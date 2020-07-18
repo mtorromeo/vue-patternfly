@@ -5,3 +5,5 @@ export { default as Gallery } from './Gallery/Gallery.vue';
 export { default as GalleryItem } from './Gallery/GalleryItem';
 export { default as Grid } from './Grid/Grid.vue';
 export { default as GridItem } from './Grid/GridItem.vue';
+export { default as Level } from './Level/Level.vue';
+export { default as LevelItem } from './Level/LevelItem';
