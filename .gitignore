@@ -1,0 +1,4 @@
+*.log
+*.gz
+dist
+node_modules
