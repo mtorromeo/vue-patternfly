@@ -1,6 +1,6 @@
 import {computed} from 'vue';
 
-const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
+export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
 
 const camelize = s =>
   s
@@ -16,7 +16,7 @@ export const toCamel = s => s.replace(/([-_][a-z])/gi, camelize);
 
 export const ucfirst = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-export function useBreakpointProp(props, baseNames, styles, additional = []) {
+export function useBreakpointProp(props, baseNames, styles, {additional = [], short = false} = {}) {
   return computed(() => {
     const c = [...additional];
 
@@ -31,12 +31,15 @@ export function useBreakpointProp(props, baseNames, styles, additional = []) {
           if (value === true) {
             value = '';
           } else {
-            value = ucfirst(toCamel(value));
+            value = toCamel(value);
             if (value.match(/^[0-9]/)) {
               value = `_${value}`;
             }
           }
-          const mod = `${toCamel(baseName)}${value}${breakpointSuffix ? `On${breakpointSuffix}` : ''}`;
+          let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}` : ''}`;
+          if (!short) {
+            mod = `${toCamel(baseName)}${ucfirst(mod)}`;
+          }
           c.push(styles.modifiers[mod]);
         }
       }
@@ -63,4 +66,12 @@ export function breakpointProp(baseName, type, values) {
     }
     return [`${baseName}${b}`, definition];
   }));
+}
+
+export function debounce(func, wait) {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(args), wait);
+  };
 }

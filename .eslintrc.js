@@ -6,7 +6,6 @@ module.exports = {
   extends: [
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
-    '@vue/prettier',
   ],
   parserOptions: {
     parser: 'babel-eslint',
@@ -16,12 +15,5 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/max-attributes-per-line': 'off',
     'comma-dangle': ['error', 'always-multiline'],
-    'prettier/prettier': [
-      'warn',
-      {
-        trailingComma: 'es5',
-        singleQuote: true,
-      },
-    ],
   },
 };

@@ -47,7 +47,7 @@ export default {
       'display',
       'fullWidth',
       'flexWrap',
-    ], styles, [styles.flex]);
+    ], styles, {additional: [styles.flex]});
     return {breakpointClasses};
   },
 };
