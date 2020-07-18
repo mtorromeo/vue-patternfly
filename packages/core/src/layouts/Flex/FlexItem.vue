@@ -6,7 +6,7 @@
 
 <script>
 import _styles from '@patternfly/react-styles/css/layouts/Flex/flex';
-import {breakpointProp, useBreakpointProp} from '../util';
+import {breakpointProp, useBreakpointProp} from '../../util';
 
 // commonjs bug
 let styles = _styles.default;
