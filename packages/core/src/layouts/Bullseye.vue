@@ -5,10 +5,9 @@
 </template>
 
 <script>
-import { css } from '@patternfly/react-styles';
 import _styles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 
-// commojs bug
+// commonjs bug
 let styles = _styles.default;
 
 export default {
@@ -23,7 +22,7 @@ export default {
 
   data() {
     return {
-      className: css(styles.bullseye),
+      className: styles.bullseye,
     };
   },
 };
