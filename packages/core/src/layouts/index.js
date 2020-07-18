@@ -7,3 +7,5 @@ export { default as Grid } from './Grid/Grid.vue';
 export { default as GridItem } from './Grid/GridItem.vue';
 export { default as Level } from './Level/Level.vue';
 export { default as LevelItem } from './Level/LevelItem';
+export { default as Split } from './Split/Split.vue';
+export { default as SplitItem } from './Split/SplitItem.vue';
