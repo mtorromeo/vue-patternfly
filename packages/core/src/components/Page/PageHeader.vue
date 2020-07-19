@@ -8,7 +8,7 @@
           :aria-label="ariaLabel"
           :aria-expanded="navOpen ? 'true' : 'false'"
           variant="plain"
-          @click="navOpen = !navOpen"
+          @click="sidebarOpen = !sidebarOpen"
         >
           <!-- <BarsIcon /> -->
           <svg fill="currentColor" height="1em" width="1em" viewBox="0 0 448 512" aria-hidden="true" role="img" style="vertical-align: -0.125em;">
@@ -51,20 +51,20 @@ export default {
   },
 
   inject: {
-    managedIsNavOpen: {
-      from: 'isNavOpen',
+    managedNavOpen: {
+      from: 'navOpen',
     },
   },
 
   props: {
     showNavToggle: Boolean,
 
-    isNavOpen: Boolean,
+    navOpen: Boolean,
     /**
-     * If true, manages the sidebar open/close state and there is no need to pass the isNavOpen boolean into
+     * If true, manages the sidebar open/close state and there is no need to pass the navOpen boolean into
      * the sidebar component or add a callback onNavToggle function into the PageHeader component
      */
-    isManagedSidebar: Boolean,
+    managedSidebar: Boolean,
 
     /** Aria Label for the nav toggle button */
     ariaLabel: {
@@ -90,13 +90,13 @@ export default {
   },
 
   computed: {
-    navOpen: {
+    sidebarOpen: {
       get() {
-        return this.isManagedSidebar ? this.managedIsNavOpen.value : this.isNavOpen;
+        return this.managedSidebar ? this.managedNavOpen.value : this.navOpen;
       },
       set(open) {
-        if (this.isManagedSidebar) {
-          this.managedIsNavOpen.value = open;
+        if (this.managedSidebar) {
+          this.managedNavOpen.value = open;
         }
       },
     },

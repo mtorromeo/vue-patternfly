@@ -14,12 +14,12 @@ export default {
   name: 'StackItem',
 
   props: {
-    isFilled: Boolean,
+    filled: Boolean,
   },
 
   computed: {
     classes() {
-      return [styles.stackItem, this.isFilled && styles.modifiers.fill];
+      return [styles.stackItem, {[styles.modifiers.fill]: this.filled}];
     },
   },
 };

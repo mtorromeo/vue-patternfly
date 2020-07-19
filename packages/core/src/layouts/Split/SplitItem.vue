@@ -14,12 +14,12 @@ export default {
   name: 'SplitItem',
 
   props: {
-    isFilled: Boolean,
+    filled: Boolean,
   },
 
   computed: {
     classes() {
-      return [styles.splitItem, this.isFilled && styles.modifiers.fill];
+      return [styles.splitItem, {[styles.modifiers.fill]: this.filled}];
     },
   },
 };

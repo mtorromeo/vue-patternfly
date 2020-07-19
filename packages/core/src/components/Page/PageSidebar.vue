@@ -1,8 +1,8 @@
 <template>
   <div id="page-sidebar" :class="[styles.pageSidebar, {
     [styles.modifiers.light]: theme === 'light',
-    [styles.modifiers.expanded]: navOpen,
-    [styles.modifiers.collapsed]: !navOpen,
+    [styles.modifiers.expanded]: sidebarOpen,
+    [styles.modifiers.collapsed]: !sidebarOpen,
   }]"
   >
     <div :class="styles.pageSidebarBody">
@@ -21,16 +21,16 @@ export default {
   name: 'PageSidebar',
 
   inject: {
-    managedIsNavOpen: {
-      from: 'isNavOpen',
+    managedNavOpen: {
+      from: 'navOpen',
     },
   },
 
   props: {
-    isManagedSidebar: Boolean,
+    managedSidebar: Boolean,
 
-    /** Programmatically manage if the side nav is shown, if isManagedSidebar is set to true in the Page component, this prop is managed */
-    isNavOpen: Boolean,
+    /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the Page component, this prop is managed */
+    navOpen: Boolean,
 
     /** Indicates the color scheme of the sidebar */
     theme: {
@@ -47,8 +47,8 @@ export default {
   },
 
   computed: {
-    navOpen() {
-      return this.isManagedSidebar ? this.managedIsNavOpen.value : this.isNavOpen;
+    sidebarOpen() {
+      return this.managedSidebar ? this.managedNavOpen.value : this.navOpen;
     },
   },
 };

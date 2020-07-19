@@ -38,9 +38,9 @@ export default {
       default: -1,
     },
 
-    isManagedSidebar: Boolean,
+    managedSidebar: Boolean,
 
-    defaultManagedSidebarIsOpen: {
+    defaultManagedSidebarOpen: {
       type: Boolean,
       default: true,
     },
@@ -53,28 +53,28 @@ export default {
 
   setup(props) {
     const mobileView = ref(false);
-    const mobileIsNavOpen = ref(false);
-    const desktopIsNavOpen = ref(!props.isManagedSidebar || props.defaultManagedSidebarIsOpen);
+    const mobileNavOpen = ref(false);
+    const desktopNavOpen = ref(!props.managedSidebar || props.defaultManagedSidebarOpen);
 
-    const isManagedSidebar = ref(props.isManagedSidebar);
-    provide('isManagedSidebar', isManagedSidebar);
+    const managedSidebar = ref(props.managedSidebar);
+    provide('managedSidebar', managedSidebar);
 
-    const isNavOpen = computed({
+    const navOpen = computed({
       get() {
-        return mobileView.value ? mobileIsNavOpen.value : desktopIsNavOpen.value;
+        return mobileView.value ? mobileNavOpen.value : desktopNavOpen.value;
       },
 
       set(open) {
         if (mobileView.value) {
-          mobileIsNavOpen.value = open;
+          mobileNavOpen.value = open;
         } else {
-          desktopIsNavOpen.value = open;
+          desktopNavOpen.value = open;
         }
       },
     });
-    provide('isNavOpen', isNavOpen);
+    provide('navOpen', navOpen);
 
-    return {isNavOpen, mobileView, mobileIsNavOpen, desktopIsNavOpen};
+    return {navOpen, mobileView, mobileNavOpen, desktopNavOpen};
   },
 
   data() {
@@ -101,7 +101,7 @@ export default {
     },
 
     navToggle() {
-      this.isNavOpen = !this.isNavOpen;
+      this.navOpen = !this.navOpen;
     },
   },
 };

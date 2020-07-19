@@ -1,7 +1,7 @@
 <template>
   <Page>
     <template #skeleton>
-      <PageHeader show-nav-toggle is-managed-sidebar>
+      <PageHeader show-nav-toggle managed-sidebar>
         <template #logo>
           <Brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px" />
         </template>
@@ -11,7 +11,7 @@
           </PageHeaderToolsGroup>
         </PageHeaderTools>
       </PageHeader>
-      <PageSidebar nav="Navigation" is-nav-open is-managed-sidebar>
+      <PageSidebar nav="Navigation" nav-open managed-sidebar>
         <Nav @select="handleSelect">
           <NavGroup title="Group title 1">
             <NavItem href="#grouped-1" item-id="grp-1_itm-1" :active="activeItem === 'grp-1_itm-1'">
@@ -165,14 +165,14 @@
     <h2 class="pf-c-title pf-m-4xl">Split Layout</h2>
     <Split has-gutter>
       <SplitItem>content</SplitItem>
-      <SplitItem is-filled>pf-m-fill</SplitItem>
+      <SplitItem filled>pf-m-fill</SplitItem>
       <SplitItem>content</SplitItem>
     </Split>
 
     <h2 class="pf-c-title pf-m-4xl">Stack Layout</h2>
     <Stack has-gutter>
       <StackItem>content</StackItem>
-      <StackItem is-filled>pf-m-fill</StackItem>
+      <StackItem filled>pf-m-fill</StackItem>
       <StackItem>content</StackItem>
     </Stack>
   </Page>

@@ -1,7 +1,7 @@
 <template>
   <section :class="[classes, variantType, variantStyle, {
-    [styles.modifiers.noFill]: !isFilled,
-    [styles.modifiers.fill]: isFilled,
+    [styles.modifiers.noFill]: !filled,
+    [styles.modifiers.fill]: filled,
   }]"
   >
     <slot />
@@ -34,7 +34,7 @@ export default {
     },
 
     /** Enables the page section to fill the available vertical space */
-    isFilled: Boolean,
+    filled: Boolean,
 
     /** Padding at various breakpoints. */
     ...breakpointProp('padding', String, ['', 'padding', 'no-padding']),
