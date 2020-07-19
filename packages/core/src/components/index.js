@@ -1,5 +1,12 @@
 export { default as Brand } from './Brand';
 export { default as Btn } from './Btn.vue';
+export { default as Divider } from './Divider';
+export { default as Nav } from './Nav/Nav.vue';
+export { default as NavGroup } from './Nav/NavGroup';
+export { default as NavList } from './Nav/NavList.vue';
+export { default as NavExpandable } from './Nav/NavExpandable.vue';
+export { default as NavItemSeparator } from './Nav/NavItemSeparator';
+export { default as NavItem } from './Nav/NavItem.vue';
 export { default as Page } from './Page/Page.vue';
 export { default as PageSidebar } from './Page/PageSidebar.vue';
 export { default as PageSection } from './Page/PageSection.vue';

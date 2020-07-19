@@ -77,3 +77,47 @@ export function debounce(func, wait) {
     timeout = setTimeout(() => func(args), wait);
   };
 }
+
+/** This function returns whether or not an element is within the viewable area of a container. If partial is true,
+ * then this function will return true even if only part of the element is in view.
+ *
+ * @param {HTMLElement} container  The container to check if the element is in view of.
+ * @param {HTMLElement} element    The element to check if it is view
+ * @param {boolean} partial   true if partial view is allowed
+ *
+ * @returns { boolean } True if the component is in View.
+ */
+export function isElementInView(container, element, partial) {
+  console.log(element, container)
+  if (!container || !element) {
+    return false;
+  }
+  const containerBounds = container.getBoundingClientRect();
+  const elementBounds = element.getBoundingClientRect();
+  const containerBoundsLeft = Math.floor(containerBounds.left);
+  const containerBoundsRight = Math.floor(containerBounds.right);
+  const elementBoundsLeft = Math.floor(elementBounds.left);
+  const elementBoundsRight = Math.floor(elementBounds.right);
+
+  // Check if in view
+  const isTotallyInView = elementBoundsLeft >= containerBoundsLeft && elementBoundsRight <= containerBoundsRight;
+  const isPartiallyInView =
+    partial &&
+    ((elementBoundsLeft < containerBoundsLeft && elementBoundsRight > containerBoundsLeft) ||
+      (elementBoundsRight > containerBoundsRight && elementBoundsLeft < containerBoundsRight));
+
+  // Return outcome
+  return isTotallyInView || isPartiallyInView;
+}
+
+/**
+ * @param {string} prefix - String to prefix ID with
+ */
+export function getUniqueId(prefix = 'pf') {
+  const uid =
+    new Date().getTime() +
+    Math.random()
+      .toString(36)
+      .slice(2);
+  return `${prefix}-${uid}`;
+}
