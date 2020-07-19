@@ -126,7 +126,7 @@
     </Flex>
 
     <h2 class="pf-c-title pf-m-4xl">Gallery Layout</h2>
-    <Gallery has-gutter>
+    <Gallery gutter>
       <GalleryItem>Gallery Item</GalleryItem>
       <GalleryItem>Gallery Item</GalleryItem>
       <GalleryItem>Gallery Item</GalleryItem>
@@ -136,7 +136,7 @@
     </Gallery>
 
     <h2 class="pf-c-title pf-m-4xl">Grid Layout</h2>
-    <Grid has-gutter>
+    <Grid gutter>
       <GridItem span="8">span = 8</GridItem>
       <GridItem span="4" row-span="2">
         span = 4, rowSpan = 2
@@ -156,21 +156,21 @@
     </Grid>
 
     <h2 class="pf-c-title pf-m-4xl">Level Layout</h2>
-    <Level has-gutter>
+    <Level gutter>
       <LevelItem>Level Item</LevelItem>
       <LevelItem>Level Item</LevelItem>
       <LevelItem>Level Item</LevelItem>
     </Level>
 
     <h2 class="pf-c-title pf-m-4xl">Split Layout</h2>
-    <Split has-gutter>
+    <Split gutter>
       <SplitItem>content</SplitItem>
       <SplitItem filled>pf-m-fill</SplitItem>
       <SplitItem>content</SplitItem>
     </Split>
 
     <h2 class="pf-c-title pf-m-4xl">Stack Layout</h2>
-    <Stack has-gutter>
+    <Stack gutter>
       <StackItem>content</StackItem>
       <StackItem filled>pf-m-fill</StackItem>
       <StackItem>content</StackItem>
