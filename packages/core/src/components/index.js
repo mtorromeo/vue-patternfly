@@ -4,3 +4,6 @@ export { default as Page } from './Page/Page.vue';
 export { default as PageSidebar } from './Page/PageSidebar.vue';
 export { default as PageSection } from './Page/PageSection.vue';
 export { default as PageHeader } from './Page/PageHeader.vue';
+export { default as PageHeaderTools } from './Page/PageHeaderTools';
+export { default as PageHeaderToolsGroup } from './Page/PageHeaderToolsGroup';
+export { default as PageHeaderToolsItem } from './Page/PageHeaderToolsItem';

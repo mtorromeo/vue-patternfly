@@ -6,6 +6,7 @@
   "module": "dist/core.esm.js",
   "unpkg": "dist/core.min.js",
   "scripts": {
+    "dev": "yarn rollup -cw",
     "build": "yarn rollup -c && yarn rollup -c --environment IS_PRODUCTION"
   },
   "dependencies": {

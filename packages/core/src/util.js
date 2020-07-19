@@ -16,37 +16,39 @@ export const toCamel = s => s.replace(/([-_][a-z])/gi, camelize);
 
 export const ucfirst = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-export function useBreakpointProp(props, baseNames, styles, {additional = [], short = false} = {}) {
-  return computed(() => {
-    const c = [...additional];
+export function classesFromBreakpointProps(props, baseNames, styles, {additional = [], short = false} = {}) {
+  const c = [...additional];
 
-    for (const baseName of baseNames) {
-      for (let breakpointSuffix of breakpoints) {
-        if (breakpointSuffix === '2xl') {
-          breakpointSuffix = '_2xl';
-        }
-        const prop = `${baseName}${breakpointSuffix}`;
-        let value = props[prop];
-        if (value) {
-          if (value === true) {
-            value = '';
-          } else {
-            value = toCamel(value);
-            if (value.match(/^[0-9]/)) {
-              value = `_${value}`;
-            }
+  for (const baseName of baseNames) {
+    for (let breakpointSuffix of breakpoints) {
+      if (breakpointSuffix === '2xl') {
+        breakpointSuffix = '_2xl';
+      }
+      const prop = `${baseName}${breakpointSuffix}`;
+      let value = props[prop];
+      if (value) {
+        if (value === true) {
+          value = '';
+        } else {
+          value = toCamel(value);
+          if (value.match(/^[0-9]/)) {
+            value = `_${value}`;
           }
-          let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}` : ''}`;
-          if (!short) {
-            mod = `${toCamel(baseName)}${ucfirst(mod)}`;
-          }
-          c.push(styles.modifiers[mod]);
         }
+        let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}` : ''}`;
+        if (!short) {
+          mod = `${toCamel(baseName)}${ucfirst(mod)}`;
+        }
+        c.push(styles.modifiers[mod]);
       }
     }
+  }
 
-    return c.filter(Boolean);
-  });
+  return c.filter(Boolean);
+}
+
+export function useBreakpointProp(...args) {
+  return computed(() => classesFromBreakpointProps(...args));
 }
 
 export function breakpointProp(baseName, type, values) {
