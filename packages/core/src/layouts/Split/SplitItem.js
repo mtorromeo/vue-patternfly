@@ -5,7 +5,7 @@ let styles = _styles.default;
 
 import {h, mergeProps} from 'vue';
 
-const SplitItem = (props, {slots, attrs}) => h('div', mergeProps({class: [styles.splitItem, {[styles.modifiers.fill]: props.filled}]}, attrs), [slots.default()]);
+const SplitItem = (props, {slots, attrs}) => h('div', mergeProps({class: [styles.splitItem, {[styles.modifiers.fill]: props.filled}]}, attrs), slots.default());
 
 SplitItem.props = {
   filled: Boolean,

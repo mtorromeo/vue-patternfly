@@ -31,7 +31,7 @@ const PageSection = (props, {slots, attrs}) => {
       [styles.modifiers.noFill]: !props.filled,
       [styles.modifiers.fill]: props.filled,
     }],
-  }, attrs), [slots.default()]);
+  }, attrs), slots.default());
 };
 
 PageSection.props = {

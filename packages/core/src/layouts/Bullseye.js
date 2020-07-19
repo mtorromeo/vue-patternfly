@@ -5,7 +5,7 @@ let styles = _styles.default;
 
 import {h, mergeProps} from 'vue';
 
-const Bullseye = (props, {slots, attrs}) => h(props.component, mergeProps({class: styles.bullseye}, attrs), [slots.default()]);
+const Bullseye = (props, {slots, attrs}) => h(props.component, mergeProps({class: styles.bullseye}, attrs), slots.default());
 
 Bullseye.props = {
   component: {

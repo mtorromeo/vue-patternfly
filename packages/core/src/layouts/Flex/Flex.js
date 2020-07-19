@@ -23,7 +23,7 @@ const Flex = (props, {slots, attrs}) => h('div', mergeProps({
     'fullWidth',
     'flexWrap',
   ], styles)],
-}, attrs), [slots.default()]);
+}, attrs), slots.default());
 
 Flex.props = {
   ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),

@@ -47,7 +47,7 @@ const GridItem = (props, {slots, attrs}) => {
     }
   }
 
-  return h('div', mergeProps({class: classes}, attrs), [slots.default()]);
+  return h('div', mergeProps({class: classes}, attrs), slots.default());
 };
 
 GridItem.props = {

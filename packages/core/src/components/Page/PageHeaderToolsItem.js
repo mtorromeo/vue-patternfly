@@ -16,7 +16,7 @@ const PageHeaderToolsItem = (props, {slots, attrs}) =>
         [styles.modifiers.selected]: props.selected,
       },
     ],
-  }, attrs), [slots.default()]);
+  }, attrs), slots.default());
 
 PageHeaderToolsItem.props = {
   ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),

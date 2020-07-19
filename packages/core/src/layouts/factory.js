@@ -1,7 +1,7 @@
 import {h, mergeProps} from 'vue';
 
 export default (name, styleClass, modifiers) => {
-  const Layout = (props, {slots, attrs}) => h(props.component, mergeProps({class: [styleClass, {[modifiers.gutter]: props.gutter}]}, attrs), [slots.default()]);
+  const Layout = (props, {slots, attrs}) => h(props.component, mergeProps({class: [styleClass, {[modifiers.gutter]: props.gutter}]}, attrs), slots.default());
 
   Layout.props = {
     component: {

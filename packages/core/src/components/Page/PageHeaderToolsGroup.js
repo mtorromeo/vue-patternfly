@@ -13,7 +13,7 @@ const PageHeaderToolsGroup = (props, {slots, attrs}) =>
       styles.pageHeaderToolsGroup,
       classesFromBreakpointProps(props, ['visibility'], styles, {short: true}),
     ],
-  }, attrs), [slots.default()]);
+  }, attrs), slots.default());
 
 PageHeaderToolsGroup.props = {
   ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),

@@ -11,7 +11,7 @@ const NavGroup = (props, {attrs, slots}) => h(
   mergeProps({class: styles.navSection, ariaLabelledby: props.id}, attrs),
   [
     h('h2', {class: styles.navSectionTitle, id: props.id}, [props.title]),
-    h('ul', [slots.default()]),
+    h('ul', slots.default()),
   ],
 );
 
