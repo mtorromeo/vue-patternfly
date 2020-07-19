@@ -36,7 +36,7 @@ export default {
     theme: {
       type: String,
       default: 'dark',
-      validate: v => ['light', 'dark'].includes(v),
+      validator: v => ['light', 'dark'].includes(v),
     },
   },
 

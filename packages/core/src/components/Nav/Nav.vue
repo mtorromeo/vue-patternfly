@@ -26,12 +26,12 @@ export default {
     theme: {
       type: String,
       default: 'dark',
-      validate: v => ['dark', 'light'].includes(v),
+      validator: v => ['dark', 'light'].includes(v),
     },
     variant: {
       type: String,
       default: '',
-      validate: v => ['', 'default', 'horizontal', 'tertiary'].includes(v),
+      validator: v => ['', 'default', 'horizontal', 'tertiary'].includes(v),
     },
     ariaLabel: {
       type: String,

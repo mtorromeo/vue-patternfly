@@ -30,7 +30,7 @@ Divider.props = {
   component: {
     type: String,
     default: 'hr',
-    validate: v => ['hr', 'li', 'div'].includes(v),
+    validator: v => ['hr', 'li', 'div'].includes(v),
   },
 };
 Divider.inheritAttrs = false;

@@ -42,13 +42,13 @@ export default {
     variant: {
       type: String,
       default: 'primary',
-      validate: v => ['primary', 'secondary', 'tertiary', 'danger', 'link', 'plain', 'control'].includes(v),
+      validator: v => ['primary', 'secondary', 'tertiary', 'danger', 'link', 'plain', 'control'].includes(v),
     },
 
     iconPosition: {
       type: String,
       default: 'left',
-      validate: v => ['left', 'right'].includes(v),
+      validator: v => ['left', 'right'].includes(v),
     },
 
     component: {

@@ -8,7 +8,7 @@ let styles = _styles.default;
 const gridSpans = {
   type: [String, Number],
   default: null,
-  validate: v => {
+  validator: v => {
     const numval = Number(v);
     return v === null || (!isNaN(numval) && numval >= 1 && numval <= 12);
   },

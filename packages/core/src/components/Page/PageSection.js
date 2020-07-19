@@ -39,14 +39,14 @@ PageSection.props = {
   variant: {
     type: String,
     default: 'default',
-    validate: v => ['default', 'light', 'dark', 'darker'].includes(v),
+    validator: v => ['default', 'light', 'dark', 'darker'].includes(v),
   },
 
   /** Section type variant */
   type: {
     type: String,
     default: 'default',
-    validate: v => ['default', 'nav'].includes(v),
+    validator: v => ['default', 'nav'].includes(v),
   },
 
   /** Enables the page section to fill the available vertical space */
