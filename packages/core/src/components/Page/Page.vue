@@ -51,6 +51,16 @@ export default {
     },
   },
 
+  emits: {
+    'page-resize'({mobileView, windowSize}) {
+      if (typeof mobileView !== 'boolean' || typeof windowSize !== 'number') {
+        console.warn('Invalid page-resize event payload!');
+        return false;
+      }
+      return true;
+    },
+  },
+
   setup(props) {
     const mobileView = ref(false);
     const mobileNavOpen = ref(false);

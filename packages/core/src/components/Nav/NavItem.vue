@@ -48,6 +48,16 @@ export default {
     },
   },
 
+  emits: {
+    select(e, groupId, itemId) {
+      if (!(e instanceof Event) || typeof groupId === 'undefined' || typeof itemId === 'undefined') {
+        console.warn('Invalid select event payload!');
+        return false;
+      }
+      return true;
+    },
+  },
+
   data() {
     return {
       styles,
