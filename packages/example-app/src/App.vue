@@ -17,26 +17,14 @@
 
       <PageSidebar nav="Navigation" nav-open managed-sidebar>
         <Nav @select="handleSelect">
-          <NavGroup title="Group title 1">
+          <NavGroup title="Overview">
             <NavItem :to="{name: 'layouts'}">
               Layouts
             </NavItem>
-            <NavItem href="#grouped-2" item-id="grp-1_itm-2" :active="activeItem === 'grp-1_itm-2'">
-              Link 2
-            </NavItem>
-            <NavItem href="#grouped-3" item-id="grp-1_itm-3" :active="activeItem === 'grp-1_itm-3'">
-              Link 3
-            </NavItem>
           </NavGroup>
-          <NavGroup title="Group title 2">
-            <NavItem href="#grouped-4" item-id="grp-2_itm-1" :active="activeItem === 'grp-2_itm-1'">
-              Link 1
-            </NavItem>
-            <NavItem href="#grouped-5" item-id="grp-2_itm-2" :active="activeItem === 'grp-2_itm-2'">
-              Link 2
-            </NavItem>
-            <NavItem href="#grouped-6" item-id="grp-2_itm-3" :active="activeItem === 'grp-2_itm-3'">
-              Link 3
+          <NavGroup title="Components">
+            <NavItem :to="{name: 'label'}">
+              Label
             </NavItem>
           </NavGroup>
           <NavList>
