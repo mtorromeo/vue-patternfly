@@ -88,7 +88,6 @@ export function debounce(func, wait) {
  * @returns { boolean } True if the component is in View.
  */
 export function isElementInView(container, element, partial) {
-  console.log(element, container)
   if (!container || !element) {
     return false;
   }
