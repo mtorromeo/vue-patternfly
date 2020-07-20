@@ -3,7 +3,7 @@ import _styles from '@patternfly/react-styles/css/components/Label/label';
 // commonjs bug
 let styles = _styles.default;
 
-import {h} from 'vue';
+import {h, mergeProps} from 'vue';
 import Btn from './Btn.vue';
 import {TimesIcon} from '@vue-patternfly4/icons';
 
@@ -17,7 +17,7 @@ const colorStyles = {
   grey: '',
 };
 
-const Label = (props, {slots, emit}) => {
+const Label = (props, {slots, attrs, emit}) => {
   let component = 'span';
   if (props.href) {
     component = 'a';
@@ -25,11 +25,11 @@ const Label = (props, {slots, emit}) => {
     component = 'router-link';
   }
 
-  return h('span', {
+  return h('span', mergeProps({
     class: [styles.label, colorStyles[props.color], {
       [styles.modifiers.outline]: props.outline || props.variant === 'outline',
     }],
-  }, [
+  }, attrs), [
     h(component, {
       to: props.to,
       href: props.href,
@@ -39,7 +39,7 @@ const Label = (props, {slots, emit}) => {
       slots.default(),
     ]),
     props.close && h(Btn, {
-      type: 'btn',
+      type: 'button',
       variant: 'plain',
       onClick: e => emit('close', e),
       'aria-label': 'label-close-button',
