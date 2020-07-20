@@ -1,6 +1,18 @@
 <template>
-  <component :is="component" :class="[styles.navItem, itemClass]" :tag="component === 'router-link' ? 'li' : null" v-bind="itemAttrs">
-    <component :is="linkComponent" :class="[styles.navLink, {[styles.modifiers.current]: active}]" :aria-current="active ? 'page' : null" v-bind="$attrs" @click="select">
+  <component
+    :is="component"
+    :class="[styles.navItem, itemClass]"
+    v-bind="itemAttrs"
+  >
+    <component
+      :is="linkTag"
+      :class="[styles.navLink, {[styles.modifiers.current]: active}]"
+      :aria-current="active ? 'page' : null"
+      :to="to"
+      :active-class="to ? styles.modifiers.current : null"
+      v-bind="$attrs"
+      @click="select"
+    >
       <slot />
     </component>
   </component>
@@ -26,7 +38,7 @@ export default {
     },
     linkComponent: {
       type: String,
-      default: 'a',
+      default: null,
     },
     groupId: {
       type: String,
@@ -46,6 +58,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    to: {
+      type: [String, Object],
+      default: null,
+    },
   },
 
   emits: {
@@ -62,6 +78,15 @@ export default {
     return {
       styles,
     };
+  },
+
+  computed: {
+    linkTag() {
+      if (this.linkComponent) {
+        return this.linkComponent;
+      }
+      return this.to === null ? 'a' : 'router-link';
+    },
   },
 
   methods: {
