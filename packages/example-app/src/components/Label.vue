@@ -1,6 +1,8 @@
 <template>
   <PageSection variant="light">
-    <Title class="example-heading" h="3">Label</Title>
+    <Title>Label</Title>
+
+    <Title class="example-heading" h="3">Filled</Title>
 
     <Label>Grey</Label>
     {{ ' ' }}
@@ -159,9 +161,7 @@
     <Label color="cyan" href="#filled">Cyan link</Label>
     {{ ' ' }}
     <Label color="cyan" href="#filled" close @close="log">Cyan link removeable</Label>
-  </PageSection>
 
-  <PageSection variant="light">
     <Title class="example-heading" h="3">Outline</Title>
 
     <Label outline>Grey</Label>

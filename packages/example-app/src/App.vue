@@ -26,6 +26,9 @@
             <NavItem :to="{name: 'label'}">
               Label
             </NavItem>
+            <NavItem :to="{name: 'title'}">
+              Title
+            </NavItem>
           </NavGroup>
           <NavList>
             <NavExpandable title="Expandable 3" group-id="grp-3" :active="activeGroup === 'grp-3'" expanded managed>
