@@ -29,3 +29,9 @@
 .pf-l-stack {
   margin: 1rem 0 !important;
 }
+
+.pf-c-page__main-section .example-heading {
+  padding: var(--pf-global--spacer--md) 0;
+  margin-bottom: var(--pf-global--spacer--md);
+  border-bottom: var(--pf-global--BorderWidth--sm) solid #f8f8f8;
+}

@@ -1,6 +1,6 @@
 <template>
   <PageSection variant="light">
-    <h1>Label</h1>
+    <Title class="example-heading" h="3">Label</Title>
 
     <Label>Grey</Label>
     {{ ' ' }}
@@ -162,7 +162,7 @@
   </PageSection>
 
   <PageSection variant="light">
-    <h1>Outline</h1>
+    <Title class="example-heading" h="3">Outline</Title>
 
     <Label outline>Grey</Label>
     {{ ' ' }}
