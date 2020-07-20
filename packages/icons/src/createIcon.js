@@ -41,8 +41,8 @@ export function createIcon({
       height: heightWidth,
       width: heightWidth,
       viewBox,
-      ariaLabelledBy: props.title ? id : null,
-      ariaHidden: props.title ? null : true,
+      'aria-labelled-by': props.title ? id : null,
+      'aria-hidden': props.title ? null : true,
       role: 'img',
     }, attrs), children);
   };
