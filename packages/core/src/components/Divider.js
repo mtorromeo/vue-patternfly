@@ -4,7 +4,7 @@ import _styles from '@patternfly/react-styles/css/components/Divider/divider';
 let styles = _styles.default;
 
 import {breakpointProp, classesFromBreakpointProps} from '../util';
-import {h, mergeProps} from 'vue';
+import {h, mergeProps, inject} from 'vue';
 
 const Divider = (props, {attrs}) => {
   attrs = mergeProps({
@@ -17,11 +17,13 @@ const Divider = (props, {attrs}) => {
     ],
   }, attrs);
 
-  if (props.component !== 'hr') {
+  const component = inject('dividerComponent', props.component);
+
+  if (component !== 'hr') {
     attrs.role = 'separator';
   }
 
-  return h(props.component, attrs);
+  return h(component, attrs);
 }
 
 Divider.props = {

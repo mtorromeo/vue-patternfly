@@ -4,6 +4,7 @@ export {default as Divider} from './Divider';
 export {default as Label} from './Label';
 export {default as Title} from './Title';
 export {default as Spinner} from './Spinner';
+export * from './Dropdown';
 export * from './Nav';
 export * from './Page';
 export * from './Text';
