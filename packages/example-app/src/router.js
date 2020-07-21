@@ -1,27 +1,37 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Home from './components/Home.vue';
-import Layouts from './components/Layouts.vue';
-import Label from './components/Label.vue';
-import Title from './components/Title.vue';
+import HomePage from './components/HomePage.vue';
+import LayoutsPage from './components/LayoutsPage.vue';
+import LabelPage from './components/LabelPage.vue';
+import DropdownPage from './components/DropdownPage.vue';
+import TitlePage from './components/TitlePage.vue';
+import SpinnerPage from './components/SpinnerPage.vue';
 
 export default createRouter({
   history: createWebHistory(),
   routes: [{
     name: 'home',
     path: '/',
-    component: Home,
+    component: HomePage,
   }, {
     name: 'layouts',
     path: '/layouts',
-    component: Layouts,
+    component: LayoutsPage,
+  }, {
+    name: 'dropdown',
+    path: '/dropdown',
+    component: DropdownPage,
   }, {
     name: 'label',
     path: '/label',
-    component: Label,
+    component: LabelPage,
   }, {
     name: 'title',
     path: '/title',
-    component: Title,
+    component: TitlePage,
+  }, {
+    name: 'spinner',
+    path: '/spinner',
+    component: SpinnerPage,
   }],
 });

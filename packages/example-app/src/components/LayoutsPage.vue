@@ -83,7 +83,7 @@
 
 <script>
 export default {
-  name: 'Layouts',
+  name: 'LayoutsPage',
 
   data() {
     return {

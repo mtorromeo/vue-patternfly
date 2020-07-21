@@ -23,8 +23,14 @@
             </NavItem>
           </NavGroup>
           <NavGroup title="Components">
+            <NavItem :to="{name: 'dropdown'}">
+              Dropdown
+            </NavItem>
             <NavItem :to="{name: 'label'}">
               Label
+            </NavItem>
+            <NavItem :to="{name: 'spinner'}">
+              Spinner
             </NavItem>
             <NavItem :to="{name: 'title'}">
               Title
@@ -89,6 +95,7 @@
 
     <router-view />
   </Page>
+  <span></span>
 </template>
 
 <script>

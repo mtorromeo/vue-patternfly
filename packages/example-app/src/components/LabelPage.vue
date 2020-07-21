@@ -328,7 +328,7 @@
 import { InfoCircleIcon } from "@vue-patternfly4/icons";
 
 export default {
-  name: "Label",
+  name: "LabelPage",
 
   components: {
     InfoCircleIcon,
