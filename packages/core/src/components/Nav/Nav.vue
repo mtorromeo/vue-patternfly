@@ -43,7 +43,7 @@ export default {
     const scrollable = ref(false);
     provide('scrollable', scrollable);
 
-    const horizontal = computed(() => ['horizontal', 'tertiary'].includes(props.variant))
+    const horizontal = ['horizontal', 'tertiary'].includes(props.variant);
     provide('horizontal', horizontal);
 
     provide('onSelect', (e, groupId, itemId) => emit('select', e, groupId, itemId));
