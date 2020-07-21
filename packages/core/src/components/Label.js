@@ -43,7 +43,9 @@ const Label = (props, {slots, attrs, emit}) => {
       variant: 'plain',
       onClick: e => emit('close', e),
       'aria-label': 'label-close-button',
-    }, h(TimesIcon)),
+    }, {
+      default: () => h(TimesIcon),
+    }),
   ]);
 };
 
