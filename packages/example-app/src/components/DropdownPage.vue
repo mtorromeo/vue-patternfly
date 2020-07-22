@@ -3,7 +3,7 @@
     <pf-title>PfDropdown</pf-title>
 
     <pf-title class="example-heading" h="3">Basic</pf-title>
-    <pf-dropdown v-model:open="open1" text="PfDropdown">
+    <pf-dropdown v-model:open="open1" text="Dropdown">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
         Action
@@ -22,7 +22,7 @@
     </pf-dropdown>
 
     <pf-title class="example-heading" h="3">With initial selection</pf-title>
-    <pf-dropdown v-model:open="open2" text="PfDropdown">
+    <pf-dropdown v-model:open="open2" text="Dropdown">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button" auto-focus>
         Action
@@ -41,7 +41,7 @@
     </pf-dropdown>
 
     <pf-title class="example-heading" h="3">Disabled</pf-title>
-    <pf-dropdown v-model:open="open3" text="PfDropdown" disabled>
+    <pf-dropdown v-model:open="open3" text="Dropdown" disabled>
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
         Action
@@ -60,7 +60,7 @@
     </pf-dropdown>
 
     <pf-title class="example-heading" h="3">Primary toggle</pf-title>
-    <pf-dropdown v-model:open="open4" text="PfDropdown" primary>
+    <pf-dropdown v-model:open="open4" text="Dropdown" primary>
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
         Action
@@ -79,7 +79,7 @@
     </pf-dropdown>
 
     <pf-title class="example-heading" h="3">Position right</pf-title>
-    <pf-dropdown v-model:open="open5" text="PfDropdown" position="right">
+    <pf-dropdown v-model:open="open5" text="Dropdown" position="right">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
         Action
@@ -98,7 +98,7 @@
     </pf-dropdown>
 
     <pf-title class="example-heading" h="3">Direction up</pf-title>
-    <pf-dropdown v-model:open="open6" text="PfDropdown" direction="up">
+    <pf-dropdown v-model:open="open6" text="Dropdown" direction="up">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
         Action
@@ -295,8 +295,8 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">PfDropdown with image and text</pf-title>
-    <pf-dropdown v-model:open="open14" text="PfDropdown">
+    <pf-title class="example-heading" h="3">Dropdown with image and text</pf-title>
+    <pf-dropdown v-model:open="open14" text="Dropdown">
       <template #toggle>
         <pf-dropdown-toggle indicator>
           <template #icon>
@@ -320,8 +320,8 @@
       </pf-dropdown-group>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">PfDropdown with descriptions</pf-title>
-    <pf-dropdown v-model:open="open15" text="PfDropdown">
+    <pf-title class="example-heading" h="3">Dropdown with descriptions</pf-title>
+    <pf-dropdown v-model:open="open15" text="Dropdown">
       <pf-dropdown-item description="This is a description">
         <template #icon>
           <CubesIcon />
