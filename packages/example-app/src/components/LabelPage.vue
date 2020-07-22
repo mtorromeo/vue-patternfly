@@ -336,7 +336,7 @@ export default {
 
   methods: {
     log(...args) {
-      console.log(args);
+      alert(JSON.stringify(args));
     },
   },
 };
