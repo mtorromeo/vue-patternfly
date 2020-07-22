@@ -10,6 +10,8 @@ export default {
 
   inheritAttrs: false,
 
+  inject: ['keyDown', 'dropdown'],
+
   props: {
     hovered: Boolean,
     component: {
@@ -18,7 +20,7 @@ export default {
     },
     role: {
       type: String,
-      default: 'none',
+      default: 'menuitem',
     },
     disabled: Boolean,
     plainText: Boolean,
@@ -45,7 +47,7 @@ export default {
 
   mounted() {
     if (this.autoFocus) {
-      this.$nextTick(() => this.$el.focus());
+      this.$nextTick(() => this.focus());
     }
   },
 
@@ -112,12 +114,16 @@ export default {
 
     return h('li', {
       role: this.role,
-      onKeyDown: this.onKeyDown,
+      onKeyDown: this.keyDown.bind(this),
       onClick: e => {
-        if (!this.disabled) {
-          this.$emit('click', e);
-          this.$emit('select', e);
+        if (this.disabled) {
+          if (this.dropdown && this.dropdown.$refs.toggle && this.dropdown.$refs.toggle.$el) {
+            this.dropdown.$refs.toggle.$el.focus();
+          }
+          return;
         }
+        this.$emit('click', e);
+        this.$emit('select', e);
       },
     }, [
       renderDefaultComponent(),
@@ -126,25 +132,17 @@ export default {
   },
 
   methods: {
-    onKeyDown() {
-      // Detected key press on this item, notify the menu parent so that the appropriate item can be focused
-      // const innerIndex = event.target === this.ref.current ? 0 : 1;
-      // if (!this.props.customChild) {
-      //   event.preventDefault();
-      // }
-      // if (event.key === 'ArrowUp') {
-      //   this.props.context.keyHandler(this.props.index, innerIndex, KEYHANDLER_DIRECTION.UP);
-      // } else if (event.key === 'ArrowDown') {
-      //   this.props.context.keyHandler(this.props.index, innerIndex, KEYHANDLER_DIRECTION.DOWN);
-      // } else if (event.key === 'ArrowRight') {
-      //   this.props.context.keyHandler(this.props.index, innerIndex, KEYHANDLER_DIRECTION.RIGHT);
-      // } else if (event.key === 'ArrowLeft') {
-      //   this.props.context.keyHandler(this.props.index, innerIndex, KEYHANDLER_DIRECTION.LEFT);
-      // } else if (event.key === 'Enter' || event.key === ' ') {
-      //   event.target.click();
-      //   this.props.enterTriggersArrowDown &&
-      //     this.props.context.keyHandler(this.props.index, innerIndex, KEYHANDLER_DIRECTION.DOWN);
-      // }
+    focus() {
+      this.focusElement().focus();
+    },
+
+    focusElement() {
+      return this.$el.querySelector('[tabindex], a, button') || this.$el;
+    },
+
+    focused() {
+      const el = this.focusElement();
+      return el.ownerDocument.activeElement === el;
     },
   },
 };

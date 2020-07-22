@@ -21,6 +21,10 @@ export default {
       type: String,
       default: 'Select',
     },
+    indicator: {
+      type: Boolean,
+      default: null,
+    },
     disabled: Boolean,
   },
 
@@ -29,10 +33,12 @@ export default {
 
     let indicator = null;
 
-    if (this.$slots.indicator) {
-      indicator = this.$slots.indicator();
-    } else {
-      indicator = h(CaretDownIcon);
+    if (this.indicator === null ? !this.$slots.icon : this.indicator) {
+      if (this.$slots.indicator) {
+        indicator = this.$slots.indicator();
+      } else {
+        indicator = h(CaretDownIcon);
+      }
     }
 
     const children = [];
@@ -90,22 +96,6 @@ export default {
   methods: {
     toggle() {
       this.$emit('update:open', !this.open);
-    },
-
-    onKeyDown(event) {
-      if (event.key === 'Tab' && !this.open) {
-        return;
-      }
-      if (!this.bubbleEvent) {
-        event.stopPropagation();
-      }
-      event.preventDefault();
-      if ((event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') && this.open) {
-        this.toggle();
-      } else if ((event.key === 'Enter' || event.key === ' ') && !this.open) {
-        this.toggle();
-        this.$emit('enter');
-      }
     },
   },
 };

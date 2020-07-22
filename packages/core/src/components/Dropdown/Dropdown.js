@@ -4,9 +4,10 @@ import _styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 let styles = _styles.default;
 
 let currentId = 0;
-import {h} from 'vue';
+import {h, mergeProps} from 'vue';
 import DropdownToggle from './DropdownToggle';
 import DropdownMenu from './DropdownMenu';
+import {keyNavigation} from '../../use';
 
 export default {
   name: 'Dropdown',
@@ -39,15 +40,29 @@ export default {
       type: String,
       default: '',
     },
+    disabled: Boolean,
     open: Boolean,
     plain: Boolean,
     grouped: Boolean,
-    autoFocus: Boolean,
+    splitButton: Boolean,
+    active: Boolean,
+    primary: Boolean,
+    autoFocus: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   data() {
     return {
       openedOnEnter: false,
+    };
+  },
+
+  provide() {
+    return {
+      ...keyNavigation(() => this.$refs.menu.getItems()),
+      dropdown: this,
     };
   },
 
@@ -66,31 +81,44 @@ export default {
     const id = this.id || `pf-dropdown-toggle-id-${currentId++}`;
 
     const children = [];
-    let items = [];
-    if (this.$slots.default) {
-      items.push(...this.$slots.default());
-    }
-
+    const items = this.$slots.default ? this.$slots.default() : [];
     const ariaHasPopup = items.length > 0;
 
+    const toggleProps = {
+      id,
+      ref: 'toggle',
+      disabled: this.disabled,
+      open: this.open,
+      plain: this.plain,
+      'aria-haspopup': ariaHasPopup,
+      onEnter: () => this.openedOnEnter = true,
+      'onUpdate:open': v => this.$emit('update:open', v),
+    }
+
     if (this.$slots.toggle) {
-      children.push(...this.$slots.toggle());
+      const toggles = this.$slots.toggle();
+      for (const t of toggles) {
+        t.props = mergeProps(t.props, toggleProps);
+      }
+      children.push(...toggles);
     } else {
-      const toggle = h(DropdownToggle, {
-        id,
-        open: this.open,
-        plain: this.plain,
-        'aria-haspopup': ariaHasPopup,
-        onEnter: () => this.openedOnEnter = true,
-        'onUpdate:open': v => this.$emit('update:open', v),
-      }, {
+      const toggle = h(DropdownToggle, mergeProps({
+        splitButton: this.splitButton,
+        active: this.active,
+        primary: this.primary,
+      }, toggleProps), {
         default: () => this.text,
       });
       children.push(toggle);
     }
 
     if (this.menuAppendTo === 'inline' && this.open) {
-      const menu = h(DropdownMenu, {}, {
+      const menu = h(DropdownMenu, {
+        ref: 'menu',
+        position: this.position,
+        grouped: this.grouped,
+        autoFocus: this.openedOnEnter && this.autoFocus,
+      }, {
         default: () => items,
       });
       children.push(menu);

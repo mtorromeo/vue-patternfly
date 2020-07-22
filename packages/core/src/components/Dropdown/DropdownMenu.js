@@ -29,8 +29,21 @@ export default {
       default: true,
     },
     openedOnEnter: Boolean,
-    autoFocus: Boolean,
+    autoFocus: {
+      type: Boolean,
+      default: true,
+    },
     grouped: Boolean,
+  },
+
+  mounted() {
+    if (this.autoFocus) {
+      const autoFocus = this.getItems()
+        .find(c => c.$el && !c.disabled && c.focus);
+      if (autoFocus) {
+        autoFocus.focus();
+      }
+    }
   },
 
   render() {
@@ -41,14 +54,24 @@ export default {
       hidden: !this.open,
     };
 
+    this.$items = this.$slots.default ? this.$slots.default() : [];
+
     if (this.component === 'div') {
       return h('div', mergeProps({
         onClick: e => this.$emit('select', e),
-      }, props), this.$slots.default());
+      }, props), this.$items);
     }
 
     return h(this.menuComponent || (this.grouped ? 'div' : this.component), mergeProps({
       role: 'menu',
-    }, props), this.$slots.default());
+    }, props), this.$items);
+  },
+
+  methods: {
+    getItems() {
+      return this.$items
+        .map(v => v.component.proxy)
+        .filter(c => !c.disabled && c.role !== 'separator' && c.$el.getAttribute('role') !== 'separator');
+    },
   },
 };
