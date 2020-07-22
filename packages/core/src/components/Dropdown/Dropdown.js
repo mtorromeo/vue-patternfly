@@ -7,7 +7,6 @@ let currentId = 0;
 import {h, mergeProps} from 'vue';
 import DropdownToggle from './DropdownToggle';
 import DropdownMenu from './DropdownMenu';
-import {keyNavigation} from '../../use';
 
 export default {
   name: 'Dropdown',
@@ -61,7 +60,6 @@ export default {
 
   provide() {
     return {
-      ...keyNavigation(() => this.$refs.menu.getItems()),
       dropdown: this,
     };
   },

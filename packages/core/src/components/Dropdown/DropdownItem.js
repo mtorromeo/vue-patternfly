@@ -4,6 +4,7 @@ import _styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 let styles = _styles.default;
 
 import {h, mergeProps} from 'vue';
+import {useChildrenTracker} from '../../use';
 
 export default {
   name: 'DropdownItem',
@@ -23,7 +24,7 @@ export default {
       default: 'menuitem',
     },
     disabled: Boolean,
-    plainText: Boolean,
+    plain: Boolean,
     tooltipProps: {
       type: Object,
       default: () => ({}),
@@ -45,10 +46,21 @@ export default {
     autoFocus: Boolean,
   },
 
+  setup() {
+    return {
+      menuTracker: useChildrenTracker(),
+    };
+  },
+
   mounted() {
+    this.menuTracker.register(this);
     if (this.autoFocus) {
       this.$nextTick(() => this.focus());
     }
+  },
+
+  beforeUnmount() {
+    this.menuTracker.unregister(this);
   },
 
   render() {
@@ -62,7 +74,7 @@ export default {
         styles.dropdownMenuItem,
         {
           [styles.modifiers.disabled]: this.disabled,
-          [styles.modifiers.text]: this.plainText,
+          [styles.modifiers.text]: this.plain,
           [styles.modifiers.description]: this.description,
         },
       );
@@ -133,16 +145,17 @@ export default {
 
   methods: {
     focus() {
-      this.focusElement().focus();
+      const el = this.focusElement();
+      el && el.focus();
     },
 
     focusElement() {
-      return this.$el.querySelector('[tabindex], a, button') || this.$el;
+      return this.$el && this.$el.querySelector('[tabindex], a, button');
     },
 
     focused() {
       const el = this.focusElement();
-      return el.ownerDocument.activeElement === el;
+      return el && el.ownerDocument.activeElement === el;
     },
   },
 };

@@ -3,7 +3,8 @@ import _styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 // commonjs bug
 let styles = _styles.default;
 
-import {h, mergeProps} from 'vue';
+import {h, mergeProps, provide, computed} from 'vue';
+import {provideChildrenTracker, keyNavigation} from '../../use';
 
 export default {
   name: 'DropdownMenu',
@@ -36,13 +37,22 @@ export default {
     grouped: Boolean,
   },
 
+  setup() {
+    const items = [];
+    provideChildrenTracker(items);
+    const $items = computed(() => items.filter(
+      c => Boolean(c.focusElement()) && !c.disabled && c.focus,
+    ));
+    const onKeyDown = keyNavigation($items);
+    provide('keyDown', onKeyDown);
+    return {
+      '$items': $items,
+    };
+  },
+
   mounted() {
-    if (this.autoFocus) {
-      const autoFocus = this.getItems()
-        .find(c => c.$el && !c.disabled && c.focus);
-      if (autoFocus) {
-        autoFocus.focus();
-      }
+    if (this.autoFocus && this.$items.length) {
+      this.$items[0].focus();
     }
   },
 
@@ -54,24 +64,16 @@ export default {
       hidden: !this.open,
     };
 
-    this.$items = this.$slots.default ? this.$slots.default() : [];
+    const items = this.$slots.default ? this.$slots.default() : [];
 
     if (this.component === 'div') {
       return h('div', mergeProps({
         onClick: e => this.$emit('select', e),
-      }, props), this.$items);
+      }, props), items);
     }
 
     return h(this.menuComponent || (this.grouped ? 'div' : this.component), mergeProps({
       role: 'menu',
-    }, props), this.$items);
-  },
-
-  methods: {
-    getItems() {
-      return this.$items
-        .map(v => v.component.proxy)
-        .filter(c => !c.disabled && c.role !== 'separator' && c.$el.getAttribute('role') !== 'separator');
-    },
+    }, props), items);
   },
 };

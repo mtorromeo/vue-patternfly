@@ -29,7 +29,7 @@ export default {
   },
 
   render() {
-    const splitButton = Boolean(this.$slots.splitButtons);
+    const splitButton = Boolean(this.$slots.buttons);
 
     let indicator = null;
 
@@ -85,7 +85,7 @@ export default {
           },
         ],
       }, [
-        this.$slots.splitButtons(),
+        this.$slots.buttons(),
         toggle,
       ]);
     }

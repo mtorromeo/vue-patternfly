@@ -1,7 +1,27 @@
-// import {reactive} from 'vue';
+import {provide, inject, isRef} from 'vue';
 
-export function keyNavigation(getItems) {
-  const navigate = (index, innerIndex, position, items) => {
+const ChildrenTrackerSymbol = Symbol();
+
+export function provideChildrenTracker(items) {
+  provide(ChildrenTrackerSymbol, {
+    register: item => items.push(item),
+    unregister: item => {
+      const idx = items.findIndex(i => i === item);
+      if (idx >= 0) {
+        items.splice(idx, 1);
+      }
+    },
+  });
+}
+
+export function useChildrenTracker() {
+  return inject(ChildrenTrackerSymbol);
+}
+
+export function keyNavigation(itemsRef) {
+  const navigate = (index, innerIndex, position) => {
+    const items = isRef(itemsRef) ? itemsRef.value : itemsRef;
+
     if (!Array.isArray(items) || !items.length) {
       return;
     }
@@ -50,26 +70,30 @@ export function keyNavigation(getItems) {
     }
   };
 
-  return {
-    keyDown(e) {
-      const items = getItems();
-      const innerIndex = this.$el === e.target ? 0 : 1;
-      const index = items.findIndex(i => i.focused());
-      if (e.key === 'ArrowUp') {
-        navigate(index, innerIndex, 'up', items);
-      } else if (e.key === 'ArrowDown') {
-        navigate(index, innerIndex, 'down', items);
-      } else if (e.key === 'ArrowRight') {
-        navigate(index, innerIndex, 'right', items);
-      } else if (e.key === 'ArrowLeft') {
-        navigate(index, innerIndex, 'left', items);
-      } else if (e.key === 'Enter' || e.key === ' ') {
-        e.target.click();
-        if (this.enterTriggersArrowDown) {
-          navigate(index, innerIndex, 'down', items);
-        }
+  return function(e) {
+    const innerIndex = this.$el === e.target ? 0 : 1;
+
+    const items = isRef(itemsRef) ? itemsRef.value : itemsRef;
+    const index = items.findIndex(i => i.focused());
+
+    if (e.key === 'ArrowUp') {
+      navigate(index, innerIndex, 'up');
+    } else if (e.key === 'ArrowDown') {
+      navigate(index, innerIndex, 'down');
+    } else if (e.key === 'ArrowRight') {
+      navigate(index, innerIndex, 'right');
+    } else if (e.key === 'ArrowLeft') {
+      navigate(index, innerIndex, 'left');
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.target.click();
+      if (this.enterTriggersArrowDown) {
+        navigate(index, innerIndex, 'down');
       }
-    },
+    } else {
+      return;
+    }
+
+    e.preventDefault();
   };
 
   // return () => {
