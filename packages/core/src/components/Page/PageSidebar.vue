@@ -18,7 +18,7 @@ import _styles from '@patternfly/react-styles/css/components/Page/page';
 let styles = _styles.default;
 
 export default {
-  name: 'PageSidebar',
+  name: 'PfPageSidebar',
 
   inject: {
     managedNavOpen: {
@@ -29,7 +29,7 @@ export default {
   props: {
     managedSidebar: Boolean,
 
-    /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the Page component, this prop is managed */
+    /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
     navOpen: Boolean,
 
     /** Indicates the color scheme of the sidebar */

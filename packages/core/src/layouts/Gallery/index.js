@@ -1,2 +1,2 @@
-export {default as Gallery} from './Gallery';
-export {default as GalleryItem} from './GalleryItem';
+export {default as PfGallery} from './Gallery';
+export {default as PfGalleryItem} from './GalleryItem';

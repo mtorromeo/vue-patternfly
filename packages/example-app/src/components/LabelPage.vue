@@ -1,327 +1,327 @@
 <template>
-  <PageSection variant="light">
-    <Title>Label</Title>
+  <pf-page-section variant="light">
+    <pf-title>PfLabel</pf-title>
 
-    <Title class="example-heading" h="3">Filled</Title>
+    <pf-title class="example-heading" h="3">Filled</pf-title>
 
-    <Label>Grey</Label>
+    <pf-label>Grey</pf-label>
     {{ ' ' }}
-    <Label>
+    <pf-label>
       <template #icon>
         <InfoCircleIcon />
       </template>Grey icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label close @close="log">Grey removeable</Label>
+    <pf-label close @close="log">Grey removeable</pf-label>
     {{ ' ' }}
-    <Label close @close="log">
+    <pf-label close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Grey icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label href="#filled">Grey link</Label>
+    <pf-label href="#filled">Grey link</pf-label>
     {{ ' ' }}
-    <Label href="#filled" close @close="log">Grey link removeable</Label>
+    <pf-label href="#filled" close @close="log">Grey link removeable</pf-label>
     <br>
     <br>
-    <Label color="blue">Blue</Label>
+    <pf-label color="blue">Blue</pf-label>
     {{ ' ' }}
-    <Label color="blue">
+    <pf-label color="blue">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Blue icon
-    </Label>
-    <Label color="blue" close @close="log">Blue removeable</Label>
+    </pf-label>
+    <pf-label color="blue" close @close="log">Blue removeable</pf-label>
     {{ ' ' }}
-    <Label color="blue" close @close="log">
+    <pf-label color="blue" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Blue icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="blue" href="#filled">Blue link</Label>
+    <pf-label color="blue" href="#filled">Blue link</pf-label>
     {{ ' ' }}
-    <Label color="blue" href="#filled" close @close="log">Blue link removeable</Label>
+    <pf-label color="blue" href="#filled" close @close="log">Blue link removeable</pf-label>
     <br>
     <br>
-    <Label color="green">Green</Label>
+    <pf-label color="green">Green</pf-label>
     {{ ' ' }}
-    <Label color="green">
+    <pf-label color="green">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Green icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="green" close @close="log">Green removeable</Label>
+    <pf-label color="green" close @close="log">Green removeable</pf-label>
     {{ ' ' }}
-    <Label color="green" close @close="log">
+    <pf-label color="green" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Green icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="green" href="#filled">Green link</Label>
+    <pf-label color="green" href="#filled">Green link</pf-label>
     {{ ' ' }}
-    <Label color="green" href="#filled" close @close="log">Green link removeable</Label>
+    <pf-label color="green" href="#filled" close @close="log">Green link removeable</pf-label>
     <br>
     <br>
-    <Label color="orange">Orange</Label>
+    <pf-label color="orange">Orange</pf-label>
     {{ ' ' }}
-    <Label color="orange">
+    <pf-label color="orange">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Orange icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="orange" close @close="log">Orange removeable</Label>
+    <pf-label color="orange" close @close="log">Orange removeable</pf-label>
     {{ ' ' }}
-    <Label color="orange" close @close="log">
+    <pf-label color="orange" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Orange icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="orange" href="#filled">Orange link</Label>
+    <pf-label color="orange" href="#filled">Orange link</pf-label>
     {{ ' ' }}
-    <Label color="orange" href="#filled" close @close="log">Orange link removeable</Label>
+    <pf-label color="orange" href="#filled" close @close="log">Orange link removeable</pf-label>
     <br>
     <br>
-    <Label color="red">Red</Label>
+    <pf-label color="red">Red</pf-label>
     {{ ' ' }}
-    <Label color="red">
+    <pf-label color="red">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Red icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="red" close @close="log">Red removeable</Label>
+    <pf-label color="red" close @close="log">Red removeable</pf-label>
     {{ ' ' }}
-    <Label color="red" close @close="log">
+    <pf-label color="red" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Red icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="red" href="#filled">Red link</Label>
+    <pf-label color="red" href="#filled">Red link</pf-label>
     {{ ' ' }}
-    <Label color="red" href="#filled" close @close="log">Red link removeable</Label>
+    <pf-label color="red" href="#filled" close @close="log">Red link removeable</pf-label>
     <br>
     <br>
-    <Label color="purple">Purple</Label>
+    <pf-label color="purple">Purple</pf-label>
     {{ ' ' }}
-    <Label color="purple">
+    <pf-label color="purple">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Purple icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="purple" close @close="log">Purple removeable</Label>
+    <pf-label color="purple" close @close="log">Purple removeable</pf-label>
     {{ ' ' }}
-    <Label color="purple" close @close="log">
+    <pf-label color="purple" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Purple icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="purple" href="#filled">Purple link</Label>
+    <pf-label color="purple" href="#filled">Purple link</pf-label>
     {{ ' ' }}
-    <Label color="purple" href="#filled" close @close="log">Purple link removeable</Label>
+    <pf-label color="purple" href="#filled" close @close="log">Purple link removeable</pf-label>
     <br>
     <br>
-    <Label color="cyan">Cyan</Label>
+    <pf-label color="cyan">Cyan</pf-label>
     {{ ' ' }}
-    <Label color="cyan">
+    <pf-label color="cyan">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Cyan icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="cyan" close @close="log">Cyan removeable</Label>
+    <pf-label color="cyan" close @close="log">Cyan removeable</pf-label>
     {{ ' ' }}
-    <Label color="cyan" close @close="log">
+    <pf-label color="cyan" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Cyan icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label color="cyan" href="#filled">Cyan link</Label>
+    <pf-label color="cyan" href="#filled">Cyan link</pf-label>
     {{ ' ' }}
-    <Label color="cyan" href="#filled" close @close="log">Cyan link removeable</Label>
+    <pf-label color="cyan" href="#filled" close @close="log">Cyan link removeable</pf-label>
 
-    <Title class="example-heading" h="3">Outline</Title>
+    <pf-title class="example-heading" h="3">Outline</pf-title>
 
-    <Label outline>Grey</Label>
+    <pf-label outline>Grey</pf-label>
     {{ ' ' }}
-    <Label outline>
+    <pf-label outline>
       <template #icon>
         <InfoCircleIcon />
       </template>Grey icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline close @close="log">Grey removeable</Label>
+    <pf-label outline close @close="log">Grey removeable</pf-label>
     {{ ' ' }}
-    <Label outline close @close="log">
+    <pf-label outline close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Grey icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline href="#filled">Grey link</Label>
+    <pf-label outline href="#filled">Grey link</pf-label>
     {{ ' ' }}
-    <Label outline href="#filled" close @close="log">Grey link removeable</Label>
+    <pf-label outline href="#filled" close @close="log">Grey link removeable</pf-label>
     <br>
     <br>
-    <Label outline color="blue">Blue</Label>
+    <pf-label outline color="blue">Blue</pf-label>
     {{ ' ' }}
-    <Label outline color="blue">
+    <pf-label outline color="blue">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Blue icon
-    </Label>
-    <Label outline color="blue" close @close="log">Blue removeable</Label>
+    </pf-label>
+    <pf-label outline color="blue" close @close="log">Blue removeable</pf-label>
     {{ ' ' }}
-    <Label outline color="blue" close @close="log">
+    <pf-label outline color="blue" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Blue icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="blue" href="#filled">Blue link</Label>
+    <pf-label outline color="blue" href="#filled">Blue link</pf-label>
     {{ ' ' }}
-    <Label outline color="blue" href="#filled" close @close="log">Blue link removeable</Label>
+    <pf-label outline color="blue" href="#filled" close @close="log">Blue link removeable</pf-label>
     <br>
     <br>
-    <Label outline color="green">Green</Label>
+    <pf-label outline color="green">Green</pf-label>
     {{ ' ' }}
-    <Label outline color="green">
+    <pf-label outline color="green">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Green icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="green" close @close="log">Green removeable</Label>
+    <pf-label outline color="green" close @close="log">Green removeable</pf-label>
     {{ ' ' }}
-    <Label outline color="green" close @close="log">
+    <pf-label outline color="green" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Green icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="green" href="#filled">Green link</Label>
+    <pf-label outline color="green" href="#filled">Green link</pf-label>
     {{ ' ' }}
-    <Label outline color="green" href="#filled" close @close="log">Green link removeable</Label>
+    <pf-label outline color="green" href="#filled" close @close="log">Green link removeable</pf-label>
     <br>
     <br>
-    <Label outline color="orange">Orange</Label>
+    <pf-label outline color="orange">Orange</pf-label>
     {{ ' ' }}
-    <Label outline color="orange">
+    <pf-label outline color="orange">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Orange icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="orange" close @close="log">Orange removeable</Label>
+    <pf-label outline color="orange" close @close="log">Orange removeable</pf-label>
     {{ ' ' }}
-    <Label outline color="orange" close @close="log">
+    <pf-label outline color="orange" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Orange icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="orange" href="#filled">Orange link</Label>
+    <pf-label outline color="orange" href="#filled">Orange link</pf-label>
     {{ ' ' }}
-    <Label outline color="orange" href="#filled" close @close="log">Orange link removeable</Label>
+    <pf-label outline color="orange" href="#filled" close @close="log">Orange link removeable</pf-label>
     <br>
     <br>
-    <Label outline color="red">Red</Label>
+    <pf-label outline color="red">Red</pf-label>
     {{ ' ' }}
-    <Label outline color="red">
+    <pf-label outline color="red">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Red icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="red" close @close="log">Red removeable</Label>
+    <pf-label outline color="red" close @close="log">Red removeable</pf-label>
     {{ ' ' }}
-    <Label outline color="red" close @close="log">
+    <pf-label outline color="red" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Red icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="red" href="#filled">Red link</Label>
+    <pf-label outline color="red" href="#filled">Red link</pf-label>
     {{ ' ' }}
-    <Label outline color="red" href="#filled" close @close="log">Red link removeable</Label>
+    <pf-label outline color="red" href="#filled" close @close="log">Red link removeable</pf-label>
     <br>
     <br>
-    <Label outline color="purple">Purple</Label>
+    <pf-label outline color="purple">Purple</pf-label>
     {{ ' ' }}
-    <Label outline color="purple">
+    <pf-label outline color="purple">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Purple icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="purple" close @close="log">Purple removeable</Label>
+    <pf-label outline color="purple" close @close="log">Purple removeable</pf-label>
     {{ ' ' }}
-    <Label outline color="purple" close @close="log">
+    <pf-label outline color="purple" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Purple icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="purple" href="#filled">Purple link</Label>
+    <pf-label outline color="purple" href="#filled">Purple link</pf-label>
     {{ ' ' }}
-    <Label outline color="purple" href="#filled" close @close="log">Purple link removeable</Label>
+    <pf-label outline color="purple" href="#filled" close @close="log">Purple link removeable</pf-label>
     <br>
     <br>
-    <Label outline color="cyan">Cyan</Label>
+    <pf-label outline color="cyan">Cyan</pf-label>
     {{ ' ' }}
-    <Label outline color="cyan">
+    <pf-label outline color="cyan">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Cyan icon
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="cyan" close @close="log">Cyan removeable</Label>
+    <pf-label outline color="cyan" close @close="log">Cyan removeable</pf-label>
     {{ ' ' }}
-    <Label outline color="cyan" close @close="log">
+    <pf-label outline color="cyan" close @close="log">
       <template #icon>
         <InfoCircleIcon />
       </template>
       Cyan icon removeable
-    </Label>
+    </pf-label>
     {{ ' ' }}
-    <Label outline color="cyan" href="#filled">Cyan link</Label>
+    <pf-label outline color="cyan" href="#filled">Cyan link</pf-label>
     {{ ' ' }}
-    <Label outline color="cyan" href="#filled" close @close="log">Cyan link removeable</Label>
-  </PageSection>
+    <pf-label outline color="cyan" href="#filled" close @close="log">Cyan link removeable</pf-label>
+  </pf-page-section>
 </template>
 
 <script>

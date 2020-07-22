@@ -4,4 +4,4 @@ import _styles from '@patternfly/react-styles/css/layouts/Gallery/gallery';
 let styles = _styles.default;
 
 import LayoutFactory from '../factory';
-export default LayoutFactory('Gallery', styles.gallery, styles.modifiers);
+export default LayoutFactory('PfGallery', styles.gallery, styles.modifiers);

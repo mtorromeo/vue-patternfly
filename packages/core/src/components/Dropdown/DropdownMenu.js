@@ -7,7 +7,7 @@ import {h, mergeProps, provide, computed} from 'vue';
 import {provideChildrenTracker, keyNavigation} from '../../use';
 
 export default {
-  name: 'DropdownMenu',
+  name: 'PfDropdownMenu',
 
   inject: {
     menuComponent: {

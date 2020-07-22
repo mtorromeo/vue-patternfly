@@ -20,7 +20,7 @@ import _styles from '@patternfly/react-styles/css/components/Nav/nav';
 let styles = _styles.default;
 
 export default {
-  name: 'Nav',
+  name: 'PfNav',
 
   props: {
     theme: {

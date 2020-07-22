@@ -6,7 +6,7 @@ let styles = _styles.default;
 import {h, mergeProps} from 'vue';
 import {breakpointProp, classesFromBreakpointProps} from '../../util';
 
-const FlexItem = (props, {slots, attrs}) => h('div', mergeProps({
+const PfFlexItem = (props, {slots, attrs}) => h('div', mergeProps({
     class: classesFromBreakpointProps(props, [
       'spacer',
       'shrink',
@@ -18,7 +18,7 @@ const FlexItem = (props, {slots, attrs}) => h('div', mergeProps({
     ], styles),
   }, attrs), slots.default());
 
-FlexItem.props = {
+PfFlexItem.props = {
   ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
   ...breakpointProp('shrink', Boolean),
   ...breakpointProp('flex', String, ['', 'default', 'none', '1', '2', '3', '4']),
@@ -28,6 +28,6 @@ FlexItem.props = {
   ...breakpointProp('fullWidth', Boolean),
 };
 
-FlexItem.inheritAttrs = false;
+PfFlexItem.inheritAttrs = false;
 
-export default FlexItem;
+export default PfFlexItem;

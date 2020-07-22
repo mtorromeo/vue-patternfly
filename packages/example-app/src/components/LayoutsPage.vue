@@ -1,69 +1,69 @@
 <template>
-  <PageSection>
-    <h2 class="pf-c-title pf-m-4xl">Bullseye Layout</h2>
-    <Bullseye>
-      Bullseye ◎ layout
-    </Bullseye>
+  <pf-page-section>
+    <h2 class="pf-c-title pf-m-4xl">PfBullseye Layout</h2>
+    <pf-bullseye>
+      PfBullseye ◎ layout
+    </pf-bullseye>
 
-    <h2 class="pf-c-title pf-m-4xl">Flex Layout</h2>
-    <Flex justify-content="space-between">
-      <FlexItem align-self-sm="flex-start">Flex 1</FlexItem>
-      <FlexItem align-self-sm="flex-start" :grow-md="grow">Flex 2</FlexItem>
-    </Flex>
+    <h2 class="pf-c-title pf-m-4xl">PfFlex Layout</h2>
+    <pf-flex justify-content="space-between">
+      <pf-flex-item align-self-sm="flex-start">PfFlex 1</pf-flex-item>
+      <pf-flex-item align-self-sm="flex-start" :grow-md="grow">PfFlex 2</pf-flex-item>
+    </pf-flex>
 
     <label><input type="checkbox" v-model="grow"> grow flex 2</label>
 
-    <Flex>
-      <Flex flex="1">
-        <FlexItem>Flex item</FlexItem>
-      </Flex>
-      <Flex flex="1">
-        <FlexItem>Flex item</FlexItem>
-        <FlexItem>Flex item</FlexItem>
-      </Flex>
-      <Flex flex="1">
-        <FlexItem>Flex item</FlexItem>
-        <FlexItem>Flex item</FlexItem>
-        <FlexItem>Flex item</FlexItem>
-      </Flex>
-    </Flex>
+    <pf-flex>
+      <pf-flex flex="1">
+        <pf-flex-item>PfFlex item</pf-flex-item>
+      </pf-flex>
+      <pf-flex flex="1">
+        <pf-flex-item>PfFlex item</pf-flex-item>
+        <pf-flex-item>PfFlex item</pf-flex-item>
+      </pf-flex>
+      <pf-flex flex="1">
+        <pf-flex-item>PfFlex item</pf-flex-item>
+        <pf-flex-item>PfFlex item</pf-flex-item>
+        <pf-flex-item>PfFlex item</pf-flex-item>
+      </pf-flex>
+    </pf-flex>
 
-    <h2 class="pf-c-title pf-m-4xl">Gallery Layout</h2>
-    <Gallery gutter>
-      <GalleryItem>Gallery Item</GalleryItem>
-      <GalleryItem>Gallery Item</GalleryItem>
-      <GalleryItem>Gallery Item</GalleryItem>
-      <GalleryItem>Gallery Item</GalleryItem>
-      <GalleryItem>Gallery Item</GalleryItem>
-      <GalleryItem>Gallery Item</GalleryItem>
-    </Gallery>
+    <h2 class="pf-c-title pf-m-4xl">PfGallery Layout</h2>
+    <pf-gallery gutter>
+      <pf-gallery-item>PfGallery Item</pf-gallery-item>
+      <pf-gallery-item>PfGallery Item</pf-gallery-item>
+      <pf-gallery-item>PfGallery Item</pf-gallery-item>
+      <pf-gallery-item>PfGallery Item</pf-gallery-item>
+      <pf-gallery-item>PfGallery Item</pf-gallery-item>
+      <pf-gallery-item>PfGallery Item</pf-gallery-item>
+    </pf-gallery>
 
-    <h2 class="pf-c-title pf-m-4xl">Grid Layout</h2>
-    <Grid gutter>
-      <GridItem span="8">span = 8</GridItem>
-      <GridItem span="4" row-span="2">
+    <h2 class="pf-c-title pf-m-4xl">PfGrid Layout</h2>
+    <pf-grid gutter>
+      <pf-grid-item span="8">span = 8</pf-grid-item>
+      <pf-grid-item span="4" row-span="2">
         span = 4, rowSpan = 2
-      </GridItem>
-      <GridItem span="2" row-span="3">
+      </pf-grid-item>
+      <pf-grid-item span="2" row-span="3">
         span = 2, rowSpan = 3
-      </GridItem>
-      <GridItem span="2">span = 2</GridItem>
-      <GridItem span="4">span = 4</GridItem>
-      <GridItem span="2">span = 2</GridItem>
-      <GridItem span="2">span = 2</GridItem>
-      <GridItem span="2">span = 2</GridItem>
-      <GridItem span="4">span = 4</GridItem>
-      <GridItem span="2">span = 2</GridItem>
-      <GridItem span="4">span = 4</GridItem>
-      <GridItem span="4">span = 4</GridItem>
-    </Grid>
+      </pf-grid-item>
+      <pf-grid-item span="2">span = 2</pf-grid-item>
+      <pf-grid-item span="4">span = 4</pf-grid-item>
+      <pf-grid-item span="2">span = 2</pf-grid-item>
+      <pf-grid-item span="2">span = 2</pf-grid-item>
+      <pf-grid-item span="2">span = 2</pf-grid-item>
+      <pf-grid-item span="4">span = 4</pf-grid-item>
+      <pf-grid-item span="2">span = 2</pf-grid-item>
+      <pf-grid-item span="4">span = 4</pf-grid-item>
+      <pf-grid-item span="4">span = 4</pf-grid-item>
+    </pf-grid>
 
-    <h2 class="pf-c-title pf-m-4xl">Level Layout</h2>
-    <Level gutter>
-      <LevelItem>Level Item</LevelItem>
-      <LevelItem>Level Item</LevelItem>
-      <LevelItem>Level Item</LevelItem>
-    </Level>
+    <h2 class="pf-c-title pf-m-4xl">PfLevel Layout</h2>
+    <pf-level gutter>
+      <pf-level-item>PfLevel Item</pf-level-item>
+      <pf-level-item>PfLevel Item</pf-level-item>
+      <pf-level-item>PfLevel Item</pf-level-item>
+    </pf-level>
 
     <h2 class="pf-c-title pf-m-4xl">Split Layout</h2>
     <Split gutter>
@@ -78,7 +78,7 @@
       <StackItem filled>pf-m-fill</StackItem>
       <StackItem>content</StackItem>
     </Stack>
-  </PageSection>
+  </pf-page-section>
 </template>
 
 <script>

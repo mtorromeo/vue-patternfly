@@ -18,7 +18,7 @@ const variantStyles = {
   'darker': styles.modifiers.dark_100,
 };
 
-const PageSection = (props, {slots, attrs}) => {
+const PfPageSection = (props, {slots, attrs}) => {
   const variantType = variantTypes[props.type];
   const variantStyle = variantStyles[props.variant];
 
@@ -34,7 +34,7 @@ const PageSection = (props, {slots, attrs}) => {
   }, attrs), slots.default());
 };
 
-PageSection.props = {
+PfPageSection.props = {
   /** Section background color variant */
   variant: {
     type: String,
@@ -56,6 +56,6 @@ PageSection.props = {
   ...breakpointProp('padding', String, ['', 'padding', 'no-padding']),
 };
 
-PageSection.inheritAttrs = false;
+PfPageSection.inheritAttrs = false;
 
-export default PageSection;
+export default PfPageSection;

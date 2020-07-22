@@ -1,9 +1,9 @@
-export {default as Brand} from './Brand';
-export {default as Btn} from './Btn.vue';
-export {default as Divider} from './Divider';
-export {default as Label} from './Label';
-export {default as Title} from './Title';
-export {default as Spinner} from './Spinner';
+export {default as PfBrand} from './Brand';
+export {default as PfButton} from './Button.vue';
+export {default as PfDivider} from './Divider';
+export {default as PfLabel} from './Label';
+export {default as PfTitle} from './Title';
+export {default as PfSpinner} from './Spinner';
 export * from './Dropdown';
 export * from './Nav';
 export * from './Page';

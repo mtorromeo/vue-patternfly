@@ -31,7 +31,7 @@ import _styles from '@patternfly/react-styles/css/components/Page/page';
 let styles = _styles.default;
 
 export default {
-  name: 'Btn',
+  name: 'PfButton',
 
   props: {
     type: {

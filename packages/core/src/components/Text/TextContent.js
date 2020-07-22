@@ -5,8 +5,8 @@ let styles = _styles.default;
 
 import {h, mergeProps} from 'vue';
 
-const TextContent = (props, {slots}) => h('div', mergeProps({
+const PfTextContent = (props, {slots}) => h('div', mergeProps({
   class: styles.content,
 }, props), slots.default());
 
-export default TextContent;
+export default PfTextContent;

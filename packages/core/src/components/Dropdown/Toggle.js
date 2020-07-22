@@ -6,7 +6,7 @@ let styles = _styles.default;
 import {h} from 'vue';
 
 export default {
-  name: 'Toggle',
+  name: 'PfToggle',
 
   inject: ['dropdown'],
 

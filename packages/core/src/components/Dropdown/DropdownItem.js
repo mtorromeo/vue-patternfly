@@ -7,7 +7,7 @@ import {h, mergeProps} from 'vue';
 import {useChildrenTracker} from '../../use';
 
 export default {
-  name: 'DropdownItem',
+  name: 'PfDropdownItem',
 
   inheritAttrs: false,
 

@@ -1,18 +1,18 @@
 import {h} from 'vue';
-import DropdownItem from './DropdownItem';
-import Divider from '../Divider';
+import PfDropdownItem from './DropdownItem';
+import PfDivider from '../Divider';
 
 export default {
-  name: 'DropdownSeparator',
+  name: 'PfDropdownSeparator',
 
   provide: {
     dividerComponent: 'div',
   },
 
   render() {
-    return h(DropdownItem, {
+    return h(PfDropdownItem, {
       role: 'separator',
-      component: Divider,
+      component: PfDivider,
     });
   },
 };

@@ -14,7 +14,7 @@ const gridSpans = {
   },
 };
 
-const GridItem = (props, {slots, attrs}) => {
+const PfGridItem = (props, {slots, attrs}) => {
   const classes = [
     styles.gridItem,
     props.span && styles.modifiers[`${props.span}Col`],
@@ -50,7 +50,7 @@ const GridItem = (props, {slots, attrs}) => {
   return h('div', mergeProps({class: classes}, attrs), slots.default());
 };
 
-GridItem.props = {
+PfGridItem.props = {
   /** the number of columns the grid item spans. Value should be a number 1-12   */
   span: gridSpans,
   /** the number of rows the grid item spans. Value should be a number 1-12   */
@@ -89,6 +89,6 @@ GridItem.props = {
   xl2Offset: gridSpans,
 };
 
-GridItem.inheritAttrs = false;
+PfGridItem.inheritAttrs = false;
 
-export default GridItem;
+export default PfGridItem;

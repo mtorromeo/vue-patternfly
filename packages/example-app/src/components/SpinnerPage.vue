@@ -1,16 +1,16 @@
 <template>
-  <PageSection variant="light">
-    <Title>Spinner</Title>
+  <pf-page-section variant="light">
+    <pf-title>PfSpinner</pf-title>
 
-    <Title class="example-heading" h="3">Basic</Title>
-    <Spinner />
+    <pf-title class="example-heading" h="3">Basic</pf-title>
+    <pf-spinner />
 
-    <Title class="example-heading" h="3">Size variations</Title>
-    <Spinner size="sm" />
-    <Spinner size="md" />
-    <Spinner size="lg" />
-    <Spinner size="xl" />
-  </PageSection>
+    <pf-title class="example-heading" h="3">Size variations</pf-title>
+    <pf-spinner size="sm" />
+    <pf-spinner size="md" />
+    <pf-spinner size="lg" />
+    <pf-spinner size="xl" />
+  </pf-page-section>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <header :class="styles.pageHeader">
     <div v-if="showNavToggle || $slots.logo" :class="styles.pageHeaderBrand">
       <div v-if="showNavToggle" :class="styles.pageHeaderBrandToggle">
-        <Btn
+        <pf-button
           id="nav-toggle"
           aria-controls="page-sidebar"
           :aria-label="ariaLabel"
@@ -11,7 +11,7 @@
           @click="sidebarOpen = !sidebarOpen"
         >
           <BarsIcon />
-        </Btn>
+        </pf-button>
       </div>
 
       <component :is="logoComponent" v-if="$slots.logo" :class="styles.pageHeaderBrandLink" v-bind="logoProps">
@@ -36,17 +36,17 @@
 <script>
 import _styles from '@patternfly/react-styles/css/components/Page/page';
 import {BarsIcon} from '@vue-patternfly4/icons';
-import Btn from '../Btn.vue';
+import PfButton from '../Button.vue';
 
 // commonjs bug
 let styles = _styles.default;
 
 export default {
-  name: 'PageHeader',
+  name: 'PfPageHeader',
 
   components: {
     BarsIcon,
-    Btn,
+    PfButton,
   },
 
   inject: {
@@ -61,11 +61,11 @@ export default {
     navOpen: Boolean,
     /**
      * If true, manages the sidebar open/close state and there is no need to pass the navOpen boolean into
-     * the sidebar component or add a callback onNavToggle function into the PageHeader component
+     * the sidebar component or add a callback onNavToggle function into the PfPageHeader component
      */
     managedSidebar: Boolean,
 
-    /** Aria Label for the nav toggle button */
+    /** Aria label for the nav toggle button */
     ariaLabel: {
       type: String,
       default: 'Global navigation',

@@ -23,7 +23,7 @@ const headingLevelSizeMap = {
   [6]: 'md',
 };
 
-const Title = ({size, h: hl}, {slots, attrs}) => {
+const PfTitle = ({size, h: hl}, {slots, attrs}) => {
   size = size || headingLevelSizeMap[Number(hl)];
 
   return h(`h${hl}`, mergeProps({
@@ -33,7 +33,7 @@ const Title = ({size, h: hl}, {slots, attrs}) => {
   }, attrs), slots.default());
 };
 
-Title.props = {
+PfTitle.props = {
   size: {
     type: String,
     default: '',
@@ -47,6 +47,6 @@ Title.props = {
   },
 };
 
-Title.inheritAttrs = false;
+PfTitle.inheritAttrs = false;
 
-export default Title;
+export default PfTitle;

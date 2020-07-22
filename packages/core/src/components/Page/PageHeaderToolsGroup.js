@@ -7,7 +7,7 @@ let styles = _styles.default;
 import {breakpointProp, classesFromBreakpointProps} from '../../util';
 import {h, mergeProps} from 'vue';
 
-const PageHeaderToolsGroup = (props, {slots, attrs}) =>
+const PfPageHeaderToolsGroup = (props, {slots, attrs}) =>
   h('div', mergeProps({
     class: [
       styles.pageHeaderToolsGroup,
@@ -15,9 +15,10 @@ const PageHeaderToolsGroup = (props, {slots, attrs}) =>
     ],
   }, attrs), slots.default());
 
-PageHeaderToolsGroup.props = {
+PfPageHeaderToolsGroup.props = {
   ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
 };
-PageHeaderToolsGroup.inheritAttrs = false;
 
-export default PageHeaderToolsGroup;
+PfPageHeaderToolsGroup.inheritAttrs = false;
+
+export default PfPageHeaderToolsGroup;

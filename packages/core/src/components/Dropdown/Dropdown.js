@@ -5,11 +5,11 @@ let styles = _styles.default;
 
 let currentId = 0;
 import {h, mergeProps} from 'vue';
-import DropdownToggle from './DropdownToggle';
-import DropdownMenu from './DropdownMenu';
+import PfDropdownToggle from './DropdownToggle';
+import PfDropdownMenu from './DropdownMenu';
 
 export default {
-  name: 'Dropdown',
+  name: 'PfDropdown',
 
   props: {
     id: {
@@ -100,7 +100,7 @@ export default {
       }
       children.push(...toggles);
     } else {
-      const toggle = h(DropdownToggle, mergeProps({
+      const toggle = h(PfDropdownToggle, mergeProps({
         splitButton: this.splitButton,
         active: this.active,
         primary: this.primary,
@@ -111,7 +111,7 @@ export default {
     }
 
     if (this.menuAppendTo === 'inline' && this.open) {
-      const menu = h(DropdownMenu, {
+      const menu = h(PfDropdownMenu, {
         ref: 'menu',
         position: this.position,
         grouped: this.grouped,

@@ -5,15 +5,15 @@ let styles = _styles.default;
 
 import {h, mergeProps} from 'vue';
 
-const Bullseye = (props, {slots, attrs}) => h(props.component, mergeProps({class: styles.bullseye}, attrs), slots.default());
+const PfBullseye = (props, {slots, attrs}) => h(props.component, mergeProps({class: styles.bullseye}, attrs), slots.default());
 
-Bullseye.props = {
+PfBullseye.props = {
   component: {
     type: String,
     default: 'div',
   },
 };
 
-Bullseye.inheritAttrs = false;
+PfBullseye.inheritAttrs = false;
 
-export default Bullseye;
+export default PfBullseye;

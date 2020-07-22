@@ -4,11 +4,11 @@ import _styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 let styles = _styles.default;
 
 import {h, mergeProps} from 'vue';
-import Toggle from './Toggle';
+import PfToggle from './Toggle';
 import CaretDownIcon from '@vue-patternfly4/icons/dist/esm/icons/caret-down-icon';
 
 export default {
-  name: 'DropdownToggle',
+  name: 'PfDropdownToggle',
 
   props: {
     open: Boolean,
@@ -63,7 +63,7 @@ export default {
       );
     }
 
-    const toggle = h(Toggle, mergeProps({
+    const toggle = h(PfToggle, mergeProps({
       open: this.open,
       disabled: this.disabled,
       splitButton,

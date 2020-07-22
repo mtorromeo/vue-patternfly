@@ -14,7 +14,7 @@ const gridSpans = {
   },
 };
 
-const Grid = (props, {slots, attrs}) => {
+const PfGrid = (props, {slots, attrs}) => {
   const classes = [
     styles.grid,
     props.span && styles.modifiers[`all_${props.span}Col`],
@@ -36,7 +36,7 @@ const Grid = (props, {slots, attrs}) => {
   return h('div', mergeProps({class: classes}, attrs), slots.default());
 };
 
-Grid.props = {
+PfGrid.props = {
   /** Adds space between children. */
   gutter: Boolean,
   /** The number of rows a column in the grid should span.  Value should be a number 1-12 */
@@ -53,6 +53,6 @@ Grid.props = {
   xl2: gridSpans,
 };
 
-Grid.inheritAttrs = false;
+PfGrid.inheritAttrs = false;
 
-export default Grid;
+export default PfGrid;

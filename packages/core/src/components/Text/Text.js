@@ -14,9 +14,9 @@ export const TextVariants = [
   'pre',
 ];
 
-const Text = (props, {slots, attrs}) => h(props.component, mergeProps({'data-pf-content': true}, attrs), slots.default());
+const PfText = (props, {slots, attrs}) => h(props.component, mergeProps({'data-pf-content': true}, attrs), slots.default());
 
-Text.props = {
+PfText.props = {
   component: {
     type: String,
     default: 'p',
@@ -24,6 +24,6 @@ Text.props = {
   },
 };
 
-Text.inheritAttrs = false;
+PfText.inheritAttrs = false;
 
-export default Text;
+export default PfText;

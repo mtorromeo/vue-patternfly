@@ -6,7 +6,7 @@ let styles = _styles.default;
 import {h, mergeProps} from 'vue';
 import {getUniqueId} from '../../util';
 
-const NavGroup = (props, {attrs, slots}) => h(
+const PfNavGroup = (props, {attrs, slots}) => h(
   'section',
   mergeProps({class: styles.navSection, ariaLabelledby: props.id}, attrs),
   [
@@ -15,7 +15,7 @@ const NavGroup = (props, {attrs, slots}) => h(
   ],
 );
 
-NavGroup.props = {
+PfNavGroup.props = {
   title: {
     type: String,
     default: '',
@@ -26,6 +26,6 @@ NavGroup.props = {
     default: getUniqueId(),
   },
 };
-NavGroup.inheritAttrs = false;
+PfNavGroup.inheritAttrs = false;
 
-export default NavGroup;
+export default PfNavGroup;

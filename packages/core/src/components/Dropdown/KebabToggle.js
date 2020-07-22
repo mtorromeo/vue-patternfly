@@ -1,9 +1,9 @@
 import {h, mergeProps} from 'vue';
-import Toggle from './Toggle';
+import PfToggle from './Toggle';
 import EllipsisVIcon from '@vue-patternfly4/icons/dist/esm/icons/ellipsis-v-icon';
 
 export default {
-  name: 'KebabToggle',
+  name: 'PfKebabToggle',
 
   props: {
     open: Boolean,
@@ -14,7 +14,7 @@ export default {
   },
 
   render() {
-    return h(Toggle, mergeProps({
+    return h(PfToggle, mergeProps({
       open: this.open,
       'aria-label': this.ariaLabel,
       'onUpdate:open': v => this.$emit('update:open', v),

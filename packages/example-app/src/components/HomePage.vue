@@ -1,5 +1,5 @@
 <template>
-  <PageSection>Welcome to Vue Patternfly 4</PageSection>
+  <pf-page-section>Welcome to Vue Patternfly 4</pf-page-section>
 </template>
 
 <script>

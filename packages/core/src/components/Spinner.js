@@ -12,7 +12,7 @@ const spinnerSizes = [
   'xl',
 ];
 
-const Spinner = ({size, ariaValueText}, {attrs}) =>
+const PfSpinner = ({size, ariaValueText}, {attrs}) =>
   h(
     'span',
     mergeProps({
@@ -26,7 +26,7 @@ const Spinner = ({size, ariaValueText}, {attrs}) =>
     ],
   );
 
-Spinner.props = {
+PfSpinner.props = {
   size: {
     type: String,
     default: 'xl',
@@ -38,6 +38,6 @@ Spinner.props = {
   },
 };
 
-Spinner.inheritAttrs = false;
+PfSpinner.inheritAttrs = false;
 
-export default Spinner;
+export default PfSpinner;

@@ -20,7 +20,7 @@ import {ref, provide, computed} from 'vue';
 let styles = _styles.default;
 
 export default {
-  name: 'Page',
+  name: 'PfPage',
 
   props: {
     role: {

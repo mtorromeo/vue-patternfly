@@ -1,7 +1,7 @@
-export {default as Page} from './Page.vue';
-export {default as PageHeader} from './PageHeader.vue';
-export {default as PageSidebar} from './PageSidebar.vue';
-export {default as PageSection} from './PageSection';
-export {default as PageHeaderTools} from './PageHeaderTools';
-export {default as PageHeaderToolsGroup} from './PageHeaderToolsGroup';
-export {default as PageHeaderToolsItem} from './PageHeaderToolsItem';
+export {default as PfPage} from './Page.vue';
+export {default as PfPageHeader} from './PageHeader.vue';
+export {default as PfPageSidebar} from './PageSidebar.vue';
+export {default as PfPageSection} from './PageSection';
+export {default as PfPageHeaderTools} from './PageHeaderTools';
+export {default as PfPageHeaderToolsGroup} from './PageHeaderToolsGroup';
+export {default as PfPageHeaderToolsItem} from './PageHeaderToolsItem';

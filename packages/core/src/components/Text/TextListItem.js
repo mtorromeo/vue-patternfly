@@ -6,9 +6,9 @@ export const TextListItemVariants = [
   'dd',
 ];
 
-const TextListItem = (props, {slots, attrs}) => h(props.component, mergeProps({'data-pf-content': true}, attrs), slots.default());
+const PfTextListItem = (props, {slots, attrs}) => h(props.component, mergeProps({'data-pf-content': true}, attrs), slots.default());
 
-TextListItem.props = {
+PfTextListItem.props = {
   component: {
     type: String,
     default: 'li',
@@ -16,6 +16,6 @@ TextListItem.props = {
   },
 };
 
-TextListItem.inheritAttrs = false;
+PfTextListItem.inheritAttrs = false;
 
-export default TextListItem;
+export default PfTextListItem;

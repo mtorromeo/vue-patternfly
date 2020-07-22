@@ -6,7 +6,7 @@ let styles = _styles.default;
 import {breakpointProp, classesFromBreakpointProps} from '../util';
 import {h, mergeProps, inject} from 'vue';
 
-const Divider = (props, {attrs}) => {
+const PfDivider = (props, {attrs}) => {
   attrs = mergeProps({
     class: [
       styles.divider,
@@ -26,7 +26,7 @@ const Divider = (props, {attrs}) => {
   return h(component, attrs);
 }
 
-Divider.props = {
+PfDivider.props = {
   ...breakpointProp('inset', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']),
   vertical: Boolean,
   component: {
@@ -35,6 +35,6 @@ Divider.props = {
     validator: v => ['hr', 'li', 'div'].includes(v),
   },
 };
-Divider.inheritAttrs = false;
+PfDivider.inheritAttrs = false;
 
-export default Divider;
+export default PfDivider;

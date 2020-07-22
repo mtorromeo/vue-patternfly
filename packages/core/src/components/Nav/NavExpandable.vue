@@ -45,7 +45,7 @@ import {AngleRightIcon} from '@vue-patternfly4/icons';
 import {getUniqueId} from '../../util';
 
 export default {
-  name: 'NavExpandable',
+  name: 'PfNavExpandable',
 
   components: {
     AngleRightIcon,

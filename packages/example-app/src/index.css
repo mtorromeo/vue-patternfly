@@ -1,3 +1,25 @@
+body {
+  --pf-global--active-color--100: #018732;
+  --pf-global--active-color--200: #89ffca;
+  --pf-global--active-color--300: #42b983;
+  --pf-global--active-color--400: #5afdb1;
+
+  --pf-global--primary-color--100: var(--pf-global--active-color--100);
+  --pf-global--primary-color--200: #003513;
+
+  --pf-global--primary-color--light-100: var(--pf-global--active-color--300);
+  --pf-global--primary-color--dark-100: var(--pf-global--primary-color--100);
+
+  --pf-global--link--Color: var(--pf-global--primary-color--100);
+  --pf-global--link--Color--hover: var(--pf-global--primary-color--200);
+
+  --pf-global--link--Color--dark: var(--pf-global--primary-color--100);
+  --pf-global--link--Color--dark--hover: var(--pf-global--primary-color--200);
+
+  --pf-global--link--Color--light: var(--pf-global--primary-color--light-100);
+  --pf-global--link--Color--light--hover: var(--pf-global--active-color--400);
+}
+
 #app {
   height: 100%;
 }

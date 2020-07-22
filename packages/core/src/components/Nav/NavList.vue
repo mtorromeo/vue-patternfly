@@ -19,7 +19,7 @@ import _styles from '@patternfly/react-styles/css/components/Nav/nav';
 let styles = _styles.default;
 
 export default {
-  name: 'NavList',
+  name: 'PfNavList',
 
   components: {
     AngleLeftIcon,

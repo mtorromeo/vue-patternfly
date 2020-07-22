@@ -4,7 +4,7 @@ import _styles from '@patternfly/react-styles/css/components/Label/label';
 let styles = _styles.default;
 
 import {h, mergeProps} from 'vue';
-import Btn from './Btn.vue';
+import PfButton from './Button.vue';
 import {TimesIcon} from '@vue-patternfly4/icons';
 
 const colorStyles = {
@@ -17,7 +17,7 @@ const colorStyles = {
   grey: '',
 };
 
-const Label = (props, {slots, attrs, emit}) => {
+const PfLabel = (props, {slots, attrs, emit}) => {
   let component = 'span';
   if (props.href) {
     component = 'a';
@@ -38,7 +38,7 @@ const Label = (props, {slots, attrs, emit}) => {
       slots.icon && h('span', {class: styles.labelIcon}, slots.icon()),
       slots.default(),
     ]),
-    props.close && h(Btn, {
+    props.close && h(PfButton, {
       type: 'button',
       variant: 'plain',
       onClick: e => emit('close', e),
@@ -49,7 +49,7 @@ const Label = (props, {slots, attrs, emit}) => {
   ]);
 };
 
-Label.props = {
+PfLabel.props = {
   color: {
     type: String,
     default: 'grey',
@@ -72,6 +72,6 @@ Label.props = {
   close: Boolean,
 };
 
-Label.inheritAttrs = false;
+PfLabel.inheritAttrs = false;
 
-export default Label;
+export default PfLabel;

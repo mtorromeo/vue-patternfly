@@ -1,100 +1,100 @@
 <template>
-  <Page>
+  <pf-page>
     <template #skeleton>
-      <PageHeader show-nav-toggle managed-sidebar>
+      <pf-page-header show-nav-toggle managed-sidebar>
         <template #logo>
           <router-link :to="{name: 'home'}">
-            <Brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px" />
+            <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px" />
           </router-link>
         </template>
 
-        <PageHeaderTools>
-          <PageHeaderToolsGroup>
-            <PageHeaderToolsItem visibility-xs="hidden">header-tools</PageHeaderToolsItem>
-          </PageHeaderToolsGroup>
-        </PageHeaderTools>
-      </PageHeader>
+        <pf-page-header-tools>
+          <pf-page-header-tools-group>
+            <pf-page-header-tools-item visibility-xs="hidden">header-tools</pf-page-header-tools-item>
+          </pf-page-header-tools-group>
+        </pf-page-header-tools>
+      </pf-page-header>
 
-      <PageSidebar nav="Navigation" nav-open managed-sidebar>
-        <Nav @select="handleSelect">
-          <NavGroup title="Overview">
-            <NavItem :to="{name: 'layouts'}">
+      <pf-page-sidebar nav="PfNavigation" nav-open managed-sidebar>
+        <pf-nav @select="handleSelect">
+          <pf-nav-group title="Overview">
+            <pf-nav-item :to="{name: 'layouts'}">
               Layouts
-            </NavItem>
-          </NavGroup>
-          <NavGroup title="Components">
-            <NavItem :to="{name: 'dropdown'}">
+            </pf-nav-item>
+          </pf-nav-group>
+          <pf-nav-group title="Components">
+            <pf-nav-item :to="{name: 'dropdown'}">
               Dropdown
-            </NavItem>
-            <NavItem :to="{name: 'label'}">
+            </pf-nav-item>
+            <pf-nav-item :to="{name: 'label'}">
               Label
-            </NavItem>
-            <NavItem :to="{name: 'spinner'}">
+            </pf-nav-item>
+            <pf-nav-item :to="{name: 'spinner'}">
               Spinner
-            </NavItem>
-            <NavItem :to="{name: 'title'}">
+            </pf-nav-item>
+            <pf-nav-item :to="{name: 'title'}">
               Title
-            </NavItem>
-          </NavGroup>
-          <NavList>
-            <NavExpandable title="Expandable 3" group-id="grp-3" :active="activeGroup === 'grp-3'" expanded managed>
-              <NavItem
+            </pf-nav-item>
+          </pf-nav-group>
+          <pf-nav-list>
+            <pf-nav-expandable title="Expandable 3" group-id="grp-3" :active="activeGroup === 'grp-3'" expanded managed>
+              <pf-nav-item
                 href="#expandable-1"
                 group-id="grp-3"
                 item-id="grp-3_itm-1"
                 :active="activeItem === 'grp-3_itm-1'"
               >
                 Subnav Link 1
-              </NavItem>
-              <NavItemSeparator />
-              <NavItem group-id="grp-3" item-id="grp-3_itm-2" :active="activeItem === 'grp-3_itm-2'">
+              </pf-nav-item>
+              <pf-nav-item-separator />
+              <pf-nav-item group-id="grp-3" item-id="grp-3_itm-2" :active="activeItem === 'grp-3_itm-2'">
                 Subnav Link 2
-              </NavItem>
-              <NavItem href="#expandable-3" group-id="grp-3" item-id="grp-3_itm-3" :active="activeItem === 'grp-3_itm-3'">
+              </pf-nav-item>
+              <pf-nav-item href="#expandable-3" group-id="grp-3" item-id="grp-3_itm-3" :active="activeItem === 'grp-3_itm-3'">
                 Subnav Link 3
-              </NavItem>
-            </NavExpandable>
-            <NavExpandable title="Expandable 4" group-id="grp-4" :active="activeGroup === 'grp-4'" expanded managed>
-              <NavItem
+              </pf-nav-item>
+            </pf-nav-expandable>
+            <pf-nav-expandable title="Expandable 4" group-id="grp-4" :active="activeGroup === 'grp-4'" expanded managed>
+              <pf-nav-item
                 group-id="grp-4"
                 item-id="own-item-handler"
                 :active="activeItem === 'own-item-handler'"
                 @select="handleItemOnclick"
               >
                 Custom onClick
-              </NavItem>
-              <NavItem
+              </pf-nav-item>
+              <pf-nav-item
                 href="#expandable-4"
                 group-id="grp-4"
                 item-id="grp-4_itm-1"
                 :active="activeItem === 'grp-4_itm-1'"
               >
                 Subnav Link 1
-              </NavItem>
-              <NavItem
+              </pf-nav-item>
+              <pf-nav-item
                 href="#expandable-5"
                 group-id="grp-4"
                 item-id="grp-4_itm-2"
                 :active="activeItem === 'grp-4_itm-2'"
               >
                 Subnav Link 2
-              </NavItem>
-              <NavItem
+              </pf-nav-item>
+              <pf-nav-item
                 href="#expandable-6"
                 group-id="grp-4"
                 item-id="grp-4_itm-3"
                 :active="activeItem === 'grp-4_itm-3'"
               >
                 Subnav Link 3
-              </NavItem>
-            </NavExpandable>
-          </NavList>
-        </Nav>
-      </PageSidebar>
+              </pf-nav-item>
+            </pf-nav-expandable>
+          </pf-nav-list>
+        </pf-nav>
+      </pf-page-sidebar>
     </template>
 
     <router-view />
-  </Page>
+  </pf-page>
   <span></span>
 </template>
 

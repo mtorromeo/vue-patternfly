@@ -1,347 +1,347 @@
 <template>
-  <PageSection variant="light">
-    <Title>Dropdown</Title>
+  <pf-page-section variant="light">
+    <pf-title>PfDropdown</pf-title>
 
-    <Title class="example-heading" h="3">Basic</Title>
-    <Dropdown v-model:open="open1" text="Dropdown">
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+    <pf-title class="example-heading" h="3">Basic</pf-title>
+    <pf-dropdown v-model:open="open1" text="PfDropdown">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">With initial selection</Title>
-    <Dropdown v-model:open="open2" text="Dropdown">
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button" auto-focus>
+    <pf-title class="example-heading" h="3">With initial selection</pf-title>
+    <pf-dropdown v-model:open="open2" text="PfDropdown">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button" auto-focus>
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Disabled</Title>
-    <Dropdown v-model:open="open3" text="Dropdown" disabled>
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+    <pf-title class="example-heading" h="3">Disabled</pf-title>
+    <pf-dropdown v-model:open="open3" text="PfDropdown" disabled>
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Primary toggle</Title>
-    <Dropdown v-model:open="open4" text="Dropdown" primary>
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+    <pf-title class="example-heading" h="3">Primary toggle</pf-title>
+    <pf-dropdown v-model:open="open4" text="PfDropdown" primary>
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Position right</Title>
-    <Dropdown v-model:open="open5" text="Dropdown" position="right">
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+    <pf-title class="example-heading" h="3">Position right</pf-title>
+    <pf-dropdown v-model:open="open5" text="PfDropdown" position="right">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Direction up</Title>
-    <Dropdown v-model:open="open6" text="Dropdown" direction="up">
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+    <pf-title class="example-heading" h="3">Direction up</pf-title>
+    <pf-dropdown v-model:open="open6" text="PfDropdown" direction="up">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">With kebab</Title>
-    <Dropdown v-model:open="open7" plain>
+    <pf-title class="example-heading" h="3">With kebab</pf-title>
+    <pf-dropdown v-model:open="open7" plain>
       <template #toggle>
-        <KebabToggle />
+        <pf-kebab-toggle />
       </template>
 
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Icon only</Title>
-    <Dropdown v-model:open="open8" plain>
+    <pf-title class="example-heading" h="3">Icon only</pf-title>
+    <pf-dropdown v-model:open="open8" plain>
       <template #toggle>
-        <DropdownToggle aria-label="Applications">
+        <pf-dropdown-toggle aria-label="Applications">
           <template #icon>
             <ThIcon />
           </template>
-        </DropdownToggle>
+        </pf-dropdown-toggle>
       </template>
 
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Split button</Title>
-    <Dropdown v-model:open="open9">
+    <pf-title class="example-heading" h="3">Split button</pf-title>
+    <pf-dropdown v-model:open="open9">
       <template #toggle>
-        <DropdownToggle>
+        <pf-dropdown-toggle>
           <template #buttons>
             <label class="pf-c-dropdown__toggle-check">
               <input aria-label="Select all" type="checkbox" aria-invalid="false">
             </label>
           </template>
-        </DropdownToggle>
+        </pf-dropdown-toggle>
       </template>
 
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Split button (with text)</Title>
-    <Dropdown v-model:open="open10">
+    <pf-title class="example-heading" h="3">Split button (with text)</pf-title>
+    <pf-dropdown v-model:open="open10">
       <template #toggle>
-        <DropdownToggle>
+        <pf-dropdown-toggle>
           <template #buttons>
             <label class="pf-c-dropdown__toggle-check">
               <input aria-label="Select all" type="checkbox" aria-invalid="false">
               <span class="pf-c-dropdown__toggle-text" aria-hidden="true">10 selected</span>
             </label>
           </template>
-        </DropdownToggle>
+        </pf-dropdown-toggle>
       </template>
 
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Split button (disabled)</Title>
-    <Dropdown v-model:open="open11" disabled>
+    <pf-title class="example-heading" h="3">Split button (disabled)</pf-title>
+    <pf-dropdown v-model:open="open11" disabled>
       <template #toggle>
-        <DropdownToggle>
+        <pf-dropdown-toggle>
           <template #buttons>
             <label class="pf-c-dropdown__toggle-check">
               <input aria-label="Select all" type="checkbox" aria-invalid="false" disabled>
             </label>
           </template>
-        </DropdownToggle>
+        </pf-dropdown-toggle>
       </template>
 
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-      <DropdownSeparator />
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-separator />
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Split button action</Title>
-    <Dropdown v-model:open="open12">
+    <pf-title class="example-heading" h="3">Split button action</pf-title>
+    <pf-dropdown v-model:open="open12">
       <template #toggle>
-        <DropdownToggle variant="action">
+        <pf-dropdown-toggle variant="action">
           <template #buttons>
             <button class="pf-c-dropdown__toggle-button">
               Action
             </button>
           </template>
-        </DropdownToggle>
+        </pf-dropdown-toggle>
       </template>
 
-      <DropdownItem>Link</DropdownItem>
-      <DropdownItem component="button">
+      <pf-dropdown-item>Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Action
-      </DropdownItem>
-      <DropdownItem disabled>
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled>
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button">
         Disabled Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
     {{ ' ' }}
-    <Dropdown v-model:open="open13">
+    <pf-dropdown v-model:open="open13">
       <template #toggle>
-        <DropdownToggle variant="action">
+        <pf-dropdown-toggle variant="action">
           <template #buttons>
             <button class="pf-c-dropdown__toggle-button">
               <CogIcon />
             </button>
           </template>
-        </DropdownToggle>
+        </pf-dropdown-toggle>
       </template>
 
-      <DropdownItem>Separated Link</DropdownItem>
-      <DropdownItem component="button">
+      <pf-dropdown-item>Separated Link</pf-dropdown-item>
+      <pf-dropdown-item component="button">
         Separated Action
-      </DropdownItem>
-    </Dropdown>
+      </pf-dropdown-item>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Dropdown with image and text</Title>
-    <Dropdown v-model:open="open14" text="Dropdown">
+    <pf-title class="example-heading" h="3">PfDropdown with image and text</pf-title>
+    <pf-dropdown v-model:open="open14" text="PfDropdown">
       <template #toggle>
-        <DropdownToggle indicator>
+        <pf-dropdown-toggle indicator>
           <template #icon>
             <UserIcon />
           </template>
           New Username
-        </DropdownToggle>
+        </pf-dropdown-toggle>
       </template>
 
-      <DropdownGroup>
-        <DropdownItem component="div" plain>Text</DropdownItem>
-        <DropdownItem component="div" plain>More text</DropdownItem>
-      </DropdownGroup>
-      <DropdownSeparator />
-      <DropdownGroup>
-        <DropdownItem>My profile</DropdownItem>
-        <DropdownItem component="button">
+      <pf-dropdown-group>
+        <pf-dropdown-item component="div" plain>PfText</pf-dropdown-item>
+        <pf-dropdown-item component="div" plain>More text</pf-dropdown-item>
+      </pf-dropdown-group>
+      <pf-dropdown-separator />
+      <pf-dropdown-group>
+        <pf-dropdown-item>My profile</pf-dropdown-item>
+        <pf-dropdown-item component="button">
           User management
-        </DropdownItem>
-        <DropdownItem>Logout</DropdownItem>
-      </DropdownGroup>
-    </Dropdown>
+        </pf-dropdown-item>
+        <pf-dropdown-item>Logout</pf-dropdown-item>
+      </pf-dropdown-group>
+    </pf-dropdown>
 
-    <Title class="example-heading" h="3">Dropdown with descriptions</Title>
-    <Dropdown v-model:open="open15" text="Dropdown">
-      <DropdownItem description="This is a description">
+    <pf-title class="example-heading" h="3">PfDropdown with descriptions</pf-title>
+    <pf-dropdown v-model:open="open15" text="PfDropdown">
+      <pf-dropdown-item description="This is a description">
         <template #icon>
           <CubesIcon />
         </template>
         Link
-      </DropdownItem>
-      <DropdownItem component="button" description="This is a very long description that describes the menu item">
+      </pf-dropdown-item>
+      <pf-dropdown-item component="button" description="This is a very long description that describes the menu item">
         <template #icon>
           <BellIcon />
         </template>
         Action
-      </DropdownItem>
-      <DropdownItem disabled description="Disabled link description">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled description="Disabled link description">
         Disabled Link
-      </DropdownItem>
-      <DropdownItem disabled component="button" description="This is a description">
+      </pf-dropdown-item>
+      <pf-dropdown-item disabled component="button" description="This is a description">
         Disabled Action
-      </DropdownItem>
-    </Dropdown>
-  </PageSection>
+      </pf-dropdown-item>
+    </pf-dropdown>
+  </pf-page-section>
 </template>
 
 <script>
