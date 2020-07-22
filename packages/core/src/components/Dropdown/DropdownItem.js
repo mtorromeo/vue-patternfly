@@ -109,7 +109,13 @@ export default {
       }
 
       if (this.description) {
-        componentContent.push(h('div', {class: styles.dropdownMenuItemMain}, children));
+        componentContent.push(h('div', {
+          class: styles.dropdownMenuItemMain,
+        }, children));
+
+        componentContent.push(h('div', {
+          class: styles.dropdownMenuItemDescription,
+        }, this.description));
       } else {
         componentContent.push(children);
       }
