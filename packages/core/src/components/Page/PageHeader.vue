@@ -6,7 +6,7 @@
           id="nav-toggle"
           aria-controls="page-sidebar"
           :aria-label="ariaLabel"
-          :aria-expanded="navOpen ? 'true' : 'false'"
+          :aria-expanded="sidebarOpen ? 'true' : 'false'"
           variant="plain"
           @click="sidebarOpen = !sidebarOpen"
         >
@@ -53,17 +53,15 @@ export default {
     managedNavOpen: {
       from: 'navOpen',
     },
+    managedSidebar: {
+      from: 'managedSidebar',
+    },
   },
 
   props: {
     showNavToggle: Boolean,
 
     navOpen: Boolean,
-    /**
-     * If true, manages the sidebar open/close state and there is no need to pass the navOpen boolean into
-     * the sidebar component or add a callback onNavToggle function into the PfPageHeader component
-     */
-    managedSidebar: Boolean,
 
     /** Aria label for the nav toggle button */
     ariaLabel: {
@@ -91,10 +89,10 @@ export default {
   computed: {
     sidebarOpen: {
       get() {
-        return this.managedSidebar ? this.managedNavOpen.value : this.navOpen;
+        return this.managedSidebar.value ? this.managedNavOpen.value : this.navOpen;
       },
       set(open) {
-        if (this.managedSidebar) {
+        if (this.managedSidebar.value) {
           this.managedNavOpen.value = open;
         }
       },

@@ -24,11 +24,12 @@ export default {
     managedNavOpen: {
       from: 'navOpen',
     },
+    managedSidebar: {
+      from: 'managedSidebar',
+    },
   },
 
   props: {
-    managedSidebar: Boolean,
-
     /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
     navOpen: Boolean,
 
@@ -48,7 +49,7 @@ export default {
 
   computed: {
     sidebarOpen() {
-      return this.managedSidebar ? this.managedNavOpen.value : this.navOpen;
+      return this.managedSidebar.value ? this.managedNavOpen.value : this.navOpen;
     },
   },
 };
