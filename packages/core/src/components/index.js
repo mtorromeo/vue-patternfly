@@ -1,3 +1,4 @@
+export {default as PfBadge} from './Badge';
 export {default as PfBrand} from './Brand';
 export {default as PfButton} from './Button.vue';
 export {default as PfDivider} from './Divider';

@@ -23,6 +23,9 @@
             </pf-nav-item>
           </pf-nav-group>
           <pf-nav-group title="Components">
+            <pf-nav-item :to="{name: 'badge'}">
+              Badge
+            </pf-nav-item>
             <pf-nav-item :to="{name: 'dropdown'}">
               Dropdown
             </pf-nav-item>
@@ -95,7 +98,7 @@
 
     <router-view />
   </pf-page>
-  <span></span>
+  <!-- -->
 </template>
 
 <script>
