@@ -5,6 +5,7 @@ export {default as PfDivider} from './Divider';
 export {default as PfLabel} from './Label';
 export {default as PfTitle} from './Title';
 export {default as PfSpinner} from './Spinner';
+export * from './ChipGroup';
 export * from './Dropdown';
 export * from './Nav';
 export * from './Page';

@@ -26,6 +26,9 @@
             <pf-nav-item :to="{name: 'badge'}">
               Badge
             </pf-nav-item>
+            <pf-nav-item :to="{name: 'chipgroup'}">
+              Chip group
+            </pf-nav-item>
             <pf-nav-item :to="{name: 'dropdown'}">
               Dropdown
             </pf-nav-item>

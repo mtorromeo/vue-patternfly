@@ -4,6 +4,7 @@ import HomePage from './components/HomePage.vue';
 import LayoutsPage from './components/LayoutsPage.vue';
 
 import BadgePage from './components/BadgePage.vue';
+import ChipGroupPage from './components/ChipGroupPage.vue';
 import DropdownPage from './components/DropdownPage.vue';
 import LabelPage from './components/LabelPage.vue';
 import SpinnerPage from './components/SpinnerPage.vue';
@@ -23,6 +24,10 @@ export default createRouter({
     name: 'badge',
     path: '/badge',
     component: BadgePage,
+  }, {
+    name: 'chipgroup',
+    path: '/chipgroup',
+    component: ChipGroupPage,
   }, {
     name: 'dropdown',
     path: '/dropdown',
