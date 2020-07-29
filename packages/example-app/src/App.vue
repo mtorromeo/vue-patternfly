@@ -1,7 +1,7 @@
 <template>
-  <pf-page>
+  <pf-page managed-sidebar>
     <template #skeleton>
-      <pf-page-header show-nav-toggle managed-sidebar>
+      <pf-page-header show-nav-toggle>
         <template #logo>
           <router-link :to="{name: 'home'}">
             <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px" />
@@ -15,7 +15,7 @@
         </pf-page-header-tools>
       </pf-page-header>
 
-      <pf-page-sidebar nav="PfNavigation" nav-open managed-sidebar>
+      <pf-page-sidebar nav="PfNavigation" nav-open>
         <pf-nav @select="handleSelect">
           <pf-nav-group title="Overview">
             <pf-nav-item :to="{name: 'layouts'}">
