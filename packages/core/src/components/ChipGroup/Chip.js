@@ -19,6 +19,7 @@ let styles = _styles.default;
 
 import TimesIcon from '@vue-patternfly4/icons/dist/esm/icons/times-icon';
 import PfButton from '../Button.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
 import {getUniqueId} from '../../util';
 import {h, mergeProps} from 'vue';
 
@@ -88,13 +89,13 @@ export default {
 
       const chip = h(this.component, props, children);
 
-      // if (!this.isTooltipVisible) {
+      if (!this.isTooltipVisible) {
         return chip;
-      // }
-      // return h(PfTooltip 'div', {position: this.tooltipPosition}, {
-      //   content: () => this.$slots.default && this.$slots.default(),
-      //   default: () => chip,
-      // });
+      }
+      return h(PfTooltip, {position: this.tooltipPosition}, {
+        content: () => this.$slots.default && this.$slots.default(),
+        default: () => chip,
+      });
     };
 
     return this.overflow ? renderOverflow() : renderSimple(this.$attrs.id || getUniqueId());

@@ -1,4 +1,4 @@
-import {computed} from 'vue';
+import {computed, Fragment} from 'vue';
 
 export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
 
@@ -119,4 +119,27 @@ export function getUniqueId(prefix = 'pf') {
       .toString(36)
       .slice(2);
   return `${prefix}-${uid}`;
+}
+
+export function findComponentVNode(vnodes) {
+  for (const n of vnodes) {
+    if (n.type !== Fragment) {
+      return n
+    }
+  }
+
+  for (const n of vnodes) {
+    if (n.type === Fragment) {
+      const child = findComponentVNode(n.children);
+      if (child !== null) {
+        return child;
+      }
+    }
+  }
+
+  return null;
+}
+
+export function domFromRef(ref) {
+  return ref.$el ? ref.$el : ref;
 }
