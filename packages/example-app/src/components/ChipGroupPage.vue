@@ -2,7 +2,9 @@
   <pf-page-section variant="light">
     <pf-title>Chip group</pf-title>
 
-    <pf-title class="example-heading" h="3">Single</pf-title>
+    <pf-title class="example-heading" h="3">
+      Single
+    </pf-title>
     <pf-chip v-if="chip" @click="chip = null">
       {{ chip.name }}
     </pf-chip>
@@ -15,7 +17,9 @@
 
     <pf-chip v-if="badgechip" @click="badgechip = null">
       {{ badgechip.name }}
-      <pf-badge :read="badgechip.read">{{ badgechip.count }}</pf-badge>
+      <pf-badge :read="badgechip.read">
+        {{ badgechip.count }}
+      </pf-badge>
     </pf-chip>
     <br><br>
 

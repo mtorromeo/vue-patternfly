@@ -36,6 +36,8 @@ export default {
     },
   },
 
+  emits: ['select'],
+
   setup(props, {emit}) {
     const scrollable = ref(false);
     provide('scrollable', scrollable);

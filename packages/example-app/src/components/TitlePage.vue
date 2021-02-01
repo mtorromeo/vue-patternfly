@@ -2,7 +2,9 @@
   <pf-page-section variant="light">
     <pf-title>PfTitle</pf-title>
 
-    <pf-title class="example-heading" h="3">Sizes</pf-title>
+    <pf-title class="example-heading" h="3">
+      Sizes
+    </pf-title>
 
     <pf-title h="1" size="4xl">
       4xl Title
@@ -23,7 +25,9 @@
       md Title
     </pf-title>
 
-    <pf-title class="example-heading" h="3">Default size mappings</pf-title>
+    <pf-title class="example-heading" h="3">
+      Default size mappings
+    </pf-title>
 
     <pf-title h="1">
       4xl Title

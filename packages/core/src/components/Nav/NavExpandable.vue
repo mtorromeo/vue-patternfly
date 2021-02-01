@@ -69,6 +69,8 @@ export default {
     expanded: Boolean,
   },
 
+  emits: ['update:expanded'],
+
   data() {
     return {
       styles,

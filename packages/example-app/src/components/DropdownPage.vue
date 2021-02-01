@@ -2,7 +2,9 @@
   <pf-page-section variant="light">
     <pf-title>PfDropdown</pf-title>
 
-    <pf-title class="example-heading" h="3">Basic</pf-title>
+    <pf-title class="example-heading" h="3">
+      Basic
+    </pf-title>
     <pf-dropdown v-model:open="open1" text="Dropdown">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
@@ -21,7 +23,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">With initial selection</pf-title>
+    <pf-title class="example-heading" h="3">
+      With initial selection
+    </pf-title>
     <pf-dropdown v-model:open="open2" text="Dropdown">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button" auto-focus>
@@ -40,7 +44,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Disabled</pf-title>
+    <pf-title class="example-heading" h="3">
+      Disabled
+    </pf-title>
     <pf-dropdown v-model:open="open3" text="Dropdown" disabled>
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
@@ -59,7 +65,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Primary toggle</pf-title>
+    <pf-title class="example-heading" h="3">
+      Primary toggle
+    </pf-title>
     <pf-dropdown v-model:open="open4" text="Dropdown" primary>
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
@@ -78,7 +86,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Position right</pf-title>
+    <pf-title class="example-heading" h="3">
+      Position right
+    </pf-title>
     <pf-dropdown v-model:open="open5" text="Dropdown" position="right">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
@@ -97,7 +107,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Direction up</pf-title>
+    <pf-title class="example-heading" h="3">
+      Direction up
+    </pf-title>
     <pf-dropdown v-model:open="open6" text="Dropdown" direction="up">
       <pf-dropdown-item>Link</pf-dropdown-item>
       <pf-dropdown-item component="button">
@@ -116,7 +128,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">With kebab</pf-title>
+    <pf-title class="example-heading" h="3">
+      With kebab
+    </pf-title>
     <pf-dropdown v-model:open="open7" plain>
       <template #toggle>
         <pf-kebab-toggle />
@@ -139,7 +153,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Icon only</pf-title>
+    <pf-title class="example-heading" h="3">
+      Icon only
+    </pf-title>
     <pf-dropdown v-model:open="open8" plain>
       <template #toggle>
         <pf-dropdown-toggle aria-label="Applications">
@@ -166,7 +182,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Split button</pf-title>
+    <pf-title class="example-heading" h="3">
+      Split button
+    </pf-title>
     <pf-dropdown v-model:open="open9">
       <template #toggle>
         <pf-dropdown-toggle>
@@ -195,7 +213,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Split button (with text)</pf-title>
+    <pf-title class="example-heading" h="3">
+      Split button (with text)
+    </pf-title>
     <pf-dropdown v-model:open="open10">
       <template #toggle>
         <pf-dropdown-toggle>
@@ -225,7 +245,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Split button (disabled)</pf-title>
+    <pf-title class="example-heading" h="3">
+      Split button (disabled)
+    </pf-title>
     <pf-dropdown v-model:open="open11" disabled>
       <template #toggle>
         <pf-dropdown-toggle>
@@ -254,7 +276,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Split button action</pf-title>
+    <pf-title class="example-heading" h="3">
+      Split button action
+    </pf-title>
     <pf-dropdown v-model:open="open12">
       <template #toggle>
         <pf-dropdown-toggle variant="action">
@@ -295,7 +319,9 @@
       </pf-dropdown-item>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Dropdown with image and text</pf-title>
+    <pf-title class="example-heading" h="3">
+      Dropdown with image and text
+    </pf-title>
     <pf-dropdown v-model:open="open14" text="Dropdown">
       <template #toggle>
         <pf-dropdown-toggle indicator>
@@ -307,8 +333,12 @@
       </template>
 
       <pf-dropdown-group>
-        <pf-dropdown-item component="div" plain>PfText</pf-dropdown-item>
-        <pf-dropdown-item component="div" plain>More text</pf-dropdown-item>
+        <pf-dropdown-item component="div" plain>
+          PfText
+        </pf-dropdown-item>
+        <pf-dropdown-item component="div" plain>
+          More text
+        </pf-dropdown-item>
       </pf-dropdown-group>
       <pf-dropdown-separator />
       <pf-dropdown-group>
@@ -320,7 +350,9 @@
       </pf-dropdown-group>
     </pf-dropdown>
 
-    <pf-title class="example-heading" h="3">Dropdown with descriptions</pf-title>
+    <pf-title class="example-heading" h="3">
+      Dropdown with descriptions
+    </pf-title>
     <pf-dropdown v-model:open="open15" text="Dropdown">
       <pf-dropdown-item description="This is a description">
         <template #icon>
