@@ -1,9 +1,6 @@
-import _styles from '@patternfly/react-styles/css/layouts/Grid/grid';
+import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
 import {breakpoints} from '../../util';
 import {h, mergeProps} from 'vue';
-
-// commonjs bug
-let styles = _styles.default;
 
 const gridSpans = {
   type: [String, Number],

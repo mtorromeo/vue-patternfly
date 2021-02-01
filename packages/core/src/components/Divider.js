@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Divider/divider';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Divider/divider';
 
 import {breakpointProp, classesFromBreakpointProps} from '../util';
 import {h, mergeProps, inject} from 'vue';

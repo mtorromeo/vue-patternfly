@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Spinner/spinner';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
 
 import {h, mergeProps} from 'vue';
 

@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
 
 import {h} from 'vue';
 

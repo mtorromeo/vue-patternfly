@@ -11,13 +11,10 @@
 </template>
 
 <script>
-import _styles from '@patternfly/react-styles/css/components/Page/page';
+import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
 import {debounce} from '../../util';
 import {ref, provide, computed} from 'vue';
-
-// commonjs bug
-let styles = _styles.default;
 
 export default {
   name: 'PfPage',

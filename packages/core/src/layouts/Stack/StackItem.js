@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/layouts/Stack/stack';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/layouts/Stack/stack';
 
 import {h, mergeProps} from 'vue';
 

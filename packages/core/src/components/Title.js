@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Title/title';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Title/title';
 
 import {h, mergeProps} from 'vue';
 

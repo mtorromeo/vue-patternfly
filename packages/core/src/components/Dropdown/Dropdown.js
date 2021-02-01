@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 let currentId = 0;
 import {h, mergeProps} from 'vue';

@@ -12,10 +12,7 @@
 
 <script> */
 
-import _styles from '@patternfly/react-styles/css/components/Chip/chip';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Chip/chip';
 
 import TimesIcon from '@vue-patternfly4/icons/dist/esm/icons/times-icon';
 import PfButton from '../Button.vue';

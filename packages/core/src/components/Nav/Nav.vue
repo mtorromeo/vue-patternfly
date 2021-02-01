@@ -13,11 +13,8 @@
 </template>
 
 <script>
-import {ref, computed, provide} from 'vue';
-import _styles from '@patternfly/react-styles/css/components/Nav/nav';
-
-// commonjs bug
-let styles = _styles.default;
+import {ref, provide} from 'vue';
+import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 export default {
   name: 'PfNav',

@@ -4,13 +4,15 @@
       <pf-page-header show-nav-toggle>
         <template #logo>
           <router-link :to="{name: 'home'}">
-            <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px" />
+            <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px;filter:invert(1)" />
           </router-link>
         </template>
 
         <pf-page-header-tools>
           <pf-page-header-tools-group>
-            <pf-page-header-tools-item visibility-xs="hidden">header-tools</pf-page-header-tools-item>
+            <pf-page-header-tools-item visibility-xs="hidden">
+              header-tools
+            </pf-page-header-tools-item>
           </pf-page-header-tools-group>
         </pf-page-header-tools>
       </pf-page-header>

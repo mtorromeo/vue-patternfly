@@ -12,10 +12,7 @@
 </template>
 
 <script>
-import _styles from '@patternfly/react-styles/css/components/Page/page';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Page/page';
 
 export default {
   name: 'PfPageSidebar',

@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Label/label';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Label/label';
 
 import {h, mergeProps} from 'vue';
 import PfButton from './Button.vue';

@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Nav/nav';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 import {h, mergeProps} from 'vue';
 import {getUniqueId} from '../../util';

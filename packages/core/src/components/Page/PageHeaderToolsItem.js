@@ -1,8 +1,5 @@
 
-import _styles from '@patternfly/react-styles/css/components/Page/page';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Page/page';
 
 import {breakpointProp, classesFromBreakpointProps} from '../../util';
 import {h, mergeProps} from 'vue';

@@ -33,15 +33,11 @@
 </template>
 
 <script>
-import _styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
 
 import PfPopper from '../Popper';
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
-import {getUniqueId} from '../../util';
 
 const positions = ['auto', 'top', 'bottom', 'left', 'right'];
 

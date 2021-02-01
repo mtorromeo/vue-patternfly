@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 
 import {h, mergeProps} from 'vue';
 

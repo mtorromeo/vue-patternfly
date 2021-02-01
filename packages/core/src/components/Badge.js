@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/components/Badge/badge';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Badge/badge';
 
 import {h, mergeProps} from 'vue';
 

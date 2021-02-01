@@ -34,12 +34,8 @@
 </template>
 
 <script>
-import _styles from '@patternfly/react-styles/css/components/Nav/nav';
-import _a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
-
-// commonjs bug
-let styles = _styles.default;
-let a11yStyles = _a11yStyles.default;
+import styles from '@patternfly/react-styles/css/components/Nav/nav';
+import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 
 import {AngleRightIcon} from '@vue-patternfly4/icons';
 import {getUniqueId} from '../../util';

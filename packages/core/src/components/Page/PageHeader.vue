@@ -34,12 +34,9 @@
 </template>
 
 <script>
-import _styles from '@patternfly/react-styles/css/components/Page/page';
+import styles from '@patternfly/react-styles/css/components/Page/page';
 import {BarsIcon} from '@vue-patternfly4/icons';
 import PfButton from '../Button.vue';
-
-// commonjs bug
-let styles = _styles.default;
 
 export default {
   name: 'PfPageHeader',

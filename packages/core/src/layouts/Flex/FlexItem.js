@@ -1,7 +1,4 @@
-import _styles from '@patternfly/react-styles/css/layouts/Flex/flex';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
 import {h, mergeProps} from 'vue';
 import {breakpointProp, classesFromBreakpointProps} from '../../util';

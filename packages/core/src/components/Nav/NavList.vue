@@ -13,10 +13,7 @@
 <script>
 import {AngleLeftIcon, AngleRightIcon} from '@vue-patternfly4/icons';
 import {isElementInView} from '../../util';
-import _styles from '@patternfly/react-styles/css/components/Nav/nav';
-
-// commonjs bug
-let styles = _styles.default;
+import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 export default {
   name: 'PfNavList',

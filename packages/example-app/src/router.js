@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import HomePage from './components/HomePage.vue';
 import LayoutsPage from './components/LayoutsPage.vue';
@@ -11,7 +11,7 @@ import SpinnerPage from './components/SpinnerPage.vue';
 import TitlePage from './components/TitlePage.vue';
 
 export default createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [{
     name: 'home',
     path: '/',
