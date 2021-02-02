@@ -3,6 +3,7 @@ export {default as PfBrand} from './Brand';
 export {default as PfButton} from './Button.vue';
 export {default as PfCloseButton} from './CloseButton';
 export {default as PfDivider} from './Divider';
+export {default as PfInputGroup} from './InputGroup';
 export {default as PfLabel} from './Label';
 export {default as PfPopper} from './Popper';
 export {default as PfSpinner} from './Spinner';
