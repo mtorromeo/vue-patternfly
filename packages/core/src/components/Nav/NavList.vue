@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import {AngleLeftIcon, AngleRightIcon} from '@vue-patternfly4/icons';
+import AngleLeftIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-left-icon';
+import AngleRightIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-right-icon';
 import {isElementInView} from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 

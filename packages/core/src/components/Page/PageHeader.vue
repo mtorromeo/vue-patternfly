@@ -35,7 +35,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import {BarsIcon} from '@vue-patternfly4/icons';
+import BarsIcon from '@vue-patternfly4/icons/dist/esm/icons/bars-icon';
 import PfButton from '../Button.vue';
 
 export default {
