@@ -4,6 +4,7 @@ import HomePage from './components/HomePage.vue';
 import LayoutsPage from './components/LayoutsPage.vue';
 
 import AlertPage from './components/AlertPage.vue';
+import AlertGroupPage from './components/AlertGroupPage.vue';
 import BadgePage from './components/BadgePage.vue';
 import ChipGroupPage from './components/ChipGroupPage.vue';
 import DropdownPage from './components/DropdownPage.vue';
@@ -29,6 +30,10 @@ export default createRouter({
     name: 'alert',
     path: '/alert',
     component: AlertPage,
+  }, {
+    name: 'alert-group',
+    path: '/alert-group',
+    component: AlertGroupPage,
   }, {
     name: 'chipgroup',
     path: '/chipgroup',

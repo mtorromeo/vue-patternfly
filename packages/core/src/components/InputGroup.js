@@ -2,12 +2,9 @@
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
 import {h, mergeProps} from 'vue';
+import {cloneElement} from '../util';
 
 const formCtrls = ['PfFormSelect', 'PfTextArea', 'PfTextInput'];
-
-function cloneElement(e, props) {
-  return h(e.type, mergeProps(e.props, props), e.children);
-}
 
 const PfInputGroup = (props, {slots}) => h('div', mergeProps({
   class: [styles.inputGroup],

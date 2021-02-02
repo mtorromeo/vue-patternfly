@@ -1,4 +1,4 @@
-import {computed, Fragment} from 'vue';
+import {h, computed, mergeProps, Fragment} from 'vue';
 
 export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
 
@@ -140,6 +140,17 @@ export function findComponentVNode(vnodes) {
   return null;
 }
 
+export function findChildrenVNodes(vnodes) {
+  if (vnodes.length === 1 && vnodes[0].type === Fragment) {
+    return vnodes[0].children;
+  }
+  return vnodes;
+}
+
 export function domFromRef(ref) {
   return ref.$el ? ref.$el : ref;
+}
+
+export function cloneElement(e, props) {
+  return h(e.type, mergeProps(e.props, props), e.children);
 }

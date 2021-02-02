@@ -28,6 +28,9 @@
             <pf-nav-item :to="{name: 'alert'}">
               Alert
             </pf-nav-item>
+            <pf-nav-item :to="{name: 'alert-group'}">
+              Alert group
+            </pf-nav-item>
             <pf-nav-item :to="{name: 'badge'}">
               Badge
             </pf-nav-item>
