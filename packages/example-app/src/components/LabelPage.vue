@@ -1,6 +1,6 @@
 <template>
   <pf-page-section variant="light">
-    <pf-title>PfLabel</pf-title>
+    <pf-title>Label</pf-title>
 
     <pf-title class="example-heading" h="3">
       Filled

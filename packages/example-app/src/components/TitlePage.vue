@@ -1,6 +1,6 @@
 <template>
   <pf-page-section variant="light">
-    <pf-title>PfTitle</pf-title>
+    <pf-title>Title</pf-title>
 
     <pf-title class="example-heading" h="3">
       Sizes

@@ -1,6 +1,6 @@
 <template>
   <pf-page-section variant="light">
-    <pf-title>PfSpinner</pf-title>
+    <pf-title>Spinner</pf-title>
 
     <pf-title class="example-heading" h="3">
       Basic
