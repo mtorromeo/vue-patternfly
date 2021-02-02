@@ -81,7 +81,7 @@ export default {
     },
 
     positionModifier() {
-      const placement = this.$el && this.$el.dataset['popper-placement'];
+      const placement = this.$el && this.$el.dataset && this.$el.dataset['popper-placement'];
       if (placement) {
         if (placement.startsWith('top')) {
           return this.top || '';
