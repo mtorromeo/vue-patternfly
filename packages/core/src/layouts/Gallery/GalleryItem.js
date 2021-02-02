@@ -1,2 +1,3 @@
 import {h} from 'vue';
-export default (props, {slots}) => h('div', props, slots.default());
+const PfGalleryItem = (props, {slots}) => h('div', props, slots.default());
+export default PfGalleryItem;

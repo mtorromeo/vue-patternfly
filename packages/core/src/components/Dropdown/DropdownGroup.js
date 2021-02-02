@@ -2,7 +2,7 @@ import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 import {h, mergeProps} from 'vue';
 
-export default (props, {slots}) =>
+const PfDropdownGroup = (props, {slots}) =>
   h('section', mergeProps({class: styles.dropdownGroup}, props), [
     slots.label && h('h1', {
       class: styles.dropdownGroupTitle,
@@ -10,3 +10,5 @@ export default (props, {slots}) =>
     }, slots.label()),
     h('ul', {role: 'none'}, slots.default()),
   ]);
+
+export default PfDropdownGroup;
