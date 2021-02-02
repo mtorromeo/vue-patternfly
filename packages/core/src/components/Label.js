@@ -1,8 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
 import {h, mergeProps} from 'vue';
-import PfButton from './Button.vue';
-import {TimesIcon} from '@vue-patternfly4/icons';
+import PfCloseButton from './CloseButton';
 
 const colorStyles = {
   blue: styles.modifiers.blue,
@@ -35,13 +34,8 @@ const PfLabel = (props, {slots, attrs, emit}) => {
       slots.icon && h('span', {class: styles.labelIcon}, slots.icon()),
       slots.default(),
     ]),
-    props.close && h(PfButton, {
-      type: 'button',
-      variant: 'plain',
+    props.close && h(PfCloseButton, {
       onClick: e => emit('close', e),
-      'aria-label': 'label-close-button',
-    }, {
-      default: () => h(TimesIcon),
     }),
   ]);
 };
