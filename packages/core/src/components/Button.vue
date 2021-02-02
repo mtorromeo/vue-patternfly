@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import styles from '@patternfly/react-styles/css/components/Page/page';
+import styles from '@patternfly/react-styles/css/components/Button/button';
 
 export default {
   name: 'PfButton',
