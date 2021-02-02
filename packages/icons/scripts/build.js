@@ -23,8 +23,7 @@ export const ${jsName}Config = {
   width: ${icon.width},
   svgPath: '${icon.svgPathData}',
   yOffset: ${icon.yOffset || 0},
-  xOffset: ${icon.xOffset || 0},
-  transform: '${icon.transform || ''}'
+  xOffset: ${icon.xOffset || 0}
 };
 
 export const ${jsName} = createIcon(${jsName}Config);

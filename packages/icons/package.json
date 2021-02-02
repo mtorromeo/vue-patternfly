@@ -12,9 +12,9 @@
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
-    "@fortawesome/free-brands-svg-icons": "^5.7.2",
-    "@fortawesome/free-regular-svg-icons": "^5.7.2",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/free-brands-svg-icons": "^5.14.0",
+    "@fortawesome/free-regular-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@patternfly/patternfly": "^4.80.3",
     "fs-extra": "^9.1.0",
     "glob": "^7.1.6",
