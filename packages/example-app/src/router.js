@@ -6,6 +6,7 @@ import LayoutsPage from './components/LayoutsPage.vue';
 import AlertPage from './components/AlertPage.vue';
 import AlertGroupPage from './components/AlertGroupPage.vue';
 import BadgePage from './components/BadgePage.vue';
+import ButtonPage from './components/ButtonPage.vue';
 import ChipGroupPage from './components/ChipGroupPage.vue';
 import DropdownPage from './components/DropdownPage.vue';
 import LabelPage from './components/LabelPage.vue';
@@ -26,6 +27,10 @@ export default createRouter({
     name: 'badge',
     path: '/badge',
     component: BadgePage,
+  }, {
+    name: 'button',
+    path: '/button',
+    component: ButtonPage,
   }, {
     name: 'alert',
     path: '/alert',

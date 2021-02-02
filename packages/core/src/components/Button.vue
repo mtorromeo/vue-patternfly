@@ -11,9 +11,15 @@
       [styles.modifiers.active]: active,
       [styles.modifiers.inline]: inline && variant === 'link',
       [styles.modifiers.small]: small,
+      [styles.modifiers.displayLg]: large,
+      [styles.modifiers.progress]: loading !== null,
+      [styles.modifiers.inProgress]: loading,
     }]"
     :tabindex="tabIdx"
   >
+    <span v-if="loading" :class="styles.buttonProgress">
+      <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
+    </span>
     <span v-if="variant !== 'plain' && $slots.icon && iconPosition === 'left'" :class="[styles.buttonIcon, styles.modifiers.start]">
       <slot name="icon" />
     </span>
@@ -27,8 +33,12 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Button/button';
 
+import PfSpinner from './Spinner';
+
 export default {
   name: 'PfButton',
+
+  components: {PfSpinner},
 
   props: {
     type: {
@@ -39,7 +49,7 @@ export default {
     variant: {
       type: String,
       default: 'primary',
-      validator: v => ['primary', 'secondary', 'tertiary', 'danger', 'link', 'plain', 'control'].includes(v),
+      validator: v => ['primary', 'secondary', 'tertiary', 'danger', 'warning', 'link', 'plain', 'control'].includes(v),
     },
 
     iconPosition: {
@@ -53,15 +63,25 @@ export default {
       default: 'button',
     },
 
+    spinnerAriaValueText: {
+      type: String,
+      default: '',
+    },
+
     active: Boolean,
     block: Boolean,
     disabled: Boolean,
+    loading: {
+      type: Boolean,
+      default: null,
+    },
 
     /** @beta Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
     ariaDisabled: Boolean,
 
     inline: Boolean,
     small: Boolean,
+    large: Boolean,
 
     tabindex: {
       type: [Number, String],
