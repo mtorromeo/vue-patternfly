@@ -8,6 +8,7 @@ export {default as PfLabel} from './Label';
 export {default as PfPopper} from './Popper';
 export {default as PfSpinner} from './Spinner';
 export {default as PfTitle} from './Title';
+export * from './Alert';
 export * from './ChipGroup';
 export * from './Dropdown';
 export * from './Nav';

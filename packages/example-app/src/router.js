@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import HomePage from './components/HomePage.vue';
 import LayoutsPage from './components/LayoutsPage.vue';
 
+import AlertPage from './components/AlertPage.vue';
 import BadgePage from './components/BadgePage.vue';
 import ChipGroupPage from './components/ChipGroupPage.vue';
 import DropdownPage from './components/DropdownPage.vue';
@@ -24,6 +25,10 @@ export default createRouter({
     name: 'badge',
     path: '/badge',
     component: BadgePage,
+  }, {
+    name: 'alert',
+    path: '/alert',
+    component: AlertPage,
   }, {
     name: 'chipgroup',
     path: '/chipgroup',
