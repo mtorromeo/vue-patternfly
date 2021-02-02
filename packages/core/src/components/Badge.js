@@ -7,7 +7,7 @@ const PfBadge = (props, {slots, attrs}) => h('span', mergeProps({
     [styles.modifiers.read]: props.read,
     [styles.modifiers.unread]: !props.read,
   }],
-}, attrs), slots.default());
+}, attrs), slots);
 
 PfBadge.props = {
   read: Boolean,
