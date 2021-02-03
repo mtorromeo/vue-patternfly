@@ -154,3 +154,10 @@ export function domFromRef(ref) {
 export function cloneElement(e, props) {
   return h(e.type, mergeProps(e.props, props), e.children);
 }
+
+export function pluralize(i, singular, plural) {
+  if (!plural) {
+    plural = `${singular}s`;
+  }
+  return `${i || 0} ${i === 1 ? singular : plural}`;
+}

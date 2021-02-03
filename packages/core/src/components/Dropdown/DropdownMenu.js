@@ -6,11 +6,7 @@ import {provideChildrenTracker, keyNavigation} from '../../use';
 export default {
   name: 'PfDropdownMenu',
 
-  inject: {
-    menuComponent: {
-      default: null,
-    },
-  },
+  inject: ['menuComponent', 'menuClass'],
 
   props: {
     component: {
@@ -35,27 +31,27 @@ export default {
   },
 
   setup() {
-    const items = [];
-    provideChildrenTracker(items);
-    const $items = computed(() => items.filter(
+    const children = [];
+    provideChildrenTracker(children);
+    const items = computed(() => children.filter(
       c => Boolean(c.focusElement()) && !c.disabled && c.focus,
     ));
-    const onKeyDown = keyNavigation($items);
+    const onKeyDown = keyNavigation(items);
     provide('keyDown', onKeyDown);
     return {
-      '$items': $items,
+      'items': items,
     };
   },
 
   mounted() {
-    if (this.autoFocus && this.$items.length) {
-      this.$items[0].focus();
+    if (this.autoFocus && this.items.length) {
+      this.items[0].focus();
     }
   },
 
   render() {
     const props = {
-      class: [styles.dropdownMenu, {
+      class: [this.menuClass || styles.dropdownMenu, {
         [styles.modifiers.alignRight]: this.position === 'right',
       }],
       hidden: !this.open,

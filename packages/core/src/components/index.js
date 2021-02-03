@@ -13,5 +13,6 @@ export * from './ChipGroup';
 export * from './Dropdown';
 export * from './Nav';
 export * from './Page';
+export * from './Pagination';
 export * from './Text';
 export * from './Tooltip';

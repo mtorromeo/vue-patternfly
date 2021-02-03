@@ -5,7 +5,7 @@ import {h} from 'vue';
 export default {
   name: 'PfToggle',
 
-  inject: ['dropdown'],
+  inject: ['dropdown', 'toggleClass'],
 
   props: {
     type: {
@@ -34,9 +34,13 @@ export default {
   },
 
   render() {
+    let toggleClass = this.toggleClass;
+    if (!toggleClass) {
+      toggleClass = this.splitButton ? styles.dropdownToggleButton : styles.dropdownToggle;
+    }
     return h('button', {
       class: [
-        this.splitButton ? styles.dropdownToggleButton : styles.dropdownToggle,
+        toggleClass,
         {
           [styles.modifiers.active]: this.active,
           [styles.modifiers.plain]: this.plain,

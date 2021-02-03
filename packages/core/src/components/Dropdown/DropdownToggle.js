@@ -7,6 +7,8 @@ import CaretDownIcon from '@vue-patternfly4/icons/dist/esm/icons/caret-down-icon
 export default {
   name: 'PfDropdownToggle',
 
+  inject: ['toggleTextClass', 'toggleIndicatorClass', 'toggleIconClass', 'disabledClass'],
+
   props: {
     open: Boolean,
     variant: {
@@ -42,20 +44,20 @@ export default {
 
     if (this.$slots.icon) {
       children.push(
-        h('span', {class: [styles.dropdownToggleImage]}, this.$slots.icon()),
+        h('span', {class: [this.toggleIconClass || styles.dropdownToggleImage]}, this.$slots.icon()),
       );
     }
 
     if (this.$slots.default) {
       children.push(
-        h('span', {class: indicator ? styles.dropdownToggleText : null}, this.$slots.default()),
+        h('span', {class: indicator ? (this.toggleTextClass || styles.dropdownToggleText) : null}, this.$slots.default()),
       );
     }
 
     if (indicator) {
       children.push(
         h('span', {
-          class: {[styles.dropdownToggleIcon]: !splitButton},
+          class: {[this.toggleIndicatorClass || styles.dropdownToggleIcon]: !splitButton},
         }, indicator),
       );
     }
@@ -78,7 +80,7 @@ export default {
           styles.modifiers.splitButton,
           {
             [styles.modifiers.action]: this.variant === 'action',
-            [styles.modifiers.disabled]: this.disabled,
+            [this.disabledClass || styles.modifiers.disabled]: this.disabled,
           },
         ],
       }, [

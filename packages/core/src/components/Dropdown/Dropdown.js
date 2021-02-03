@@ -8,6 +8,8 @@ import PfDropdownMenu from './DropdownMenu';
 export default {
   name: 'PfDropdown',
 
+  inject: ['baseClass'],
+
   props: {
     id: {
       type: String,
@@ -120,7 +122,7 @@ export default {
     }
 
     return h(this.baseComponent, {
-      class: [styles.dropdown, {
+      class: [this.baseClass || styles.dropdown, {
         [styles.modifiers.top]: this.direction === 'up',
         [styles.modifiers.alignRight]: this.position === 'right',
         [styles.modifiers.expanded]: this.open,

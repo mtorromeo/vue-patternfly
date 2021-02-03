@@ -8,7 +8,7 @@ export default {
 
   inheritAttrs: false,
 
-  inject: ['keyDown', 'dropdown'],
+  inject: ['keyDown', 'dropdown', 'itemClass', 'disabledClass'],
 
   props: {
     hovered: Boolean,
@@ -68,9 +68,9 @@ export default {
 
     if (this.role !== 'separator') {
       classes.push(
-        styles.dropdownMenuItem,
+        this.itemClass || styles.dropdownMenuItem,
         {
-          [styles.modifiers.disabled]: this.disabled,
+          [this.disabledClass || styles.modifiers.disabled]: this.disabled,
           [styles.modifiers.text]: this.plain,
           [styles.modifiers.description]: this.description,
         },
