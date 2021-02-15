@@ -12,6 +12,7 @@ import DropdownPage from './components/DropdownPage.vue';
 import LabelPage from './components/LabelPage.vue';
 import PaginationPage from './components/PaginationPage.vue';
 import SpinnerPage from './components/SpinnerPage.vue';
+import SwitchPage from './components/SwitchPage.vue';
 import TitlePage from './components/TitlePage.vue';
 
 export default createRouter({
@@ -60,6 +61,10 @@ export default createRouter({
     name: 'spinner',
     path: '/spinner',
     component: SpinnerPage,
+  }, {
+    name: 'switch',
+    path: '/switch',
+    component: SwitchPage,
   }, {
     name: 'title',
     path: '/title',

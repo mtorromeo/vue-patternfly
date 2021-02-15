@@ -52,6 +52,9 @@
             <pf-nav-item :to="{name: 'spinner'}">
               Spinner
             </pf-nav-item>
+            <pf-nav-item :to="{name: 'switch'}">
+              Switch
+            </pf-nav-item>
             <pf-nav-item :to="{name: 'title'}">
               Title
             </pf-nav-item>
