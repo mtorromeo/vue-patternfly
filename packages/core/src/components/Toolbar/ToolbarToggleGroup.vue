@@ -28,6 +28,7 @@ import {breakpointProp, classesFromBreakpointProps, toCamel} from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';
+import {windowWidth} from '../../use';
 
 export default {
   name: 'PfToolbarToggleGroup',
@@ -45,7 +46,13 @@ export default {
     ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
     ...breakpointProp('alignment', String, ['', 'right', 'left']),
     ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-    ...breakpointProp('spacerItems', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
+    ...breakpointProp('spaceItems', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
+  },
+
+  setup() {
+    return {
+      windowWidth: windowWidth(),
+    };
   },
 
   data() {
@@ -58,18 +65,17 @@ export default {
     breakpointClasses() {
       return [
         ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, {short: true}),
-        ...classesFromBreakpointProps(this.$props, ['spacer', 'spacerItems'], styles),
+        ...classesFromBreakpointProps(this.$props, ['spacer', 'spaceItems'], styles),
       ];
     },
 
     variantClass() {
-      return this.variant ? toCamel(this.variant) : null;
+      return this.variant ? styles.modifiers[toCamel(this.variant)] : null;
     },
 
     isContentPopup() {
-      const viewportSize = window.innerWidth;
       const lgBreakpointValue = parseInt(globalBreakpointLg.value);
-      return viewportSize < lgBreakpointValue;
+      return this.windowWidth < lgBreakpointValue;
     },
   },
 };

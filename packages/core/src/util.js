@@ -21,10 +21,10 @@ export function classesFromBreakpointProps(props, baseNames, styles, {additional
 
   for (const baseName of baseNames) {
     for (let breakpointSuffix of breakpoints) {
-      if (breakpointSuffix === '2xl') {
-        breakpointSuffix = '_2xl';
-      }
       const prop = `${baseName}${breakpointSuffix}`;
+      if (breakpointSuffix.match(/^[0-9]/)) {
+        breakpointSuffix = `_${breakpointSuffix}`;
+      }
       let value = props[prop];
       if (value) {
         if (value === true) {

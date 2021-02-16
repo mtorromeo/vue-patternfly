@@ -10,6 +10,10 @@
       :clear-filters-button-text="clearFiltersButtonText"
     >
       <pf-toolbar-group @mounted="expandable = $event" />
+
+      <template #chip-container>
+        <pf-toolbar-group @mounted="chipContainer = $event" />
+      </template>
     </pf-toolbar-expandable-content>
   </div>
 </template>
@@ -35,7 +39,11 @@ export default {
   setup() {
     const expandable = ref(null);
     provide('expandableRef', expandable);
-    return {expandable};
+
+    const chipContainer = ref(null);
+    provide('chipContainerRef', chipContainer);
+
+    return {expandable, chipContainer};
   },
 
   data() {
@@ -52,8 +60,19 @@ export default {
     },
   },
 
+  watch: {
+    chipContainer(v) {
+      console.log(v);
+    },
+  },
+
   beforeUnmount() {
-    this.expandable.value = null;
+    if (this.expandable) {
+      this.expandable.value = null;
+    }
+    if (this.chipContainer) {
+      this.chipContainer.value = null;
+    }
   },
 };
 </script>

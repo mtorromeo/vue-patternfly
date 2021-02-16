@@ -101,10 +101,6 @@ export default {
     },
   },
 
-  beforeUmount() {
-    window.removeEventListener('resize', this.handleScrollButtons, false);
-  },
-
   methods: {
     handleToggle(e) {
       // Item events can bubble up, ignore those

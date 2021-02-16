@@ -49,7 +49,7 @@ export default {
     },
 
     variantClass() {
-      return this.variant ? toCamel(this.variant) : null;
+      return this.variant ? styles.modifiers[toCamel(this.variant)] : null;
     },
   },
 };

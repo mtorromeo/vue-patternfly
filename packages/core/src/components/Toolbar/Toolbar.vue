@@ -12,6 +12,7 @@
       :number-of-filters="numberOfFilters"
       :collapse-listed-filters-breakpoint="collapseListedFiltersBreakpoint"
       @clear-all-filters="clearAllFilters"
+      @mounted="chipGroupContent = $event"
     />
   </div>
 </template>
@@ -19,6 +20,7 @@
 <script>
 import {provide, ref, computed} from 'vue'
 import {breakpointProp, classesFromBreakpointProps} from '../../util';
+import {windowWidth} from '../../use';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
 
@@ -31,16 +33,16 @@ export default {
     return {
       toggleExpanded: this.toggleExpanded,
       clearFiltersButtonText: this.clearFiltersButtonText,
-      numberOfFilters: this.numberOfFilters,
       showClearFiltersButton: this.showClearFiltersButton,
       clearAllFilters: this.clearAllFilters,
+      updateNumberFilters: this.updateNumberFilters,
     };
   },
 
   props: {
     clearFiltersButtonText: {
       type: String,
-      default: '',
+      default: 'Clear all filters',
     },
 
     collapseListedFiltersBreakpoint: {
@@ -79,17 +81,29 @@ export default {
 
     provide('expanded', effectiveExpanded);
 
+    const chipGroupContent = ref(null);
+    provide('chipGroupContentRef', chipGroupContent);
+
+    const width = windowWidth();
+
+    const filterInfo = ref({});
+    const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));
+    provide('numberOfFilters', numberOfFilters);
+
     return {
       managedToggleExpanded,
       toggleManaged,
       effectiveExpanded,
+      chipGroupContent,
+      filterInfo,
+      numberOfFilters,
+      windowWidth: width,
     };
   },
 
   data() {
     return {
       styles,
-      filterInfo: {},
     };
   },
 
@@ -98,24 +112,22 @@ export default {
       return classesFromBreakpointProps(this.$props, ['inset'], styles);
     },
 
-    numberOfFilters() {
-      return Object.values(this.filterInfo).reduce((acc, cur) => acc + cur, 0);
-    },
-
     showClearFiltersButton() {
       return this.numberOfFilters > 0;
     },
   },
 
-  mounted() {
-    if (this.toggleManaged) {
-      window.addEventListener('resize', this.closeExpandableContent);
-    }
+  watch: {
+    windowWidth() {
+      if (this.toggleManaged) {
+        this.closeExpandableContent();
+      }
+    },
   },
 
   beforeUnmount() {
-    if (this.toggleManaged) {
-      window.removeEventListener('resize', this.closeExpandableContent);
+    if (this.chipGroupContent) {
+      this.chipGroupContent.value = null;
     }
   },
 
@@ -128,13 +140,8 @@ export default {
       this.effectiveExpanded = !this.effectiveExpanded;
     },
 
-    updateNumberFilters(categoryName, numberOfFilters) {
-      const filterInfoToUpdate = {...this.staticFilterInfo};
-      if (!Object.hasOwnProperty.call(filterInfoToUpdate, categoryName) || filterInfoToUpdate[categoryName] !== numberOfFilters) {
-        filterInfoToUpdate[categoryName] = numberOfFilters;
-        this.staticFilterInfo = filterInfoToUpdate;
-        this.filterInfo = filterInfoToUpdate;
-      }
+    updateNumberFilters(category, numberOfFilters) {
+      this.filterInfo[category] = numberOfFilters;
     },
 
     clearAllFilters() {

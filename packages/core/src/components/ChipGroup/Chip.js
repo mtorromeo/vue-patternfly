@@ -1,17 +1,3 @@
-/* <template>
-  <component
-    :is="component"
-    :id="id"
-    :class="styles.chip"
-  >
-    <span ref="span">
-      <slot />
-    </span>
-  </component>
-</template>
-
-<script> */
-
 import styles from '@patternfly/react-styles/css/components/Chip/chip';
 
 import TimesIcon from '@vue-patternfly4/icons/dist/esm/icons/times-icon';

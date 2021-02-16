@@ -1,4 +1,5 @@
-import {provide, inject, isRef} from 'vue';
+import {provide, inject, isRef, computed, onMounted, onUnmounted, ref} from 'vue';
+import {debounce} from './util';
 
 const ChildrenTrackerSymbol = Symbol();
 
@@ -152,4 +153,37 @@ export function keyNavigation(itemsRef) {
   //     }
   //   }
   // };
+}
+
+class WindowResizeManager {
+  constructor(refValue) {
+    this.width = refValue;
+    this.counter = 0;
+  }
+
+  onResize = debounce(() => {
+    this.width.value = window.innerWidth;
+  }, 250)
+
+  addListener() {
+    if (!this.counter) {
+      window.addEventListener('resize', this.onResize);
+    }
+    this.counter++;
+  }
+
+  removeListener() {
+    this.counter--;
+    if (!this.counter) {
+      window.removeEventListener('resize', this.onResize);
+    }
+  }
+}
+
+const windowResizeManager = new WindowResizeManager(ref(window.innerWidth));
+
+export function windowWidth() {
+  onMounted(() => windowResizeManager.addListener());
+  onUnmounted(() => windowResizeManager.removeListener());
+  return computed(() => windowResizeManager.width.value);
 }

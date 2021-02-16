@@ -13,7 +13,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
-import {debounce} from '../../util';
+import {windowWidth} from '../../use';
 import {ref, provide, computed} from 'vue';
 
 export default {
@@ -81,7 +81,15 @@ export default {
     });
     provide('navOpen', navOpen);
 
-    return {navOpen, mobileView, mobileNavOpen, desktopNavOpen};
+    const width = windowWidth();
+
+    return {
+      navOpen,
+      mobileView,
+      mobileNavOpen,
+      desktopNavOpen,
+      windowWidth: width,
+    };
   },
 
   data() {
@@ -90,23 +98,14 @@ export default {
     };
   },
 
-  mounted() {
-    window.addEventListener('resize', debounce(this.handleResize, 250));
-    // Initial check if should be shown
-    this.handleResize();
-  },
-
-  beforeUnmount() {
-    window.removeEventListener('resize', debounce(this.handleResize, 250));
+  watch: {
+    windowWidth(width) {
+      this.mobileView = width < Number.parseInt(globalBreakpointXl.value, 10);
+      this.$emit('page-resize', {mobileView: this.mobileView, windowSize: width});
+    },
   },
 
   methods: {
-    handleResize() {
-      const windowSize = window.innerWidth;
-      this.mobileView = windowSize < Number.parseInt(globalBreakpointXl.value, 10);
-      this.$emit('page-resize', {mobileView: this.mobileView, windowSize});
-    },
-
     navToggle() {
       this.navOpen = !this.navOpen;
     },

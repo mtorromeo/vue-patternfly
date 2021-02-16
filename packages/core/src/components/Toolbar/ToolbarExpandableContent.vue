@@ -5,8 +5,8 @@
   >
     <slot />
 
-    <pf-toolbar-group v-if="numberOfFilters">
-      <pf-toolbar-group />
+    <pf-toolbar-group v-if="numberOfFilters.value" :class="styles.modifiers.chipContainer">
+      <slot name="chip-container" />
       <pf-toolbar-item v-if="showClearFiltersButton">
         <pf-button variant="link" inline @click="clearAllFilters">
           {{ clearFiltersButtonText }}
@@ -37,7 +37,7 @@ export default {
 
     clearFiltersButtonText: {
       type: String,
-      default: '',
+      default: 'Clear all filters',
     },
   },
 
