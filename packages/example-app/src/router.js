@@ -14,6 +14,7 @@ import PaginationPage from './components/PaginationPage.vue';
 import SpinnerPage from './components/SpinnerPage.vue';
 import SwitchPage from './components/SwitchPage.vue';
 import TitlePage from './components/TitlePage.vue';
+import ToolbarPage from './components/ToolbarPage.vue';
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -69,5 +70,9 @@ export default createRouter({
     name: 'title',
     path: '/title',
     component: TitlePage,
+  }, {
+    name: 'toolbar',
+    path: '/toolbar',
+    component: ToolbarPage,
   }],
 });

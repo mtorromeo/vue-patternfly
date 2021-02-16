@@ -58,6 +58,9 @@
             <pf-nav-item :to="{name: 'title'}">
               Title
             </pf-nav-item>
+            <pf-nav-item :to="{name: 'toolbar'}">
+              Toolbar
+            </pf-nav-item>
           </pf-nav-group>
           <pf-nav-list>
             <pf-nav-expandable title="Expandable 3" group-id="grp-3" :active="activeGroup === 'grp-3'" expanded managed>

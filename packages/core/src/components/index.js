@@ -16,4 +16,5 @@ export * from './Nav';
 export * from './Page';
 export * from './Pagination';
 export * from './Text';
+export * from './Toolbar';
 export * from './Tooltip';
