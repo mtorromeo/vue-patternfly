@@ -6,7 +6,14 @@ import {provideChildrenTracker, keyNavigation} from '../../use';
 export default {
   name: 'PfDropdownMenu',
 
-  inject: ['menuComponent', 'menuClass'],
+  inject: {
+    menuComponent: {
+      default: null,
+    },
+    menuClass: {
+      default: null,
+    },
+  },
 
   props: {
     component: {

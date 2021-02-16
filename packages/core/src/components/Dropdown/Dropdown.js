@@ -8,7 +8,11 @@ import PfDropdownMenu from './DropdownMenu';
 export default {
   name: 'PfDropdown',
 
-  inject: ['baseClass'],
+  inject: {
+    baseClass: {
+      default: '',
+    },
+  },
 
   props: {
     id: {

@@ -5,7 +5,14 @@ import {h} from 'vue';
 export default {
   name: 'PfToggle',
 
-  inject: ['dropdown', 'toggleClass'],
+  inject: {
+    dropdown: {
+      default: null,
+    },
+    toggleClass: {
+      default: null,
+    },
+  },
 
   props: {
     type: {
