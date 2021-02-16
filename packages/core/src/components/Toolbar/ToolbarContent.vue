@@ -60,12 +60,6 @@ export default {
     },
   },
 
-  watch: {
-    chipContainer(v) {
-      console.log(v);
-    },
-  },
-
   beforeUnmount() {
     if (this.expandable) {
       this.expandable.value = null;
