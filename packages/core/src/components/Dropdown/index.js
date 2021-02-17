@@ -5,4 +5,5 @@ export {default as PfDropdownMenu} from './DropdownMenu';
 export {default as PfDropdownSeparator} from './DropdownSeparator';
 export {default as PfDropdownToggle} from './DropdownToggle';
 export {default as PfKebabToggle} from './KebabToggle';
+export {default as PfDropdownToggleCheckbox} from './DropdownToggleCheckbox';
 export {default as PfToggle} from './Toggle';

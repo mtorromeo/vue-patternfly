@@ -342,6 +342,117 @@
         </pf-toolbar-item>
       </pf-toolbar-content>
     </pf-toolbar>
+
+    <pf-title class="example-heading" h="3">
+      Stacked example
+    </pf-title>
+    <pf-toolbar>
+      <pf-toolbar-content>
+        <pf-toolbar-toggle-group breakpoint="lg">
+          <template #icon>
+            <FilterIcon />
+          </template>
+          <pf-toolbar-item id="stacked-example-resource-select" variant="label">
+            Resource
+          </pf-toolbar-item>
+          <pf-toolbar-item>
+            <select />
+          </pf-toolbar-item>
+          <pf-toolbar-item id="stacked-example-status-select" variant="label">
+            Status
+          </pf-toolbar-item>
+          <pf-toolbar-item>
+            <select />
+          </pf-toolbar-item>
+          <pf-toolbar-item id="stacked-example-type-select" variant="label">
+            Type
+          </pf-toolbar-item>
+          <pf-toolbar-item>
+            <select />
+          </pf-toolbar-item>
+        </pf-toolbar-toggle-group>
+        <pf-toolbar-item variant="overflow-menu">
+          <OverflowMenu breakpoint="2xl">
+            <OverflowMenuContent>
+              <OverflowMenuGroup group-type="button">
+                <OverflowMenuItem>
+                  <pf-button variant="primary">
+                    Primary
+                  </pf-button>
+                </OverflowMenuItem>
+                <OverflowMenuItem>
+                  <pf-button variant="secondary">
+                    Secondary
+                  </pf-button>
+                </OverflowMenuItem>
+              </OverflowMenuGroup>
+            </OverflowMenuContent>
+            <OverflowMenuControl has-additional-options>
+              <pf-dropdown v-model:open="kebabIsOpen" plain>
+                <template #toggle>
+                  <pf-kebab-toggle />
+                </template>
+                <pf-dropdown-item key="link">
+                  Link
+                </pf-dropdown-item>
+                <pf-dropdown-item key="action" component="button">
+                  Action
+                </pf-dropdown-item>
+                <pf-dropdown-item key="disabled link" disabled>
+                  Disabled Link
+                </pf-dropdown-item>
+                <pf-dropdown-item key="disabled action" disabled component="button">
+                  Disabled Action
+                </pf-dropdown-item>
+                <pf-dropdown-separator key="separator" />
+                <pf-dropdown-item key="separated link">
+                  Separated Link
+                </pf-dropdown-item>
+                <pf-dropdown-item key="separated action" component="button">
+                  Separated Action
+                </pf-dropdown-item>
+              </pf-dropdown>
+            </OverflowMenuControl>
+          </OverflowMenu>
+        </pf-toolbar-item>
+      </pf-toolbar-content>
+    </pf-toolbar>
+    <pf-divider />
+    <pf-toolbar>
+      <pf-toolbar-content>
+        <pf-toolbar-item variant="bulk-select">
+          <pf-dropdown v-model:open="splitButtonDropdownIsOpen">
+            <template #toggle>
+              <pf-dropdown-toggle id="stacked-example-toggle">
+                <template #buttons>
+                  <pf-dropdown-toggle-checkbox id="example-checkbox-1" key="split-checkbox" aria-label="Select all" />
+                </template>
+              </pf-dropdown-toggle>
+            </template>
+            <pf-dropdown-item key="link">
+              Link
+            </pf-dropdown-item>
+            <pf-dropdown-item key="action" component="button">
+              Action
+            </pf-dropdown-item>
+            <pf-dropdown-item key="disabled link" disabled>
+              Disabled Link
+            </pf-dropdown-item>
+            <pf-dropdown-item key="disabled action" disabled component="button">
+              Disabled Action
+            </pf-dropdown-item>
+          </pf-dropdown>
+        </pf-toolbar-item>
+        <pf-toolbar-item variant="pagination" :align="{default: 'alignRight'}">
+          <pf-pagination
+            v-model:page="page"
+            v-model:per-page="perPage"
+            :count="37"
+            widget-id="pagination-options-menu-top"
+          />
+        </pf-toolbar-item>
+      </pf-toolbar-content>
+    </pf-toolbar>
   </pf-page-section>
 </template>
 
@@ -372,6 +483,17 @@ export default {
         risk: ['Low'],
         status: ['New', 'Pending'],
       },
+
+      kebabIsOpen: false,
+      resourceIsExpanded: false,
+      resourceSelected: null,
+      statusIsExpanded: false,
+      statusSelected: null,
+      typeIsExpanded: false,
+      typeSelected: null,
+      splitButtonDropdownIsOpen: false,
+      page: 1,
+      perPage: 20,
     };
   },
 
