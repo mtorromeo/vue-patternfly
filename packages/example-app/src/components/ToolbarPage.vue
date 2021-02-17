@@ -372,22 +372,22 @@
           </pf-toolbar-item>
         </pf-toolbar-toggle-group>
         <pf-toolbar-item variant="overflow-menu">
-          <OverflowMenu breakpoint="2xl">
-            <OverflowMenuContent>
-              <OverflowMenuGroup group-type="button">
-                <OverflowMenuItem>
+          <pf-overflow-menu breakpoint="2xl">
+            <pf-overflow-menu-content>
+              <pf-overflow-menu-group type="button">
+                <pf-overflow-menu-item>
                   <pf-button variant="primary">
                     Primary
                   </pf-button>
-                </OverflowMenuItem>
-                <OverflowMenuItem>
+                </pf-overflow-menu-item>
+                <pf-overflow-menu-item>
                   <pf-button variant="secondary">
                     Secondary
                   </pf-button>
-                </OverflowMenuItem>
-              </OverflowMenuGroup>
-            </OverflowMenuContent>
-            <OverflowMenuControl has-additional-options>
+                </pf-overflow-menu-item>
+              </pf-overflow-menu-group>
+            </pf-overflow-menu-content>
+            <pf-overflow-menu-control additional-options>
               <pf-dropdown v-model:open="kebabIsOpen" plain>
                 <template #toggle>
                   <pf-kebab-toggle />
@@ -412,8 +412,8 @@
                   Separated Action
                 </pf-dropdown-item>
               </pf-dropdown>
-            </OverflowMenuControl>
-          </OverflowMenu>
+            </pf-overflow-menu-control>
+          </pf-overflow-menu>
         </pf-toolbar-item>
       </pf-toolbar-content>
     </pf-toolbar>

@@ -20,7 +20,7 @@
 <script>
 import {provide, ref, computed} from 'vue'
 import {breakpointProp, classesFromBreakpointProps} from '../../util';
-import {windowWidth} from '../../use';
+import {useWindowWidth} from '../../use';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
 
@@ -84,7 +84,7 @@ export default {
     const chipGroupContent = ref(null);
     provide('chipGroupContentRef', chipGroupContent);
 
-    const width = windowWidth();
+    const windowWidth = useWindowWidth();
 
     const filterInfo = ref({});
     const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));
@@ -97,7 +97,7 @@ export default {
       chipGroupContent,
       filterInfo,
       numberOfFilters,
-      windowWidth: width,
+      windowWidth,
     };
   },
 

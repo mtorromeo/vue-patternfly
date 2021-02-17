@@ -13,7 +13,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
-import {windowWidth} from '../../use';
+import {useWindowWidth} from '../../use';
 import {ref, provide, computed} from 'vue';
 
 export default {
@@ -81,14 +81,14 @@ export default {
     });
     provide('navOpen', navOpen);
 
-    const width = windowWidth();
+    const windowWidth = useWindowWidth();
 
     return {
       navOpen,
       mobileView,
       mobileNavOpen,
       desktopNavOpen,
-      windowWidth: width,
+      windowWidth,
     };
   },
 

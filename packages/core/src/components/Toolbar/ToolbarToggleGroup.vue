@@ -28,7 +28,7 @@ import {breakpointProp, classesFromBreakpointProps, toCamel} from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';
-import {windowWidth} from '../../use';
+import {useWindowWidth} from '../../use';
 
 export default {
   name: 'PfToolbarToggleGroup',
@@ -51,7 +51,7 @@ export default {
 
   setup() {
     return {
-      windowWidth: windowWidth(),
+      windowWidth: useWindowWidth(),
     };
   },
 

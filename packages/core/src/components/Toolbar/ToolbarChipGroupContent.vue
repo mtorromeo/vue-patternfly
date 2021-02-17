@@ -29,7 +29,7 @@ import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import {globalBreakpoints} from './ToolbarUtils';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
-import {windowWidth} from '../../use';
+import {useWindowWidth} from '../../use';
 
 export default {
   name: 'PfToolbarChipGroupContent',
@@ -64,7 +64,7 @@ export default {
 
   setup() {
     return {
-      windowWidth: windowWidth(),
+      windowWidth: useWindowWidth(),
     };
   },
 

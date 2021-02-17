@@ -13,6 +13,7 @@ export * from './Alert';
 export * from './ChipGroup';
 export * from './Dropdown';
 export * from './Nav';
+export * from './OverflowMenu';
 export * from './Page';
 export * from './Pagination';
 export * from './Text';

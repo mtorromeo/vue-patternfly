@@ -182,7 +182,7 @@ class WindowResizeManager {
 
 const windowResizeManager = new WindowResizeManager(ref(window.innerWidth));
 
-export function windowWidth() {
+export function useWindowWidth() {
   onMounted(() => windowResizeManager.addListener());
   onUnmounted(() => windowResizeManager.removeListener());
   return computed(() => windowResizeManager.width.value);
