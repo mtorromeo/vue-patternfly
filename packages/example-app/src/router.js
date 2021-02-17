@@ -13,6 +13,7 @@ import LabelPage from './components/LabelPage.vue';
 import PaginationPage from './components/PaginationPage.vue';
 import SpinnerPage from './components/SpinnerPage.vue';
 import SwitchPage from './components/SwitchPage.vue';
+import TextInputPage from './components/TextInputPage.vue';
 import TitlePage from './components/TitlePage.vue';
 import ToolbarPage from './components/ToolbarPage.vue';
 
@@ -66,6 +67,10 @@ export default createRouter({
     name: 'switch',
     path: '/switch',
     component: SwitchPage,
+  }, {
+    name: 'text-input',
+    path: '/text-input',
+    component: TextInputPage,
   }, {
     name: 'title',
     path: '/title',

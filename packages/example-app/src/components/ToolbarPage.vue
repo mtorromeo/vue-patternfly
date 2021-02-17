@@ -13,7 +13,7 @@
       <pf-toolbar-content>
         <pf-toolbar-item>
           <pf-input-group>
-            <input class="pf-c-form-control" type="search" aria-label="search input example">
+            <pf-text-input type="search" aria-label="search input example" />
             <pf-button variant="control" aria-label="search button for search input">
               <SearchIcon />
             </pf-button>
@@ -209,7 +209,7 @@
 
           <pf-toolbar-item>
             <pf-input-group>
-              <input class="pf-c-form-control" type="search" aria-label="search input example">
+              <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
                 <SearchIcon />
               </pf-button>
@@ -241,7 +241,7 @@
 
           <pf-toolbar-item>
             <pf-input-group>
-              <input class="pf-c-form-control" type="search" aria-label="search input example">
+              <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
                 <SearchIcon />
               </pf-button>
@@ -273,7 +273,7 @@
 
           <pf-toolbar-item>
             <pf-input-group>
-              <input class="pf-c-form-control" type="search" aria-label="search input example">
+              <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
                 <SearchIcon />
               </pf-button>

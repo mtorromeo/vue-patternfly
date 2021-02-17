@@ -1,0 +1,166 @@
+<script>
+import {h, mergeProps} from 'vue';
+import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+
+export default {
+  name: 'PfTextInput',
+
+  props: {
+    type: {
+      type: String,
+      default: 'text',
+    },
+
+    value: {
+      type: [String, Number],
+      default: null,
+    },
+
+    autovalidate: {
+      type: [Boolean, String],
+      default: true,
+      validator: v => typeof v === 'boolean' || ['blur', 'input', 'change'].includes(v),
+    },
+
+    validated: {
+      type: String,
+      default: null,
+      validator: v => [null, 'default', 'success', 'warning', 'error'].includes(v),
+    },
+
+    leftTruncated: Boolean,
+
+    iconVariant: {
+      type: String,
+      default: '',
+      validator: v => ['', 'calendar', 'clock', 'search'].includes(v),
+    },
+
+    iconUrl: {
+      type: String,
+      default: '',
+    },
+
+    iconDimensions: {
+      type: String,
+      default: '',
+    },
+  },
+
+  emits: ['input', 'blur', 'change', 'invalid', 'keyup', 'update:value', 'update:validated'],
+
+  data() {
+    return {
+      innerValidated: 'default',
+    };
+  },
+
+  computed: {
+    effectiveValidated() {
+      return this.validated === null ? this.innerValidated : this.validated;
+    },
+  },
+
+  watch: {
+    value() {
+      this.innerValidated = 'default';
+    },
+
+    innerValidated(validity) {
+      this.$emit('update:validated', validity);
+    },
+  },
+
+  methods: {
+    onInput(event) {
+      this.$emit('input', event);
+      this.$emit('update:value', event.target.value);
+      if (this.autovalidate === 'input') {
+        this.reportValidity();
+      } else {
+        this.innerValidated = 'default';
+      }
+    },
+
+    onBlur(event) {
+      this.$emit('blur', event);
+      if (this.autovalidate === 'blur') {
+        this.reportValidity(true);
+      } else if (['input', 'change'].includes(this.autovalidate) && this.innerValidated === 'default') {
+        this.checkValidity();
+      }
+    },
+
+    onChange(event) {
+      this.$emit('change', event);
+      if (this.autovalidate === 'change') {
+        this.reportValidity();
+      }
+    },
+
+    onInvalid(event) {
+      this.$emit('invalid', event);
+      this.innerValidated = 'error';
+    },
+
+    onKeyUp(event) {
+      this.$emit('keyup', event);
+      if (event.key === 'Enter' && this.autovalidate) {
+        this.reportValidity();
+      }
+    },
+
+    checkValidity() {
+      if (this.$el && this.$el.checkValidity()) {
+        this.innerValidated = 'success';
+        return true;
+      }
+      return false;
+    },
+
+    reportValidity(once) {
+      const validatedWas = this.innerValidated;
+      const valid = this.checkValidity();
+      if (!once || (valid && validatedWas !== 'success') || (!valid && validatedWas !== 'error')) {
+        this.$el && this.$el.reportValidity();
+      }
+      return valid;
+    },
+  },
+
+  render() {
+    let style = {};
+    if (this.iconUrl) {
+      style['background-image'] = `url('${this.iconUrl}')`;
+    }
+    if (this.iconDimensions) {
+      style['background-size'] = this.iconDimensions;
+    }
+
+    const inputProps = {};
+    if (this.value !== null) {
+      inputProps.value = this.value;
+    }
+
+    return h('input', mergeProps({
+      class: [
+        styles.formControl, {
+          [styles.modifiers.success]: this.effectiveValidated === 'success',
+          [styles.modifiers.warning]: this.effectiveValidated === 'warning',
+          [styles.modifiers.icon]: (this.iconVariant && this.iconVariant !== 'search') || this.iconUrl,
+          [styles.modifiers[this.iconVariant]]: this.iconVariant,
+        },
+      ],
+      type: this.type,
+      style,
+      'aria-invalid': this.effectiveValidated === 'error',
+      onChange: this.onChange,
+      onInput: this.onInput,
+      onBlur: this.onBlur,
+      onInvalid: this.onInvalid,
+      onKeyUp: this.onKeyUp,
+      ...inputProps,
+    }, this.$attrs));
+  },
+};
+</script>

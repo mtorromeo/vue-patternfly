@@ -78,6 +78,7 @@ export function debounce(func, wait) {
   };
 }
 
+// copied from react-core/src/helpers/util.ts
 /** This function returns whether or not an element is within the viewable area of a container. If partial is true,
  * then this function will return true even if only part of the element is in view.
  *
@@ -160,4 +161,64 @@ export function pluralize(i, singular, plural) {
     plural = `${singular}s`;
   }
   return `${i || 0} ${i === 1 ? singular : plural}`;
+}
+
+// copied from react-core/src/helpers/util.ts
+/**
+ * Calculate the width of the text
+ * Example:
+ * getTextWidth('my text', node)
+ *
+ * @param {string} text The text to calculate the width for
+ * @param {HTMLElement} node The HTML element
+ */
+export function getTextWidth(text, node) {
+  const computedStyle = getComputedStyle(node);
+  // Firefox returns the empty string for .font, so this function creates the .font property manually
+  const getFontFromComputedStyle = () => {
+    let computedFont = '';
+    // Firefox uses percentages for font-stretch, but Canvas does not accept percentages
+    // so convert to keywords, as listed at:
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch
+    const fontStretchLookupTable = {
+      '50%': 'ultra-condensed',
+      '62.5%': 'extra-condensed',
+      '75%': 'condensed',
+      '87.5%': 'semi-condensed',
+      '100%': 'normal',
+      '112.5%': 'semi-expanded',
+      '125%': 'expanded',
+      '150%': 'extra-expanded',
+      '200%': 'ultra-expanded',
+    };
+    // If the retrieved font-stretch percentage isn't found in the lookup table, use
+    // 'normal' as a last resort.
+    let fontStretch;
+    if (computedStyle.fontStretch in fontStretchLookupTable) {
+      fontStretch = fontStretchLookupTable[computedStyle.fontStretch];
+    } else {
+      fontStretch = 'normal';
+    }
+    computedFont =
+      computedStyle.fontStyle +
+      ' ' +
+      computedStyle.fontVariant +
+      ' ' +
+      computedStyle.fontWeight +
+      ' ' +
+      fontStretch +
+      ' ' +
+      computedStyle.fontSize +
+      '/' +
+      computedStyle.lineHeight +
+      ' ' +
+      computedStyle.fontFamily;
+    return computedFont;
+  };
+
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  context.font = computedStyle.font || getFontFromComputedStyle();
+
+  return context.measureText(text).width;
 }

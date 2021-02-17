@@ -58,6 +58,9 @@
             <pf-nav-item :to="{name: 'title'}">
               Title
             </pf-nav-item>
+            <pf-nav-item :to="{name: 'text-input'}">
+              TextInput
+            </pf-nav-item>
             <pf-nav-item :to="{name: 'toolbar'}">
               Toolbar
             </pf-nav-item>

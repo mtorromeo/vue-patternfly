@@ -15,7 +15,6 @@ export default {
   },
 
   render() {
-    console.log(this.isBelowBreakpoint.value, !this.persistent);
     if (this.isBelowBreakpoint.value && !this.persistent) {
       return null;
     }
