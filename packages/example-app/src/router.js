@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import HomePage from './pages/HomePage.vue';
 import LayoutsPage from './pages/LayoutsPage.vue';
 
+import AccordionPage from './pages/AccordionPage.vue';
 import AlertGroupPage from './pages/AlertGroupPage.vue';
 import AlertPage from './pages/AlertPage.vue';
 import BadgePage from './pages/BadgePage.vue';
@@ -27,6 +28,10 @@ export default createRouter({
     name: 'layouts',
     path: '/layouts',
     component: LayoutsPage,
+  }, {
+    name: 'accordion',
+    path: '/accordion',
+    component: AccordionPage,
   }, {
     name: 'alert-group',
     path: '/alert-group',

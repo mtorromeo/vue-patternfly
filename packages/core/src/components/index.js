@@ -10,6 +10,7 @@ export {default as PfSpinner} from './Spinner';
 export {default as Switch} from './Switch.vue';
 export {default as PfTextInput} from './TextInput.vue';
 export {default as PfTitle} from './Title';
+export * from './Accordion';
 export * from './Alert';
 export * from './ChipGroup';
 export * from './Dropdown';

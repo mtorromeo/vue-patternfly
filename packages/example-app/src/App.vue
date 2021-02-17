@@ -25,6 +25,9 @@
             </pf-nav-item>
           </pf-nav-group>
           <pf-nav-group title="Components">
+            <pf-nav-item :to="{name: 'accordion'}">
+              Accordion
+            </pf-nav-item>
             <pf-nav-item :to="{name: 'alert'}">
               Alert
             </pf-nav-item>

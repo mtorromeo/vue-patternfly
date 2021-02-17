@@ -187,3 +187,19 @@ export function useWindowWidth() {
   onUnmounted(() => windowResizeManager.removeListener());
   return computed(() => windowResizeManager.width.value);
 }
+
+export function useManagedProp(props, emit, name, value=null) {
+  const inner = ref(value);
+  return computed({
+    get() {
+      return props[name] === null ? inner.value : props[name];
+    },
+    set(to) {
+      if (props[name] === null) {
+        inner.value = to;
+      } else {
+        emit(`update:${name}`, to);
+      }
+    },
+  });
+}
