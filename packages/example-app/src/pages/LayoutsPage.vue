@@ -1,15 +1,21 @@
 <template>
   <pf-page-section>
-    <h2 class="pf-c-title pf-m-4xl">
-      Bullseye Layout
-    </h2>
+    <pf-title size="4xl">
+      Layouts
+    </pf-title>
+
+    <pf-title h="2">
+      Bullseye
+    </pf-title>
     <pf-bullseye>
       Bullseye ◎ layout
     </pf-bullseye>
 
-    <h2 class="pf-c-title pf-m-4xl">
-      Flex Layout
-    </h2>
+    <pf-divider />
+
+    <pf-title h="2">
+      Flex
+    </pf-title>
     <pf-flex justify-content="space-between">
       <pf-flex-item align-self-sm="flex-start">
         Flex 1
@@ -36,9 +42,11 @@
       </pf-flex>
     </pf-flex>
 
-    <h2 class="pf-c-title pf-m-4xl">
-      Gallery Layout
-    </h2>
+    <pf-divider />
+
+    <pf-title h="2">
+      Gallery
+    </pf-title>
     <pf-gallery gutter>
       <pf-gallery-item>Gallery Item</pf-gallery-item>
       <pf-gallery-item>Gallery Item</pf-gallery-item>
@@ -48,9 +56,11 @@
       <pf-gallery-item>Gallery Item</pf-gallery-item>
     </pf-gallery>
 
-    <h2 class="pf-c-title pf-m-4xl">
-      Grid Layout
-    </h2>
+    <pf-divider />
+
+    <pf-title h="2">
+      Grid
+    </pf-title>
     <pf-grid gutter>
       <pf-grid-item span="8">
         span = 8
@@ -90,36 +100,42 @@
       </pf-grid-item>
     </pf-grid>
 
-    <h2 class="pf-c-title pf-m-4xl">
-      Level Layout
-    </h2>
+    <pf-divider />
+
+    <pf-title h="2">
+      Level
+    </pf-title>
     <pf-level gutter>
       <pf-level-item>Level Item</pf-level-item>
       <pf-level-item>Level Item</pf-level-item>
       <pf-level-item>Level Item</pf-level-item>
     </pf-level>
 
-    <h2 class="pf-c-title pf-m-4xl">
-      Split Layout
-    </h2>
-    <Split gutter>
-      <SplitItem>content</SplitItem>
-      <SplitItem filled>
-        pf-m-fill
-      </SplitItem>
-      <SplitItem>content</SplitItem>
-    </Split>
+    <pf-divider />
 
-    <h2 class="pf-c-title pf-m-4xl">
-      Stack Layout
-    </h2>
-    <Stack gutter>
-      <StackItem>content</StackItem>
-      <StackItem filled>
+    <pf-title h="2">
+      Split
+    </pf-title>
+    <pf-split gutter>
+      <pf-split-item>content</pf-split-item>
+      <pf-split-item filled>
         pf-m-fill
-      </StackItem>
-      <StackItem>content</StackItem>
-    </Stack>
+      </pf-split-item>
+      <pf-split-item>content</pf-split-item>
+    </pf-split>
+
+    <pf-divider />
+
+    <pf-title h="2">
+      Stack
+    </pf-title>
+    <pf-stack gutter>
+      <pf-stack-item>content</pf-stack-item>
+      <pf-stack-item filled>
+        pf-m-fill
+      </pf-stack-item>
+      <pf-stack-item>content</pf-stack-item>
+    </pf-stack>
   </pf-page-section>
 </template>
 
@@ -134,3 +150,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.pf-c-divider {
+  margin-bottom: 1rem;
+}
+</style>

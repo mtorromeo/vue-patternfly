@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Title</pf-title>
-
+  <doc-page title="Title">
     <pf-title class="example-heading" h="3">
       Sizes
     </pf-title>
@@ -47,7 +45,7 @@
     <pf-title h="6">
       md Title
     </pf-title>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

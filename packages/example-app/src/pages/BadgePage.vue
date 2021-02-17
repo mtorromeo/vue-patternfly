@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Badge</pf-title>
-
+  <doc-page title="Badge">
     <pf-title class="example-heading" h="3">
       Read
     </pf-title>
@@ -31,7 +29,7 @@
     <pf-badge>240</pf-badge>
     {{ ' ' }}
     <pf-badge>999+</pf-badge>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

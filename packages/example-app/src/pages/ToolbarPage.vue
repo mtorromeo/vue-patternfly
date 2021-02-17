@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Toolbar</pf-title>
-
+  <doc-page title="Toolbar">
     <pf-title class="example-heading" h="2">
       Examples
     </pf-title>
@@ -453,7 +451,7 @@
         </pf-toolbar-item>
       </pf-toolbar-content>
     </pf-toolbar>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

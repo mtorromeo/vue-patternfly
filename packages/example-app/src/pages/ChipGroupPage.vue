@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Chip group</pf-title>
-
+  <doc-page title="Chip group">
     <pf-title class="example-heading" h="3">
       Single
     </pf-title>
@@ -31,7 +29,7 @@
     <pf-chip v-if="overflowchip" component="button" overflow @click="overflowchip = null">
       {{ overflowchip.name }}
     </pf-chip>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

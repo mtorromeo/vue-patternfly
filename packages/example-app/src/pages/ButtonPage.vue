@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Button</pf-title>
-
+  <doc-page title="Button">
     <pf-title class="example-heading" h="3">
       Variations
     </pf-title>
@@ -246,7 +244,7 @@
         Click to start loading
       </template>
     </pf-button>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

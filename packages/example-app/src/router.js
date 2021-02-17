@@ -1,21 +1,21 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import HomePage from './components/HomePage.vue';
-import LayoutsPage from './components/LayoutsPage.vue';
+import HomePage from './pages/HomePage.vue';
+import LayoutsPage from './pages/LayoutsPage.vue';
 
-import AlertGroupPage from './components/AlertGroupPage.vue';
-import AlertPage from './components/AlertPage.vue';
-import BadgePage from './components/BadgePage.vue';
-import ButtonPage from './components/ButtonPage.vue';
-import ChipGroupPage from './components/ChipGroupPage.vue';
-import DropdownPage from './components/DropdownPage.vue';
-import LabelPage from './components/LabelPage.vue';
-import PaginationPage from './components/PaginationPage.vue';
-import SpinnerPage from './components/SpinnerPage.vue';
-import SwitchPage from './components/SwitchPage.vue';
-import TextInputPage from './components/TextInputPage.vue';
-import TitlePage from './components/TitlePage.vue';
-import ToolbarPage from './components/ToolbarPage.vue';
+import AlertGroupPage from './pages/AlertGroupPage.vue';
+import AlertPage from './pages/AlertPage.vue';
+import BadgePage from './pages/BadgePage.vue';
+import ButtonPage from './pages/ButtonPage.vue';
+import ChipGroupPage from './pages/ChipGroupPage.vue';
+import DropdownPage from './pages/DropdownPage.vue';
+import LabelPage from './pages/LabelPage.vue';
+import PaginationPage from './pages/PaginationPage.vue';
+import SpinnerPage from './pages/SpinnerPage.vue';
+import SwitchPage from './pages/SwitchPage.vue';
+import TextInputPage from './pages/TextInputPage.vue';
+import TitlePage from './pages/TitlePage.vue';
+import ToolbarPage from './pages/ToolbarPage.vue';
 
 export default createRouter({
   history: createWebHashHistory(),

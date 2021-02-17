@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>PfDropdown</pf-title>
-
+  <doc-page title="Dropdown">
     <pf-title class="example-heading" h="3">
       Basic
     </pf-title>
@@ -373,7 +371,7 @@
         Disabled Action
       </pf-dropdown-item>
     </pf-dropdown>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

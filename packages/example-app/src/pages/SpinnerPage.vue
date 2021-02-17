@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Spinner</pf-title>
-
+  <doc-page title="Spinner">
     <pf-title class="example-heading" h="3">
       Basic
     </pf-title>
@@ -14,7 +12,7 @@
     <pf-spinner size="md" />
     <pf-spinner size="lg" />
     <pf-spinner size="xl" />
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

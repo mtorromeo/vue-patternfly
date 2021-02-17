@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Switch</pf-title>
-
+  <doc-page title="Switch">
     <pf-title class="example-heading" h="3">
       Basic
     </pf-title>
@@ -19,7 +17,7 @@
     <pf-switch disabled label="Message when on" label-off="Message when off" /> <br>
     <pf-switch disabled checked /> <br>
     <pf-switch disabled /> <br>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

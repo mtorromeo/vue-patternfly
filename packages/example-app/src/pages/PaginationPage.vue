@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Pagination</pf-title>
-
+  <doc-page title="Pagination">
     <pf-title class="example-heading" h="3">
       Top
     </pf-title>
@@ -42,7 +40,7 @@
     <pf-title class="example-heading" h="3">
       Sticky
     </pf-title>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>

@@ -59,7 +59,7 @@
               Title
             </pf-nav-item>
             <pf-nav-item :to="{name: 'text-input'}">
-              TextInput
+              Text input
             </pf-nav-item>
             <pf-nav-item :to="{name: 'toolbar'}">
               Toolbar

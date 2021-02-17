@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section variant="light">
-    <pf-title>Label</pf-title>
-
+  <doc-page title="Label">
     <pf-title class="example-heading" h="3">
       Filled
     </pf-title>
@@ -435,7 +433,7 @@
     <pf-label outline color="cyan" href="#filled" close @close="log">
       Cyan link removeable
     </pf-label>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <script>
