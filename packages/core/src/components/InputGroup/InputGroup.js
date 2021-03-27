@@ -2,7 +2,7 @@
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
 import {h, mergeProps} from 'vue';
-import {cloneElement} from '../util';
+import {cloneElement} from '../../util';
 
 const formCtrls = ['PfFormSelect', 'PfTextArea', 'PfTextInput'];
 
