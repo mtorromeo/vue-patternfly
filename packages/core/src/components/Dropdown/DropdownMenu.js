@@ -43,8 +43,8 @@ export default {
     const items = computed(() => children.filter(
       c => Boolean(c.focusElement()) && !c.disabled && c.focus,
     ));
-    const onKeyDown = keyNavigation(items);
-    provide('keyDown', onKeyDown);
+    const onKeydown = keyNavigation(items);
+    provide('keydown', onKeydown);
     return {
       'items': items,
     };

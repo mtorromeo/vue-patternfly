@@ -159,7 +159,7 @@
     <p>
       Note that using a <b>span</b> as a button does not fire the <b>onclick</b> event for Enter or Space keys.
       <pf-button variant="link" inline component="span" on-key-down="{handleKeydown}">
-        An <b>onKeyDown</b> event listener is needed for Enter and Space key presses to prevent their default behavior and trigger your code.
+        An <b>onKeydown</b> event listener is needed for Enter and Space key presses to prevent their default behavior and trigger your code.
       </pf-button>
       {{ ' ' }}Pressing the Enter or Space keys on the inline link as span above demonstrates this by triggering an alert.
     </p>

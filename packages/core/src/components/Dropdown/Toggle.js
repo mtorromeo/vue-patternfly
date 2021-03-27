@@ -31,13 +31,13 @@ export default {
   mounted() {
     document.addEventListener('mousedown', this.onDocClick);
     document.addEventListener('touchstart', this.onDocClick);
-    document.addEventListener('keydown', this.onEscPress);
+    document.addEventListener('keydown', this.onEscPress, {capture: true});
   },
 
   beforeUmount() {
     document.removeEventListener('mousedown', this.onDocClick);
     document.removeEventListener('touchstart', this.onDocClick);
-    document.removeEventListener('keydown', this.onEscPress);
+    document.removeEventListener('keydown', this.onEscPress, {capture: true});
   },
 
   render() {
@@ -57,7 +57,7 @@ export default {
       type: this.type,
       'aria-expanded': this.open,
       onClick: this.toggle,
-      onKeyDown: this.onKeyDown,
+      onKeydown: this.onKeydown,
     }, this.$slots.default ? this.$slots.default() : []);
   },
 
@@ -104,22 +104,41 @@ export default {
       }
     },
 
-    onKeyDown(event) {
+    onKeydown(event) {
       if (event.key === 'Tab' && !this.open) {
         return;
       }
 
-      if (!this.bubbleEvent) {
-        event.stopPropagation();
-        this.onEscPress(event);
+      const stopEvent = () => {
+        if (!this.bubbleEvent) {
+          event.stopPropagation();
+        }
+        event.preventDefault();
       }
-      event.preventDefault();
 
-      if ((event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') && this.open) {
+      if (!this.open) {
+        if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+          this.toggle();
+          this.$emit('enter');
+          stopEvent();
+        }
+        return;
+      }
+
+      const keyCode = event.keyCode || event.which;
+
+      if (!this.bubbleEvent && keyCode === 27 /* ESC */) {
+        this.onEscPress(event);
+        stopEvent();
+      } else if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
         this.toggle();
-      } else if ((event.key === 'Enter' || event.key === ' ') && !this.open) {
-        this.toggle();
-        this.$emit('enter');
+        stopEvent();
+      } else if (event.key === 'ArrowDown') {
+        const menu = this.dropdown.$refs.menu;
+        if (menu && menu.items.length && menu.$el && !menu.$el.contains(event.target)) {
+          menu.items[0].focus();
+          stopEvent();
+        }
       }
     },
   },

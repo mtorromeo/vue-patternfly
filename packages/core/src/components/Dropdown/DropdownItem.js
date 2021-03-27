@@ -9,7 +9,7 @@ export default {
   inheritAttrs: false,
 
   inject: {
-    keyDown: 'keyDown',
+    keydown: 'keydown',
     dropdown: {
       default: null,
     },
@@ -140,7 +140,7 @@ export default {
 
     return h('li', {
       role: this.role,
-      onKeyDown: this.keyDown.bind(this),
+      onKeydown: this.keydown.bind(this),
       onClick: e => {
         if (this.disabled) {
           if (this.dropdown && this.dropdown.$refs.toggle && this.dropdown.$refs.toggle.$el) {

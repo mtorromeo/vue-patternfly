@@ -33,7 +33,7 @@
         :disabled="disabled || (page === firstPage && page === lastPage) || page === 0"
         :min="lastPage <= 0 && firstPage <= 0 ? 0 : 1"
         :max="lastPage"
-        @keydown="onKeyDown"
+        @keydown="onKeydown"
         @change="onChange"
       >
       <span aria-hidden="true">of {{ pagesTitle ? pluralize(lastPage, pagesTitle) : lastPage }}</span>
@@ -176,7 +176,7 @@ export default {
       return inputPage;
     },
 
-    onKeyDown(e) {
+    onKeydown(e) {
       if (e.keyCode === 13) { // ENTER
         const inputPage = this.parseInteger(this.userInputPage, this.lastPage);
         this.handleNewPage(isNaN(inputPage) ? this.page : inputPage);
