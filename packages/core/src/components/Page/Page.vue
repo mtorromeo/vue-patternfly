@@ -2,8 +2,18 @@
   <div :class="styles.page">
     <slot name="skeleton" />
     <main :id="mainContainerId" :role="role" :class="styles.pageMain" :tab-index="mainTabIndex" :aria-label="mainAriaLabel">
-      <section v-if="$slots.breadcrumb" :class="styles.pageMainBreadcrumb">
-        <slot name="breadcrumb" />
+      <section
+        v-if="$slots.breadcrumb"
+        :class="[styles.pageMainBreadcrumb, {
+          [styles.modifiers.limitWidth]: breadcrumbWidthLimited,
+        }]"
+      >
+        <div v-if="breadcrumbWidthLimited" :class="styles.pageMainBody">
+          <slot name="breadcrumb" />
+        </div>
+        <template v-else>
+          <slot name="breadcrumb" />
+        </template>
       </section>
       <slot />
     </main>
@@ -46,6 +56,8 @@ export default {
       type: String,
       default: '',
     },
+
+    breadcrumbWidthLimited: Boolean,
   },
 
   emits: {

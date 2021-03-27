@@ -23,12 +23,18 @@ const PfPageSection = (props, {slots, attrs}) => {
     'padding',
   ], styles, {short: true});
 
+  let children = slots.default();
+  if (props.widthLimited) {
+    children = h('div', {class: styles.pageMainBody}, children);
+  }
+
   return h('section', mergeProps({
     class: [classes, variantType, variantStyle, {
       [styles.modifiers.noFill]: !props.filled,
       [styles.modifiers.fill]: props.filled,
+      [styles.modifiers.limitWidth]: props.widthLimited,
     }],
-  }, attrs), slots.default());
+  }, attrs), children);
 };
 
 PfPageSection.props = {
@@ -48,6 +54,9 @@ PfPageSection.props = {
 
   /** Enables the page section to fill the available vertical space */
   filled: Boolean,
+
+  /** Limits the width of the section */
+  widthLimited: Boolean,
 
   /** Padding at various breakpoints. */
   ...breakpointProp('padding', String, ['', 'padding', 'no-padding']),
