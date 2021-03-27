@@ -145,13 +145,28 @@
       <pf-toolbar-content>
         <pf-toolbar-group variant="filter-group">
           <pf-toolbar-item>
-            <select />
+            <pf-select v-model:open="selectExpanded1" @clear="void 0">
+              <pf-select-option value="Filter 1" placeholder />
+              <pf-select-option value="A" />
+              <pf-select-option value="B" />
+              <pf-select-option value="C" />
+            </pf-select>
           </pf-toolbar-item>
           <pf-toolbar-item>
-            <select />
+            <pf-select v-model:open="selectExpanded2" @clear="void 0">
+              <pf-select-option value="Filter 2" placeholder />
+              <pf-select-option value="1" />
+              <pf-select-option value="2" />
+              <pf-select-option value="3" />
+            </pf-select>
           </pf-toolbar-item>
           <pf-toolbar-item>
-            <select />
+            <pf-select v-model:open="selectExpanded3" @clear="void 0">
+              <pf-select-option value="Filter 3" placeholder />
+              <pf-select-option value="I" />
+              <pf-select-option value="II" />
+              <pf-select-option value="III" />
+            </pf-select>
           </pf-toolbar-item>
         </pf-toolbar-group>
         <pf-toolbar-group variant="icon-button-group">
@@ -216,11 +231,21 @@
 
           <pf-toolbar-group variant="filter-group">
             <pf-toolbar-item>
-              <select />
+              <pf-select>
+                <pf-select-option value="Filter 1" placeholder />
+                <pf-select-option value="A" />
+                <pf-select-option value="B" />
+                <pf-select-option value="C" />
+              </pf-select>
             </pf-toolbar-item>
 
             <pf-toolbar-item>
-              <select />
+              <pf-select>
+                <pf-select-option value="Filter 2" placeholder />
+                <pf-select-option value="1" />
+                <pf-select-option value="2" />
+                <pf-select-option value="3" />
+              </pf-select>
             </pf-toolbar-item>
           </pf-toolbar-group>
         </pf-toolbar-toggle-group>
@@ -248,11 +273,21 @@
 
           <pf-toolbar-group variant="filter-group">
             <pf-toolbar-item>
-              <select />
+              <pf-select>
+                <pf-select-option value="Filter 1" placeholder />
+                <pf-select-option value="A" />
+                <pf-select-option value="B" />
+                <pf-select-option value="C" />
+              </pf-select>
             </pf-toolbar-item>
 
             <pf-toolbar-item>
-              <select />
+              <pf-select>
+                <pf-select-option value="Filter 2" placeholder />
+                <pf-select-option value="1" />
+                <pf-select-option value="2" />
+                <pf-select-option value="3" />
+              </pf-select>
             </pf-toolbar-item>
           </pf-toolbar-group>
         </pf-toolbar-toggle-group>
@@ -281,13 +316,23 @@
           <pf-toolbar-group variant="filter-group">
             <pf-toolbar-filter category="Status" :chips="filters.status" @delete-chip="onDelete" @delete-chip-group="onDeleteGroup">
               <pf-toolbar-item>
-                <select />
+                <pf-select>
+                  <pf-select-option value="Filter 1" placeholder />
+                  <pf-select-option value="A" />
+                  <pf-select-option value="B" />
+                  <pf-select-option value="C" />
+                </pf-select>
               </pf-toolbar-item>
             </pf-toolbar-filter>
 
             <pf-toolbar-filter category="Risk" :chips="filters.risk" @delete-chip="onDelete">
               <pf-toolbar-item>
-                <select />
+                <pf-select>
+                  <pf-select-option value="Filter 2" placeholder />
+                  <pf-select-option value="1" />
+                  <pf-select-option value="2" />
+                  <pf-select-option value="3" />
+                </pf-select>
               </pf-toolbar-item>
             </pf-toolbar-filter>
           </pf-toolbar-group>
@@ -354,19 +399,34 @@
             Resource
           </pf-toolbar-item>
           <pf-toolbar-item>
-            <select />
+            <pf-select>
+              <pf-select-option value="Filter 1" placeholder />
+              <pf-select-option value="A" />
+              <pf-select-option value="B" />
+              <pf-select-option value="C" />
+            </pf-select>
           </pf-toolbar-item>
           <pf-toolbar-item id="stacked-example-status-select" variant="label">
             Status
           </pf-toolbar-item>
           <pf-toolbar-item>
-            <select />
+            <pf-select>
+              <pf-select-option value="Filter 2" placeholder />
+              <pf-select-option value="1" />
+              <pf-select-option value="2" />
+              <pf-select-option value="3" />
+            </pf-select>
           </pf-toolbar-item>
           <pf-toolbar-item id="stacked-example-type-select" variant="label">
             Type
           </pf-toolbar-item>
           <pf-toolbar-item>
-            <select />
+            <pf-select>
+              <pf-select-option value="Filter 3" placeholder />
+              <pf-select-option value="I" />
+              <pf-select-option value="II" />
+              <pf-select-option value="III" />
+            </pf-select>
           </pf-toolbar-item>
         </pf-toolbar-toggle-group>
         <pf-toolbar-item variant="overflow-menu">
@@ -476,6 +536,9 @@ export default {
     return {
       expanded1: false,
       expanded2: false,
+      selectExpanded1: false,
+      selectExpanded2: false,
+      selectExpanded3: false,
       dropdownOpen: false,
       filters: {
         risk: ['Low'],

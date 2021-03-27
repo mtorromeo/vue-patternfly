@@ -52,6 +52,9 @@
             <pf-nav-item :to="{name: 'pagination'}">
               Pagination
             </pf-nav-item>
+            <pf-nav-item :to="{name: 'select'}">
+              Select
+            </pf-nav-item>
             <pf-nav-item :to="{name: 'spinner'}">
               Spinner
             </pf-nav-item>

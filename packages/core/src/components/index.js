@@ -18,6 +18,7 @@ export * from './Nav';
 export * from './OverflowMenu';
 export * from './Page';
 export * from './Pagination';
+export * from './Select';
 export * from './Text';
 export * from './Toolbar';
 export * from './Tooltip';

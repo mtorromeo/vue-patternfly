@@ -23,11 +23,6 @@ export default {
       type: String,
       default: 'div',
     },
-    direction: {
-      type: String,
-      default: 'down',
-      validator: v => ['up', 'down'].includes(v),
-    },
     position: {
       type: String,
       default: 'left',
@@ -42,6 +37,7 @@ export default {
       type: String,
       default: '',
     },
+    dropUp: Boolean,
     disabled: Boolean,
     open: Boolean,
     plain: Boolean,
@@ -127,7 +123,7 @@ export default {
 
     return h(this.baseComponent, {
       class: [this.baseClass || styles.dropdown, {
-        [styles.modifiers.top]: this.direction === 'up',
+        [styles.modifiers.top]: this.dropUp,
         [styles.modifiers.alignRight]: this.position === 'right',
         [styles.modifiers.expanded]: this.open,
       }],

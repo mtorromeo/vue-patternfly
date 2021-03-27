@@ -29,7 +29,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    openedOnEnter: Boolean,
     autoFocus: {
       type: Boolean,
       default: true,

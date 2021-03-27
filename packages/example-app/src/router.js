@@ -12,6 +12,7 @@ import ChipGroupPage from './pages/ChipGroupPage.vue';
 import DropdownPage from './pages/DropdownPage.vue';
 import LabelPage from './pages/LabelPage.vue';
 import PaginationPage from './pages/PaginationPage.vue';
+import SelectPage from './pages/SelectPage.vue';
 import SpinnerPage from './pages/SpinnerPage.vue';
 import SwitchPage from './pages/SwitchPage.vue';
 import TextInputPage from './pages/TextInputPage.vue';
@@ -64,6 +65,10 @@ export default createRouter({
     name: 'pagination',
     path: '/pagination',
     component: PaginationPage,
+  }, {
+    name: 'select',
+    path: '/select',
+    component: SelectPage,
   }, {
     name: 'spinner',
     path: '/spinner',

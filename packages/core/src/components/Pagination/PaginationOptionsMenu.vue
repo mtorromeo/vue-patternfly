@@ -2,7 +2,7 @@
   <pf-dropdown
     :id="widgetId"
     v-model:open="open"
-    :direction="dropUp ? 'up' : 'down'"
+    :drop-up="dropUp"
     plain
   >
     <template #toggle>
