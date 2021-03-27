@@ -1,3 +1,4 @@
+export {default as PfBadgeToggle} from './BadgeToggle';
 export {default as PfDropdown} from './Dropdown';
 export {default as PfDropdownGroup} from './DropdownGroup';
 export {default as PfDropdownItem} from './DropdownItem';

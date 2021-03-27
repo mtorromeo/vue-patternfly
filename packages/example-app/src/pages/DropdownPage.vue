@@ -181,6 +181,36 @@
     </pf-dropdown>
 
     <pf-title class="example-heading" h="3">
+      With badge
+    </pf-title>
+    <pf-dropdown v-model:open="open16" plain>
+      <template #toggle>
+        <pf-badge-toggle aria-label="Applications">
+          3
+        </pf-badge-toggle>
+      </template>
+
+      <pf-dropdown-item component="button">
+        <template #icon>
+          <AngleLeftIcon />
+        </template>
+        Edit
+      </pf-dropdown-item>
+      <pf-dropdown-item component="button">
+        <template #icon>
+          <AngleLeftIcon />
+        </template>
+        Deployment
+      </pf-dropdown-item>
+      <pf-dropdown-item component="button">
+        <template #icon>
+          <AngleLeftIcon />
+        </template>
+        Applications
+      </pf-dropdown-item>
+    </pf-dropdown>
+
+    <pf-title class="example-heading" h="3">
       Split button
     </pf-title>
     <pf-dropdown v-model:open="open9">
@@ -380,6 +410,7 @@ import CogIcon from '@vue-patternfly4/icons/dist/esm/icons/cog-icon';
 import CubesIcon from '@vue-patternfly4/icons/dist/esm/icons/cubes-icon';
 import ThIcon from '@vue-patternfly4/icons/dist/esm/icons/th-icon';
 import UserIcon from '@vue-patternfly4/icons/dist/esm/icons/user-icon';
+import AngleLeftIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-left-icon';
 
 
 export default {
@@ -391,6 +422,7 @@ export default {
     CubesIcon,
     ThIcon,
     UserIcon,
+    AngleLeftIcon,
   },
 
   data() {
@@ -410,6 +442,7 @@ export default {
       open13: false,
       open14: false,
       open15: false,
+      open16: false,
     };
   },
 };
