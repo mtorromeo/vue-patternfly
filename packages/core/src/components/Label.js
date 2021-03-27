@@ -21,6 +21,11 @@ const PfLabel = (props, {slots, attrs, emit}) => {
     component = 'router-link';
   }
 
+  let children = slots.default();
+  if (props.truncated) {
+    children = h('span', {class: styles.labelText}, children);
+  }
+
   return h('span', mergeProps({
     class: [styles.label, colorStyles[props.color], {
       [styles.modifiers.outline]: props.outline || props.variant === 'outline',
@@ -32,7 +37,7 @@ const PfLabel = (props, {slots, attrs, emit}) => {
       class: styles.labelContent,
     }, [
       slots.icon && h('span', {class: styles.labelIcon}, slots.icon()),
-      slots.default(),
+      children,
     ]),
     props.close && h(PfCloseButton, {
       onClick: e => emit('close', e),
@@ -61,6 +66,7 @@ PfLabel.props = {
   },
   outline: Boolean,
   close: Boolean,
+  truncated: Boolean,
 };
 
 PfLabel.inheritAttrs = false;

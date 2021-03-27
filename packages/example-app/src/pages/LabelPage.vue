@@ -30,6 +30,12 @@
     <pf-label href="#filled" close @close="log">
       Grey link removeable
     </pf-label>
+    <pf-label close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Grey label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label color="blue">
@@ -59,6 +65,12 @@
     {{ ' ' }}
     <pf-label color="blue" href="#filled" close @close="log">
       Blue link removeable
+    </pf-label>
+    <pf-label color="blue" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Blue label with icon that overflows
     </pf-label>
     <br>
     <br>
@@ -91,6 +103,12 @@
     <pf-label color="green" href="#filled" close @close="log">
       Green link removeable
     </pf-label>
+    <pf-label color="green" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Green label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label color="orange">
@@ -121,6 +139,12 @@
     {{ ' ' }}
     <pf-label color="orange" href="#filled" close @close="log">
       Orange link removeable
+    </pf-label>
+    <pf-label color="orange" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Orange label with icon that overflows
     </pf-label>
     <br>
     <br>
@@ -153,6 +177,12 @@
     <pf-label color="red" href="#filled" close @close="log">
       Red link removeable
     </pf-label>
+    <pf-label color="red" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Red label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label color="purple">
@@ -184,6 +214,12 @@
     <pf-label color="purple" href="#filled" close @close="log">
       Purple link removeable
     </pf-label>
+    <pf-label color="purple" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Purple label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label color="cyan">
@@ -214,6 +250,12 @@
     {{ ' ' }}
     <pf-label color="cyan" href="#filled" close @close="log">
       Cyan link removeable
+    </pf-label>
+    <pf-label color="cyan" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Cyan label with icon that overflows
     </pf-label>
 
     <pf-title class="example-heading" h="3">
@@ -248,6 +290,12 @@
     <pf-label outline href="#filled" close @close="log">
       Grey link removeable
     </pf-label>
+    <pf-label outline close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Grey label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label outline color="blue">
@@ -277,6 +325,12 @@
     {{ ' ' }}
     <pf-label outline color="blue" href="#filled" close @close="log">
       Blue link removeable
+    </pf-label>
+    <pf-label outline color="blue" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Blue label with icon that overflows
     </pf-label>
     <br>
     <br>
@@ -309,6 +363,12 @@
     <pf-label outline color="green" href="#filled" close @close="log">
       Green link removeable
     </pf-label>
+    <pf-label outline color="green" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Green label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label outline color="orange">
@@ -339,6 +399,12 @@
     {{ ' ' }}
     <pf-label outline color="orange" href="#filled" close @close="log">
       Orange link removeable
+    </pf-label>
+    <pf-label outline color="orange" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Orange label with icon that overflows
     </pf-label>
     <br>
     <br>
@@ -371,6 +437,12 @@
     <pf-label outline color="red" href="#filled" close @close="log">
       Red link removeable
     </pf-label>
+    <pf-label outline color="red" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Red label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label outline color="purple">
@@ -402,6 +474,12 @@
     <pf-label outline color="purple" href="#filled" close @close="log">
       Purple link removeable
     </pf-label>
+    <pf-label outline color="purple" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Purple label with icon that overflows
+    </pf-label>
     <br>
     <br>
     <pf-label outline color="cyan">
@@ -432,6 +510,12 @@
     {{ ' ' }}
     <pf-label outline color="cyan" href="#filled" close @close="log">
       Cyan link removeable
+    </pf-label>
+    <pf-label outline color="cyan" close truncated @close="log">
+      <template #icon>
+        <InfoCircleIcon />
+      </template>
+      Cyan label with icon that overflows
     </pf-label>
   </doc-page>
 </template>
