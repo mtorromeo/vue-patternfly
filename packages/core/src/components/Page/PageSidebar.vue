@@ -17,6 +17,12 @@ import styles from '@patternfly/react-styles/css/components/Page/page';
 export default {
   name: 'PfPageSidebar',
 
+  provide() {
+    return {
+      sidebar: this,
+    };
+  },
+
   inject: {
     managedNavOpen: {
       from: 'navOpen',

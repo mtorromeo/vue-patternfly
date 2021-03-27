@@ -10,6 +10,7 @@
       :aria-current="active ? 'page' : null"
       :to="to"
       :active-class="to ? styles.modifiers.current : null"
+      :tabindex="tabindex || sidebar.sidebarOpen ? null : '-1'"
       v-bind="$attrs"
       @click="select"
     >
@@ -24,7 +25,7 @@ import styles from '@patternfly/react-styles/css/components/Nav/nav';
 export default {
   name: 'PfNavItem',
 
-  inject: ['onSelect'],
+  inject: ['onSelect', 'sidebar'],
 
   inheritAttrs: false,
 
@@ -57,6 +58,10 @@ export default {
     },
     to: {
       type: [String, Object],
+      default: null,
+    },
+    tabindex: {
+      type: [String, Number],
       default: null,
     },
   },
