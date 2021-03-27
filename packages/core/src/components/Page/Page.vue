@@ -1,7 +1,7 @@
 <template>
   <div :class="styles.page">
     <slot name="skeleton" />
-    <main :id="mainContainerId" :role="role" :class="styles.pageMain" :tab-index="mainTabIndex" :aria-label="mainAriaLabel">
+    <main :id="mainContainerId" :role="role" :class="styles.pageMain" :tab-index="mainTabIndex" :aria-label="mainAriaLabel" @click="mainClick" @touchstart="mainClick">
       <section
         v-if="$slots.breadcrumb"
         :class="[styles.pageMainBreadcrumb, {
@@ -120,6 +120,12 @@ export default {
   methods: {
     navToggle() {
       this.navOpen = !this.navOpen;
+    },
+
+    mainClick() {
+      if (this.mobileView && this.navOpen) {
+        this.navOpen = false;
+      }
     },
   },
 };
