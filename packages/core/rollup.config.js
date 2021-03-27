@@ -20,9 +20,10 @@ const c = {
   },
   plugins: [
     replace({
-      'process.env.NODE_ENV': `'${
-        isProduction ? 'production' : 'development'
-      }'`,
+      preventAssignment: true,
+      values: {
+        'process.env.NODE_ENV': `'${isProduction ? 'production' : 'development'}'`,
+      },
     }),
     resolve(),
     vue({
