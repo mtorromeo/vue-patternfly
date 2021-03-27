@@ -6,11 +6,11 @@
     }]"
     @click="handleToggle"
   >
-    <a
+    <button
       :id="srText ? null : validId"
       ref="expandable"
+      type="button"
       :class="styles.navLink"
-      href="#"
       :aria-expanded="realExpanded"
       @click.prevent
       @mousedown.prevent
@@ -21,7 +21,7 @@
           <AngleRightIcon aria-hidden="true" />
         </span>
       </span>
-    </a>
+    </button>
     <section :class="styles.navSubnav" :aria-labelledby="validId" :hidden="realExpanded ? null : true">
       <h2 v-if="srText" :id="validId" :class="a11yStyles.screenReader">
         {{ srText }}
