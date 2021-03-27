@@ -1,6 +1,6 @@
 <template>
   <teleport :disabled="!toast" :to="appendTo">
-    <pf-alert-group-inline :toast="toast">
+    <pf-alert-group-inline :toast="toast" v-bind="$attrs">
       <slot />
     </pf-alert-group-inline>
   </teleport>

@@ -1,11 +1,13 @@
 <template>
-  <div v-if="!disabled"
+  <div v-if="!dismissed"
        :class="[styles.alert, {
          [styles.modifiers.inline]: inline,
          [styles.modifiers[variant]]: variant !== 'default',
        }]"
        :aria-live="liveRegion ? 'polite' : null"
        :aria-atomic="liveRegion ? 'false' : null"
+       @mouseenter="onMouseEnter"
+       @mouseleave="onMouseLeave"
   >
     <pf-alert-icon :variant="variant">
       <template v-if="$slots['custom-icon']" #default>
@@ -73,17 +75,26 @@ export default {
       type: [Boolean, Number],
       default: false,
     },
+
+    timeoutAnimation: {
+      type: Number,
+      default: 3000,
+    },
   },
 
-  emits: ['close', 'timeout'],
+  emits: ['close', 'timeout', 'mouseenter', 'mouseleave'],
 
   data() {
     return {
       tooltipVisible: true, // TODO
       styles,
       accessibleStyles,
-      disabled: false,
       timer: null,
+
+      timedOut: false,
+      timedOutAnimation: true,
+      containsFocus: false,
+      isMouseOver: false,
     };
   },
 
@@ -91,19 +102,60 @@ export default {
     variantLabel() {
       return `${this.variant.charAt('').toUpperCase()}${this.variant.slice(1)} alert:`;
     },
+
+    dismissed() {
+      return this.timedOut && this.timedOutAnimation && !this.isMouseOver && !this.containsFocus;
+    },
+  },
+
+  watch: {
+    dismissed() {
+      if (this.dismissed) {
+        this.$emit('timeout');
+      }
+    },
   },
 
   mounted() {
     if (this.timeout) {
-      this.timer = setTimeout(() => {
-        this.disabled = true;
-        this.$emit('timeout');
-      }, this.timeout === true ? 8000 : this.timeout)
+      this.timer = setTimeout(() => this.timedOut = true, this.timeout === true ? 8000 : this.timeout);
     }
+
+    document.addEventListener('focus', this.onDocumentFocus, true);
+
+    this.$watch(() => [this.containsFocus, this.isMouseOver], ([containsFocus, isMouseOver]) => {
+      if (!containsFocus || !isMouseOver) {
+        this.animationTimer = setTimeout(() => this.timedOutAnimation = true, this.timeoutAnimation);
+      }
+    });
   },
 
   beforeUnmount() {
     clearTimeout(this.timer);
+    clearTimeout(this.animationTimer);
+    document.removeEventListener('focus', this.onDocumentFocus, true);
+  },
+
+  methods: {
+    onDocumentFocus() {
+      if (this.$el && this.$el.contains(document.activeElement)) {
+        this.containsFocus = true;
+        this.timedOutAnimation = false;
+      } else if (this.containsFocus) {
+        this.containsFocus = false;
+      }
+    },
+
+    onMouseEnter(e) {
+      this.isMouseOver = true;
+      this.timedOutAnimation = false;
+      this.$emit('mouseenter', e);
+    },
+
+    onMouseLeave(e) {
+      this.isMouseOver = false;
+      this.$emit('mouseleave', e);
+    },
   },
 };
 </script>
