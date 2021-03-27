@@ -8,8 +8,8 @@
     :placement="position"
     :visible="visible"
     @click="click"
-    @mouseEnter="visible = true"
-    @mouseLeave="visible = false"
+    @mouseenter="visible = true"
+    @mouseleave="visible = false"
   >
     <slot />
 
