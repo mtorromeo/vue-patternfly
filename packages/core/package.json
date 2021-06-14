@@ -1,7 +1,7 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.0-alpha.0",
+  "private": false,
   "main": "dist/core.umd.js",
   "module": "dist/core.esm.js",
   "unpkg": "dist/core.min.js",

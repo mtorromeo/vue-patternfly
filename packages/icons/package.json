@@ -1,7 +1,7 @@
 {
   "name": "@vue-patternfly/icons",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.0-alpha.0",
+  "private": false,
   "main": "dist/js/index.js",
   "module": "dist/esm/index.js",
   "sideEffects": false,
