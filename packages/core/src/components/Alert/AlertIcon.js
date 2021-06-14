@@ -1,11 +1,11 @@
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
 
 import {h, mergeProps} from 'vue';
-import CheckCircleIcon from '@vue-patternfly4/icons/dist/esm/icons/check-circle-icon';
-import ExclamationCircleIcon from '@vue-patternfly4/icons/dist/esm/icons/exclamation-circle-icon';
-import ExclamationTriangleIcon from '@vue-patternfly4/icons/dist/esm/icons/exclamation-triangle-icon';
-import InfoCircleIcon from '@vue-patternfly4/icons/dist/esm/icons/info-circle-icon';
-import BellIcon from '@vue-patternfly4/icons/dist/esm/icons/bell-icon';
+import CheckCircleIcon from '@vue-patternfly/icons/dist/esm/icons/check-circle-icon';
+import ExclamationCircleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon';
+import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-triangle-icon';
+import InfoCircleIcon from '@vue-patternfly/icons/dist/esm/icons/info-circle-icon';
+import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 
 const variantIcons = {
   success: CheckCircleIcon,

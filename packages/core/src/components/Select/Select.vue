@@ -88,7 +88,7 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 
 import PfVoid from '../Void';
 import PfPopper from '../Popper';
-import TimesCircleIcon from '@vue-patternfly4/icons/dist/esm/icons/times-circle-icon';
+import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 
 import {useManagedProp} from '../../use';
 

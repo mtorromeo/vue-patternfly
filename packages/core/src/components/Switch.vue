@@ -22,7 +22,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
-import CheckIcon from '@vue-patternfly4/icons/dist/esm/icons/check-icon';
+import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 
 export default {
   name: 'PfSwitch',

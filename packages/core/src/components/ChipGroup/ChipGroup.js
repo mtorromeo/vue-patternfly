@@ -1,6 +1,6 @@
 import {h, mergeProps} from 'vue';
 import styles from '@patternfly/react-styles/css/components/ChipGroup/chip-group';
-import TimesCircleIcon from '@vue-patternfly4/icons/dist/esm/icons/times-circle-icon';
+import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 import PfChip from './Chip';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';

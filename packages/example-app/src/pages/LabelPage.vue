@@ -521,7 +521,7 @@
 </template>
 
 <script>
-import { InfoCircleIcon } from "@vue-patternfly4/icons";
+import { InfoCircleIcon } from "@vue-patternfly/icons";
 
 export default {
   name: "LabelPage",

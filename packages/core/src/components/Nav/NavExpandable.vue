@@ -37,7 +37,7 @@
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 
-import AngleRightIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-right-icon';
+import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import {getUniqueId} from '../../util';
 
 export default {

@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Chip/chip';
 
-import TimesIcon from '@vue-patternfly4/icons/dist/esm/icons/times-icon';
+import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import {getUniqueId} from '../../util';

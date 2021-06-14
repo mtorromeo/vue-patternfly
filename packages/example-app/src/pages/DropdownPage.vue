@@ -405,12 +405,12 @@
 </template>
 
 <script>
-import BellIcon from '@vue-patternfly4/icons/dist/esm/icons/bell-icon';
-import CogIcon from '@vue-patternfly4/icons/dist/esm/icons/cog-icon';
-import CubesIcon from '@vue-patternfly4/icons/dist/esm/icons/cubes-icon';
-import ThIcon from '@vue-patternfly4/icons/dist/esm/icons/th-icon';
-import UserIcon from '@vue-patternfly4/icons/dist/esm/icons/user-icon';
-import AngleLeftIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-left-icon';
+import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
+import CogIcon from '@vue-patternfly/icons/dist/esm/icons/cog-icon';
+import CubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
+import ThIcon from '@vue-patternfly/icons/dist/esm/icons/th-icon';
+import UserIcon from '@vue-patternfly/icons/dist/esm/icons/user-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 
 
 export default {

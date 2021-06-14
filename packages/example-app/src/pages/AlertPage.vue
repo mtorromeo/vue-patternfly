@@ -269,11 +269,11 @@
 </template>
 
 <script>
-import UsersIcon from '@vue-patternfly4/icons/dist/esm/icons/users-icon';
-import BoxIcon from '@vue-patternfly4/icons/dist/esm/icons/box-icon';
-import DatabaseIcon from '@vue-patternfly4/icons/dist/esm/icons/database-icon';
-import ServerIcon from '@vue-patternfly4/icons/dist/esm/icons/server-icon';
-import LaptopIcon from '@vue-patternfly4/icons/dist/esm/icons/laptop-icon';
+import UsersIcon from '@vue-patternfly/icons/dist/esm/icons/users-icon';
+import BoxIcon from '@vue-patternfly/icons/dist/esm/icons/box-icon';
+import DatabaseIcon from '@vue-patternfly/icons/dist/esm/icons/database-icon';
+import ServerIcon from '@vue-patternfly/icons/dist/esm/icons/server-icon';
+import LaptopIcon from '@vue-patternfly/icons/dist/esm/icons/laptop-icon';
 
 export default {
   name: 'AlertPage',

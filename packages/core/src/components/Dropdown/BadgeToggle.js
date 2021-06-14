@@ -1,7 +1,7 @@
 import {h} from 'vue';
 import PfBadge from '../Badge';
 import PfToggle from './Toggle';
-import CaretDownIcon from '@vue-patternfly4/icons/dist/esm/icons/caret-down-icon';
+import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 const PfBadgeToggle = (props, {slots}) =>

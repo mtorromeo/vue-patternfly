@@ -53,7 +53,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/OptionsMenu/options-menu';
-import CheckIcon from '@vue-patternfly4/icons/dist/esm/icons/check-icon';
+import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import PfDropdown from '../Dropdown/Dropdown';
 import PfDropdownItem from '../Dropdown/DropdownItem';
 import PfDropdownToggle from '../Dropdown/DropdownToggle';

@@ -62,7 +62,7 @@ import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 
 import PfVoid from '../Void';
-import CheckIcon from '@vue-patternfly4/icons/dist/esm/icons/check-icon';
+import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 
 export default {
   name: 'PfSelectOption',

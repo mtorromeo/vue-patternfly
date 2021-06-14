@@ -515,11 +515,11 @@
 </template>
 
 <script>
-import SearchIcon from '@vue-patternfly4/icons/dist/esm/icons/search-icon';
-import FilterIcon from '@vue-patternfly4/icons/dist/esm/icons/filter-icon';
-import CloneIcon from '@vue-patternfly4/icons/dist/esm/icons/clone-icon';
-import EditIcon from '@vue-patternfly4/icons/dist/esm/icons/edit-icon';
-import SyncIcon from '@vue-patternfly4/icons/dist/esm/icons/sync-icon';
+import SearchIcon from '@vue-patternfly/icons/dist/esm/icons/search-icon';
+import FilterIcon from '@vue-patternfly/icons/dist/esm/icons/filter-icon';
+import CloneIcon from '@vue-patternfly/icons/dist/esm/icons/clone-icon';
+import EditIcon from '@vue-patternfly/icons/dist/esm/icons/edit-icon';
+import SyncIcon from '@vue-patternfly/icons/dist/esm/icons/sync-icon';
 
 export default {
   name: 'ToolbarPage',

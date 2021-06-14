@@ -1,6 +1,6 @@
 import {h, mergeProps} from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
-import AngleRightIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-right-icon';
+import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import {useManagedProp} from '../../use';
 
 export default {

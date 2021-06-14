@@ -22,7 +22,7 @@
 import styles from '@patternfly/react-styles/css/components/Select/select';
 // import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 
-import CaretDownIcon from '@vue-patternfly4/icons/dist/esm/icons/caret-down-icon';
+import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 
 export default {
   name: 'PfSelectToggle',

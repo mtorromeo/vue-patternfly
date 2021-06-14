@@ -68,10 +68,10 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 
-import AngleLeftIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-left-icon';
-import AngleDoubleLeftIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-double-left-icon';
-import AngleRightIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-right-icon';
-import AngleDoubleRightIcon from '@vue-patternfly4/icons/dist/esm/icons/angle-double-right-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
+import AngleDoubleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import AngleDoubleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon';
 
 import {pluralize} from '../../util';
 

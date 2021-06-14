@@ -123,7 +123,7 @@
 </template>
 
 <script>
-import CubesIcon from '@vue-patternfly4/icons/dist/esm/icons/cubes-icon';
+import CubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
 
 export default {
   name: 'SelectPage',

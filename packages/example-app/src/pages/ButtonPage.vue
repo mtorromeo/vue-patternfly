@@ -248,11 +248,11 @@
 </template>
 
 <script>
-import PlusCircleIcon from '@vue-patternfly4/icons/dist/esm/icons/plus-circle-icon';
-import ExternalLinkSquareAltIcon from '@vue-patternfly4/icons/dist/esm/icons/external-link-square-alt-icon';
-import CopyIcon from '@vue-patternfly4/icons/dist/esm/icons/copy-icon';
-import TimesIcon from '@vue-patternfly4/icons/dist/esm/icons/times-icon';
-import ArrowRightIcon from '@vue-patternfly4/icons/dist/esm/icons/arrow-right-icon';
+import PlusCircleIcon from '@vue-patternfly/icons/dist/esm/icons/plus-circle-icon';
+import ExternalLinkSquareAltIcon from '@vue-patternfly/icons/dist/esm/icons/external-link-square-alt-icon';
+import CopyIcon from '@vue-patternfly/icons/dist/esm/icons/copy-icon';
+import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
+import ArrowRightIcon from '@vue-patternfly/icons/dist/esm/icons/arrow-right-icon';
 
 export default {
   name: 'ButtonPage',

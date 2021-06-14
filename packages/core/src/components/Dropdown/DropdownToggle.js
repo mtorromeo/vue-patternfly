@@ -2,7 +2,7 @@ import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 import {h, mergeProps} from 'vue';
 import PfToggle from './Toggle';
-import CaretDownIcon from '@vue-patternfly4/icons/dist/esm/icons/caret-down-icon';
+import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 
 export default {
   name: 'PfDropdownToggle',
