@@ -2,6 +2,7 @@ import commonjs from '@rollup/plugin-commonjs'; // Convert CommonJS modules to E
 import resolve from '@rollup/plugin-node-resolve';
 import vue from 'rollup-plugin-vue'; // Handle .vue SFC files
 import babel from '@rollup/plugin-babel'; // Transpile/polyfill with reasonable browser support
+import sass from 'sass';
 import scss from 'rollup-plugin-scss';
 import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
@@ -32,7 +33,9 @@ const c = {
     }),
     commonjs(),
     babel({ babelHelpers: 'bundled' }), // Transpile to ES5
-    scss(),
+    scss({
+      sass,
+    }),
     isProduction && terser(),
   ],
 };

@@ -1,5 +1,5 @@
 {
-  "name": "@vue-patternfly4/icons",
+  "name": "@vue-patternfly/icons",
   "version": "0.1.0",
   "private": true,
   "main": "dist/js/index.js",
@@ -16,7 +16,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@patternfly/patternfly": "^4.80.3",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^10.0.0",
     "glob": "^7.1.6",
     "rimraf": "^3.0.2"
   },
