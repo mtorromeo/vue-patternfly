@@ -12,11 +12,11 @@
   </a>
 
   <a href="https://npmjs.org/package/@vue-patternfly/core">
-    <img src="https://img.shields.io/npm/v/vue-patternfly.svg?style=flat-square" alt="NPM" />
+    <img src="https://img.shields.io/npm/v/@vue-patternfly/core.svg?style=flat-square" alt="NPM" />
   </a>
 
   <a href="https://npmjs.org/package/@vue-patternfly/core">
-    <img src="https://img.shields.io/npm/dw/vue-patternfly.svg?style=flat-square" alt="Downloads" />
+    <img src="https://img.shields.io/npm/dw/@vue-patternfly/core.svg?style=flat-square" alt="Downloads" />
   </a>
 
   <a href="https://github.com/mtorromeo/vue-patternfly4/issues">
