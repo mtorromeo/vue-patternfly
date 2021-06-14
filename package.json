@@ -1,10 +1,14 @@
 {
   "private": true,
+  "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
   "engines": {
     "node": ">=10.0.0"
+  },
+  "scripts": {
+    "pub": "npm publish --access public -w packages/core -w packages/icons"
   },
   "devDependencies": {
     "eslint": "^7.19.0",
