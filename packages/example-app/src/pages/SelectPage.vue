@@ -71,6 +71,54 @@
       <pf-select-option value="Warning" />
       <pf-select-option value="Restarted" />
     </pf-select>
+
+    <pf-title class="example-heading" h="3">
+      Checkbox input no badge
+    </pf-title>
+    <pf-select variant="checkbox" placeholder="Filter by status" selection-badge-hidden>
+      <pf-select-option value="Debug" />
+      <pf-select-option value="Info" />
+      <pf-select-option value="Warn" />
+      <pf-select-option value="Error" />
+    </pf-select>
+
+    <pf-title class="example-heading" h="3">
+      Grouped checkbox input
+    </pf-title>
+    <pf-select variant="checkbox" placeholder="Filter by status/vendor">
+      <pf-select-group label="Status">
+        <pf-select-option value="Running" />
+        <pf-select-option value="Stopped" />
+        <pf-select-option value="Down" />
+        <pf-select-option value="Degraded" />
+        <pf-select-option value="Needs Maintenance" />
+      </pf-select-group>
+      <pf-divider component="li" />
+      <pf-select-group label="Status">
+        <pf-select-option value="Dell" />
+        <pf-select-option value="Samsung" disabled />
+        <pf-select-option value="Hewlett-Packard" />
+      </pf-select-group>
+    </pf-select>
+
+    <pf-title class="example-heading" h="3">
+      Grouped checkbox input with filtering and placeholder text
+    </pf-title>
+    <pf-select variant="checkbox" placeholder="Filter by status/vendor" inline-filter inline-filter-placeholder="Filter by status">
+      <pf-select-group label="Status">
+        <pf-select-option value="Running" />
+        <pf-select-option value="Stopped" />
+        <pf-select-option value="Down" />
+        <pf-select-option value="Degraded" />
+        <pf-select-option value="Needs Maintenance" />
+      </pf-select-group>
+      <pf-divider component="li" />
+      <pf-select-group label="Status">
+        <pf-select-option value="Dell" />
+        <pf-select-option value="Samsung" disabled />
+        <pf-select-option value="Hewlett-Packard" />
+      </pf-select-group>
+    </pf-select>
   </doc-page>
 </template>
 
