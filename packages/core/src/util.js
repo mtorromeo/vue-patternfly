@@ -65,6 +65,7 @@ export function breakpointProp(baseName, type, values) {
     };
     if (Array.isArray(values)) {
       definition.validate = v => values.includes(v);
+      definition._values = values;
     }
     return [`${baseName}${b}`, definition];
   }));

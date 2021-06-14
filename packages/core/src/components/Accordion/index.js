@@ -1,2 +1,2 @@
-export {default as PfAccordion} from './Accordion';
-export {default as PfAccordionItem} from './AccordionItem';
+export {default as PfAccordion} from './Accordion.vue';
+export {default as PfAccordionItem} from './AccordionItem.vue';

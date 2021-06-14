@@ -1,2 +1,2 @@
-export {default as Stack} from './Stack';
-export {default as StackItem} from './StackItem';
+export {default as PfStack} from './Stack.vue';
+export {default as PfStackItem} from './StackItem';

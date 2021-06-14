@@ -1,2 +1,2 @@
-export {default as PfInputGroup} from './InputGroup';
-export {default as PfInputGroupText} from './InputGroupText';
+export {default as PfInputGroup} from './InputGroup.vue';
+export {default as PfInputGroupText} from './InputGroupText.vue';

@@ -1,3 +1,5 @@
+<script>
+
 import {h, mergeProps} from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
@@ -5,6 +7,8 @@ import {useManagedProp} from '../../use';
 
 export default {
   name: 'PfAccordionItem',
+
+  inject: ['accordion'],
 
   props: {
     title: {
@@ -27,8 +31,6 @@ export default {
   },
 
   emits: ['update:expanded'],
-
-  inject: ['accordion'],
 
   setup(props, {emit}) {
     return {
@@ -73,3 +75,4 @@ export default {
     ];
   },
 };
+</script>

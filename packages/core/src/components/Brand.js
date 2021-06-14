@@ -1,4 +1,3 @@
-
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
 import {h, mergeProps} from 'vue';

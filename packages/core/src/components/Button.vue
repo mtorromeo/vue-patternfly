@@ -33,7 +33,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Button/button';
 
-import PfSpinner from './Spinner';
+import PfSpinner from './Spinner.vue';
 
 export default {
   name: 'PfButton',
@@ -41,6 +41,7 @@ export default {
   components: {PfSpinner},
 
   props: {
+    /** type of button */
     type: {
       type: String,
       default: 'button',
@@ -76,7 +77,7 @@ export default {
       default: null,
     },
 
-    /** @beta Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
+    /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
     ariaDisabled: Boolean,
 
     inline: Boolean,

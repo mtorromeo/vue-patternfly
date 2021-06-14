@@ -1,2 +1,2 @@
-export {default as PfGrid} from './Grid';
-export {default as PfGridItem} from './GridItem';
+export {default as PfGrid} from './Grid.vue';
+export {default as PfGridItem} from './GridItem.vue';

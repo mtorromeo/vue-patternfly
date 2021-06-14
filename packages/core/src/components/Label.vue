@@ -1,3 +1,4 @@
+<script>
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
 import {h, mergeProps} from 'vue';
@@ -18,6 +19,9 @@ export default {
   name: 'PfLabel',
 
   props: {
+    /**
+     * The color of the label outline/fill
+     */
     color: {
       type: String,
       default: 'grey',
@@ -46,10 +50,30 @@ export default {
     truncated: Boolean,
   },
 
+  emits: ['close'],
+
   data() {
     return {
       tooltipVisible: false,
     };
+  },
+
+  mounted() {
+    this.calcTooltipVisible();
+  },
+
+  updated() {
+    this.calcTooltipVisible();
+  },
+
+  methods: {
+    calcTooltipVisible() {
+      this.tooltipVisible = this.$refs.text && this.$refs.text.offsetWidth < this.$refs.text.scrollWidth;
+    },
+
+    onClose(e) {
+      this.$emit('close', e);
+    },
   },
 
   render() {
@@ -94,22 +118,5 @@ export default {
       }),
     ]);
   },
-
-  mounted() {
-    this.calcTooltipVisible();
-  },
-
-  updated() {
-    this.calcTooltipVisible();
-  },
-
-  methods: {
-    calcTooltipVisible() {
-      this.tooltipVisible = this.$refs.text && this.$refs.text.offsetWidth < this.$refs.text.scrollWidth;
-    },
-
-    onClose(e) {
-      this.$emit('close', e);
-    },
-  },
 }
+</script>
