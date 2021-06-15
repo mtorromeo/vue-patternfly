@@ -223,3 +223,7 @@ export function getTextWidth(text, node) {
 
   return context.measureText(text).width;
 }
+
+export function fillTemplate(templateString, templateVars) {
+  return templateString.replace(/\${(.*?)}/g, (_, match) => templateVars[match] || '');
+}

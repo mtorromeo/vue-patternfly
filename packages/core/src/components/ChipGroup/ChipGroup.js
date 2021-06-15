@@ -4,7 +4,7 @@ import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-i
 import PfChip from './Chip';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
-import {findChildrenVNodes} from '../../util';
+import {findChildrenVNodes, fillTemplate} from '../../util';
 
 export default {
   name: 'PfChipGroup',
@@ -44,7 +44,7 @@ export default {
       default: 'Show Less',
     },
 
-    collapsedTest: {
+    collapsedText: {
       type: String,
       default: '${remaining} more',
     },
@@ -65,14 +65,17 @@ export default {
 
     const lis = chipArray.map((child, i) => h('li', {key: i, class: styles.chipGroupListItem}, child));
 
-    if (children.length > chipArray.length) {
+    if (children.length > this.numChips) {
+      const collapsedTextResult = fillTemplate(this.collapsedText, {
+        remaining: children.length - chipArray.length,
+      });
       lis.push(h('li', {class: styles.chipGroupListItem}, [
         h(PfChip, {
             component: 'button',
-            'overflow-chip': true,
+            overflow: true,
             onClick: this.overflowChipClick,
           },
-          this.open ? this.expandedText : this.collapsedTextResult,
+          this.open ? this.expandedText : collapsedTextResult,
         ),
       ]));
     }
@@ -84,6 +87,7 @@ export default {
 
           },
           h('span', {
+              ref: 'heading',
               class: styles.chipGroupLabel,
             },
             h('span', {
@@ -146,6 +150,11 @@ export default {
     overflowChipClick(e) {
       this.toggleCollapse();
       this.$emit('overflow-chip-click', e);
+    },
+
+    toggleCollapse() {
+      this.open = !this.open;
+      this.tooltipVisible = this.$refs.heading && this.$refs.heading.offsetWidth < this.$refs.heading.scrollWidth;
     },
   },
 };
