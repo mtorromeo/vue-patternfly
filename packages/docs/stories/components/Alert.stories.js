@@ -1,14 +1,14 @@
-import {PfAlert, PfAlertActionLink} from "../../../core/src/components/Alert";
+import { PfAlert, PfAlertActionLink } from "../../../core/src/components/Alert";
 
 export default {
   title: "Components/Alert",
   component: PfAlert,
-  subcomponents: {PfAlertActionLink},
+  subcomponents: { PfAlertActionLink },
   argTypes: {
     variant: {
       control: {
         type: "select",
-        options: ['default', 'success', 'danger', 'warning', 'info'],
+        options: ["default", "success", "danger", "warning", "info"],
       },
     },
   },
