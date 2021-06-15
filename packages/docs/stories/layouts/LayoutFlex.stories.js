@@ -1,24 +1,22 @@
-import {PfFlex, PfFlexItem} from "../../core/src/layouts/Flex";
-import {argTypesFromProps} from '../utils';
+import {PfFlex, PfFlexItem} from "../../../core/src/layouts/Flex";
+import {argTypesFromProps} from '../../utils';
 
 export default {
-  title: "Layouts/Flex Item",
-  component: PfFlexItem,
-  subcomponents: {PfFlex},
-  argTypes: argTypesFromProps(PfFlexItem.props),
+  title: "Layouts/Flex",
+  component: PfFlex,
+  subcomponents: {PfFlexItem},
+  argTypes: argTypesFromProps(PfFlex.props),
 };
 
-export const Default = (args) => ({
+const Template = (args) => ({
   components: { PfFlex, PfFlexItem },
   setup() {
     return { args };
   },
   template: `
-    <pf-flex>
+    <pf-flex v-bind="args">
       <pf-flex flex="1">
-        <pf-flex-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
-          Flex item
-        </pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
       </pf-flex>
       <pf-flex flex="1">
         <pf-flex-item>Flex item</pf-flex-item>
@@ -32,3 +30,5 @@ export const Default = (args) => ({
     </pf-flex>
   `,
 });
+
+export const Default = Template.bind({});

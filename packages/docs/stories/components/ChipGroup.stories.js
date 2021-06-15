@@ -1,5 +1,5 @@
-import { PfChip, PfChipGroup } from "../../core/src/components/ChipGroup";
-import { argTypesFromProps } from "../utils";
+import { PfChip, PfChipGroup } from "../../../core/src/components/ChipGroup";
+import { argTypesFromProps } from "../../utils";
 
 export default {
   title: "Components/Chip Group",

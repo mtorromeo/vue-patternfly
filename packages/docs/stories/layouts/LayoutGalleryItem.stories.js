@@ -1,4 +1,4 @@
-import {PfGallery, PfGalleryItem} from "../../core/src/layouts/Gallery";
+import {PfGallery, PfGalleryItem} from "../../../core/src/layouts/Gallery";
 
 export default {
   title: "Layouts/Gallery Item",

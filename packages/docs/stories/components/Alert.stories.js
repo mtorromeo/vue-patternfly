@@ -1,4 +1,4 @@
-import {PfAlert, PfAlertActionLink} from "../../core/src/components/Alert";
+import {PfAlert, PfAlertActionLink} from "../../../core/src/components/Alert";
 
 export default {
   title: "Components/Alert",

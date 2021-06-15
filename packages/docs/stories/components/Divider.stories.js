@@ -1,5 +1,5 @@
-import PfDivider from "../../core/src/components/Divider";
-import {argTypesFromProps} from '../utils';
+import PfDivider from "../../../core/src/components/Divider";
+import {argTypesFromProps} from '../../utils';
 
 export default {
   title: "Components/Divider",

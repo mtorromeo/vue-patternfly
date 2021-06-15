@@ -7,12 +7,12 @@ import {
   PfBadgeToggle,
   PfDropdownToggle,
   PfDropdownToggleCheckbox,
-} from "../../core/src/components/Dropdown";
-import PfAvatar from '../../core/src/components/Avatar.vue';
-import PfAngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import PfBellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
-import PfCubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
-import { argTypesFromProps } from "../utils";
+} from "../../../core/src/components/Dropdown";
+import PfAvatar from "../../../core/src/components/Avatar.vue";
+import PfAngleLeftIcon from "@vue-patternfly/icons/dist/esm/icons/angle-left-icon";
+import PfBellIcon from "@vue-patternfly/icons/dist/esm/icons/bell-icon";
+import PfCubesIcon from "@vue-patternfly/icons/dist/esm/icons/cubes-icon";
+import { argTypesFromProps } from "../../utils";
 
 const argTypes = argTypesFromProps(PfDropdown.props);
 
@@ -257,7 +257,7 @@ WithDescriptions.args = {
   ...Basic.args,
 };
 
-import avatarImg from '../examples/avatar.svg';
+import avatarImg from "../../examples/avatar.svg";
 
 export const WithImageAndText = ({ ...args }) => ({
   components: {

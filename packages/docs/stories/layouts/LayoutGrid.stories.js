@@ -1,11 +1,11 @@
-import {PfGrid, PfGridItem} from "../../core/src/layouts/Grid";
-import {argTypesFromProps} from '../utils';
+import {PfGrid, PfGridItem} from "../../../core/src/layouts/Grid";
+import {argTypesFromProps} from '../../utils';
 
 export default {
-  title: "Layouts/Grid Item",
-  component: PfGridItem,
-  subcomponents: {PfGrid},
-  argTypes: argTypesFromProps(PfGridItem.props),
+  title: "Layouts/Grid",
+  component: PfGrid,
+  subcomponents: {PfGridItem},
+  argTypes: argTypesFromProps(PfGrid.props),
 };
 
 const Template = (args) => ({
@@ -14,15 +14,15 @@ const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-grid gutter>
+    <pf-grid v-bind="args">
       <pf-grid-item span="8">
         span = 8
       </pf-grid-item>
       <pf-grid-item span="4" row-span="2">
         span = 4, rowSpan = 2
       </pf-grid-item>
-      <pf-grid-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
-        span = {{ args.span }}, rowSpan = {{ args.rowSpan }}
+      <pf-grid-item span="2" row-span="3">
+        span = 2, rowSpan = 3
       </pf-grid-item>
       <pf-grid-item span="2">
         span = 2
@@ -57,6 +57,5 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  span: 2,
-  rowSpan: 3,
+  gutter: true,
 };

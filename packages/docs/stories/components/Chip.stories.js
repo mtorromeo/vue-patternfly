@@ -1,6 +1,6 @@
-import { PfChip } from "../../core/src/components/ChipGroup";
-import PfBadge from "../../core/src/components/Badge";
-import { argTypesFromProps } from "../utils";
+import { PfChip } from "../../../core/src/components/ChipGroup";
+import PfBadge from "../../../core/src/components/Badge";
+import { argTypesFromProps } from "../../utils";
 
 export default {
   title: "Components/Chip",

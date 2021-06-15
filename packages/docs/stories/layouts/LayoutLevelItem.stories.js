@@ -1,4 +1,4 @@
-import {PfLevel, PfLevelItem} from "../../core/src/layouts/Level";
+import {PfLevel, PfLevelItem} from "../../../core/src/layouts/Level";
 
 export default {
   title: "Layouts/Level Item",

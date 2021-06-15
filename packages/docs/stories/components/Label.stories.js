@@ -1,4 +1,4 @@
-import PfLabel from '../../core/src/components/Label.vue';
+import PfLabel from '../../../core/src/components/Label.vue';
 
 export default {
   title: "Components/Label",

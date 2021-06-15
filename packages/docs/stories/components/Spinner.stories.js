@@ -1,4 +1,4 @@
-import PfSpinner from "../../core/src/components/Spinner.vue";
+import PfSpinner from "../../../core/src/components/Spinner.vue";
 
 export default {
   title: "Components/Spinner",

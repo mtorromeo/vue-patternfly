@@ -1,4 +1,4 @@
-import { PfAccordion, PfAccordionItem } from '../../core/src/components/Accordion';
+import { PfAccordion, PfAccordionItem } from '../../../core/src/components/Accordion';
 import { ref } from 'vue';
 
 export default {

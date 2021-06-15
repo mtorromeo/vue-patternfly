@@ -1,7 +1,7 @@
 import {ref} from 'vue';
-import {PfAlert, PfAlertGroup} from "../../core/src/components/Alert";
-import PfButton from "../../core/src/components/Button.vue";
-import {PfInputGroup} from "../../core/src/components/InputGroup";
+import {PfAlert, PfAlertGroup} from "../../../core/src/components/Alert";
+import PfButton from "../../../core/src/components/Button.vue";
+import {PfInputGroup} from "../../../core/src/components/InputGroup";
 
 export default {
   title: "Components/Alert Group",

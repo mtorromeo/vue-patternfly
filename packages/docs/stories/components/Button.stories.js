@@ -1,4 +1,4 @@
-import PfButton from '../../core/src/components/Button.vue';
+import PfButton from '../../../core/src/components/Button.vue';
 
 export default {
   title: "Components/Button",

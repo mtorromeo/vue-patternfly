@@ -1,5 +1,5 @@
-import {PfSplit, PfSplitItem} from "../../core/src/layouts/Split";
-import {argTypesFromProps} from '../utils';
+import {PfSplit, PfSplitItem} from "../../../core/src/layouts/Split";
+import {argTypesFromProps} from '../../utils';
 
 export default {
   title: "Layouts/Split Item",

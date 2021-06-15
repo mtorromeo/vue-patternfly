@@ -1,5 +1,5 @@
-import {PfLevel, PfLevelItem} from "../../core/src/layouts/Level";
-import {argTypesFromProps} from '../utils';
+import {PfLevel, PfLevelItem} from "../../../core/src/layouts/Level";
+import {argTypesFromProps} from '../../utils';
 
 export default {
   title: "Layouts/Level",
