@@ -29,6 +29,7 @@ export default {
         class: styles.dropdownToggleCheck,
       }, [
         h('input', mergeProps({
+          ref: 'checkbox',
           type: 'checkbox',
           'aria-label': this.ariaLabel,
           checked: this.checked,
@@ -37,5 +38,19 @@ export default {
         text,
       ],
     );
+  },
+
+  mounted() {
+    if (this.$refs.checkbox) {
+      this.$refs.checkbox.indeterminate = this.checked === null;
+    }
+  },
+
+  watch: {
+    checked() {
+      if (this.$refs.checkbox) {
+        this.$refs.checkbox.indeterminate = this.checked === null;
+      }
+    },
   },
 };

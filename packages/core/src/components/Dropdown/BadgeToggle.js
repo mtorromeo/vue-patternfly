@@ -25,7 +25,9 @@ PfBadgeToggle.props = {
   },
   badge: {
     type: Object,
-    default: () => {},
+    default: () => ({
+      read: true,
+    }),
   },
 };
 
