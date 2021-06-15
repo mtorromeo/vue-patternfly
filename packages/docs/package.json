@@ -9,6 +9,7 @@
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
+    "@storybook/storybook-deployer": "^2.8.10",
     "@storybook/vue3": "^6.2.9",
     "babel-loader": "^8.2.2",
     "vue-loader": "^16.2.0"
@@ -16,6 +17,7 @@
   "dependencies": {},
   "scripts": {
     "storybook": "start-storybook -p 6006 --no-manager-cache",
-    "build-storybook": "build-storybook"
+    "build": "build-storybook",
+    "deploy": "storybook-to-ghpages"
   }
 }
