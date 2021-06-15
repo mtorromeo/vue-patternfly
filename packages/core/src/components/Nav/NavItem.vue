@@ -25,7 +25,14 @@ import styles from '@patternfly/react-styles/css/components/Nav/nav';
 export default {
   name: 'PfNavItem',
 
-  inject: ['onSelect', 'sidebar'],
+  inject: {
+    onSelect: {
+      default: null,
+    },
+    sidebar: {
+      default: () => ({sidebarOpen: false}),
+    },
+  },
 
   inheritAttrs: false,
 
@@ -97,7 +104,9 @@ export default {
         e.preventDefault();
       }
       this.$emit('select', e, this.groupId, this.itemId);
-      this.onSelect(e, this.groupId, this.itemId);
+      if (this.onSelect) {
+        this.onSelect(e, this.groupId, this.itemId);
+      }
     },
   },
 };

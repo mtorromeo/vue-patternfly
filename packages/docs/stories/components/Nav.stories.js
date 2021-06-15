@@ -76,27 +76,27 @@ export const Grouped = ({ ...args }) => ({
   },
   template: `
     <div :style="{'background-color': args.theme == 'light' || args.variant === 'tertiary' ? null : 'var(--pf-global--BackgroundColor--dark-300)'}">
-      <pf-nav v-bind="args">
+      <pf-nav v-bind="args" @select="selectLink">
         <pf-nav-list>
           <pf-nav-group title="Section title 1">
-            <pf-nav-item item-id="link1" :active="activeLink == 'link1'" @select="selectLink">
+            <pf-nav-item item-id="link1" :active="activeLink == 'link1'">
               Link 1
             </pf-nav-item>
-            <pf-nav-item item-id="link2" :active="activeLink == 'link2'" @select="selectLink">
+            <pf-nav-item item-id="link2" :active="activeLink == 'link2'">
               Link 2
             </pf-nav-item>
-            <pf-nav-item item-id="link3" :active="activeLink == 'link3'" @select="selectLink">
+            <pf-nav-item item-id="link3" :active="activeLink == 'link3'">
               Link 3
             </pf-nav-item>
           </pf-nav-group>
           <pf-nav-group title="Section title 2">
-            <pf-nav-item item-id="link4" :active="activeLink == 'link4'" @select="selectLink">
+            <pf-nav-item item-id="link4" :active="activeLink == 'link4'">
               Link 4
             </pf-nav-item>
-            <pf-nav-item item-id="link5" :active="activeLink == 'link5'" @select="selectLink">
+            <pf-nav-item item-id="link5" :active="activeLink == 'link5'">
               Link 5
             </pf-nav-item>
-            <pf-nav-item item-id="link6" :active="activeLink == 'link6'" @select="selectLink">
+            <pf-nav-item item-id="link6" :active="activeLink == 'link6'">
               Link 6
             </pf-nav-item>
           </pf-nav-group>

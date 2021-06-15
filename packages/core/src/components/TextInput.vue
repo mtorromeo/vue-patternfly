@@ -11,36 +11,50 @@ export default {
       default: 'text',
     },
 
+    /** @model */
     value: {
       type: [String, Number],
       default: null,
     },
 
+    /**
+     * @values blur, input, change
+     */
     autovalidate: {
       type: [Boolean, String],
       default: true,
       validator: v => typeof v === 'boolean' || ['blur', 'input', 'change'].includes(v),
     },
 
+    /**
+     * Value to indicate if the input is modified to show that validation state.
+     * If set to success, input will be modified to indicate valid state.
+     * If set to error,  input will be modified to indicate error state.
+     * @values default, success, warning, error
+     */
     validated: {
       type: String,
       default: null,
       validator: v => [null, 'default', 'success', 'warning', 'error'].includes(v),
     },
 
+    /** Trim text on left */
     leftTruncated: Boolean,
 
+    /** @values calendar, clock, search */
     iconVariant: {
       type: String,
       default: '',
       validator: v => ['', 'calendar', 'clock', 'search'].includes(v),
     },
 
+    /** Custom icon url to set as the input's background-image */
     iconUrl: {
       type: String,
       default: '',
     },
 
+    /** Dimensions for the custom icon set as the input's background-size */
     iconDimensions: {
       type: String,
       default: '',

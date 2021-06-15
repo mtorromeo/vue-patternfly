@@ -7,10 +7,13 @@ export default {
   name: 'PfInputGroupText',
 
   props: {
+    /** Component that wraps the input group text. */
     component: {
       type: String,
       default: 'span',
     },
+
+    /** Input group plain variant */
     plain: Boolean,
   },
 

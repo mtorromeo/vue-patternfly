@@ -14,7 +14,7 @@ export default {
       class: [styles.inputGroup],
     }, this.$props), {
       default: () => {
-        const children = this.$slots.default();
+        const children = this.$slots.default ? this.$slots.default() : [];
         const idItem = children.find(child => !formCtrls.includes(child.type.name) && child.props && child.props.id);
 
         if (!idItem) {
