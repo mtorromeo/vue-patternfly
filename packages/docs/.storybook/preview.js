@@ -18,11 +18,15 @@ const templateSourceCode = (src, args, argTypes) => {
     }
   }
 
-  const propToSource = (key, val) => {
+  const propToSource = (prop, val) => {
+    const key = paramCase(prop);
     const type = typeof val;
     switch (type) {
       case "boolean":
-        return val ? key : "";
+        if (argTypes[prop] && argTypes[prop].defaultValue !== true) {
+          return val ? key : "";
+        }
+        return val ? "" : `:${key}="false"`;
       case "string":
         return `${key}="${val}"`;
       default:
@@ -34,7 +38,7 @@ const templateSourceCode = (src, args, argTypes) => {
     ' v-bind="args"',
     Object.keys(replaceArgs)
       .filter((k) => replaceArgs[k] !== "")
-      .map((k) => " " + propToSource(paramCase(k), replaceArgs[k]))
+      .map((k) => " " + propToSource(k, replaceArgs[k]))
       .join("")
   );
 };
