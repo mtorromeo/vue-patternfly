@@ -33,7 +33,8 @@ const templateSourceCode = (src, args, argTypes) => {
   return src.replace(
     ' v-bind="args"',
     Object.keys(replaceArgs)
-      .map((key) => " " + propToSource(paramCase(key), replaceArgs[key]))
+      .filter((k) => replaceArgs[k] !== "")
+      .map((k) => " " + propToSource(paramCase(k), replaceArgs[k]))
       .join("")
   );
 };
