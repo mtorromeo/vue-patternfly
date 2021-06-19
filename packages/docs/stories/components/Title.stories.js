@@ -19,7 +19,7 @@ const Template = ({ title, ...args }) => ({
   setup() {
     return { args, title };
   },
-  template: '<pf-title v-bind="args">{{ title }}</pf-title>',
+  template: `<pf-title v-bind="args">{{ title }}</pf-title>`,
 });
 
 export const Default = Template.bind({});

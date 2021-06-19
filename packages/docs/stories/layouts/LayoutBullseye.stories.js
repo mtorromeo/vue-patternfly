@@ -1,10 +1,8 @@
 import PfBullseye from "@vue-patternfly/core/src/layouts/Bullseye";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Bullseye",
   component: PfBullseye,
-  argTypes: argTypesFromProps(PfBullseye.props),
 };
 
 export const Default = (args) => ({

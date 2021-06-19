@@ -29,7 +29,9 @@ const Template = (args) => ({
     const {label, ...props} = args;
     return { args: props, label };
   },
-  template: '<pf-button v-bind="args">{{ label }}</pf-button>',
+  template: `
+    <pf-button v-bind="args">{{ label }}</pf-button>
+  `,
 });
 
 export const Primary = Template.bind({});

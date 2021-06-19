@@ -1,11 +1,9 @@
 import {PfLevel, PfLevelItem} from "@vue-patternfly/core/src/layouts/Level";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Level",
   component: PfLevel,
   subcomponents: {PfLevelItem},
-  argTypes: argTypesFromProps(PfLevel.props),
 };
 
 const Template = (args) => ({

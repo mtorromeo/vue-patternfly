@@ -1,11 +1,9 @@
 import {PfSplit, PfSplitItem} from "@vue-patternfly/core/src/layouts/Split";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Split Item",
   component: PfSplitItem,
   subcomponents: {PfSplit},
-  argTypes: argTypesFromProps(PfSplitItem.props),
 };
 
 const Template = (args) => ({

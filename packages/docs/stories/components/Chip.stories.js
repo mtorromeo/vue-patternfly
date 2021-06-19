@@ -1,11 +1,9 @@
 import { PfChip } from "@vue-patternfly/core/src/components/ChipGroup";
 import PfBadge from "@vue-patternfly/core/src/components/Badge";
-import { argTypesFromProps } from "@/utils";
 
 export default {
   title: "Components/Chip",
   component: PfChip,
-  argTypes: argTypesFromProps(PfChip.props),
 };
 
 const Template = ({ text, ...args }) => ({

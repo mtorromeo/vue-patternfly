@@ -1,11 +1,9 @@
 import {PfGallery, PfGalleryItem} from "@vue-patternfly/core/src/layouts/Gallery";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Gallery",
   component: PfGallery,
   subcomponents: {PfGalleryItem},
-  argTypes: argTypesFromProps(PfGallery.props),
 };
 
 const Template = (args) => ({

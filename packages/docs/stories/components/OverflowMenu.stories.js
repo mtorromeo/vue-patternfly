@@ -12,9 +12,6 @@ import PfButton from '@vue-patternfly/core/src/components/Button.vue';
 import PfAlignLeftIcon from "../../../icons/dist/esm/icons/align-left-icon";
 import PfAlignCenterIcon from "../../../icons/dist/esm/icons/align-center-icon";
 import PfAlignRightIcon from "../../../icons/dist/esm/icons/align-right-icon";
-import { argTypesFromProps } from "@/utils";
-
-const argTypes = argTypesFromProps(PfOverflowMenu.props);
 
 export default {
   title: "Components/Overflow Menu",
@@ -27,9 +24,7 @@ export default {
     PfOverflowMenuControl,
   },
   argTypes: {
-    ...argTypes,
     breakpoint: {
-      ...argTypes.breakpoint,
       control: {
         type: "select",
         options: ["md", "lg", "xl", "2xl"],

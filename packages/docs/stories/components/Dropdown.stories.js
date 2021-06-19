@@ -12,23 +12,18 @@ import PfAvatar from "@vue-patternfly/core/src/components/Avatar.vue";
 import PfAngleLeftIcon from "@vue-patternfly/icons/dist/esm/icons/angle-left-icon";
 import PfBellIcon from "@vue-patternfly/icons/dist/esm/icons/bell-icon";
 import PfCubesIcon from "@vue-patternfly/icons/dist/esm/icons/cubes-icon";
-import { argTypesFromProps } from "@/utils";
-
-const argTypes = argTypesFromProps(PfDropdown.props);
 
 export default {
   title: "Components/Dropdown",
   component: PfDropdown,
   subcomponents: { PfDropdownItem, PfDropdownGroup, PfDropdownSeparator },
   argTypes: {
-    ...argTypes,
     autoFocusAction: {
       table: {
         disable: true,
       },
     },
     open: {
-      ...argTypes.open,
       control: null,
     },
   },
@@ -164,6 +159,7 @@ const SplitButtonTemplate = ({ splitButtonText, checked, ...args }) => ({
     PfDropdownItem,
     PfDropdownToggle,
     PfDropdownToggleCheckbox,
+    PfDropdownSeparator,
   },
   setup() {
     const open = ref(false);

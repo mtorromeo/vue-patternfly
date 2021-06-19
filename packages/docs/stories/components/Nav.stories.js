@@ -4,26 +4,20 @@ import {
   PfNavItem,
   PfNavGroup,
 } from "@vue-patternfly/core/src/components/Nav";
-import { argTypesFromProps } from "@/utils";
 import { ref } from "vue";
-
-const argTypes = argTypesFromProps(PfNav.props);
 
 export default {
   title: "Components/Nav",
   component: PfNav,
   subcomponents: { PfNavList, PfNavItem, PfNavGroup },
   argTypes: {
-    ...argTypes,
     theme: {
-      ...argTypes.theme,
       control: {
         type: "select",
         options: ["dark", "light"],
       },
     },
     variant: {
-      ...argTypes.variant,
       control: {
         type: "select",
         options: ["default", "horizontal", "tertiary"],

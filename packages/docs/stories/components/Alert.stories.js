@@ -19,7 +19,7 @@ export const Default = ({ text, ...args }) => ({
   setup() {
     return { args, text };
   },
-  template: '<pf-alert v-bind="args">{{ text }}</pf-alert>',
+  template: `<pf-alert v-bind="args">{{ text }}</pf-alert>`,
 });
 Default.args = {
   title: "Alert title",

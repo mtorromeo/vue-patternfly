@@ -1,10 +1,8 @@
 import PfDivider from "@vue-patternfly/core/src/components/Divider";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Components/Divider",
   component: PfDivider,
-  argTypes: argTypesFromProps(PfDivider.props),
 };
 
 export const Default = (args) => ({
@@ -12,5 +10,5 @@ export const Default = (args) => ({
   setup() {
     return { args };
   },
-  template: '<pf-divider />',
+  template: `<pf-divider />`,
 });

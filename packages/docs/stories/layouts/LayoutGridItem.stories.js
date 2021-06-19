@@ -1,11 +1,9 @@
 import {PfGrid, PfGridItem} from "@vue-patternfly/core/src/layouts/Grid";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Grid Item",
   component: PfGridItem,
   subcomponents: {PfGrid},
-  argTypes: argTypesFromProps(PfGridItem.props),
 };
 
 const Template = (args) => ({

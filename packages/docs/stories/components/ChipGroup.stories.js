@@ -1,11 +1,9 @@
 import { PfChip, PfChipGroup } from "@vue-patternfly/core/src/components/ChipGroup";
-import { argTypesFromProps } from "@/utils";
 
 export default {
   title: "Components/Chip Group",
   component: PfChipGroup,
   subcomponents: { PfChip },
-  argTypes: argTypesFromProps(PfChipGroup.props),
 };
 
 const Template = ({ chip1, chip2, chip3, chip4, chip5, ...args }) => ({

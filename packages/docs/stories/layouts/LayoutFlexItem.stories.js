@@ -1,11 +1,9 @@
 import {PfFlex, PfFlexItem} from "@vue-patternfly/core/src/layouts/Flex";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Flex Item",
   component: PfFlexItem,
   subcomponents: {PfFlex},
-  argTypes: argTypesFromProps(PfFlexItem.props),
 };
 
 export const Default = (args) => ({

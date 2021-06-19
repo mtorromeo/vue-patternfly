@@ -1,11 +1,9 @@
 import {PfStack, PfStackItem} from "@vue-patternfly/core/src/layouts/Stack";
-import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Stack",
   component: PfStack,
   subcomponents: {PfStackItem},
-  argTypes: argTypesFromProps(PfStack.props),
 };
 
 const Template = (args) => ({

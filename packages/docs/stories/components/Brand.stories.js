@@ -10,7 +10,7 @@ const Template = ({ ...args }) => ({
   setup() {
     return { args };
   },
-  template: '<pf-brand v-bind="args" />',
+  template: `<pf-brand v-bind="args" />`,
 });
 
 export const Default = Template.bind({});

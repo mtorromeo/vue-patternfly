@@ -29,7 +29,7 @@ const Template = ({label, ...args}) => ({
   setup() {
     return { args, label };
   },
-  template: '<pf-label v-bind="args">{{ label }}</pf-label>',
+  template: `<pf-label v-bind="args">{{ label }}</pf-label>`,
 });
 
 export const Default = Template.bind({});
