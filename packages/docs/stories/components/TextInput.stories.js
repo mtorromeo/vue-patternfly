@@ -1,4 +1,4 @@
-import PfTextInput from "../../../core/src/components/TextInput.vue";
+import PfTextInput from "@vue-patternfly/core/src/components/TextInput.vue";
 
 export default {
   title: "Components/TextInput",

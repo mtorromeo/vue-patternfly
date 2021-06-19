@@ -3,8 +3,8 @@ import {
   PfNavList,
   PfNavItem,
   PfNavGroup,
-} from "../../../core/src/components/Nav";
-import { argTypesFromProps } from "../../utils";
+} from "@vue-patternfly/core/src/components/Nav";
+import { argTypesFromProps } from "@/utils";
 import { ref } from "vue";
 
 const argTypes = argTypesFromProps(PfNav.props);

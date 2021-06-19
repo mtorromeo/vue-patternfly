@@ -1,4 +1,4 @@
-import PfSwitch from "../../../core/src/components/Switch.vue";
+import PfSwitch from "@vue-patternfly/core/src/components/Switch.vue";
 
 export default {
   title: "Components/Switch",

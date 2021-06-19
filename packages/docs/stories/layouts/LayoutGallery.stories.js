@@ -1,5 +1,5 @@
-import {PfGallery, PfGalleryItem} from "../../../core/src/layouts/Gallery";
-import {argTypesFromProps} from '../../utils';
+import {PfGallery, PfGalleryItem} from "@vue-patternfly/core/src/layouts/Gallery";
+import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Gallery",

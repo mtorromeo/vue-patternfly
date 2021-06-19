@@ -1,4 +1,4 @@
-import PfCloseButton from "../../../core/src/components/CloseButton";
+import PfCloseButton from "@vue-patternfly/core/src/components/CloseButton";
 
 export default {
   title: "Components/CloseButton",

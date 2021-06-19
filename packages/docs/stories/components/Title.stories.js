@@ -1,4 +1,4 @@
-import PfTitle from "../../../core/src/components/Title.vue";
+import PfTitle from "@vue-patternfly/core/src/components/Title.vue";
 
 export default {
   title: "Components/Title",

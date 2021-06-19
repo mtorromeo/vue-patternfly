@@ -1,5 +1,5 @@
-import PfBullseye from "../../../core/src/layouts/Bullseye";
-import {argTypesFromProps} from '../../utils';
+import PfBullseye from "@vue-patternfly/core/src/layouts/Bullseye";
+import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Bullseye",

@@ -1,5 +1,5 @@
-import PfAvatar from "../../../core/src/components/Avatar.vue";
-import { argTypesFromProps } from "../../utils";
+import PfAvatar from "@vue-patternfly/core/src/components/Avatar.vue";
+import { argTypesFromProps } from "@/utils";
 import avatarImg from "../../examples/avatar.svg";
 
 export default {

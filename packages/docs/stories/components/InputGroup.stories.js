@@ -1,8 +1,8 @@
 import {
   PfInputGroup,
   PfInputGroupText,
-} from "../../../core/src/components/InputGroup";
-import PfTextInput from "../../../core/src/components/TextInput.vue";
+} from "@vue-patternfly/core/src/components/InputGroup";
+import PfTextInput from "@vue-patternfly/core/src/components/TextInput.vue";
 import PfAtIcon from "../../../icons/dist/esm/icons/at-icon";
 import PfSearchIcon from "../../../icons/dist/esm/icons/search-icon";
 

@@ -1,5 +1,5 @@
-import PfBadge from '../../../core/src/components/Badge';
-import {argTypesFromProps} from '../../utils';
+import PfBadge from '@vue-patternfly/core/src/components/Badge';
+import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Components/Badge",

@@ -1,4 +1,4 @@
-import PfButton from '../../../core/src/components/Button.vue';
+import PfButton from '@vue-patternfly/core/src/components/Button';
 
 export default {
   title: "Components/Button",

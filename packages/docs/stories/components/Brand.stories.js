@@ -1,4 +1,4 @@
-import PfBrand from "../../../core/src/components/Brand";
+import PfBrand from "@vue-patternfly/core/src/components/Brand";
 
 export default {
   title: "Components/Brand",

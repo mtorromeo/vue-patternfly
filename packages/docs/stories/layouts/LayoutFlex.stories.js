@@ -1,5 +1,5 @@
-import {PfFlex, PfFlexItem} from "../../../core/src/layouts/Flex";
-import {argTypesFromProps} from '../../utils';
+import {PfFlex, PfFlexItem} from "@vue-patternfly/core/src/layouts/Flex";
+import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Flex",

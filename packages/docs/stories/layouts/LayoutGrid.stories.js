@@ -1,5 +1,5 @@
-import {PfGrid, PfGridItem} from "../../../core/src/layouts/Grid";
-import {argTypesFromProps} from '../../utils';
+import {PfGrid, PfGridItem} from "@vue-patternfly/core/src/layouts/Grid";
+import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Grid",

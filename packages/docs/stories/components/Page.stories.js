@@ -1,4 +1,4 @@
-import PfBrand from "../../../core/src/components/Brand";
+import PfBrand from "@vue-patternfly/core/src/components/Brand";
 import {
   PfPage,
   PfPageHeader,
@@ -7,7 +7,7 @@ import {
   PfPageHeaderToolsItem,
   PfPageSidebar,
   PfPageSection,
-} from "../../../core/src/components/Page";
+} from "@vue-patternfly/core/src/components/Page";
 
 export default {
   title: "Components/Page",

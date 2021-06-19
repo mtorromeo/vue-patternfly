@@ -1,5 +1,5 @@
-import {PfStack, PfStackItem} from "../../../core/src/layouts/Stack";
-import {argTypesFromProps} from '../../utils';
+import {PfStack, PfStackItem} from "@vue-patternfly/core/src/layouts/Stack";
+import {argTypesFromProps} from '@/utils';
 
 export default {
   title: "Layouts/Stack",
