@@ -1,10 +1,13 @@
-import { PfAccordion, PfAccordionItem } from '@vue-patternfly/core/src/components/Accordion';
-import { ref } from 'vue';
+import {
+  PfAccordion,
+  PfAccordionItem,
+} from "@vue-patternfly/core/src/components/Accordion";
+import { ref } from "vue";
 
 export default {
   title: "Components/Accordion",
   component: PfAccordion,
-  subcomponents: {PfAccordionItem},
+  subcomponents: { PfAccordionItem },
   argTypes: {
     level: {
       control: {

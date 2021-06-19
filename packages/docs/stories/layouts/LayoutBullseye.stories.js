@@ -11,7 +11,7 @@ export const Default = (args) => ({
     return { args };
   },
   template: `
-    <pf-bullseye>
+    <pf-bullseye v-bind="args">
       Bullseye ◎ layout
     </pf-bullseye>
   `,

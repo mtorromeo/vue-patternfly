@@ -32,7 +32,7 @@ export default {
   ],
 };
 
-const Template = ({ autoFocusAction, ...args }) => ({
+const Template = ({ auto_focus_action, ...args }) => ({
   components: {
     PfDropdown,
     PfDropdownItem,
@@ -40,12 +40,12 @@ const Template = ({ autoFocusAction, ...args }) => ({
   },
   setup() {
     const open = ref(false);
-    return { args, open, autoFocusAction };
+    return { args, open, auto_focus_action };
   },
   template: `
     <pf-dropdown v-bind="args" v-model:open="open">
       <pf-dropdown-item>Link</pf-dropdown-item>
-      <pf-dropdown-item component="button" :auto-focus="autoFocusAction">
+      <pf-dropdown-item component="button" :auto-focus="auto_focus_action">
         Action
       </pf-dropdown-item>
       <pf-dropdown-item disabled>
@@ -66,13 +66,13 @@ const Template = ({ autoFocusAction, ...args }) => ({
 export const Basic = Template.bind({});
 Basic.args = {
   text: "Dropdown",
-  autoFocusAction: false,
+  auto_focus_action: false,
 };
 
 export const WithInitialSelection = Template.bind({});
 WithInitialSelection.args = {
   ...Basic.args,
-  autoFocusAction: true,
+  auto_focus_action: true,
 };
 
 export const WithGroups = ({ ...args }) => ({

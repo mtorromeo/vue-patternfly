@@ -1,4 +1,4 @@
-import PfLabel from '@vue-patternfly/core/src/components/Label.vue';
+import PfLabel from "@vue-patternfly/core/src/components/Label.vue";
 
 export default {
   title: "Components/Label",
@@ -7,45 +7,42 @@ export default {
     color: {
       control: {
         type: "select",
-        options: [
-          "blue",
-          "cyan",
-          "green",
-          "orange",
-          "purple",
-          "red",
-          "grey",
-        ],
+        options: ["blue", "cyan", "green", "orange", "purple", "red", "grey"],
       },
     },
     variant: { control: { type: "select", options: ["outline", "filled"] } },
-    tooltipPosition: { control: { type: "select", options: ['auto', 'top', 'bottom', 'left', 'right'] } },
+    tooltipPosition: {
+      control: {
+        type: "select",
+        options: ["auto", "top", "bottom", "left", "right"],
+      },
+    },
     onClose: {},
   },
 };
 
-const Template = ({label, ...args}) => ({
+const Template = ({ sample_label, ...args }) => ({
   components: { PfLabel },
   setup() {
-    return { args, label };
+    return { args, sample_label };
   },
-  template: `<pf-label v-bind="args">{{ label }}</pf-label>`,
+  template: `<pf-label v-bind="args">{{ sample_label }}</pf-label>`,
 });
 
 export const Default = Template.bind({});
 Default.args = {
-  label: "Label",
+  sample_label: "Label",
 };
 
-export const Truncated = Default.bind({});
+export const Truncated = Template.bind({});
 Truncated.args = {
   ...Default.args,
-  label: "Label is too long to fit in the label",
+  sample_label: "Label is too long to fit in the label",
   truncated: true,
   tooltipPosition: "right",
 };
 
-export const WithClose = Default.bind({});
+export const WithClose = Template.bind({});
 WithClose.args = {
   ...Default.args,
   close: true,

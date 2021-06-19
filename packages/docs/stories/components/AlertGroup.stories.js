@@ -15,7 +15,7 @@ export const Static = (args) => ({
     return { args };
   },
   template: `
-    <pf-alert-group>
+    <pf-alert-group v-bind="args">
       <pf-alert title="Success Alert" variant="success" inline />
       <pf-alert title="Info Alert" variant="info" inline />
     </pf-alert-group>

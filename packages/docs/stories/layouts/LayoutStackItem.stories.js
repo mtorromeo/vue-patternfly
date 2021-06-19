@@ -1,12 +1,12 @@
-import {PfStack, PfStackItem} from "@vue-patternfly/core/src/layouts/Stack";
+import { PfStack, PfStackItem } from "@vue-patternfly/core/src/layouts/Stack";
 
 export default {
   title: "Layouts/Stack Item",
   component: PfStackItem,
-  subcomponents: {PfStack},
+  subcomponents: { PfStack },
 };
 
-const Template = (args) => ({
+export const Default = (args) => ({
   components: { PfStack, PfStackItem },
   setup() {
     return { args };
@@ -21,8 +21,6 @@ const Template = (args) => ({
     </pf-stack>
   `,
 });
-
-export const Default = Template.bind({});
 Default.args = {
   filled: true,
 };

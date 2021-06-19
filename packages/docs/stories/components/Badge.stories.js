@@ -1,19 +1,17 @@
-import PfBadge from '@vue-patternfly/core/src/components/Badge';
+import PfBadge from "@vue-patternfly/core/src/components/Badge";
 
 export default {
   title: "Components/Badge",
   component: PfBadge,
 };
 
-const Template = ({label, ...args}) => ({
+export const Default = ({ sample_label, ...args }) => ({
   components: { PfBadge },
   setup() {
-    return { args, label };
+    return { args, sample_label };
   },
-  template: `<pf-badge v-bind="args">{{ label }}</pf-badge>`,
+  template: `<pf-badge v-bind="args">{{ sample_label }}</pf-badge>`,
 });
-
-export const Default = Template.bind({});
 Default.args = {
-  label: "24",
+  sample_label: "24",
 };

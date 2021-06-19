@@ -21,7 +21,7 @@ export default {
     PfPageSidebar,
   },
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
 };
 

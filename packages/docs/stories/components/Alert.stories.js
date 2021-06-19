@@ -1,4 +1,7 @@
-import { PfAlert, PfAlertActionLink } from "@vue-patternfly/core/src/components/Alert";
+import {
+  PfAlert,
+  PfAlertActionLink,
+} from "@vue-patternfly/core/src/components/Alert";
 
 export default {
   title: "Components/Alert",
@@ -14,22 +17,22 @@ export default {
   },
 };
 
-export const Default = ({ text, ...args }) => ({
+export const Default = ({ sample_text, ...args }) => ({
   components: { PfAlert },
   setup() {
-    return { args, text };
+    return { args, sample_text };
   },
-  template: `<pf-alert v-bind="args">{{ text }}</pf-alert>`,
+  template: `<pf-alert v-bind="args">{{ sample_text }}</pf-alert>`,
 });
 Default.args = {
   title: "Alert title",
-  text: "Alert text",
+  sample_text: "Alert text",
 };
 
-export const WithActionLinks = ({ text, ...args }) => ({
+export const WithActionLinks = ({ sample_text, ...args }) => ({
   components: { PfAlert, PfAlertActionLink },
   setup() {
-    return { args, text };
+    return { args, sample_text };
   },
   template: `
     <pf-alert v-bind="args" @close="alert('Clicked the close button')">
@@ -42,7 +45,7 @@ export const WithActionLinks = ({ text, ...args }) => ({
         </pf-alert-action-link>
       </template>
 
-      <p>{{ text }}</p>
+      <p>{{ sample_text }}</p>
     </pf-alert>
   `,
   methods: {
@@ -50,6 +53,5 @@ export const WithActionLinks = ({ text, ...args }) => ({
   },
 });
 WithActionLinks.args = {
-  title: "Alert title",
-  text: "Alert text",
+  ...Default.args,
 };

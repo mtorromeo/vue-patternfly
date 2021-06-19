@@ -7,8 +7,11 @@ import {
   PfOverflowMenuGroup,
   PfOverflowMenuControl,
 } from "@vue-patternfly/core/src/components/OverflowMenu";
-import {PfDropdown, PfKebabToggle} from '@vue-patternfly/core/src/components/Dropdown';
-import PfButton from '@vue-patternfly/core/src/components/Button.vue';
+import {
+  PfDropdown,
+  PfKebabToggle,
+} from "@vue-patternfly/core/src/components/Dropdown";
+import PfButton from "@vue-patternfly/core/src/components/Button.vue";
 import PfAlignLeftIcon from "../../../icons/dist/esm/icons/align-left-icon";
 import PfAlignCenterIcon from "../../../icons/dist/esm/icons/align-center-icon";
 import PfAlignRightIcon from "../../../icons/dist/esm/icons/align-right-icon";

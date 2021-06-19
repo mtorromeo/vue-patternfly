@@ -1,4 +1,7 @@
-import { PfChip, PfChipGroup } from "@vue-patternfly/core/src/components/ChipGroup";
+import {
+  PfChip,
+  PfChipGroup,
+} from "@vue-patternfly/core/src/components/ChipGroup";
 
 export default {
   title: "Components/Chip Group",
@@ -6,28 +9,42 @@ export default {
   subcomponents: { PfChip },
 };
 
-const Template = ({ chip1, chip2, chip3, chip4, chip5, ...args }) => ({
+const Template = ({
+  sample_chip1,
+  sample_chip2,
+  sample_chip3,
+  sample_chip4,
+  sample_chip5,
+  ...args
+}) => ({
   components: { PfChipGroup, PfChip },
   setup() {
-    return { args, chip1, chip2, chip3, chip4, chip5 };
+    return {
+      args,
+      sample_chip1,
+      sample_chip2,
+      sample_chip3,
+      sample_chip4,
+      sample_chip5,
+    };
   },
   template: `
     <pf-chip-group v-bind="args">
-      <pf-chip>{{ chip1 }}</pf-chip>
-      <pf-chip>{{ chip2 }}</pf-chip>
-      <pf-chip>{{ chip3 }}</pf-chip>
-      <pf-chip>{{ chip4 }}</pf-chip>
-      <pf-chip>{{ chip5 }}</pf-chip>
+      <pf-chip>{{ sample_chip1 }}</pf-chip>
+      <pf-chip>{{ sample_chip2 }}</pf-chip>
+      <pf-chip>{{ sample_chip3 }}</pf-chip>
+      <pf-chip>{{ sample_chip4 }}</pf-chip>
+      <pf-chip>{{ sample_chip5 }}</pf-chip>
     </pf-chip-group>
   `,
 });
 
 const chips = {
-  chip1: "Chip one",
-  chip2: "Really long chip that goes on and on",
-  chip3: "Chip three",
-  chip4: "Chip four",
-  chip5: "Chip five",
+  sample_chip1: "Chip one",
+  sample_chip2: "Really long chip that goes on and on",
+  sample_chip3: "Chip three",
+  sample_chip4: "Chip four",
+  sample_chip5: "Chip five",
 };
 
 export const SimpleInline = Template.bind({});

@@ -26,7 +26,7 @@ export default {
   },
 };
 
-export const Default = ({ ...args }) => ({
+export const Default = (args) => ({
   components: { PfNav, PfNavList, PfNavItem },
   setup() {
     const activeLink = ref("link1");

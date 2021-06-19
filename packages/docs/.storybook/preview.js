@@ -2,13 +2,18 @@ import "@patternfly/patternfly/patternfly.css";
 import "@vue-patternfly/core/dist/core.umd.css";
 import dedent from "ts-dedent";
 import { paramCase } from "param-case";
-import {extractArgTypes} from "@storybook/addon-docs/dist/esm/frameworks/vue3/extractArgTypes";
+import { extractArgTypes } from "@storybook/addon-docs/dist/esm/frameworks/vue3/extractArgTypes";
 
 const templateSourceCode = (src, args, argTypes) => {
   const replaceArgs = {};
   for (const [k, t] of Object.entries(argTypes)) {
     const val = args[k];
-    if (k !== "extra" && typeof val !== "undefined" && val !== t.defaultValue) {
+    if (
+      k !== "extra" &&
+      !k.includes("_") &&
+      typeof val !== "undefined" &&
+      val !== t.defaultValue
+    ) {
       replaceArgs[k] = val;
     }
   }
@@ -28,12 +33,13 @@ const templateSourceCode = (src, args, argTypes) => {
   return src.replace(
     ' v-bind="args"',
     Object.keys(replaceArgs)
-      .map(key => " " + propToSource(paramCase(key), replaceArgs[key]))
+      .map((key) => " " + propToSource(paramCase(key), replaceArgs[key]))
       .join("")
   );
 };
 
 export const parameters = {
+  viewMode: "docs",
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
@@ -42,6 +48,8 @@ export const parameters = {
     },
   },
   docs: {
+    state: "open",
+
     transformSource(src, ctx) {
       const match = /\b("')?template\1\s*:\s*`([^`]+)`/.exec(src);
       if (match) {
@@ -96,6 +104,32 @@ export const parameters = {
         args[k] = arg;
       }
       return args;
-    }
+    },
   },
 };
+
+// REMOVE IN STORYBOOK 6.3
+window.addEventListener("load", () => {
+  showCodeSamples();
+
+  let loc = window.location.href;
+  window.setInterval(() => {
+    let newLoc = window.location.href;
+
+    if (newLoc !== loc) {
+      loc = newLoc;
+      showCodeSamples();
+    }
+  }, 500);
+});
+
+function showCodeSamples() {
+  try {
+    [...document.querySelectorAll(".docs-story button")]
+      .filter((el) => el.textContent === "Show code")
+      .forEach((btn) => btn.click());
+  } catch (e) {
+    console.warn(e);
+  }
+}
+// END REMOVE IN STORYBOOK 6.3

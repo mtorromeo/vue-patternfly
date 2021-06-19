@@ -1,12 +1,12 @@
-import {PfGrid, PfGridItem} from "@vue-patternfly/core/src/layouts/Grid";
+import { PfGrid, PfGridItem } from "@vue-patternfly/core/src/layouts/Grid";
 
 export default {
   title: "Layouts/Grid",
   component: PfGrid,
-  subcomponents: {PfGridItem},
+  subcomponents: { PfGridItem },
 };
 
-const Template = (args) => ({
+export const Default = (args) => ({
   components: { PfGrid, PfGridItem },
   setup() {
     return { args };
@@ -52,8 +52,6 @@ const Template = (args) => ({
     </pf-grid>
   `,
 });
-
-export const Default = Template.bind({});
 Default.args = {
   gutter: true,
 };

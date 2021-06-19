@@ -1,4 +1,4 @@
-import PfButton from '@vue-patternfly/core/src/components/Button';
+import PfButton from "@vue-patternfly/core/src/components/Button";
 
 export default {
   title: "Components/Button",
@@ -23,20 +23,19 @@ export default {
   },
 };
 
-const Template = (args) => ({
+const Template = ({ sample_label, ...args }) => ({
   components: { PfButton },
   setup() {
-    const {label, ...props} = args;
-    return { args: props, label };
+    return { args, sample_label };
   },
   template: `
-    <pf-button v-bind="args">{{ label }}</pf-button>
+    <pf-button v-bind="args">{{ sample_label }}</pf-button>
   `,
 });
 
 export const Primary = Template.bind({});
 Primary.args = {
-  label: "Button",
+  sample_label: "Button",
 };
 
 export const Secondary = Template.bind({});

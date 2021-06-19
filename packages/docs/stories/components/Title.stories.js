@@ -14,15 +14,13 @@ export default {
   },
 };
 
-const Template = ({ title, ...args }) => ({
+export const Default = ({ sample_title, ...args }) => ({
   components: { PfTitle },
   setup() {
-    return { args, title };
+    return { args, sample_title };
   },
-  template: `<pf-title v-bind="args">{{ title }}</pf-title>`,
+  template: `<pf-title v-bind="args">{{ sample_title }}</pf-title>`,
 });
-
-export const Default = Template.bind({});
 Default.args = {
-  title: "Title text",
+  sample_title: "Title text",
 };

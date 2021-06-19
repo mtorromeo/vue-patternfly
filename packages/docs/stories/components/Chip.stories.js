@@ -6,38 +6,38 @@ export default {
   component: PfChip,
 };
 
-const Template = ({ text, ...args }) => ({
+const Template = ({ sample_label, ...args }) => ({
   components: { PfChip },
   setup() {
-    return { args, text };
+    return { args, sample_label };
   },
   template: `
-    <pf-chip v-bind="args">{{ text }}</pf-chip>
+    <pf-chip v-bind="args">{{ sample_label }}</pf-chip>
   `,
 });
 
 export const Simple = Template.bind({});
 Simple.args = {
-  text: 'Chip',
+  sample_label: "Chip",
 };
 
 export const Long = Template.bind({});
 Long.args = {
-  text: 'Really long chip that goes on and on',
+  sample_label: "Really long chip that goes on and on",
 };
 
-export const WithBadge = ({ text, ...args }) => ({
+export const WithBadge = ({ sample_label, ...args }) => ({
   components: { PfChip, PfBadge },
   setup() {
-    return { args, text };
+    return { args, sample_label };
   },
   template: `
     <pf-chip v-bind="args">
-      {{ text }}
+      {{ sample_label }}
       <pf-badge read>00</pf-badge>
     </pf-chip>
   `,
 });
 WithBadge.args = {
-  text: 'Chip',
+  sample_label: "Chip",
 };

@@ -1,9 +1,12 @@
-import {PfGallery, PfGalleryItem} from "@vue-patternfly/core/src/layouts/Gallery";
+import {
+  PfGallery,
+  PfGalleryItem,
+} from "@vue-patternfly/core/src/layouts/Gallery";
 
 export default {
   title: "Layouts/Gallery Item",
   component: PfGalleryItem,
-  subcomponents: {PfGallery},
+  subcomponents: { PfGallery },
 };
 
 export const Default = (args) => ({

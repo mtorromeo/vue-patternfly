@@ -5,7 +5,7 @@ export default {
   component: PfCloseButton,
 };
 
-export const Default = ({ ...args }) => ({
+export const Default = (args) => ({
   components: { PfCloseButton },
   setup() {
     return { args };

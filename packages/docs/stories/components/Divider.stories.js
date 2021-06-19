@@ -10,5 +10,5 @@ export const Default = (args) => ({
   setup() {
     return { args };
   },
-  template: `<pf-divider />`,
+  template: `<pf-divider v-bind="args" />`,
 });

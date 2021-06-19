@@ -18,7 +18,7 @@ const Template = (args) => ({
   setup() {
     return { args };
   },
-  template: "<pf-spinner />",
+  template: `<pf-spinner v-bind="args" />`,
 });
 
 export const Default = Template.bind({});
