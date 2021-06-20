@@ -19,7 +19,7 @@ export const Title = ({ sample_title, ...args }) => ({
   setup() {
     return { args, sample_title };
   },
-  template: '<pf-title v-bind="args">{{ sample_title }}</pf-title>',
+  template: `<pf-title v-bind="args">{{ sample_title }}</pf-title>`,
 });
 Title.args = {
   sample_title: 'Title text',

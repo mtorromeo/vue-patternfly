@@ -10,7 +10,7 @@ export const Badge = ({ sample_label, ...args }) => ({
   setup() {
     return { args, sample_label };
   },
-  template: '<pf-badge v-bind="args">{{ sample_label }}</pf-badge>',
+  template: `<pf-badge v-bind="args">{{ sample_label }}</pf-badge>`,
 });
 Badge.args = {
   sample_label: '24',

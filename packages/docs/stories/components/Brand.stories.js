@@ -10,7 +10,7 @@ export const Brand = ({ ...args }) => ({
   setup() {
     return { args };
   },
-  template: '<pf-brand v-bind="args" />',
+  template: `<pf-brand v-bind="args" />`,
 });
 Brand.args = {
   src: 'https://www.patternfly.org/assets/images/pf_logo.svg',

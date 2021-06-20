@@ -10,5 +10,5 @@ export const Divider = (args) => ({
   setup() {
     return { args };
   },
-  template: '<pf-divider v-bind="args" />',
+  template: `<pf-divider v-bind="args" />`,
 });

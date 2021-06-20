@@ -18,5 +18,5 @@ export const Spinner = (args) => ({
   setup() {
     return { args };
   },
-  template: '<pf-spinner v-bind="args" />',
+  template: `<pf-spinner v-bind="args" />`,
 });

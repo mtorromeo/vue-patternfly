@@ -11,7 +11,7 @@ export const Avatar = (args) => ({
   setup() {
     return { args };
   },
-  template: '<pf-avatar v-bind="args" />',
+  template: `<pf-avatar v-bind="args" />`,
 });
 Avatar.args = {
   src: avatarImg,

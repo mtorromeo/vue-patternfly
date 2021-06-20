@@ -10,5 +10,5 @@ export const CloseButton = (args) => ({
   setup() {
     return { args };
   },
-  template: '<pf-close-button v-bind="args" />',
+  template: `<pf-close-button v-bind="args" />`,
 });
