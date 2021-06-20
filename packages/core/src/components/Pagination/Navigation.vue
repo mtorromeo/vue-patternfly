@@ -1,6 +1,12 @@
 <template>
-  <nav :class="styles.paginationNav" :aria-label="paginationTitle">
-    <div v-if="!compact" :class="[styles.paginationNavControl, styles.modifiers.first]">
+  <nav
+    :class="styles.paginationNav"
+    :aria-label="paginationTitle"
+  >
+    <div
+      v-if="!compact"
+      :class="[styles.paginationNavControl, styles.modifiers.first]"
+    >
       <pf-button
         variant="plain"
         :disabled="disabled || page === firstPage || page === 0"
@@ -24,19 +30,26 @@
       </pf-button>
     </div>
 
-    <div v-if="!compact" :class="styles.paginationNavPageSelect">
+    <div
+      v-if="!compact"
+      :class="styles.paginationNavPageSelect"
+    >
       <input
         v-model="userInputPage"
         :class="styles.formControl"
         :aria-label="currPage"
         type="number"
-        :disabled="disabled || (page === firstPage && page === lastPage) || page === 0"
+        :disabled="
+          disabled || (page === firstPage && page === lastPage) || page === 0
+        "
         :min="lastPage <= 0 && firstPage <= 0 ? 0 : 1"
         :max="lastPage"
         @keydown="onKeydown"
         @change="onChange"
       >
-      <span aria-hidden="true">of {{ pagesTitle ? pluralize(lastPage, pagesTitle) : lastPage }}</span>
+      <span aria-hidden="true">
+        of {{ pagesTitle ? pluralize(lastPage, pagesTitle) : lastPage }}
+      </span>
     </div>
 
     <div :class="styles.paginationNavControl">
@@ -51,7 +64,10 @@
       </pf-button>
     </div>
 
-    <div v-if="!compact" :class="[styles.paginationNavControl, styles.modifiers.last]">
+    <div
+      v-if="!compact"
+      :class="[styles.paginationNavControl, styles.modifiers.last]"
+    >
       <pf-button
         variant="plain"
         :disabled="disabled || page === lastPage"
@@ -66,19 +82,21 @@
 </template>
 
 <script>
-import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
+import styles from "@patternfly/react-styles/css/components/Pagination/pagination";
 
-import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import AngleDoubleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-left-icon';
-import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import AngleDoubleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon';
+import PfButton from "../Button.vue";
+import AngleLeftIcon from "@vue-patternfly/icons/dist/esm/icons/angle-left-icon";
+import AngleDoubleLeftIcon from "@vue-patternfly/icons/dist/esm/icons/angle-double-left-icon";
+import AngleRightIcon from "@vue-patternfly/icons/dist/esm/icons/angle-right-icon";
+import AngleDoubleRightIcon from "@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon";
 
-import {pluralize} from '../../util';
+import { pluralize } from "../../util";
 
 export default {
-  name: 'PfNavigation',
+  name: "PfNavigation",
 
   components: {
+    PfButton,
     AngleLeftIcon,
     AngleDoubleLeftIcon,
     AngleRightIcon,
@@ -104,42 +122,42 @@ export default {
 
     pagesTitle: {
       type: String,
-      default: '',
+      default: "",
     },
     toLastPage: {
       type: String,
-      default: 'Go to last page',
+      default: "Go to last page",
     },
     toNextPage: {
       type: String,
-      default: 'Go to next page',
+      default: "Go to next page",
     },
     toFirstPage: {
       type: String,
-      default: 'Go to first page',
+      default: "Go to first page",
     },
     toPreviousPage: {
       type: String,
-      default: 'Go to previous page',
+      default: "Go to previous page",
     },
     currPage: {
       type: String,
-      default: 'Current page',
+      default: "Current page",
     },
     paginationTitle: {
       type: String,
-      default: 'Pagination',
+      default: "Pagination",
     },
   },
 
   emits: [
-    'firstClick',
-    'previousClick',
-    'nextClick',
-    'lastClick',
-    'keydown',
-    'change',
-    'set-page',
+    "firstClick",
+    "previousClick",
+    "nextClick",
+    "lastClick",
+    "keydown",
+    "change",
+    "set-page",
   ],
 
   data() {
@@ -164,7 +182,7 @@ export default {
     handleNewPage(newPage) {
       const startIdx = (newPage - 1) * this.perPage;
       const endIdx = newPage * this.perPage;
-      this.$emit('set-page', newPage, this.perPage, startIdx, endIdx);
+      this.$emit("set-page", newPage, this.perPage, startIdx, endIdx);
     },
 
     parseInteger(input, lastPage) {
@@ -177,7 +195,8 @@ export default {
     },
 
     onKeydown(e) {
-      if (e.keyCode === 13) { // ENTER
+      if (e.keyCode === 13) {
+        // ENTER
         const inputPage = this.parseInteger(this.userInputPage, this.lastPage);
         this.handleNewPage(isNaN(inputPage) ? this.page : inputPage);
       }
@@ -189,30 +208,31 @@ export default {
     },
 
     goToFirstPage() {
-      this.$emit('firstClick', 1);
+      this.$emit("firstClick", 1);
       this.userInputPage = 1;
       this.handleNewPage(1);
     },
 
     goToPreviousPage() {
       const newPage = this.page - 1 >= 1 ? this.page - 1 : 1;
-      this.$emit('previousClick', newPage);
+      this.$emit("previousClick", newPage);
       this.userInputPage = newPage;
       this.handleNewPage(newPage);
     },
 
     goToNextPage() {
-      const newPage = this.page + 1 <= this.lastPage ? this.page + 1 : this.lastPage;
-      this.$emit('nextClick', newPage);
+      const newPage =
+        this.page + 1 <= this.lastPage ? this.page + 1 : this.lastPage;
+      this.$emit("nextClick", newPage);
       this.userInputPage = newPage;
       this.handleNewPage(newPage);
     },
 
     goToLastPage() {
-      this.$emit('lastClick', this.lastPage);
+      this.$emit("lastClick", this.lastPage);
       this.userInputPage = this.lastPage;
       this.handleNewPage(this.lastPage);
     },
   },
-}
+};
 </script>
