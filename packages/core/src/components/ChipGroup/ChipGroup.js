@@ -75,7 +75,7 @@ export default {
           overflow: true,
           onClick: this.overflowChipClick,
         },
-          this.open ? this.expandedText : collapsedTextResult,
+          () => this.open ? this.expandedText : collapsedTextResult,
         ),
       ]));
     }
