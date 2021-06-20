@@ -3,25 +3,25 @@ import {
   PfNavList,
   PfNavItem,
   PfNavGroup,
-} from "@vue-patternfly/core/src/components/Nav";
-import { ref } from "vue";
+} from '@vue-patternfly/core/src/components/Nav';
+import { ref } from 'vue';
 
 export default {
-  title: "Components/Nav",
+  title: 'Components/Nav',
   component: PfNav,
   subcomponents: { PfNavList, PfNavItem, PfNavGroup },
   argTypes: {
     theme: {
       control: {
-        type: "select",
-        options: ["dark", "light"],
+        type: 'select',
       },
+      options: ['dark', 'light'],
     },
     variant: {
       control: {
-        type: "select",
-        options: ["default", "horizontal", "tertiary"],
+        type: 'select',
       },
+      options: ['default', 'horizontal', 'tertiary'],
     },
   },
 };
@@ -29,7 +29,7 @@ export default {
 export const Default = (args) => ({
   components: { PfNav, PfNavList, PfNavItem },
   setup() {
-    const activeLink = ref("link1");
+    const activeLink = ref('link1');
     return { args, activeLink };
   },
   template: `
@@ -65,7 +65,7 @@ export const Default = (args) => ({
 export const Grouped = ({ ...args }) => ({
   components: { PfNav, PfNavList, PfNavItem, PfNavGroup },
   setup() {
-    const activeLink = ref("link1");
+    const activeLink = ref('link1');
     return { args, activeLink };
   },
   template: `

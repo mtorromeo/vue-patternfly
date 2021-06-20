@@ -1,11 +1,11 @@
-import PfBullseye from "@vue-patternfly/core/src/layouts/Bullseye";
+import PfBullseye from '@vue-patternfly/core/src/layouts/Bullseye';
 
 export default {
-  title: "Layouts/Bullseye",
+  title: 'Layouts/Bullseye',
   component: PfBullseye,
 };
 
-export const Default = (args) => ({
+export const Bullseye = (args) => ({
   components: { PfBullseye },
   setup() {
     return { args };

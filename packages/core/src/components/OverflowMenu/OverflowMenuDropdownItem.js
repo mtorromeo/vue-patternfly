@@ -1,4 +1,4 @@
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import PfDropdownItem from '../Dropdown/DropdownItem';
 
 export default {
@@ -14,7 +14,7 @@ export default {
 
   inject: {
     isBelowBreakpoint: {
-      default: () => ({value: false}),
+      default: () => ({ value: false }),
     },
   },
 

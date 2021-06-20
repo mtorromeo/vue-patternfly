@@ -1,12 +1,12 @@
-import { PfGrid, PfGridItem } from "@vue-patternfly/core/src/layouts/Grid";
+import { PfGrid, PfGridItem } from '@vue-patternfly/core/src/layouts/Grid';
 
 export default {
-  title: "Layouts/Grid Item",
+  title: 'Layouts/Grid Item',
   component: PfGridItem,
   subcomponents: { PfGrid },
 };
 
-export const Default = (args) => ({
+export const GridItem = (args) => ({
   components: { PfGrid, PfGridItem },
   setup() {
     return { args };
@@ -52,7 +52,7 @@ export const Default = (args) => ({
     </pf-grid>
   `,
 });
-Default.args = {
+GridItem.args = {
   span: 2,
   rowSpan: 3,
 };

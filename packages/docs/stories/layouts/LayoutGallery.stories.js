@@ -1,15 +1,15 @@
 import {
   PfGallery,
   PfGalleryItem,
-} from "@vue-patternfly/core/src/layouts/Gallery";
+} from '@vue-patternfly/core/src/layouts/Gallery';
 
 export default {
-  title: "Layouts/Gallery",
+  title: 'Layouts/Gallery',
   component: PfGallery,
   subcomponents: { PfGalleryItem },
 };
 
-export const Default = (args) => ({
+export const Gallery = (args) => ({
   components: { PfGallery, PfGalleryItem },
   setup() {
     return { args };
@@ -25,6 +25,6 @@ export const Default = (args) => ({
     </pf-gallery>
   `,
 });
-Default.args = {
+Gallery.args = {
   gutter: true,
 };

@@ -1,12 +1,12 @@
-import { PfSplit, PfSplitItem } from "@vue-patternfly/core/src/layouts/Split";
+import { PfSplit, PfSplitItem } from '@vue-patternfly/core/src/layouts/Split';
 
 export default {
-  title: "Layouts/Split",
+  title: 'Layouts/Split',
   component: PfSplit,
   subcomponents: { PfSplitItem },
 };
 
-export const Default = (args) => ({
+export const Split = (args) => ({
   components: { PfSplit, PfSplitItem },
   setup() {
     return { args };
@@ -21,6 +21,6 @@ export const Default = (args) => ({
     </pf-split>
   `,
 });
-Default.args = {
+Split.args = {
   gutter: true,
 };

@@ -3,8 +3,8 @@ import styles from '@patternfly/react-styles/css/components/Chip/chip';
 import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
-import {getUniqueId} from '../../util';
-import {h, mergeProps} from 'vue';
+import { getUniqueId } from '../../util';
+import { h, mergeProps } from 'vue';
 
 export default {
   name: 'PfChip',
@@ -44,13 +44,13 @@ export default {
       return h(this.component, {
         onClick: e => this.$emit('click', e),
         class: [styles.chip, styles.modifiers.overflow],
-        ...(this.component === 'button' ? {type: 'button'} : {}),
-      }, h('span', {class: styles.chipText}, this.$slots.default && this.$slots.default()));
+        ...(this.component === 'button' ? { type: 'button' } : {}),
+      }, h('span', { class: styles.chipText }, this.$slots.default && this.$slots.default()));
     };
 
     const renderSimple = id => {
       const children = [
-        h('span', {ref: 'span', class: styles.chipText, id}, this.$slots.default && this.$slots.default()),
+        h('span', { ref: 'span', class: styles.chipText, id }, this.$slots.default && this.$slots.default()),
       ];
 
       if (!this.readonly) {
@@ -61,7 +61,7 @@ export default {
           id: `remove_${id}`,
           'aria-labelledby': `remove_${id} ${id}`,
         }, {
-          default: () => h(TimesIcon, {'aria-hidden': true}),
+          default: () => h(TimesIcon, { 'aria-hidden': true }),
         }));
       }
 
@@ -75,7 +75,7 @@ export default {
       if (!this.isTooltipVisible) {
         return chip;
       }
-      return h(PfTooltip, {position: this.tooltipPosition}, {
+      return h(PfTooltip, { position: this.tooltipPosition }, {
         content: () => this.$slots.default && this.$slots.default(),
         default: () => chip,
       });

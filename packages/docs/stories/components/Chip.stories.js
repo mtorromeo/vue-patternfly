@@ -1,8 +1,8 @@
-import { PfChip } from "@vue-patternfly/core/src/components/ChipGroup";
-import PfBadge from "@vue-patternfly/core/src/components/Badge";
+import { PfChip } from '@vue-patternfly/core/src/components/ChipGroup';
+import PfBadge from '@vue-patternfly/core/src/components/Badge';
 
 export default {
-  title: "Components/Chip",
+  title: 'Components/Chip',
   component: PfChip,
 };
 
@@ -18,12 +18,12 @@ const Template = ({ sample_label, ...args }) => ({
 
 export const Simple = Template.bind({});
 Simple.args = {
-  sample_label: "Chip",
+  sample_label: 'Chip',
 };
 
 export const Long = Template.bind({});
 Long.args = {
-  sample_label: "Really long chip that goes on and on",
+  sample_label: 'Really long chip that goes on and on',
 };
 
 export const WithBadge = ({ sample_label, ...args }) => ({
@@ -39,5 +39,5 @@ export const WithBadge = ({ sample_label, ...args }) => ({
   `,
 });
 WithBadge.args = {
-  sample_label: "Chip",
+  sample_label: 'Chip',
 };

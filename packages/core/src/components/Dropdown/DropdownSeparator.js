@@ -1,4 +1,4 @@
-import {h} from 'vue';
+import { h } from 'vue';
 import PfDropdownItem from './DropdownItem';
 import PfDivider from '../Divider';
 

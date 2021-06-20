@@ -1,5 +1,5 @@
-import {h, mergeProps, provide, ref} from 'vue';
-import {useWindowWidth} from '../../use';
+import { h, mergeProps, provide, ref } from 'vue';
+import { useWindowWidth } from '../../use';
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 
 import mdBreakpoint from '@patternfly/react-tokens/dist/js/global_breakpoint_md';
@@ -38,9 +38,7 @@ export default {
   render() {
     return h('div', mergeProps({
       class: styles.overflowMenu,
-    }, this.$attrs), {
-      default: () => this.$slots.default(),
-    });
+    }, this.$attrs), this.$slots);
   },
 
   watch: {

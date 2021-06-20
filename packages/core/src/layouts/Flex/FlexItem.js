@@ -1,19 +1,19 @@
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
-import {h, mergeProps} from 'vue';
-import {breakpointProp, classesFromBreakpointProps} from '../../util';
+import { h, mergeProps } from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
 
-const PfFlexItem = (props, {slots, attrs}) => h('div', mergeProps({
-    class: classesFromBreakpointProps(props, [
-      'spacer',
-      'shrink',
-      'flex',
-      'alignSelf',
-      'grow',
-      'align',
-      'fullWidth',
-    ], styles),
-  }, attrs), slots.default());
+const PfFlexItem = (props, { slots, attrs }) => h('div', mergeProps({
+  class: classesFromBreakpointProps(props, [
+    'spacer',
+    'shrink',
+    'flex',
+    'alignSelf',
+    'grow',
+    'align',
+    'fullWidth',
+  ], styles),
+}, attrs), slots.default());
 
 PfFlexItem.props = {
   ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),

@@ -1,19 +1,19 @@
-import PfAvatar from "@vue-patternfly/core/src/components/Avatar.vue";
-import avatarImg from "../../examples/avatar.svg";
+import PfAvatar from '@vue-patternfly/core/src/components/Avatar.vue';
+import avatarImg from '../../examples/avatar.svg';
 
 export default {
-  title: "Components/Avatar",
+  title: 'Components/Avatar',
   component: PfAvatar,
 };
 
-export const Default = (args) => ({
+export const Avatar = (args) => ({
   components: { PfAvatar },
   setup() {
     return { args };
   },
-  template: `<pf-avatar v-bind="args" />`,
+  template: '<pf-avatar v-bind="args" />',
 });
-Default.args = {
+Avatar.args = {
   src: avatarImg,
-  alt: "avatar",
+  alt: 'avatar',
 };

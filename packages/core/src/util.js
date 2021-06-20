@@ -1,4 +1,4 @@
-import {h, computed, mergeProps, Fragment} from 'vue';
+import { h, computed, mergeProps, Fragment } from 'vue';
 
 export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
 
@@ -16,7 +16,7 @@ export const toCamel = s => s.replace(/([-_][a-z])/gi, camelize);
 
 export const ucfirst = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-export function classesFromBreakpointProps(props, baseNames, styles, {additional = [], short = false} = {}) {
+export function classesFromBreakpointProps(props, baseNames, styles, { additional = [], short = false } = {}) {
   const c = [...additional];
 
   for (const baseName of baseNames) {
@@ -55,7 +55,7 @@ export function breakpointProp(baseName, type, values) {
   return Object.fromEntries(breakpoints.map(b => {
     let _default = null;
     if (Array.isArray(values) && values.length) {
-      _default = values[0]
+      _default = values[0];
     } else if (type === Boolean) {
       _default = false;
     }
@@ -126,7 +126,7 @@ export function getUniqueId(prefix = 'pf') {
 export function findComponentVNode(vnodes) {
   for (const n of vnodes) {
     if (n.type !== Fragment) {
-      return n
+      return n;
     }
   }
 

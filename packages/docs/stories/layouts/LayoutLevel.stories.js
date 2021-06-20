@@ -1,12 +1,12 @@
-import { PfLevel, PfLevelItem } from "@vue-patternfly/core/src/layouts/Level";
+import { PfLevel, PfLevelItem } from '@vue-patternfly/core/src/layouts/Level';
 
 export default {
-  title: "Layouts/Level",
+  title: 'Layouts/Level',
   component: PfLevel,
   subcomponents: { PfLevelItem },
 };
 
-export const Default = (args) => ({
+export const Level = (args) => ({
   components: { PfLevel, PfLevelItem },
   setup() {
     return { args };
@@ -19,6 +19,6 @@ export const Default = (args) => ({
     </pf-level>
   `,
 });
-Default.args = {
+Level.args = {
   gutter: true,
 };

@@ -1,8 +1,8 @@
-import "@patternfly/patternfly/patternfly.css";
-import "@vue-patternfly/core/dist/core.umd.css";
-import dedent from "ts-dedent";
-import { paramCase } from "param-case";
-import { extractArgTypes } from "@storybook/addon-docs/dist/esm/frameworks/vue3/extractArgTypes";
+import '@patternfly/patternfly/patternfly.css';
+import '@vue-patternfly/core/dist/core.umd.css';
+import dedent from 'ts-dedent';
+import { paramCase } from 'param-case';
+import { extractArgTypes } from '@storybook/addon-docs/dist/esm/frameworks/vue3/extractArgTypes';
 
 const templateSourceCode = (src, args, argTypes) => {
   const replaceArgs = {};
@@ -10,10 +10,11 @@ const templateSourceCode = (src, args, argTypes) => {
     const val = args[k];
 
     if (
-      k !== "extra" &&
-      !k.includes("_") &&
-      typeof val !== "undefined" &&
-      t.type.name === "boolean"
+      k !== 'extra' &&
+      !k.includes('_') &&
+      typeof val !== 'undefined' &&
+      t.type &&
+      t.type.name === 'boolean'
         ? !val !== !t.defaultValue
         : val !== t.defaultValue
     ) {
@@ -25,9 +26,9 @@ const templateSourceCode = (src, args, argTypes) => {
     const key = paramCase(prop);
     const type = typeof val;
     switch (type) {
-      case "boolean":
+      case 'boolean':
         return val ? key : `:${key}="false"`;
-      case "string":
+      case 'string':
         return `${key}="${val}"`;
       default:
         return `:${key}="${val}"`;
@@ -37,15 +38,15 @@ const templateSourceCode = (src, args, argTypes) => {
   return src.replace(
     ' v-bind="args"',
     Object.keys(replaceArgs)
-      .filter((k) => replaceArgs[k] !== "")
-      .map((k) => " " + propToSource(k, replaceArgs[k]))
-      .join("")
+      .filter((k) => replaceArgs[k] !== '')
+      .map((k) => ' ' + propToSource(k, replaceArgs[k]))
+      .join(''),
   );
 };
 
 export const parameters = {
-  viewMode: "docs",
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  viewMode: 'docs',
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -53,10 +54,12 @@ export const parameters = {
     },
   },
   docs: {
-    state: "open",
+    state: 'open',
 
     transformSource(src, ctx) {
-      const match = /\b("')?template\1\s*:\s*`([^`]+)`/.exec(src);
+      const match = /\b("')?template\1\s*:\s*`(?:\s*<div>)?([^`]+?)(?:<\/div>\s*)?`/.exec(
+        src,
+      );
       if (match) {
         return templateSourceCode(dedent(match[2]), ctx.args, ctx.argTypes);
       }
@@ -64,7 +67,7 @@ export const parameters = {
     },
 
     extractArgTypes(component) {
-      let args = extractArgTypes(component) || {};
+      const args = extractArgTypes(component) || {};
 
       const props = component.props;
       if (!props) {
@@ -75,35 +78,35 @@ export const parameters = {
         const arg = {
           name: k,
           type: {
-            name: "string",
+            name: 'string',
             required: false,
           },
           table: {
-            category: "props",
+            category: 'props',
             type: {},
           },
         };
-        if (typeof prop === "function") {
+        if (typeof prop === 'function') {
           prop = { type: prop };
         }
-        if (typeof prop.type !== "undefined") {
+        if (typeof prop.type !== 'undefined') {
           let propType = null;
           if (Array.isArray(prop.type)) {
-            propType = prop.type.map((t) => t.name.toLowerCase()).join(" | ");
+            propType = prop.type.map((t) => t.name.toLowerCase()).join(' | ');
           } else {
             propType = prop.type.name.toLowerCase();
           }
           arg.type.name = arg.table.type.summary = propType;
         }
-        if (typeof prop.required !== "undefined") {
+        if (typeof prop.required !== 'undefined') {
           arg.type.required = prop.required;
         }
-        if (typeof prop.default !== "undefined") {
+        if (typeof prop.default !== 'undefined') {
           arg.defaultValue = prop.default;
           arg.table.defaultValue = { summary: JSON.stringify(prop.default) };
         }
 
-        if (typeof args[k] !== "undefined") {
+        if (typeof args[k] !== 'undefined') {
           args[k] = {
             ...arg,
             ...args[k],
@@ -118,12 +121,12 @@ export const parameters = {
 };
 
 // REMOVE IN STORYBOOK 6.3
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   showCodeSamples();
 
   let loc = window.location.href;
   window.setInterval(() => {
-    let newLoc = window.location.href;
+    const newLoc = window.location.href;
 
     if (newLoc !== loc) {
       loc = newLoc;
@@ -134,8 +137,8 @@ window.addEventListener("load", () => {
 
 function showCodeSamples() {
   try {
-    [...document.querySelectorAll(".docs-story button")]
-      .filter((el) => el.textContent === "Show code")
+    [...document.querySelectorAll('.docs-story button')]
+      .filter((el) => el.textContent === 'Show code')
       .forEach((btn) => btn.click());
   } catch (e) {
     console.warn(e);

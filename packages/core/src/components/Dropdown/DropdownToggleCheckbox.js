@@ -1,5 +1,5 @@
-import {h, mergeProps} from 'vue';
-import {findChildrenVNodes} from '../../util';
+import { h, mergeProps } from 'vue';
+import { findChildrenVNodes } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 export default {

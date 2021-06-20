@@ -1,10 +1,10 @@
 import {
   PfChip,
   PfChipGroup,
-} from "@vue-patternfly/core/src/components/ChipGroup";
+} from '@vue-patternfly/core/src/components/ChipGroup';
 
 export default {
-  title: "Components/Chip Group",
+  title: 'Components/Chip Group',
   component: PfChipGroup,
   subcomponents: { PfChip },
 };
@@ -40,11 +40,11 @@ const Template = ({
 });
 
 const chips = {
-  sample_chip1: "Chip one",
-  sample_chip2: "Really long chip that goes on and on",
-  sample_chip3: "Chip three",
-  sample_chip4: "Chip four",
-  sample_chip5: "Chip five",
+  sample_chip1: 'Chip one',
+  sample_chip2: 'Really long chip that goes on and on',
+  sample_chip3: 'Chip three',
+  sample_chip4: 'Chip four',
+  sample_chip5: 'Chip five',
 };
 
 export const SimpleInline = Template.bind({});
@@ -55,12 +55,12 @@ SimpleInline.args = {
 export const SimpleCategory = Template.bind({});
 SimpleCategory.args = {
   ...chips,
-  category: "Category One",
+  category: 'Category One',
 };
 
 export const CategoryRemovable = Template.bind({});
 CategoryRemovable.args = {
   ...chips,
-  category: "Category has a very long name",
+  category: 'Category has a very long name',
   closable: true,
 };

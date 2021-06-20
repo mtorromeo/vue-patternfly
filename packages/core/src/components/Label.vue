@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import PfCloseButton from './CloseButton';
 import PfTooltip from './Tooltip/Tooltip.vue';
 
@@ -19,9 +19,7 @@ export default {
   name: 'PfLabel',
 
   props: {
-    /**
-     * The color of the label outline/fill
-     */
+    /** The color of the label outline/fill */
     color: {
       type: String,
       default: 'grey',
@@ -87,7 +85,7 @@ export default {
     const children = this.$slots.default();
     let content = children;
     if (this.truncated) {
-      content = h('span', {ref: 'text', class: styles.labelText}, children);
+      content = h('span', { ref: 'text', class: styles.labelText }, children);
     }
 
     let labelChild = h(component, {
@@ -95,13 +93,13 @@ export default {
       href: this.href,
       class: styles.labelContent,
     }, [
-      this.$slots.icon && h('span', {class: styles.labelIcon}, this.$slots.icon()),
+      this.$slots.icon && h('span', { class: styles.labelIcon }, this.$slots.icon()),
       content,
     ]);
 
     let tooltip = null;
     if (this.tooltipVisible) {
-      tooltip = h(PfTooltip, {position: this.tooltipPosition}, {
+      tooltip = h(PfTooltip, { position: this.tooltipPosition }, {
         default: () => labelChild,
         content: () => children,
       });

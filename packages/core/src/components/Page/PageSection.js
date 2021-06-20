@@ -1,31 +1,31 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
-import {breakpointProp, classesFromBreakpointProps} from '../../util';
-import {h, mergeProps} from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { h, mergeProps } from 'vue';
 
 const variantTypes = {
-  'default': styles.pageMainSection,
-  'nav': styles.pageMainNav,
+  default: styles.pageMainSection,
+  nav: styles.pageMainNav,
 };
 
 const variantStyles = {
-  'default': '',
-  'light': styles.modifiers.light,
-  'dark': styles.modifiers.dark_200,
-  'darker': styles.modifiers.dark_100,
+  default: '',
+  light: styles.modifiers.light,
+  dark: styles.modifiers.dark_200,
+  darker: styles.modifiers.dark_100,
 };
 
-const PfPageSection = (props, {slots, attrs}) => {
+const PfPageSection = (props, { slots, attrs }) => {
   const variantType = variantTypes[props.type];
   const variantStyle = variantStyles[props.variant];
 
   const classes = classesFromBreakpointProps(props, [
     'padding',
-  ], styles, {short: true});
+  ], styles, { short: true });
 
   let children = slots.default();
   if (props.widthLimited) {
-    children = h('div', {class: styles.pageMainBody}, children);
+    children = h('div', { class: styles.pageMainBody }, children);
   }
 
   return h('section', mergeProps({

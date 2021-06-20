@@ -1,12 +1,12 @@
-import { PfFlex, PfFlexItem } from "@vue-patternfly/core/src/layouts/Flex";
+import { PfFlex, PfFlexItem } from '@vue-patternfly/core/src/layouts/Flex';
 
 export default {
-  title: "Layouts/Flex",
+  title: 'Layouts/Flex',
   component: PfFlex,
   subcomponents: { PfFlexItem },
 };
 
-export const Default = (args) => ({
+export const Flex = (args) => ({
   components: { PfFlex, PfFlexItem },
   setup() {
     return { args };

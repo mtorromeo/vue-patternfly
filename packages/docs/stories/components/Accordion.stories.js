@@ -1,19 +1,17 @@
 import {
   PfAccordion,
   PfAccordionItem,
-} from "@vue-patternfly/core/src/components/Accordion";
-import { ref } from "vue";
+} from '@vue-patternfly/core/src/components/Accordion';
+import { ref } from 'vue';
 
 export default {
-  title: "Components/Accordion",
+  title: 'Components/Accordion',
   component: PfAccordion,
   subcomponents: { PfAccordionItem },
   argTypes: {
     level: {
-      control: {
-        type: "select",
-        options: [1, 2, 3, 4, 5, 6],
-      },
+      control: { type: 'select' },
+      options: [1, 2, 3, 4, 5, 6],
     },
   },
 };

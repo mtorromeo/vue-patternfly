@@ -1,24 +1,22 @@
-import PfSpinner from "@vue-patternfly/core/src/components/Spinner.vue";
+import PfSpinner from '@vue-patternfly/core/src/components/Spinner.vue';
 
 export default {
-  title: "Components/Spinner",
+  title: 'Components/Spinner',
   component: PfSpinner,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["sm", "md", "lg", "xl"],
+        type: 'select',
       },
+      options: ['sm', 'md', 'lg', 'xl'],
     },
   },
 };
 
-const Template = (args) => ({
+export const Spinner = (args) => ({
   components: { PfSpinner },
   setup() {
     return { args };
   },
-  template: `<pf-spinner v-bind="args" />`,
+  template: '<pf-spinner v-bind="args" />',
 });
-
-export const Default = Template.bind({});

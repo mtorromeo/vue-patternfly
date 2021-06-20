@@ -1,6 +1,6 @@
-import {createPopper} from '@popperjs/core';
-import {h, mergeProps, Teleport} from "vue";
-import {findComponentVNode, domFromRef} from '../util';
+import { createPopper } from '@popperjs/core';
+import { h, mergeProps, Teleport } from 'vue';
+import { findComponentVNode, domFromRef } from '../util';
 
 export default {
   name: 'PfPopper',
@@ -118,7 +118,7 @@ export default {
           name: 'updateState',
           enabled: true,
           phase: 'write',
-          fn: ({state}) => {
+          fn: ({ state }) => {
             this.styles = state.styles.popper;
             this.attributes = state.attributes.popper;
           },
@@ -131,10 +131,10 @@ export default {
           enabled: this.popperMatchesTriggerWidth,
           phase: 'beforeWrite',
           requires: ['computeStyles'],
-          fn: ({state}) => {
+          fn: ({ state }) => {
             this.width = `${state.rects.reference.width}px`;
           },
-          effect: ({state}) => {
+          effect: ({ state }) => {
             this.width = `${(state.elements.reference).offsetWidth}px`;
             return () => {};
           },
@@ -173,8 +173,8 @@ export default {
     }
 
     return [
-      h(reference, mergeProps({ref: 'reference'}, this.$attrs)),
-      h(Teleport, {to: this.appendTo}, popper),
+      h(reference, mergeProps({ ref: 'reference' }, this.$attrs)),
+      h(Teleport, { to: this.appendTo }, popper),
     ];
   },
 

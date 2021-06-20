@@ -1,4 +1,4 @@
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 
 export default {
@@ -15,7 +15,7 @@ export default {
 
   inject: {
     isBelowBreakpoint: {
-      default: () => ({value: false}),
+      default: () => ({ value: false }),
     },
   },
 

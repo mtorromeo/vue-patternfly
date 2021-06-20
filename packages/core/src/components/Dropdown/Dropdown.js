@@ -1,9 +1,9 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
-
-let currentId = 0;
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import PfDropdownToggle from './DropdownToggle';
 import PfDropdownMenu from './DropdownMenu';
+
+let currentId = 0;
 
 export default {
   name: 'PfDropdown',
@@ -88,9 +88,9 @@ export default {
       open: this.open,
       plain: this.plain,
       'aria-haspopup': ariaHasPopup,
-      onEnter: () => this.openedOnEnter = true,
+      onEnter: () => (this.openedOnEnter = true),
       'onUpdate:open': v => this.$emit('update:open', v),
-    }
+    };
 
     if (this.$slots.toggle) {
       const toggles = this.$slots.toggle();

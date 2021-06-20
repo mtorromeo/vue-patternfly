@@ -1,45 +1,29 @@
-import {
-  PfNavigation,
-  PfPagination,
-  PfPaginationOptionsMenu,
-} from "@vue-patternfly/core/src/components/Pagination";
-import { ref } from "vue";
+import { PfPagination } from '@vue-patternfly/core/src/components/Pagination';
+import { ref } from 'vue';
 
 export default {
-  title: "Components/Pagination",
+  title: 'Components/Pagination',
   component: PfPagination,
-  subcomponents: { PfNavigation, PfPaginationOptionsMenu },
-  // argTypes: {
-  //   theme: {
-  //     control: {
-  //       type: "select",
-  //       options: ["dark", "light"],
-  //     },
-  //   },
-  //   variant: {
-  //     control: {
-  //       type: "select",
-  //       options: ["default", "horizontal", "tertiary"],
-  //     },
-  //   },
-  // },
-};
-
-export const Default = (args) => ({
-  components: { PfPagination },
-  setup() {
-    const activeLink = ref("link1");
-    return { args, activeLink };
+  args: {
+    count: 333,
   },
-  template: `
-    <pf-pagination v-bind="args" />
-  `,
-  methods: {
-    selectLink(e, groupid, itemid) {
-      this.activeLink = itemid;
+  argTypes: {
+    page: {
+      control: null,
     },
   },
-});
-Default.args = {
-  count: 333,
 };
+
+export const Pagination = (args) => ({
+  components: { PfPagination },
+  setup() {
+    delete args.page;
+    const page = ref(1);
+    return { args, page };
+  },
+  template: `
+    <div>
+      <pf-pagination v-model:page="page" v-bind="args" />
+    </div>
+  `,
+});

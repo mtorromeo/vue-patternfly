@@ -1,4 +1,4 @@
-import PfBrand from "@vue-patternfly/core/src/components/Brand";
+import PfBrand from '@vue-patternfly/core/src/components/Brand';
 import {
   PfPage,
   PfPageHeader,
@@ -7,10 +7,10 @@ import {
   PfPageHeaderToolsItem,
   PfPageSidebar,
   PfPageSection,
-} from "@vue-patternfly/core/src/components/Page";
+} from '@vue-patternfly/core/src/components/Page';
 
 export default {
-  title: "Components/Page",
+  title: 'Components/Page',
   component: PfPage,
   subcomponents: {
     PfBrand,
@@ -21,11 +21,11 @@ export default {
     PfPageSidebar,
   },
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
-const Template = (args) => ({
+export const Page = (args) => ({
   components: {
     PfPage,
     PfBrand,
@@ -65,8 +65,6 @@ const Template = (args) => ({
     </pf-page>
   `,
 });
-
-export const Default = Template.bind({});
-Default.args = {
+Page.args = {
   managedSidebar: true,
 };

@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import {h} from 'vue';
+import { h } from 'vue';
 
 export default {
   name: 'PfToggle',
@@ -31,13 +31,13 @@ export default {
   mounted() {
     document.addEventListener('mousedown', this.onDocClick);
     document.addEventListener('touchstart', this.onDocClick);
-    document.addEventListener('keydown', this.onEscPress, {capture: true});
+    document.addEventListener('keydown', this.onEscPress, { capture: true });
   },
 
   beforeUmount() {
     document.removeEventListener('mousedown', this.onDocClick);
     document.removeEventListener('touchstart', this.onDocClick);
-    document.removeEventListener('keydown', this.onEscPress, {capture: true});
+    document.removeEventListener('keydown', this.onEscPress, { capture: true });
   },
 
   render() {
@@ -114,7 +114,7 @@ export default {
           event.stopPropagation();
         }
         event.preventDefault();
-      }
+      };
 
       if (!this.open) {
         if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {

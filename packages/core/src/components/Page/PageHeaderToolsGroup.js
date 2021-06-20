@@ -1,14 +1,14 @@
 
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
-import {breakpointProp, classesFromBreakpointProps} from '../../util';
-import {h, mergeProps} from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { h, mergeProps } from 'vue';
 
-const PfPageHeaderToolsGroup = (props, {slots, attrs}) =>
+const PfPageHeaderToolsGroup = (props, { slots, attrs }) =>
   h('div', mergeProps({
     class: [
       styles.pageHeaderToolsGroup,
-      classesFromBreakpointProps(props, ['visibility'], styles, {short: true}),
+      classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
     ],
   }, attrs), slots.default());
 

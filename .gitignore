@@ -1,4 +1,7 @@
 .*
+!.git*
+!.eslint*
+!.editorconfig
 *.log
 *.gz
 dist

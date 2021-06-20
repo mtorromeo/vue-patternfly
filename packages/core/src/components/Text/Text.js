@@ -1,4 +1,4 @@
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 
 export const TextVariants = [
   'h1',
@@ -14,7 +14,7 @@ export const TextVariants = [
   'pre',
 ];
 
-const PfText = (props, {slots, attrs}) => h(props.component, mergeProps({'data-pf-content': true}, attrs), slots.default());
+const PfText = (props, { slots, attrs }) => h(props.component, mergeProps({ 'data-pf-content': true }, attrs), slots.default());
 
 PfText.props = {
   component: {

@@ -1,4 +1,4 @@
-const Void = (props, {slots}) => {
+const Void = (props, { slots }) => {
   let children = slots.default();
   if (props.alter) {
     children = props.alter(children);

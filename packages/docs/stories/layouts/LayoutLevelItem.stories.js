@@ -1,12 +1,12 @@
-import {PfLevel, PfLevelItem} from "@vue-patternfly/core/src/layouts/Level";
+import { PfLevel, PfLevelItem } from '@vue-patternfly/core/src/layouts/Level';
 
 export default {
-  title: "Layouts/Level Item",
+  title: 'Layouts/Level Item',
   component: PfLevelItem,
-  subcomponents: {PfLevel},
+  subcomponents: { PfLevel },
 };
 
-export const Default = (args) => ({
+export const LevelItem = (args) => ({
   components: { PfLevel, PfLevelItem },
   setup() {
     return { args };

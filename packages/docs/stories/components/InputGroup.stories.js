@@ -1,13 +1,13 @@
 import {
   PfInputGroup,
   PfInputGroupText,
-} from "@vue-patternfly/core/src/components/InputGroup";
-import PfTextInput from "@vue-patternfly/core/src/components/TextInput.vue";
-import PfAtIcon from "../../../icons/dist/esm/icons/at-icon";
-import PfSearchIcon from "../../../icons/dist/esm/icons/search-icon";
+} from '@vue-patternfly/core/src/components/InputGroup';
+import PfTextInput from '@vue-patternfly/core/src/components/TextInput.vue';
+import PfAtIcon from '../../../icons/dist/esm/icons/at-icon';
+import PfSearchIcon from '../../../icons/dist/esm/icons/search-icon';
 
 export default {
-  title: "Components/Input Group",
+  title: 'Components/Input Group',
   component: PfInputGroup,
   subcomponents: { PfInputGroupText, PfTextInput },
 };

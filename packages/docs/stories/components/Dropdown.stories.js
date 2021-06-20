@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref } from 'vue';
 import {
   PfDropdown,
   PfDropdownItem,
@@ -7,14 +7,16 @@ import {
   PfBadgeToggle,
   PfDropdownToggle,
   PfDropdownToggleCheckbox,
-} from "@vue-patternfly/core/src/components/Dropdown";
-import PfAvatar from "@vue-patternfly/core/src/components/Avatar.vue";
-import PfAngleLeftIcon from "@vue-patternfly/icons/dist/esm/icons/angle-left-icon";
-import PfBellIcon from "@vue-patternfly/icons/dist/esm/icons/bell-icon";
-import PfCubesIcon from "@vue-patternfly/icons/dist/esm/icons/cubes-icon";
+} from '@vue-patternfly/core/src/components/Dropdown';
+import PfAvatar from '@vue-patternfly/core/src/components/Avatar.vue';
+import PfAngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
+import PfBellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
+import PfCubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
+
+import avatarImg from '../../examples/avatar.svg';
 
 export default {
-  title: "Components/Dropdown",
+  title: 'Components/Dropdown',
   component: PfDropdown,
   subcomponents: { PfDropdownItem, PfDropdownGroup, PfDropdownSeparator },
   argTypes: {
@@ -65,7 +67,7 @@ const Template = ({ auto_focus_action, ...args }) => ({
 
 export const Basic = Template.bind({});
 Basic.args = {
-  text: "Dropdown",
+  text: 'Dropdown',
   auto_focus_action: false,
 };
 
@@ -199,14 +201,14 @@ const SplitButtonTemplate = ({ splitButtonText, checked, ...args }) => ({
 export const SplitButton = SplitButtonTemplate.bind({});
 SplitButton.args = {
   ...Basic.args,
-  splitButtonText: "",
+  splitButtonText: '',
   checked: false,
 };
 
 export const SplitButtonWithText = SplitButtonTemplate.bind({});
 SplitButtonWithText.args = {
   ...SplitButton.args,
-  splitButtonText: "10 selected",
+  splitButtonText: '10 selected',
 };
 
 export const SplitButtonThirdState = SplitButtonTemplate.bind({});
@@ -252,8 +254,6 @@ export const WithDescriptions = ({ ...args }) => ({
 WithDescriptions.args = {
   ...Basic.args,
 };
-
-import avatarImg from "../../examples/avatar.svg";
 
 export const WithImageAndText = ({ ...args }) => ({
   components: {

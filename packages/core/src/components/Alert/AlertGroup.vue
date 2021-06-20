@@ -1,6 +1,12 @@
 <template>
-  <teleport :disabled="!toast" :to="appendTo">
-    <pf-alert-group-inline :toast="toast" v-bind="$attrs">
+  <teleport
+    :disabled="!toast"
+    :to="appendTo"
+  >
+    <pf-alert-group-inline
+      :toast="toast"
+      v-bind="$attrs"
+    >
       <slot />
     </pf-alert-group-inline>
   </teleport>
@@ -12,7 +18,7 @@ import PfAlertGroupInline from './AlertGroupInline';
 export default {
   name: 'PfAlertGroup',
 
-  components: {PfAlertGroupInline},
+  components: { PfAlertGroupInline },
 
   props: {
     toast: Boolean,

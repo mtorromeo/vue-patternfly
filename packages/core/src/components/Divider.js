@@ -1,9 +1,9 @@
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 
-import {breakpointProp, classesFromBreakpointProps} from '../util';
-import {h, mergeProps, inject} from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../util';
+import { h, mergeProps, inject } from 'vue';
 
-const PfDivider = (props, {attrs}) => {
+const PfDivider = (props, { attrs }) => {
   attrs = mergeProps({
     class: [
       styles.divider,
@@ -21,7 +21,7 @@ const PfDivider = (props, {attrs}) => {
   }
 
   return h(component, attrs);
-}
+};
 
 PfDivider.props = {
   ...breakpointProp('inset', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']),

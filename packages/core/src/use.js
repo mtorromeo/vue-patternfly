@@ -1,7 +1,7 @@
-import {provide, inject, isRef, computed, onMounted, onUnmounted, ref} from 'vue';
-import {debounce} from './util';
+import { provide, inject, isRef, computed, onMounted, onUnmounted, ref } from 'vue';
+import { debounce } from './util';
 
-const ChildrenTrackerSymbol = Symbol();
+const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
 export function provideChildrenTracker(items) {
   provide(ChildrenTrackerSymbol, {
@@ -188,7 +188,7 @@ export function useWindowWidth() {
   return computed(() => windowResizeManager.width.value);
 }
 
-export function useManagedProp(props, emit, name, value=null) {
+export function useManagedProp(props, emit, name, value = null) {
   const inner = ref(value);
   return computed({
     get() {

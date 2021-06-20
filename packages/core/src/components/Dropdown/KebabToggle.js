@@ -1,4 +1,4 @@
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import PfToggle from './Toggle';
 import EllipsisVIcon from '@vue-patternfly/icons/dist/esm/icons/ellipsis-v-icon';
 

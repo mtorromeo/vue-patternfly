@@ -1,18 +1,16 @@
 import {
   PfAlert,
   PfAlertActionLink,
-} from "@vue-patternfly/core/src/components/Alert";
+} from '@vue-patternfly/core/src/components/Alert';
 
 export default {
-  title: "Components/Alert",
+  title: 'Components/Alert',
   component: PfAlert,
   subcomponents: { PfAlertActionLink },
   argTypes: {
     variant: {
-      control: {
-        type: "select",
-        options: ["default", "success", "danger", "warning", "info"],
-      },
+      control: { type: 'select' },
+      options: ['default', 'success', 'danger', 'warning', 'info'],
     },
   },
 };
@@ -22,11 +20,11 @@ export const Default = ({ sample_text, ...args }) => ({
   setup() {
     return { args, sample_text };
   },
-  template: `<pf-alert v-bind="args">{{ sample_text }}</pf-alert>`,
+  template: '<pf-alert v-bind="args">{{ sample_text }}</pf-alert>',
 });
 Default.args = {
-  title: "Alert title",
-  sample_text: "Alert text",
+  title: 'Alert title',
+  sample_text: 'Alert text',
 };
 
 export const WithActionLinks = ({ sample_text, ...args }) => ({

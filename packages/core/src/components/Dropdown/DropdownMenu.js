@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import {h, mergeProps, provide, computed} from 'vue';
-import {provideChildrenTracker, keyNavigation} from '../../use';
+import { h, mergeProps, provide, computed } from 'vue';
+import { provideChildrenTracker, keyNavigation } from '../../use';
 
 export default {
   name: 'PfDropdownMenu',
@@ -45,7 +45,7 @@ export default {
     const onKeydown = keyNavigation(items);
     provide('keydown', onKeydown);
     return {
-      'items': items,
+      items: items,
     };
   },
 

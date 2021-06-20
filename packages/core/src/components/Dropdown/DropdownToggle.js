@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import PfToggle from './Toggle';
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 
@@ -57,20 +57,20 @@ export default {
 
     if (this.$slots.icon) {
       children.push(
-        h('span', {class: this.toggleIconClass}, this.$slots.icon()),
+        h('span', { class: this.toggleIconClass }, this.$slots.icon()),
       );
     }
 
     if (this.$slots.default) {
       children.push(
-        h('span', {class: indicator ? this.toggleTextClass : null}, this.$slots.default()),
+        h('span', { class: indicator ? this.toggleTextClass : null }, this.$slots.default()),
       );
     }
 
     if (indicator) {
       children.push(
         h('span', {
-          class: {[this.toggleIndicatorClass]: !splitButton},
+          class: { [this.toggleIndicatorClass]: !splitButton },
         }, indicator),
       );
     }

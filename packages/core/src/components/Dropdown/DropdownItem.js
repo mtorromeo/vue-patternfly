@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import {h, mergeProps} from 'vue';
-import {useChildrenTracker} from '../../use';
+import { h, mergeProps } from 'vue';
+import { useChildrenTracker } from '../../use';
 
 export default {
   name: 'PfDropdownItem',
@@ -72,7 +72,7 @@ export default {
   },
 
   render() {
-    let classes = [];
+    const classes = [];
     if (this.$slots.icon) {
       classes.push(styles.modifiers.icon);
     }
@@ -111,7 +111,7 @@ export default {
 
       if (this.$slots.icon) {
         children = [
-          h('span', {class: styles.dropdownMenuItemIcon}, this.$slots.icon()),
+          h('span', { class: styles.dropdownMenuItemIcon }, this.$slots.icon()),
           children,
         ];
       }

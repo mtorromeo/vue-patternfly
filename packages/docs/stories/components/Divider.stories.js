@@ -1,14 +1,14 @@
-import PfDivider from "@vue-patternfly/core/src/components/Divider";
+import PfDivider from '@vue-patternfly/core/src/components/Divider';
 
 export default {
-  title: "Components/Divider",
+  title: 'Components/Divider',
   component: PfDivider,
 };
 
-export const Default = (args) => ({
+export const Divider = (args) => ({
   components: { PfDivider },
   setup() {
     return { args };
   },
-  template: `<pf-divider v-bind="args" />`,
+  template: '<pf-divider v-bind="args" />',
 });

@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref } from 'vue';
 import {
   PfOverflowMenu,
   PfOverflowMenuItem,
@@ -6,18 +6,18 @@ import {
   PfOverflowMenuDropdownItem,
   PfOverflowMenuGroup,
   PfOverflowMenuControl,
-} from "@vue-patternfly/core/src/components/OverflowMenu";
+} from '@vue-patternfly/core/src/components/OverflowMenu';
 import {
   PfDropdown,
   PfKebabToggle,
-} from "@vue-patternfly/core/src/components/Dropdown";
-import PfButton from "@vue-patternfly/core/src/components/Button.vue";
-import PfAlignLeftIcon from "../../../icons/dist/esm/icons/align-left-icon";
-import PfAlignCenterIcon from "../../../icons/dist/esm/icons/align-center-icon";
-import PfAlignRightIcon from "../../../icons/dist/esm/icons/align-right-icon";
+} from '@vue-patternfly/core/src/components/Dropdown';
+import PfButton from '@vue-patternfly/core/src/components/Button.vue';
+import PfAlignLeftIcon from '../../../icons/dist/esm/icons/align-left-icon';
+import PfAlignCenterIcon from '../../../icons/dist/esm/icons/align-center-icon';
+import PfAlignRightIcon from '../../../icons/dist/esm/icons/align-right-icon';
 
 export default {
-  title: "Components/Overflow Menu",
+  title: 'Components/Overflow Menu',
   component: PfOverflowMenu,
   subcomponents: {
     PfOverflowMenuItem,
@@ -29,9 +29,9 @@ export default {
   argTypes: {
     breakpoint: {
       control: {
-        type: "select",
-        options: ["md", "lg", "xl", "2xl"],
+        type: 'select',
       },
+      options: ['md', 'lg', 'xl', '2xl'],
     },
   },
   decorators: [
@@ -81,7 +81,7 @@ export const Default = (args) => ({
   `,
 });
 Default.args = {
-  breakpoint: "lg",
+  breakpoint: 'lg',
 };
 
 export const Persistent = (args) => ({
@@ -143,5 +143,5 @@ export const Persistent = (args) => ({
   `,
 });
 Persistent.args = {
-  breakpoint: "lg",
+  breakpoint: 'lg',
 };

@@ -1,26 +1,26 @@
-import PfTextInput from "@vue-patternfly/core/src/components/TextInput.vue";
+import PfTextInput from '@vue-patternfly/core/src/components/TextInput.vue';
 
 export default {
-  title: "Components/TextInput",
+  title: 'Components/TextInput',
   component: PfTextInput,
   argTypes: {
     autovalidate: {
       control: {
-        type: "select",
-        options: [true, false, "blur", "input", "change"],
+        type: 'select',
       },
+      options: [true, false, 'blur', 'input', 'change'],
     },
     iconVariant: {
       control: {
-        type: "select",
-        options: ["", "calendar", "clock", "search"],
+        type: 'select',
       },
+      options: ['', 'calendar', 'clock', 'search'],
     },
     validated: {
       control: {
-        type: "select",
-        options: [null, "default", "success", "warning", "error"],
+        type: 'select',
       },
+      options: [null, 'default', 'success', 'warning', 'error'],
     },
   },
 };
@@ -39,7 +39,7 @@ export const TruncatedOnLeft = Simple.bind({});
 TruncatedOnLeft.args = {
   leftTruncated: true,
   value:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 };
 
 export const CustomIcon = Simple.bind({});
