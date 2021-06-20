@@ -6,14 +6,12 @@
     plain
   >
     <template #toggle>
-      <div
-        :class="[
-          styles.optionsMenuToggle,
-          styles.modifiers.plain,
-          styles.modifiers.text,
-          {[styles.modifiers.disabled]: disabled},
-        ]"
-      >
+      <div :class="[
+        styles.optionsMenuToggle,
+        styles.modifiers.plain,
+        styles.modifiers.text,
+        {[styles.modifiers.disabled]: disabled},
+      ]">
         <template v-if="perPageOptions && perPageOptions.length > 0">
           <span :class="styles.optionsMenuToggleText">
             <b>{{ firstIndex }} - {{ lastIndex }}</b> of <b>{{ count }}</b> {{ itemsTitle }}
@@ -44,7 +42,10 @@
     >
       {{ o.title }}
       {{ ` ${perPageSuffix}` }}
-      <div v-if="perPage === o.value" :class="styles.optionsMenuMenuItemIcon">
+      <div
+        v-if="perPage === o.value"
+        :class="styles.optionsMenuMenuItemIcon"
+      >
         <check-icon />
       </div>
     </pf-dropdown-item>
@@ -58,12 +59,12 @@ import PfDropdown from '../Dropdown/Dropdown';
 import PfDropdownItem from '../Dropdown/DropdownItem';
 import PfDropdownToggle from '../Dropdown/DropdownToggle';
 
-import {paginationProps} from './common';
+import { paginationProps } from './common';
 
 export default {
   name: 'PfPaginationOptionsMenu',
 
-  components: {CheckIcon, PfDropdown, PfDropdownItem, PfDropdownToggle},
+  components: { CheckIcon, PfDropdown, PfDropdownItem, PfDropdownToggle },
 
   provide() {
     return {

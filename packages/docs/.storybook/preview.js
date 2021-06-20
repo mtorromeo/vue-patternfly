@@ -8,11 +8,14 @@ const templateSourceCode = (src, args, argTypes) => {
   const replaceArgs = {};
   for (const [k, t] of Object.entries(argTypes)) {
     const val = args[k];
+
     if (
       k !== "extra" &&
       !k.includes("_") &&
       typeof val !== "undefined" &&
-      val !== t.defaultValue
+      t.type.name === "boolean"
+        ? !val !== !t.defaultValue
+        : val !== t.defaultValue
     ) {
       replaceArgs[k] = val;
     }
@@ -23,10 +26,7 @@ const templateSourceCode = (src, args, argTypes) => {
     const type = typeof val;
     switch (type) {
       case "boolean":
-        if (argTypes[prop] && argTypes[prop].defaultValue !== true) {
-          return val ? key : "";
-        }
-        return val ? "" : `:${key}="false"`;
+        return val ? key : `:${key}="false"`;
       case "string":
         return `${key}="${val}"`;
       default:
@@ -64,17 +64,13 @@ export const parameters = {
     },
 
     extractArgTypes(component) {
-      let args = extractArgTypes(component);
-      if (args !== null) {
-        return args;
-      }
+      let args = extractArgTypes(component) || {};
 
       const props = component.props;
       if (!props) {
-        return {};
+        return args;
       }
 
-      args = {};
       for (let [k, prop] of Object.entries(props)) {
         const arg = {
           name: k,
@@ -106,7 +102,15 @@ export const parameters = {
           arg.defaultValue = prop.default;
           arg.table.defaultValue = { summary: JSON.stringify(prop.default) };
         }
-        args[k] = arg;
+
+        if (typeof args[k] !== "undefined") {
+          args[k] = {
+            ...arg,
+            ...args[k],
+          };
+        } else {
+          args[k] = arg;
+        }
       }
       return args;
     },
