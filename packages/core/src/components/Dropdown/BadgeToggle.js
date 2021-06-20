@@ -8,14 +8,14 @@ const PfBadgeToggle = (props, { slots }) =>
   h(PfToggle, {
     plain: props.plain,
   },
-  {
-    default: () => h(PfBadge, props.badge, {
-      default: () => [
-        slots.default(),
-        h('span', { class: styles.dropdownToggleIcon }, h(CaretDownIcon)),
-      ],
-    }),
-  },
+    {
+      default: () => h(PfBadge, props.badge, {
+        default: () => [
+          slots.default(),
+          h('span', { class: styles.dropdownToggleIcon }, h(CaretDownIcon)),
+        ],
+      }),
+    },
   );
 
 PfBadgeToggle.props = {

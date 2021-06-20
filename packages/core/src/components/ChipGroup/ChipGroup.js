@@ -75,7 +75,7 @@ export default {
           overflow: true,
           onClick: this.overflowChipClick,
         },
-        this.open ? this.expandedText : collapsedTextResult,
+          this.open ? this.expandedText : collapsedTextResult,
         ),
       ]));
     }
@@ -83,18 +83,16 @@ export default {
     let label = null;
     if (this.category) {
       if (this.tooltipVisible) {
-        label = h(PfTooltip, {
-
-        },
-        h('span', {
-          ref: 'heading',
-          class: styles.chipGroupLabel,
-        },
-        h('span', {
-          'aria-hidden': true,
-        }, this.category,
-        ),
-        ),
+        label = h(PfTooltip, {},
+                  h('span', {
+                    ref: 'heading',
+                    class: styles.chipGroupLabel,
+                  },
+                    h('span', {
+                      'aria-hidden': true,
+                    }, this.category,
+                    ),
+                  ),
         );
       } else {
         label = h('span', {
@@ -124,25 +122,27 @@ export default {
       groupChildren.push(
         h('div', {
           class: styles.chipGroupClose,
-        }, [
-          h(PfButton, {
-            variant: 'plain',
-            'aria-label': this.closeBtnAriaLabel,
-            onClick: () => this.$emit('click'),
-          },
-          () => h(TimesCircleIcon, { 'aria-hidden': true }),
-          ),
-        ],
+        },
+          [
+            h(PfButton, {
+              variant: 'plain',
+              'aria-label': this.closeBtnAriaLabel,
+              onClick: () => this.$emit('click'),
+            },
+              () => h(TimesCircleIcon, { 'aria-hidden': true }),
+            ),
+          ],
         ),
       );
     }
 
-    return h('div', mergeProps(this.$attrs, {
-      class: [styles.chipGroup, {
-        [styles.modifiers.category]: this.category,
-      }],
-    }),
-    groupChildren,
+    return h('div', mergeProps(this.$attrs,
+                               {
+                                 class: [styles.chipGroup, {
+                                   [styles.modifiers.category]: this.category,
+                                 }],
+                               }),
+             groupChildren,
     );
   },
 

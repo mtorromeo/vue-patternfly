@@ -25,5 +25,6 @@ module.exports = {
       'error',
       'always-multiline',
     ],
+    indent: ['error', 2, { CallExpression: { arguments: 'first' }, SwitchCase: 1 }],
   },
 };

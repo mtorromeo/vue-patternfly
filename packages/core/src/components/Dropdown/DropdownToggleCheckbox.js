@@ -25,18 +25,18 @@ export default {
     }
 
     return h('label',
-      {
-        class: styles.dropdownToggleCheck,
-      }, [
-        h('input', mergeProps({
-          ref: 'checkbox',
-          type: 'checkbox',
-          'aria-label': this.ariaLabel,
-          checked: this.checked,
-          onChange: e => this.$emit('change', e.target.checked),
-        }, this.$attrs)),
-        text,
-      ],
+             {
+               class: styles.dropdownToggleCheck,
+             }, [
+               h('input', mergeProps({
+                 ref: 'checkbox',
+                 type: 'checkbox',
+                 'aria-label': this.ariaLabel,
+                 checked: this.checked,
+                 onChange: e => this.$emit('change', e.target.checked),
+               }, this.$attrs)),
+               text,
+             ],
     );
   },
 

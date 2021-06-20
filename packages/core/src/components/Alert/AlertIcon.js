@@ -15,10 +15,11 @@ const variantIcons = {
   default: BellIcon,
 };
 
-const PfAlertIcon = (props, { slots, attrs }) => h('div',
-  mergeProps({
-    class: styles.alertIcon,
-  }, attrs), slots.default ? slots : h(variantIcons[props.variant]));
+const PfAlertIcon = (props, { slots, attrs }) =>
+  h('div',
+    mergeProps({
+      class: styles.alertIcon,
+    }, attrs), slots.default ? slots : h(variantIcons[props.variant]));
 
 PfAlertIcon.props = {
   variant: {
