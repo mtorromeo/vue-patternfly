@@ -2,44 +2,37 @@
   "name": "@vue-patternfly/core",
   "version": "0.1.0-alpha.3",
   "private": false,
+  "files": [
+    "dist"
+  ],
   "main": "dist/core.umd.js",
-  "module": "dist/core.esm.js",
-  "unpkg": "dist/core.min.js",
+  "module": "dist/core.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/core.es.js",
+      "require": "./dist/core.umd.js"
+    }
+  },
   "scripts": {
-    "dev": "yarn rollup -cw",
-    "build": "yarn rollup -c && yarn rollup -c --environment IS_PRODUCTION"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.5",
     "@patternfly/patternfly": "^4.80.3",
     "@patternfly/react-styles": "^4.5.0",
     "@popperjs/core": "^2.4.4",
-    "core-js": "^3.6.5",
     "eslint": "^7.19.0",
     "eslint-plugin-vue": "^7.5.0",
     "vue": "^3"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-decorators": "^7.10.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
     "@patternfly/react-tokens": "^4.6.0",
-    "@rollup/plugin-babel": "^5.1.0",
-    "@rollup/plugin-commonjs": "^19.0.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@rollup/plugin-replace": "^2.3.3",
     "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "^10.1.0",
     "fs-extra": "^10.0.0",
     "prettier": "^2.2.1",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.22.1",
-    "rollup-plugin-scss": "^3.0.0-rc1",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-vue": "^6.0.0-beta.8",
-    "sass": "^1.34.1"
+    "@vitejs/plugin-vue": "^1.3.0",
+    "@vue-patternfly/icons": "^0.1.0-alpha.1",
+    "@vue/compiler-sfc": "^3.0.5",
+    "vite": "^2.4.4"
   }
 }
