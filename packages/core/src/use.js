@@ -1,5 +1,4 @@
-import { provide, inject, isRef, computed, onMounted, onUnmounted, ref } from 'vue';
-import { debounce } from './util';
+import { provide, inject, isRef, computed, ref } from 'vue';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
@@ -153,39 +152,6 @@ export function keyNavigation(itemsRef) {
   //     }
   //   }
   // };
-}
-
-class WindowResizeManager {
-  constructor(refValue) {
-    this.width = refValue;
-    this.counter = 0;
-  }
-
-  onResize = debounce(() => {
-    this.width.value = window.innerWidth;
-  }, 250)
-
-  addListener() {
-    if (!this.counter) {
-      window.addEventListener('resize', this.onResize);
-    }
-    this.counter++;
-  }
-
-  removeListener() {
-    this.counter--;
-    if (!this.counter) {
-      window.removeEventListener('resize', this.onResize);
-    }
-  }
-}
-
-const windowResizeManager = new WindowResizeManager(ref(window.innerWidth));
-
-export function useWindowWidth() {
-  onMounted(() => windowResizeManager.addListener());
-  onUnmounted(() => windowResizeManager.removeListener());
-  return computed(() => windowResizeManager.width.value);
 }
 
 export function useManagedProp(props, emit, name, value = null) {

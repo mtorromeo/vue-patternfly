@@ -1,5 +1,5 @@
 import { h, mergeProps, provide, ref } from 'vue';
-import { useWindowWidth } from '../../use';
+import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 
 import mdBreakpoint from '@patternfly/react-tokens/dist/js/global_breakpoint_md';
@@ -29,8 +29,10 @@ export default {
     const isBelowBreakpoint = ref(false);
     provide('isBelowBreakpoint', isBelowBreakpoint);
 
+    const { width: windowWidth } = useWindowSize();
+
     return {
-      windowWidth: useWindowWidth(),
+      windowWidth,
       isBelowBreakpoint,
     };
   },

@@ -34,7 +34,7 @@ import { globalBreakpoints } from './ToolbarUtils';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 import PfButton from '../Button.vue';
-import { useWindowWidth } from '../../use';
+import { useWindowSize } from '@vueuse/core';
 
 export default {
   name: 'PfToolbarChipGroupContent',
@@ -69,8 +69,9 @@ export default {
   emits: ['clear-all-filters', 'mounted'],
 
   setup() {
+    const { width: windowWidth } = useWindowSize();
     return {
-      windowWidth: useWindowWidth(),
+      windowWidth,
     };
   },
 

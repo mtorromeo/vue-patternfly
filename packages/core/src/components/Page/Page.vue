@@ -1,14 +1,25 @@
 <template>
   <div :class="styles.page">
     <slot name="skeleton" />
-    <main :id="mainContainerId" :role="role" :class="styles.pageMain" :tab-index="mainTabIndex" :aria-label="mainAriaLabel" @click="mainClick" @touchstart="mainClick">
+    <main
+      :id="mainContainerId"
+      :role="role"
+      :class="styles.pageMain"
+      :tab-index="mainTabIndex"
+      :aria-label="mainAriaLabel"
+      @click="mainClick"
+      @touchstart="mainClick"
+    >
       <section
         v-if="$slots.breadcrumb"
         :class="[styles.pageMainBreadcrumb, {
           [styles.modifiers.limitWidth]: breadcrumbWidthLimited,
         }]"
       >
-        <div v-if="breadcrumbWidthLimited" :class="styles.pageMainBody">
+        <div
+          v-if="breadcrumbWidthLimited"
+          :class="styles.pageMainBody"
+        >
           <slot name="breadcrumb" />
         </div>
         <template v-else>
@@ -23,8 +34,8 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
-import {useWindowWidth} from '../../use';
-import {ref, provide, computed} from 'vue';
+import { useWindowSize } from '@vueuse/core';
+import { ref, provide, computed } from 'vue';
 
 export default {
   name: 'PfPage',
@@ -61,7 +72,7 @@ export default {
   },
 
   emits: {
-    'page-resize'({mobileView, windowSize}) {
+    'page-resize'({ mobileView, windowSize }) {
       if (typeof mobileView !== 'boolean' || typeof windowSize !== 'number') {
         console.warn('Invalid page-resize event payload!');
         return false;
@@ -93,7 +104,7 @@ export default {
     });
     provide('navOpen', navOpen);
 
-    const windowWidth = useWindowWidth();
+    const { width: windowWidth } = useWindowSize();
 
     return {
       navOpen,
@@ -113,7 +124,7 @@ export default {
   watch: {
     windowWidth(width) {
       this.mobileView = width < Number.parseInt(globalBreakpointXl.value, 10);
-      this.$emit('page-resize', {mobileView: this.mobileView, windowSize: width});
+      this.$emit('page-resize', { mobileView: this.mobileView, windowSize: width });
     },
   },
 
