@@ -14,7 +14,11 @@
     "babel-loader": "^8.2.2",
     "vue-loader": "^16.2.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "eslint": "^7.19.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-vue": "^7.5.0"
+  },
   "scripts": {
     "storybook": "start-storybook -p 6006 --no-manager-cache",
     "build": "build-storybook",

@@ -14,4 +14,7 @@ module.exports = {
     config.resolve.alias['@vue-patternfly/core'] = path.resolve(__dirname, '../../core');
     return config;
   },
+  features: {
+    previewCsfV3: true,
+  },
 };
