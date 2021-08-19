@@ -1,4 +1,5 @@
-import { provide, inject, isRef, computed, ref } from 'vue';
+import { provide, inject, isRef, computed, ref, onUpdated } from 'vue';
+import { tryOnMounted } from '@vueuse/shared';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
@@ -169,3 +170,21 @@ export function useManagedProp(props, emit, name, value = null) {
     },
   });
 }
+
+export function useElementOverflow(element) {
+  const overflowing = ref(false);
+
+  const testElementOverflow = () => {
+    if (!window || !element.value) {
+      overflowing.value = false;
+      return;
+    }
+
+    overflowing.value = element.value.scrollWidth > element.value.clientWidth;
+  };
+
+  tryOnMounted(testElementOverflow);
+  onUpdated(testElementOverflow);
+
+  return overflowing;
+};

@@ -1,10 +1,11 @@
-import { h, mergeProps } from 'vue';
+import { h, mergeProps, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ChipGroup/chip-group';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 import PfChip from './Chip';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import { findChildrenVNodes, fillTemplate } from '../../util';
+import { useElementOverflow } from '../../use';
 
 export default {
   name: 'PfChipGroup',
@@ -50,10 +51,18 @@ export default {
     },
   },
 
+  setup() {
+    const labelRef = ref(null);
+
+    return {
+      labelRef,
+      labelOverflowing: useElementOverflow(labelRef),
+    };
+  },
+
   data() {
     return {
       open: this.defaultOpen,
-      tooltipVisible: false,
     };
   },
 
@@ -82,10 +91,10 @@ export default {
 
     let label = null;
     if (this.category) {
-      if (this.tooltipVisible) {
+      if (this.labelOverflowing) {
         label = h(PfTooltip, {},
                   h('span', {
-                    ref: 'heading',
+                    ref: this.labelRef,
                     class: styles.chipGroupLabel,
                   },
                     h('span', {
@@ -154,7 +163,6 @@ export default {
 
     toggleCollapse() {
       this.open = !this.open;
-      this.tooltipVisible = this.$refs.heading && this.$refs.heading.offsetWidth < this.$refs.heading.scrollWidth;
     },
   },
 };

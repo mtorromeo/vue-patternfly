@@ -4,7 +4,8 @@ import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';
-import { h, mergeProps } from 'vue';
+import { h, mergeProps, ref } from 'vue';
+import { useElementOverflow } from '../../use';
 
 export default {
   name: 'PfChip',
@@ -29,14 +30,13 @@ export default {
     },
   },
 
-  data() {
-    return {
-      isTooltipVisible: false,
-    };
-  },
+  setup() {
+    const textRef = ref(null);
 
-  mounted() {
-    this.isTooltipVisible = Boolean(this.$refs.span && this.$refs.span.offsetWidth < this.$refs.span.scrollWidth);
+    return {
+      textRef,
+      textOverflowing: useElementOverflow(textRef),
+    };
   },
 
   render() {
@@ -50,7 +50,7 @@ export default {
 
     const renderSimple = id => {
       const children = [
-        h('span', { ref: 'span', class: styles.chipText, id }, this.$slots.default && this.$slots.default()),
+        h('span', { ref: this.textRef, class: styles.chipText, id }, this.$slots.default && this.$slots.default()),
       ];
 
       if (!this.readonly) {
@@ -72,7 +72,7 @@ export default {
 
       const chip = h(this.component, props, children);
 
-      if (!this.isTooltipVisible) {
+      if (!this.textOverflowing) {
         return chip;
       }
       return h(PfTooltip, { position: this.tooltipPosition }, {

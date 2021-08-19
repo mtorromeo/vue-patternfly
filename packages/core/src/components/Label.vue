@@ -1,7 +1,8 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import { h, mergeProps } from 'vue';
+import { h, mergeProps, ref } from 'vue';
+import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton';
 import PfTooltip from './Tooltip/Tooltip.vue';
 
@@ -50,25 +51,16 @@ export default {
 
   emits: ['close'],
 
-  data() {
+  setup() {
+    const textRef = ref(null);
+
     return {
-      tooltipVisible: false,
+      textRef,
+      textOverflowing: useElementOverflow(textRef),
     };
   },
 
-  mounted() {
-    this.calcTooltipVisible();
-  },
-
-  updated() {
-    this.calcTooltipVisible();
-  },
-
   methods: {
-    calcTooltipVisible() {
-      this.tooltipVisible = this.$refs.text && this.$refs.text.offsetWidth < this.$refs.text.scrollWidth;
-    },
-
     onClose(e) {
       this.$emit('close', e);
     },
@@ -85,10 +77,10 @@ export default {
     const children = this.$slots.default();
     let content = children;
     if (this.truncated) {
-      content = h('span', { ref: 'text', class: styles.labelText }, children);
+      content = h('span', { ref: this.textRef, class: styles.labelText }, children);
     }
 
-    let labelChild = h(component, {
+    const labelChild = h(component, {
       to: this.to,
       href: this.href,
       class: styles.labelContent,
@@ -98,7 +90,7 @@ export default {
     ]);
 
     let tooltip = null;
-    if (this.tooltipVisible) {
+    if (this.textOverflowing.value) {
       tooltip = h(PfTooltip, { position: this.tooltipPosition }, {
         default: () => labelChild,
         content: () => children,
@@ -116,5 +108,5 @@ export default {
       }),
     ]);
   },
-}
+};
 </script>
