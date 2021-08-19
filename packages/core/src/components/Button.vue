@@ -17,14 +17,26 @@
     }]"
     :tabindex="tabIdx"
   >
-    <span v-if="loading" :class="styles.buttonProgress">
-      <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
+    <span
+      v-if="loading"
+      :class="styles.buttonProgress"
+    >
+      <pf-spinner
+        size="md"
+        :aria-valuetext="spinnerAriaValueText"
+      />
     </span>
-    <span v-if="variant !== 'plain' && $slots.icon && iconPosition === 'left'" :class="[styles.buttonIcon, styles.modifiers.start]">
+    <span
+      v-if="variant !== 'plain' && $slots.icon && iconPosition === 'left'"
+      :class="[styles.buttonIcon, styles.modifiers.start]"
+    >
       <slot name="icon" />
     </span>
     <slot />
-    <span v-if="variant !== 'plain' && $slots.icon && iconPosition === 'right'" :class="[styles.buttonIcon, styles.modifiers.end]">
+    <span
+      v-if="variant !== 'plain' && $slots.icon && iconPosition === 'right'"
+      :class="[styles.buttonIcon, styles.modifiers.end]"
+    >
       <slot name="icon" />
     </span>
   </component>
@@ -38,7 +50,7 @@ import PfSpinner from './Spinner.vue';
 export default {
   name: 'PfButton',
 
-  components: {PfSpinner},
+  components: { PfSpinner },
 
   props: {
     /** type of button */
@@ -101,10 +113,13 @@ export default {
       if (this.tabindex) {
         return this.tabindex;
       }
-      if ((this.disabled && this.component === 'button') || this.ariaDisabled) {
-        return null;
+      if (this.disabled) {
+        return this.component === 'button' ? null : -1;
       }
-      return -1;
+      if (!this.ariaDisabled && this.component === 'span') {
+        return 0;
+      }
+      return null;
     },
   },
 };
