@@ -1,5 +1,9 @@
 <template>
-  <pf-divider v-if="variant == 'separator'" :class="styles.modifiers.vertical" v-bind="$attrs" />
+  <pf-divider
+    v-if="variant == 'separator'"
+    :class="styles.modifiers.vertical"
+    v-bind="$attrs"
+  />
   <div
     v-else
     :class="[styles.toolbarItem, breakpointClasses, variantClass, {
@@ -13,11 +17,14 @@
 </template>
 
 <script>
-import {breakpointProp, classesFromBreakpointProps, toCamel} from '../../util';
+import PfDivider from '../Divider';
+import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 
 export default {
   name: 'PfToolbarItem',
+
+  components: { PfDivider },
 
   props: {
     variant: {
@@ -43,7 +50,7 @@ export default {
   computed: {
     breakpointClasses() {
       return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, {short: true}),
+        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
         ...classesFromBreakpointProps(this.$props, ['spacer'], styles),
       ];
     },

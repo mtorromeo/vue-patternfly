@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {breakpointProp, classesFromBreakpointProps, toCamel} from '../../util';
+import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 
 export default {
@@ -34,7 +34,7 @@ export default {
   computed: {
     breakpointClasses() {
       return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, {short: true}),
+        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
         ...classesFromBreakpointProps(this.$props, ['spacer', 'spaceItems'], styles),
       ];
     },

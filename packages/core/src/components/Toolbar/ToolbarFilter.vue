@@ -2,10 +2,25 @@
   <pf-toolbar-item v-if="!hideToolbarItem">
     <slot />
   </pf-toolbar-item>
-  <teleport v-if="mounted && teleportTarget" :to="teleportTarget">
-    <pf-toolbar-item v-if="chips.length" variant="chip-group">
-      <pf-chip-group :key="category" :category="category" closable @click="$emit('delete-chip-group', category)">
-        <pf-chip v-for="chip of chips" :key="chipKey(chip)" @click="$emit('delete-chip', category, chipKey(chip))">
+  <teleport
+    v-if="mounted && teleportTarget"
+    :to="teleportTarget"
+  >
+    <pf-toolbar-item
+      v-if="chips.length"
+      variant="chip-group"
+    >
+      <pf-chip-group
+        :key="category"
+        :category="category"
+        closable
+        @click="$emit('delete-chip-group', category)"
+      >
+        <pf-chip
+          v-for="chip of chips"
+          :key="chipKey(chip)"
+          @click="$emit('delete-chip', category, chipKey(chip))"
+        >
           {{ chipLabel(chip) }}
         </pf-chip>
       </pf-chip-group>

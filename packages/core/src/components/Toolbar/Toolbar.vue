@@ -1,9 +1,7 @@
 <template>
-  <div
-    :class="[styles.toolbar, breakpointClasses, {
-      [styles.modifiers.pageInsets]: pageInsets,
-    }]"
-  >
+  <div :class="[styles.toolbar, breakpointClasses, {
+    [styles.modifiers.pageInsets]: pageInsets,
+  }]">
     <slot />
     <pf-toolbar-chip-group-content
       :expanded="effectiveExpanded"
@@ -18,16 +16,16 @@
 </template>
 
 <script>
-import {provide, ref, computed} from 'vue'
-import {breakpointProp, classesFromBreakpointProps} from '../../util';
-import {useWindowWidth} from '../../use';
+import { provide, ref, computed } from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { useWindowWidth } from '../../use';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
 
 export default {
   name: 'PfToolbar',
 
-  components: {PfToolbarChipGroupContent},
+  components: { PfToolbarChipGroupContent },
 
   provide() {
     return {
@@ -62,7 +60,7 @@ export default {
 
   emits: ['update:expanded', 'clear-all-filters'],
 
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     const managedToggleExpanded = ref(false);
 
     const toggleManaged = computed(() => !props.expanded && props.expanded !== false);

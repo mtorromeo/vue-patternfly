@@ -14,7 +14,10 @@
         <slot name="icon" />
       </pf-button>
     </div>
-    <teleport v-if="expanded.value && expandableRef.value" :to="expandableRef.value">
+    <teleport
+      v-if="expanded.value && expandableRef.value"
+      :to="expandableRef.value"
+    >
       <slot />
     </teleport>
     <template v-else>
@@ -24,16 +27,16 @@
 </template>
 
 <script>
-import {breakpointProp, classesFromBreakpointProps, toCamel} from '../../util';
+import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';
-import {useWindowWidth} from '../../use';
+import { useWindowWidth } from '../../use';
 
 export default {
   name: 'PfToolbarToggleGroup',
 
-  components: {PfButton},
+  components: { PfButton },
 
   inject: ['expanded', 'toggleExpanded', 'expandableRef'],
 
@@ -64,7 +67,7 @@ export default {
   computed: {
     breakpointClasses() {
       return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, {short: true}),
+        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
         ...classesFromBreakpointProps(this.$props, ['spacer', 'spaceItems'], styles),
       ];
     },

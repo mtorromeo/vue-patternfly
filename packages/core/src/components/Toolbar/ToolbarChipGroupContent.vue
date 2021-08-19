@@ -17,7 +17,11 @@
     </pf-toolbar-group>
 
     <pf-toolbar-item v-if="showClearFiltersButton && !expanded">
-      <pf-button variant="link" inline @click="$emit('clear-all-filters')">
+      <pf-button
+        variant="link"
+        inline
+        @click="$emit('clear-all-filters')"
+      >
         {{ clearFiltersButtonText }}
       </pf-button>
     </pf-toolbar-item>
@@ -26,10 +30,11 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import {globalBreakpoints} from './ToolbarUtils';
+import { globalBreakpoints } from './ToolbarUtils';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
-import {useWindowWidth} from '../../use';
+import PfButton from '../Button.vue';
+import { useWindowWidth } from '../../use';
 
 export default {
   name: 'PfToolbarChipGroupContent',
@@ -37,6 +42,7 @@ export default {
   components: {
     PfToolbarGroup,
     PfToolbarItem,
+    PfButton,
   },
 
   props: {

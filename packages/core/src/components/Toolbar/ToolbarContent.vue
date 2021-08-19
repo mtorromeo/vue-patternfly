@@ -19,15 +19,16 @@
 </template>
 
 <script>
-import {ref, provide} from 'vue'
-import {breakpointProp, classesFromBreakpointProps} from '../../util';
+import { ref, provide } from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
+import PfToolbarGroup from './ToolbarGroup.vue';
 
 export default {
   name: 'PfToolbarContent',
 
-  components: {PfToolbarExpandableContent},
+  components: { PfToolbarExpandableContent, PfToolbarGroup },
 
   inject: ['expanded', 'showClearFiltersButton', 'clearFiltersButtonText'],
 
@@ -43,7 +44,7 @@ export default {
     const chipContainer = ref(null);
     provide('chipContainerRef', chipContainer);
 
-    return {expandable, chipContainer};
+    return { expandable, chipContainer };
   },
 
   data() {
@@ -55,7 +56,7 @@ export default {
   computed: {
     breakpointClasses() {
       return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, {short: true}),
+        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
       ];
     },
   },

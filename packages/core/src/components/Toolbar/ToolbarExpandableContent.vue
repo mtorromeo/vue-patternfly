@@ -5,10 +5,17 @@
   >
     <slot />
 
-    <pf-toolbar-group v-if="numberOfFilters.value" :class="styles.modifiers.chipContainer">
+    <pf-toolbar-group
+      v-if="numberOfFilters.value"
+      :class="styles.modifiers.chipContainer"
+    >
       <slot name="chip-container" />
       <pf-toolbar-item v-if="showClearFiltersButton">
-        <pf-button variant="link" inline @click="clearAllFilters">
+        <pf-button
+          variant="link"
+          inline
+          @click="clearAllFilters"
+        >
           {{ clearFiltersButtonText }}
         </pf-button>
       </pf-toolbar-item>
@@ -18,6 +25,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import PfButton from '../Button.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 
@@ -27,6 +35,7 @@ export default {
   components: {
     PfToolbarGroup,
     PfToolbarItem,
+    PfButton,
   },
 
   inject: ['numberOfFilters', 'clearAllFilters'],
