@@ -23,7 +23,8 @@
     "@patternfly/react-tokens": "^4.6.0",
     "@popperjs/core": "^2.4.4",
     "@vue-patternfly/icons": "^0.1.0-alpha.1",
-    "@vueuse/core": "^6.0.0"
+    "@vueuse/core": "^6.0.0",
+    "@vueuse/integrations": "^6.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.3.0",
