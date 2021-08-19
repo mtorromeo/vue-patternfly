@@ -1,4 +1,5 @@
 export { default as PfBadge } from './Badge';
+export { default as PfBackdrop } from './Backdrop';
 export { default as PfBrand } from './Brand';
 export { default as PfButton } from './Button.vue';
 export { default as PfCloseButton } from './CloseButton';
