@@ -14,9 +14,9 @@ const templateSourceCode = (src, args, argTypes) => {
       !k.includes('_') &&
       typeof val !== 'undefined' &&
       t.type &&
-      t.type.name === 'boolean'
+      (t.type.name === 'boolean'
         ? !val !== !t.defaultValue
-        : val !== t.defaultValue
+        : val !== t.defaultValue)
     ) {
       replaceArgs[k] = val;
     }
@@ -57,6 +57,7 @@ export const parameters = {
     state: 'open',
 
     transformSource(src, ctx) {
+      console.log(src);
       const match = /\b("')?template\1\s*:\s*`(?:\s*<div>)?([^`]+?)(?:<\/div>\s*)?`/.exec(
         src,
       );
