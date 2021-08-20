@@ -57,7 +57,6 @@ export const parameters = {
     state: 'open',
 
     transformSource(src, ctx) {
-      console.log(src);
       const match = /\b("')?template\1\s*:\s*`(?:\s*<div>)?([^`]+?)(?:<\/div>\s*)?`/.exec(
         src,
       );
@@ -105,6 +104,9 @@ export const parameters = {
         if (typeof prop.default !== 'undefined') {
           arg.defaultValue = prop.default;
           arg.table.defaultValue = { summary: JSON.stringify(prop.default) };
+        } else if (prop.type === Boolean) {
+          arg.defaultValue = false;
+          arg.table.defaultValue = { summary: 'false' };
         }
 
         if (typeof args[k] !== 'undefined') {
