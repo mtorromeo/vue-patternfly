@@ -157,12 +157,13 @@ export function keyNavigation(itemsRef) {
 
 export function useManagedProp(props, emit, name, value = null) {
   const inner = ref(value);
+  const undef = value => value === null || typeof value === 'undefined';
   return computed({
     get() {
-      return props[name] === null ? inner.value : props[name];
+      return undef(props[name]) ? inner.value : props[name];
     },
     set(to) {
-      if (props[name] === null) {
+      if (undef(props[name])) {
         inner.value = to;
       } else {
         emit(`update:${name}`, to);
