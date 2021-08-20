@@ -12,7 +12,7 @@ export const GridItem = (args) => ({
     return { args };
   },
   template: `
-    <pf-grid gutter>
+    <pf-grid gutter class="docs-layout-outline">
       <pf-grid-item span="8">
         span = 8
       </pf-grid-item>

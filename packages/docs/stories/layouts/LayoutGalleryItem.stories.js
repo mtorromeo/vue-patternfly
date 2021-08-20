@@ -15,7 +15,7 @@ export const GalleryItem = (args) => ({
     return { args };
   },
   template: `
-    <pf-gallery gutter>
+    <pf-gallery gutter class="docs-layout-outline">
       <pf-gallery-item v-bind="args">Gallery Item</pf-gallery-item>
       <pf-gallery-item>Gallery Item</pf-gallery-item>
       <pf-gallery-item>Gallery Item</pf-gallery-item>

@@ -12,7 +12,7 @@ export const SplitItem = (args) => ({
     return { args };
   },
   template: `
-    <pf-split gutter>
+    <pf-split gutter class="docs-layout-outline">
       <pf-split-item>content</pf-split-item>
       <pf-split-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
         pf-m-fill

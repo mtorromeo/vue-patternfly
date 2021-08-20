@@ -12,7 +12,7 @@ export const Grid = (args) => ({
     return { args };
   },
   template: `
-    <pf-grid v-bind="args">
+    <pf-grid v-bind="args" class="docs-layout-outline">
       <pf-grid-item span="8">
         span = 8
       </pf-grid-item>

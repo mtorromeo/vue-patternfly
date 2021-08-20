@@ -12,7 +12,7 @@ export const Stack = (args) => ({
     return { args };
   },
   template: `
-    <pf-stack v-bind="args" style="height: 300px">
+    <pf-stack v-bind="args" class="docs-layout-outline" style="height: 300px">
       <pf-stack-item>content</pf-stack-item>
       <pf-stack-item filled>
         pf-m-fill

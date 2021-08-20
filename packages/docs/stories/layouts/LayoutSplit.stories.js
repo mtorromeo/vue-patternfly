@@ -12,7 +12,7 @@ export const Split = (args) => ({
     return { args };
   },
   template: `
-    <pf-split v-bind="args">
+    <pf-split v-bind="args" class="docs-layout-outline">
       <pf-split-item>content</pf-split-item>
       <pf-split-item filled>
         pf-m-fill

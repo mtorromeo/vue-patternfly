@@ -12,7 +12,7 @@ export const FlexItem = (args) => ({
     return { args };
   },
   template: `
-    <pf-flex>
+    <pf-flex class="docs-layout-outline">
       <pf-flex flex="1">
         <pf-flex-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
           Flex item

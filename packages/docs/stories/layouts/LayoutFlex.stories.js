@@ -12,7 +12,7 @@ export const Flex = (args) => ({
     return { args };
   },
   template: `
-    <pf-flex v-bind="args">
+    <pf-flex v-bind="args" class="docs-layout-outline">
       <pf-flex flex="1">
         <pf-flex-item>Flex item</pf-flex-item>
       </pf-flex>

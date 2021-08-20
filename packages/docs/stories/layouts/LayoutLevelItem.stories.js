@@ -12,7 +12,7 @@ export const LevelItem = (args) => ({
     return { args };
   },
   template: `
-    <pf-level gutter>
+    <pf-level gutter class="docs-layout-outline">
       <pf-level-item>Level Item</pf-level-item>
       <pf-level-item v-bind="args">
         Level Item

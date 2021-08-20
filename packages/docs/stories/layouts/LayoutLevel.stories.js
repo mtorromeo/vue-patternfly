@@ -12,7 +12,7 @@ export const Level = (args) => ({
     return { args };
   },
   template: `
-    <pf-level v-bind="args">
+    <pf-level v-bind="args" class="docs-layout-outline">
       <pf-level-item>Level Item</pf-level-item>
       <pf-level-item>Level Item</pf-level-item>
       <pf-level-item>Level Item</pf-level-item>
