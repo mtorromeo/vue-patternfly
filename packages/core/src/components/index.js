@@ -14,6 +14,7 @@ export * from './Accordion';
 export * from './Alert';
 export * from './ChipGroup';
 export * from './Dropdown';
+export * from './EmptyState';
 export * from './InputGroup';
 export * from './Modal';
 export * from './Nav';
