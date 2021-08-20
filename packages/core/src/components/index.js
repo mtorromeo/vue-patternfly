@@ -6,6 +6,7 @@ export { default as PfCloseButton } from './CloseButton';
 export { default as PfDivider } from './Divider';
 export { default as PfLabel } from './Label.vue';
 export { default as PfPopper } from './Popper';
+export { default as PfRadio } from './Radio.vue';
 export { default as PfSpinner } from './Spinner.vue';
 export { default as PfSwitch } from './Switch.vue';
 export { default as PfTextInput } from './TextInput.vue';
