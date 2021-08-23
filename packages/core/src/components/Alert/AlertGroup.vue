@@ -20,6 +20,8 @@ export default {
 
   components: { PfAlertGroupInline },
 
+  inheritAttrs: false,
+
   props: {
     toast: Boolean,
     appendTo: {

@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="[styles.toolbarGroup, styles.modifiers.toggleGroup, breakpointClasses]"
-    v-bind="$attrs"
-  >
+  <div :class="[styles.toolbarGroup, styles.modifiers.toggleGroup, breakpointClasses]">
     <div :class="styles.toolbarToggle">
       <pf-button
         variant="plain"

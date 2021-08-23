@@ -1,5 +1,5 @@
 <template>
-  <label :class="[styles.switch, $attrs.class]">
+  <label v-bind="labelAttrs" :class="[styles.switch, $attrs.class]">
     <input v-bind="$attrs" :class="styles.switchInput" type="checkbox" :checked="checked" @change="$emit('update:checked', $event.target.checked)">
 
     <template v-if="label">
@@ -27,7 +27,9 @@ import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 export default {
   name: 'PfSwitch',
 
-  components: {CheckIcon},
+  components: { CheckIcon },
+
+  inheritAttrs: false,
 
   props: {
     checked: Boolean,
@@ -40,6 +42,11 @@ export default {
     labelOff: {
       type: String,
       default: null,
+    },
+
+    labelAttrs: {
+      type: Object,
+      default: () => ({}),
     },
   },
 

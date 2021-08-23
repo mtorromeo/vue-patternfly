@@ -13,7 +13,7 @@
 <script>
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import {isElementInView} from '../../util';
+import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 export default {
@@ -25,6 +25,8 @@ export default {
   },
 
   inject: ['horizontal', 'scrollable'],
+
+  inheritAttrs: false,
 
   props: {
     ariaLeftScroll: {

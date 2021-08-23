@@ -137,6 +137,8 @@ export default {
     BellIcon,
   },
 
+  inheritAttrs: false,
+
   // inject: ['open'],
 
   props: {

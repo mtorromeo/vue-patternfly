@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="[styles.toolbarExpandableContent, {[styles.modifiers.expanded]: expanded}]"
-    v-bind="$attrs"
-  >
+  <div :class="[styles.toolbarExpandableContent, {[styles.modifiers.expanded]: expanded}]">
     <slot />
 
     <pf-toolbar-group
