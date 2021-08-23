@@ -5,8 +5,6 @@ import { h, mergeProps } from 'vue';
 export default {
   name: 'PfDropdownGroup',
 
-  inheritAttrs: true,
-
   render() {
     return h('section', mergeProps({ class: styles.dropdownGroup }, this.$props), [
       this.$slots.label && h('h1', {
