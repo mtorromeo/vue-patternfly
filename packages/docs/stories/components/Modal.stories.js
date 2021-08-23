@@ -26,7 +26,7 @@ export const Default = ({ sample_content, ...args }) => ({
   template: `
     <pf-button @click="open = !open">Toggle Modal</pf-button>
 
-    <pf-modal v-model:open="open" v-bind="args">
+    <pf-modal v-bind="args" v-model:open="open">
       {{ sample_content }}
     </pf-modal>
   `,
@@ -49,7 +49,7 @@ export const WithDescription = ({ sample_content, ...args }) => ({
   template: `
     <pf-button @click="open = !open">Toggle Modal</pf-button>
 
-    <pf-modal v-model:open="open" v-bind="args">
+    <pf-modal v-bind="args" v-model:open="open">
       {{ sample_content }}
 
       <template #description>
@@ -86,7 +86,7 @@ export const WithHelp = ({ sample_content, ...args }) => ({
   template: `
     <pf-button @click="open = !open">Toggle Modal</pf-button>
 
-    <pf-modal v-model:open="open" v-bind="args">
+    <pf-modal v-bind="args" v-model:open="open">
       {{ sample_content }}
 
       <template #help>
