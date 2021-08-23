@@ -2,6 +2,9 @@ import { createPopper } from '@popperjs/core';
 import { h, mergeProps, Teleport } from 'vue';
 import { findComponentVNode, domFromRef } from '../util';
 
+export const getOpacityTransition = (animationDuration) =>
+  `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`;
+
 export default {
   name: 'PfPopper',
 
@@ -29,8 +32,14 @@ export default {
     },
 
     visible: Boolean,
-    disableFlip: Boolean,
     popperMatchesTriggerWidth: Boolean,
+    noFlip: Boolean,
+
+    flipBehavoir: {
+      type: String,
+      default: 'flip',
+      validator: v => ['flip', 'top', 'bottom', 'left', 'right'].includes(v),
+    },
 
     distance: {
       type: Number,
@@ -62,6 +71,7 @@ export default {
 
   data() {
     return {
+      popper: null,
       width: '',
       styles: {},
       attributes: {},
@@ -81,19 +91,25 @@ export default {
     },
 
     positionModifier() {
-      const placement = this.$el && this.$el.dataset && this.$el.dataset['popper-placement'];
-      if (placement) {
-        if (placement.startsWith('top')) {
-          return this.top || '';
-        } else if (placement.startsWith('bottom')) {
-          return this.bottom || '';
-        } else if (placement.startsWith('left')) {
-          return this.left || '';
-        } else if (placement.startsWith('right')) {
-          return this.right || '';
-        }
+      if (!this.attributes['data-popper-placement']) {
+        return this.top || '';
       }
-      return this.top;
+      const placement = this.attributes['data-popper-placement'];
+      if (placement.startsWith('bottom')) {
+        return this.bottom || '';
+      }
+      if (placement.startsWith('left')) {
+        return this.left || '';
+      }
+      if (placement.startsWith('right')) {
+        return this.right || '';
+      }
+      return this.top || '';
+    },
+
+    oppositePlacement() {
+      const hash = { left: 'right', right: 'left', bottom: 'top', top: 'bottom' };
+      return this.popperPlacement.replace(/left|right|bottom|top/g, (matched) => hash[matched]);
     },
 
     options() {
@@ -113,7 +129,10 @@ export default {
           enabled: false,
         }, {
           name: 'flip',
-          enabled: !this.disableFlip,
+          enabled: this.popperPlacement.startsWith('auto') || !this.noFlip,
+          options: {
+            fallbackPlacements: this.flipBehavoir === 'flip' ? [this.oppositePlacement] : this.flipBehavoir,
+          },
         }, {
           name: 'updateState',
           enabled: true,
