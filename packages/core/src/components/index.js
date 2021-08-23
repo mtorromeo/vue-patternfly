@@ -14,6 +14,7 @@ export { default as PfTextInput } from './TextInput.vue';
 export { default as PfTitle } from './Title.vue';
 export * from './Accordion';
 export * from './Alert';
+export * from './Breadcrumb';
 export * from './ChipGroup';
 export * from './Dropdown';
 export * from './EmptyState';
