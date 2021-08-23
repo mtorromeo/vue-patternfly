@@ -5,7 +5,8 @@
         :class="bullsEyeStyles.bullseye"
         :active="!disableFocusTrap"
       >
-        <div
+        <component
+          :is="component"
           v-bind="$attrs"
           role="dialog"
           :aria-label="ariaLabel"
@@ -92,7 +93,7 @@
           >
             <slot name="footer" />
           </footer>
-        </div>
+        </component>
       </pf-focus-trap>
     </pf-backdrop>
   </teleport>
@@ -222,6 +223,11 @@ export default {
     descriptorId: {
       type: String,
       default: '',
+    },
+
+    component: {
+      type: String,
+      default: 'div',
     },
   },
 
