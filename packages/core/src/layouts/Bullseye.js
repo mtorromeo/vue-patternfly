@@ -13,4 +13,6 @@ PfBullseye.props = {
 
 PfBullseye.inheritAttrs = false;
 
+Object.defineProperty(PfBullseye, 'name', { value: 'PfBullseye', writable: false });
+
 export default PfBullseye;

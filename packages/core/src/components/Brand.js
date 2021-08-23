@@ -1,11 +1,11 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfBrand = (props) => h('img', mergeProps({
-  class: [styles.brand],
-}, props));
+export default {
+  name: 'PfBrand',
 
-PfBrand.inheritAttrs = false;
-
-export default PfBrand;
+  render() {
+    return h('img', { class: styles.brand });
+  },
+};

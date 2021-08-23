@@ -1,11 +1,11 @@
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfEmptyStateBody = (props, { slots, attrs }) => h('div', mergeProps({
-  class: [styles.emptyStateBody],
-}, attrs), slots);
+export default {
+  name: 'PfEmptyStateBody',
 
-PfEmptyStateBody.inheritAttrs = false;
-
-export default PfEmptyStateBody;
+  render() {
+    return h('div', { class: styles.emptyStateBody }, this.$slots);
+  },
+};

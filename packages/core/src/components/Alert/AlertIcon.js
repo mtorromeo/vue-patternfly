@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 import CheckCircleIcon from '@vue-patternfly/icons/dist/esm/icons/check-circle-icon';
 import ExclamationCircleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon';
 import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-triangle-icon';
@@ -15,20 +15,18 @@ const variantIcons = {
   default: BellIcon,
 };
 
-const PfAlertIcon = (props, { slots, attrs }) =>
-  h('div',
-    mergeProps({
-      class: styles.alertIcon,
-    }, attrs), slots.default ? slots : h(variantIcons[props.variant]));
+export default {
+  name: 'PfAlertIcon',
 
-PfAlertIcon.props = {
-  variant: {
-    type: String,
-    default: 'default',
-    validator: v => ['default', 'success', 'danger', 'warning', 'info'].includes(v),
+  props: {
+    variant: {
+      type: String,
+      default: 'default',
+      validator: v => ['default', 'success', 'danger', 'warning', 'info'].includes(v),
+    },
+  },
+
+  render() {
+    return h('div', { class: styles.alertIcon }, this.$slots.default ? this.$slots : h(variantIcons[this.variant]));
   },
 };
-
-PfAlertIcon.inheritAttrs = false;
-
-export default PfAlertIcon;

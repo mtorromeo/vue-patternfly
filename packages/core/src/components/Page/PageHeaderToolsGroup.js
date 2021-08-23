@@ -2,20 +2,21 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfPageHeaderToolsGroup = (props, { slots, attrs }) =>
-  h('div', mergeProps({
-    class: [
-      styles.pageHeaderToolsGroup,
-      classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
-    ],
-  }, attrs), slots.default());
+export default {
+  name: 'PfPageHeaderToolsGroup',
 
-PfPageHeaderToolsGroup.props = {
-  ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
+  props: {
+    ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
+  },
+
+  render() {
+    return h('div', {
+      class: [
+        styles.pageHeaderToolsGroup,
+        classesFromBreakpointProps(this.$props, ['visibility'], styles, { short: true }),
+      ],
+    }, this.$slots);
+  },
 };
-
-PfPageHeaderToolsGroup.inheritAttrs = false;
-
-export default PfPageHeaderToolsGroup;

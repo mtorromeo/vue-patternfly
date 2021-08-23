@@ -10,4 +10,6 @@ PfStackItem.props = {
 
 PfStackItem.inheritAttrs = false;
 
+Object.defineProperty(PfStackItem, 'name', { value: 'PfStackItem', writable: false });
+
 export default PfStackItem;

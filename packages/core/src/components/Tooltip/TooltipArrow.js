@@ -2,8 +2,10 @@ import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
 
 import { h } from 'vue';
 
-const PfTooltipArrow = () => h('div', {
-  class: styles.tooltipArrow,
-});
+export default {
+  name: 'PfTooltipArrow',
 
-export default PfTooltipArrow;
+  render() {
+    return h('div', { class: styles.tooltipArrow });
+  },
+};

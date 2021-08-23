@@ -27,4 +27,6 @@ PfFlexItem.props = {
 
 PfFlexItem.inheritAttrs = false;
 
+Object.defineProperty(PfFlexItem, 'name', { value: 'PfFlexItem', writable: false });
+
 export default PfFlexItem;

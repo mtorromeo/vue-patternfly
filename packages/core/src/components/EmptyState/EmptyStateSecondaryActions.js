@@ -1,11 +1,11 @@
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfEmptyStateSecondaryActions = (props, { slots, attrs }) => h('div', mergeProps({
-  class: [styles.emptyStateSecondary],
-}, attrs), slots);
+export default {
+  name: 'PfEmptyStateSecondaryActions',
 
-PfEmptyStateSecondaryActions.inheritAttrs = false;
-
-export default PfEmptyStateSecondaryActions;
+  render() {
+    return h('div', { class: styles.emptyStateSecondary }, this.$slots);
+  },
+};

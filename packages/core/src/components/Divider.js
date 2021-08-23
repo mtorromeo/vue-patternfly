@@ -1,37 +1,38 @@
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 
 import { breakpointProp, classesFromBreakpointProps } from '../util';
-import { h, mergeProps, inject } from 'vue';
+import { h, inject } from 'vue';
 
-const PfDivider = (props, { attrs }) => {
-  attrs = mergeProps({
-    class: [
-      styles.divider,
-      classesFromBreakpointProps(props, ['inset'], styles),
-      {
-        [styles.modifiers.vertical]: props.vertical,
-      },
-    ],
-  }, attrs);
+export default {
+  name: 'PfDivider',
 
-  const component = inject('dividerComponent', props.component);
+  props: {
+    ...breakpointProp('inset', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']),
+    vertical: Boolean,
+    component: {
+      type: String,
+      default: 'hr',
+      validator: v => ['hr', 'li', 'div'].includes(v),
+    },
+  },
 
-  if (component !== 'hr') {
-    attrs.role = 'separator';
-  }
+  render() {
+    const attrs = {
+      class: [
+        styles.divider,
+        classesFromBreakpointProps(this.$props, ['inset'], styles),
+        {
+          [styles.modifiers.vertical]: this.vertical,
+        },
+      ],
+    };
 
-  return h(component, attrs);
-};
+    const component = inject('dividerComponent', this.component);
 
-PfDivider.props = {
-  ...breakpointProp('inset', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']),
-  vertical: Boolean,
-  component: {
-    type: String,
-    default: 'hr',
-    validator: v => ['hr', 'li', 'div'].includes(v),
+    if (component !== 'hr') {
+      attrs.role = 'separator';
+    }
+
+    return h(component, attrs);
   },
 };
-PfDivider.inheritAttrs = false;
-
-export default PfDivider;

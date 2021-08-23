@@ -1,4 +1,4 @@
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
 export const TextListItemVariants = [
   'li',
@@ -6,16 +6,18 @@ export const TextListItemVariants = [
   'dd',
 ];
 
-const PfTextListItem = (props, { slots, attrs }) => h(props.component, mergeProps({ 'data-pf-content': true }, attrs), slots.default());
+export default {
+  name: 'PfTextListItem',
 
-PfTextListItem.props = {
-  component: {
-    type: String,
-    default: 'li',
-    validator: v => TextListItemVariants.includes(v),
+  props: {
+    component: {
+      type: String,
+      default: 'li',
+      validator: v => TextListItemVariants.includes(v),
+    },
+  },
+
+  render() {
+    return h(this.component, { 'data-pf-content': true }, this.$slots);
   },
 };
-
-PfTextListItem.inheritAttrs = false;
-
-export default PfTextListItem;

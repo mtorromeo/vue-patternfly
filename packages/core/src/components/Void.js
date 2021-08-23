@@ -14,4 +14,7 @@ Void.props = {
 };
 
 Void.inheritAttrs = false;
+
+Object.defineProperty(Void, 'name', { value: 'Void', writable: false });
+
 export default Void;

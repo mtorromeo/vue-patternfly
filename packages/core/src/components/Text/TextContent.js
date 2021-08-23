@@ -1,9 +1,11 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfTextContent = (props, { slots }) => h('div', mergeProps({
-  class: styles.content,
-}, props), slots.default());
+export default {
+  name: 'PfTextContent',
 
-export default PfTextContent;
+  render() {
+    return h('div', { class: styles.content }, this.$slots);
+  },
+};

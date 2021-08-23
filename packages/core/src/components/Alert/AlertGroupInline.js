@@ -1,25 +1,25 @@
 import styles from '@patternfly/react-styles/css/components/AlertGroup/alert-group';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 import { findChildrenVNodes } from '../../util';
 
-const PfAlertGroupInline = (props, { slots, attrs }) =>
-  h('ul',
-    mergeProps({
+export default {
+  name: 'PfAlertGroupInline',
+
+  props: {
+    toast: Boolean,
+  },
+
+  render() {
+    return h('ul', {
       class: [styles.alertGroup, {
-        [styles.modifiers.toast]: props.toast,
+        [styles.modifiers.toast]: this.toast,
       }],
-    }, attrs), {
-      default() {
-        const children = findChildrenVNodes(slots.default());
+    }, {
+      default: () => {
+        const children = findChildrenVNodes(this.$slots.default());
         return children.map((e, index) => h('li', { key: index }, e));
       },
     });
-
-PfAlertGroupInline.props = {
-  toast: Boolean,
+  },
 };
-
-PfAlertGroupInline.inheritAttrs = false;
-
-export default PfAlertGroupInline;

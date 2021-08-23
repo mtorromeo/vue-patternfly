@@ -66,7 +66,7 @@ export default {
       }
 
       const props = mergeProps(this.$attrs, {
-        class: [styles.chip],
+        class: styles.chip,
       });
       delete props.onClick;
 

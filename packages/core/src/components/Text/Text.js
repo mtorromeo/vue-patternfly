@@ -1,4 +1,4 @@
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
 export const TextVariants = [
   'h1',
@@ -14,16 +14,18 @@ export const TextVariants = [
   'pre',
 ];
 
-const PfText = (props, { slots, attrs }) => h(props.component, mergeProps({ 'data-pf-content': true }, attrs), slots.default());
+export default {
+  name: 'PfText',
 
-PfText.props = {
-  component: {
-    type: String,
-    default: 'p',
-    validator: v => TextVariants.includes(v),
+  props: {
+    component: {
+      type: String,
+      default: 'p',
+      validator: v => TextVariants.includes(v),
+    },
+  },
+
+  render() {
+    return h(this.component, { 'data-pf-content': true }, this.$slots);
   },
 };
-
-PfText.inheritAttrs = false;
-
-export default PfText;

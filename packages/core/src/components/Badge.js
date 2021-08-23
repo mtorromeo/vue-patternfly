@@ -1,18 +1,20 @@
 import styles from '@patternfly/react-styles/css/components/Badge/badge';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfBadge = (props, { slots, attrs }) => h('span', mergeProps({
-  class: [styles.badge, {
-    [styles.modifiers.read]: props.read,
-    [styles.modifiers.unread]: !props.read,
-  }],
-}, attrs), slots);
+export default {
+  name: 'PfBadge',
 
-PfBadge.props = {
-  read: Boolean,
+  props: {
+    read: Boolean,
+  },
+
+  render() {
+    return h('span', {
+      class: [styles.badge, {
+        [styles.modifiers.read]: this.read,
+        [styles.modifiers.unread]: !this.read,
+      }],
+    }, this.$slots);
+  },
 };
-
-PfBadge.inheritAttrs = false;
-
-export default PfBadge;

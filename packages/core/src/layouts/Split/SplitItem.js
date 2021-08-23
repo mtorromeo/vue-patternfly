@@ -10,4 +10,6 @@ PfSplitItem.props = {
 
 PfSplitItem.inheritAttrs = false;
 
+Object.defineProperty(PfSplitItem, 'name', { value: 'PfSplitItem', writable: false });
+
 export default PfSplitItem;

@@ -30,7 +30,7 @@ export default {
       default: null,
     },
     sidebar: {
-      default: () => ({sidebarOpen: false}),
+      default: () => ({ sidebarOpen: false }),
     },
   },
 

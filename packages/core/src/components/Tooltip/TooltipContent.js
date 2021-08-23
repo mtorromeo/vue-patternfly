@@ -1,18 +1,20 @@
 
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfTooltipContent = (props, { attrs, slots }) => h('div', mergeProps({
-  class: [styles.tooltipContent, {
-    [styles.modifiers.textAlignLeft]: props.leftAligned,
-  }],
-}, attrs), slots);
+export default {
+  name: 'PfTooltipContent',
 
-PfTooltipContent.props = {
-  leftAligned: Boolean,
+  props: {
+    leftAligned: Boolean,
+  },
+
+  render() {
+    return h('div', {
+      class: [styles.tooltipContent, {
+        [styles.modifiers.textAlignLeft]: this.leftAligned,
+      }],
+    }, this.$slots);
+  },
 };
-
-PfTooltipContent.inheritAttrs = false;
-
-export default PfTooltipContent;

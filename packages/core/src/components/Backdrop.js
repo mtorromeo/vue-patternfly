@@ -1,11 +1,11 @@
 import styles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
 
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfBackdrop = (props, { slots, attrs }) => h('div', mergeProps({
-  class: [styles.backdrop],
-}, attrs), slots);
+export default {
+  name: 'PfBackdrop',
 
-PfBackdrop.inheritAttrs = false;
-
-export default PfBackdrop;
+  render() {
+    return h('div', { class: styles.backdrop }, this.$slots);
+  },
+};

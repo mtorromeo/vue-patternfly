@@ -1,5 +1,10 @@
 import PfDivider from '../Divider';
-import { h, mergeProps } from 'vue';
+import { h } from 'vue';
 
-const PfNavItemSeparator = (props) => h(PfDivider, mergeProps({ component: 'li' }, props));
-export default PfNavItemSeparator;
+export default {
+  name: 'PfNavItemSeparator',
+
+  render() {
+    return h(PfDivider, { component: 'li' });
+  },
+};

@@ -4,31 +4,37 @@ import PfToggle from './Toggle';
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-const PfBadgeToggle = (props, { slots }) =>
-  h(PfToggle, {
-    plain: props.plain,
-  },
-    {
-      default: () => h(PfBadge, props.badge, {
-        default: () => [
-          slots.default(),
-          h('span', { class: styles.dropdownToggleIcon }, h(CaretDownIcon)),
-        ],
+export default {
+  name: 'PfBadgeToggle',
+
+  props: {
+    plain: {
+      type: Boolean,
+      default: true,
+    },
+
+    badge: {
+      type: Object,
+      default: () => ({
+        read: true,
       }),
     },
-  );
-
-PfBadgeToggle.props = {
-  plain: {
-    type: Boolean,
-    default: true,
   },
-  badge: {
-    type: Object,
-    default: () => ({
-      read: true,
-    }),
+
+  render() {
+    return h(
+      PfToggle,
+      {
+        plain: this.plain,
+      },
+      {
+        default: () => h(PfBadge, this.badge, {
+          default: () => [
+            this.$slots.default(),
+            h('span', { class: styles.dropdownToggleIcon }, h(CaretDownIcon)),
+          ],
+        }),
+      },
+    );
   },
 };
-
-export default PfBadgeToggle;
