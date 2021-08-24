@@ -5,6 +5,8 @@ import { findComponentVNode, domFromRef } from '../util';
 export const getOpacityTransition = (animationDuration) =>
   `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`;
 
+export const positions = ['auto', 'top', 'bottom', 'left', 'right', 'top-start', 'top-end', 'bottom-start', 'bottom-end', 'left-start', 'left-end', 'right-start', 'right-end'];
+
 export default {
   name: 'PfPopper',
 
@@ -25,6 +27,38 @@ export default {
       type: String,
       default: null,
     },
+    topStart: {
+      type: String,
+      default: null,
+    },
+    topEnd: {
+      type: String,
+      default: null,
+    },
+    bottomStart: {
+      type: String,
+      default: null,
+    },
+    bottomEnd: {
+      type: String,
+      default: null,
+    },
+    leftStart: {
+      type: String,
+      default: null,
+    },
+    leftEnd: {
+      type: String,
+      default: null,
+    },
+    rightStart: {
+      type: String,
+      default: null,
+    },
+    rightEnd: {
+      type: String,
+      default: null,
+    },
 
     zIndex: {
       type: Number,
@@ -35,10 +69,18 @@ export default {
     popperMatchesTriggerWidth: Boolean,
     noFlip: Boolean,
 
-    flipBehavoir: {
-      type: String,
+    flipBehavior: {
+      type: [String, Array],
       default: 'flip',
-      validator: v => ['flip', 'top', 'bottom', 'left', 'right'].includes(v),
+      validator(v) {
+        if (v === 'flip') {
+          return true;
+        }
+        if (!Array.isArray(v)) {
+          return false;
+        }
+        return v.every(pos => positions.includes(pos));
+      },
     },
 
     distance: {
@@ -95,16 +137,7 @@ export default {
         return this.top || '';
       }
       const placement = this.attributes['data-popper-placement'];
-      if (placement.startsWith('bottom')) {
-        return this.bottom || '';
-      }
-      if (placement.startsWith('left')) {
-        return this.left || '';
-      }
-      if (placement.startsWith('right')) {
-        return this.right || '';
-      }
-      return this.top || '';
+      return this.$props[placement];
     },
 
     oppositePlacement() {
@@ -128,7 +161,7 @@ export default {
           name: 'flip',
           enabled: this.popperPlacement.startsWith('auto') || !this.noFlip,
           options: {
-            fallbackPlacements: this.flipBehavoir === 'flip' ? [this.oppositePlacement, 'right', 'left', 'top', 'bottom'] : this.flipBehavoir,
+            fallbackPlacements: this.flipBehavior === 'flip' ? [this.oppositePlacement] : this.flipBehavior,
           },
         }, {
           name: 'updateState',

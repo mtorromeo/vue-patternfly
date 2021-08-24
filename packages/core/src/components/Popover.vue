@@ -4,10 +4,19 @@
     :bottom="styles.modifiers.bottom"
     :left="styles.modifiers.left"
     :right="styles.modifiers.right"
+    :top-start="styles.modifiers.topLeft"
+    :top-end="styles.modifiers.topRight"
+    :bottom-start="styles.modifiers.bottomLeft"
+    :bottom-end="styles.modifiers.bottomRight"
+    :left-start="styles.modifiers.leftTop"
+    :left-end="styles.modifiers.leftBottom"
+    :right-start="styles.modifiers.rightTop"
+    :right-end="styles.modifiers.rightBottom"
     :distance="distance"
     :placement="position"
     :visible="visible"
     :disable-flip="noFlip"
+    :flip-behavior="flipBehavior"
     @click="managedOpen = !managedOpen"
     @keydown.enter="managedOpen = true"
   >
@@ -62,11 +71,9 @@ import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
 import PfFocusTrap from './FocusTrap.vue';
-import { default as PfPopper, getOpacityTransition } from './Popper';
+import { default as PfPopper, getOpacityTransition, positions } from './Popper';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
-
-const positions = ['auto', 'top', 'bottom', 'left', 'right'];
 
 export default {
   name: 'PfPopover',
@@ -96,6 +103,29 @@ export default {
      * If the position is set to 'auto', this prop is ignored
      */
     noFlip: Boolean,
+
+    /**
+     * The desired position to flip the popover to if the initial position is not possible.
+     * By setting this prop to 'flip' it attempts to flip the popover to the opposite side if there is no space.
+     * You can also pass an array of positions that determines the flip order. It should contain the initial position
+     * followed by alternative positions if that position is unavailable.
+     * Example: Initial position is 'top'. Button with popover is in the top right corner. 'flipBehavior' is set to
+     * ['top', 'right', 'left']. Since there is no space to the top, it checks if right is available. There's also no
+     * space to the right, so it finally shows the popover on the left.
+     */
+    flipBehavior: {
+      type: [String, Array],
+      default: () => ['top', 'right', 'bottom', 'left', 'top', 'right', 'bottom'],
+      validator(v) {
+        if (v === 'flip') {
+          return true;
+        }
+        if (!Array.isArray(v)) {
+          return false;
+        }
+        return v.every(pos => positions.includes(pos));
+      },
+    },
 
     /** Hides the popover when a click occurs outside (only works if isVisible is not controlled by the user) */
     noHideOnOutsideClick: Boolean,
