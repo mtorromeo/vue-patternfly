@@ -3,7 +3,7 @@
     <pf-title class="example-heading" h="3">
       Basic
     </pf-title>
-    <pf-text-input v-model:value="text1" aria-label="text input example" />
+    <pf-text-input v-model="text1" aria-label="text input example" />
 
     <pf-title class="example-heading" h="3">
       Disabled
@@ -24,7 +24,7 @@
     <br>
     <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on blur)" aria-label="validates on blur" autovalidate="blur" />
     <br>
-    <pf-text-input v-model:value="text1" required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on change)" aria-label="validates on change" autovalidate="change" />
+    <pf-text-input v-model="text1" required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on change)" aria-label="validates on change" autovalidate="change" />
     <br>
     <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on input)" aria-label="validates on input" autovalidate="input" />
 
