@@ -50,7 +50,7 @@ export default {
 
     const renderSimple = id => {
       const children = [
-        h('span', { ref: this.textRef, class: styles.chipText, id }, this.$slots.default && this.$slots.default()),
+        h('span', { ref: 'textRef', class: styles.chipText, id }, this.$slots.default && this.$slots.default()),
       ];
 
       if (!this.readonly) {

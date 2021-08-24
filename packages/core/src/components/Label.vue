@@ -77,7 +77,7 @@ export default {
     const children = this.$slots.default();
     let content = children;
     if (this.truncated) {
-      content = h('span', { ref: this.textRef, class: styles.labelText }, children);
+      content = h('span', { ref: 'textRef', class: styles.labelText }, children);
     }
 
     const labelChild = h(component, {
@@ -90,7 +90,7 @@ export default {
     ]);
 
     let tooltip = null;
-    if (this.textOverflowing.value) {
+    if (this.textOverflowing) {
       tooltip = h(PfTooltip, { position: this.tooltipPosition }, {
         default: () => labelChild,
         content: () => children,

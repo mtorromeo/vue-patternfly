@@ -94,7 +94,7 @@ export default {
       if (this.labelOverflowing) {
         label = h(PfTooltip, {},
                   h('span', {
-                    ref: this.labelRef,
+                    ref: 'labelRef',
                     class: styles.chipGroupLabel,
                   },
                     h('span', {
