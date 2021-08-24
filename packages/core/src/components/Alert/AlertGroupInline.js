@@ -8,6 +8,7 @@ export default {
 
   props: {
     toast: Boolean,
+    liveRegion: Boolean,
   },
 
   render() {
@@ -15,6 +16,8 @@ export default {
       class: [styles.alertGroup, {
         [styles.modifiers.toast]: this.toast,
       }],
+      'aria-live': this.liveRegion ? 'polite' : null,
+      'aria-atomic': this.liveRegion ? false : null,
     }, {
       default: () => {
         const children = findChildrenVNodes(this.$slots.default());
