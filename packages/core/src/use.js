@@ -23,19 +23,21 @@ export function provideChildrenTracker() {
 export function useChildrenTracker() {
   const tracker = inject(ChildrenTrackerSymbol);
 
-  tryOnMounted(() => {
-    const instance = getCurrentInstance();
-    if (instance) {
-      tracker.register(instance.proxy);
-    }
-  });
+  if (tracker) {
+    tryOnMounted(() => {
+      const instance = getCurrentInstance();
+      if (instance) {
+        tracker.register(instance.proxy);
+      }
+    });
 
-  onBeforeUnmount(() => {
-    const instance = getCurrentInstance();
-    if (instance) {
-      tracker.unregister(instance.proxy);
-    }
-  });
+    onBeforeUnmount(() => {
+      const instance = getCurrentInstance();
+      if (instance) {
+        tracker.unregister(instance.proxy);
+      }
+    });
+  }
 
   return tracker;
 }
