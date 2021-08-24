@@ -102,6 +102,9 @@ export const parameters = {
           arg.type.required = prop.required;
         }
         if (typeof prop.default !== 'undefined') {
+          if (typeof prop.default === 'function' && !(Array.isArray(prop.type) ? prop.type.includes(Function) : prop.type === Function)) {
+            prop.default = prop.default();
+          }
           arg.defaultValue = prop.default;
           arg.table.defaultValue = { summary: JSON.stringify(prop.default) };
         } else if (prop.type === Boolean) {
