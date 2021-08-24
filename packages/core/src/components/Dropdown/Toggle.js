@@ -34,7 +34,7 @@ export default {
     document.addEventListener('keydown', this.onEscPress, { capture: true });
   },
 
-  beforeUmount() {
+  beforeUnmount() {
     document.removeEventListener('mousedown', this.onDocClick);
     document.removeEventListener('touchstart', this.onDocClick);
     document.removeEventListener('keydown', this.onEscPress, { capture: true });

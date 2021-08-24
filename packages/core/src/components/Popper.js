@@ -209,7 +209,7 @@ export default {
     }
   },
 
-  beforeUmount() {
+  beforeUnmount() {
     this.destroyInstance();
   },
 

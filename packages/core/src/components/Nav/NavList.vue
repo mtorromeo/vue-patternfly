@@ -51,7 +51,7 @@ export default {
     window.addEventListener('resize', this.handleScrollButtons, false);
   },
 
-  beforeUmount() {
+  beforeUnmount() {
     window.removeEventListener('resize', this.handleScrollButtons, false);
   },
 

@@ -219,7 +219,7 @@ export default {
     document.addEventListener('keydown', this.onEscPress, { capture: true });
   },
 
-  beforeUmount() {
+  beforeUnmount() {
     document.removeEventListener('click', this.onDocumentClick);
     document.removeEventListener('keydown', this.onEscPress, { capture: true });
   },
