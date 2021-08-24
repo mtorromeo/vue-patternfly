@@ -1,5 +1,9 @@
 <template>
-  <label v-bind="labelAttrs" :class="[styles.switch, $attrs.class]">
+  <label
+    v-bind="labelAttrs"
+    :class="[styles.switch, $attrs.class, {
+      [styles.modifiers.reverse]: reversed,
+    }]">
     <input v-bind="$attrs" :class="styles.switchInput" type="checkbox" :checked="checked" @change="$emit('update:checked', $event.target.checked)">
 
     <template v-if="label">
@@ -34,11 +38,16 @@ export default {
   props: {
     checked: Boolean,
 
+    /** Flag to reverse the layout of toggle and label (toggle on right). */
+    reversed: Boolean,
+
+    /** Text value for the label when on */
     label: {
       type: String,
       default: null,
     },
 
+    /** Text value for the label when off */
     labelOff: {
       type: String,
       default: null,
