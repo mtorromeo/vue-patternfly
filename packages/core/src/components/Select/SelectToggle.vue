@@ -62,11 +62,13 @@ export default {
 
   mounted() {
     document.addEventListener('click', this.onDocClick);
+    document.addEventListener('touchstart', this.onDocClick);
     document.addEventListener('keydown', this.handleGlobalKeys);
   },
 
   beforeUnmount() {
     document.removeEventListener('click', this.onDocClick);
+    document.removeEventListener('touchstart', this.onDocClick);
     document.removeEventListener('keydown', this.handleGlobalKeys);
   },
 
