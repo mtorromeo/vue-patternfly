@@ -1,3 +1,5 @@
+import styles from '@patternfly/react-styles/css/components/Content/content';
+
 import { h } from 'vue';
 
 export const TextVariants = [
@@ -23,9 +25,17 @@ export default {
       default: 'p',
       validator: v => TextVariants.includes(v),
     },
+
+    /** Flag to indicate the link has visited styles applied if the browser determines the link has been visited */
+    visited: Boolean,
   },
 
   render() {
-    return h(this.component, { 'data-pf-content': true }, this.$slots);
+    return h(this.component, {
+      'data-pf-content': true,
+      class: {
+        [styles.modifiers.visited]: this.visited && this.component === 'a',
+      },
+    }, this.$slots);
   },
 };
