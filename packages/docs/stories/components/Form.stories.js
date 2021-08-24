@@ -68,7 +68,7 @@ export const InvalidWithFormAlert = (args) => ({
   },
   template: `
     <pf-form v-bind="args">
-      <pf-form-group label="Age" field-id="age" helperTextInvalid="Age has to be a number">
+      <pf-form-group label="Age" label-info="Additional label info" field-id="age" helperTextInvalid="Age has to be a number">
         <template v-if="age === ''" #helperText>
           <pf-exclamation-circle-icon /> Please enter your age
         </template>
