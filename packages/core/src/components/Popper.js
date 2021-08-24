@@ -43,7 +43,7 @@ export default {
 
     distance: {
       type: Number,
-      default: 15,
+      default: 0,
     },
 
     direction: {
@@ -122,16 +122,13 @@ export default {
             offset: [0, this.distance],
           },
         }, {
-          name: 'preventOverflow',
-          enabled: false,
-        }, {
           name: 'hide',
-          enabled: false,
+          enabled: true,
         }, {
           name: 'flip',
           enabled: this.popperPlacement.startsWith('auto') || !this.noFlip,
           options: {
-            fallbackPlacements: this.flipBehavoir === 'flip' ? [this.oppositePlacement] : this.flipBehavoir,
+            fallbackPlacements: this.flipBehavoir === 'flip' ? [this.oppositePlacement, 'right', 'left', 'top', 'bottom'] : this.flipBehavoir,
           },
         }, {
           name: 'updateState',
