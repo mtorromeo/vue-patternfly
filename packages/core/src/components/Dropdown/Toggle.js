@@ -80,7 +80,6 @@ export default {
 
       if (!clickedOnToggle() && !clickedWithinMenu()) {
         this.toggle();
-        this.$el.focus();
       }
     },
 
