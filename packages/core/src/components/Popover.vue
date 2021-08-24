@@ -204,9 +204,9 @@ export default {
           clearTimeout(this.showTimer);
         }
         this.hideTimer = setTimeout(() => {
+          this.visible = false;
           this.opacity = 0;
           this.transitionTimer = setTimeout(() => {
-            this.visible = false;
             this.$emit('hidden');
           }, this.animationDuration);
         }, 0);
