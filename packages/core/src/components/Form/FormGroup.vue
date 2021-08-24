@@ -1,16 +1,30 @@
 <template>
   <div :class="styles.formGroup">
-    <div v-if="label || $slots.label" :class="[styles.formGroupLabel, {[styles.modifiers.noPaddingTop]: noPaddingTop}]">
-      <label :class="styles.formLabel" :for="fieldId">
-        <span :class="styles.formLabelText">
-          <slot name="label">{{ label }}</slot>
-        </span>
-        <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">
-          {{ ' *' }}
-        </span>
-      </label>
-      {{ ' ' }}
-      <slot name="labelIcon" />
+    <div
+      v-if="label || $slots.label"
+      :class="[styles.formGroupLabel, {
+        [styles.modifiers.info]: labelInfo || $slots.labelInfo,
+        [styles.modifiers.noPaddingTop]: noPaddingTop,
+      }]"
+    >
+      <component :is="(labelInfo || $slots.labelInfo) ? 'div' : 'void'" :class="styles.formGroupLabelMain">
+        <label :class="styles.formLabel" :for="fieldId">
+          <span :class="styles.formLabelText">
+            <slot name="label">{{ label }}</slot>
+          </span>
+          <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">
+            {{ ' *' }}
+          </span>
+        </label>
+        {{ ' ' }}
+        <slot name="labelIcon" />
+      </component>
+
+      <div v-if="labelInfo || $slots.labelInfo" :class="styles.formGroupLabelInfo">
+        <slot name="labelInfo">
+          {{ labelInfo }}
+        </slot>
+      </div>
     </div>
 
     <div :class="[styles.formGroupControl, {
@@ -56,13 +70,24 @@
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import { computed } from 'vue';
 import { provideChildrenTracker } from '../../use';
+import Void from '../Void';
 
 export default {
   name: 'PfFormGroup',
 
+  components: {
+    Void,
+  },
+
   props: {
     /** Label text before the field. */
     label: {
+      type: String,
+      default: '',
+    },
+
+    /** Additional label information displayed after the label. */
+    labelInfo: {
       type: String,
       default: '',
     },
