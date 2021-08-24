@@ -13,7 +13,10 @@
       <slot name="labelIcon" />
     </div>
 
-    <div :class="[styles.formGroupControl, {[styles.modifiers.inline]: inline}]">
+    <div :class="[styles.formGroupControl, {
+      [styles.modifiers.inline]: inline,
+      [styles.modifiers.stack]: stack,
+    }]">
       <slot v-if="!helperTextBeforeField" />
 
       <div
@@ -79,6 +82,9 @@ export default {
     },
 
     inline: Boolean,
+
+    /** Sets the FormGroupControl to be stacked */
+    stack: Boolean,
 
     /** Removes top spacer from label. */
     noPaddingTop: Boolean,
