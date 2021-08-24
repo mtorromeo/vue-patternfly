@@ -9,6 +9,7 @@
     :class="[styles.toolbarItem, breakpointClasses, variantClass, {
       [styles.modifiers.expanded]: allExpanded,
     }]"
+    :style="breakpointWidths"
     :aria-hidden="variant == 'label'"
     v-bind="$attrs"
   >
@@ -18,7 +19,7 @@
 
 <script>
 import PfDivider from '../Divider';
-import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
+import { breakpoints, breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 
 export default {
@@ -35,6 +36,7 @@ export default {
     ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
     ...breakpointProp('alignment', String, ['', 'right', 'left']),
     ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
+    ...breakpointProp('width', String),
 
     allExpanded: Boolean,
   },
@@ -53,6 +55,18 @@ export default {
         ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
         ...classesFromBreakpointProps(this.$props, ['spacer'], styles),
       ];
+    },
+
+    breakpointWidths() {
+      const widths = {};
+      for (const b of breakpoints) {
+        const prop = `width${b}`;
+        if (!this.$props[prop]) {
+          continue;
+        }
+        widths[`--pf-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = this.$props[prop];
+      }
+      return widths;
     },
 
     variantClass() {
