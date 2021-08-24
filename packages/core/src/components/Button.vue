@@ -10,6 +10,7 @@
       [styles.modifiers.ariaDisabled]: ariaDisabled,
       [styles.modifiers.active]: active,
       [styles.modifiers.inline]: inline && variant === 'link',
+      [styles.modifiers.danger]: danger && (variant === 'link' || variant === 'secondary'),
       [styles.modifiers.small]: small,
       [styles.modifiers.displayLg]: large,
       [styles.modifiers.progress]: loading !== null,
@@ -92,9 +93,17 @@ export default {
     /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
     ariaDisabled: Boolean,
 
+    /** Adds inline styling to a link button */
     inline: Boolean,
+
+    /** Adds small styling to the button */
     small: Boolean,
+
+    /** Adds small styling to the button */
     large: Boolean,
+
+    /** Adds danger styling to secondary or link button variants */
+    danger: Boolean,
 
     tabindex: {
       type: [Number, String],
