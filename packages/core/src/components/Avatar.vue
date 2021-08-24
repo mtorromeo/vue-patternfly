@@ -17,11 +17,21 @@ export default {
       type: String,
       required: true,
     },
+
+    /** Border to add */
+    border: {
+      type: String,
+      default: '',
+      validator: v => ['', 'light', 'dark'].includes(v),
+    },
   },
 
   render() {
     return h('img', mergeProps({
-      class: styles.avatar,
+      class: [styles.avatar, {
+        [styles.modifiers.light]: this.border === 'light',
+        [styles.modifiers.dark]: this.border === 'dark',
+      }],
     }, this.$props));
   },
 };
