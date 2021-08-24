@@ -6,6 +6,8 @@ import { h } from 'vue';
 const variantTypes = {
   default: styles.pageMainSection,
   nav: styles.pageMainNav,
+  subNav: styles.pageMainSubNav,
+  breadcrumb: styles.pageMainBreadcrumb,
   tabs: styles.pageMainTabs,
   wizard: styles.pageMainWizard,
 };

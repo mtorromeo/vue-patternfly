@@ -4,6 +4,7 @@
       [styles.modifiers.light]: theme === 'light',
       [styles.modifiers.horizontal]: horizontal,
       [styles.modifiers.tertiary]: variant === 'tertiary',
+      [styles.modifiers.horizontalSubnav]: variant === 'horizontal-subnav',
       [styles.modifiers.scrollable]: scrollable,
     }]"
     :aria-label="ariaLabel || variant === 'tertiary' ? 'Local' : 'Global'"
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-import {ref, provide} from 'vue';
+import { ref, provide } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 export default {
@@ -28,7 +29,7 @@ export default {
     variant: {
       type: String,
       default: '',
-      validator: v => ['', 'default', 'horizontal', 'tertiary'].includes(v),
+      validator: v => ['', 'default', 'horizontal', 'tertiary', 'horizontal-subnav'].includes(v),
     },
     ariaLabel: {
       type: String,
@@ -38,16 +39,16 @@ export default {
 
   emits: ['select'],
 
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     const scrollable = ref(false);
     provide('scrollable', scrollable);
 
-    const horizontal = ['horizontal', 'tertiary'].includes(props.variant);
+    const horizontal = ['horizontal', 'tertiary', 'horizontal-subnav'].includes(props.variant);
     provide('horizontal', horizontal);
 
     provide('onSelect', (e, groupId, itemId) => emit('select', e, groupId, itemId));
 
-    return {horizontal, scrollable};
+    return { horizontal, scrollable };
   },
 
   data() {
