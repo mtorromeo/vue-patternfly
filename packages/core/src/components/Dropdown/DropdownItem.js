@@ -55,20 +55,13 @@ export default {
   },
 
   setup() {
-    return {
-      menuTracker: useChildrenTracker(),
-    };
+    useChildrenTracker();
   },
 
   mounted() {
-    this.menuTracker.register(this);
     if (this.autoFocus) {
       this.$nextTick(() => this.focus());
     }
-  },
-
-  beforeUnmount() {
-    this.menuTracker.unregister(this);
   },
 
   render() {

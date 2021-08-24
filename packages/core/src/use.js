@@ -1,22 +1,43 @@
-import { provide, inject, isRef, computed, ref, onUpdated } from 'vue';
+import { provide, inject, isRef, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
-export function provideChildrenTracker(items) {
+export function provideChildrenTracker() {
+  const items = ref([]);
+
   provide(ChildrenTrackerSymbol, {
-    register: item => items.push(item),
+    register: item => items.value.push(item),
+
     unregister: item => {
-      const idx = items.findIndex(i => i === item);
+      const idx = items.value.findIndex(i => i === item);
       if (idx >= 0) {
-        items.splice(idx, 1);
+        items.value.splice(idx, 1);
       }
     },
   });
+
+  return items;
 }
 
 export function useChildrenTracker() {
-  return inject(ChildrenTrackerSymbol);
+  const tracker = inject(ChildrenTrackerSymbol);
+
+  tryOnMounted(() => {
+    const instance = getCurrentInstance();
+    if (instance) {
+      tracker.register(instance.proxy);
+    }
+  });
+
+  onBeforeUnmount(() => {
+    const instance = getCurrentInstance();
+    if (instance) {
+      tracker.unregister(instance.proxy);
+    }
+  });
+
+  return tracker;
 }
 
 export function keyNavigation(itemsRef) {

@@ -37,15 +37,14 @@ export default {
   },
 
   setup() {
-    const children = [];
-    provideChildrenTracker(children);
-    const items = computed(() => children.filter(
+    const children = provideChildrenTracker();
+    const items = computed(() => children.value.filter(
       c => Boolean(c.focusElement()) && !c.disabled && c.focus,
     ));
     const onKeydown = keyNavigation(items);
     provide('keydown', onKeydown);
     return {
-      items: items,
+      items,
     };
   },
 
