@@ -24,7 +24,7 @@ export default {
       { class: styles.navSection, ariaLabelledby: this.id },
       [
         h('h2', { class: styles.navSectionTitle, id: this.id }, [this.title]),
-        h('ul', {}, this.$slots),
+        h('ul', { class: styles.navList }, this.$slots),
       ],
     );
   },
