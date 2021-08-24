@@ -65,13 +65,21 @@ export default {
     const items = this.$slots.default ? this.$slots.default() : [];
 
     if (this.component === 'div') {
-      return h('div', mergeProps({
-        onClick: e => this.$emit('select', e),
-      }, props), items);
+      return h(
+        'div',
+        mergeProps({
+          onClick: e => this.$emit('select', e),
+        }, props),
+        items,
+      );
     }
 
-    return h(this.menuComponent || (this.grouped ? 'div' : this.component), mergeProps({
-      role: 'menu',
-    }, props), items);
+    return h(
+      this.menuComponent || (this.grouped ? 'div' : this.component),
+      mergeProps({
+        role: 'menu',
+      }, props),
+      items,
+    );
   },
 };

@@ -2,6 +2,7 @@ import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 import { h, mergeProps } from 'vue';
 import PfDropdownToggle from './DropdownToggle';
 import PfDropdownMenu from './DropdownMenu';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
 
 let currentId = 0;
 
@@ -49,6 +50,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    ...breakpointProp('align', String, ['', 'left', 'right']),
   },
 
   data() {
@@ -112,6 +114,7 @@ export default {
     if (this.menuAppendTo === 'inline' && this.open) {
       const menu = h(PfDropdownMenu, {
         ref: 'menu',
+        class: classesFromBreakpointProps(this.$props, ['align'], styles),
         position: this.position,
         grouped: this.grouped,
         autoFocus: this.openedOnEnter && this.autoFocus,
@@ -122,11 +125,15 @@ export default {
     }
 
     return h(this.baseComponent, {
-      class: [this.baseClass || styles.dropdown, {
-        [styles.modifiers.top]: this.dropUp,
-        [styles.modifiers.alignRight]: this.position === 'right',
-        [styles.modifiers.expanded]: this.open,
-      }],
+      class: [
+        this.baseClass || styles.dropdown,
+        classesFromBreakpointProps(this.$props, ['align'], styles),
+        {
+          [styles.modifiers.top]: this.dropUp,
+          [styles.modifiers.alignRight]: this.position === 'right',
+          [styles.modifiers.expanded]: this.open,
+        },
+      ],
       open: this.open,
       position: this.position,
       'aria-labelledby': `${id}-toggle`,
