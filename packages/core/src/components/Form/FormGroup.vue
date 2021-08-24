@@ -17,16 +17,16 @@
       <slot v-if="!helperTextBeforeField" />
 
       <div
-        v-if="validated === 'error' ? (helperTextInvalid || $slots.helperTextInvalid) : (helperText || $slots.helperText)"
+        v-if="internalValidated === 'error' ? (helperTextInvalid || $slots.helperTextInvalid) : (helperText || $slots.helperText)"
         :id="`${fieldId}-helper`"
         :class="[styles.formHelperText, {
-          [styles.modifiers.success]: validated === 'success',
-          [styles.modifiers.warning]: validated === 'warning',
-          [styles.modifiers.error]: validated === 'error',
+          [styles.modifiers.success]: internalValidated === 'success',
+          [styles.modifiers.warning]: internalValidated === 'warning',
+          [styles.modifiers.error]: internalValidated === 'error',
         }]"
         aria-live="polite"
       >
-        <template v-if="validated === 'error'">
+        <template v-if="internalValidated === 'error'">
           <span v-if="$slots.helperTextInvalidIcon" :class="styles.formHelperTextIcon">
             <slot name="helperTextInvalidIcon" />
           </span>
@@ -51,6 +51,8 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Form/form';
+import { computed } from 'vue';
+import { provideChildrenTracker } from '../../use';
 
 export default {
   name: 'PfFormGroup',
@@ -72,7 +74,7 @@ export default {
      */
     validated: {
       type: String,
-      default: 'default',
+      default: null,
       validator: v => ['success', 'warning', 'error', 'default'].includes(v),
     },
 
@@ -101,6 +103,23 @@ export default {
       type: String,
       default: '',
     },
+  },
+
+  setup(props) {
+    const inputs = provideChildrenTracker();
+    return {
+      internalValidated: computed(() => {
+        if (props.validated !== null) {
+          return props.validated;
+        }
+        for (const validation of ['error', 'warning', 'success', 'default']) {
+          if (inputs.value.some(input => input.effectiveValidated === validation)) {
+            return validation;
+          }
+        }
+        return 'default';
+      }),
+    };
   },
 
   data() {

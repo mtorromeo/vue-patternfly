@@ -1,6 +1,7 @@
 <script>
-import {h, mergeProps} from 'vue';
+import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+import { useChildrenTracker } from '../use';
 
 export default {
   name: 'PfTextInput',
@@ -11,8 +12,13 @@ export default {
       default: 'text',
     },
 
-    /** @model */
     value: {
+      type: String,
+      default: null,
+    },
+
+    /** @model */
+    modelValue: {
       type: [String, Number],
       default: null,
     },
@@ -61,7 +67,11 @@ export default {
     },
   },
 
-  emits: ['input', 'blur', 'change', 'invalid', 'keyup', 'update:value', 'update:validated'],
+  emits: ['input', 'blur', 'change', 'invalid', 'keyup', 'update:modelValue', 'update:validated'],
+
+  setup() {
+    useChildrenTracker();
+  },
 
   data() {
     return {
@@ -80,6 +90,10 @@ export default {
       this.innerValidated = 'default';
     },
 
+    modelValue() {
+      this.innerValidated = 'default';
+    },
+
     innerValidated(validity) {
       this.$emit('update:validated', validity);
     },
@@ -88,7 +102,7 @@ export default {
   methods: {
     onInput(event) {
       this.$emit('input', event);
-      this.$emit('update:value', event.target.value);
+      this.$emit('update:modelValue', event.target.value);
       if (this.autovalidate === 'input') {
         this.reportValidity();
       } else {
@@ -143,7 +157,7 @@ export default {
   },
 
   render() {
-    let style = {};
+    const style = {};
     if (this.iconUrl) {
       style['background-image'] = `url('${this.iconUrl}')`;
     }
@@ -152,11 +166,13 @@ export default {
     }
 
     const inputProps = {};
-    if (this.value !== null) {
+    if (this.modelValue !== null) {
+      inputProps.value = this.modelValue;
+    } else if (this.value !== null) {
       inputProps.value = this.value;
     }
 
-    return h('input', mergeProps({
+    return h('input', {
       class: [
         styles.formControl, {
           [styles.modifiers.success]: this.effectiveValidated === 'success',
@@ -174,7 +190,7 @@ export default {
       onInvalid: this.onInvalid,
       onKeyUp: this.onKeyUp,
       ...inputProps,
-    }, this.$attrs));
+    });
   },
 };
 </script>
