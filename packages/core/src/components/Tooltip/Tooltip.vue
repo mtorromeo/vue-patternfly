@@ -66,7 +66,7 @@ export default {
 
     entryDelay: {
       type: Number,
-      default: 0,
+      default: 300,
     },
 
     exitDelay: {
