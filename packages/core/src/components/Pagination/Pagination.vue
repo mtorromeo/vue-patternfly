@@ -13,7 +13,7 @@
       :class="styles.paginationTotalItems"
     >
       <b>{{ firstIndex }} - {{ lastIndex }}</b> of <b>{{ count }}</b>
-      {{ itemsTitle }}
+      {{ titleItems }}
     </div>
 
     <pf-pagination-options-menu
@@ -61,14 +61,14 @@
 </template>
 
 <script>
-import styles from "@patternfly/react-styles/css/components/Pagination/pagination";
-import PfPaginationOptionsMenu from "./PaginationOptionsMenu.vue";
-import PfNavigation from "./Navigation.vue";
+import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
+import PfPaginationOptionsMenu from './PaginationOptionsMenu.vue';
+import PfNavigation from './Navigation.vue';
 
-import { paginationProps } from "./common";
+import { paginationProps } from './common';
 
 export default {
-  name: "PfPagination",
+  name: 'PfPagination',
 
   components: { PfPaginationOptionsMenu, PfNavigation },
 
@@ -113,58 +113,58 @@ export default {
 
     titleItems: {
       type: String,
-      default: "",
+      default: '',
     },
     titlePage: {
       type: String,
-      default: "",
+      default: '',
     },
     titleItemsPerPage: {
       type: String,
-      default: "Items per page",
+      default: 'Items per page',
     },
     titlePerPageSuffix: {
       type: String,
-      default: "per page",
+      default: 'per page',
     },
     titleToFirstPage: {
       type: String,
-      default: "Go to first page",
+      default: 'Go to first page',
     },
     titleToPreviousPage: {
       type: String,
-      default: "Go to previous page",
+      default: 'Go to previous page',
     },
     titleToLastPage: {
       type: String,
-      default: "Go to last page",
+      default: 'Go to last page',
     },
     titleToNextPage: {
       type: String,
-      default: "Go to next page",
+      default: 'Go to next page',
     },
     titleOptionsToggle: {
       type: String,
-      default: "Items per page",
+      default: 'Items per page',
     },
     titleCurrPage: {
       type: String,
-      default: "Current page",
+      default: 'Current page',
     },
     titlePaginationTitle: {
       type: String,
-      default: "Pagination",
+      default: 'Pagination',
     },
   },
 
   emits: [
-    "update:page",
-    "update:perPage",
-    "first-click",
-    "previous-click",
-    "next-click",
-    "last-click",
-    "page-input",
+    'update:page',
+    'update:perPage',
+    'first-click',
+    'previous-click',
+    'next-click',
+    'last-click',
+    'page-input',
   ],
 
   data() {
