@@ -20,6 +20,7 @@ export * from './ChipGroup';
 export * from './Dropdown';
 export * from './EmptyState';
 export * from './ExpandableSection';
+export * from './Form';
 export * from './InputGroup';
 export * from './Modal';
 export * from './Nav';
