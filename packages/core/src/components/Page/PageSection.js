@@ -6,6 +6,8 @@ import { h } from 'vue';
 const variantTypes = {
   default: styles.pageMainSection,
   nav: styles.pageMainNav,
+  tabs: styles.pageMainTabs,
+  wizard: styles.pageMainWizard,
 };
 
 const variantStyles = {
@@ -23,14 +25,14 @@ export default {
     variant: {
       type: String,
       default: 'default',
-      validator: v => ['default', 'light', 'dark', 'darker'].includes(v),
+      validator: v => v in variantStyles,
     },
 
     /** Section type variant */
     type: {
       type: String,
       default: 'default',
-      validator: v => ['default', 'nav'].includes(v),
+      validator: v => v in variantTypes,
     },
 
     /** Enables the page section to fill the available vertical space */
