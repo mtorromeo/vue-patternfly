@@ -1,9 +1,8 @@
 <script>
-
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import {useManagedProp} from '../../use';
+import { useManagedProp } from '../../use';
 
 export default {
   name: 'PfAccordionItem',
@@ -32,9 +31,9 @@ export default {
 
   emits: ['update:expanded'],
 
-  setup(props, {emit}) {
+  setup() {
     return {
-      managedExpanded: useManagedProp(props, emit, 'expanded', false),
+      managedExpanded: useManagedProp('expanded', false),
     };
   },
 
@@ -51,12 +50,14 @@ export default {
           },
         ],
         'aria-expanded': this.managedExpanded,
-        onClick: () => this.managedExpanded = !this.managedExpanded,
+        onClick: () => {
+          this.managedExpanded = !this.managedExpanded;
+        },
       }, this.$attrs), [
-        h('span', {class: styles.accordionToggleText}, {
+        h('span', { class: styles.accordionToggleText }, {
           default: () => this.$slots.toggle ? this.$slots.toggle() : this.title,
         }),
-        h('span', {class: styles.accordionToggleIcon}, h(AngleRightIcon)),
+        h('span', { class: styles.accordionToggleIcon }, h(AngleRightIcon)),
       ])),
 
       h(Content, mergeProps({
@@ -68,7 +69,7 @@ export default {
         ],
         hidden: !this.managedExpanded,
       }, this.$attrs),
-        h('div', {class: styles.accordionExpandedContentBody}, {
+        h('div', { class: styles.accordionExpandedContentBody }, {
           default: () => this.$slots.default ? this.$slots.default() : null,
         }),
       ),

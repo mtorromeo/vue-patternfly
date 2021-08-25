@@ -182,9 +182,9 @@ export default {
 
   emits: ['update:open', 'show', 'shown', 'hide', 'hidden'],
 
-  setup(props, { emit }) {
+  setup() {
     return {
-      managedOpen: useManagedProp(props, emit, 'open', false),
+      managedOpen: useManagedProp('open', false),
     };
   },
 

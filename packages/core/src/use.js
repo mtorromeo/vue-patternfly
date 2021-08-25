@@ -178,18 +178,23 @@ export function keyNavigation(itemsRef) {
   // };
 }
 
-export function useManagedProp(props, emit, name, value = null) {
+export function useManagedProp(name, value = null) {
+  const instance = getCurrentInstance();
+  if (!instance) {
+    return;
+  }
+
   const inner = ref(value);
   const undef = value => value === null || typeof value === 'undefined';
   return computed({
     get() {
-      return undef(props[name]) ? inner.value : props[name];
+      return undef(instance.props[name]) ? inner.value : instance.props[name];
     },
     set(to) {
-      if (undef(props[name])) {
+      if (undef(instance.props[name])) {
         inner.value = to;
       } else {
-        emit(`update:${name}`, to);
+        instance.emit(`update:${name}`, to);
       }
     },
   });

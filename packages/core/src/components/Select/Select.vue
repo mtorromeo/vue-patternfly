@@ -90,12 +90,12 @@ import PfVoid from '../Void';
 import PfPopper from '../Popper';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 
-import {useManagedProp} from '../../use';
+import { useManagedProp } from '../../use';
 
 export default {
   name: 'PfSelect',
 
-  components: {PfVoid, PfPopper, TimesCircleIcon},
+  components: { PfVoid, PfPopper, TimesCircleIcon },
 
   provide() {
     return {
@@ -145,9 +145,9 @@ export default {
 
   emits: ['clear', 'update:open'],
 
-  setup(props, {emit}) {
+  setup() {
     return {
-      managedOpen: useManagedProp(props, emit, 'open', false),
+      managedOpen: useManagedProp('open', false),
     };
   },
 

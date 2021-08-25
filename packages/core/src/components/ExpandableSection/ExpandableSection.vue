@@ -85,9 +85,9 @@ export default {
 
   emits: ['update:expanded'],
 
-  setup(props, { emit }) {
+  setup() {
     return {
-      managedExpanded: useManagedProp(props, emit, 'expanded', false),
+      managedExpanded: useManagedProp('expanded', false),
     };
   },
 
