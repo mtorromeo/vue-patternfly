@@ -8,6 +8,8 @@ const camelize = s =>
     .replace('-', '')
     .replace('_', '');
 
+export const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
 /**
  *
  * @param {string} s string to make camelCased

@@ -11,6 +11,7 @@ export { default as PfPopper } from './Popper';
 export { default as PfRadio } from './Radio.vue';
 export { default as PfSpinner } from './Spinner.vue';
 export { default as PfSwitch } from './Switch.vue';
+export { default as PfTextarea } from './Textarea';
 export { default as PfTextInput } from './TextInput.vue';
 export { default as PfTitle } from './Title.vue';
 export * from './Accordion';
