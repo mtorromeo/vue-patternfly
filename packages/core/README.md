@@ -1,47 +1,58 @@
 # Vue PatternFly
 
-<p align="center">
-  <!-- <a href="https://circleci.com/gh/mtorromeo/vue-patternfly4">
-    <img src="https://circleci.com/gh/mtorromeo/vue-patternfly4.svg?style=svg" alt="Build Status" />
-  </a>
-  <a href="https://coveralls.io/github/mtorromeo/vue-patternfly4?branch=master">
-    <img src="https://coveralls.io/repos/github/mtorromeo/vue-patternfly4/badge.svg?branch=master&style=flat-square" alt="Coverage Status" />
-  </a> -->
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License" />
-  </a>
-
-  <a href="https://npmjs.org/package/@vue-patternfly/core">
-    <img src="https://img.shields.io/npm/v/@vue-patternfly/core.svg?style=flat-square" alt="NPM" />
-  </a>
-
-  <a href="https://npmjs.org/package/@vue-patternfly/core">
-    <img src="https://img.shields.io/npm/dw/@vue-patternfly/core.svg?style=flat-square" alt="Downloads" />
-  </a>
-
-  <a href="https://github.com/mtorromeo/vue-patternfly4/issues">
-    <img src="https://img.shields.io/github/issues/mtorromeo/vue-patternfly4.svg?style=flat-square" alt="Issues" />
-  </a>
-</p>
+[![LICENSE](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)][link-LICENSE]
+[![NPM](https://img.shields.io/npm/v/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
+[![Download](https://img.shields.io/npm/dw/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
+[![Issues](https://img.shields.io/github/issues/mtorromeo/vue-patternfly4.svg?style=flat-square)](https://github.com/mtorromeo/vue-patternfly4/issues)
 
 PatternFly 4 components for Vue 3.
 
-<!-- More informations on the project [homepage][link-homepage]. -->
+The components are mostly a straight-forward port of the [PatternFly 4 components][link-patternfly4] to Vue 3 with some differences where it makes sense to improve ergonomics or add new features.
 
-### Installation
+### Common differences from patternfly-react
+
+#### Component names are prefixed with `pf-`
+
+This is done to conform to the custom element specification that requires component names to include an hyphen and to avoid conflicts with other components.
+
+#### Boolean props "is/has" prefixes removed
+
+This makes it easier to use the components and matches the naming convention of native elements. E.g. `<pf-text-input disabled />` just like `<input disabled>` instead of `<pf-text-input is-disabled />`.
+
+By doing this we can also omit to declare some props that are automatically inherited by the underlying native element.
+
+### Get started
+
+Install the library with the package management tool of your choice:
+
 ```
 npm install --save @vue-patternfly/core
-```
-
-or
-
-```
+# or
 yarn add @vue-patternfly/core
+```
+
+Then you can import the components you need or use the whole library of components like this:
+
+```js
+import Vue from 'vue';
+import VuePatternfly4 from '@vue-patternfly/core';
+
+const app = Vue.createApp({
+  setup() {
+    return {};
+  },
+});
+app.use(VuePatternfly4);
+app.mount('#app');
 ```
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
+
+## Documentation
+
+See the [storybook][link-storybook] for usage instructions and other documentation.
 
 ## Security
 
@@ -56,6 +67,9 @@ If you discover any security related issues, please email massimiliano.torromeo@
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
-<!-- [link-homepage]: https://mtorromeo.github.io/vue-patternfly4 -->
+[link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly4/master/packages/core/LICENSE
+[link-CONDUCT]: https://github.com/mtorromeo/vue-patternfly4/blob/master/packages/core/CONDUCT.md
 [link-author]: https://github.com/mtorromeo
 [link-contributors]: ../../contributors
+[link-patternfly4]: https://www.patternfly.org/v4/
+[link-storybook]: https://mtorromeo.github.io/vue-patternfly4/
