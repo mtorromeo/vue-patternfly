@@ -1,6 +1,7 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import PfTextInput from '@vue-patternfly/core/src/components/TextInput.vue';
+import { inputValidationProps } from '../common';
 
 export const Template = (args) => ({
   components: { PfTextInput },
@@ -8,30 +9,19 @@ export const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-text-input v-bind="args" />
+    <pf-text-input v-bind="args" :title="args.placeholder" />
   `,
 });
 
 
 <Meta title="Components/Text Input" component={PfTextInput} argTypes={{
-    autovalidate: {
-      control: {
-        type: 'select',
-      },
-      options: [true, false, 'blur', 'input', 'change'],
-    },
     iconVariant: {
       control: {
         type: 'select',
       },
       options: ['', 'calendar', 'clock', 'search'],
     },
-    validated: {
-      control: {
-        type: 'select',
-      },
-      options: [null, 'default', 'success', 'warning', 'error'],
-    },
+    ...inputValidationProps,
   }} />
 
 # PfTextInput `pf-text-input`
@@ -41,7 +31,10 @@ export const Template = (args) => ({
 ### Default
 
 <Canvas>
-  <Story name="Default">
+  <Story name="Default" args={{
+    pattern: '[0-9A-Fa-f]',
+    placeholder: 'hexadecimal format only',
+  }}>
     {Template.bind({})}
   </Story>
 </Canvas>

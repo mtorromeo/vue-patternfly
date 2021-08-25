@@ -18,15 +18,15 @@
     <pf-title class="example-heading" h="3">
       Validation
     </pf-title>
-    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (does not validate)" aria-label="does not validate" :autovalidate="false" />
+    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (does not validate)" aria-label="does not validate" :auto-validate="false" />
     <br>
-    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on enter/submit)" aria-label="validates on enter/submit" autovalidate />
+    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on enter/submit)" aria-label="validates on enter/submit" auto-validate />
     <br>
-    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on blur)" aria-label="validates on blur" autovalidate="blur" />
+    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on blur)" aria-label="validates on blur" auto-validate="blur" />
     <br>
-    <pf-text-input v-model="text1" required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on change)" aria-label="validates on change" autovalidate="change" />
+    <pf-text-input v-model="text1" required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on change)" aria-label="validates on change" auto-validate="change" />
     <br>
-    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on input)" aria-label="validates on input" autovalidate="input" />
+    <pf-text-input required pattern="[0-9a-f]*" placeholder="hexadecimal value (validates on input)" aria-label="validates on input" auto-validate="input" />
 
     <pf-title class="example-heading" h="3">
       Select all

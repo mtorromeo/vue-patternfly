@@ -1,47 +1,18 @@
 <script>
 import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useChildrenTracker } from '../use';
+import { useChildrenTracker, useManagedProp } from '../use';
+import InputValidationMixin from '../mixins/InputValidationMixin';
 
 export default {
   name: 'PfTextInput',
+
+  mixins: [InputValidationMixin],
 
   props: {
     type: {
       type: String,
       default: 'text',
-    },
-
-    value: {
-      type: String,
-      default: null,
-    },
-
-    /** @model */
-    modelValue: {
-      type: [String, Number],
-      default: null,
-    },
-
-    /**
-     * @values blur, input, change
-     */
-    autovalidate: {
-      type: [Boolean, String],
-      default: true,
-      validator: v => typeof v === 'boolean' || ['blur', 'input', 'change'].includes(v),
-    },
-
-    /**
-     * Value to indicate if the input is modified to show that validation state.
-     * If set to success, input will be modified to indicate valid state.
-     * If set to error,  input will be modified to indicate error state.
-     * @values default, success, warning, error
-     */
-    validated: {
-      type: String,
-      default: null,
-      validator: v => [null, 'default', 'success', 'warning', 'error'].includes(v),
     },
 
     /** Trim text on left */
@@ -71,89 +42,9 @@ export default {
 
   setup() {
     useChildrenTracker();
-  },
-
-  data() {
     return {
-      innerValidated: 'default',
+      value: useManagedProp('modelValue', ''),
     };
-  },
-
-  computed: {
-    effectiveValidated() {
-      return this.validated === null ? this.innerValidated : this.validated;
-    },
-  },
-
-  watch: {
-    value() {
-      this.innerValidated = 'default';
-    },
-
-    modelValue() {
-      this.innerValidated = 'default';
-    },
-
-    innerValidated(validity) {
-      this.$emit('update:validated', validity);
-    },
-  },
-
-  methods: {
-    onInput(event) {
-      this.$emit('input', event);
-      this.$emit('update:modelValue', event.target.value);
-      if (this.autovalidate === 'input') {
-        this.reportValidity();
-      } else {
-        this.innerValidated = 'default';
-      }
-    },
-
-    onBlur(event) {
-      this.$emit('blur', event);
-      if (this.autovalidate === 'blur') {
-        this.reportValidity(true);
-      } else if (['input', 'change'].includes(this.autovalidate) && this.innerValidated === 'default') {
-        this.checkValidity();
-      }
-    },
-
-    onChange(event) {
-      this.$emit('change', event);
-      if (this.autovalidate === 'change') {
-        this.reportValidity();
-      }
-    },
-
-    onInvalid(event) {
-      this.$emit('invalid', event);
-      this.innerValidated = 'error';
-    },
-
-    onKeyUp(event) {
-      this.$emit('keyup', event);
-      if (event.key === 'Enter' && this.autovalidate) {
-        this.reportValidity();
-      }
-    },
-
-    checkValidity() {
-      if (this.$el && this.$el.checkValidity()) {
-        this.innerValidated = 'success';
-        return true;
-      }
-      return false;
-    },
-
-    reportValidity(once) {
-      const validatedWas = this.innerValidated;
-      const valid = this.checkValidity();
-      if (!once || (valid && validatedWas !== 'success') || (!valid && validatedWas !== 'error')) {
-        this.$el && this.$el.reportValidity();
-      }
-      return valid;
-    },
   },
 
   render() {
@@ -165,14 +56,8 @@ export default {
       style['background-size'] = this.iconDimensions;
     }
 
-    const inputProps = {};
-    if (this.modelValue !== null) {
-      inputProps.value = this.modelValue;
-    } else if (this.value !== null) {
-      inputProps.value = this.value;
-    }
-
     return h('input', {
+      value: this.value,
       class: [
         styles.formControl, {
           [styles.modifiers.success]: this.effectiveValidated === 'success',
@@ -189,7 +74,6 @@ export default {
       onBlur: this.onBlur,
       onInvalid: this.onInvalid,
       onKeyUp: this.onKeyUp,
-      ...inputProps,
     });
   },
 };
