@@ -1,0 +1,36 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import PfTitle from '@vue-patternfly/core/src/components/Title.vue';
+
+export const Template = ({ sample_title, ...args }) => ({
+  components: { PfTitle },
+  setup() {
+    return { args, sample_title };
+  },
+  template: `<pf-title v-bind="args">{{ sample_title }}</pf-title>`,
+});
+
+
+<Meta title="Components/Title" component={PfTitle} argTypes={{
+    h: { control: { type: 'select' }, options: [1, 2, 3, 4, 5, 6] },
+    size: {
+      control: {
+        type: 'select',
+      },
+      options: ['', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
+    },
+  }} />
+
+# PfTitle `pf-title`
+
+## Examples
+
+<Canvas>
+  <Story name="Title" args={{
+    sample_title: 'Title text',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Title" />

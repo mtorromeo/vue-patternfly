@@ -1,0 +1,43 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { PfFlex, PfFlexItem } from '@vue-patternfly/core/src/layouts/Flex';
+
+export const Template = (args) => ({
+  components: { PfFlex, PfFlexItem },
+  setup() {
+    return { args };
+  },
+  template: `
+    <pf-flex class="docs-layout-outline">
+      <pf-flex flex="1">
+        <pf-flex-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
+          Flex item
+        </pf-flex-item>
+      </pf-flex>
+      <pf-flex flex="1">
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+      </pf-flex>
+      <pf-flex flex="1">
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+      </pf-flex>
+    </pf-flex>
+  `,
+});
+
+
+<Meta title="Layouts/Flex Item" component={PfFlexItem} subcomponents={{PfFlex}} />
+
+# PfFlexItem `pf-flex-item`
+
+## Examples
+
+<Canvas>
+  <Story name="Flex Item">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Flex Item" />

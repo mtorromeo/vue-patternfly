@@ -1,0 +1,38 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import {
+  PfGallery,
+  PfGalleryItem,
+} from '@vue-patternfly/core/src/layouts/Gallery';
+
+export const Template = (args) => ({
+  components: { PfGallery, PfGalleryItem },
+  setup() {
+    return { args };
+  },
+  template: `
+    <pf-gallery v-bind="args" class="docs-layout-outline">
+      <pf-gallery-item>Gallery Item</pf-gallery-item>
+      <pf-gallery-item>Gallery Item</pf-gallery-item>
+      <pf-gallery-item>Gallery Item</pf-gallery-item>
+      <pf-gallery-item>Gallery Item</pf-gallery-item>
+      <pf-gallery-item>Gallery Item</pf-gallery-item>
+      <pf-gallery-item>Gallery Item</pf-gallery-item>
+    </pf-gallery>
+  `,
+});
+
+
+<Meta title="Layouts/Gallery" component={PfGallery} subcomponents={{PfGalleryItem}} />
+
+# PfGallery `pf-gallery`
+
+## Examples
+
+<Canvas>
+  <Story name="Gallery" args={{gutter: true}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Gallery" />

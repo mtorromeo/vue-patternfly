@@ -1,0 +1,34 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { PfSplit, PfSplitItem } from '@vue-patternfly/core/src/layouts/Split';
+
+export const Template = (args) => ({
+  components: { PfSplit, PfSplitItem },
+  setup() {
+    return { args };
+  },
+  template: `
+    <pf-split gutter class="docs-layout-outline">
+      <pf-split-item>content</pf-split-item>
+      <pf-split-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
+        pf-m-fill
+      </pf-split-item>
+      <pf-split-item>content</pf-split-item>
+    </pf-split>
+  `,
+});
+
+
+<Meta title="Layouts/Split Item" component={PfSplitItem} subcomponents={{PfSplit}} />
+
+# PfSplit `pf-split-item`
+
+## Examples
+
+<Canvas>
+  <Story name="Split Item" args={{filled: true}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Split Item" />

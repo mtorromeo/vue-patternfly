@@ -1,0 +1,66 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { PfChip } from '@vue-patternfly/core/src/components/ChipGroup';
+import PfBadge from '@vue-patternfly/core/src/components/Badge';
+
+export const Template = ({ sample_label, ...args }) => ({
+  components: { PfChip },
+  setup() {
+    return { args, sample_label };
+  },
+  template: `
+    <pf-chip v-bind="args">{{ sample_label }}</pf-chip>
+  `,
+});
+
+export const WithBadge = ({ sample_label, ...args }) => ({
+  components: { PfChip, PfBadge },
+  setup() {
+    return { args, sample_label };
+  },
+  template: `
+    <pf-chip v-bind="args">
+      {{ sample_label }}
+      <pf-badge read>00</pf-badge>
+    </pf-chip>
+  `,
+});
+
+
+<Meta title="Components/Chip" component={PfChip} />
+
+# PfChip `pf-chip`
+
+## Examples
+
+### Simple
+
+<Canvas>
+  <Story name="Simple" args={{
+    sample_label: 'Chip',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Simple" />
+
+### Long
+
+<Canvas>
+  <Story name="Long" args={{
+    sample_label: 'Really long chip that goes on and on',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### With badge
+
+<Canvas>
+  <Story name="WithBadge" args={{
+    sample_label: 'Chip',
+  }}>
+    {WithBadge.bind({})}
+  </Story>
+</Canvas>

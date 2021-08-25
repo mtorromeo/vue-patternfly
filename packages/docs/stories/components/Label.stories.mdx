@@ -1,0 +1,64 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import PfLabel from '@vue-patternfly/core/src/components/Label.vue';
+
+export const Template = ({ sample_label, ...args }) => ({
+  components: { PfLabel },
+  setup() {
+    return { args, sample_label };
+  },
+  template: `<pf-label v-bind="args">{{ sample_label }}</pf-label>`,
+});
+
+
+<Meta title="Components/Label" component={PfLabel} argTypes={{
+    color: {
+      control: { type: 'select' },
+      options: ['blue', 'cyan', 'green', 'orange', 'purple', 'red', 'grey'],
+    },
+    variant: { control: { type: 'select' }, options: ['outline', 'filled'] },
+    tooltipPosition: {
+      control: { type: 'select' },
+      options: ['auto', 'top', 'bottom', 'left', 'right'],
+    },
+    onClose: {},
+  }} />
+
+# PfLabel `pf-label`
+
+## Examples
+
+### Default
+
+<Canvas>
+  <Story name="Default" args={{
+    sample_label: 'Label',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
+
+### Truncated
+
+<Canvas>
+  <Story name="Truncated" args={{
+    sample_label: 'Label is too long to fit in the label',
+    truncated: true,
+    tooltipPosition: 'right',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### With close
+
+<Canvas>
+  <Story name="WithClose" args={{
+    sample_label: 'Label',
+    close: true,
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

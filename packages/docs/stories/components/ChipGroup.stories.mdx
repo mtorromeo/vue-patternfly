@@ -1,0 +1,86 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import {
+  PfChip,
+  PfChipGroup,
+} from '@vue-patternfly/core/src/components/ChipGroup';
+
+export const Template = ({
+  sample_chip1,
+  sample_chip2,
+  sample_chip3,
+  sample_chip4,
+  sample_chip5,
+  ...args
+}) => ({
+  components: { PfChipGroup, PfChip },
+  setup() {
+    return {
+      args,
+      sample_chip1,
+      sample_chip2,
+      sample_chip3,
+      sample_chip4,
+      sample_chip5,
+    };
+  },
+  template: `
+    <pf-chip-group v-bind="args">
+      <pf-chip>{{ sample_chip1 }}</pf-chip>
+      <pf-chip>{{ sample_chip2 }}</pf-chip>
+      <pf-chip>{{ sample_chip3 }}</pf-chip>
+      <pf-chip>{{ sample_chip4 }}</pf-chip>
+      <pf-chip>{{ sample_chip5 }}</pf-chip>
+    </pf-chip-group>
+  `,
+});
+
+export const chips = {
+  sample_chip1: 'Chip one',
+  sample_chip2: 'Really long chip that goes on and on',
+  sample_chip3: 'Chip three',
+  sample_chip4: 'Chip four',
+  sample_chip5: 'Chip five',
+};
+
+
+<Meta title="Components/Chip Group" component={PfChipGroup} subcomponents={{PfChip}} />
+
+# PfChipGroup `pf-chip-group`
+
+## Examples
+
+### Simple inline
+
+<Canvas>
+  <Story name="SimpleInline" args={{
+    ...chips,
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="SimpleInline" />
+
+### Simple category
+
+<Canvas>
+  <Story name="SimpleCategory" args={{
+    ...chips,
+    category: 'Category One',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Category removable
+
+<Canvas>
+  <Story name="CategoryRemovable" args={{
+    ...chips,
+    category: 'Category has a very long name',
+    closable: true,
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

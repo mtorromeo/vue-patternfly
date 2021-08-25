@@ -1,0 +1,86 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import PfBrand from '@vue-patternfly/core/src/components/Brand';
+import {
+  PfPage,
+  PfPageHeader,
+  PfPageHeaderTools,
+  PfPageHeaderToolsGroup,
+  PfPageHeaderToolsItem,
+  PfPageSidebar,
+  PfPageSection,
+} from '@vue-patternfly/core/src/components/Page';
+
+export const Default = (args) => ({
+  components: {
+    PfPage,
+    PfBrand,
+    PfPageHeader,
+    PfPageHeaderTools,
+    PfPageHeaderToolsGroup,
+    PfPageHeaderToolsItem,
+    PfPageSidebar,
+    PfPageSection,
+  },
+  setup() {
+    return { args };
+  },
+  template: `
+    <pf-page v-bind="args">
+      <template #skeleton>
+        <pf-page-header show-nav-toggle>
+          <template #logo>
+            <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px;filter:invert(1)" />
+          </template>
+\
+          <pf-page-header-tools>
+            <pf-page-header-tools-group>
+              <pf-page-header-tools-item visibility-xs="hidden">
+                header-tools
+              </pf-page-header-tools-item>
+            </pf-page-header-tools-group>
+          </pf-page-header-tools>
+        </pf-page-header>
+\
+        <pf-page-sidebar nav="PfNavigation" nav-open />
+      </template>
+\
+      <pf-page-section variant="darker">Section with darker background</pf-page-section>
+      <pf-page-section variant="dark">Section with dark background</pf-page-section>
+      <pf-page-section variant="light">Section with light background</pf-page-section>
+    </pf-page>
+  `,
+});
+
+
+<Meta title="Components/Page" component={PfPage} subcomponents={{
+    PfBrand,
+    PfPageHeader,
+    PfPageHeaderTools,
+    PfPageHeaderToolsGroup,
+    PfPageHeaderToolsItem,
+    PfPageSidebar,
+  }} argTypes={{
+    collapseListedFiltersBreakpoint: {
+      control: {
+        type: 'select',
+      },
+      options: ['', 'all', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
+    },
+  }} parameters={{
+    layout: 'fullscreen',
+  }} />
+
+# PfPage `pf-page`
+
+## Examples
+
+<Canvas>
+  <Story name="Page" args={{
+    managedSidebar: true,
+  }}>
+    {Default.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Page" />

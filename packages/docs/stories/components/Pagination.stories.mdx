@@ -1,0 +1,39 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { PfPagination } from '@vue-patternfly/core/src/components/Pagination';
+import { ref } from 'vue';
+
+export const Template = (args) => ({
+  components: { PfPagination },
+  setup() {
+    delete args.page;
+    const page = ref(1);
+    return { args, page };
+  },
+  template: `
+    <div>
+      <pf-pagination v-model:page="page" v-bind="args" />
+    </div>
+  `,
+});
+
+
+<Meta title="Components/Pagination" component={PfPagination} argTypes={{
+    page: {
+      control: null,
+    },
+  }} />
+
+# PfPagination `pf-pagination`
+
+## Examples
+
+<Canvas>
+  <Story name="Pagination" args={{
+    count: 333,
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Pagination" />
