@@ -3,6 +3,7 @@ import { h, mergeProps } from 'vue';
 import PfDropdownToggle from './DropdownToggle';
 import PfDropdownMenu from './DropdownMenu';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { useManagedProp } from '../../use';
 
 let currentId = 0;
 
@@ -40,7 +41,10 @@ export default {
     },
     dropUp: Boolean,
     disabled: Boolean,
-    open: Boolean,
+    open: {
+      type: Boolean,
+      default: null,
+    },
     plain: Boolean,
     grouped: Boolean,
     splitButton: Boolean,
@@ -52,6 +56,8 @@ export default {
     },
     ...breakpointProp('align', String, ['', 'left', 'right']),
   },
+
+  emits: ['update:open'],
 
   data() {
     return {
@@ -65,8 +71,14 @@ export default {
     };
   },
 
+  setup() {
+    return {
+      managedOpen: useManagedProp('open', false),
+    };
+  },
+
   watch: {
-    open: {
+    managedOpen: {
       handler(value) {
         if (!value) {
           this.openedOnEnter = false;
@@ -87,11 +99,11 @@ export default {
       id,
       ref: 'toggle',
       disabled: this.disabled,
-      open: this.open,
+      open: this.managedOpen,
       plain: this.plain,
       'aria-haspopup': ariaHasPopup,
       onEnter: () => (this.openedOnEnter = true),
-      'onUpdate:open': v => this.$emit('update:open', v),
+      'onUpdate:open': v => (this.managedOpen = v),
     };
 
     if (this.$slots.toggle) {
@@ -111,7 +123,7 @@ export default {
       children.push(toggle);
     }
 
-    if (this.menuAppendTo === 'inline' && this.open) {
+    if (this.menuAppendTo === 'inline' && this.managedOpen) {
       const menu = h(PfDropdownMenu, {
         ref: 'menu',
         class: classesFromBreakpointProps(this.$props, ['align'], styles),
@@ -134,7 +146,7 @@ export default {
           [styles.modifiers.expanded]: this.open,
         },
       ],
-      open: this.open,
+      open: this.managedOpen,
       position: this.position,
       'aria-labelledby': `${id}-toggle`,
     }, children);
