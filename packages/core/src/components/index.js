@@ -17,6 +17,7 @@ export { default as PfTitle } from './Title.vue';
 export * from './Accordion';
 export * from './Alert';
 export * from './Breadcrumb';
+export * from './Card';
 export * from './ChipGroup';
 export * from './Dropdown';
 export * from './EmptyState';
