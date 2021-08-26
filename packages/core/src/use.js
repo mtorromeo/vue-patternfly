@@ -21,7 +21,7 @@ export function provideChildrenTracker() {
 }
 
 export function useChildrenTracker() {
-  const tracker = inject(ChildrenTrackerSymbol);
+  const tracker = inject(ChildrenTrackerSymbol, null);
 
   if (tracker) {
     tryOnMounted(() => {
