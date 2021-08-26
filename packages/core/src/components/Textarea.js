@@ -3,7 +3,7 @@ import heightToken from '@patternfly/react-tokens/dist/esm/c_form_control_textar
 
 import { h } from 'vue';
 import InputValidationMixin from '../mixins/InputValidationMixin';
-import { useManagedProp } from '../use';
+import { useChildrenTracker, useManagedProp } from '../use';
 import { canUseDOM } from '../util';
 
 export default {
@@ -46,6 +46,7 @@ export default {
   },
 
   setup() {
+    useChildrenTracker();
     return {
       value: useManagedProp('modelValue', ''),
     };
