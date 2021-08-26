@@ -9,6 +9,7 @@ import {
 import PfPopover from '@vue-patternfly/core/src/components/Popover.vue';
 import PfButton from '@vue-patternfly/core/src/components/Button';
 import PfTextInput from '@vue-patternfly/core/src/components/TextInput';
+import PfTextarea from '@vue-patternfly/core/src/components/Textarea';
 import PfHelpIcon from '@vue-patternfly/icons/dist/esm/icons/help-icon';
 import PfTrashIcon from '@vue-patternfly/icons/dist/esm/icons/trash-icon';
 import PfExclamationCircleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon';
@@ -53,10 +54,11 @@ export const Basic = (args) => ({
 });
 
 export const InvalidWithFormAlert = (args) => ({
-  components: { PfForm, PfFormGroup, PfPopover, PfButton, PfExclamationCircleIcon, PfTextInput },
+  components: { PfForm, PfFormGroup, PfPopover, PfButton, PfExclamationCircleIcon, PfTextInput, PfTextarea },
   setup() {
     const age = ref('Five');
-    return { args, age };
+    const description = ref('Nice description\nmy email: mail@mail.com');
+    return { args, age, description };
   },
   template: `
     <pf-form v-bind="args">
@@ -69,7 +71,15 @@ export const InvalidWithFormAlert = (args) => ({
           <pf-exclamation-circle-icon />
         </template>
 \
-        <pf-text-input id="age" pattern="[0-9]+" v-model="age" required name="age" aria-describedby="age" auto-validate="change" />
+        <pf-text-input id="age" pattern="[0-9]+" v-model="age" required name="age" aria-describedby="age" />
+      </pf-form-group>
+\
+      <pf-form-group label="Description" field-id="description" helperTextInvalid="No emails allowed in the description">
+        <template #helperTextInvalidIcon>
+          <pf-exclamation-circle-icon />
+        </template>
+\
+        <pf-textarea id="description" pattern="(?!.*[A-Za-z0-9]@[A-Za-z].*).*" v-model="description" name="description" aria-describedby="description" spellcheck="false" />
       </pf-form-group>
     </pf-form>
   `,
@@ -176,7 +186,7 @@ export const FieldGroup = (args) => ({
   </Story>
 </Canvas>
 
-<ArgsTable story="Default" />
+<ArgsTable story="Basic" />
 
 ### Invalid with form alert
 

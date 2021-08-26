@@ -41,7 +41,7 @@ export default {
       if (this.pattern instanceof RegExp) {
         return this.pattern;
       }
-      return new RegExp(`^(?:${this.pattern})$`, 'u');
+      return new RegExp(`^(?:${this.pattern})$`, 'us');
     },
   },
 
