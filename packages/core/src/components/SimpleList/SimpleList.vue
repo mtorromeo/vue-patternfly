@@ -40,11 +40,11 @@ export default {
     const grouped = children.length === 0 ? false : children[0].type.name === 'PfSimpleListGroup';
 
     let content = children;
+    if (!grouped) {
+      content = [h('ul', content)];
+    }
     if (this.name) {
       content.unshift(h('input', { type: 'hidden', name: this.name, value: this.value }));
-    }
-    if (!grouped) {
-      content = h('ul', content);
     }
 
     return h('div', {
