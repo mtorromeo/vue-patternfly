@@ -61,7 +61,7 @@ export const parameters = {
         src,
       );
       if (match) {
-        return templateSourceCode(dedent(match[2]), ctx.args, ctx.argTypes);
+        return templateSourceCode(dedent(match[2].replace(/^\s*\\$/mg, '')), ctx.args, ctx.argTypes);
       }
       return src;
     },
