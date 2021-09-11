@@ -39,7 +39,7 @@ import PfPopper from '../Popper';
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
 
-const positions = ['auto', 'top', 'bottom', 'left', 'right'];
+export const positions = ['auto', 'top', 'bottom', 'left', 'right'];
 
 export default {
   name: 'PfTooltip',

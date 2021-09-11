@@ -31,15 +31,19 @@
       </template>
     </pf-alert-icon>
 
-    <component :is="tooltipVisible ? 'pf-tooltip' : 'void'">
-      <h4 ref="title"
+    <component :is="tooltipVisible ? 'pf-tooltip' : 'void'" :position="tooltipPosition">
+      <h4 ref="titleRef"
           :class="[styles.alertTitle, {
             [styles.modifiers.truncate]: truncateTitle,
           }]"
+          :tabindex="tooltipVisible ? '0' : null"
       >
         <span :class="accessibleStyles.screenReader">{{ variantLabel }}</span>
         {{ title }}
       </h4>
+      <template #content>
+        {{ title }}
+      </template>
     </component>
 
     <div v-if="close" :class="styles.alertAction">
@@ -59,13 +63,17 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
+import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
 import Void from '../Void';
-import PfTooltip from '../Tooltip/Tooltip.vue';
+import PfTooltip, { positions } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton';
 import PfAlertIcon from './AlertIcon';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+
+import { ref, watch } from 'vue';
+import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
 
 export default {
@@ -81,7 +89,10 @@ export default {
     plain: Boolean,
 
     /** Truncate title to number of lines */
-    truncateTitle: Boolean,
+    truncateTitle: {
+      type: Number,
+      default: 0,
+    },
 
     /** Flag to indicate if the alert is in a live region */
     liveRegion: Boolean,
@@ -128,19 +139,39 @@ export default {
       type: Number,
       default: 3000,
     },
+
+    tooltipPosition: {
+      type: String,
+      default: 'auto',
+      validator: v => positions.includes(v),
+    },
   },
 
   emits: ['close', 'timeout', 'mouseenter', 'mouseleave'],
 
-  setup() {
+  setup(props) {
+    const titleRef = ref(null);
+    const { width, height } = useElementSize(titleRef);
+
+    const tooltipVisible = ref(false);
+
+    watch(() => [width.value, height.value], () => {
+      if (!titleRef.value || !props.truncateTitle) {
+        return false;
+      }
+      titleRef.value.style.setProperty(maxLines.name, props.truncateTitle.toString());
+      tooltipVisible.value = titleRef.value.offsetHeight < titleRef.value.scrollHeight;
+    });
+
     return {
+      titleRef,
+      tooltipVisible,
       managedExpanded: useManagedProp('expanded', false),
     };
   },
 
   data() {
     return {
-      tooltipVisible: true, // TODO
       styles,
       accessibleStyles,
       timer: null,
