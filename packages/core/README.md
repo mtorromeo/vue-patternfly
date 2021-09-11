@@ -37,10 +37,10 @@ Then you can import the components you need or use the whole library of componen
 import '@patternfly/patternfly/patternfly.css';
 // alternatively include it in your html as a <style> tag
 
-import Vue from 'vue';
+import { createApp } from 'vue';
 import VuePatternfly4 from '@vue-patternfly/core';
 
-const app = Vue.createApp({
+const app = createApp({
   setup() {
     return {};
   },
