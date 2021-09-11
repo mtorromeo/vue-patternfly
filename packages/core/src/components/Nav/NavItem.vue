@@ -150,7 +150,6 @@ export default {
   },
 
   mounted() {
-    console.log(Object.keys(styles.modifiers));
     window.addEventListener('click', this.flyoutClick);
   },
 
