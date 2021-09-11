@@ -36,6 +36,7 @@
           :class="[styles.alertTitle, {
             [styles.modifiers.truncate]: truncateTitle,
           }]"
+          :style="truncateTitle ? `${maxLinesVar}: ${truncateTitle}` : null"
           :tabindex="tooltipVisible ? '0' : null"
       >
         <span :class="accessibleStyles.screenReader">{{ variantLabel }}</span>
@@ -159,7 +160,6 @@ export default {
       if (!titleRef.value || !props.truncateTitle) {
         return false;
       }
-      titleRef.value.style.setProperty(maxLines.name, props.truncateTitle.toString());
       tooltipVisible.value = titleRef.value.offsetHeight < titleRef.value.scrollHeight;
     });
 
@@ -172,6 +172,7 @@ export default {
 
   data() {
     return {
+      maxLinesVar: maxLines.name,
       styles,
       accessibleStyles,
       timer: null,
