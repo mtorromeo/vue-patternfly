@@ -1,5 +1,5 @@
 <script>
-import { useFocusTrap } from '@vueuse/integrations/useFocusTrap.esm.js';
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 import { h, ref } from 'vue';
 
 export default {
