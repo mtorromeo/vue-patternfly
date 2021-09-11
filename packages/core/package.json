@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "0.1.0-alpha.8",
+  "version": "0.1.0-alpha.9",
   "private": false,
   "files": [
     "dist"
@@ -15,7 +15,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@patternfly/patternfly": "^4.133.0",
