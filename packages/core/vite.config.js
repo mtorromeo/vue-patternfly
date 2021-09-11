@@ -22,11 +22,10 @@ export default defineConfig({
     },
   },
   plugins: [
-    vue(),
     {
       name: 'ignore-css-imports',
-      resolveId: id => /\.css$/.test(id),
-      load: id => 'export default undefined;',
+      load: id => /\.css$/.test(id) ? '' : null,
     },
+    vue(),
   ],
 });
