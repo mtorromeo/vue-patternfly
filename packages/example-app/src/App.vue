@@ -134,21 +134,8 @@
 </template>
 
 <script>
-import '@patternfly/patternfly/patternfly.css';
-// import '@patternfly/patternfly/patternfly-base.css';
-// import '@patternfly/patternfly/base/patternfly-common.css';
-// import '@patternfly/patternfly/base/patternfly-fa-icons.css';
-// import '@patternfly/patternfly/base/patternfly-fonts.css';
-// import '@patternfly/patternfly/base/patternfly-globals.css';
-// import '@patternfly/patternfly/base/patternfly-icons.css';
-// import '@patternfly/patternfly/base/patternfly-pf-icons.css';
-// import '@patternfly/patternfly/base/patternfly-shield-inheritable.css';
-// import '@patternfly/patternfly/base/patternfly-shield-noninheritable.css';
-// import '@patternfly/patternfly/base/patternfly-themes.css';
-// import '@patternfly/patternfly/base/patternfly-variables.css';
-
 export default {
-  name: "App",
+  name: 'App',
 
   data() {
     return {

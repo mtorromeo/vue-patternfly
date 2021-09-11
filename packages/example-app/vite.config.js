@@ -1,11 +1,7 @@
+import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-/**
- * https://vitejs.dev/config/
- * @type {import('vite').UserConfig}
- */
-export default {
-  plugins: [vue({
-    isProduction: false,
-  })],
-};
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+});
