@@ -12,6 +12,14 @@ module.exports = {
   webpackFinal(config) {
     config.resolve.alias['@'] = path.resolve(__dirname, '..');
     config.resolve.alias['@vue-patternfly/core'] = path.resolve(__dirname, '../../core');
+
+    // https://github.com/vueuse/vueuse/issues/718
+    config.module.rules.push({
+      test: /\.mjs$/,
+      include: /node_modules/,
+      type: 'javascript/auto',
+    });
+
     return config;
   },
   features: {
