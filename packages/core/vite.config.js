@@ -21,5 +21,12 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    {
+      name: 'ignore-css-imports',
+      resolveId: id => /\.css$/.test(id),
+      load: id => 'export default undefined;',
+    },
+  ],
 });

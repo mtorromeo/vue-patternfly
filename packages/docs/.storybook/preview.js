@@ -1,5 +1,4 @@
 import '@patternfly/patternfly/patternfly.css';
-import '@vue-patternfly/core/dist/core.css';
 import dedent from 'ts-dedent';
 import { paramCase } from 'param-case';
 import { extractArgTypes } from '@storybook/addon-docs/dist/esm/frameworks/vue3/extractArgTypes';
