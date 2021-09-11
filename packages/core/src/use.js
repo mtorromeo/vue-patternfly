@@ -3,10 +3,10 @@ import { tryOnMounted } from '@vueuse/shared';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
-export function provideChildrenTracker() {
+export function provideChildrenTracker(symbol) {
   const items = ref([]);
 
-  provide(ChildrenTrackerSymbol, {
+  provide(symbol || ChildrenTrackerSymbol, {
     register: item => items.value.push(item),
 
     unregister: item => {
@@ -20,8 +20,8 @@ export function provideChildrenTracker() {
   return items;
 }
 
-export function useChildrenTracker() {
-  const tracker = inject(ChildrenTrackerSymbol, null);
+export function useChildrenTracker(symbol) {
+  const tracker = inject(symbol || ChildrenTrackerSymbol, null);
 
   if (tracker) {
     tryOnMounted(() => {
@@ -178,23 +178,29 @@ export function keyNavigation(itemsRef) {
   // };
 }
 
-export function useManagedProp(name, value = null) {
+export function isDefined(value) {
+  return value !== null && typeof value !== 'undefined';
+}
+
+export function useManagedProp(name, value = null, transform) {
   const instance = getCurrentInstance();
   if (!instance) {
     return;
   }
 
   const inner = ref(value);
-  const undef = value => value === null || typeof value === 'undefined';
   return computed({
     get() {
-      return undef(instance.props[name]) ? inner.value : instance.props[name];
+      return isDefined(instance.props[name]) ? instance.props[name] : inner.value;
     },
     set(to) {
-      if (undef(instance.props[name])) {
-        inner.value = to;
-      } else {
+      if (typeof transform === 'function') {
+        to = transform(to);
+      }
+      if (isDefined(instance.props[name])) {
         instance.emit(`update:${name}`, to);
+      } else {
+        inner.value = to;
       }
     },
   });

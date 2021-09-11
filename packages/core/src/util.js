@@ -122,7 +122,10 @@ export function getUniqueId(prefix = 'pf') {
     Math.random()
       .toString(36)
       .slice(2);
-  return `${prefix}-${uid}`;
+  if (prefix) {
+    prefix += '-';
+  }
+  return `${prefix}${uid}`;
 }
 
 export function findComponentVNode(vnodes) {
