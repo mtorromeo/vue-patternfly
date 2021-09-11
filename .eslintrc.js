@@ -14,6 +14,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production'
       ? 'warn'
       : 'off',
+    'no-return-assign': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/html-closing-bracket-newline': 'off',
     'space-before-function-paren': ['error', 'never'],
