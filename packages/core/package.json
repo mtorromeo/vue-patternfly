@@ -18,9 +18,9 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@patternfly/patternfly": "^4.80.3",
-    "@patternfly/react-styles": "^4.5.0",
-    "@patternfly/react-tokens": "^4.6.0",
+    "@patternfly/patternfly": "^4.133.0",
+    "@patternfly/react-styles": "^4.11.14",
+    "@patternfly/react-tokens": "^4.12.16",
     "@popperjs/core": "^2.4.4",
     "@vue-patternfly/icons": "^0.1.0-alpha.1",
     "@vueuse/core": "^6.0.0",

@@ -11,7 +11,7 @@
           @click="managedExpanded = !managedExpanded"
         >
           <span :class="styles.formFieldGroupToggleIcon">
-            <pf-angle-right-icon aria-hidden="true" />
+            <pf-angle-right-icon aria-hidden />
           </span>
         </pf-button>
       </div>

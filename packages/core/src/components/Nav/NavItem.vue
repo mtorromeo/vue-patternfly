@@ -1,8 +1,12 @@
 <template>
   <component
     :is="component"
-    :class="[styles.navItem, itemClass]"
+    :class="[styles.navItem, itemClass, {
+      [(styles.modifiers.flyout || 'pf-m-flyout')]: $slots.flyout,
+    }]"
     v-bind="itemAttrs"
+    @keydown="handleFlyout"
+    @mouseover="flyoutVisible = !!$slots.flyout"
   >
     <component
       :is="linkTag"
@@ -15,15 +19,28 @@
       @click="select"
     >
       <slot />
+      <span v-if="$slots.flyout" :class="styles.navToggle">
+        <span :class="styles.navToggleIcon">
+          <pf-angle-right-icon aria-hidden />
+        </span>
+      </span>
     </component>
+
+    <slot v-if="flyoutVisible" name="flyout" />
   </component>
 </template>
 
 <script>
+import { watchEffect } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
+import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
 export default {
   name: 'PfNavItem',
+
+  components: {
+    PfAngleRightIcon,
+  },
 
   inject: {
     onSelect: {
@@ -31,6 +48,9 @@ export default {
     },
     sidebar: {
       default: () => ({ sidebarOpen: false }),
+    },
+    flyoutRef: {
+      default: null,
     },
   },
 
@@ -74,6 +94,7 @@ export default {
   },
 
   emits: {
+    showflyout: true,
     select(e, groupId, itemId) {
       if (!(e instanceof Event) || typeof groupId === 'undefined' || typeof itemId === 'undefined') {
         console.warn('Invalid select event payload!');
@@ -86,6 +107,7 @@ export default {
   data() {
     return {
       styles,
+      flyoutTarget: null,
     };
   },
 
@@ -96,6 +118,44 @@ export default {
       }
       return this.to === null ? 'a' : 'router-link';
     },
+
+    flyoutVisible: {
+      get() {
+        return this === this.flyoutRef.value;
+      },
+      set(visible) {
+        this.flyoutRef.value = visible ? this : null;
+        if (visible) {
+          this.$emit('showflyout');
+        }
+      },
+    },
+  },
+
+  created() {
+    watchEffect(() => {
+      if (!this.flyoutTarget) {
+        return;
+      }
+      if (this.flyoutVisible) {
+        const flyoutMenu = this.flyoutTarget.nextElementSibling;
+        const flyoutItems = Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
+          el => !(el.classList.contains('pf-m-disabled') || el.classList.contains('pf-c-divider')),
+        );
+        flyoutItems[0].firstChild.focus();
+      } else {
+        this.flyoutTarget.focus();
+      }
+    });
+  },
+
+  mounted() {
+    console.log(Object.keys(styles.modifiers));
+    window.addEventListener('click', this.flyoutClick);
+  },
+
+  beforeUnmount() {
+    window.removeEventListener('click', this.flyoutClick);
   },
 
   methods: {
@@ -106,6 +166,45 @@ export default {
       this.$emit('select', e, this.groupId, this.itemId);
       if (this.onSelect) {
         this.onSelect(e, this.groupId, this.itemId);
+      }
+    },
+
+    handleFlyout(e) {
+      if (!this.$slots.flyout) {
+        return;
+      }
+
+      if (e.key === ' ' || e.key === 'ArrowRight') {
+        e.stopPropagation();
+        e.preventDefault();
+        if (!this.flyoutVisible) {
+          this.flyoutVisible = true;
+          this.flyoutTarget = e.target;
+        }
+      }
+
+      if (e.key === 'Escape' || e.key === 'ArrowLeft') {
+        if (this.flyoutVisible) {
+          e.stopPropagation();
+          e.preventDefault();
+          let closestFlyout = e.target.closest('.pf-c-nav__item.pf-m-flyout');
+          if (e.target.parentElement === closestFlyout) {
+            closestFlyout = closestFlyout.parentElement.closest('.pf-c-nav__item.pf-m-flyout');
+          }
+
+          if (closestFlyout) {
+            closestFlyout.firstChild.focus();
+          }
+
+          this.flyoutVisible = false;
+        }
+      }
+    },
+
+    flyoutClick(e) {
+      const closestItem = e.target.closest('.pf-c-nav__item');
+      if (!closestItem) {
+        this.flyoutVisible = !!this.$slots.flyout;
       }
     },
   },

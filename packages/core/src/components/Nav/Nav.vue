@@ -1,16 +1,19 @@
 <template>
-  <nav
-    :class="[styles.nav, {
+  <component
+    :is="variant === 'subnav' ? 'section' : 'nav'"
+    :class="{
+      [styles.nav]: variant !== 'subnav',
+      [styles.navSubnav]: variant === 'subnav',
       [styles.modifiers.light]: theme === 'light',
       [styles.modifiers.horizontal]: horizontal,
       [styles.modifiers.tertiary]: variant === 'tertiary',
       [styles.modifiers.horizontalSubnav]: variant === 'horizontal-subnav',
       [styles.modifiers.scrollable]: scrollable,
-    }]"
+    }"
     :aria-label="ariaLabel || variant === 'tertiary' ? 'Local' : 'Global'"
   >
     <slot />
-  </nav>
+  </component>
 </template>
 
 <script>
@@ -28,8 +31,8 @@ export default {
     },
     variant: {
       type: String,
-      default: '',
-      validator: v => ['', 'default', 'horizontal', 'tertiary', 'horizontal-subnav'].includes(v),
+      default: 'default',
+      validator: v => ['', 'default', 'horizontal', 'tertiary', 'horizontal-subnav', 'subnav'].includes(v),
     },
     ariaLabel: {
       type: String,
@@ -47,6 +50,9 @@ export default {
     provide('horizontal', horizontal);
 
     provide('onSelect', (e, groupId, itemId) => emit('select', e, groupId, itemId));
+
+    const flyoutRef = ref(null);
+    provide('flyoutRef', flyoutRef);
 
     return { horizontal, scrollable };
   },

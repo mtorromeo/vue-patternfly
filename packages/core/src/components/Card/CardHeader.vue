@@ -9,7 +9,7 @@
     <div v-if="expandable.value" :class="styles.cardHeaderToggle">
       <pf-button variant="plain" v-bind="toggleButtonAttrs" @click="toggle">
         <span :class="styles.cardHeaderToggleIcon">
-          <pf-angle-right-icon aria-hidden="true" />
+          <pf-angle-right-icon aria-hidden />
         </span>
       </pf-button>
     </div>
