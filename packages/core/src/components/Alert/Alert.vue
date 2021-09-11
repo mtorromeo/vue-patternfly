@@ -2,6 +2,9 @@
   <div v-if="!dismissed"
        :class="[styles.alert, {
          [styles.modifiers.inline]: inline,
+         [styles.modifiers.plain]: plain,
+         [styles.modifiers.expandable]: expandable,
+         [styles.modifiers.expanded]: expanded,
          [styles.modifiers[variant]]: variant !== 'default',
        }]"
        :aria-live="liveRegion ? 'polite' : null"
@@ -9,6 +12,19 @@
        @mouseenter="onMouseEnter"
        @mouseleave="onMouseLeave"
   >
+    <div v-if="expandable" :class="styles.alertToggle">
+      <pf-button
+        variant="plain"
+        :aria-expanded="managedExpanded"
+        :aria-label="toggleAriaLabel || `Toggle ${variantLabel} ${title}`"
+        @click="managedExpanded = !managedExpanded"
+      >
+        <span :class="styles.alertToggleIcon">
+          <pf-angle-right-icon aria-hidden />
+        </span>
+      </pf-button>
+    </div>
+
     <pf-alert-icon :variant="variant">
       <template v-if="$slots['custom-icon']" #default>
         <slot name="custom-icon" />
@@ -30,7 +46,7 @@
       <pf-close-button @click="$emit('close', $event)" />
     </div>
 
-    <div v-if="$slots.default" :class="styles.alertDescription">
+    <div v-if="$slots.default && (!expandable || expanded)" :class="styles.alertDescription">
       <slot />
     </div>
 
@@ -46,36 +62,68 @@ import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibili
 
 import Void from '../Void';
 import PfTooltip from '../Tooltip/Tooltip.vue';
+import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton';
 import PfAlertIcon from './AlertIcon';
+import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import { useManagedProp } from '../../use';
 
 export default {
   name: 'PfAlert',
 
-  components: {PfAlertIcon, PfCloseButton, PfTooltip, Void},
+  components: { PfAlertIcon, PfAngleRightIcon, PfButton, PfCloseButton, PfTooltip, Void },
 
   props: {
+  /** Flag to indicate if the alert is inline */
     inline: Boolean,
+
+    /** Flag to indicate if the alert is plain */
+    plain: Boolean,
+
+    /** Truncate title to number of lines */
     truncateTitle: Boolean,
+
+    /** Flag to indicate if the alert is in a live region */
     liveRegion: Boolean,
+
+    /** Show close button */
     close: Boolean,
 
+    /** Flag indicating that the alert is expandable */
+    expandable: Boolean,
+
+    /** Flag indicating that the alert is expanded */
+    expanded: {
+      type: Boolean,
+      default: null,
+    },
+
+    /** Adds accessible text to the alert Toggle */
+    toggleAriaLabel: {
+      type: String,
+      default: null,
+    },
+
+    /** Title of the alert  */
     title: {
       type: String,
       required: true,
     },
 
+    /** Adds alert variant styles  */
     variant: {
       type: String,
       default: 'default',
       validator: v => ['default', 'success', 'danger', 'warning', 'info'].includes(v),
     },
 
+    /** If set to true, the timeout is 8000 milliseconds. If a number is provided, alert will be dismissed after that amount of time in milliseconds. */
     timeout: {
       type: [Boolean, Number],
       default: false,
     },
 
+    /** If the user hovers over the alert and `timeout` expires, this is how long to wait before finally dismissing the alert */
     timeoutAnimation: {
       type: Number,
       default: 3000,
@@ -83,6 +131,12 @@ export default {
   },
 
   emits: ['close', 'timeout', 'mouseenter', 'mouseleave'],
+
+  setup() {
+    return {
+      managedExpanded: useManagedProp('expanded', false),
+    };
+  },
 
   data() {
     return {

@@ -9,6 +9,6 @@ import PfButton from '../Button.vue';
 
 export default {
   name: 'PfAlertActionLink',
-  components: {PfButton},
+  components: { PfButton },
 };
 </script>
