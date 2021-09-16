@@ -5,7 +5,7 @@
     <input
       :id="id"
       ref="input"
-      v-bind="$args"
+      v-bind="$attrs"
       :class="styles.checkInput"
       type="checkbox"
       :checked="modelValue"
