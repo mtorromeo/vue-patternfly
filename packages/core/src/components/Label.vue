@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import { h, mergeProps, ref } from 'vue';
+import { h, mergeProps, ref, resolveDynamicComponent } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton';
 import PfTooltip from './Tooltip/Tooltip.vue';
@@ -80,7 +80,7 @@ export default {
       content = h('span', { ref: 'textRef', class: styles.labelText }, children);
     }
 
-    const labelChild = h(component, {
+    const labelChild = h(resolveDynamicComponent(component), {
       to: this.to,
       href: this.href,
       class: styles.labelContent,

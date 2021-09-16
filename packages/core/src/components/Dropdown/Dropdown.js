@@ -1,5 +1,5 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
-import { h, mergeProps } from 'vue';
+import { h, mergeProps, resolveDynamicComponent } from 'vue';
 import PfDropdownToggle from './DropdownToggle';
 import PfDropdownMenu from './DropdownMenu';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
@@ -136,7 +136,7 @@ export default {
       children.push(menu);
     }
 
-    return h(this.baseComponent, {
+    return h(resolveDynamicComponent(this.baseComponent), {
       class: [
         this.baseClass || styles.dropdown,
         classesFromBreakpointProps(this.$props, ['align'], styles),

@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import { h, mergeProps, provide, computed } from 'vue';
+import { h, mergeProps, provide, computed, resolveDynamicComponent } from 'vue';
 import { provideChildrenTracker, keyNavigation } from '../../use';
 
 export default {
@@ -75,7 +75,7 @@ export default {
     }
 
     return h(
-      this.menuComponent || (this.grouped ? 'div' : this.component),
+      resolveDynamicComponent(this.menuComponent || (this.grouped ? 'div' : this.component)),
       mergeProps({
         role: 'menu',
       }, props),

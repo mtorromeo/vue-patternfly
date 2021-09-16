@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
-import {h, mergeProps} from 'vue';
+import { h, mergeProps, resolveDynamicComponent } from 'vue';
 
 export default {
   name: 'PfInputGroupText',
@@ -18,7 +18,7 @@ export default {
   },
 
   render() {
-    return h(this.component, mergeProps({
+    return h(resolveDynamicComponent(this.component), mergeProps({
       class: [
         styles.inputGroupText, {
           [styles.modifiers.plain]: this.plain,

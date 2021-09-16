@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Content/content';
 
-import { h } from 'vue';
+import { h, resolveDynamicComponent } from 'vue';
 
 export const TextVariants = [
   'h1',
@@ -31,7 +31,7 @@ export default {
   },
 
   render() {
-    return h(this.component, {
+    return h(resolveDynamicComponent(this.component), {
       'data-pf-content': true,
       class: {
         [styles.modifiers.visited]: this.visited && this.component === 'a',

@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
 
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 
 const spinnerSizes = [
   'sm',
@@ -33,9 +33,9 @@ export default {
         'aria-valuetext': this.ariaValueText,
       }, this.$attrs),
       [
-        h('span', {class: styles.spinnerClipper}),
-        h('span', {class: styles.spinnerLeadBall}),
-        h('span', {class: styles.spinnerTailBall}),
+        h('span', { class: styles.spinnerClipper }),
+        h('span', { class: styles.spinnerLeadBall }),
+        h('span', { class: styles.spinnerTailBall }),
       ],
     );
   },

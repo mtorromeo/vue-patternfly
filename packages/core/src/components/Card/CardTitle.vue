@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { h } from 'vue';
+import { h, resolveDynamicComponent } from 'vue';
 
 export default {
   name: 'PfCardTitle',
@@ -15,7 +15,7 @@ export default {
   },
 
   render() {
-    return h(this.component, { class: styles.cardTitle }, this.$slots);
+    return h(resolveDynamicComponent(this.component), { class: styles.cardTitle }, this.$slots);
   },
 };
 </script>

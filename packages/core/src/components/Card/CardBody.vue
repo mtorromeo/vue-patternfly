@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { h } from 'vue';
+import { h, resolveDynamicComponent } from 'vue';
 
 export default {
   name: 'PfCardBody',
@@ -18,7 +18,7 @@ export default {
   },
 
   render() {
-    return h(this.component, {
+    return h(resolveDynamicComponent(this.component), {
       class: [styles.cardBody, {
         [styles.modifiers.noFill]: !this.filled,
       }],

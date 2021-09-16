@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 
 import { breakpointProp, classesFromBreakpointProps } from '../util';
-import { h, inject } from 'vue';
+import { h, inject, resolveDynamicComponent } from 'vue';
 
 export default {
   name: 'PfDivider',
@@ -33,6 +33,6 @@ export default {
       attrs.role = 'separator';
     }
 
-    return h(component, attrs);
+    return h(resolveDynamicComponent(component), attrs);
   },
 };

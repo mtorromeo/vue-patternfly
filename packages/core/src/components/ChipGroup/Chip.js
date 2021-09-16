@@ -4,7 +4,7 @@ import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';
-import { h, mergeProps, ref } from 'vue';
+import { h, mergeProps, ref, resolveDynamicComponent } from 'vue';
 import { useElementOverflow } from '../../use';
 
 export default {
@@ -41,7 +41,7 @@ export default {
 
   render() {
     const renderOverflow = () => {
-      return h(this.component, {
+      return h(resolveDynamicComponent(this.component), {
         onClick: e => this.$emit('click', e),
         class: [styles.chip, styles.modifiers.overflow],
         ...(this.component === 'button' ? { type: 'button' } : {}),
@@ -70,7 +70,7 @@ export default {
       });
       delete props.onClick;
 
-      const chip = h(this.component, props, children);
+      const chip = h(resolveDynamicComponent(this.component), props, children);
 
       if (!this.textOverflowing) {
         return chip;

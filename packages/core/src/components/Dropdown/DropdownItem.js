@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import { h, mergeProps } from 'vue';
+import { h, mergeProps, resolveDynamicComponent } from 'vue';
 import { useChildrenTracker } from '../../use';
 
 export default {
@@ -121,7 +121,7 @@ export default {
         componentContent.push(children);
       }
 
-      return h(this.component, mergeProps({
+      return h(resolveDynamicComponent(this.component), mergeProps({
         class: classes,
         'aria-disabled': this.component === 'a' ? this.disabled : null,
         tabindex: this.component === 'a' ? (this.disabled ? -1 : this.tabindex) : null,

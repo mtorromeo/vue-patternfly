@@ -1,5 +1,5 @@
 <script>
-import { h, mergeProps } from 'vue';
+import { h, mergeProps, resolveDynamicComponent } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
@@ -60,7 +60,7 @@ export default {
         h('span', { class: styles.accordionToggleIcon }, h(AngleRightIcon)),
       ])),
 
-      h(Content, mergeProps({
+      h(resolveDynamicComponent(Content), mergeProps({
         class: [
           styles.accordionExpandedContent, {
             [styles.modifiers.fixed]: this.fixed,

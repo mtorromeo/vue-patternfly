@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { h, provide, computed } from 'vue';
+import { h, provide, computed, resolveDynamicComponent } from 'vue';
 import { useManagedProp } from '../../use';
 
 export default {
@@ -63,7 +63,7 @@ export default {
   },
 
   render() {
-    return h(this.component, {
+    return h(resolveDynamicComponent(this.component), {
       class: [styles.card, {
         [styles.modifiers.hoverable]: this.hoverable,
         [styles.modifiers.compact]: this.compact,
