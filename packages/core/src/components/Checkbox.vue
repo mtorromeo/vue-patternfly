@@ -8,10 +8,10 @@
       v-bind="$args"
       :class="styles.checkInput"
       type="checkbox"
-      :checked="checked"
+      :checked="modelValue"
       :disabled="disabled"
       :aria-valid="!valid"
-      @change="$emit('change', $event)"
+      @change="$emit('update:modelValue', $event.target.checked)"
     >
     <label
       v-if="label || $slots.label"
@@ -45,7 +45,7 @@ export default {
 
   props: {
     /** Flag to show if the radio is checked. */
-    checked: Boolean,
+    modelValue: Boolean,
 
     /** Flag to show if the radio is disabled. */
     disabled: Boolean,
@@ -78,7 +78,7 @@ export default {
     },
   },
 
-  emits: ['change'],
+  emits: ['update:modelValue'],
 
   data() {
     return {
@@ -87,12 +87,12 @@ export default {
   },
 
   watch: {
-    checked: {
+    modelValue: {
       handler() {
         if (!this.$refs.input) {
           return;
         }
-        this.$refs.input.indeterminate = this.checked === null;
+        this.$refs.input.indeterminate = this.modelValue === null;
       },
       immediate: true,
     },
