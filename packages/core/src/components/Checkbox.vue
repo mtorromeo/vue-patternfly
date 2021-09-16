@@ -3,7 +3,7 @@
     [styles.modifiers.standalone]: !label && !$slots.label,
   }]">
     <input
-      :id="id"
+      :id="validId"
       ref="input"
       v-bind="$attrs"
       :class="styles.checkInput"
@@ -18,7 +18,7 @@
       :class="[styles.checkLabel, {
         [styles.modifiers.disabled]: disabled,
       }]"
-      :for="id"
+      :for="validId"
     >
       <slot name="label">{{ label }}</slot>
     </label>
@@ -39,6 +39,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Check/check';
+import { getUniqueId } from '../util';
 
 export default {
   name: 'PfCheckbox',
@@ -56,7 +57,7 @@ export default {
     /** Id of the radio. */
     id: {
       type: String,
-      required: true,
+      default: null,
     },
 
     /** Label text of the radio. */
@@ -84,6 +85,12 @@ export default {
     return {
       styles,
     };
+  },
+
+  computed: {
+    validId() {
+      return this.id || getUniqueId();
+    },
   },
 
   watch: {
