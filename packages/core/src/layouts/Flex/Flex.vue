@@ -1,13 +1,19 @@
 <script>
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
-import {breakpointProp, classesFromBreakpointProps} from '../../util';
-import {h, mergeProps} from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { h, resolveDynamicComponent } from 'vue';
 
 export default {
   name: 'PfFlex',
 
   props: {
+    /** The tag or component to use as container */
+    component: {
+      type: String,
+      default: 'div',
+    },
+
     ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
     ...breakpointProp('spaceItems', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
     ...breakpointProp('grow', Boolean),
@@ -25,7 +31,7 @@ export default {
   },
 
   render() {
-    return h('div', mergeProps({
+    return h(resolveDynamicComponent(this.component), {
       class: [styles.flex, classesFromBreakpointProps(this.$props, [
         'spacer',
         'spaceItems',
@@ -42,7 +48,7 @@ export default {
         'fullWidth',
         'flexWrap',
       ], styles)],
-    }, this.$attrs), this.$slots);
+    }, this.$slots);
   },
 };
 </script>

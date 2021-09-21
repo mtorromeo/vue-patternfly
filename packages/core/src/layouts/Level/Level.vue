@@ -1,7 +1,7 @@
 <script>
-  import styles from '@patternfly/react-styles/css/layouts/Level/level';
+import styles from '@patternfly/react-styles/css/layouts/Level/level';
 
-import {render} from '../factory';
+import { render } from '../factory';
 
 export default {
   name: 'PfLevel',

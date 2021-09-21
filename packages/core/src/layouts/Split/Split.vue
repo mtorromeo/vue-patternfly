@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/layouts/Split/split';
 
-import {render} from '../factory';
+import { render } from '../factory';
 
 export default {
   name: 'PfSplit',

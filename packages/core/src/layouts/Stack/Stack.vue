@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/layouts/Stack/stack';
 
-import {render} from '../factory';
+import { render } from '../factory';
 
 export default {
   name: 'PfStack',

@@ -1,32 +1,38 @@
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
-import { h, mergeProps } from 'vue';
+import { h, resolveDynamicComponent } from 'vue';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
 
-const PfFlexItem = (props, { slots, attrs }) => h('div', mergeProps({
-  class: classesFromBreakpointProps(props, [
-    'spacer',
-    'shrink',
-    'flex',
-    'alignSelf',
-    'grow',
-    'align',
-    'fullWidth',
-  ], styles),
-}, attrs), slots.default());
+export default {
+  name: 'PfFlexItem',
 
-PfFlexItem.props = {
-  ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-  ...breakpointProp('shrink', Boolean),
-  ...breakpointProp('flex', String, ['', 'default', 'none', '1', '2', '3', '4']),
-  ...breakpointProp('alignSelf', String, ['', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline']),
-  ...breakpointProp('grow', Boolean),
-  ...breakpointProp('align', String, ['', 'left', 'right']),
-  ...breakpointProp('fullWidth', Boolean),
+  props: {
+    /** The tag or component to use as container */
+    component: {
+      type: String,
+      default: 'div',
+    },
+
+    ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
+    ...breakpointProp('shrink', Boolean),
+    ...breakpointProp('flex', String, ['', 'default', 'none', '1', '2', '3', '4']),
+    ...breakpointProp('alignSelf', String, ['', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline']),
+    ...breakpointProp('grow', Boolean),
+    ...breakpointProp('align', String, ['', 'left', 'right']),
+    ...breakpointProp('fullWidth', Boolean),
+  },
+
+  render() {
+    return h(resolveDynamicComponent(this.component), {
+      class: classesFromBreakpointProps(this.$props, [
+        'spacer',
+        'shrink',
+        'flex',
+        'alignSelf',
+        'grow',
+        'align',
+        'fullWidth',
+      ], styles),
+    }, this.$slots);
+  },
 };
-
-PfFlexItem.inheritAttrs = false;
-
-Object.defineProperty(PfFlexItem, 'name', { value: 'PfFlexItem', writable: false });
-
-export default PfFlexItem;

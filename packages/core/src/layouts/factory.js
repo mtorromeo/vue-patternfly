@@ -1,7 +1,7 @@
-import { h, mergeProps, resolveDynamicComponent } from 'vue';
+import { h, resolveDynamicComponent } from 'vue';
 
 export function render(styleClass, modifiers) {
-  return h(resolveDynamicComponent(this.component), mergeProps({
+  return h(resolveDynamicComponent(this.component), {
     class: [styleClass, { [modifiers.gutter]: this.gutter }],
-  }, this.$attrs), this.$slots);
+  }, this.$slots);
 }

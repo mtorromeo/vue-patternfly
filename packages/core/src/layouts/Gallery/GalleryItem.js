@@ -1,4 +1,17 @@
-import { h } from 'vue';
-const PfGalleryItem = (props, { slots }) => h('div', props, slots.default());
-Object.defineProperty(PfGalleryItem, 'name', { value: 'PfGalleryItem', writable: false });
-export default PfGalleryItem;
+import { h, resolveDynamicComponent } from 'vue';
+
+export default {
+  name: 'PfGalleryItem',
+
+  props: {
+    /** The tag or component to use as container */
+    component: {
+      type: String,
+      default: 'div',
+    },
+  },
+
+  render() {
+    return h(resolveDynamicComponent(this.component), {}, this.$slots);
+  },
+};

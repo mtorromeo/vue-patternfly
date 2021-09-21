@@ -1,4 +1,17 @@
-import { h } from 'vue';
-const PfLevelItem = (props, { slots }) => h('div', props, slots.default());
-Object.defineProperty(PfLevelItem, 'name', { value: 'PfLevelItem', writable: false });
-export default PfLevelItem;
+import { h, resolveDynamicComponent } from 'vue';
+
+export default {
+  name: 'PfLevelItem',
+
+  props: {
+    /** The tag or component to use as container */
+    component: {
+      type: String,
+      default: 'div',
+    },
+  },
+
+  render() {
+    return h(resolveDynamicComponent(this.component), {}, this.$slots);
+  },
+};

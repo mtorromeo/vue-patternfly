@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
-import {breakpoints} from '../../util';
-import {h, mergeProps} from 'vue';
+import { breakpoints } from '../../util';
+import { h, resolveDynamicComponent } from 'vue';
 
 const gridSpans = {
   type: [String, Number],
@@ -16,6 +16,12 @@ export default {
   name: 'PfGrid',
 
   props: {
+    /** The tag or component to use as container */
+    component: {
+      type: String,
+      default: 'div',
+    },
+
     /** Adds space between children. */
     gutter: Boolean,
     /** The number of rows a column in the grid should span.  Value should be a number 1-12 */
@@ -51,7 +57,7 @@ export default {
       }
     }
 
-    return h('div', mergeProps({class: classes}, this.$attrs), this.$slots);
+    return h(resolveDynamicComponent(this.component), { class: classes }, this.$slots);
   },
 };
 </script>

@@ -1,15 +1,19 @@
 import styles from '@patternfly/react-styles/css/layouts/Stack/stack';
+import { h, resolveDynamicComponent } from 'vue';
 
-import { h, mergeProps } from 'vue';
+export default {
+  name: 'PfStackItem',
 
-const PfStackItem = (props, { slots, attrs }) => h('div', mergeProps({ class: [styles.stackItem, { [styles.modifiers.fill]: props.filled }] }, attrs), slots.default());
+  props: {
+    /** The tag or component to use as container */
+    component: {
+      type: String,
+      default: 'div',
+    },
+    filled: Boolean,
+  },
 
-PfStackItem.props = {
-  filled: Boolean,
+  render() {
+    return h(resolveDynamicComponent(this.component), { class: [styles.stackItem, { [styles.modifiers.fill]: this.filled }] }, this.$slots);
+  },
 };
-
-PfStackItem.inheritAttrs = false;
-
-Object.defineProperty(PfStackItem, 'name', { value: 'PfStackItem', writable: false });
-
-export default PfStackItem;
