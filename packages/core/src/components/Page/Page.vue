@@ -14,6 +14,7 @@
         v-if="$slots.breadcrumb"
         :class="[styles.pageMainBreadcrumb, {
           [styles.modifiers.limitWidth]: breadcrumbWidthLimited,
+          [styles.modifiers.stickyTop]: breadcrumbStickyTop,
         }]"
       >
         <div
@@ -69,6 +70,7 @@ export default {
     },
 
     breadcrumbWidthLimited: Boolean,
+    breadcrumbStickyTop: Boolean,
   },
 
   emits: {
