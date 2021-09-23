@@ -16,7 +16,6 @@ export default {
         [styles.modifiers.horizontal]: this.horizontal,
         [styles.modifiers.limitWidth]: this.widthLimited,
       }],
-      noValidate: true,
     }, this.$slots);
   },
 };
