@@ -1,4 +1,4 @@
-import { h, computed, mergeProps, Fragment } from 'vue';
+import { h, computed, mergeProps, Fragment, Comment } from 'vue';
 
 export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
 
@@ -148,10 +148,10 @@ export function findComponentVNode(vnodes) {
 }
 
 export function findChildrenVNodes(vnodes) {
-  if (vnodes.length === 1 && vnodes[0].type === Fragment) {
-    return vnodes[0].children;
-  }
-  return vnodes;
+  return vnodes
+    .filter(n => n.type !== Comment)
+    .map(n => n.type === Fragment ? findChildrenVNodes(n.children) : n)
+    .flat();
 }
 
 export function domFromRef(ref) {
