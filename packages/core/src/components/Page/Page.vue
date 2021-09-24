@@ -42,34 +42,45 @@ export default {
   name: 'PfPage',
 
   props: {
+    /** Sets the value for role on the <main> element */
     role: {
       type: String,
       default: '',
     },
 
+    /** an id to use for the [role="main"] element */
     mainContainerId: {
       type: String,
       default: '',
     },
 
+    /** tabIndex to use for the [role="main"] element, null to unset it */
     mainTabIndex: {
       type: Number,
       default: -1,
     },
 
+    /**
+     * If true, manages the sidebar open/close state and there is no need to pass the isNavOpen boolean into
+     * the sidebar component or add a callback onNavToggle function into the PageHeader component
+     */
     managedSidebar: Boolean,
 
+    /** If true, the managed sidebar is initially open for desktop view */
     defaultManagedSidebarOpen: {
       type: Boolean,
       default: true,
     },
 
+    /** Accessible label, can be used to name main section */
     mainAriaLabel: {
       type: String,
       default: '',
     },
 
+    /** Flag indicating if breadcrumb width should be limited */
     breadcrumbWidthLimited: Boolean,
+    /** Flag indicating if breadcrumb should be sticky at top */
     breadcrumbStickyTop: Boolean,
   },
 

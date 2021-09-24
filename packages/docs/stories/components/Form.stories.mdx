@@ -15,6 +15,30 @@ import PfTrashIcon from '@vue-patternfly/icons/dist/esm/icons/trash-icon';
 import PfExclamationCircleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon';
 import { ref } from 'vue';
 
+<Meta title="Components/Form" component={PfForm} subcomponents={{
+    PfFormGroup,
+    PfFormFieldGroup,
+    PfFormFieldGroupHeader,
+  }} />
+
+# PfForm `pf-form`
+
+A **form** is a group of elements used to collect information from a user in a variety of contexts including in a modal, in a wizard, or on a page. Use cases for forms include tasks reliant on user-inputted information for completion like logging in, registering, configuring settings, or completing surveys.
+
+Use forms to accomplish tasks reliant on user-inputted information like logging in, registering for accounts or services, configuring settings, or completing surveys.
+
+See full [Design guidelines](https://www.patternfly.org/v4/components/form/design-guidelines) on the official patternfly documentation.
+
+## Differences from patternfly-react
+- The `novalidate` attribute is not implicitly applied to the form but you can still add it yourself. This makes `pf-form` usable with the native form validation technique.
+- Allowed overriding the `component` used by the form. A typical use-case is when you have a parent form tag already present and you only need `pf-form` to apply the patternfly layout to its children.
+
+See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
+
+## Examples
+
+### Basic
+
 export const Basic = (args) => ({
   components: { PfForm, PfFormGroup, PfPopover, PfButton, PfHelpIcon, PfTextInput },
   setup() {
@@ -53,6 +77,16 @@ export const Basic = (args) => ({
   `,
 });
 
+<Canvas>
+  <Story name="Basic">
+    {Basic.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Basic" />
+
+### Invalid with form alert
+
 export const InvalidWithFormAlert = (args) => ({
   components: { PfForm, PfFormGroup, PfPopover, PfButton, PfExclamationCircleIcon, PfTextInput, PfTextarea },
   setup() {
@@ -84,6 +118,14 @@ export const InvalidWithFormAlert = (args) => ({
     </pf-form>
   `,
 });
+
+<Canvas>
+  <Story name="InvalidWithFormAlert">
+    {InvalidWithFormAlert.bind({})}
+  </Story>
+</Canvas>
+
+### Field group
 
 export const FieldGroup = (args) => ({
   components: { PfForm, PfFormGroup, PfFormFieldGroup, PfFormFieldGroupHeader, PfTextInput, PfButton, PfTrashIcon },
@@ -166,37 +208,6 @@ export const FieldGroup = (args) => ({
     </pf-form>
   `,
 });
-
-
-<Meta title="Components/Form" component={PfForm} subcomponents={{
-    PfFormGroup,
-    PfFormFieldGroup,
-    PfFormFieldGroupHeader,
-  }} />
-
-# PfForm `pf-form`
-
-## Examples
-
-### Basic
-
-<Canvas>
-  <Story name="Basic">
-    {Basic.bind({})}
-  </Story>
-</Canvas>
-
-<ArgsTable story="Basic" />
-
-### Invalid with form alert
-
-<Canvas>
-  <Story name="InvalidWithFormAlert">
-    {InvalidWithFormAlert.bind({})}
-  </Story>
-</Canvas>
-
-### Field group
 
 <Canvas>
   <Story name="FieldGroup">

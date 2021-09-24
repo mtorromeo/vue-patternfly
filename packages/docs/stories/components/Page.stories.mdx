@@ -11,6 +11,36 @@ import {
   PfPageSection,
 } from '@vue-patternfly/core/src/components/Page';
 
+<Meta title="Components/Page" component={PfPage} subcomponents={{
+    PfBrand,
+    PfPageHeader,
+    PfPageHeaderTools,
+    PfPageHeaderToolsGroup,
+    PfPageHeaderToolsItem,
+    PfPageSidebar,
+    PfPageSection,
+  }} argTypes={{
+    collapseListedFiltersBreakpoint: {
+      control: {
+        type: 'select',
+      },
+      options: ['', 'all', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
+    },
+  }} parameters={{
+    layout: 'fullscreen',
+  }} />
+
+# PfPage `pf-page`
+
+The **page** component is used to define the basic layout of a page with either vertical or horizontal navigation.
+
+See full [Design guidelines](https://www.patternfly.org/v4/components/page/design-guidelines) on the official patternfly documentation.
+
+## Differences from patternfly-react
+- Tha additional `breadcrumbStickyTop` prop allows to set the breadcrumb slot as sticky.
+
+## Examples
+
 export const Default = (args) => ({
   components: {
     PfPage,
@@ -51,30 +81,6 @@ export const Default = (args) => ({
     </pf-page>
   `,
 });
-
-
-<Meta title="Components/Page" component={PfPage} subcomponents={{
-    PfBrand,
-    PfPageHeader,
-    PfPageHeaderTools,
-    PfPageHeaderToolsGroup,
-    PfPageHeaderToolsItem,
-    PfPageSidebar,
-    PfPageSection,
-  }} argTypes={{
-    collapseListedFiltersBreakpoint: {
-      control: {
-        type: 'select',
-      },
-      options: ['', 'all', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
-    },
-  }} parameters={{
-    layout: 'fullscreen',
-  }} />
-
-# PfPage `pf-page`
-
-## Examples
 
 <Canvas>
   <Story name="Page" args={{
