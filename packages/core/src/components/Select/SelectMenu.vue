@@ -13,15 +13,15 @@
           [styles.selectMenuFieldset]: !childrenCount,
         }"
       >
-        <pf-void :alter="extendCheckboxChildren">
+        <void :alter="extendCheckboxChildren">
           <slot />
-        </pf-void>
+        </void>
       </fieldset>
     </template>
 
-    <pf-void v-else :alter="extendChildren">
+    <void v-else :alter="extendChildren">
       <slot />
-    </pf-void>
+    </void>
   </component>
 </template>
 
@@ -29,13 +29,13 @@
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import formStyles from '@patternfly/react-styles/css/components/Form/form';
 
-import PfVoid from '../Void';
+import Void from '../Void';
 import PfDivider from '../Divider';
 
 export default {
   name: 'PfSelectMenu',
 
-  components: {PfVoid, PfDivider},
+  components: { Void, PfDivider },
 
   inject: ['select'],
 
@@ -104,7 +104,7 @@ export default {
       this.childrenCount = children.length;
 
       // const { isGrouped, checked, sendRef, keyHandler, hasInlineFilter } = this.props;
-      let index = this.inlineFilter ? 1 : 0;
+      const index = this.inlineFilter ? 1 : 0;
       if (this.grouped) {
       //   return children.map(children, (group) => {
       //     if (group.type === SelectOption || group.type === Divider) {

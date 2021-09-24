@@ -46,7 +46,7 @@
       [styles.modifiers.description]: description,
       [styles.modifiers.link]: favorite !== null,
     }]" role="option" :aria-selected="selected" type="button">
-      <component :is="description ? 'span' : 'pf-void'" :class="styles.selectMenuItemMain">
+      <component :is="description ? 'span' : 'void'" :class="styles.selectMenuItemMain">
         <slot>{{ value.toString() }}</slot>
         <span v-if="selected" :class="styles.selectMenuItemIcon">
           <CheckIcon aria-hidden />
@@ -61,13 +61,13 @@
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 
-import PfVoid from '../Void';
+import Void from '../Void';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 
 export default {
   name: 'PfSelectOption',
 
-  components: {PfVoid, CheckIcon},
+  components: { Void, CheckIcon },
 
   inject: ['select'],
 

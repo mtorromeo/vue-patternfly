@@ -1,5 +1,5 @@
 <template>
-  <component :is="appendTo === 'inline' ? 'pf-void' : 'pf-popper'">
+  <component :is="appendTo === 'inline' ? 'void' : 'pf-popper'">
     <div
       ref="select"
       :class="[styles.select, {
@@ -86,7 +86,7 @@ import badgeStyles from '@patternfly/react-styles/css/components/Badge/badge';
 import formStyles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 
-import PfVoid from '../Void';
+import Void from '../Void';
 import PfPopper from '../Popper';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 
@@ -95,7 +95,7 @@ import { useManagedProp } from '../../use';
 export default {
   name: 'PfSelect',
 
-  components: { PfVoid, PfPopper, TimesCircleIcon },
+  components: { Void, PfPopper, TimesCircleIcon },
 
   provide() {
     return {
