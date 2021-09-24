@@ -3,10 +3,9 @@ import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import { breakpointProp, classesFromBreakpointProps, findChildrenVNodes, isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { h, provide } from 'vue';
+import { h, provide, computed, reactive } from 'vue';
 
 import PfTabContent from './TabContent.vue';
-import PfTabTitleText from './TabTitleText.vue';
 import PfAngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
@@ -89,8 +88,27 @@ export default {
 
   setup(props) {
     provide('variant', props.variant);
+
+    const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);
+    provide('activeKey', localActiveKey);
+
+    const idSuffix = computed(() => props.id || getUniqueId(''));
+    provide('idSuffix', idSuffix);
+
+    const shownKeys = reactive([]);
+
+    provide('handleTabClick', key => {
+      localActiveKey.value = key;
+
+      if (props.mountOnEnter) {
+        shownKeys.push(key);
+      }
+    });
+
     return {
-      localActiveKey: useManagedProp('activeKey', props.defaultActiveKey),
+      localActiveKey,
+      idSuffix,
+      shownKeys,
     };
   },
 
@@ -99,15 +117,10 @@ export default {
       showScrollButtons: false,
       disableLeftScrollButton: false,
       disableRightScrollButton: false,
-      shownKeys: [],
     };
   },
 
   computed: {
-    idSuffix() {
-      return this.id || getUniqueId('');
-    },
-
     breakpointClasses() {
       return classesFromBreakpointProps(this.$props, ['inset'], styles);
     },
@@ -140,14 +153,6 @@ export default {
   },
 
   methods: {
-    handleTabClick(key) {
-      this.localActiveKey = key;
-
-      if (this.mountOnEnter) {
-        this.shownKeys.push(key);
-      }
-    },
-
     handleScrollButtons() {
       if (this.$refs.tablist && !this.vertical) {
         const container = this.$refs.tablist;
@@ -227,53 +232,35 @@ export default {
     }, h(PfAngleRightIcon));
 
     const tabs = findChildrenVNodes(this.$slots.default())
-      .filter(tab => !tab.props || !(tab.props.hidden === '' || tab.props.hidden));
+      .filter(tab => !tab.props || !(tab.props.hidden === '' || tab.props.hidden))
+      .map((tab, index) => {
+        if (!tab.key) {
+          tab.key = index.toString();
+        }
+        return tab;
+      });
 
-    const tabTitles = tabs.map((tab, index) => {
-      if (!tab.key) {
-        tab.key = index.toString();
-      }
-
-      if (tab.props && tab.props['content-ref'] && tab.props['content-ref'].$el) {
-        tab.props['content-ref'].$el.hidden = tab.key !== this.localActiveKey;
-      }
-
-      return h(
-        'li',
+    const tabList =
+      h('ul',
         {
-          key: tab.key,
-          class: [styles.tabsItem, {
-            [styles.modifiers.current]: tab.key === this.localActiveKey,
-          }],
+          ref: 'tablist',
+          role: 'tablist',
+          class: styles.tabsList,
+          onScroll: this.handleScrollButtons,
         },
-        h(
-          'button',
-          {
-            id: `pf-tab-${tab.key}-${this.idSuffix}`,
-            type: 'button',
-            class: styles.tabsLink,
-            'aria-controls': `pf-tab-section-${tab.key}-${this.idSuffix}`,
-            onClick: e => this.handleTabClick(tab.key),
-          },
-          {
-            default: () => {
-              if (tab.children && tab.children.title) {
-                return tab.children.title();
-              } else if (tab.props && tab.props.title) {
-                return [h(PfTabTitleText, {}, { default: () => tab.props.title })];
-              }
+        tabs.map((tab, index) => {
+          if (tab.props && tab.props['content-ref'] && tab.props['content-ref'].$el) {
+            tab.props['content-ref'].$el.hidden = tab.key !== this.localActiveKey;
+          }
+          return {
+            ...tab,
+            children: {
+              // the title is in the title slot of pf-tab
+              default: () => tab.children && tab.children.title ? tab.children.title() : [],
             },
-          },
-        ),
+          };
+        }),
       );
-    });
-
-    const tabList = h('ul', {
-      ref: 'tablist',
-      role: 'tablist',
-      class: styles.tabsList,
-      onScroll: this.handleScrollButtons,
-    }, tabTitles);
 
     return [
       h(
@@ -306,7 +293,10 @@ export default {
             key: tab.key,
             eventKey: tab.key,
             activeKey: this.localActiveKey,
-          }, { default: () => tab }),
+          }, {
+            // the content is in the default slot of pf-tab
+            default: () => tab.children && tab.children.default ? tab.children.default() : [],
+          }),
         ),
     ];
   },
