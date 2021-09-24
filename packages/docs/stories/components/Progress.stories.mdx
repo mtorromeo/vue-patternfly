@@ -1,0 +1,222 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import PfProgress from '@vue-patternfly/core/src/components/Progress.vue';
+
+export const Template = (args) => ({
+  components: { PfProgress },
+  setup() {
+    return { args };
+  },
+  template: `<pf-progress v-bind="args" />`,
+});
+
+
+<Meta title="Components/Progress" component={PfProgress} />
+
+# PfProgress `pf-progress`
+
+A **progress** bar informs users about the completion status of an ongoing process or task.
+
+See full [Design guidelines](https://www.patternfly.org/v4/components/progress/design-guidelines) on the official patternfly documentation.
+
+## Examples
+
+### Basic
+
+<Canvas>
+  <Story name="Basic" args={{
+    value: 33,
+    title: 'Title',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Basic" />
+
+### Small
+
+<Canvas>
+  <Story name="Small" args={{
+    value: 33,
+    title: 'Title',
+    size: 'sm',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Large
+
+<Canvas>
+  <Story name="Large" args={{
+    value: 33,
+    title: 'Title',
+    size: 'lg',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Outside
+
+<Canvas>
+  <Story name="Outside" args={{
+    value: 33,
+    title: 'Title',
+    measureLocation: 'outside',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Inside
+
+<Canvas>
+  <Story name="Inside" args={{
+    value: 33,
+    title: 'Title',
+    measureLocation: 'inside',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Success
+
+<Canvas>
+  <Story name="Success" args={{
+    value: 33,
+    title: 'Title',
+    variant: 'success',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Failure
+
+<Canvas>
+  <Story name="Failure" args={{
+    value: 33,
+    title: 'Title',
+    variant: 'danger',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Warning
+
+<Canvas>
+  <Story name="Warning" args={{
+    value: 33,
+    title: 'Title',
+    variant: 'warning',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Inside success
+
+<Canvas>
+  <Story name="InsideSuccess" args={{
+    value: 33,
+    title: 'Title',
+    variant: 'success',
+    measureLocation: 'inside',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Outside failure
+
+<Canvas>
+  <Story name="OutsideFailure" args={{
+    value: 33,
+    title: 'Title',
+    variant: 'danger',
+    measureLocation: 'outside',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Single line
+
+<Canvas>
+  <Story name="SingleLine" args={{
+    value: 33,
+    ariaTitle: 'Title',
+    measureLocation: 'outside',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Without measure
+
+<Canvas>
+  <Story name="WithoutMeasure" args={{
+    value: 33,
+    title: 'Title',
+    measureLocation: 'none',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Failure without measure
+
+<Canvas>
+  <Story name="FailureWithoutMeasure" args={{
+    value: 33,
+    title: 'Title',
+    variant: 'danger',
+    measureLocation: 'none',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Finite step
+
+<Canvas>
+  <Story name="FiniteStep" args={{
+    title: 'Title',
+    value: 2,
+    max: 5,
+    label: '2 of 5',
+    valueText: '2 of 5',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Progress (step instruction)
+
+<Canvas>
+  <Story name="StepInstruction" args={{
+    title: 'Title',
+    value: 2,
+    max: 5,
+    label: 'Step 2: Copying files',
+    valueText: 'Step 2: Copying files',
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Truncate title
+
+<Canvas>
+  <Story name="TruncateTitle" args={{
+    value: 33,
+    title: 'Very very very very very very very very very very very long title which should be truncated if it does not fit onto one line above the progress bar',
+    titleTruncated: true,
+  }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
