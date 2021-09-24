@@ -24,6 +24,7 @@ export * from './EmptyState';
 export * from './ExpandableSection';
 export * from './Form';
 export * from './FormSelect';
+export * from './Hint';
 export * from './InputGroup';
 export * from './Modal';
 export * from './Nav';
