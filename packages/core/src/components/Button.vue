@@ -45,6 +45,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Button/button';
+import { markRaw } from 'vue';
 
 import PfSpinner from './Spinner.vue';
 
@@ -111,9 +112,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

@@ -13,6 +13,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Page/page';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfPageSidebar',
@@ -44,9 +45,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

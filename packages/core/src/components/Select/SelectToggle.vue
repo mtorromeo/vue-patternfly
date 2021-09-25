@@ -21,13 +21,14 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Select/select';
 // import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
+import { markRaw } from 'vue';
 
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 
 export default {
   name: 'PfSelectToggle',
 
-  components: {CaretDownIcon},
+  components: { CaretDownIcon },
 
   inject: ['select'],
 
@@ -54,9 +55,9 @@ export default {
 
   emits: ['enter', 'close', 'update:open', 'typeaheadKeys'],
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 
@@ -133,7 +134,7 @@ export default {
             this.toggle();
           }
         }
-        return
+        return;
       }
 
       if (

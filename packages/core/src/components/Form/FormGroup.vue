@@ -68,7 +68,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { computed } from 'vue';
+import { computed, markRaw } from 'vue';
 import { provideChildrenTracker } from '../../use';
 import Void from '../Void';
 
@@ -139,6 +139,7 @@ export default {
   setup(props) {
     const inputs = provideChildrenTracker();
     return {
+      styles: markRaw(styles),
       internalValidated: computed(() => {
         if (props.validated !== null) {
           return props.validated;
@@ -150,12 +151,6 @@ export default {
         }
         return 'default';
       }),
-    };
-  },
-
-  data() {
-    return {
-      styles,
     };
   },
 };

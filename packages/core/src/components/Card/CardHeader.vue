@@ -21,6 +21,7 @@
 import styles from '@patternfly/react-styles/css/components/Card/card';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import PfButton from '../Button.vue';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfCardHeader',
@@ -51,9 +52,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

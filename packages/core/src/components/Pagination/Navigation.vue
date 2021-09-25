@@ -82,18 +82,19 @@
 </template>
 
 <script>
-import styles from "@patternfly/react-styles/css/components/Pagination/pagination";
+import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 
-import PfButton from "../Button.vue";
-import AngleLeftIcon from "@vue-patternfly/icons/dist/esm/icons/angle-left-icon";
-import AngleDoubleLeftIcon from "@vue-patternfly/icons/dist/esm/icons/angle-double-left-icon";
-import AngleRightIcon from "@vue-patternfly/icons/dist/esm/icons/angle-right-icon";
-import AngleDoubleRightIcon from "@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon";
+import PfButton from '../Button.vue';
+import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
+import AngleDoubleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import AngleDoubleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon';
 
-import { pluralize } from "../../util";
+import { pluralize } from '../../util';
+import { markRaw } from 'vue';
 
 export default {
-  name: "PfNavigation",
+  name: 'PfNavigation',
 
   components: {
     PfButton,
@@ -122,47 +123,52 @@ export default {
 
     pagesTitle: {
       type: String,
-      default: "",
+      default: '',
     },
     toLastPage: {
       type: String,
-      default: "Go to last page",
+      default: 'Go to last page',
     },
     toNextPage: {
       type: String,
-      default: "Go to next page",
+      default: 'Go to next page',
     },
     toFirstPage: {
       type: String,
-      default: "Go to first page",
+      default: 'Go to first page',
     },
     toPreviousPage: {
       type: String,
-      default: "Go to previous page",
+      default: 'Go to previous page',
     },
     currPage: {
       type: String,
-      default: "Current page",
+      default: 'Current page',
     },
     paginationTitle: {
       type: String,
-      default: "Pagination",
+      default: 'Pagination',
     },
   },
 
   emits: [
-    "firstClick",
-    "previousClick",
-    "nextClick",
-    "lastClick",
-    "keydown",
-    "change",
-    "set-page",
+    'firstClick',
+    'previousClick',
+    'nextClick',
+    'lastClick',
+    'keydown',
+    'change',
+    'set-page',
   ],
+
+  setup() {
+    return {
+      styles: markRaw(styles),
+    };
+  },
 
   data() {
     return {
-      styles,
       userInputPage: this.page,
     };
   },
@@ -182,7 +188,7 @@ export default {
     handleNewPage(newPage) {
       const startIdx = (newPage - 1) * this.perPage;
       const endIdx = newPage * this.perPage;
-      this.$emit("set-page", newPage, this.perPage, startIdx, endIdx);
+      this.$emit('set-page', newPage, this.perPage, startIdx, endIdx);
     },
 
     parseInteger(input, lastPage) {
@@ -208,14 +214,14 @@ export default {
     },
 
     goToFirstPage() {
-      this.$emit("firstClick", 1);
+      this.$emit('firstClick', 1);
       this.userInputPage = 1;
       this.handleNewPage(1);
     },
 
     goToPreviousPage() {
       const newPage = this.page - 1 >= 1 ? this.page - 1 : 1;
-      this.$emit("previousClick", newPage);
+      this.$emit('previousClick', newPage);
       this.userInputPage = newPage;
       this.handleNewPage(newPage);
     },
@@ -223,13 +229,13 @@ export default {
     goToNextPage() {
       const newPage =
         this.page + 1 <= this.lastPage ? this.page + 1 : this.lastPage;
-      this.$emit("nextClick", newPage);
+      this.$emit('nextClick', newPage);
       this.userInputPage = newPage;
       this.handleNewPage(newPage);
     },
 
     goToLastPage() {
-      this.$emit("lastClick", this.lastPage);
+      this.$emit('lastClick', this.lastPage);
       this.userInputPage = this.lastPage;
       this.handleNewPage(this.lastPage);
     },

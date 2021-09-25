@@ -15,6 +15,7 @@ import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon'
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfNavList',
@@ -39,9 +40,14 @@ export default {
     },
   },
 
+  setup() {
+    return {
+      styles: markRaw(styles),
+    };
+  },
+
   data() {
     return {
-      styles,
       scrollViewAtStart: false,
       scrollViewAtEnd: false,
     };

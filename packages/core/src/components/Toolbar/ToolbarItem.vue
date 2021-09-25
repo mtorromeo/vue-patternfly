@@ -21,6 +21,7 @@
 import PfDivider from '../Divider';
 import { breakpoints, breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfToolbarItem',
@@ -43,9 +44,9 @@ export default {
 
   emits: ['clear-all-filters'],
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

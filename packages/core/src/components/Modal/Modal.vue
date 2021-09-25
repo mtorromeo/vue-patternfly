@@ -118,7 +118,7 @@ import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclam
 import InfoCircleIcon from '@vue-patternfly/icons/dist/esm/icons/info-circle-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import { capitalize } from '@vue/shared';
-import { ref } from 'vue';
+import { ref, markRaw } from 'vue';
 import { useElementOverflow } from '../../use';
 
 export default {
@@ -239,15 +239,10 @@ export default {
     return {
       titleRef,
       titleOverflowing: useElementOverflow(titleRef),
-    };
-  },
-
-  data() {
-    return {
-      styles,
-      accessibleStyles,
-      bullsEyeStyles,
-      topSpacer,
+      styles: markRaw(styles),
+      accessibleStyles: markRaw(accessibleStyles),
+      bullsEyeStyles: markRaw(bullsEyeStyles),
+      topSpacer: markRaw(topSpacer),
     };
   },
 

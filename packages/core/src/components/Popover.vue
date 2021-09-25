@@ -67,11 +67,12 @@
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
 import { useManagedProp } from '../use';
+import { markRaw } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
 import PfFocusTrap from './FocusTrap.vue';
-import { default as PfPopper, getOpacityTransition, positions } from './Popper';
+import PfPopper, { getOpacityTransition, positions } from './Popper';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
 
@@ -185,6 +186,7 @@ export default {
   setup() {
     return {
       managedOpen: useManagedProp('open', false),
+      styles: markRaw(styles),
     };
   },
 
@@ -192,7 +194,6 @@ export default {
     return {
       visible: this.managedOpen,
       opacity: 0,
-      styles,
       hideTimer: null,
       showTimer: null,
       transitionTimer: null,

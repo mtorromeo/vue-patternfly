@@ -60,6 +60,7 @@ import PfDropdownItem from '../Dropdown/DropdownItem';
 import PfDropdownToggle from '../Dropdown/DropdownToggle';
 
 import { paginationProps } from './common';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfPaginationOptionsMenu',
@@ -114,11 +115,16 @@ export default {
 
   emits: ['update:perPage'],
 
+  setup() {
+    return {
+      styles: markRaw(styles),
+    };
+  },
+
   data() {
     return {
-      styles,
       open: false,
     };
   },
-}
+};
 </script>

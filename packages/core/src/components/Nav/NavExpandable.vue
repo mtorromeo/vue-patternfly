@@ -39,6 +39,7 @@ import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/acc
 
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { getUniqueId } from '../../util';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfNavExpandable',
@@ -71,10 +72,15 @@ export default {
 
   emits: ['update:expanded'],
 
+  setup() {
+    return {
+      styles: markRaw(styles),
+      a11yStyles: markRaw(a11yStyles),
+    };
+  },
+
   data() {
     return {
-      styles,
-      a11yStyles,
       scrollViewAtStart: false,
       scrollViewAtEnd: false,
       expandedState: this.expanded,

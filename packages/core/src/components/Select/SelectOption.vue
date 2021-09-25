@@ -60,6 +60,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
+import { markRaw } from 'vue';
 
 import Void from '../Void';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
@@ -95,10 +96,10 @@ export default {
 
   emits: ['click', 'select'],
 
-  data() {
+  setup() {
     return {
-      styles,
-      checkStyles,
+      styles: markRaw(styles),
+      checkStyles: markRaw(checkStyles),
     };
   },
 

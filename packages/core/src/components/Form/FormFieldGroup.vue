@@ -29,6 +29,7 @@ import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
 import { getUniqueId } from '../../util';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfFormFieldGroup',
@@ -60,12 +61,7 @@ export default {
   setup() {
     return {
       managedExpanded: useManagedProp('expanded', false),
-    };
-  },
-
-  data() {
-    return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

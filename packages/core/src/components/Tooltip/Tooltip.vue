@@ -34,6 +34,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
+import { markRaw } from 'vue';
 
 import PfPopper from '../Popper';
 import PfTooltipArrow from './TooltipArrow';
@@ -95,10 +96,15 @@ export default {
     },
   },
 
+  setup() {
+    return {
+      styles: markRaw(styles),
+    };
+  },
+
   data() {
     return {
       visible: false,
-      styles,
     };
   },
 

@@ -29,6 +29,7 @@ import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfToolbarToggleGroup',
@@ -52,13 +53,8 @@ export default {
   setup() {
     const { width: windowWidth } = useWindowSize();
     return {
+      styles: markRaw(styles),
       windowWidth,
-    };
-  },
-
-  data() {
-    return {
-      styles,
     };
   },
 

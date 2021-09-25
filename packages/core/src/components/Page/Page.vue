@@ -36,7 +36,7 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
 import { useWindowSize } from '@vueuse/core';
-import { ref, provide, computed } from 'vue';
+import { ref, provide, computed, markRaw } from 'vue';
 
 export default {
   name: 'PfPage',
@@ -120,17 +120,12 @@ export default {
     const { width: windowWidth } = useWindowSize();
 
     return {
+      styles: markRaw(styles),
       navOpen,
       mobileView,
       mobileNavOpen,
       desktopNavOpen,
       windowWidth,
-    };
-  },
-
-  data() {
-    return {
-      styles,
     };
   },
 

@@ -21,6 +21,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
+import { markRaw } from 'vue';
 
 import Void from '../Void';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
@@ -67,9 +68,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

@@ -66,6 +66,7 @@ import PfPaginationOptionsMenu from './PaginationOptionsMenu.vue';
 import PfNavigation from './Navigation.vue';
 
 import { paginationProps } from './common';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfPagination',
@@ -167,9 +168,9 @@ export default {
     'page-input',
   ],
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

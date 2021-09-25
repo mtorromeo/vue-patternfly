@@ -91,6 +91,7 @@ import PfPopper from '../Popper';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 
 import { useManagedProp } from '../../use';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfSelect',
@@ -148,15 +149,15 @@ export default {
   setup() {
     return {
       managedOpen: useManagedProp('open', false),
+      styles: markRaw(styles),
+      buttonStyles: markRaw(buttonStyles),
+      badgeStyles: markRaw(badgeStyles),
+      formStyles: markRaw(formStyles),
     };
   },
 
   data() {
     return {
-      styles,
-      buttonStyles,
-      badgeStyles,
-      formStyles,
       options: [],
       typeaheadInputValue: null,
       typeaheadCurrIndex: -1,

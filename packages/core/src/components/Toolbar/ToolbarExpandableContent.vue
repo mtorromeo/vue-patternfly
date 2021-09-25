@@ -22,6 +22,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import { markRaw } from 'vue';
 import PfButton from '../Button.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
@@ -47,9 +48,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 };

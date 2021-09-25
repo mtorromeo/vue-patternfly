@@ -13,6 +13,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Skeleton/skeleton';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfSkeleton',
@@ -51,9 +52,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

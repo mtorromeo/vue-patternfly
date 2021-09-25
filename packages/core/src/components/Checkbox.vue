@@ -40,6 +40,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Check/check';
 import { getUniqueId } from '../util';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfCheckbox',
@@ -81,9 +82,9 @@ export default {
 
   emits: ['update:modelValue'],
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

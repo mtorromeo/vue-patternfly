@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { provide, ref, computed } from 'vue';
+import { provide, ref, computed, markRaw } from 'vue';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
 import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
@@ -89,6 +89,7 @@ export default {
     provide('numberOfFilters', numberOfFilters);
 
     return {
+      styles: markRaw(styles),
       managedToggleExpanded,
       toggleManaged,
       effectiveExpanded,
@@ -96,12 +97,6 @@ export default {
       filterInfo,
       numberOfFilters,
       windowWidth,
-    };
-  },
-
-  data() {
-    return {
-      styles,
     };
   },
 

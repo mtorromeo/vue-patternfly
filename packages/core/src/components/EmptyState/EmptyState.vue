@@ -14,6 +14,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfEmptyState',
@@ -30,9 +31,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 };

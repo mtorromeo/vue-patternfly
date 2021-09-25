@@ -62,6 +62,7 @@ import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-i
 import CheckCircleIcon from '@vue-patternfly/icons/dist/esm/icons/check-circle-icon';
 import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-triangle-icon';
 import { getUniqueId } from '../util';
+import { markRaw } from 'vue';
 
 const variantToIcon = {
   danger: TimesCircleIcon,
@@ -160,9 +161,14 @@ export default {
     },
   },
 
+  setup() {
+    return {
+      styles: markRaw(styles),
+    };
+  },
+
   data() {
     return {
-      styles,
       tooltip: '',
     };
   },

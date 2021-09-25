@@ -73,7 +73,7 @@ import PfCloseButton from '../CloseButton';
 import PfAlertIcon from './AlertIcon';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
-import { ref, watch } from 'vue';
+import { ref, watch, markRaw } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
 
@@ -167,14 +167,14 @@ export default {
       titleRef,
       tooltipVisible,
       managedExpanded: useManagedProp('expanded', false),
+      styles: markRaw(styles),
+      accessibleStyles: markRaw(accessibleStyles),
     };
   },
 
   data() {
     return {
       maxLinesVar: maxLines.name,
-      styles,
-      accessibleStyles,
       timer: null,
 
       timedOut: false,

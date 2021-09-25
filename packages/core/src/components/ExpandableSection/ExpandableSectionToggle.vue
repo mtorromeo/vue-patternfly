@@ -27,6 +27,7 @@
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfExpandableSectionToggle',
@@ -58,12 +59,7 @@ export default {
   setup() {
     return {
       managedExpanded: useManagedProp('expanded', false),
-    };
-  },
-
-  data() {
-    return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 };

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { ref, provide } from 'vue';
+import { ref, provide, markRaw } from 'vue';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
@@ -44,12 +44,10 @@ export default {
     const chipContainer = ref(null);
     provide('chipContainerRef', chipContainer);
 
-    return { expandable, chipContainer };
-  },
-
-  data() {
     return {
-      styles,
+      expandable,
+      chipContainer,
+      styles: markRaw(styles),
     };
   },
 

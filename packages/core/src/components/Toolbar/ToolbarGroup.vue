@@ -7,6 +7,7 @@
 <script>
 import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfToolbarGroup',
@@ -25,9 +26,9 @@ export default {
 
   emits: ['clear-all-filters', 'mounted'],
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

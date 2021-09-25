@@ -27,6 +27,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfSwitch',
@@ -61,9 +62,9 @@ export default {
 
   emits: ['update:checked'],
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 };

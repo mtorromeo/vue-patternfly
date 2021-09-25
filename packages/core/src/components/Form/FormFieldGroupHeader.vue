@@ -18,6 +18,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Form/form';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfFormFieldGroupHeader',
@@ -36,9 +37,9 @@ export default {
     },
   },
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 };

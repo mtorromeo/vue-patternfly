@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { watchEffect } from 'vue';
+import { watchEffect, markRaw } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
@@ -104,9 +104,14 @@ export default {
     },
   },
 
+  setup() {
+    return {
+      styles: markRaw(styles),
+    };
+  },
+
   data() {
     return {
-      styles,
       flyoutTarget: null,
     };
   },

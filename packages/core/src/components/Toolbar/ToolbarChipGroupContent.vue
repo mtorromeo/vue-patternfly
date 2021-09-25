@@ -35,6 +35,7 @@ import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfToolbarChipGroupContent',
@@ -72,12 +73,7 @@ export default {
     const { width: windowWidth } = useWindowSize();
     return {
       windowWidth,
-    };
-  },
-
-  data() {
-    return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 

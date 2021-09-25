@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ref, provide } from 'vue';
+import { ref, provide, markRaw } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 export default {
@@ -54,12 +54,10 @@ export default {
     const flyoutRef = ref(null);
     provide('flyoutRef', flyoutRef);
 
-    return { horizontal, scrollable };
-  },
-
-  data() {
     return {
-      styles,
+      horizontal,
+      scrollable,
+      styles: markRaw(styles),
     };
   },
 };

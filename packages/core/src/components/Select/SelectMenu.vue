@@ -28,6 +28,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import formStyles from '@patternfly/react-styles/css/components/Form/form';
+import { markRaw } from 'vue';
 
 import Void from '../Void';
 import PfDivider from '../Divider';
@@ -49,11 +50,16 @@ export default {
     inlineFilter: Boolean,
   },
 
+  setup() {
+    return {
+      styles: markRaw(styles),
+      formStyles: markRaw(formStyles),
+    };
+  },
+
   data() {
     return {
       childrenCount: 0,
-      styles,
-      formStyles,
     };
   },
 

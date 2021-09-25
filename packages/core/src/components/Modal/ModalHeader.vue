@@ -20,13 +20,14 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
+import { markRaw } from 'vue';
 
 export default {
   name: 'PfModalHeader',
 
-  data() {
+  setup() {
     return {
-      styles,
+      styles: markRaw(styles),
     };
   },
 };
