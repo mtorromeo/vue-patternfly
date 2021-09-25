@@ -1,6 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
+import { markRaw } from 'vue';
 import { PfStack, PfStackItem } from '@vue-patternfly/core/src/layouts/Stack';
+import PfSkeleton from '@vue-patternfly/core/src/components/Skeleton.vue';
 
 export const Template = (args) => ({
   components: { PfStack, PfStackItem },
@@ -8,13 +10,9 @@ export const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-stack gutter class="docs-layout-outline" style="height: 300px">
-      <pf-stack-item>content</pf-stack-item>
-      <pf-stack-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
-        pf-m-fill
-      </pf-stack-item>
-      <pf-stack-item>content</pf-stack-item>
-    </pf-stack>
+    <pf-stack-item v-bind="args">
+      pf-m-fill
+    </pf-stack-item>
   `,
 });
 
@@ -25,10 +23,65 @@ export const Template = (args) => ({
 
 ## Examples
 
+### Basic
+
+The dashed lines are not part of the component and are only for visual separation in the documentation. The highlighted item with green lines is the one controlled by the story.
+
 <Canvas>
-  <Story name="Stack Item" args={{filled: true}}>
+  <Story
+    name="Basic"
+    args={{
+      filled: true,
+    }}
+    decorators={[
+      () => ({
+        components: { PfStack, PfStackItem },
+        template: `
+          <pf-stack gutter class="docs-layout-outline" style="height: 300px">
+            <pf-stack-item>content</pf-stack-item>
+            <story style="border-color: var(--pf-global--palette--green-300)" />
+            <pf-stack-item>content</pf-stack-item>
+          </pf-stack>
+        `,
+      }),
+    ]}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
-<ArgsTable story="Stack Item" />
+<ArgsTable story="Basic" />
+
+### Skeleton items
+
+We can use `PfSkeleton` as the `component` prop of each `pf-stack-item` to create a skeleton layout.
+
+<Canvas>
+  <Story
+    name="Skeleton items"
+    args={{
+      filled: true,
+      component: PfSkeleton,
+    }}
+    decorators={[
+      () => ({
+        components: { PfStack, PfStackItem },
+        setup() {
+          return {
+            component: markRaw(PfSkeleton),
+          };
+        },
+        template: `
+          <!-- storybook wants to transform the root element to a skeleton itself, so we give it a div to play with -->
+          <div>
+            <pf-stack gutter style="height: 300px">
+              <pf-stack-item :component="component" />
+              <story style="border-color: var(--pf-global--palette--green-300)" />
+              <pf-stack-item :component="component" />
+            </pf-stack>
+          </div>
+        `,
+      }),
+    ]}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

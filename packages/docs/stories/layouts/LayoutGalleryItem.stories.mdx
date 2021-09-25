@@ -1,9 +1,11 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
+import { markRaw } from 'vue';
 import {
   PfGallery,
   PfGalleryItem,
 } from '@vue-patternfly/core/src/layouts/Gallery';
+import PfSkeleton from '@vue-patternfly/core/src/components/Skeleton.vue';
 
 export const Template = (args) => ({
   components: { PfGallery, PfGalleryItem },
@@ -11,14 +13,9 @@ export const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-gallery gutter class="docs-layout-outline">
-      <pf-gallery-item v-bind="args">Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-    </pf-gallery>
+    <pf-gallery-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
+      Gallery Item
+    </pf-gallery-item>
   `,
 });
 
@@ -29,10 +26,67 @@ export const Template = (args) => ({
 
 ## Examples
 
+### Basic
+
+The dashed lines are not part of the component and are only for visual separation in the documentation. The highlighted item with green lines is the one controlled by the story.
+
 <Canvas>
-  <Story name="Gallery Item">
+  <Story
+    name="Basic"
+    decorators={[
+      () => ({
+        components: { PfGallery, PfGalleryItem },
+        template: `
+          <pf-gallery gutter class="docs-layout-outline">
+            <story style="border-color: var(--pf-global--palette--green-300)" />
+            <pf-gallery-item>Gallery Item</pf-gallery-item>
+            <pf-gallery-item>Gallery Item</pf-gallery-item>
+            <pf-gallery-item>Gallery Item</pf-gallery-item>
+            <pf-gallery-item>Gallery Item</pf-gallery-item>
+            <pf-gallery-item>Gallery Item</pf-gallery-item>
+          </pf-gallery>
+        `,
+      }),
+    ]}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
-<ArgsTable story="Gallery Item" />
+<ArgsTable story="Basic" />
+
+### Skeleton items
+
+We can use `PfSkeleton` as the `component` prop of each `pf-gallery-item` to create a skeleton layout.
+
+<Canvas>
+  <Story
+    name="Skeleton items"
+    args={{
+      component: PfSkeleton,
+    }}
+    decorators={[
+      () => ({
+        components: { PfGallery, PfGalleryItem },
+        setup() {
+          return {
+            component: markRaw(PfSkeleton),
+          };
+        },
+        template: `
+          <!-- storybook wants to transform the root element to a skeleton itself, so we give it a div to play with -->
+          <div>
+            <pf-gallery gutter>
+              <story style="border-color: var(--pf-global--palette--green-300)" />
+              <pf-gallery-item :component="component" />
+              <pf-gallery-item :component="component" />
+              <pf-gallery-item :component="component" />
+              <pf-gallery-item :component="component" />
+              <pf-gallery-item :component="component" />
+            </pf-gallery>
+          </div>
+        `,
+      }),
+    ]}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

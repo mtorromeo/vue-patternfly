@@ -29,6 +29,10 @@ const templateSourceCode = (src, args, argTypes) => {
         return val ? key : `:${key}="false"`;
       case 'string':
         return `${key}="${val}"`;
+      case 'object':
+        if (val.__docgenInfo) {
+          return `:${key}="${val.__docgenInfo.displayName}"`;
+        }
       default:
         return `:${key}="${val}"`;
     }

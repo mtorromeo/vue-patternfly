@@ -1,6 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
+import { markRaw } from 'vue';
 import { PfSplit, PfSplitItem } from '@vue-patternfly/core/src/layouts/Split';
+import PfSkeleton from '@vue-patternfly/core/src/components/Skeleton.vue';
 
 export const Template = (args) => ({
   components: { PfSplit, PfSplitItem },
@@ -8,13 +10,9 @@ export const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-split gutter class="docs-layout-outline">
-      <pf-split-item>content</pf-split-item>
-      <pf-split-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
-        pf-m-fill
-      </pf-split-item>
-      <pf-split-item>content</pf-split-item>
-    </pf-split>
+    <pf-split-item v-bind="args">
+      pf-m-fill
+    </pf-split-item>
   `,
 });
 
@@ -25,10 +23,65 @@ export const Template = (args) => ({
 
 ## Examples
 
+### Basic
+
+The dashed lines are not part of the component and are only for visual separation in the documentation. The highlighted item with green lines is the one controlled by the story.
+
 <Canvas>
-  <Story name="Split Item" args={{filled: true}}>
+  <Story
+    name="Basic"
+    args={{
+      filled: true,
+    }}
+    decorators={[
+      () => ({
+        components: { PfSplit, PfSplitItem },
+        template: `
+          <pf-split gutter class="docs-layout-outline">
+            <pf-split-item>content</pf-split-item>
+            <story style="border-color: var(--pf-global--palette--green-300)" />
+            <pf-split-item>content</pf-split-item>
+          </pf-split>
+        `,
+      }),
+    ]}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
-<ArgsTable story="Split Item" />
+<ArgsTable story="Basic" />
+
+### Skeleton items
+
+We can use `PfSkeleton` as the `component` prop of each `pf-split-item` to create a skeleton layout.
+
+<Canvas>
+  <Story
+    name="Skeleton items"
+    args={{
+      filled: true,
+      component: PfSkeleton,
+    }}
+    decorators={[
+      () => ({
+        components: { PfSplit, PfSplitItem },
+        setup() {
+          return {
+            component: markRaw(PfSkeleton),
+          };
+        },
+        template: `
+          <!-- storybook wants to transform the root element to a skeleton itself, so we give it a div to play with -->
+          <div>
+            <pf-split gutter>
+              <pf-split-item width="15%" :component="component">content</pf-split-item>
+              <story style="border-color: var(--pf-global--palette--green-300)" />
+              <pf-split-item width="15%" :component="component">content</pf-split-item>
+            </pf-split>
+          </div>
+        `,
+      }),
+    ]}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

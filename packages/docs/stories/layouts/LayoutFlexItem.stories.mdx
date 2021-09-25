@@ -1,6 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
+import { markRaw } from 'vue';
 import { PfFlex, PfFlexItem } from '@vue-patternfly/core/src/layouts/Flex';
+import PfSkeleton from '@vue-patternfly/core/src/components/Skeleton.vue';
 
 export const Template = (args) => ({
   components: { PfFlex, PfFlexItem },
@@ -8,22 +10,9 @@ export const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-flex class="docs-layout-outline">
-      <pf-flex flex="1">
-        <pf-flex-item v-bind="args" style="border-color: var(--pf-global--palette--green-300)">
-          Flex item
-        </pf-flex-item>
-      </pf-flex>
-      <pf-flex flex="1">
-        <pf-flex-item>Flex item</pf-flex-item>
-        <pf-flex-item>Flex item</pf-flex-item>
-      </pf-flex>
-      <pf-flex flex="1">
-        <pf-flex-item>Flex item</pf-flex-item>
-        <pf-flex-item>Flex item</pf-flex-item>
-        <pf-flex-item>Flex item</pf-flex-item>
-      </pf-flex>
-    </pf-flex>
+    <pf-flex-item v-bind="args">
+      Flex item
+    </pf-flex-item>
   `,
 });
 
@@ -34,8 +23,32 @@ export const Template = (args) => ({
 
 ## Examples
 
+The dashed lines are not part of the component and are only for visual separation in the documentation. The highlighted item with green lines is the one controlled by the story.
+
 <Canvas>
-  <Story name="Flex Item">
+  <Story
+    name="Flex Item"
+    decorators={[
+      () => ({
+        components: { PfFlex, PfFlexItem },
+        template: `
+          <pf-flex class="docs-layout-outline">
+            <pf-flex flex="1">
+              <story style="border-color: var(--pf-global--palette--green-300)" />
+            </pf-flex>
+            <pf-flex flex="1">
+              <pf-flex-item>Flex item</pf-flex-item>
+              <pf-flex-item>Flex item</pf-flex-item>
+            </pf-flex>
+            <pf-flex flex="1">
+              <pf-flex-item>Flex item</pf-flex-item>
+              <pf-flex-item>Flex item</pf-flex-item>
+              <pf-flex-item>Flex item</pf-flex-item>
+            </pf-flex>
+          </pf-flex>
+        `,
+      }),
+    ]}>
     {Template.bind({})}
   </Story>
 </Canvas>

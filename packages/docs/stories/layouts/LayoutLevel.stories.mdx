@@ -8,7 +8,7 @@ export const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-level v-bind="args" class="docs-layout-outline">
+    <pf-level v-bind="args">
       <pf-level-item>Level Item</pf-level-item>
       <pf-level-item>Level Item</pf-level-item>
       <pf-level-item>Level Item</pf-level-item>
@@ -23,8 +23,20 @@ export const Template = (args) => ({
 
 ## Examples
 
+The dashed lines are not part of the component and are only for visual separation in the documentation.
+
 <Canvas>
-  <Story name="Level" args={{gutter: true}}>
+  <Story
+    name="Level"
+    args={{gutter: true}}
+    decorators={[
+      () => ({
+        template: `
+          <story class="docs-layout-outline" />
+        `,
+      }),
+    ]}>
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

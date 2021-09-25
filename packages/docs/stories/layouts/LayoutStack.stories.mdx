@@ -8,7 +8,7 @@ export const Template = (args) => ({
     return { args };
   },
   template: `
-    <pf-stack v-bind="args" class="docs-layout-outline" style="height: 300px">
+    <pf-stack v-bind="args" style="height: 300px">
       <pf-stack-item>content</pf-stack-item>
       <pf-stack-item filled>
         pf-m-fill
@@ -25,8 +25,20 @@ export const Template = (args) => ({
 
 ## Examples
 
+The dashed lines are not part of the component and are only for visual separation in the documentation.
+
 <Canvas>
-  <Story name="Stack" args={{gutter: true}}>
+  <Story
+    name="Stack"
+    args={{gutter: true}}
+    decorators={[
+      () => ({
+        template: `
+          <story class="docs-layout-outline" />
+        `,
+      }),
+    ]}>
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
