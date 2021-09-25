@@ -10,6 +10,7 @@ export { default as PfPopover } from './Popover.vue';
 export { default as PfPopper } from './Popper';
 export { default as PfProgress } from './Progress.vue';
 export { default as PfRadio } from './Radio.vue';
+export { default as PfSkeleton } from './Skeleton.vue';
 export { default as PfSpinner } from './Spinner.vue';
 export { default as PfSwitch } from './Switch.vue';
 export { default as PfTextarea } from './Textarea';

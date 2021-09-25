@@ -1,0 +1,94 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import PfSkeleton from '@vue-patternfly/core/src/components/Skeleton.vue';
+
+export const Template = (args) => ({
+  components: { PfSkeleton },
+  setup() {
+    return { args };
+  },
+  template: `<pf-skeleton v-bind="args" />`,
+});
+
+
+<Meta title="Components/Skeleton" component={PfSkeleton} argTypes={{
+    fontSize: {
+      control: { type: 'select' },
+      options: [null, 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
+    },
+    shape: { control: { type: 'select' }, options: [null, 'circle', 'square'] },
+  }} />
+
+# PfSkeleton `pf-skeleton`
+
+A **skeleton** is a type of loading state that allows you to expose content incrementally. For content that may take a long time to load, use a progress bar in place of a skeleton.
+
+See full [Design guidelines](https://www.patternfly.org/v4/components/skeleton/design-guidelines) on the official patternfly documentation.
+
+## Examples
+
+### Basic
+
+<Canvas>
+  <Story name="Basic">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Basic" />
+
+### Percentage widths
+
+<Canvas>
+  <Story
+    name="PercentageWidths"
+    args={{
+      width: '25%',
+    }}
+    decorators={[
+      () => ({
+        components: { PfSkeleton },
+        template: `
+          <story />
+          <br />
+          <pf-skeleton width="50%" />
+          <br />
+          <pf-skeleton width="60%" />
+          <br />
+          <pf-skeleton width="75%" />
+          <br />
+          <pf-skeleton width="100%" />
+        `,
+      }),
+    ]}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Percentage heights
+
+<Canvas>
+  <Story
+    name="PercentageHeights"
+    args={{
+      height: '25%',
+      width: '15%',
+    }}
+    decorators={[
+      () => ({
+        components: { PfSkeleton },
+        template: `
+          <div style="height: 400px; display: flex; align-items: flex-end; justify-content: space-between">
+            <story />
+            <pf-skeleton width="15%" height="33%" />
+            <pf-skeleton width="15%" height="50%" />
+            <pf-skeleton width="15%" height="60%" />
+            <pf-skeleton width="15%" height="75%" />
+            <pf-skeleton width="15%" height="100%" />
+          </div>
+        `,
+      }),
+    ]}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
