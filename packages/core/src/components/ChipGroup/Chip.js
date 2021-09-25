@@ -16,7 +16,7 @@ export default {
     readonly: Boolean,
     overflow: Boolean,
     component: {
-      type: String,
+      type: [String, Object],
       default: 'div',
     },
     tooltipPosition: {

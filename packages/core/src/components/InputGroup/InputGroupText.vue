@@ -9,7 +9,7 @@ export default {
   props: {
     /** Component that wraps the input group text. */
     component: {
-      type: String,
+      type: [String, Object],
       default: 'span',
     },
 

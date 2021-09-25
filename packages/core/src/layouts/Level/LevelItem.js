@@ -6,7 +6,7 @@ export default {
   props: {
     /** The tag or component to use as container */
     component: {
-      type: String,
+      type: [String, Object],
       default: 'div',
     },
   },

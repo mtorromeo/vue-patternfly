@@ -73,7 +73,7 @@ export default {
 
   props: {
     component: {
-      type: String,
+      type: [String, Object],
       default: 'button',
     },
     favorite: Boolean,

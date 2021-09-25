@@ -226,7 +226,7 @@ export default {
     },
 
     component: {
-      type: String,
+      type: [String, Object],
       default: 'div',
     },
   },

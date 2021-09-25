@@ -7,13 +7,17 @@ export default {
   props: {
     /** The tag or component to use as container */
     component: {
-      type: String,
+      type: [String, Object],
       default: 'div',
     },
     filled: Boolean,
   },
 
   render() {
-    return h(resolveDynamicComponent(this.component), { class: [styles.stackItem, { [styles.modifiers.fill]: this.filled }] }, this.$slots);
+    return h(resolveDynamicComponent(this.component), {
+      class: [styles.stackItem, {
+        [styles.modifiers.fill]: this.filled,
+      }],
+    }, this.$slots);
   },
 };

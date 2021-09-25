@@ -6,7 +6,7 @@ const PfBullseye = (props, { slots, attrs }) => h(resolveDynamicComponent(props.
 
 PfBullseye.props = {
   component: {
-    type: String,
+    type: [String, Object],
     default: 'div',
   },
 };

@@ -9,7 +9,7 @@ export default {
   props: {
     /** Sets the base component to render. */
     component: {
-      type: String,
+      type: [String, Object],
       default: 'div',
     },
   },

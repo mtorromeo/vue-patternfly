@@ -1,4 +1,4 @@
-import { h, resolveDynamicComponent } from 'vue';
+import { h } from 'vue';
 
 export const TextListItemVariants = [
   'li',
@@ -18,6 +18,6 @@ export default {
   },
 
   render() {
-    return h(resolveDynamicComponent(this.component), { 'data-pf-content': true }, this.$slots);
+    return h(this.component, { 'data-pf-content': true }, this.$slots);
   },
 };

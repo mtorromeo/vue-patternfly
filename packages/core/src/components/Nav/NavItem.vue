@@ -58,7 +58,7 @@ export default {
 
   props: {
     component: {
-      type: String,
+      type: [String, Object],
       default: 'li',
     },
     linkComponent: {

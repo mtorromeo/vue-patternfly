@@ -1,15 +1,23 @@
 import styles from '@patternfly/react-styles/css/layouts/Split/split';
+import { h, resolveDynamicComponent } from 'vue';
 
-import { h, mergeProps } from 'vue';
+export default {
+  name: 'PfSplitItem',
 
-const PfSplitItem = (props, { slots, attrs }) => h('div', mergeProps({ class: [styles.splitItem, { [styles.modifiers.fill]: props.filled }] }, attrs), slots.default());
+  props: {
+    /** The tag or component to use as container */
+    component: {
+      type: [String, Object],
+      default: 'div',
+    },
+    filled: Boolean,
+  },
 
-PfSplitItem.props = {
-  filled: Boolean,
+  render() {
+    return h(resolveDynamicComponent(this.component), {
+      class: [styles.splitItem, {
+        [styles.modifiers.fill]: this.filled,
+      }],
+    }, this.$slots);
+  },
 };
-
-PfSplitItem.inheritAttrs = false;
-
-Object.defineProperty(PfSplitItem, 'name', { value: 'PfSplitItem', writable: false });
-
-export default PfSplitItem;

@@ -57,7 +57,7 @@ export default {
     showDivider: Boolean,
 
     component: {
-      type: String,
+      type: [String, Object],
       default: null,
     },
 

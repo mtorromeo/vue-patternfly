@@ -10,7 +10,7 @@ export default {
   props: {
     /** Content rendered inside the Card */
     component: {
-      type: String,
+      type: [String, Object],
       default: 'article',
     },
 
