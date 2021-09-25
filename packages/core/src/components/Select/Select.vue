@@ -14,6 +14,7 @@
         :variant="variant"
         @enter="onEnter"
         @close="onClose"
+        @keydown="onKeydown"
       >
         <div :class="styles.selectToggleWrapper">
           <span v-if="$slots['toggle-icon']" :class="styles.selectToggleIcon">
@@ -26,11 +27,11 @@
               <slot name="placeholder">{{ placeholder || childPlaceholderText }}</slot>
             </span>
             <div
-              v-if="!selectionBadgeHidden && selectedOptions.length"
+              v-if="!selectionBadgeHidden && checkedOptions.length"
               :class="styles.selectToggleBadge"
             >
               <span :class="[badgeStyles.badge, badgeStyles.modifiers.read]">
-                {{ selectionBadgeText || selectedOptions.length || '' }}
+                {{ selectionBadgeText || checkedOptions.length || '' }}
               </span>
             </div>
           </template>
@@ -45,7 +46,7 @@
               :value="
                 typeaheadInputValue !== null
                   ? typeaheadInputValue
-                  : selectedOptions[0].value || ''
+                  : checkedOptions[0].value || ''
               "
               type="text"
               autoComplete="off"
@@ -57,7 +58,7 @@
         </div>
 
         <button
-          v-if="$attrs.onClear && (selectedOptions.length || typeaheadInputValue)"
+          v-if="$attrs.onClear && (checkedOptions.length || typeaheadInputValue)"
           :class="[buttonStyles.button, buttonStyles.modifiers.plain, styles.selectToggleClear]"
           type="button"
           :disabled="disabled"
@@ -71,9 +72,24 @@
         v-show="managedOpen"
         ref="menu"
         :v-slot="appendTo === 'inline' ? null : 'popper'"
-        :grouped="grouped"
       >
         <slot name="customContent" />
+
+        <template v-if="inlineFilter">
+          <div :class="styles.selectMenuSearch">
+            <input
+              ref="filter"
+              type="search"
+              :class="[formStyles.formControl, formStyles.modifiers.search]"
+              :placeholder="inlineFilterPlaceholderText"
+              autoComplete="off"
+              @change="onChange"
+              @keydown="onFilterKeydown"
+            >
+          </div>
+          <pf-divider />
+        </template>
+
         <slot />
       </pf-select-menu>
     </div>
@@ -88,15 +104,25 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 
 import Void from '../Void';
 import PfPopper from '../Popper';
+import PfSelectMenu from './SelectMenu.vue';
+import PfSelectToggle from './SelectToggle.vue';
+import PfDivider from '../Divider';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 
-import { useManagedProp } from '../../use';
-import { markRaw } from 'vue';
+import { useManagedProp, provideChildrenTracker, keyNavigation } from '../../use';
+import { markRaw, provide } from 'vue';
 
 export default {
   name: 'PfSelect',
 
-  components: { Void, PfPopper, TimesCircleIcon },
+  components: {
+    PfSelectMenu,
+    PfSelectToggle,
+    Void,
+    PfPopper,
+    PfDivider,
+    TimesCircleIcon,
+  },
 
   provide() {
     return {
@@ -123,7 +149,6 @@ export default {
     },
     up: Boolean,
     disabled: Boolean,
-    grouped: Boolean,
     width: {
       type: String,
       default: null,
@@ -142,12 +167,24 @@ export default {
       type: String,
       default: null,
     },
+    /** Flag indicating if select should have an inline text input for filtering */
+    inlineFilter: Boolean,
+    /** Placeholder text for inline filter */
+    inlineFilterPlaceholderText: {
+      type: String,
+      default: '',
+    },
   },
 
   emits: ['clear', 'update:open'],
 
   setup() {
+    const options = provideChildrenTracker();
+    const onKeydown = keyNavigation(options);
+    provide('keydown', onKeydown);
     return {
+      options,
+      menuOnKeydown: onKeydown,
       managedOpen: useManagedProp('open', false),
       styles: markRaw(styles),
       buttonStyles: markRaw(buttonStyles),
@@ -158,7 +195,6 @@ export default {
 
   data() {
     return {
-      options: [],
       typeaheadInputValue: null,
       typeaheadCurrIndex: -1,
       // tabbedIntoFavoritesMenu: false,
@@ -170,17 +206,24 @@ export default {
       if (this.$slots.customContent) {
         return;
       }
-      if (this.selectedOptions.length || this.placeholder) {
+      if (this.checkedOptions.length || this.placeholder) {
         return;
       }
       const placeholder = this.options.find(i => i.placeholder === true);
       return (placeholder && placeholder.value) || (this.options[0] && this.options[0].value);
     },
 
-    selectedOptions() {
-      const selections = Array.isArray(this.selections) ? this.selections : [this.selections];
-      return this.options.filter(o => selections.includes(o) || selections.includes(o.value));
+    checkedOptions() {
+      return this.options.filter(o => o.managedChecked);
     },
+  },
+
+  mounted() {
+    document.addEventListener('keydown', this.onEscPress);
+  },
+
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.onEscPress);
   },
 
   methods: {
@@ -193,7 +236,27 @@ export default {
 
     onEnter() {
       if (this.options.length) {
-        this.options[0].focus();
+        this.options[0].focused = true;
+      }
+    },
+
+    onEscPress(event) {
+      const keyCode = event.keyCode || event.which;
+
+      if (!this.managedOpen || !(keyCode === 27 /* ESC */ || event.key === 'Tab')) {
+        return;
+      }
+
+      const escFromToggle = () => this.$refs.select && this.$refs.select.contains(event.target);
+
+      const escFromWithinMenu = () => {
+        const menu = this.$refs.menu.$el;
+        return menu && menu.contains && menu.contains(event.target);
+      };
+
+      if (escFromToggle() || escFromWithinMenu()) {
+        this.managedOpen = false;
+        this.$refs.select.focus();
       }
     },
 
@@ -202,6 +265,54 @@ export default {
       // this.typeaheadFilteredChildren = React.Children.toArray(this.props.children);
       this.typeaheadCurrIndex = -1;
       // this.tabbedIntoFavoritesMenu = false;
+    },
+
+    onKeydown(event) {
+      if (event.key === 'Tab' && !this.managedOpen) {
+        return;
+      }
+
+      const stopEvent = () => {
+        if (!this.bubbleEvent) {
+          event.stopPropagation();
+        }
+        event.preventDefault();
+      };
+
+      if (!this.managedOpen) {
+        if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+          this.managedOpen = true;
+          stopEvent();
+        }
+        return;
+      }
+
+      const keyCode = event.keyCode || event.which;
+
+      if (!this.bubbleEvent && keyCode === 27 /* ESC */) {
+        this.onEscPress(event);
+        stopEvent();
+      } else if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
+        this.managedOpen = false;
+        stopEvent();
+      } else if (event.key === 'ArrowDown') {
+        if (this.options.length) {
+          this.options[0].focused = true;
+          stopEvent();
+        }
+      }
+    },
+
+    onFilterKeydown(event) {
+      if (event.key === 'Tab' && this.variant === 'checkbox') {
+        // More modal-like experience for checkboxes
+        // Let SelectOption handle this
+        this.menuOnKeydown.navigate(0, 0, event.shiftKey ? 'up' : 'down');
+        event.stopPropagation();
+        event.preventDefault();
+      } else {
+        this.menuOnKeydown(event, this.$refs.filter);
+      }
     },
   },
 };

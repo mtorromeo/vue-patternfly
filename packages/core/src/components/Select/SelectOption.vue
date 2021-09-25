@@ -1,32 +1,62 @@
 <template>
   <template v-if="select.variant === 'checkbox'">
-    <div v-if="noResult">
-      <component :is="component" :class="[styles.selectMenuItem, {
-        [styles.modifiers.selected]: selected,
-        [styles.modifiers.disabled]: disabled,
-      }]" role="option" :aria-selected="selected" type="button">
-        <slot>{{ value.toString() }}</slot>
+    <button
+      v-if="load"
+      ref="menuItem"
+      :class="[styles.selectMenuItem, styles.modifiers.load, {
+        [styles.modifiers.focus]: focused,
+      }]"
+      @click.stop="$emit('viewmore')"
+      @keydown="keydown"
+    >
+      <slot>{{ value }}</slot>
+    </button>
+
+    <div v-else-if="loading" :class="[styles.selectListItem, styles.modifiers.loading]">
+      <slot />
+    </div>
+
+    <div v-else-if="noResult">
+      <component
+        :is="component"
+        ref="menuItem"
+        :class="[styles.selectMenuItem, {
+          [styles.modifiers.selected]: selected,
+          [styles.modifiers.disabled]: disabled,
+        }]"
+        role="option"
+        :aria-selected="selected"
+        type="button"
+        @keydown="keydown"
+      >
+        <slot>{{ value }}</slot>
       </component>
     </div>
 
     <label
       v-else
+      ref="menuItem"
       :class="[styles.selectMenuItem, checkStyles.check, {
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.description]: description,
       }]"
+      @keydown="keydown"
     >
       <input
+        v-model="managedChecked"
         :name="select.name"
         :value="value"
         :class="checkStyles.checkInput"
         type="checkbox"
-        :checked="checked"
         :disabled="disabled"
         @change="onCheckboxChange"
       >
-      <span :class="[checkStyles.checkLabel, {[styles.modifiers.disabled]: disabled}]">
-        <slot>{{ value.toString() }}</slot>
+      <span :class="[checkStyles.checkLabel, {
+        [styles.modifiers.disabled]: disabled,
+      }]">
+        <ItemDisplay :count="count">
+          <slot>{{ value }}</slot>
+        </ItemDisplay>
       </span>
       <div v-if="description" :class="checkStyles.checkDescription">{{ description }}</div>
     </label>
@@ -35,96 +65,173 @@
   <li
     v-else
     role="presentation"
-    :class="[styles.selectMenuWrapper, {
+    :class="{
+      [styles.selectMenuWrapper]: !load && !loading,
+      [styles.selectListItem]: loading,
+      [styles.modifiers.loading]: loading,
       [styles.modifiers.favorite]: favorite,
       [styles.modifiers.focus]: focused,
-    }]"
+    }"
   >
-    <component :is="component" :class="[styles.selectMenuItem, {
-      [styles.modifiers.selected]: selected,
-      [styles.modifiers.disabled]: disabled,
-      [styles.modifiers.description]: description,
-      [styles.modifiers.link]: favorite !== null,
-    }]" role="option" :aria-selected="selected" type="button">
-      <component :is="description ? 'span' : 'void'" :class="styles.selectMenuItemMain">
-        <slot>{{ value.toString() }}</slot>
-        <span v-if="selected" :class="styles.selectMenuItemIcon">
-          <CheckIcon aria-hidden />
-        </span>
+    <slot v-if="loading" />
+
+    <template v-else>
+      <component
+        :is="component"
+        ref="menuItem"
+        :class="[styles.selectMenuItem, {
+          [styles.modifiers.load]: load,
+          [styles.modifiers.selected]: selected,
+          [styles.modifiers.disabled]: disabled,
+          [styles.modifiers.description]: description,
+          [styles.modifiers.link]: favorite !== null,
+        }]"
+        role="option"
+        :aria-selected="selected"
+        type="button"
+        @keydown="keydown"
+      >
+        <component :is="description ? 'span' : 'void'" :class="styles.selectMenuItemMain">
+          <ItemDisplay :count="count">
+            <slot>{{ value.toString() }}</slot>
+          </ItemDisplay>
+
+          <span v-if="selected" :class="styles.selectMenuItemIcon">
+            <CheckIcon aria-hidden />
+          </span>
+        </component>
+        <span v-if="description" :class="styles.selectMenuItemDescription">{{ description }}</span>
       </component>
-      <span v-if="description" :class="styles.selectMenuItemDescription">{{ description }}</span>
-    </component>
+
+      <button
+        v-if="favorite !== null"
+        ref="menuItem"
+        :class="[styles.selectMenuItem, styles.modifiers.action, styles.modifiers.favoriteAction]"
+        :aria-label="favorite ? ariaFavoriteLabel : ariaNotFavoriteLabel"
+        @click="$emit('update:favorite', !favorite, this)"
+      >
+        <span :class="styles.selectMenuItemActionIcon">
+          <StarIcon />
+        </span>
+      </button>
+    </template>
   </li>
 </template>
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
-import { markRaw } from 'vue';
+import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
+import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
+import { h, markRaw, inject, getCurrentInstance } from 'vue';
+import { useChildrenTracker, useFocused, useManagedProp } from '../../use';
 
 import Void from '../Void';
-import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 
 export default {
   name: 'PfSelectOption',
 
-  components: { Void, CheckIcon },
+  components: {
+    Void,
+    CheckIcon,
+    StarIcon,
+    ItemDisplay: {
+      props: ['count'],
+      render() {
+        if (this.count || this.count === 0) {
+          return h('span', { class: styles.selectMenuItemRow }, [
+            h('span', { class: styles.selectMenuItemText }, this.$slots.default()),
+            h('span', { class: styles.selectMenuItemCount }, this.count),
+          ]);
+        }
+        return this.$slots.default();
+      },
+    },
+  },
 
   inject: ['select'],
 
   props: {
+    /** Indicates which component will be used as select item */
     component: {
       type: [String, Object],
       default: 'button',
     },
-    favorite: Boolean,
+    /** Flag indicating if the option is favorited */
+    favorite: {
+      type: Boolean,
+      default: null,
+    },
+    /** Flag indicating if the option acts as a "no results" indicator */
     noResult: Boolean,
+    /** @hide Internal flag to apply the load styling to view more option */
+    load: Boolean,
+    /** @hide Internal flag to apply the loading styling to spinner */
+    loading: Boolean,
+    /** Flag indicating if the option is selected */
     selected: Boolean,
-    checked: Boolean,
+    /** Flag indicating if the option is checked */
+    checked: {
+      type: Boolean,
+      default: null,
+    },
+    /** Flag indicating if the option is disabled */
     disabled: Boolean,
+    /** Flag indicating if the option acts as a placeholder */
     placeholder: Boolean,
-    focused: Boolean,
+    /** Flag forcing the focused state */
+    // focused: Boolean,
+    /** Description of the item for single and both typeahead select variants */
     description: {
       type: String,
       default: '',
     },
+    /** The value for the option */
     value: {
       type: String,
       default: null,
     },
+    /** Number of items matching the option */
+    count: {
+      type: [Number, String],
+      default: null,
+    },
+    /** Aria label text for favoritable button when favorited */
+    ariaFavoriteLabel: {
+      type: String,
+      default: 'starred',
+    },
+    /** Aria label text for favoritable button when not favorited */
+    ariaNotFavoriteLabel: {
+      type: String,
+      default: 'not starred',
+    },
   },
 
-  emits: ['click', 'select'],
+  emits: ['click', 'select', 'update:checked', 'update:selected', 'update:favorite', 'viewmore'],
 
   setup() {
+    const instance = getCurrentInstance();
+    useChildrenTracker();
+    const keydown = inject('keydown');
     return {
+      keydown: e => keydown.call(instance.proxy, e, instance.refs.menuItem),
+      focused: useFocused(() => instance.refs.menuItem, instance),
       styles: markRaw(styles),
       checkStyles: markRaw(checkStyles),
+      managedChecked: useManagedProp('checked', false),
     };
-  },
-
-  mounted() {
-    this.select.options.push(this);
-  },
-
-  beforeUnmount() {
-    const idx = this.select.options.findIndex(i => i === this);
-    if (idx >= 0) {
-      this.select.options.splice(idx, 1);
-    }
   },
 
   methods: {
     focus() {
-      const el = this.focusElement();
-      el && el.focus();
-    },
-
-    focusElement() {
-      return this.$el && this.$el.querySelector(`.${styles.selectMenuItem}`);
+      this.focused = true;
     },
 
     onCheckboxChange(event) {
+      if (this.disabled) {
+        return;
+      }
       this.$emit('click', event);
       this.$emit('select', event, this.value);
       this.select.$emit('select', event, this.value);

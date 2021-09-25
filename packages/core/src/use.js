@@ -1,5 +1,6 @@
-import { provide, inject, isRef, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance } from 'vue';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
+import { useActiveElement } from '@vueuse/core';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
@@ -42,38 +43,74 @@ export function useChildrenTracker(symbol) {
   return tracker;
 }
 
+export function useFocused(getFocusElement, instance) {
+  if (!instance) {
+    instance = getCurrentInstance();
+  }
+
+  if (!getFocusElement) {
+    getFocusElement = () => instance.el;
+  }
+
+  const activeElement = useActiveElement();
+  const focused = computed({
+    get() {
+      const el = getFocusElement();
+      return activeElement.value === el || (el && el.contains(activeElement.value));
+    },
+    set(focus) {
+      const el = getFocusElement();
+      focus ? el.focus() : el.blur();
+    },
+  });
+
+  return focused;
+}
+
 export function keyNavigation(itemsRef) {
+  const enabledItems = () => {
+    const items = unref(itemsRef);
+    const isMultiDimensional = Array.isArray(items[0]);
+    // ignore disabled items
+    if (isMultiDimensional) {
+      return items.map(innerItems => innerItems.filter(item => !item.disabled));
+    } else {
+      return items.filter(item => !item.disabled);
+    }
+  };
+
   const navigate = (index, innerIndex, position) => {
-    const items = isRef(itemsRef) ? itemsRef.value : itemsRef;
+    const items = enabledItems();
 
     if (!Array.isArray(items) || !items.length) {
       return;
     }
     const isMultiDimensional = Array.isArray(items[0]);
+
     let nextIndex = index;
     let nextInnerIndex = innerIndex;
     if (position === 'up') {
-      if (index === 0) {
+      if (index <= 0) {
         // loop back to end
         nextIndex = items.length - 1;
       } else {
         nextIndex = index - 1;
       }
     } else if (position === 'down') {
-      if (index === items.length - 1) {
+      if (index >= items.length - 1) {
         // loop back to beginning
         nextIndex = 0;
       } else {
         nextIndex = index + 1;
       }
     } else if (position === 'left') {
-      if (innerIndex === 0) {
+      if (innerIndex <= 0) {
         nextInnerIndex = items[index].length - 1;
       } else {
         nextInnerIndex = innerIndex - 1;
       }
     } else if (position === 'right') {
-      if (innerIndex === items[index].length - 1) {
+      if (innerIndex >= items[index].length - 1) {
         nextInnerIndex = 0;
       } else {
         nextInnerIndex = innerIndex + 1;
@@ -88,17 +125,21 @@ export function keyNavigation(itemsRef) {
     }
 
     if (isMultiDimensional) {
-      items[nextIndex][nextInnerIndex].focus();
+      items[nextIndex][nextInnerIndex].focused = true;
     } else {
-      items[nextIndex].focus();
+      items[nextIndex].focused = true;
     }
   };
 
-  return function(e) {
-    const innerIndex = this.$el === e.target ? 0 : 1;
+  const onKeydown = function(e, itemEl) {
+    if (!itemEl) {
+      itemEl = this.focusElement();
+    }
 
-    const items = isRef(itemsRef) ? itemsRef.value : itemsRef;
-    const index = items.findIndex(i => i.focused());
+    const innerIndex = itemEl === e.target ? 0 : 1;
+
+    const items = enabledItems();
+    const index = items.findIndex(i => i.focused);
 
     if (e.key === 'ArrowUp') {
       navigate(index, innerIndex, 'up');
@@ -119,6 +160,9 @@ export function keyNavigation(itemsRef) {
 
     e.preventDefault();
   };
+
+  onKeydown.navigate = navigate;
+  return onKeydown;
 
   // return () => {
   //   if (!Array.isArray(kids)) {

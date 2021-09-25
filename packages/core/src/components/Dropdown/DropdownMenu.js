@@ -39,7 +39,7 @@ export default {
   setup() {
     const children = provideChildrenTracker();
     const items = computed(() => children.value.filter(
-      c => Boolean(c.focusElement()) && !c.disabled && c.focus,
+      c => Boolean(c.focusElement()) && !c.disabled,
     ));
     const onKeydown = keyNavigation(items);
     provide('keydown', onKeydown);
@@ -50,7 +50,7 @@ export default {
 
   mounted() {
     if (this.autoFocus && this.items.length) {
-      this.items[0].focus();
+      this.items[0].focused = true;
     }
   },
 

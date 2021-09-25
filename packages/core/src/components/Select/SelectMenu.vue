@@ -1,42 +1,11 @@
-<template>
-  <component
-    :is="component"
-    :class="styles.selectMenu"
-    :style="{maxHeight, overflow: 'auto'}"
-    v-bind="$attrs"
-  >
-    <template v-if="select.variant === 'checkbox'">
-      <fieldset
-        v-bind="$attrs"
-        :class="{
-          [formStyles.formFieldset]: childrenCount,
-          [styles.selectMenuFieldset]: !childrenCount,
-        }"
-      >
-        <void :alter="extendCheckboxChildren">
-          <slot />
-        </void>
-      </fieldset>
-    </template>
-
-    <void v-else :alter="extendChildren">
-      <slot />
-    </void>
-  </component>
-</template>
-
 <script>
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import formStyles from '@patternfly/react-styles/css/components/Form/form';
-import { markRaw } from 'vue';
-
-import Void from '../Void';
-import PfDivider from '../Divider';
+import { h, resolveDynamicComponent, mergeProps } from 'vue';
+import { findChildrenVNodes } from '../../util';
 
 export default {
   name: 'PfSelectMenu',
-
-  components: { Void, PfDivider },
 
   inject: ['select'],
 
@@ -46,43 +15,18 @@ export default {
       type: String,
       default: null,
     },
-    grouped: Boolean,
     inlineFilter: Boolean,
   },
 
-  setup() {
-    return {
-      styles: markRaw(styles),
-      formStyles: markRaw(formStyles),
-    };
-  },
-
-  data() {
-    return {
-      childrenCount: 0,
-    };
-  },
-
-  computed: {
-    component() {
-      if (!this.custom && this.select.variant !== 'checkbox' && !this.grouped) {
-        return 'ul';
-      }
-      return 'div';
-    },
-  },
-
   methods: {
-    extendChildren(children) {
-      this.childrenCount = children.length;
-
+    extendChildren(children, grouped) {
       if (this.select.variant === 'checkbox') {
         return children;
       }
 
       const randomId = this.select.inputIdPrefix;
 
-      if (this.grouped) {
+      if (grouped) {
         // let index = 0;
         // return React.Children.map(childrenArray, (group: React.ReactElement) => {
         //   if (group.type === SelectGroup) {
@@ -103,7 +47,7 @@ export default {
       return children;
     },
 
-    extendCheckboxChildren(children) {
+    extendCheckboxChildren(children, grouped) {
       if (this.inlineFilter) {
         children.shift();
       }
@@ -111,7 +55,7 @@ export default {
 
       // const { isGrouped, checked, sendRef, keyHandler, hasInlineFilter } = this.props;
       const index = this.inlineFilter ? 1 : 0;
-      if (this.grouped) {
+      if (grouped) {
       //   return children.map(children, (group) => {
       //     if (group.type === SelectOption || group.type === Divider) {
       //       return group;
@@ -152,6 +96,34 @@ export default {
 
       return children;
     },
+  },
+
+  render() {
+    let children = this.$slots.default
+      ? findChildrenVNodes(this.$slots.default())
+      : [];
+    const grouped = children.length && children[0].type.name === 'PfSelectGroup';
+
+    const component = !this.custom && this.select.variant !== 'checkbox' && !grouped
+      ? 'ul'
+      : 'div';
+
+    if (this.select.variant === 'checkbox') {
+      children = this.extendCheckboxChildren(children, grouped);
+      children = h('fieldset', mergeProps({
+        class: [children.length ? formStyles.formFieldset : styles.selectMenuFieldset],
+      }, this.$attrs), children);
+    } else {
+      children = this.extendChildren(children, grouped);
+    }
+
+    return h(resolveDynamicComponent(component), {
+      class: styles.selectMenu,
+      style: {
+        maxHeight: this.maxHeight,
+        overflow: 'auto',
+      },
+    }, children);
   },
 };
 </script>

@@ -135,7 +135,7 @@ export default {
       } else if (event.key === 'ArrowDown') {
         const menu = this.dropdown.$refs.menu;
         if (menu && menu.items.length && menu.$el && !menu.$el.contains(event.target)) {
-          menu.items[0].focus();
+          menu.items[0].focused = true;
           stopEvent();
         }
       }

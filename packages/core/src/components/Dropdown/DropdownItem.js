@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import { h, mergeProps, resolveDynamicComponent } from 'vue';
-import { useChildrenTracker } from '../../use';
+import { h, mergeProps, resolveDynamicComponent, getCurrentInstance } from 'vue';
+import { useChildrenTracker, useFocused } from '../../use';
 
 export default {
   name: 'PfDropdownItem',
@@ -56,11 +56,15 @@ export default {
 
   setup() {
     useChildrenTracker();
+    const instance = getCurrentInstance();
+    return {
+      focused: useFocused(() => instance.proxy.focusElement(), instance),
+    };
   },
 
   mounted() {
     if (this.autoFocus) {
-      this.$nextTick(() => this.focus());
+      this.$nextTick(() => this.focused = true);
     }
   },
 
@@ -152,17 +156,11 @@ export default {
 
   methods: {
     focus() {
-      const el = this.focusElement();
-      el && el.focus();
+      this.focused = true;
     },
 
     focusElement() {
       return this.$el && this.$el.querySelector('[tabindex], a, button');
-    },
-
-    focused() {
-      const el = this.focusElement();
-      return el && el.ownerDocument.activeElement === el;
     },
   },
 };
