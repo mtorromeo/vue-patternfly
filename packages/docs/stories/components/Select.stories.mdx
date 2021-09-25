@@ -1,0 +1,226 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import {
+  PfSelect,
+  PfSelectOption,
+  PfSelectGroup,
+} from '@vue-patternfly/core/src/components/Select';
+import PfDivider from '@vue-patternfly/core/src/components/Divider';
+import { reactive } from 'vue';
+
+
+<Meta
+  title="Components/Select"
+  component={PfSelect}
+  subcomponents={{ PfSelectOption, PfSelectGroup }}
+  decorators={[
+    () => ({
+      template: `
+        <div style="height: 400px">
+          <story />
+        </div>
+      `,
+    }),
+  ]} />
+
+# PfSelect `pf-select`
+
+A **select list** enables users to select one or more items from a list. Use a select list when options are dynamic or variable.
+
+[View PatternFly design guidelines](https://www.patternfly.org/v4/components/select/design-guidelines)
+
+## Differences from patternfly-react
+- There is no `grouped` prop since the presence of groups is auto-detected.
+
+See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
+
+## Examples
+
+### Single
+
+export const Single = (args) => ({
+  components: { PfSelect, PfSelectOption },
+  setup() {
+    return { args };
+  },
+  template: `
+    <pf-select v-bind="args">
+      <pf-select-option value="Please Choose" placeholder disabled />
+      <pf-select-option value="Mr" />
+      <pf-select-option value="Miss" />
+      <pf-select-option value="Mrs" />
+      <pf-select-option value="Ms" />
+      <pf-select-option value="Dr" disabled />
+    </pf-select>
+  `,
+});
+
+<Canvas>
+  <Story name="Single">
+    {Single.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Single" />
+
+### Single with description
+
+export const Ungrouped = ({divider, ...args}) => ({
+  components: { PfSelect, PfSelectOption, PfDivider },
+  setup() {
+    return { args, divider };
+  },
+  template: `
+    <pf-select v-bind="args">
+      <pf-select-option value="Active" description="This is a description" />
+      <pf-select-option value="Cancelled" />
+      <pf-select-option value="Paused" />
+      <pf-divider v-if="divider" />
+      <pf-select-option value="Warning" />
+      <pf-select-option value="Restarted" />
+    </pf-select>
+  `,
+});
+
+<Canvas>
+  <Story name="Single with description">
+    {Ungrouped.bind({})}
+  </Story>
+</Canvas>
+
+### Grouped single
+
+export const Grouped = ({divider, ...args}) => ({
+  components: { PfSelect, PfSelectOption, PfSelectGroup, PfDivider },
+  setup() {
+    return { args, divider };
+  },
+  template: `
+    <pf-select v-bind="args">
+      <pf-select-group label="Status">
+        <pf-select-option value="Running" />
+        <pf-select-option value="Stopped" />
+        <pf-select-option value="Down" />
+        <pf-select-option value="Degraded" />
+        <pf-select-option value="Needs maintenance" />
+      </pf-select-group>
+      <pf-divider v-if="divider" />
+      <pf-select-group label="Vendor names">
+        <pf-select-option value="Dell" />
+        <pf-select-option value="Samsung" disabled />
+        <pf-select-option value="Hewlett-Packard" />
+      </pf-select-group>
+    </pf-select>
+  `,
+});
+
+<Canvas>
+  <Story name="Grouped single" args={{
+    placeholder: 'Filter by status',
+    divider: true,
+  }}>
+    {Grouped.bind({})}
+  </Story>
+</Canvas>
+
+### Checkbox input
+
+<Canvas>
+  <Story name="Checkbox input" args={{
+    placeholder: 'Filter by status',
+    variant: 'checkbox',
+  }}>
+    {Ungrouped.bind({})}
+  </Story>
+</Canvas>
+
+### Checkbox input with counts
+
+<Canvas>
+  <Story name="Checkbox input with counts" args={{
+    placeholder: 'Filter by status',
+    variant: 'checkbox',
+  }}>
+    {Ungrouped.bind({})}
+  </Story>
+</Canvas>
+
+### Checkbox input no badge
+
+<Canvas>
+  <Story name="Checkbox input no badge" args={{
+    placeholder: 'Filter by status',
+    variant: 'checkbox',
+    selectionBadgeHidden: true,
+  }}>
+    {Ungrouped.bind({})}
+  </Story>
+</Canvas>
+
+### Grouped checkbox input
+
+<Canvas>
+  <Story name="Grouped checkbox input" args={{
+    placeholder: 'Filter by status',
+    variant: 'checkbox',
+  }}>
+    {Grouped.bind({})}
+  </Story>
+</Canvas>
+
+### Grouped single with filtering
+
+<Canvas>
+  <Story name="Grouped single with filtering" args={{
+    placeholder: 'Filter by status',
+    variant: 'checkbox',
+    inlineFilter: true,
+  }}>
+    {Grouped.bind({})}
+  </Story>
+</Canvas>
+
+### Favorites
+
+export const Favorites = (args) => ({
+  components: { PfSelect, PfSelectOption, PfSelectGroup },
+  setup() {
+    const options = reactive({
+      Status: [
+        { value: 'Running', favorite: false, description: 'This is a description.' },
+        { value: 'Stopped', favorite: false },
+        { value: 'Down', favorite: false, disabled: true },
+        { value: 'Degraded', favorite: false },
+        { value: 'Needs maintenance', favorite: false },
+      ],
+      'Vendor names': [
+        { value: 'Dell', favorite: false },
+        { value: 'Samsung', favorite: false },
+        { value: 'Hewlett-Packard', favorite: false, description: 'This is a description.' },
+      ],
+    });
+    return { args, options };
+  },
+  template: `
+    <pf-select v-bind="args">
+      <pf-select-group v-for="(groupOptions, group) of options" :key="group" :label="group">
+        <pf-select-option
+          v-for="option of groupOptions"
+          :key="option.value"
+          :value="option.value"
+          :description="option.description"
+          :disabled="option.disabled"
+          v-model:favorite="option.favorite"
+        />
+      </pf-select-group>
+    </pf-select>
+  `,
+});
+
+<Canvas>
+  <Story name="Favorites" args={{
+    placeholder: 'Filter by status',
+  }}>
+    {Favorites.bind({})}
+  </Story>
+</Canvas>
