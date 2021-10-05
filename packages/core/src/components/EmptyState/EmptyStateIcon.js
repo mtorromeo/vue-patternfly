@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
 
 import { h, mergeProps } from 'vue';
-import { findChildrenVNodes } from '../../util';
+import { findChildrenVNodes } from '../../util.ts';
 
 export default {
   name: 'PfEmptyStateIcon',

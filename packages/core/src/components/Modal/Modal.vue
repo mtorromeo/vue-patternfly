@@ -119,7 +119,7 @@ import InfoCircleIcon from '@vue-patternfly/icons/dist/esm/icons/info-circle-ico
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import { capitalize } from '@vue/shared';
 import { ref, markRaw } from 'vue';
-import { useElementOverflow } from '../../use';
+import { useElementOverflow } from '../../use.ts';
 
 export default {
   name: 'PfModal',

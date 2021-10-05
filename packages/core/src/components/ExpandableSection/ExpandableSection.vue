@@ -33,7 +33,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { useManagedProp } from '../../use';
+import { useManagedProp } from '../../use.ts';
 import { markRaw } from 'vue';
 
 export default {

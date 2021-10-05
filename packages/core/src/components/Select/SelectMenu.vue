@@ -2,7 +2,7 @@
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import formStyles from '@patternfly/react-styles/css/components/Form/form';
 import { h, resolveDynamicComponent, mergeProps } from 'vue';
-import { findChildrenVNodes } from '../../util';
+import { findChildrenVNodes } from '../../util.ts';
 
 export default {
   name: 'PfSelectMenu',

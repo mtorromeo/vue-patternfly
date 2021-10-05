@@ -3,8 +3,8 @@ import heightToken from '@patternfly/react-tokens/dist/esm/c_form_control_textar
 
 import { h } from 'vue';
 import InputValidationMixin from '../mixins/InputValidationMixin';
-import { useChildrenTracker, useManagedProp } from '../use';
-import { canUseDOM } from '../util';
+import { useChildrenTracker, useManagedProp } from '../use.ts';
+import { canUseDOM } from '../util.ts';
 
 export default {
   name: 'PfTextarea',

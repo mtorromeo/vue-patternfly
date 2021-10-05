@@ -90,7 +90,7 @@ import AngleDoubleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-doub
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import AngleDoubleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon';
 
-import { pluralize } from '../../util';
+import { pluralize } from '../../util.ts';
 import { markRaw } from 'vue';
 
 export default {

@@ -39,7 +39,7 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { getUniqueId } from '../util';
+import { getUniqueId } from '../util.ts';
 import { markRaw } from 'vue';
 
 export default {

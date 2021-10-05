@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 import { h, mergeProps, resolveDynamicComponent, getCurrentInstance } from 'vue';
-import { useChildrenTracker, useFocused } from '../../use';
+import { useChildrenTracker, useFocused } from '../../use.ts';
 
 export default {
   name: 'PfDropdownItem',

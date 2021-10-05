@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/AlertGroup/alert-group';
 
 import { h } from 'vue';
-import { findChildrenVNodes } from '../../util';
+import { findChildrenVNodes } from '../../util.ts';
 
 export default {
   name: 'PfAlertGroupInline',

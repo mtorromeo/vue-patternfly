@@ -33,7 +33,7 @@
         role="dialog"
         aria-modal="true"
         :aria-label="$slots.header ? null : ariaLabel"
-        ::aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : null"
+        :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : null"
         :aria-describedby="`popover-${uniqueId}-body`"
         :style="{
           minWidth: hasCustomMinWidth ? minWidth : null,
@@ -65,8 +65,8 @@
 
 <script>
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
-import { getUniqueId } from '../util';
-import { useManagedProp } from '../use';
+import { getUniqueId } from '../util.ts';
+import { useManagedProp } from '../use.ts';
 import { markRaw } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';

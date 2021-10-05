@@ -1,6 +1,6 @@
 import { createPopper } from '@popperjs/core';
 import { h, mergeProps, Teleport } from 'vue';
-import { findComponentVNode, domFromRef } from '../util';
+import { findComponentVNode, domFromRef } from '../util.ts';
 
 export const getOpacityTransition = (animationDuration) =>
   `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`;

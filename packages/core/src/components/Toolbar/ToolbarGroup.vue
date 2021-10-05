@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util';
+import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util.ts';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { markRaw } from 'vue';
 

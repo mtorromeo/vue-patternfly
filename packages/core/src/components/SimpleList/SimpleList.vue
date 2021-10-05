@@ -2,8 +2,8 @@
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
 import { h, provide } from 'vue';
-import { findChildrenVNodes } from '../../util';
-import { useManagedProp } from '../../use';
+import { findChildrenVNodes } from '../../util.ts';
+import { useManagedProp } from '../../use.ts';
 
 export default {
   name: 'PfSimpleList',

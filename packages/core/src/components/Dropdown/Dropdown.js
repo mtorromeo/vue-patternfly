@@ -2,8 +2,8 @@ import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 import { h, mergeProps, resolveDynamicComponent } from 'vue';
 import PfDropdownToggle from './DropdownToggle';
 import PfDropdownMenu from './DropdownMenu';
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
-import { useManagedProp } from '../../use';
+import { breakpointProp, classesFromBreakpointProps } from '../../util.ts';
+import { useManagedProp } from '../../use.ts';
 
 let currentId = 0;
 

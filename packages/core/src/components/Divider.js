@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 
-import { breakpointProp, classesFromBreakpointProps } from '../util';
+import { breakpointProp, classesFromBreakpointProps } from '../util.ts';
 import { h, inject, resolveDynamicComponent } from 'vue';
 
 export default {

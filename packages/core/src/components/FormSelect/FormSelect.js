@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 
 import { h } from 'vue';
-import { provideChildrenTracker, useManagedProp } from '../../use';
+import { provideChildrenTracker, useManagedProp } from '../../use.ts';
 
 export default {
   name: 'PfFormSelect',

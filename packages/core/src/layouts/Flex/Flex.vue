@@ -1,7 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../util.ts';
 import { h, resolveDynamicComponent } from 'vue';
 
 export default {

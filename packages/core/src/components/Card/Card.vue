@@ -2,7 +2,7 @@
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
 import { h, provide, computed, resolveDynamicComponent } from 'vue';
-import { useManagedProp } from '../../use';
+import { useManagedProp } from '../../use.ts';
 
 export default {
   name: 'PfCard',

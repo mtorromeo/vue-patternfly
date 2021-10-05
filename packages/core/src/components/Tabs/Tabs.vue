@@ -1,8 +1,8 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
-import { breakpointProp, classesFromBreakpointProps, findChildrenVNodes, isElementInView, getUniqueId } from '../../util';
-import { useManagedProp } from '../../use';
+import { breakpointProp, classesFromBreakpointProps, findChildrenVNodes, isElementInView, getUniqueId } from '../../util.ts';
+import { useManagedProp } from '../../use.ts';
 import { h, provide, computed, reactive } from 'vue';
 
 import PfTabContent from './TabContent.vue';

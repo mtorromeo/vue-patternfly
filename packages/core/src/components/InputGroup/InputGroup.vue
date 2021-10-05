@@ -1,8 +1,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
-import {h, mergeProps} from 'vue';
-import {cloneElement} from '../../util';
+import { h, mergeProps, cloneVNode } from 'vue';
 
 const formCtrls = ['PfFormSelect', 'PfTextArea', 'PfTextInput'];
 
@@ -21,7 +20,7 @@ export default {
           return children;
         }
 
-        return children.map(child => formCtrls.includes(child.type.name) ? cloneElement(child, {'aria-describedby': idItem.props.id}) : child);
+        return children.map(child => formCtrls.includes(child.type.name) ? cloneVNode(child, { 'aria-describedby': idItem.props.id }) : child);
       },
     });
   },

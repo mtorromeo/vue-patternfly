@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2015",
+      "es2016",
+      "es2017",
+      "es2018",
+      "dom",
+      "dom.iterable"
+    ],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "importHelpers": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "isolatedModules": true
+  }
+}

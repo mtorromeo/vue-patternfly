@@ -2,7 +2,7 @@
 import { h, mergeProps, resolveDynamicComponent } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { useManagedProp } from '../../use';
+import { useManagedProp } from '../../use.ts';
 
 export default {
   name: 'PfAccordionItem',

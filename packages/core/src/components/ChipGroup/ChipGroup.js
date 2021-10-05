@@ -4,8 +4,8 @@ import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-i
 import PfChip from './Chip';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
-import { findChildrenVNodes, fillTemplate } from '../../util';
-import { useElementOverflow } from '../../use';
+import { findChildrenVNodes, fillTemplate } from '../../util.ts';
+import { useElementOverflow } from '../../use.ts';
 
 export default {
   name: 'PfChipGroup',

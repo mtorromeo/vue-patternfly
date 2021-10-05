@@ -75,7 +75,7 @@ import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-i
 
 import { ref, watch, markRaw } from 'vue';
 import { useElementSize } from '@vueuse/core';
-import { useManagedProp } from '../../use';
+import { useManagedProp } from '../../use.ts';
 
 export default {
   name: 'PfAlert',

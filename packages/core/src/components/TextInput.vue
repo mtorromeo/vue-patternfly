@@ -1,7 +1,7 @@
 <script>
 import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useChildrenTracker, useManagedProp } from '../use';
+import { useChildrenTracker, useManagedProp } from '../use.ts';
 import InputValidationMixin from '../mixins/InputValidationMixin';
 
 export default {

@@ -124,7 +124,7 @@ import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
 import { h, markRaw, inject, getCurrentInstance } from 'vue';
-import { useChildrenTracker, useFocused, useManagedProp } from '../../use';
+import { useChildrenTracker, useFocused, useManagedProp } from '../../use.ts';
 
 import Void from '../Void';
 

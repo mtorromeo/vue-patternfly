@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import { h } from 'vue';
-import { findChildrenVNodes } from '../../util';
+import { findChildrenVNodes } from '../../util.ts';
 
 export default {
   name: 'PfBreadcrumb',

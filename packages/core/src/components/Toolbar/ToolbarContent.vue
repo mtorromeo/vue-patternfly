@@ -20,7 +20,7 @@
 
 <script>
 import { ref, provide, markRaw } from 'vue';
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../util.ts';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';

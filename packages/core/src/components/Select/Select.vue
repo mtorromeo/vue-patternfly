@@ -109,7 +109,7 @@ import PfSelectToggle from './SelectToggle.vue';
 import PfDivider from '../Divider';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 
-import { useManagedProp, provideChildrenTracker, keyNavigation } from '../../use';
+import { useManagedProp, provideChildrenTracker, keyNavigation } from '../../use.ts';
 import { markRaw, provide } from 'vue';
 
 export default {

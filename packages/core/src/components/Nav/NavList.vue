@@ -13,7 +13,7 @@
 <script>
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { isElementInView } from '../../util';
+import { isElementInView } from '../../util.ts';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import { markRaw } from 'vue';
 

@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 import { h } from 'vue';
-import { getUniqueId } from '../../util';
+import { getUniqueId } from '../../util.ts';
 
 export default {
   name: 'PfNavGroup',

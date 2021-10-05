@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../util.ts';
 import { h } from 'vue';
 
 const variantTypes = {

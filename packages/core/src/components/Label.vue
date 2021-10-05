@@ -2,7 +2,7 @@
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
 import { h, mergeProps, ref, resolveDynamicComponent } from 'vue';
-import { useElementOverflow } from '../use';
+import { useElementOverflow } from '../use.ts';
 import PfCloseButton from './CloseButton';
 import PfTooltip from './Tooltip/Tooltip.vue';
 

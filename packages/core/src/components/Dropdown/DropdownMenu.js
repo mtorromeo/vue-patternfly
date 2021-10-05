@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 import { h, mergeProps, provide, computed, resolveDynamicComponent } from 'vue';
-import { provideChildrenTracker, keyNavigation } from '../../use';
+import { provideChildrenTracker, keyNavigation } from '../../use.ts';
 
 export default {
   name: 'PfDropdownMenu',

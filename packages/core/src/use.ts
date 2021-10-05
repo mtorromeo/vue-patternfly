@@ -1,16 +1,16 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance } from 'vue';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
-export function provideChildrenTracker(symbol) {
-  const items = ref([]);
+export function provideChildrenTracker(symbol: Symbol) {
+  const items = ref<Component[]>([]);
 
   provide(symbol || ChildrenTrackerSymbol, {
-    register: item => items.value.push(item),
+    register: (item: Component) => items.value.push(item),
 
-    unregister: item => {
+    unregister: (item: Component) => {
       const idx = items.value.findIndex(i => i === item);
       if (idx >= 0) {
         items.value.splice(idx, 1);
@@ -21,7 +21,7 @@ export function provideChildrenTracker(symbol) {
   return items;
 }
 
-export function useChildrenTracker(symbol) {
+export function useChildrenTracker(symbol: Symbol) {
   const tracker = inject(symbol || ChildrenTrackerSymbol, null);
 
   if (tracker) {
@@ -43,13 +43,13 @@ export function useChildrenTracker(symbol) {
   return tracker;
 }
 
-export function useFocused(getFocusElement, instance) {
+export function useFocused(getFocusElement: () => RendererNode, instance: ComponentInternalInstance) {
   if (!instance) {
     instance = getCurrentInstance();
   }
 
   if (!getFocusElement) {
-    getFocusElement = () => instance.el;
+    getFocusElement = () => instance.vnode.el;
   }
 
   const activeElement = useActiveElement();
@@ -67,25 +67,39 @@ export function useFocused(getFocusElement, instance) {
   return focused;
 }
 
-export function keyNavigation(itemsRef) {
+interface Disableable {
+  disabled: boolean;
+}
+
+interface Focusable {
+  focused: boolean;
+}
+
+interface Navigatable {
+  focusElement: () => HTMLElement;
+  enterTriggersArrowDown?: boolean;
+}
+
+export function keyNavigation<N extends Component & Navigatable, C extends Component & Disableable & Focusable, T extends C[] | C[][]>(itemsRef: T | Ref<T>): (this: N, e: KeyboardEvent, itemEl?: HTMLElement) => void {
   const enabledItems = () => {
     const items = unref(itemsRef);
-    const isMultiDimensional = Array.isArray(items[0]);
+    const isMultiDimensional = items.length && Array.isArray(items[0]);
     // ignore disabled items
     if (isMultiDimensional) {
-      return items.map(innerItems => innerItems.filter(item => !item.disabled));
+      const components = items as C[][];
+      return components.map(innerItems => innerItems.filter(item => !item.disabled));
     } else {
-      return items.filter(item => !item.disabled);
+      const components = items as C[];
+      return components.filter(item => !item.disabled);
     }
   };
 
-  const navigate = (index, innerIndex, position) => {
+  const navigate = (index: number, innerIndex: number, position: 'up' | 'down' | 'left' | 'right') => {
     const items = enabledItems();
 
     if (!Array.isArray(items) || !items.length) {
       return;
     }
-    const isMultiDimensional = Array.isArray(items[0]);
 
     let nextIndex = index;
     let nextInnerIndex = innerIndex;
@@ -118,20 +132,20 @@ export function keyNavigation(itemsRef) {
     }
 
     if (!items[nextIndex] ||
-      (isMultiDimensional && !items[nextIndex][nextInnerIndex])
+      (Array.isArray(items[nextIndex]) && !(items[nextIndex] as C[])[nextInnerIndex])
     ) {
-      navigate(nextIndex, nextInnerIndex, position, items);
+      navigate(nextIndex, nextInnerIndex, position);
       return;
     }
 
-    if (isMultiDimensional) {
-      items[nextIndex][nextInnerIndex].focused = true;
+    if (Array.isArray(items[nextIndex])) {
+      (items[nextIndex] as C[])[nextInnerIndex].focused = true;
     } else {
-      items[nextIndex].focused = true;
+      (items[nextIndex] as C).focused = true;
     }
   };
 
-  const onKeydown = function(e, itemEl) {
+  const onKeydown = function (this: N, e: KeyboardEvent, itemEl?: HTMLElement) {
     if (!itemEl) {
       itemEl = this.focusElement();
     }
@@ -139,7 +153,7 @@ export function keyNavigation(itemsRef) {
     const innerIndex = itemEl === e.target ? 0 : 1;
 
     const items = enabledItems();
-    const index = items.findIndex(i => i.focused);
+    const index = items.findIndex(i => !Array.isArray(i) && i.focused);
 
     if (e.key === 'ArrowUp') {
       navigate(index, innerIndex, 'up');
@@ -150,7 +164,9 @@ export function keyNavigation(itemsRef) {
     } else if (e.key === 'ArrowLeft') {
       navigate(index, innerIndex, 'left');
     } else if (e.key === 'Enter' || e.key === ' ') {
-      e.target.click();
+      if (e.target instanceof HTMLElement) {
+        e.target.click();
+      }
       if (this.enterTriggersArrowDown) {
         navigate(index, innerIndex, 'down');
       }
@@ -222,11 +238,11 @@ export function keyNavigation(itemsRef) {
   // };
 }
 
-export function isDefined(value) {
+export function isDefined(value: any): boolean {
   return value !== null && typeof value !== 'undefined';
 }
 
-export function useManagedProp(name, value = null, transform) {
+export function useManagedProp(name: string, value: any = null, transform?: (value: any) => any) {
   const instance = getCurrentInstance();
   if (!instance) {
     return;
@@ -250,7 +266,7 @@ export function useManagedProp(name, value = null, transform) {
   });
 }
 
-export function useElementOverflow(element) {
+export function useElementOverflow(element: Ref<HTMLElement>): Ref<boolean> {
   const overflowing = ref(false);
 
   const testElementOverflow = () => {

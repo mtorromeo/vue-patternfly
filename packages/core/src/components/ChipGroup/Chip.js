@@ -3,9 +3,9 @@ import styles from '@patternfly/react-styles/css/components/Chip/chip';
 import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
-import { getUniqueId } from '../../util';
+import { getUniqueId } from '../../util.ts';
 import { h, mergeProps, ref, resolveDynamicComponent } from 'vue';
-import { useElementOverflow } from '../../use';
+import { useElementOverflow } from '../../use.ts';
 
 export default {
   name: 'PfChip',

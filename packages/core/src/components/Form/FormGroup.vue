@@ -69,7 +69,7 @@
 <script>
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import { computed, markRaw } from 'vue';
-import { provideChildrenTracker } from '../../use';
+import { provideChildrenTracker } from '../../use.ts';
 import Void from '../Void';
 
 export default {

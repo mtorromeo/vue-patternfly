@@ -1,5 +1,5 @@
 import { h } from 'vue';
-import { useChildrenTracker } from '../../use';
+import { useChildrenTracker } from '../../use.ts';
 
 export default {
   name: 'PfFormSelectOption',
