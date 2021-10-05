@@ -30,7 +30,7 @@ const templateSourceCode = (src, args, argTypes) => {
       case 'string':
         return `${key}="${val}"`;
       case 'object':
-        if (val.__docgenInfo) {
+        if (val && val.__docgenInfo) {
           return `:${key}="${val.__docgenInfo.displayName}"`;
         }
       default:
