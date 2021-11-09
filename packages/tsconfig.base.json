@@ -5,6 +5,7 @@
       "es2016",
       "es2017",
       "es2018",
+      "es2019",
       "dom",
       "dom.iterable"
     ],
@@ -17,6 +18,7 @@
     "importHelpers": true,
     "strict": true,
     "strictNullChecks": false,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "allowJs": true
   }
 }
