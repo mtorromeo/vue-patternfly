@@ -1,45 +1,59 @@
 <template>
   <component
-    :is="component"
-    :type="type"
-    :aria-disabled="disabled || ariaDisabled"
-    :disabled="disabled"
-    :class="[styles.button, styles.modifiers[variant], {
-      [styles.modifiers.block]: block,
-      [styles.modifiers.disabled]: disabled,
-      [styles.modifiers.ariaDisabled]: ariaDisabled,
-      [styles.modifiers.active]: active,
-      [styles.modifiers.inline]: inline && variant === 'link',
-      [styles.modifiers.danger]: danger && (variant === 'link' || variant === 'secondary'),
-      [styles.modifiers.small]: small,
-      [styles.modifiers.displayLg]: large,
-      [styles.modifiers.progress]: loading !== null,
-      [styles.modifiers.inProgress]: loading,
-    }]"
-    :tabindex="tabIdx"
+    :is="to ? 'router-link' : 'void'"
+    v-slot="routerCtx"
+    :to="to"
+    :replace="replace"
+    custom
   >
-    <span
-      v-if="loading"
-      :class="styles.buttonProgress"
+    <component
+      v-bind="$attrs"
+      :is="buttonComponent"
+      :type="buttonComponent === 'button' ? type : null"
+      :disabled="effectiveDisabled || null"
+      :aria-disabled="effectiveDisabled || ariaDisabled"
+      :class="[styles.button, styles.modifiers[variant], {
+        [styles.modifiers.block]: block,
+        [styles.modifiers.disabled]: disabled,
+        [styles.modifiers.ariaDisabled]: ariaDisabled,
+        [styles.modifiers.active]: active || routerCtx?.isActive,
+        [styles.modifiers.inline]: inline && variant === 'link',
+        [styles.modifiers.danger]: danger && (variant === 'link' || variant === 'secondary'),
+        [styles.modifiers.small]: small,
+        [styles.modifiers.displayLg]: large,
+        [styles.modifiers.progress]: loading !== null,
+        [styles.modifiers.inProgress]: loading,
+      }]"
+      :aria-current="routerCtx?.isExactActive ? ariaCurrentValue : null"
+      :aria-pressed="active || routerCtx?.isActive || null"
+      :tabindex="tabIdx"
+      :role="buttonComponent !== 'button' ? 'button' : null"
+      :href="href || (buttonComponent === 'a' ? routerCtx?.href : null)"
+      @click="onClick($event, routerCtx?.navigate)"
     >
-      <pf-spinner
-        size="md"
-        :aria-valuetext="spinnerAriaValueText"
-      />
-    </span>
-    <span
-      v-if="variant !== 'plain' && $slots.icon && iconPosition === 'left'"
-      :class="[styles.buttonIcon, styles.modifiers.start]"
-    >
-      <slot name="icon" />
-    </span>
-    <slot />
-    <span
-      v-if="variant !== 'plain' && $slots.icon && iconPosition === 'right'"
-      :class="[styles.buttonIcon, styles.modifiers.end]"
-    >
-      <slot name="icon" />
-    </span>
+      <span
+        v-if="loading"
+        :class="styles.buttonProgress"
+      >
+        <pf-spinner
+          size="md"
+          :aria-valuetext="spinnerAriaValueText"
+        />
+      </span>
+      <span
+        v-if="variant !== 'plain' && $slots.icon && iconPosition === 'left'"
+        :class="[styles.buttonIcon, styles.modifiers.start]"
+      >
+        <slot name="icon" />
+      </span>
+      <slot />
+      <span
+        v-if="variant !== 'plain' && $slots.icon && iconPosition === 'right'"
+        :class="[styles.buttonIcon, styles.modifiers.end]"
+      >
+        <slot name="icon" />
+      </span>
+    </component>
   </component>
 </template>
 
@@ -48,11 +62,14 @@ import styles from '@patternfly/react-styles/css/components/Button/button';
 import { markRaw } from 'vue';
 
 import PfSpinner from './Spinner.vue';
+import Void from './Void.js';
 
 export default {
   name: 'PfButton',
 
-  components: { PfSpinner },
+  components: { PfSpinner, Void },
+
+  inheritAttrs: false,
 
   props: {
     /** type of button */
@@ -75,7 +92,7 @@ export default {
 
     component: {
       type: [String, Object],
-      default: 'button',
+      default: 'auto',
     },
 
     spinnerAriaValueText: {
@@ -110,7 +127,25 @@ export default {
       type: [Number, String],
       default: null,
     },
+
+    href: {
+      type: String,
+      default: null,
+    },
+
+    // router-link attributes
+    to: {
+      type: [String, Object],
+      default: null,
+    },
+    replace: Boolean,
+    ariaCurrentValue: {
+      type: String,
+      default: null,
+    },
   },
+
+  emits: ['click'],
 
   setup() {
     return {
@@ -119,6 +154,17 @@ export default {
   },
 
   computed: {
+    buttonComponent() {
+      if (this.component !== 'auto') {
+        return this.component;
+      }
+      return (this.href || this.to) ? 'a' : 'button';
+    },
+
+    effectiveDisabled() {
+      return this.loading || this.disabled;
+    },
+
     tabIdx() {
       if (this.tabindex) {
         return this.tabindex;
@@ -130,6 +176,22 @@ export default {
         return 0;
       }
       return null;
+    },
+  },
+
+  methods: {
+    onClick(e, navigate) {
+      if (this.effectiveDisabled) {
+        e.preventDefault();
+        return;
+      }
+
+      if (navigate) {
+        navigate(e);
+        return;
+      }
+
+      this.$emit('click', e);
     },
   },
 };
