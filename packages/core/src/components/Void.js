@@ -1,6 +1,8 @@
 export default {
   name: 'Void',
 
+  inheritAttrs: false,
+
   props: {
     alter: {
       type: Function,
@@ -38,10 +40,6 @@ export default {
       children = this.alter(children);
     }
 
-    if (children.length !== 1) {
-      // eslint-disable-next-line no-unused-vars
-      const _ = this.$attrs;
-    }
     return children;
   },
 };
