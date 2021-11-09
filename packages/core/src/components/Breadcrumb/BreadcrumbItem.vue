@@ -39,7 +39,7 @@ export default {
     /** HREF for breadcrumb link. */
     href: {
       type: String,
-      default: null,
+      default: undefined,
     },
 
     /** router-link destination for breadcrumb link. */
