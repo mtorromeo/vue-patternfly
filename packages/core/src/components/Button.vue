@@ -10,7 +10,7 @@
       v-bind="$attrs"
       :is="buttonComponent"
       :type="buttonComponent === 'button' ? type : null"
-      :disabled="effectiveDisabled || null"
+      :disabled="effectiveDisabled"
       :aria-disabled="effectiveDisabled || ariaDisabled"
       :class="[styles.button, styles.modifiers[variant], {
         [styles.modifiers.block]: block,
@@ -162,7 +162,7 @@ export default {
     },
 
     effectiveDisabled() {
-      return this.loading || this.disabled;
+      return this.loading || this.disabled || null;
     },
 
     tabIdx() {
