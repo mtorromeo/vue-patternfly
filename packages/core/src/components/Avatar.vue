@@ -1,5 +1,5 @@
 <script>
-import {h, mergeProps} from 'vue';
+import { h, mergeProps } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Avatar/avatar';
 
 export default {

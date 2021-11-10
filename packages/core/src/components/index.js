@@ -1,3 +1,4 @@
+export { default as PfAvatar } from './Avatar.vue';
 export { default as PfBadge } from './Badge';
 export { default as PfBackdrop } from './Backdrop';
 export { default as PfBrand } from './Brand';
