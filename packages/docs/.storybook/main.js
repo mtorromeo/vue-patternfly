@@ -16,8 +16,8 @@ module.exports = {
   },
 
   async viteFinal(config, { configType }) {
-    config.base = './';
     if (configType === "DEVELOPMENT") {
+      // customize the Vite config here
       config.server.port = 6001;
       config.server.https = false;
       config.server.host = true;
@@ -26,6 +26,8 @@ module.exports = {
         protocol: "ws",
       };
     }
+
+    // return the customized config
     return config;
   },
 }
