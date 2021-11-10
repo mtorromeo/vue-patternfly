@@ -9,8 +9,8 @@ import {
   PfBadgeToggle,
   PfDropdownToggle,
   PfDropdownToggleCheckbox,
-} from '@vue-patternfly/core';
-import PfAvatar from '@vue-patternfly/core';
+} from '@core/components/Dropdown/index.js';
+import PfAvatar from '@core/components/Avatar.vue';
 import PfAngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 import PfBellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import PfCubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
@@ -261,7 +261,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### Basic
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Basic" args={{
     text: 'Dropdown',
     auto_focus_action: false,
@@ -274,7 +274,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### With initial selection
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With initial selection" args={{
     text: 'Dropdown',
     auto_focus_action: true,
@@ -285,7 +285,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### With groups
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With groups" args={{
     text: 'Dropdown',
     auto_focus_action: false,
@@ -296,7 +296,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### With badge
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With badge" args={{
     text: 'Dropdown',
     auto_focus_action: false,
@@ -307,7 +307,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### Split button
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Split button" args={{
     text: 'Dropdown',
     auto_focus_action: false,
@@ -320,7 +320,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### Split button with text
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Split button with text" args={{
     text: 'Dropdown',
     auto_focus_action: false,
@@ -333,7 +333,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### Split button third state
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Split button third state" args={{
     text: 'Dropdown',
     auto_focus_action: false,
@@ -346,7 +346,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### With descriptions
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With descriptions" args={{
     text: 'Dropdown',
     auto_focus_action: false,
@@ -357,7 +357,7 @@ export const WithImageAndText = ({ ...args }) => ({
 
 ### With image and text
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With image and text" args={{
     text: 'Dropdown',
     auto_focus_action: false,

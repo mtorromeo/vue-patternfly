@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfButton from '@vue-patternfly/core';
+import PfButton from '@core/components/Button.vue';
 
 export const Template = ({ sample_label, ...args }) => ({
   components: { PfButton },
@@ -36,7 +36,7 @@ export const Template = ({ sample_label, ...args }) => ({
 
 ### Primary
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Primary" args={{
     sample_label: 'Button',
   }}>
@@ -48,7 +48,7 @@ export const Template = ({ sample_label, ...args }) => ({
 
 ### Secondary
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Secondary" args={{
     sample_label: 'Button',
     variant: 'secondary',
@@ -59,7 +59,7 @@ export const Template = ({ sample_label, ...args }) => ({
 
 ### Large
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Large" args={{
     sample_label: 'Button',
     large: true,
@@ -70,7 +70,7 @@ export const Template = ({ sample_label, ...args }) => ({
 
 ### Small
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Small" args={{
     sample_label: 'Button',
     small: true,

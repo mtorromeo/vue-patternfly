@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfCheckbox from '@vue-patternfly/core';
+import PfCheckbox from '@core/components/Checkbox.vue';
 
 export const Template = (args) => ({
   components: { PfCheckbox },
@@ -19,7 +19,7 @@ export const Template = (args) => ({
 
 ### Default
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Default" args={{
     id: 'basic-checkbox',
     label: 'Basic checkbox',
@@ -32,7 +32,7 @@ export const Template = (args) => ({
 
 ### With description
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With description" args={{
     id: 'checkbox-with-description',
     label: 'Checkbox with description',
@@ -44,7 +44,7 @@ export const Template = (args) => ({
 
 ### With description and body
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With description and body" args={{
     id: 'checkbox-with-description-and-body',
     label: 'Checkbox with description and body',

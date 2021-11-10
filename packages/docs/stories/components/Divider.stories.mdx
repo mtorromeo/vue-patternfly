@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfDivider from '@vue-patternfly/core';
+import PfDivider from '@core/components/Divider.js';
 
 export const Template = (args) => ({
   components: { PfDivider },
@@ -17,7 +17,7 @@ export const Template = (args) => ({
 
 ## Examples
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Divider">
     {Template.bind({})}
   </Story>

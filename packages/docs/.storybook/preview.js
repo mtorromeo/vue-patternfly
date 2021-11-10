@@ -64,7 +64,7 @@ export const parameters = {
         src,
       );
       if (match) {
-        return templateSourceCode(dedent(match[2].replace(/^\s*\\$/mg, '')), ctx.args, ctx.argTypes);
+        return templateSourceCode(dedent(match[2].replace(/^\s*\\$/mg, '')), ctx.initialArgs, ctx.argTypes);
       }
       return src;
     },
@@ -128,29 +128,3 @@ export const parameters = {
     },
   },
 };
-
-// REMOVE IN STORYBOOK 6.3
-window.addEventListener('load', () => {
-  showCodeSamples();
-
-  let loc = window.location.href;
-  window.setInterval(() => {
-    const newLoc = window.location.href;
-
-    if (newLoc !== loc) {
-      loc = newLoc;
-      showCodeSamples();
-    }
-  }, 500);
-});
-
-function showCodeSamples() {
-  try {
-    [...document.querySelectorAll('.docs-story button')]
-      .filter((el) => el.textContent === 'Show code')
-      .forEach((btn) => btn.click());
-  } catch (e) {
-    console.warn(e);
-  }
-}
-// END REMOVE IN STORYBOOK 6.3

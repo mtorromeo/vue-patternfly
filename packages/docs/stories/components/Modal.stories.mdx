@@ -1,8 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfModal from '@vue-patternfly/core';
-import PfButton from '@vue-patternfly/core';
-import PfTooltip from '@vue-patternfly/core';
+import { PfModal } from '@core/components/Modal/index.js';
+import PfButton from '@core/components/Button.vue';
+import { PfTooltip } from '@core/components/Tooltip/index.js';
 import PfHelpIcon from '@vue-patternfly/icons/dist/esm/icons/help-icon';
 import { ref } from 'vue';
 
@@ -93,7 +93,7 @@ export const WithHelp = ({ sample_content, ...args }) => ({
 
 ### Default
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Default" args={{
     title: 'Simple modal header',
     sample_content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -110,7 +110,7 @@ export const WithHelp = ({ sample_content, ...args }) => ({
 
 ### With description
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With description" args={{
     title: 'Simple modal header',
     sample_content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -126,7 +126,7 @@ export const WithHelp = ({ sample_content, ...args }) => ({
 
 ### With help
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With help" args={{
     title: 'Simple modal header',
     sample_content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore

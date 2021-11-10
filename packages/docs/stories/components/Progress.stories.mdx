@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfProgress from '@vue-patternfly/core';
+import PfProgress from '@core/components/Progress.vue';
 
 export const Template = (args) => ({
   components: { PfProgress },
@@ -23,7 +23,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Basic
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Basic" args={{
     value: 33,
     title: 'Title',
@@ -36,7 +36,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Small
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Small" args={{
     value: 33,
     title: 'Title',
@@ -48,7 +48,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Large
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Large" args={{
     value: 33,
     title: 'Title',
@@ -60,7 +60,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Outside
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Outside" args={{
     value: 33,
     title: 'Title',
@@ -72,7 +72,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Inside
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Inside" args={{
     value: 33,
     title: 'Title',
@@ -84,7 +84,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Success
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Success" args={{
     value: 33,
     title: 'Title',
@@ -96,7 +96,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Failure
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Failure" args={{
     value: 33,
     title: 'Title',
@@ -108,7 +108,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Warning
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Warning" args={{
     value: 33,
     title: 'Title',
@@ -120,7 +120,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Inside success
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Inside success" args={{
     value: 33,
     title: 'Title',
@@ -133,7 +133,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Outside failure
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Outside failure" args={{
     value: 33,
     title: 'Title',
@@ -146,7 +146,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Single line
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Single line" args={{
     value: 33,
     ariaTitle: 'Title',
@@ -158,7 +158,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Without measure
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Without measure" args={{
     value: 33,
     title: 'Title',
@@ -170,7 +170,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Failure without measure
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Failure without measure" args={{
     value: 33,
     title: 'Title',
@@ -183,7 +183,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Finite step
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Finite step" args={{
     title: 'Title',
     value: 2,
@@ -197,7 +197,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Progress (step instruction)
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Progress (step instruction)" args={{
     title: 'Title',
     value: 2,
@@ -211,7 +211,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/progress/d
 
 ### Truncate title
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Truncate title" args={{
     value: 33,
     title: 'Very very very very very very very very very very very long title which should be truncated if it does not fit onto one line above the progress bar',

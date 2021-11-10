@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import { PfChip } from '@vue-patternfly/core';
-import PfBadge from '@vue-patternfly/core';
+import { PfChip } from '@core/components/ChipGroup/index.js';
+import PfBadge from '@core/components/Badge.js';
 
 export const Template = ({ sample_label, ...args }) => ({
   components: { PfChip },
@@ -35,7 +35,7 @@ export const WithBadge = ({ sample_label, ...args }) => ({
 
 ### Simple
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Simple" args={{
     sample_label: 'Chip',
   }}>
@@ -47,7 +47,7 @@ export const WithBadge = ({ sample_label, ...args }) => ({
 
 ### Long
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Long" args={{
     sample_label: 'Really long chip that goes on and on',
   }}>
@@ -57,7 +57,7 @@ export const WithBadge = ({ sample_label, ...args }) => ({
 
 ### With badge
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With badge" args={{
     sample_label: 'Chip',
   }}>

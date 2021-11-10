@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfRadio from '@vue-patternfly/core';
+import PfRadio from '@core/components/Radio.vue';
 
 export const Template = (args) => ({
   components: { PfRadio },
@@ -19,7 +19,7 @@ export const Template = (args) => ({
 
 ### Basic
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Basic" args={{
     id: 'basic-radio',
     label: 'Basic radio',
@@ -32,7 +32,7 @@ export const Template = (args) => ({
 
 ### With description
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With description" args={{
     id: 'radio-with-description',
     label: 'Radio with description',
@@ -44,7 +44,7 @@ export const Template = (args) => ({
 
 ### With description and body
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With description and body" args={{
     id: 'radio-with-description-and-body',
     label: 'Radio with description and body',

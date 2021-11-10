@@ -3,8 +3,8 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import {
   PfInputGroup,
   PfInputGroupText,
-} from '@vue-patternfly/core';
-import PfTextInput from '@vue-patternfly/core';
+} from '@core/components/InputGroup/index.js';
+import PfTextInput from '@core/components/TextInput.vue';
 import PfAtIcon from '../../../icons/dist/esm/icons/at-icon';
 import PfSearchIcon from '../../../icons/dist/esm/icons/search-icon';
 
@@ -60,7 +60,7 @@ export const WithPostIcon = (args) => ({
 
 ### Default
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Default">
     {Default.bind({})}
   </Story>
@@ -70,7 +70,7 @@ export const WithPostIcon = (args) => ({
 
 ### With pre icon
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With pre icon">
     {WithPreIcon.bind({})}
   </Story>
@@ -78,7 +78,7 @@ export const WithPostIcon = (args) => ({
 
 ### With post icon
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With post icon">
     {WithPostIcon.bind({})}
   </Story>

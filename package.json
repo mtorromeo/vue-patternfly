@@ -11,11 +11,17 @@
     "pub": "npm publish --access public -w packages/core -w packages/icons"
   },
   "devDependencies": {
-    "eslint": "^7.19.0",
+    "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-vue": "^7.5.0"
-  }
+    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-vue": "^7.20.0"
+  },
+  "resolutions": {
+    "@storybook/core-event": "6.4.0-rc.5",
+    "@storybook/csf-tools": "6.4.0-rc.5",
+    "@storybook/source-loader": "6.4.0-rc.5"
+  },
+  "packageManager": "yarn@3.1.0"
 }

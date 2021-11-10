@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import { PfSplit, PfSplitItem } from '@vue-patternfly/core';
+import { PfSplit, PfSplitItem } from '@core/layouts/Split/index.js';
 
 export const Template = (args) => ({
   components: { PfSplit, PfSplitItem },
@@ -27,7 +27,7 @@ export const Template = (args) => ({
 
 The dashed lines are not part of the component and are only for visual separation in the documentation.
 
-<Canvas>
+<Canvas withSource="open">
   <Story
     name="Split"
     args={{gutter: true}}

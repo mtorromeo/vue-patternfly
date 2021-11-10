@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfSwitch from '@vue-patternfly/core';
+import PfSwitch from '@core/components/Switch.vue';
 
 export const Template = (args) => ({
   components: { PfSwitch },
@@ -19,7 +19,7 @@ export const Template = (args) => ({
 
 ### Default
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Default">
     {Template.bind({})}
   </Story>
@@ -29,7 +29,7 @@ export const Template = (args) => ({
 
 ### With text
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="With text" args={{
     label: 'Switch ON',
     labelOff: 'Switch OFF',

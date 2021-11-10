@@ -6,7 +6,7 @@ import {
   PfTabContent,
   PfTabTitleText,
   PfTabTitleIcon,
-} from '@vue-patternfly/core';
+} from '@core/components/Tabs/index.js';
 import { ref } from 'vue';
 
 
@@ -57,7 +57,7 @@ export const Default = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Default">
     {Default.bind({})}
   </Story>
@@ -127,7 +127,7 @@ export const IconsAndText = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Icons and text">
     {IconsAndText.bind({})}
   </Story>
@@ -213,7 +213,7 @@ export const TabsWithSubTabs = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Tabs with sub tabs" args={{defaultActiveKey: '0'}}>
     {TabsWithSubTabs.bind({})}
   </Story>
@@ -245,7 +245,7 @@ export const SeparateContent = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Separate content" args={{defaultActiveKey: '0'}}>
     {SeparateContent.bind({})}
   </Story>

@@ -5,11 +5,11 @@ import {
   PfFormGroup,
   PfFormFieldGroup,
   PfFormFieldGroupHeader,
-} from '@vue-patternfly/core';
-import PfPopover from '@vue-patternfly/core';
-import PfButton from '@vue-patternfly/core';
-import PfTextInput from '@vue-patternfly/core';
-import PfTextarea from '@vue-patternfly/core';
+} from '@core/components/Form/index.js';
+import PfPopover from '@core/components/Popover.vue';
+import PfButton from '@core/components/Button.vue';
+import PfTextInput from '@core/components/TextInput.vue';
+import PfTextarea from '@core/components/Textarea.js';
 import PfHelpIcon from '@vue-patternfly/icons/dist/esm/icons/help-icon';
 import PfTrashIcon from '@vue-patternfly/icons/dist/esm/icons/trash-icon';
 import PfExclamationCircleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon';
@@ -40,7 +40,7 @@ See [common differences from patternfly-react](/story/intro--page#common-differe
 ### Basic
 
 export const Basic = (args) => ({
-  components: { PfForm, PfFormGroup, PfPopover, PfButton, PfHelpIcon, PfTextInput },
+  components: { PfForm, PfFormGroup, PfPopover, PfHelpIcon, PfTextInput },
   setup() {
     return { args };
   },
@@ -61,13 +61,14 @@ export const Basic = (args) => ({
               </div>
             </template>
 \
-            <pf-button
+            <button
+              type="button"
               aria-label="More info for name field"
               aria-describedby="simple-form-name-01"
               className="pf-c-form__group-label-help"
             >
               <pf-help-icon no-vertical-align />
-            </pf-button>
+            </button>
           </pf-popover>
         </template>
 \
@@ -77,7 +78,7 @@ export const Basic = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Basic">
     {Basic.bind({})}
   </Story>
@@ -88,7 +89,7 @@ export const Basic = (args) => ({
 ### Invalid with form alert
 
 export const InvalidWithFormAlert = (args) => ({
-  components: { PfForm, PfFormGroup, PfPopover, PfButton, PfExclamationCircleIcon, PfTextInput, PfTextarea },
+  components: { PfForm, PfFormGroup, PfPopover, PfExclamationCircleIcon, PfTextInput, PfTextarea },
   setup() {
     const age = ref('Five');
     const description = ref('Nice description\nmy email: mail@mail.com');
@@ -119,7 +120,7 @@ export const InvalidWithFormAlert = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Invalid with form alert">
     {InvalidWithFormAlert.bind({})}
   </Story>
@@ -209,7 +210,7 @@ export const FieldGroup = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Field group">
     {FieldGroup.bind({})}
   </Story>

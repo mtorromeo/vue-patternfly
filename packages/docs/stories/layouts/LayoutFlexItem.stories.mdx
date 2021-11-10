@@ -1,8 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { markRaw } from 'vue';
-import { PfFlex, PfFlexItem } from '@vue-patternfly/core';
-import PfSkeleton from '@vue-patternfly/core';
+import { PfFlex, PfFlexItem } from '@core/layouts/Flex/index.js';
+import PfSkeleton from '@core/components/Skeleton.vue';
 
 export const Template = (args) => ({
   components: { PfFlex, PfFlexItem },
@@ -25,7 +25,7 @@ export const Template = (args) => ({
 
 The dashed lines are not part of the component and are only for visual separation in the documentation. The highlighted item with green lines is the one controlled by the story.
 
-<Canvas>
+<Canvas withSource="open">
   <Story
     name="Flex Item"
     decorators={[

@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfSkeleton from '@vue-patternfly/core';
+import PfSkeleton from '@core/components/Skeleton.vue';
 
 export const Template = (args) => ({
   components: { PfSkeleton },
@@ -29,7 +29,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/skeleton/d
 
 ### Basic
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Basic">
     {Template.bind({})}
   </Story>
@@ -39,7 +39,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/skeleton/d
 
 ### Percentage widths
 
-<Canvas>
+<Canvas withSource="open">
   <Story
     name="Percentage widths"
     args={{
@@ -67,7 +67,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/skeleton/d
 
 ### Percentage heights
 
-<Canvas>
+<Canvas withSource="open">
   <Story
     name="Percentage heights"
     args={{

@@ -1,8 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { markRaw } from 'vue';
-import { PfGrid, PfGridItem } from '@vue-patternfly/core';
-import PfSkeleton from '@vue-patternfly/core';
+import { PfGrid, PfGridItem } from '@core/layouts/Grid/index.js';
+import PfSkeleton from '@core/components/Skeleton.vue';
 
 export const Template = (args) => ({
   components: { PfGrid, PfGridItem },
@@ -27,7 +27,7 @@ export const Template = (args) => ({
 
 The dashed lines are not part of the component and are only for visual separation in the documentation. The highlighted item with green lines is the one controlled by the story.
 
-<Canvas>
+<Canvas withSource="open">
   <Story
     name="Basic"
     args={{
@@ -87,7 +87,7 @@ The dashed lines are not part of the component and are only for visual separatio
 
 We can use `PfSkeleton` as the `component` prop of each `pf-grid-item` to create a skeleton layout.
 
-<Canvas>
+<Canvas withSource="open">
   <Story
     name="Skeleton items"
     args={{

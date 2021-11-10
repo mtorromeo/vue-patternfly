@@ -3,7 +3,7 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import {
   PfChip,
   PfChipGroup,
-} from '@vue-patternfly/core';
+} from '@core/components/ChipGroup/index.js';
 
 export const Template = ({
   sample_chip1,
@@ -52,7 +52,7 @@ export const chips = {
 
 ### Simple inline
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Simple inline" args={{
     ...chips,
   }}>
@@ -64,7 +64,7 @@ export const chips = {
 
 ### Simple category
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Simple category" args={{
     ...chips,
     category: 'Category One',
@@ -75,7 +75,7 @@ export const chips = {
 
 ### Category removable
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Category removable" args={{
     ...chips,
     category: 'Category has a very long name',

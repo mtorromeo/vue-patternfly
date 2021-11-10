@@ -5,14 +5,14 @@ import {
   PfHintBody,
   PfHintFooter,
   PfHintTitle,
-} from '@vue-patternfly/core';
+} from '@core/components/Hint/index.js';
 import {
   PfDropdown,
   PfDropdownItem,
   PfDropdownSeparator,
   PfKebabToggle,
-} from '@vue-patternfly/core';
-import PfButton from '@vue-patternfly/core';
+} from '@core/components/Dropdown/index.js';
+import PfButton from '@core/components/Button.vue';
 
 
 <Meta title="Components/Hint" component={PfHint} subcomponents={{
@@ -68,7 +68,7 @@ export const Basic = ({ ...args }) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Hint">
     {Basic.bind({})}
   </Story>

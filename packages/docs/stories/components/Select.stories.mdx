@@ -4,8 +4,8 @@ import {
   PfSelect,
   PfSelectOption,
   PfSelectGroup,
-} from '@vue-patternfly/core';
-import PfDivider from '@vue-patternfly/core';
+} from '@core/components/Select/index.js';
+import PfDivider from '@core/components/Divider.js';
 import { reactive } from 'vue';
 
 
@@ -55,7 +55,7 @@ export const Single = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Single">
     {Single.bind({})}
   </Story>
@@ -82,7 +82,7 @@ export const Ungrouped = ({divider, ...args}) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Single with description">
     {Ungrouped.bind({})}
   </Story>
@@ -114,7 +114,7 @@ export const Grouped = ({divider, ...args}) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Grouped single" args={{
     placeholder: 'Filter by status',
     divider: true,
@@ -125,7 +125,7 @@ export const Grouped = ({divider, ...args}) => ({
 
 ### Checkbox input
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Checkbox input" args={{
     placeholder: 'Filter by status',
     variant: 'checkbox',
@@ -136,7 +136,7 @@ export const Grouped = ({divider, ...args}) => ({
 
 ### Checkbox input with counts
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Checkbox input with counts" args={{
     placeholder: 'Filter by status',
     variant: 'checkbox',
@@ -147,7 +147,7 @@ export const Grouped = ({divider, ...args}) => ({
 
 ### Checkbox input no badge
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Checkbox input no badge" args={{
     placeholder: 'Filter by status',
     variant: 'checkbox',
@@ -159,7 +159,7 @@ export const Grouped = ({divider, ...args}) => ({
 
 ### Grouped checkbox input
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Grouped checkbox input" args={{
     placeholder: 'Filter by status',
     variant: 'checkbox',
@@ -170,7 +170,7 @@ export const Grouped = ({divider, ...args}) => ({
 
 ### Grouped single with filtering
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Grouped single with filtering" args={{
     placeholder: 'Filter by status',
     variant: 'checkbox',
@@ -217,7 +217,7 @@ export const Favorites = (args) => ({
   `,
 });
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Favorites" args={{
     placeholder: 'Filter by status',
   }}>

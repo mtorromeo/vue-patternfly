@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import { PfLevel, PfLevelItem } from '@vue-patternfly/core';
+import { PfLevel, PfLevelItem } from '@core/layouts/Level/index.js';
 
 export const Template = (args) => ({
   components: { PfLevel, PfLevelItem },
@@ -25,7 +25,7 @@ export const Template = (args) => ({
 
 The dashed lines are not part of the component and are only for visual separation in the documentation.
 
-<Canvas>
+<Canvas withSource="open">
   <Story
     name="Level"
     args={{gutter: true}}

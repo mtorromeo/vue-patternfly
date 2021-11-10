@@ -5,9 +5,9 @@ import {
   PfEmptyStateBody,
   PfEmptyStateIcon,
   PfEmptyStateSecondaryActions,
-} from '@vue-patternfly/core';
-import PfTitle from '@vue-patternfly/core';
-import PfButton from '@vue-patternfly/core';
+} from '@core/components/EmptyState/index.js';
+import PfTitle from '@core/components/Title.vue';
+import PfButton from '@core/components/Button.vue';
 import PfCubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
 
 export const Template = (args) => ({
@@ -67,7 +67,7 @@ export const Template = (args) => ({
 
 ## Examples
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Empty State">
     {Template.bind({})}
   </Story>

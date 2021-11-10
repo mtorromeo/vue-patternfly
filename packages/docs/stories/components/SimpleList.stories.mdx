@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import { PfSimpleList, PfSimpleListGroup, PfSimpleListItem } from '@vue-patternfly/core';
+import { PfSimpleList, PfSimpleListGroup, PfSimpleListItem } from '@core/components/SimpleList/index.js';
 
 export const Simple = (args) => ({
   components: { PfSimpleList, PfSimpleListItem },
@@ -70,7 +70,7 @@ See [common differences from patternfly-react](/story/intro--page#common-differe
 
 ### Simple
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Simple">
     {Simple.bind({})}
   </Story>
@@ -80,7 +80,7 @@ See [common differences from patternfly-react](/story/intro--page#common-differe
 
 ### List as form element
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="List as form element" args={{
     name: 'selection',
     sample_selection: '3',
@@ -91,7 +91,7 @@ See [common differences from patternfly-react](/story/intro--page#common-differe
 
 ### Grouped
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Grouped">
     {Grouped.bind({})}
   </Story>

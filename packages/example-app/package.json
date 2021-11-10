@@ -8,12 +8,12 @@
   },
   "dependencies": {
     "@vue-patternfly/core": "^0.1.0-alpha.7",
-    "vue": "^3.0.5",
-    "vue-router": "4"
+    "vue": "^3.2.22",
+    "vue-router": "4.0.12"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.1.2",
-    "@vue/compiler-sfc": "^3.0.5",
-    "vite": "^2.3.7"
+    "@vitejs/plugin-vue": "^1.10.0",
+    "@vue/compiler-sfc": "^3.2.22",
+    "vite": "^2.6.14"
   }
 }

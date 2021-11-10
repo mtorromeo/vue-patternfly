@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import PfBadge from '@vue-patternfly/core';
+import PfBadge from '@core/components/Badge.js';
 
 export const Template = ({ sample_label, ...args }) => ({
   components: { PfBadge },
@@ -17,7 +17,7 @@ export const Template = ({ sample_label, ...args }) => ({
 
 ## Examples
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Badge" args={{
     sample_label: '24',
   }}>

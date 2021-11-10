@@ -5,10 +5,10 @@ import {
   PfToolbarContent,
   PfToolbarGroup,
   PfToolbarItem,
-} from '@vue-patternfly/core';
-import { PfInputGroup } from '@vue-patternfly/core';
-import PfTextInput from '@vue-patternfly/core';
-import PfButton from '@vue-patternfly/core';
+} from '@core/components/Toolbar/index.js';
+import PfInputGroup from '@core/components/InputGroup/InputGroup.vue';
+import PfTextInput from '@core/components/TextInput.vue';
+import PfButton from '@core/components/Button.vue';
 import PfSearchIcon from '@vue-patternfly/icons/dist/esm/icons/search-icon';
 
 export const Simple = (args) => ({
@@ -134,7 +134,7 @@ export const AdjustingItemSpacers = (args) => ({
 
 ### Default
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Simple">
     {Simple.bind({})}
   </Story>
@@ -144,7 +144,7 @@ export const AdjustingItemSpacers = (args) => ({
 
 ### Adjusting toolbar inset
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Adjusting toolbar inset" args={{
     inset: 'none',
     'inset-md': 'sm',
@@ -157,7 +157,7 @@ export const AdjustingItemSpacers = (args) => ({
 
 ### Adjusting item spacers
 
-<Canvas>
+<Canvas withSource="open">
   <Story name="Adjusting item spacers" args={{
     inset: 'none',
     'inset-md': 'sm',
