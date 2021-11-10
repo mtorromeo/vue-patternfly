@@ -1,7 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { PfText, PfTextContent } from '@vue-patternfly/core';
-import { TextVariants } from '@vue-patternfly/core';
 
 export const Text = ({ sample_title, ...args }) => ({
   components: { PfText },
@@ -62,7 +61,19 @@ export const TextVisited = (args) => ({
       control: {
         type: 'select',
       },
-      options: TextVariants,
+      options: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'p',
+        'a',
+        'small',
+        'blockquote',
+        'pre',
+      ],
     },
   }} />
 
