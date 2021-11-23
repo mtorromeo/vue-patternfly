@@ -5,6 +5,7 @@ import {
   PfFormGroup,
   PfFormFieldGroup,
   PfFormFieldGroupHeader,
+  PfActionGroup,
 } from '@core/components/Form/index.js';
 import PfPopover from '@core/components/Popover.vue';
 import PfButton from '@core/components/Button.vue';
@@ -19,6 +20,7 @@ import { ref } from 'vue';
     PfFormGroup,
     PfFormFieldGroup,
     PfFormFieldGroupHeader,
+    PfActionGroup,
   }} />
 
 # PfForm `pf-form`
@@ -40,7 +42,7 @@ See [common differences from patternfly-react](/story/intro--page#common-differe
 ### Basic
 
 export const Basic = (args) => ({
-  components: { PfForm, PfFormGroup, PfPopover, PfHelpIcon, PfTextInput },
+  components: { PfForm, PfActionGroup, PfButton, PfFormGroup, PfPopover, PfHelpIcon, PfTextInput },
   setup() {
     return { args };
   },
@@ -74,6 +76,10 @@ export const Basic = (args) => ({
 \
         <pf-text-input required id="simple-form-name-01" name="simple-form-name-01" aria-describedby="simple-form-name-01-helper" />
       </pf-form-group>
+      <pf-action-group>
+        <pf-button variant="primary">Submit</pf-button>
+        <pf-button variant="link">Cancel</pf-button>
+      </pf-action-group>
     </pf-form>
   `,
 });
