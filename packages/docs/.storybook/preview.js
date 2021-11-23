@@ -56,6 +56,19 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  options: {
+    storySort: (a, b) => {
+      a = a[1];
+      b = b[1];
+      if (a.kind.startsWith('Introduction/') && !b.kind.startsWith('Introduction/')) {
+        return -1;
+      }
+      if (b.kind.startsWith('Introduction/') && !a.kind.startsWith('Introduction/')) {
+        return 1;
+      }
+      return a.kind === b.kind ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true })
+    },
+  },
   docs: {
     state: 'open',
 
