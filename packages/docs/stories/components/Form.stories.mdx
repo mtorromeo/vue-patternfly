@@ -34,6 +34,7 @@ See full [Design guidelines](https://www.patternfly.org/v4/components/form/desig
 ## Differences from patternfly-react
 - The `novalidate` attribute is not implicitly applied to the form but you can still add it yourself. This makes `pf-form` usable with the native form validation technique.
 - Allowed overriding the `component` used by the form. A typical use-case is when you have a parent form tag already present and you only need `pf-form` to apply the patternfly layout to its children.
+- There is no FormHelperText component. You can instead use the `helper-text` prop or the `helperText` and `helperTextIcon` slots on `pf-form-group`.
 
 See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
 
@@ -76,6 +77,7 @@ export const Basic = (args) => ({
 \
         <pf-text-input required id="simple-form-name-01" name="simple-form-name-01" aria-describedby="simple-form-name-01-helper" />
       </pf-form-group>
+\
       <pf-action-group>
         <pf-button variant="primary">Submit</pf-button>
         <pf-button variant="link">Cancel</pf-button>
@@ -105,7 +107,11 @@ export const InvalidWithFormAlert = (args) => ({
     <pf-form v-bind="args">
       <pf-form-group label="Age" label-info="Additional label info" field-id="age" helperTextInvalid="Age has to be a number">
         <template v-if="age === ''" #helperText>
-          <pf-exclamation-circle-icon /> Please enter your age
+          Please enter your age
+        </template>
+\
+        <template #helperTextIcon>
+          <pf-exclamation-circle-icon />
         </template>
 \
         <template #helperTextInvalidIcon>

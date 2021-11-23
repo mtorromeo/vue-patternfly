@@ -52,7 +52,7 @@
           </slot>
         </template>
 
-        <template v-else>
+        <template v-else-if="helperText || $slots.helperText">
           <span v-if="$slots.helperTextIcon" :class="styles.formHelperTextIcon">
             <slot name="helperTextIcon" />
           </span>
@@ -114,7 +114,7 @@ export default {
     /** Removes top spacer from label. */
     noPaddingTop: Boolean,
 
-    /** Helper text regarding the field. It can be a simple text or an object. */
+    /** Helper text regarding the field. */
     helperText: {
       type: String,
       default: '',
@@ -123,7 +123,7 @@ export default {
     /** Flag to position the helper text before the field. False by default */
     helperTextBeforeField: Boolean,
 
-    /** Helper text after the field when the field is invalid. It can be a simple text or an object. */
+    /** Helper text after the field when the field is invalid. */
     helperTextInvalid: {
       type: String,
       default: '',
