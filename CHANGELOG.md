@@ -1,19 +1,44 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [0.1.0-beta.1] - 2021-11-24
 
 ### Bug Fixes
 
+- *(Avatar)* Fixed export of the component
+- *(docs)* Set relative path for assets and downgraded storybook to stable
+- *(docs)* Updated imports of components and updated storybook
+- *(docs)* Restored introduction as first page
+
+### Documentation
+
+- *(Form)* Clarified helperText usage- Removed unresolved export of TextVariants
+
+
+### Features
+- ActionGroup component
+- HelperText component
+- NotificationBadge component
+
+
+## [0.1.0-alpha.13] - 2021-11-10
+
+### Bug Fixes
+
+- *(BreadcrumbItem)* Let router-link set the href of the link
+- *(Void)* Prevent warnings for inherited attributes being passed on to children
+- *(build)* Set correct ts target for use of Object.fromEntries and Array.flat
 - *(docs)* Renamed links
 - *(docs)* Prevent error accessing docgeninfo on null
 
 ### Documentation
 - Layout examples using skeleton as items' component
+- Migrated storybook builder to vite
 
 
 ### Features
-- Skeleton component
+
+- *(Button)* Allow use of buttons as router-links- Skeleton component
 - Allowed all unconstrained `component` props to accept Objects
 
 
@@ -23,6 +48,7 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
+- *(Button)* Simplified disabled attribute handling
 - *(Select)* Made some progress
 - *(Select)* Made some progress- Initial typescript conversion of use.js and util.js
 
@@ -32,6 +58,10 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - *(Form)* Removed implicit novalidate attribute
+
+### Documentation
+
+- *(Form, Page)* Documented differences from upstream
 
 ### Features
 
@@ -53,6 +83,7 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
+- *(Flex, Gallery, Grid)* Allow setting alternative component
 - *(Page)* Added breadcrumbStickyTop modifier
 
 ## [0.1.0-alpha.10] - 2021-09-16
@@ -125,7 +156,9 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - *(ChildrenTracker)* Do not fail when the tracked is not provided by a parent component
+- *(Chip, ChipGroup, Label)* Fixed detection of overflowing text
 - *(Dropdown)* Fix focus on toggle after click off menu
+- *(Dropdown, Select)* Fix scrollbar click closing menu
 - *(Nav)* Added missing class to grouped nav items wrapper
 - *(Popover)* Corrected import path
 - *(Popover)* Call setVisible before animation
@@ -148,6 +181,7 @@ All notable changes to this project will be documented in this file.
 - *(Form)* Inherit validation state from children text-inputs
 - *(Form)* Add stack variant to FormGroup
 - *(Form)* Add form group label info
+- *(Navigation, PageSection)* Add horizontal subnav variant
 - *(Page)* Add tabs and wizard PageSection variants
 - *(Popover)* Support diagonal positions
 - *(Switch)* Add isReversed prop/layout
