@@ -7,6 +7,7 @@ export { default as PfCheckbox } from './Checkbox.vue';
 export { default as PfCloseButton } from './CloseButton';
 export { default as PfDivider } from './Divider';
 export { default as PfLabel } from './Label.vue';
+export { default as PfNotificationBadge } from './NotificationBadge.vue';
 export { default as PfPopover } from './Popover.vue';
 export { default as PfPopper } from './Popper';
 export { default as PfProgress } from './Progress.vue';

@@ -73,7 +73,7 @@ export const parameters = {
     state: 'open',
 
     transformSource(src, ctx) {
-      const match = /\b("')?template\1\s*:\s*`(?:\s*<div>)?([^`]+?)(?:<\/div>\s*)?`/.exec(
+      const match = /\b("')?template\1\s*:\s*`(?:\s*<div[^>]*>)?([^`]+?)(?:<\/div>\s*)?`/.exec(
         src,
       );
       if (match) {
