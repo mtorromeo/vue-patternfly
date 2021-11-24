@@ -1,6 +1,6 @@
 export { default as PfAvatar } from './Avatar.vue';
-export { default as PfBadge } from './Badge';
 export { default as PfBackdrop } from './Backdrop';
+export { default as PfBadge } from './Badge';
 export { default as PfBrand } from './Brand';
 export { default as PfButton } from './Button.vue';
 export { default as PfCheckbox } from './Checkbox.vue';
@@ -27,6 +27,7 @@ export * from './EmptyState';
 export * from './ExpandableSection';
 export * from './Form';
 export * from './FormSelect';
+export * from './HelperText';
 export * from './Hint';
 export * from './InputGroup';
 export * from './Modal';
