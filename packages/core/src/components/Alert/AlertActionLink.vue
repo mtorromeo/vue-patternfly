@@ -4,11 +4,12 @@
   </pf-button>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import PfButton from '../Button.vue';
 
-export default {
+export default defineComponent({
   name: 'PfAlertActionLink',
   components: { PfButton },
-};
+});
 </script>

@@ -1,8 +1,8 @@
-<script>
-import { h, mergeProps } from 'vue';
+<script lang="ts">
+import { defineComponent, h, mergeProps, PropType } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Avatar/avatar';
 
-export default {
+export default defineComponent({
   name: 'PfAvatar',
 
   props: {
@@ -20,9 +20,9 @@ export default {
 
     /** Border to add */
     border: {
-      type: String,
-      default: '',
-      validator: v => ['', 'light', 'dark'].includes(v),
+      type: String as PropType<'light' | 'dark' | null>,
+      default: null,
+      validator: (v: any) => [null, '', 'light', 'dark'].includes(v),
     },
   },
 
@@ -34,5 +34,5 @@ export default {
       }],
     }, this.$props));
   },
-};
+});
 </script>

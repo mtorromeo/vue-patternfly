@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Radio/radio';
 
-import { h, mergeProps } from 'vue';
+import { defineComponent, h, mergeProps } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfRadio',
 
   props: {
@@ -64,6 +64,7 @@ export default {
         class: [styles.radioLabel, {
           [styles.modifiers.disabled]: this.disabled,
         }],
+        for: undefined as string | undefined,
       };
       if (!this.labelWrapped) {
         labelProps.for = this.id;
@@ -79,7 +80,7 @@ export default {
       disabled: this.disabled,
       checked: this.checked,
       'aria-label': (this.label || this.$slots.label) ? null : this.ariaLabel,
-      onChange: e => this.$emit('change', e),
+      onChange: (e: Event) => this.$emit('change', e),
     }, this.$attrs));
 
     if (this.labelBeforeButton) {
@@ -110,5 +111,5 @@ export default {
       }],
     }, children);
   },
-};
+});
 </script>

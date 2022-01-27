@@ -1,22 +1,16 @@
 <template>
-  <teleport
-    :disabled="!toast"
-    :to="appendTo"
-  >
-    <pf-alert-group-inline
-      :toast="toast"
-      :live-region="liveRegion"
-      v-bind="$attrs"
-    >
+  <teleport :disabled="!toast" :to="appendTo">
+    <pf-alert-group-inline :toast="toast" :live-region="liveRegion" v-bind="$attrs">
       <slot />
     </pf-alert-group-inline>
   </teleport>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import PfAlertGroupInline from './AlertGroupInline';
 
-export default {
+export default defineComponent({
   name: 'PfAlertGroup',
 
   components: { PfAlertGroupInline },
@@ -36,5 +30,5 @@ export default {
       default: 'body',
     },
   },
-};
+});
 </script>

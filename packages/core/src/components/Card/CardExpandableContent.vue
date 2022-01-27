@@ -1,23 +1,24 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { h } from 'vue';
+import { defineComponent, h, inject } from 'vue';
+import { CardExpandedKey } from './Card.vue';
 
-export default {
+export default defineComponent({
   name: 'PfCardExpandableContent',
 
-  inject: {
-    expanded: {
-      default: false,
-    },
+  setup() {
+    return {
+      expanded: inject(CardExpandedKey),
+    };
   },
 
   render() {
-    if (!this.expanded.value) {
+    if (!this.expanded) {
       return null;
     }
 
     return h('div', { class: styles.cardExpandableContent }, this.$slots);
   },
-};
+});
 </script>

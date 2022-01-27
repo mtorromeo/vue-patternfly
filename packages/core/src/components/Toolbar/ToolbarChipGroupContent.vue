@@ -6,7 +6,7 @@
     :hidden="numberOfFilters === 0 || expanded"
   >
     <pf-toolbar-group
-      :x-class="{[styles.modifiers.hidden]: collapseListedFilters}"
+      :x-class="{ [styles.modifiers.hidden]: collapseListedFilters }"
       :x-hidden="collapseListedFilters"
       :x-aria-hidden="collapseListedFilters"
       @mounted="$emit('mounted', $event)"
@@ -21,23 +21,21 @@
         variant="link"
         inline
         @click="$emit('clear-all-filters')"
-      >
-        {{ clearFiltersButtonText }}
-      </pf-button>
+      >{{ clearFiltersButtonText }}</pf-button>
     </pf-toolbar-item>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { globalBreakpoints } from './ToolbarUtils';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfToolbarChipGroupContent',
 
   components: {
@@ -53,9 +51,9 @@ export default {
     },
 
     collapseListedFiltersBreakpoint: {
-      type: String,
+      type: String as PropType<keyof typeof globalBreakpoints | 'all'>,
       default: 'lg',
-      validator: v => ['', 'all', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(v),
+      validator: (v: any) => v === 'all' || v in globalBreakpoints,
     },
 
     numberOfFilters: {
@@ -85,5 +83,5 @@ export default {
       return this.windowWidth < globalBreakpoints[this.collapseListedFiltersBreakpoint];
     },
   },
-};
+});
 </script>

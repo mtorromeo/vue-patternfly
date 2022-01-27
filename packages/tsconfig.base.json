@@ -1,24 +1,31 @@
 {
   "compilerOptions": {
+    "assumeChangesOnlyAffectDirectDependencies": true,
     "lib": [
-      "es2015",
-      "es2016",
-      "es2017",
-      "es2018",
-      "es2019",
-      "dom",
-      "dom.iterable"
+      "es2021",
+      "DOM",
+      "DOM.Iterable"
     ],
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es2015",
+    "module": "es2015",
     "moduleResolution": "node",
-    "jsx": "preserve",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "importHelpers": true,
+    "sourceMap": true,
     "strict": true,
     "strictNullChecks": false,
     "isolatedModules": true,
-    "allowJs": true
-  }
+    "allowJs": true,
+    "plugins": [
+      {
+        "transform": "transformer-cjs-imports"
+      }
+    ]
+  },
+  "exclude": [
+    "**/**.test.tsx",
+    "**/**.test.ts",
+    "**/examples/**"
+  ]
 }

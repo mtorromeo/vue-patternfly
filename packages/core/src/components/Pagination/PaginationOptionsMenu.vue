@@ -1,20 +1,19 @@
 <template>
-  <pf-dropdown
-    :id="widgetId"
-    v-model:open="open"
-    :drop-up="dropUp"
-    plain
-  >
+  <pf-dropdown :id="widgetId" v-model:open="open" :drop-up="dropUp" plain>
     <template #toggle>
-      <div :class="[
-        styles.optionsMenuToggle,
-        styles.modifiers.plain,
-        styles.modifiers.text,
-        {[styles.modifiers.disabled]: disabled},
-      ]">
+      <div
+        :class="[
+          styles.optionsMenuToggle,
+          styles.modifiers.plain,
+          styles.modifiers.text,
+          { [styles.modifiers.disabled]: disabled },
+        ]"
+      >
         <template v-if="perPageOptions && perPageOptions.length > 0">
           <span :class="styles.optionsMenuToggleText">
-            <b>{{ firstIndex }} - {{ lastIndex }}</b> of <b>{{ count }}</b> {{ itemsTitle }}
+            <b>{{ firstIndex }} - {{ lastIndex }}</b> of
+            <b>{{ count }}</b>
+            {{ itemsTitle }}
           </span>
           <pf-dropdown-toggle
             :id="widgetId"
@@ -35,53 +34,45 @@
     <pf-dropdown-item
       v-for="o of perPageOptions"
       :key="o.title"
-      :class="{'pf-m-selected': perPage === o.value}"
+      :class="{ 'pf-m-selected': perPage === o.value }"
       :data-action="`per-page-${o.value}`"
       component="button"
       @click="$emit('update:perPage', o.value)"
     >
       {{ o.title }}
       {{ ` ${perPageSuffix}` }}
-      <div
-        v-if="perPage === o.value"
-        :class="styles.optionsMenuMenuItemIcon"
-      >
+      <div v-if="perPage === o.value" :class="styles.optionsMenuMenuItemIcon">
         <check-icon />
       </div>
     </pf-dropdown-item>
   </pf-dropdown>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/OptionsMenu/options-menu';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
-import PfDropdown from '../Dropdown/Dropdown';
-import PfDropdownItem from '../Dropdown/DropdownItem';
+import { PaginationMixin } from './common';
+import PfDropdown, {
+  DropdownBaseClassKey,
+  DropdownDisabledClassKey,
+  DropdownMenuClassKey,
+  DropdownItemClassKey,
+  DropdownToggleIndicatorClassKey,
+  DropdownToggleTextClassKey,
+  DropdownToggleClassKey,
+} from '../Dropdown/Dropdown';
+import PfDropdownItem from '../Dropdown/DropdownItem.vue';
 import PfDropdownToggle from '../Dropdown/DropdownToggle';
+import { defineComponent, markRaw, provide } from 'vue';
 
-import { paginationProps } from './common';
-import { markRaw } from 'vue';
-
-export default {
+export default defineComponent({
   name: 'PfPaginationOptionsMenu',
 
   components: { CheckIcon, PfDropdown, PfDropdownItem, PfDropdownToggle },
 
-  provide() {
-    return {
-      baseClass: styles.optionsMenu,
-      toggleIndicatorClass: styles.optionsMenuToggleButtonIcon,
-      toggleTextClass: styles.optionsMenuToggleText,
-      menuClass: styles.optionsMenuMenu,
-      itemClass: styles.optionsMenuMenuItem,
-      toggleClass: styles.optionsMenuToggleButton,
-      disabledClass: styles.modifiers.disabled,
-    };
-  },
+  mixins: [PaginationMixin],
 
   props: {
-    ...paginationProps,
-
     count: {
       type: Number,
       default: 0,
@@ -116,6 +107,14 @@ export default {
   emits: ['update:perPage'],
 
   setup() {
+    provide(DropdownBaseClassKey, styles.optionsMenu);
+    provide(DropdownDisabledClassKey, styles.modifiers.disabled);
+    provide(DropdownMenuClassKey, styles.optionsMenuMenu);
+    provide(DropdownItemClassKey, styles.optionsMenuMenuItem);
+    provide(DropdownToggleIndicatorClassKey, styles.optionsMenuToggleButtonIcon);
+    provide(DropdownToggleTextClassKey, styles.optionsMenuToggleText);
+    provide(DropdownToggleClassKey, styles.optionsMenuToggleButton);
+
     return {
       styles: markRaw(styles),
     };
@@ -126,5 +125,5 @@ export default {
       open: false,
     };
   },
-};
+});
 </script>

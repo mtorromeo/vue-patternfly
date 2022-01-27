@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Level/level';
+import { DefineComponent, defineComponent, PropType } from 'vue';
 
 import { render } from '../factory';
 
-export default {
+export default defineComponent({
   name: 'PfLevel',
 
   props: {
     /** The tag or component to use as container */
     component: {
-      type: [String, Object],
+      type: [String, Object] as PropType<string | DefineComponent>,
       default: 'div',
     },
     /** Adds space between children */
@@ -19,5 +20,5 @@ export default {
   render() {
     return render.call(this, styles.level, styles.modifiers);
   },
-};
+});
 </script>

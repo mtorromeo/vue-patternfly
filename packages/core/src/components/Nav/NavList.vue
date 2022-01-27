@@ -1,31 +1,42 @@
 <template>
-  <button v-if="horizontal" :class="styles.navScrollButton" :aria-label="ariaLeftScroll" :disabled="scrollViewAtStart" @click="scrollLeft">
+  <button
+    v-if="horizontal"
+    :class="styles.navScrollButton"
+    :aria-label="ariaLeftScroll"
+    :disabled="scrollViewAtStart"
+    @click="scrollLeft"
+  >
     <AngleLeftIcon />
   </button>
   <ul ref="navList" v-bind="$attrs" :class="styles.navList" @scroll="handleScrollButtons">
     <slot />
   </ul>
-  <button v-if="horizontal" :class="styles.navScrollButton" :aria-label="ariaRightScroll" :disabled="scrollViewAtEnd" @click="scrollRight">
+  <button
+    v-if="horizontal"
+    :class="styles.navScrollButton"
+    :aria-label="ariaRightScroll"
+    :disabled="scrollViewAtEnd"
+    @click="scrollRight"
+  >
     <AngleRightIcon />
   </button>
 </template>
 
-<script>
+<script lang="ts">
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { isElementInView } from '../../util.ts';
+import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
-import { markRaw } from 'vue';
+import { defineComponent, inject, markRaw, ref, Ref } from 'vue';
+import { NavHorizontalKey, NavScrollablelKey } from './Nav.vue';
 
-export default {
+export default defineComponent({
   name: 'PfNavList',
 
   components: {
     AngleLeftIcon,
     AngleRightIcon,
   },
-
-  inject: ['horizontal', 'scrollable'],
 
   inheritAttrs: false,
 
@@ -41,8 +52,12 @@ export default {
   },
 
   setup() {
+    const navList: Ref<HTMLUListElement | null> = ref(null);
     return {
+      navList,
       styles: markRaw(styles),
+      horizontal: inject(NavHorizontalKey),
+      scrollable: inject(NavScrollablelKey),
     };
   },
 
@@ -63,18 +78,18 @@ export default {
 
   methods: {
     handleScrollButtons() {
-      const container = this.$refs.navList;
+      const container = this.navList;
       if (container) {
         // check if it elements are in view
-        this.scrollViewAtStart = isElementInView(container, container.firstChildElement, false);
-        this.scrollViewAtEnd = isElementInView(container, container.lastChildElement, false);
-        this.scrollable.value = !this.scrollViewAtStart || !this.scrollViewAtEnd;
+        this.scrollViewAtStart = isElementInView(container, container.firstElementChild, false);
+        this.scrollViewAtEnd = isElementInView(container, container.lastElementChild, false);
+        this.scrollable = !this.scrollViewAtStart || !this.scrollViewAtEnd;
       }
     },
 
     scrollLeft() {
       // find first Element that is fully in view on the left, then scroll to the element before it
-      const container = this.$refs.navList;
+      const container = this.navList;
       if (container) {
         const childrenArr = Array.from(container.children);
         let firstElementInView;
@@ -94,7 +109,7 @@ export default {
 
     scrollRight() {
       // find last Element that is fully in view on the right, then scroll to the element after it
-      const container = this.$refs.navList;
+      const container = this.navList;
       if (container) {
         const childrenArr = Array.from(container.children);
         let lastElementInView;
@@ -112,5 +127,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

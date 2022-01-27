@@ -4,19 +4,19 @@
   </div>
 </template>
 
-<script>
-import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util.ts';
+<script lang="ts">
+import { breakpointProp, classesFromBreakpointProps, toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfToolbarGroup',
 
   props: {
     variant: {
-      type: String,
+      type: String as PropType<'filter-group' | 'icon-button-group' | 'button-group'>,
       default: '',
-      validator: v => ['', 'filter-group', 'icon-button-group', 'button-group'].includes(v),
+      validator: (v: any) => ['', 'filter-group', 'icon-button-group', 'button-group'].includes(v),
     },
     ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
     ...breakpointProp('alignment', String, ['', 'right', 'left']),
@@ -41,12 +41,12 @@ export default {
     },
 
     variantClass() {
-      return this.variant ? styles.modifiers[toCamel(this.variant)] : null;
+      return this.variant ? styles.modifiers[toCamelCase(this.variant)] : null;
     },
   },
 
   mounted() {
     this.$emit('mounted', this.$el);
   },
-};
+});
 </script>

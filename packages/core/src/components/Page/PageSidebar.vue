@@ -1,9 +1,11 @@
 <template>
-  <div id="page-sidebar" :class="[styles.pageSidebar, {
-    [styles.modifiers.light]: theme === 'light',
-    [styles.modifiers.expanded]: sidebarOpen,
-    [styles.modifiers.collapsed]: !sidebarOpen,
-  }]"
+  <div
+    id="page-sidebar"
+    :class="[styles.pageSidebar, {
+      [styles.modifiers.light]: theme === 'light',
+      [styles.modifiers.expanded]: sidebarOpen,
+      [styles.modifiers.collapsed]: !sidebarOpen,
+    }]"
   >
     <div :class="styles.pageSidebarBody">
       <slot />
@@ -11,27 +13,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import { markRaw } from 'vue';
+import { computed, ComputedRef, defineComponent, inject, InjectionKey, markRaw, provide } from 'vue';
+import { PageManagedSidebarKey, PageNavOpenKey } from './Page.vue';
 
-export default {
+export const SidebarOpenKey = Symbol('SidebarOpenKey') as InjectionKey<ComputedRef<boolean> | boolean>;
+
+export default defineComponent({
   name: 'PfPageSidebar',
-
-  provide() {
-    return {
-      sidebar: this,
-    };
-  },
-
-  inject: {
-    managedNavOpen: {
-      from: 'navOpen',
-    },
-    managedSidebar: {
-      from: 'managedSidebar',
-    },
-  },
 
   props: {
     /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
@@ -41,20 +31,23 @@ export default {
     theme: {
       type: String,
       default: 'dark',
-      validator: v => ['light', 'dark'].includes(v),
+      validator: (v: any) => ['light', 'dark'].includes(v),
     },
   },
 
-  setup() {
+  setup(props) {
+    const managedNavOpen = inject(PageNavOpenKey);
+    const managedSidebar = inject(PageManagedSidebarKey);
+
+    const sidebarOpen = computed(() => managedSidebar.value ? managedNavOpen.value : props.navOpen);
+    provide(SidebarOpenKey, sidebarOpen);
+
     return {
       styles: markRaw(styles),
+      sidebarOpen,
+      managedNavOpen,
+      managedSidebar,
     };
   },
-
-  computed: {
-    sidebarOpen() {
-      return this.managedSidebar.value ? this.managedNavOpen.value : this.navOpen;
-    },
-  },
-};
+});
 </script>

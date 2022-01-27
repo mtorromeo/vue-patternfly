@@ -3,17 +3,23 @@
     v-bind="labelAttrs"
     :class="[styles.switch, $attrs.class, {
       [styles.modifiers.reverse]: reversed,
-    }]">
-    <input v-bind="$attrs" :class="styles.switchInput" type="checkbox" :checked="checked" @change="$emit('update:checked', $event.target.checked)">
+    }]"
+  >
+    <input
+      v-bind="$attrs"
+      :class="styles.switchInput"
+      type="checkbox"
+      :checked="checked"
+      @change="$emit('update:checked', ($event.target as HTMLInputElement).checked)"
+    />
 
     <template v-if="label">
       <span :class="styles.switchToggle" />
-      <span :class="[styles.switchLabel, styles.modifiers.on]" aria-hidden="true">
-        {{ label }}
-      </span>
-      <span :class="[styles.switchLabel, styles.modifiers.off]" aria-hidden="true">
-        {{ labelOff ? labelOff : label }}
-      </span>
+      <span :class="[styles.switchLabel, styles.modifiers.on]" aria-hidden="true">{{ label }}</span>
+      <span
+        :class="[styles.switchLabel, styles.modifiers.off]"
+        aria-hidden="true"
+      >{{ labelOff ? labelOff : label }}</span>
     </template>
 
     <span v-else :class="styles.switchToggle">
@@ -24,12 +30,12 @@
   </label>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfSwitch',
 
   components: { CheckIcon },
@@ -67,5 +73,5 @@ export default {
       styles: markRaw(styles),
     };
   },
-};
+});
 </script>

@@ -8,12 +8,17 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Form/form';
-</script>
+import { defineComponent, markRaw } from 'vue';
 
-<script>
-export default {
+export default defineComponent({
   name: 'PfActionGroup',
-};
+
+  setup() {
+    return {
+      styles: markRaw(styles),
+    };
+  },
+});
 </script>

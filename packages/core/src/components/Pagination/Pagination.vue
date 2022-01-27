@@ -1,18 +1,18 @@
 <template>
-  <div :class="[
-    styles.pagination,
-    {
-      [styles.modifiers.bottom]: !top,
-      [styles.modifiers.compact]: compact,
-      [styles.modifiers.static]: $props.static,
-      [styles.modifiers.sticky]: sticky,
-    },
-  ]">
-    <div
-      v-if="top"
-      :class="styles.paginationTotalItems"
-    >
-      <b>{{ firstIndex }} - {{ lastIndex }}</b> of <b>{{ count }}</b>
+  <div
+    :class="[
+      styles.pagination,
+      {
+        [styles.modifiers.bottom]: !top,
+        [styles.modifiers.compact]: compact,
+        [styles.modifiers.static]: $props.static,
+        [styles.modifiers.sticky]: sticky,
+      },
+    ]"
+  >
+    <div v-if="top" :class="styles.paginationTotalItems">
+      <b>{{ firstIndex }} - {{ lastIndex }}</b> of
+      <b>{{ count }}</b>
       {{ titleItems }}
     </div>
 
@@ -22,8 +22,8 @@
       :items-title="compact ? '' : titleItems"
       :options-toggle="titleOptionsToggle"
       :per-page-options="perPageOptions"
-      :first-index="itemsStart != null ? items - start : firstIndex"
-      :last-index="itemsEnd != null ? items - end : lastIndex"
+      :first-index="itemsStart !== null ? count - itemsStart : firstIndex"
+      :last-index="itemsEnd !== null ? count - itemsEnd : lastIndex"
       :default-to-full-page="defaultToFullPage"
       :count="count"
       :last-page="lastPage"
@@ -45,7 +45,7 @@
       :pagination-title="titlePaginationTitle"
       :page="count <= 0 ? 0 : constrainedPage"
       :per-page="perPage"
-      :first-page="itemsStart != null ? items - start : 1"
+      :first-page="itemsStart !== null ? count - itemsStart : 1"
       :last-page="lastPage"
       :disabled="disabled"
       :compact="compact"
@@ -60,18 +60,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 import PfPaginationOptionsMenu from './PaginationOptionsMenu.vue';
 import PfNavigation from './Navigation.vue';
 
-import { paginationProps } from './common';
-import { markRaw } from 'vue';
+import { PaginationMixin } from './common';
+import { defineComponent, markRaw } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfPagination',
 
   components: { PfPaginationOptionsMenu, PfNavigation },
+
+  mixins: [PaginationMixin],
 
   props: {
     /** Render pagination on top instead of bottom. */
@@ -109,8 +111,6 @@ export default {
       type: Number,
       default: null,
     },
-
-    ...paginationProps,
 
     titleItems: {
       type: String,
@@ -210,5 +210,5 @@ export default {
       return page;
     },
   },
-};
+});
 </script>

@@ -5,7 +5,7 @@
     </div>
 
     <pf-toolbar-expandable-content
-      :expanded="expanded.value"
+      :expanded="expanded"
       :show-clear-filters-button="showClearFiltersButton"
       :clear-filters-button-text="clearFiltersButtonText"
     >
@@ -18,19 +18,21 @@
   </div>
 </template>
 
-<script>
-import { ref, provide, markRaw } from 'vue';
-import { breakpointProp, classesFromBreakpointProps } from '../../util.ts';
+<script lang="ts">
+import { ref, provide, markRaw, defineComponent, InjectionKey, Ref, inject } from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
+import { ToolbarClearFilterButtonTextKey, ToolbarExpandedKey, ToolbarShowClearFiltersButtonKey } from './Toolbar.vue';
 
-export default {
+export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+
+export default defineComponent({
   name: 'PfToolbarContent',
 
   components: { PfToolbarExpandableContent, PfToolbarGroup },
-
-  inject: ['expanded', 'showClearFiltersButton', 'clearFiltersButtonText'],
 
   props: {
     ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
@@ -38,15 +40,18 @@ export default {
   },
 
   setup() {
-    const expandable = ref(null);
-    provide('expandableRef', expandable);
+    const expandable: Ref<HTMLDivElement | null> = ref(null);
+    provide(ToolbarContentExpandableRefKey, expandable);
 
-    const chipContainer = ref(null);
-    provide('chipContainerRef', chipContainer);
+    const chipContainer: Ref<HTMLDivElement | null> = ref(null);
+    provide(ToolbarContentChipContainerRefKey, chipContainer);
 
     return {
       expandable,
       chipContainer,
+      expanded: inject(ToolbarExpandedKey),
+      showClearFiltersButton: inject(ToolbarShowClearFiltersButtonKey),
+      clearFiltersButtonText: inject(ToolbarClearFilterButtonTextKey),
       styles: markRaw(styles),
     };
   },
@@ -61,11 +66,11 @@ export default {
 
   beforeUnmount() {
     if (this.expandable) {
-      this.expandable.value = null;
+      this.expandable = null;
     }
     if (this.chipContainer) {
-      this.chipContainer.value = null;
+      this.chipContainer = null;
     }
   },
-};
+});
 </script>

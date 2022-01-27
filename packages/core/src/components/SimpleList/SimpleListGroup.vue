@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { h, mergeProps } from 'vue';
+import { defineComponent, h, mergeProps, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfSimpleListGroup',
 
   inheritAttrs: false,
@@ -23,7 +23,7 @@ export default {
 
     /** Additional classes added to the SimpleList group title */
     titleClass: {
-      type: [String, Array, Object],
+      type: [String, Array, Object] as PropType<string | string[] | Record<string, string>>,
       default: null,
     },
   },
@@ -38,5 +38,5 @@ export default {
       h('ul', { class: className, 'aria-labelledby': this.id }, this.$slots.default && this.$slots.default()),
     ]);
   },
-};
+});
 </script>

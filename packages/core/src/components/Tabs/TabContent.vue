@@ -1,15 +1,10 @@
-<script>
-import { h } from 'vue';
+<script lang="ts">
+import { defineComponent, h, inject } from 'vue';
 import styles from '@patternfly/react-styles/css/components/TabContent/tab-content';
+import { TabsVariantKey } from './Tabs.vue';
 
-export default {
+export default defineComponent({
   name: 'PfTabContent',
-
-  inject: {
-    variant: {
-      default: null,
-    },
-  },
 
   props: {
     activeKey: {
@@ -21,6 +16,12 @@ export default {
       type: [Number, String],
       default: null,
     },
+  },
+
+  setup() {
+    return {
+      variant: inject(TabsVariantKey),
+    };
   },
 
   render() {
@@ -37,5 +38,5 @@ export default {
       this.$slots,
     );
   },
-};
+});
 </script>

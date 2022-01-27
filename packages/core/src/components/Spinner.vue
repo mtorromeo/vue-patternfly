@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
 
-import { h, mergeProps } from 'vue';
+import { defineComponent, h, mergeProps } from 'vue';
 
 const spinnerSizes = [
   'sm',
@@ -10,14 +10,14 @@ const spinnerSizes = [
   'xl',
 ];
 
-export default {
+export default defineComponent({
   name: 'PfSpinner',
 
   props: {
     size: {
       type: String,
       default: 'xl',
-      validator: v => spinnerSizes.includes(v),
+      validator: (v: any) => spinnerSizes.includes(v),
     },
     ariaValueText: {
       type: String,
@@ -29,7 +29,7 @@ export default {
     return h(
       'span',
       mergeProps({
-        class: [styles.spinner, styles.modifiers[this.size]],
+        class: [styles.spinner, styles.modifiers[this.size as keyof typeof styles.modifiers]],
         'aria-valuetext': this.ariaValueText,
       }, this.$attrs),
       [
@@ -39,5 +39,5 @@ export default {
       ],
     );
   },
-};
+});
 </script>

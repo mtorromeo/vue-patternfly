@@ -1,9 +1,5 @@
 <template>
-  <pf-divider
-    v-if="variant == 'separator'"
-    :class="styles.modifiers.vertical"
-    v-bind="$attrs"
-  />
+  <pf-divider v-if="variant == 'separator'" :class="styles.modifiers.vertical" v-bind="$attrs" />
   <div
     v-else
     :class="[styles.toolbarItem, breakpointClasses, variantClass, {
@@ -17,22 +13,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import PfDivider from '../Divider';
-import { breakpoints, breakpointProp, classesFromBreakpointProps, toCamel } from '../../util.ts';
+import { breakpoints, breakpointProp, classesFromBreakpointProps, toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfToolbarItem',
 
   components: { PfDivider },
 
   props: {
     variant: {
-      type: String,
-      default: '',
-      validator: v => ['', 'separator', 'bulk-select', 'overflow-menu', 'pagination', 'search-filter', 'label', 'chip-group', 'expand-all'].includes(v),
+      type: String as PropType<'separator' | 'bulk-select' | 'overflow-menu' | 'pagination' | 'search-filter' | 'label' | 'chip-group' | 'expand-all' | null>,
+      default: null,
+      validator: (v: any) => ['', null, 'separator', 'bulk-select', 'overflow-menu', 'pagination', 'search-filter', 'label', 'chip-group', 'expand-all'].includes(v),
     },
     ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
     ...breakpointProp('alignment', String, ['', 'right', 'left']),
@@ -59,20 +55,20 @@ export default {
     },
 
     breakpointWidths() {
-      const widths = {};
+      const widths: Record<string, any> = {};
       for (const b of breakpoints) {
         const prop = `width${b}`;
-        if (!this.$props[prop]) {
+        if (!this.$props[prop as keyof typeof this.$props]) {
           continue;
         }
-        widths[`--pf-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = this.$props[prop];
+        widths[`--pf-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = this.$props[prop as keyof typeof this.$props];
       }
       return widths;
     },
 
     variantClass() {
-      return this.variant ? styles.modifiers[toCamel(this.variant)] : null;
+      return this.variant && this.variant !== 'separator' ? styles.modifiers[toCamelCase(this.variant)] : null;
     },
   },
-};
+});
 </script>

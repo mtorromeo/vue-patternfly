@@ -31,14 +31,8 @@
       :href="href || (buttonComponent === 'a' ? routerCtx?.href : null)"
       @click="onClick($event, routerCtx?.navigate)"
     >
-      <span
-        v-if="loading"
-        :class="styles.buttonProgress"
-      >
-        <pf-spinner
-          size="md"
-          :aria-valuetext="spinnerAriaValueText"
-        />
+      <span v-if="loading" :class="styles.buttonProgress">
+        <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
       </span>
       <span
         v-if="variant !== 'plain' && $slots.icon && iconPosition === 'left'"
@@ -57,14 +51,14 @@
   </component>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import { markRaw } from 'vue';
+import { DefineComponent, defineComponent, markRaw, PropType } from 'vue';
 
 import PfSpinner from './Spinner.vue';
-import Void from './Void.js';
+import Void from './Void';
 
-export default {
+export default defineComponent({
   name: 'PfButton',
 
   components: { PfSpinner, Void },
@@ -79,19 +73,19 @@ export default {
     },
 
     variant: {
-      type: String,
+      type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'warning' | 'link' | 'plain' | 'control'>,
       default: 'primary',
-      validator: v => ['primary', 'secondary', 'tertiary', 'danger', 'warning', 'link', 'plain', 'control'].includes(v),
+      validator: (v: any) => ['primary', 'secondary', 'tertiary', 'danger', 'warning', 'link', 'plain', 'control'].includes(v),
     },
 
     iconPosition: {
-      type: String,
+      type: String as PropType<'left' | 'right'>,
       default: 'left',
-      validator: v => ['left', 'right'].includes(v),
+      validator: (v: any) => ['left', 'right'].includes(v),
     },
 
     component: {
-      type: [String, Object],
+      type: [String, Object] as PropType<string | DefineComponent>,
       default: 'auto',
     },
 
@@ -180,7 +174,7 @@ export default {
   },
 
   methods: {
-    onClick(e, navigate) {
+    onClick(e: Event, navigate: (e: Event) => void) {
       if (this.effectiveDisabled) {
         e.preventDefault();
         return;
@@ -194,5 +188,5 @@ export default {
       this.$emit('click', e);
     },
   },
-};
+});
 </script>

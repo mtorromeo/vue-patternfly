@@ -4,10 +4,7 @@
   }]">
     <slot v-if="!$slots.help" />
 
-    <template
-      v-else
-      name="help"
-    >
+    <template v-else name="help">
       <div :class="styles.modalBoxHeaderMain">
         <slot />
       </div>
@@ -18,11 +15,11 @@
   </header>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfModalHeader',
 
   setup() {
@@ -30,5 +27,5 @@ export default {
       styles: markRaw(styles),
     };
   },
-};
+});
 </script>

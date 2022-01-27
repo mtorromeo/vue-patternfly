@@ -32,17 +32,23 @@
   </pf-popper>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw, PropType } from 'vue';
 
 import PfPopper from '../Popper';
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
 
-export const positions = ['auto', 'top', 'bottom', 'left', 'right'];
+export enum TooltipPosition {
+  auto = 'auto',
+  top = 'top',
+  bottom = 'bottom',
+  left = 'left',
+  right = 'right',
+}
 
-export default {
+export default defineComponent({
   name: 'PfTooltip',
 
   components: {
@@ -53,9 +59,9 @@ export default {
 
   props: {
     position: {
-      type: String,
-      default: 'top',
-      validator: v => positions.includes(v),
+      type: String as PropType<TooltipPosition>,
+      default: TooltipPosition.top,
+      validator: (v: any) => v in TooltipPosition,
     },
 
     trigger: {
@@ -109,9 +115,9 @@ export default {
   },
 
   methods: {
-    click(e) {
+    click(e: MouseEvent | TouchEvent) {
       console.log(e, this.visible);
     },
   },
-};
+});
 </script>

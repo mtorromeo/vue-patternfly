@@ -1,11 +1,13 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "files": [
-    "dist"
+    "dist",
+    "global.d.ts"
   ],
   "main": "dist/core.umd.js",
   "module": "dist/core.es.js",
+  "typings": "dist/types/main.d.ts",
   "exports": {
     ".": {
       "import": "./dist/core.es.js",
@@ -14,31 +16,30 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build && vue-tsc --declaration --emitDeclarationOnly",
     "prepack": "npm run build"
   },
   "dependencies": {
     "@patternfly/patternfly": "^4.159.2",
     "@patternfly/react-styles": "^4.25.9",
     "@patternfly/react-tokens": "^4.27.9",
-    "@popperjs/core": "^2.10.2",
-    "@vue-patternfly/icons": "^0.1.0-alpha.1",
-    "@vueuse/core": "^6.9.2",
-    "@vueuse/integrations": "^6.9.2"
+    "@popperjs/core": "^2.11.4",
+    "@vue-patternfly/icons": "^0.2.0",
+    "@vueuse/core": "^8.1.2",
+    "@vueuse/integrations": "^8.1.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.10.0",
-    "@vue/compiler-sfc": "^3.2.22",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^7.20.0",
-    "fs-extra": "^10.0.0",
-    "prettier": "^2.4.1",
-    "typescript": "^4.5.2",
-    "vite": "^2.6.14",
-    "vue-tsc": "^0.29.6"
+    "@vitejs/plugin-vue": "^2.2.4",
+    "@vue/compiler-sfc": "^3.2.31",
+    "focus-trap": "^6.7.3",
+    "fs-extra": "^10.0.1",
+    "typescript": "^4.6.2",
+    "vite": "^2.8.6",
+    "vue-router": "^4.0.14",
+    "vue-tsc": "^0.33.7"
   },
   "peerDependencies": {
+    "focus-trap": "*",
     "vue": "^3"
   }
 }

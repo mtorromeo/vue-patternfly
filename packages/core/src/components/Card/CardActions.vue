@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { h } from 'vue';
+import { defineComponent, h } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfCardActions',
 
   props: {
@@ -18,5 +18,5 @@ export default {
       }],
     }, this.$slots);
   },
-};
+});
 </script>

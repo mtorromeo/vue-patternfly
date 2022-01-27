@@ -2,13 +2,9 @@
   <div :class="styles.formFieldGroupHeader">
     <div :class="styles.formFieldGroupHeaderMain">
       <div v-if="title" :class="styles.formFieldGroupHeaderTitle">
-        <div :class="styles.formFieldGroupHeaderTitleText">
-          {{ title }}
-        </div>
+        <div :class="styles.formFieldGroupHeaderTitleText">{{ title }}</div>
       </div>
-      <div v-if="description" :class="styles.formFieldGroupHeaderDescription">
-        {{ description }}
-      </div>
+      <div v-if="description" :class="styles.formFieldGroupHeaderDescription">{{ description }}</div>
     </div>
     <div v-if="$slots.default" :class="styles.formFieldGroupHeaderActions">
       <slot />
@@ -16,11 +12,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfFormFieldGroupHeader',
 
   props: {
@@ -42,5 +38,5 @@ export default {
       styles: markRaw(styles),
     };
   },
-};
+});
 </script>

@@ -1,10 +1,17 @@
 <template>
-  <div :id="validId" :class="[styles.progress, styles.modifiers[variant], {
-    [styles.modifiers[measureLocation]]: ['inside', 'outside'].includes(measureLocation),
-    [styles.modifiers.lg]: measureLocation === 'inside',
-    [styles.modifiers[size]]: measureLocation !== 'inside',
-    [styles.modifiers.singleline]: !title,
-  }]">
+  <div
+    :id="validId"
+    :class="[
+      styles.progress,
+      styles.modifiers[variant],
+      measureLocation === 'inside' || measureLocation === 'outside' && styles.modifiers[measureLocation],
+      measureLocation !== 'inside' && size !== 'md' && styles.modifiers[size],
+      {
+        [styles.modifiers.lg]: measureLocation === 'inside',
+        [styles.modifiers.singleline]: !title,
+      },
+    ]"
+  >
     <component :is="tooltip ? 'pf-tooltip' : 'void'" :position="tooltipPosition">
       <div
         :id="`${validId}-description`"
@@ -12,20 +19,14 @@
           [styles.modifiers.truncate]: titleTruncated,
         }]"
         @mouseenter="checkTooltip"
-      >
-        {{ title }}
-      </div>
+      >{{ title }}</div>
 
-      <template #content>
-        {{ tooltip }}
-      </template>
+      <template #content>{{ tooltip }}</template>
     </component>
 
     <div :class="styles.progressStatus" aria-hidden="true">
       <span v-if="['top', 'outside'].includes(measureLocation)" :class="styles.progressMeasure">
-        <slot name="label">
-          {{ label || `${value}%` }}
-        </slot>
+        <slot name="label">{{ label || `${value}%` }}</slot>
       </span>
 
       <span v-if="variantIcon !== null" :class="styles.progressStatusIcon">
@@ -43,26 +44,24 @@
       :aria-label="ariaLabel"
       :aria-valuetext="valueText"
     >
-      <div :class="styles.progressIndicator" :style="{width: `${value}%`}">
+      <div :class="styles.progressIndicator" :style="{ width: `${scaledValue}%` }">
         <span :class="styles.progressMeasure">
-          <template v-if="measureLocation === 'inside'">
-            {{ value }}%
-          </template>
+          <template v-if="measureLocation === 'inside'">{{ value }}%</template>
         </span>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
 import Void from './Void';
 import PfTooltip from './Tooltip/Tooltip.vue';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 import CheckCircleIcon from '@vue-patternfly/icons/dist/esm/icons/check-circle-icon';
 import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-triangle-icon';
-import { getUniqueId } from '../util.ts';
-import { markRaw } from 'vue';
+import { getUniqueId } from '../util';
+import { defineComponent, markRaw, PropType } from 'vue';
 
 const variantToIcon = {
   danger: TimesCircleIcon,
@@ -70,7 +69,7 @@ const variantToIcon = {
   warning: ExclamationTriangleIcon,
 };
 
-export default {
+export default defineComponent({
   name: 'PfProgress',
 
   components: { Void, PfTooltip },
@@ -122,30 +121,30 @@ export default {
 
     /** Position of the tooltip which is displayed if title is truncated */
     tooltipPosition: {
-      type: String,
+      type: String as PropType<'auto' | 'top' | 'bottom' | 'left' | 'right'>,
       default: 'top',
-      validator: v => ['auto', 'top', 'bottom', 'left', 'right'].includes(v),
+      validator: (v: any) => ['auto', 'top', 'bottom', 'left', 'right'].includes(v),
     },
 
     /** Size variant of progress. */
     size: {
-      type: String,
-      default: '',
-      validator: v => !v || ['sm', 'md', 'lg'].includes(v),
+      type: String as PropType<'sm' | 'md' | 'lg' | null>,
+      default: null,
+      validator: (v: any) => !v || ['sm', 'md', 'lg'].includes(v),
     },
 
     /** Where the measure percent will be located. */
     measureLocation: {
-      type: String,
+      type: String as PropType<'outside' | 'inside' | 'top' | 'none'>,
       default: 'top',
-      validator: v => ['outside', 'inside', 'top', 'none'].includes(v),
+      validator: (v: any) => ['outside', 'inside', 'top', 'none'].includes(v),
     },
 
     /** Status variant of progress. */
     variant: {
-      type: String,
+      type: String as PropType<'success' | 'warning' | 'danger'>,
       default: '',
-      validator: v => !v || ['danger', 'success', 'warning'].includes(v),
+      validator: (v: any) => !v || ['danger', 'success', 'warning'].includes(v),
     },
 
     /** Adds accessible text to the ProgressBar. Required when title not used and there is not any label associated with the progress bar */
@@ -195,12 +194,15 @@ export default {
   },
 
   methods: {
-    checkTooltip(e) {
+    checkTooltip(e: MouseEvent) {
+      if (!(e.target instanceof HTMLElement)) {
+        return;
+      }
       if (e && e.target && e.target.offsetWidth < e.target.scrollWidth) {
         this.tooltip = this.title || e.target.innerHTML;
       }
       this.tooltip = '';
     },
   },
-};
+});
 </script>

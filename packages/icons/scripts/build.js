@@ -31,6 +31,23 @@ export const ${jsName} = createIcon(${jsName}Config);
 export default ${jsName};
 `.trim();
 
+const compileDTSIcon = (jsName, icon) => `
+import { createIcon } from '../createIcon';
+
+export declare const ${jsName}Config: {
+  name: '${jsName}',
+  height: ${icon.height},
+  width: ${icon.width},
+  svgPath: '${icon.svgPathData}',
+  yOffset: ${icon.yOffset || 0},
+  xOffset: ${icon.xOffset || 0}
+};
+
+export declare const ${jsName}: ReturnType<typeof createIcon>;
+
+export default ${jsName};
+`.trim();
+
 async function esm2cjs(dest, code) {
   const cjs = await babel.transformAsync(code, {
     plugins: ['@babel/plugin-transform-modules-commonjs'],
@@ -54,9 +71,12 @@ async function esm2cjs(dest, code) {
     const fname = `${iconName}-icon`;
     const jsName = `${toCamel(iconName)}Icon`;
     const esmIcon = compileIcon(jsName, icon);
+    const dtsIcon = compileDTSIcon(jsName, icon);
     (async () => {
       await fs.outputFile(path.join(outDir, 'esm/icons', `${fname}.js`), esmIcon);
+      await fs.outputFile(path.join(outDir, 'esm/icons', `${fname}.d.ts`), dtsIcon);
       await esm2cjs(path.join(outDir, 'js/icons', `${fname}.js`), esmIcon);
+      await fs.outputFile(path.join(outDir, 'js/icons', `${fname}.d.ts`), dtsIcon);
     })();
     index.push(fname);
   }
@@ -66,8 +86,10 @@ async function esm2cjs(dest, code) {
     .map(file => `export * from './${file}';`)
     .join('\n');
   await fs.outputFile(path.join(outDir, 'esm', 'icons/index.js'), esmIndexString);
-  await esm2cjs(path.join(outDir, 'js/icons/index.js'), esmIndexString)
+  await fs.outputFile(path.join(outDir, 'esm', 'icons/index.d.ts'), esmIndexString);
+  await esm2cjs(path.join(outDir, 'js/icons/index.js'), esmIndexString);
+  await fs.outputFile(path.join(outDir, 'js', 'icons/index.d.ts'), esmIndexString);
 
   // eslint-disable-next-line no-console
-  console.log('Wrote', (index.length + 3) * 2, ' files.');
+  console.log('Wrote', (index.length + 3) * 4, ' files.');
 })(generateIcons());

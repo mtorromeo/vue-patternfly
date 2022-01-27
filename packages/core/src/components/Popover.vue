@@ -44,7 +44,11 @@
       >
         <div :class="styles.popoverArrow" />
         <div :class="styles.popoverContent">
-          <pf-close-button v-if="showClose" :aria-label="closeBtnAriaLabel" @click.prevent="managedOpen = false" />
+          <pf-close-button
+            v-if="showClose"
+            :aria-label="closeBtnAriaLabel"
+            @click.prevent="managedOpen = false"
+          />
 
           <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" h="6" size="md">
             <slot name="header" />
@@ -54,7 +58,11 @@
             <slot name="body" />
           </div>
 
-          <footer v-if="$slots.footer" :id="`popover-${uniqueId}-footer`" :class="styles.popoverFooter">
+          <footer
+            v-if="$slots.footer"
+            :id="`popover-${uniqueId}-footer`"
+            :class="styles.popoverFooter"
+          >
             <slot name="footer" />
           </footer>
         </div>
@@ -63,11 +71,11 @@
   </pf-popper>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
-import { getUniqueId } from '../util.ts';
-import { useManagedProp } from '../use.ts';
-import { markRaw } from 'vue';
+import { getUniqueId } from '../util';
+import { useManagedProp } from '../use';
+import { defineComponent, markRaw, PropType, Ref, ref } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
@@ -75,8 +83,9 @@ import PfFocusTrap from './FocusTrap.vue';
 import PfPopper, { getOpacityTransition, positions } from './Popper';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
+import { Placement } from '@popperjs/core';
 
-export default {
+export default defineComponent({
   name: 'PfPopover',
 
   components: {
@@ -115,9 +124,9 @@ export default {
      * space to the right, so it finally shows the popover on the left.
      */
     flipBehavior: {
-      type: [String, Array],
-      default: () => ['top', 'right', 'bottom', 'left', 'top', 'right', 'bottom'],
-      validator(v) {
+      type: [String, Array] as PropType<Placement | Placement[]>,
+      default: (): Placement[] => ['top', 'right', 'bottom', 'left', 'top', 'right', 'bottom'],
+      validator: (v: any) => {
         if (v === 'flip') {
           return true;
         }
@@ -137,9 +146,9 @@ export default {
      * The behavior of where it flips to can be controlled through the flipBehavior prop.
      */
     position: {
-      type: String,
+      type: String as PropType<Placement>,
       default: 'top',
-      validator: v => positions.includes(v),
+      validator: (v: any) => positions.includes(v),
     },
 
     /** Minimum width of the popover (default 6.25rem) */
@@ -184,15 +193,18 @@ export default {
   emits: ['update:open', 'show', 'shown', 'hide', 'hidden'],
 
   setup() {
+    const managedOpen = useManagedProp('open', false);
+    const dialog: Ref<InstanceType<typeof PfFocusTrap>> = ref(null);
     return {
-      managedOpen: useManagedProp('open', false),
+      managedOpen,
+      dialog,
       styles: markRaw(styles),
+      visible: ref(managedOpen.value),
     };
   },
 
   data() {
     return {
-      visible: this.managedOpen,
       opacity: 0,
       hideTimer: null,
       showTimer: null,
@@ -258,18 +270,18 @@ export default {
   methods: {
     getOpacityTransition,
 
-    onDocumentClick(event) {
+    onDocumentClick(event: MouseEvent | TouchEvent) {
       if (this.noHideOnOutsideClick || !this.visible) {
         return;
       }
       // check if we clicked within the popper, if so don't do anything
-      if (this.$refs.dialog.$el && this.$refs.dialog.$el.contains(event.target)) {
+      if (this.dialog.$el?.contains(event.target)) {
         return;
       }
       this.managedOpen = false;
     },
 
-    onEscPress(event) {
+    onEscPress(event: KeyboardEvent) {
       const keyCode = event.keyCode || event.which;
 
       if (!this.managedOpen || !(keyCode === 27 /* ESC */)) {
@@ -279,5 +291,5 @@ export default {
       this.managedOpen = false;
     },
   },
-};
+});
 </script>

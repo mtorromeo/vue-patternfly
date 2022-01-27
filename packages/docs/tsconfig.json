@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "module": "es2020",
+    "types": [
+      "vite/client"
+    ]
+  },
+  "include": [
+    "./src/*",
+    "./src/**/*",
+    "node_modules/@vue-patternfly/core/global.d.ts"
+  ]
+}

@@ -1,8 +1,8 @@
-<script>
-import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
-import { h, ref } from 'vue';
+<script lang="ts">
+import { useFocusTrap, UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
+import { defineComponent, h, ref, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfFocusTrap',
 
   props: {
@@ -10,8 +10,8 @@ export default {
     paused: Boolean,
     // preventScrollOnDeactivate: Boolean,
     focusTrapOptions: {
-      type: Object,
-      default: () => ({}),
+      type: Object as PropType<UseFocusTrapOptions>,
+      default: (): UseFocusTrapOptions => ({}),
     },
   },
 
@@ -56,5 +56,5 @@ export default {
   render() {
     return h('div', { ...this.$attrs, ref: 'target' }, this.$slots);
   },
-};
+});
 </script>

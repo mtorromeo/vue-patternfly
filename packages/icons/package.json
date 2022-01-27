@@ -1,24 +1,28 @@
 {
   "name": "@vue-patternfly/icons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "dist/js/index.js",
   "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "clean": "rimraf dist",
-    "build": "npm run clean && node scripts/build.js",
+    "clean": "rimraf dist src/icons src/index.js src/index.d.ts",
+    "generate": "rimraf dist/esm/icons dist/js/icons && node scripts/build.js",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
+    "@babel/core": "^7.17.8",
+    "@babel/plugin-transform-modules-commonjs": "^7.17.7",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@patternfly/patternfly": "^4.159.2",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.0.1",
     "glob": "^7.2.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "ts-patch": "^2.0.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.2"
   },
   "peerDependencies": {
     "vue": "^3"

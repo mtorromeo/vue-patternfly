@@ -7,30 +7,31 @@
         [styles.modifiers.noPaddingTop]: noPaddingTop,
       }]"
     >
-      <component :is="(labelInfo || $slots.labelInfo) ? 'div' : 'void'" :class="styles.formGroupLabelMain">
+      <component
+        :is="(labelInfo || $slots.labelInfo) ? 'div' : 'void'"
+        :class="styles.formGroupLabelMain"
+      >
         <label :class="styles.formLabel" :for="fieldId">
           <span :class="styles.formLabelText">
             <slot name="label">{{ label }}</slot>
           </span>
-          <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">
-            {{ ' *' }}
-          </span>
+          <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">{{ ' *' }}</span>
         </label>
         {{ ' ' }}
         <slot name="labelIcon" />
       </component>
 
       <div v-if="labelInfo || $slots.labelInfo" :class="styles.formGroupLabelInfo">
-        <slot name="labelInfo">
-          {{ labelInfo }}
-        </slot>
+        <slot name="labelInfo">{{ labelInfo }}</slot>
       </div>
     </div>
 
-    <div :class="[styles.formGroupControl, {
-      [styles.modifiers.inline]: inline,
-      [styles.modifiers.stack]: stack,
-    }]">
+    <div
+      :class="[styles.formGroupControl, {
+        [styles.modifiers.inline]: inline,
+        [styles.modifiers.stack]: stack,
+      }]"
+    >
       <slot v-if="!helperTextBeforeField" />
 
       <div
@@ -47,18 +48,14 @@
           <span v-if="$slots.helperTextInvalidIcon" :class="styles.formHelperTextIcon">
             <slot name="helperTextInvalidIcon" />
           </span>
-          <slot name="helperTextInvalid">
-            {{ helperTextInvalid }}
-          </slot>
+          <slot name="helperTextInvalid">{{ helperTextInvalid }}</slot>
         </template>
 
         <template v-else-if="helperText || $slots.helperText">
           <span v-if="$slots.helperTextIcon" :class="styles.formHelperTextIcon">
             <slot name="helperTextIcon" />
           </span>
-          <slot name="helperText">
-            {{ helperText }}
-          </slot>
+          <slot name="helperText">{{ helperText }}</slot>
         </template>
       </div>
       <slot v-if="helperTextBeforeField" />
@@ -66,13 +63,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { computed, markRaw } from 'vue';
-import { provideChildrenTracker } from '../../use.ts';
+import { ComponentPublicInstance, computed, defineComponent, markRaw, UnwrapNestedRefs } from 'vue';
+import { useInputValidation } from '../../input';
+import { provideChildrenTracker } from '../../use';
 import Void from '../Void';
 
-export default {
+export default defineComponent({
   name: 'PfFormGroup',
 
   components: {
@@ -103,7 +101,7 @@ export default {
     validated: {
       type: String,
       default: null,
-      validator: v => ['success', 'warning', 'error', 'default'].includes(v),
+      validator: (v: any) => ['success', 'warning', 'error', 'default'].includes(v),
     },
 
     inline: Boolean,
@@ -137,7 +135,8 @@ export default {
   },
 
   setup(props) {
-    const inputs = provideChildrenTracker();
+    // components that use useInputValidation
+    const inputs = provideChildrenTracker<ComponentPublicInstance & UnwrapNestedRefs<ReturnType<typeof useInputValidation>>>();
     return {
       styles: markRaw(styles),
       internalValidated: computed(() => {
@@ -153,5 +152,5 @@ export default {
       }),
     };
   },
-};
+});
 </script>

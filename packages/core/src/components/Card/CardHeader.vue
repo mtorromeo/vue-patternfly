@@ -6,7 +6,7 @@
   >
     <slot v-if="toggleRightAligned" />
 
-    <div v-if="expandable.value" :class="styles.cardHeaderToggle">
+    <div v-if="expandable" :class="styles.cardHeaderToggle">
       <pf-button variant="plain" v-bind="toggleButtonAttrs" @click="toggle">
         <span :class="styles.cardHeaderToggleIcon">
           <pf-angle-right-icon aria-hidden />
@@ -17,28 +17,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Card/card';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import PfButton from '../Button.vue';
-import { markRaw } from 'vue';
+import { defineComponent, inject, markRaw } from 'vue';
+import { CardExpandableKey, CardExpandedKey } from './Card.vue';
 
-export default {
+export default defineComponent({
   name: 'PfCardHeader',
 
   components: {
     PfAngleRightIcon,
     PfButton,
-  },
-
-  inject: {
-    expandable: {
-      default: false,
-    },
-
-    expanded: {
-      default: false,
-    },
   },
 
   props: {
@@ -54,14 +45,16 @@ export default {
 
   setup() {
     return {
+      expandable: inject(CardExpandableKey),
+      expanded: inject(CardExpandedKey),
       styles: markRaw(styles),
     };
   },
 
   methods: {
     toggle() {
-      this.expanded.value = !this.expanded.value;
+      this.expanded = !this.expanded;
     },
   },
-};
+});
 </script>

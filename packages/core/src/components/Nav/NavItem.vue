@@ -10,11 +10,11 @@
   >
     <component
       :is="linkTag"
-      :class="[styles.navLink, {[styles.modifiers.current]: active}]"
+      :class="[styles.navLink, { [styles.modifiers.current]: active }]"
       :aria-current="active ? 'page' : null"
       :to="to"
       :active-class="to ? styles.modifiers.current : null"
-      :tabindex="tabindex || sidebar.sidebarOpen ? null : '-1'"
+      :tabindex="tabindex || sidebarOpen ? null : '-1'"
       v-bind="$attrs"
       @click="select"
     >
@@ -30,28 +30,18 @@
   </component>
 </template>
 
-<script>
-import { watchEffect, markRaw } from 'vue';
+<script lang="ts">
+import { watchEffect, markRaw, defineComponent, inject } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import { NavFlyoutRefKey, NavOnSelectKey } from './Nav.vue';
+import { SidebarOpenKey } from '../Page/PageSidebar.vue';
 
-export default {
+export default defineComponent({
   name: 'PfNavItem',
 
   components: {
     PfAngleRightIcon,
-  },
-
-  inject: {
-    onSelect: {
-      default: null,
-    },
-    sidebar: {
-      default: () => ({ sidebarOpen: false }),
-    },
-    flyoutRef: {
-      default: null,
-    },
   },
 
   inheritAttrs: false,
@@ -94,8 +84,8 @@ export default {
   },
 
   emits: {
-    showflyout: true,
-    select(e, groupId, itemId) {
+    showflyout: () => true,
+    select(e: Event, groupId: string, itemId: string) {
       if (!(e instanceof Event) || typeof groupId === 'undefined' || typeof itemId === 'undefined') {
         console.warn('Invalid select event payload!');
         return false;
@@ -107,12 +97,15 @@ export default {
   setup() {
     return {
       styles: markRaw(styles),
+      onSelect: inject(NavOnSelectKey, null),
+      flyoutRef: inject(NavFlyoutRefKey, null),
+      sidebarOpen: inject(SidebarOpenKey, false),
     };
   },
 
-  data() {
+  data(this: void) {
     return {
-      flyoutTarget: null,
+      flyoutTarget: null as HTMLElement | null,
     };
   },
 
@@ -126,10 +119,10 @@ export default {
 
     flyoutVisible: {
       get() {
-        return this === this.flyoutRef.value;
+        return this.$el && this.$el === this.flyoutRef;
       },
-      set(visible) {
-        this.flyoutRef.value = visible ? this : null;
+      set(visible: boolean) {
+        this.flyoutRef = visible ? this.$el : null;
         if (visible) {
           this.$emit('showflyout');
         }
@@ -147,7 +140,10 @@ export default {
         const flyoutItems = Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
           el => !(el.classList.contains('pf-m-disabled') || el.classList.contains('pf-c-divider')),
         );
-        flyoutItems[0].firstChild.focus();
+        const child = flyoutItems[0].firstElementChild;
+        if (child instanceof HTMLElement) {
+          child.focus();
+        }
       } else {
         this.flyoutTarget.focus();
       }
@@ -163,7 +159,7 @@ export default {
   },
 
   methods: {
-    select(e) {
+    select(e: Event) {
       if (e && this.preventDefault) {
         e.preventDefault();
       }
@@ -173,8 +169,8 @@ export default {
       }
     },
 
-    handleFlyout(e) {
-      if (!this.$slots.flyout) {
+    handleFlyout(e: KeyboardEvent) {
+      if (!this.$slots.flyout || !(e.target instanceof HTMLElement)) {
         return;
       }
 
@@ -183,7 +179,7 @@ export default {
         e.preventDefault();
         if (!this.flyoutVisible) {
           this.flyoutVisible = true;
-          this.flyoutTarget = e.target;
+          this.flyoutTarget = e.target as any;
         }
       }
 
@@ -197,7 +193,10 @@ export default {
           }
 
           if (closestFlyout) {
-            closestFlyout.firstChild.focus();
+            const child = closestFlyout.firstElementChild;
+            if (child instanceof HTMLElement) {
+              child.focus();
+            }
           }
 
           this.flyoutVisible = false;
@@ -205,12 +204,15 @@ export default {
       }
     },
 
-    flyoutClick(e) {
+    flyoutClick(e: Event) {
+      if (!(e.target instanceof HTMLElement)) {
+        return;
+      }
       const closestItem = e.target.closest('.pf-c-nav__item');
       if (!closestItem) {
         this.flyoutVisible = !!this.$slots.flyout;
       }
     },
   },
-};
+});
 </script>

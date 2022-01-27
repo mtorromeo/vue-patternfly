@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
-import { breakpointProp, classesFromBreakpointProps } from '../../util.ts';
-import { h, resolveDynamicComponent } from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { DefineComponent, defineComponent, h, resolveDynamicComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfFlex',
 
   props: {
@@ -30,9 +30,10 @@ export default {
     ...breakpointProp('flexWrap', String, ['', 'wrap', 'wrap-reverse', 'nowrap']),
   },
 
-  render() {
-    return h(resolveDynamicComponent(this.component), {
-      class: [styles.flex, classesFromBreakpointProps(this.$props, [
+  setup(props, { slots }) {
+    const Component = resolveDynamicComponent(props.component) as DefineComponent;
+    return () => h(Component, {
+      class: [styles.flex, classesFromBreakpointProps(props, [
         'spacer',
         'spaceItems',
         'grow',
@@ -48,7 +49,7 @@ export default {
         'fullWidth',
         'flexWrap',
       ], styles)],
-    }, this.$slots);
+    }, slots);
   },
-};
+});
 </script>

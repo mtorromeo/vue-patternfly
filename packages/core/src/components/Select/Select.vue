@@ -6,7 +6,7 @@
         [styles.modifiers.expanded]: managedOpen,
         [styles.modifiers.top]: up,
       }]"
-      :style="{width}"
+      :style="{ width }"
     >
       <pf-select-toggle
         v-model:open="managedOpen"
@@ -22,7 +22,12 @@
           </span>
 
           <template v-if="$slots.customContent || ['single', 'checkbox'].includes(variant)">
-            <input v-if="variant === 'single' && name" type="hidden" :name="name" :value="value">
+            <input
+              v-if="variant === 'single' && name"
+              type="hidden"
+              :name="name"
+              :value="modelValue"
+            />
             <span :class="styles.selectToggleText">
               <slot name="placeholder">{{ placeholder || childPlaceholderText }}</slot>
             </span>
@@ -30,9 +35,9 @@
               v-if="!selectionBadgeHidden && checkedOptions.length"
               :class="styles.selectToggleBadge"
             >
-              <span :class="[badgeStyles.badge, badgeStyles.modifiers.read]">
-                {{ selectionBadgeText || checkedOptions.length || '' }}
-              </span>
+              <span
+                :class="[badgeStyles.badge, badgeStyles.modifiers.read]"
+              >{{ selectionBadgeText || checkedOptions.length || '' }}</span>
             </div>
           </template>
 
@@ -40,7 +45,7 @@
             <input
               :id="`${selectToggleId}-select-typeahead`"
               :class="[formStyles.formControl, styles.selectToggleTypeahead]"
-              :aria-activedescendant="typeaheadActiveChild && typeaheadActiveChild.id"
+              :aria-activedescendant="typeaheadActiveChild?.id"
               :aria-label="typeAheadAriaLabel"
               :placeholder="placeholder"
               :value="
@@ -49,11 +54,11 @@
                   : checkedOptions[0].value || ''
               "
               type="text"
-              autoComplete="off"
+              autocomplete="off"
               :disabled="disabled"
               @click="onClick"
               @change="onChange"
-            >
+            />
           </template>
         </div>
 
@@ -82,10 +87,10 @@
               type="search"
               :class="[formStyles.formControl, formStyles.modifiers.search]"
               :placeholder="inlineFilterPlaceholderText"
-              autoComplete="off"
+              autocomplete="off"
               @change="onChange"
               @keydown="onFilterKeydown"
-            >
+            />
           </div>
           <pf-divider />
         </template>
@@ -96,7 +101,7 @@
   </component>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import badgeStyles from '@patternfly/react-styles/css/components/Badge/badge';
 import formStyles from '@patternfly/react-styles/css/components/FormControl/form-control';
@@ -105,14 +110,24 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 import Void from '../Void';
 import PfPopper from '../Popper';
 import PfSelectMenu from './SelectMenu.vue';
+import PfSelectOption from './SelectOption.vue';
 import PfSelectToggle from './SelectToggle.vue';
 import PfDivider from '../Divider';
 import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
 
-import { useManagedProp, provideChildrenTracker, keyNavigation } from '../../use.ts';
-import { markRaw, provide } from 'vue';
+import { useManagedProp, provideChildrenTracker, keyNavigation, Disableable, Focusable, Navigatable } from '../../use';
+import { Component, defineComponent, InjectionKey, markRaw, PropType, provide, Ref, ref } from 'vue';
 
-export default {
+export const SelectKey = Symbol('SelectKey') as InjectionKey<{
+  $emit: (event: 'select', ...args: any[]) => void;
+  name: string;
+  variant: string;
+  keydown: (this: Component & Navigatable, event: KeyboardEvent, itemEl?: HTMLElement) => void;
+  element: Ref<HTMLSelectElement | null>,
+  menu: Ref<InstanceType<typeof PfSelectMenu> | null>,
+}>;
+
+export default defineComponent({
   name: 'PfSelect',
 
   components: {
@@ -122,12 +137,6 @@ export default {
     PfPopper,
     PfDivider,
     TimesCircleIcon,
-  },
-
-  provide() {
-    return {
-      select: this,
-    };
   },
 
   props: {
@@ -149,6 +158,7 @@ export default {
     },
     up: Boolean,
     disabled: Boolean,
+    bubbleEvent: Boolean,
     width: {
       type: String,
       default: null,
@@ -156,11 +166,11 @@ export default {
     variant: {
       type: String,
       default: 'single',
-      validator: v => ['single', 'checkbox', 'typeahead', 'typeaheadmulti'].includes(v),
+      validator: (v: any) => ['single', 'checkbox', 'typeahead', 'typeaheadmulti'].includes(v),
     },
     selections: {
-      type: [String, Array],
-      default: () => [],
+      type: [String, Array] as PropType<string | string[]>,
+      default: (): string | string[] => [],
     },
     selectionBadgeHidden: Boolean,
     selectionBadgeText: {
@@ -174,15 +184,41 @@ export default {
       type: String,
       default: '',
     },
+
+    // TODO
+    selectToggleId: {
+      type: String,
+      default: '',
+    },
+    modelValue: {
+      type: String,
+      default: '',
+    },
   },
 
-  emits: ['clear', 'update:open'],
+  emits: ['select', 'clear', 'update:open'],
 
-  setup() {
-    const options = provideChildrenTracker();
+  setup(props, { emit }) {
+    const options = provideChildrenTracker<InstanceType<typeof PfSelectOption> & Disableable & Focusable>();
     const onKeydown = keyNavigation(options);
-    provide('keydown', onKeydown);
+
+    const select: Ref<HTMLSelectElement | null> = ref(null);
+    const menu: Ref<InstanceType<typeof PfSelectMenu> | null> = ref(null);
+    const filter: Ref<HTMLInputElement | null> = ref(null);
+
+    provide(SelectKey, {
+      $emit: emit,
+      name: props.name,
+      variant: props.variant,
+      keydown: onKeydown,
+      element: select,
+      menu,
+    });
+
     return {
+      select,
+      filter,
+      menu,
       options,
       menuOnKeydown: onKeydown,
       managedOpen: useManagedProp('open', false),
@@ -193,10 +229,12 @@ export default {
     };
   },
 
-  data() {
+  data(this: void) {
     return {
-      typeaheadInputValue: null,
+      typeaheadInputValue: null as string | null,
       typeaheadCurrIndex: -1,
+      typeaheadActiveChild: null as HTMLElement | null,
+      typeAheadAriaLabel: '',
       // tabbedIntoFavoritesMenu: false,
     };
   },
@@ -210,7 +248,7 @@ export default {
         return;
       }
       const placeholder = this.options.find(i => i.placeholder === true);
-      return (placeholder && placeholder.value) || (this.options[0] && this.options[0].value);
+      return placeholder?.value || this.options[0]?.value;
     },
 
     checkedOptions() {
@@ -227,7 +265,7 @@ export default {
   },
 
   methods: {
-    clearSelection(e) {
+    clearSelection(e: Event) {
       this.typeaheadInputValue = null;
       // this.typeaheadFilteredChildren = React.Children.toArray(this.props.children);
       this.typeaheadCurrIndex = -1;
@@ -240,23 +278,23 @@ export default {
       }
     },
 
-    onEscPress(event) {
+    onEscPress(event: KeyboardEvent) {
       const keyCode = event.keyCode || event.which;
 
       if (!this.managedOpen || !(keyCode === 27 /* ESC */ || event.key === 'Tab')) {
         return;
       }
 
-      const escFromToggle = () => this.$refs.select && this.$refs.select.contains(event.target);
+      const escFromToggle = () => event.target instanceof HTMLElement && this.select?.contains?.(event.target);
 
       const escFromWithinMenu = () => {
-        const menu = this.$refs.menu.$el;
-        return menu && menu.contains && menu.contains(event.target);
+        const menu = this.menu.$el;
+        return menu?.contains?.(event.target);
       };
 
       if (escFromToggle() || escFromWithinMenu()) {
         this.managedOpen = false;
-        this.$refs.select.focus();
+        this.select?.focus();
       }
     },
 
@@ -267,7 +305,7 @@ export default {
       // this.tabbedIntoFavoritesMenu = false;
     },
 
-    onKeydown(event) {
+    onKeydown(event: KeyboardEvent) {
       if (event.key === 'Tab' && !this.managedOpen) {
         return;
       }
@@ -303,17 +341,25 @@ export default {
       }
     },
 
-    onFilterKeydown(event) {
+    onFilterKeydown(event: KeyboardEvent) {
       if (event.key === 'Tab' && this.variant === 'checkbox') {
         // More modal-like experience for checkboxes
         // Let SelectOption handle this
-        this.menuOnKeydown.navigate(0, 0, event.shiftKey ? 'up' : 'down');
+        // this.menuOnKeydown.navigate(0, 0, event.shiftKey ? 'up' : 'down');
         event.stopPropagation();
         event.preventDefault();
       } else {
-        this.menuOnKeydown(event, this.$refs.filter);
+        // this.menuOnKeydown(event, this.filter);
       }
     },
+
+    onClick(event: MouseEvent | TouchEvent) {
+
+    },
+
+    onChange(event: Event) {
+
+    },
   },
-};
+});
 </script>

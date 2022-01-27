@@ -22,10 +22,12 @@
         </span>
       </span>
     </button>
-    <section :class="styles.navSubnav" :aria-labelledby="validId" :hidden="realExpanded ? null : true">
-      <h2 v-if="srText" :id="validId" :class="a11yStyles.screenReader">
-        {{ srText }}
-      </h2>
+    <section
+      :class="styles.navSubnav"
+      :aria-labelledby="validId"
+      :hidden="realExpanded ? null : true"
+    >
+      <h2 v-if="srText" :id="validId" :class="a11yStyles.screenReader">{{ srText }}</h2>
       <ul :class="styles.navList">
         <slot />
       </ul>
@@ -33,15 +35,15 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { getUniqueId } from '../../util.ts';
-import { markRaw } from 'vue';
+import { getUniqueId } from '../../util';
+import { defineComponent, markRaw, Ref, ref } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfNavExpandable',
 
   components: {
@@ -57,7 +59,7 @@ export default {
       type: String,
       default: '',
     },
-    groupdId: {
+    groupId: {
       type: [String, Number],
       default: '',
     },
@@ -70,20 +72,24 @@ export default {
     expanded: Boolean,
   },
 
-  emits: ['update:expanded'],
+  emits: {
+    'update:expanded': (value: boolean, groupId: string | number) => value !== undefined && groupId !== undefined,
+  },
 
-  setup() {
+  setup(props) {
+    const expandable: Ref<HTMLButtonElement> = ref(null);
     return {
+      expandable,
       styles: markRaw(styles),
       a11yStyles: markRaw(a11yStyles),
+      expandedState: ref(props.expanded),
     };
   },
 
-  data() {
+  data(this: void) {
     return {
       scrollViewAtStart: false,
       scrollViewAtEnd: false,
-      expandedState: this.expanded,
     };
   },
 
@@ -97,7 +103,7 @@ export default {
         return this.managed ? this.expandedState : this.expanded;
       },
 
-      set(value) {
+      set(value: boolean) {
         if (this.managed) {
           this.expandedState = value;
         } else {
@@ -108,13 +114,16 @@ export default {
   },
 
   methods: {
-    handleToggle(e) {
+    handleToggle(e: Event) {
+      if (!(e.target instanceof Element)) {
+        return;
+      }
       // Item events can bubble up, ignore those
-      if (!this.$refs.expandable || !this.$refs.expandable.contains(e.target)) {
+      if (!this.expandable?.contains(e.target)) {
         return;
       }
       this.realExpanded = !this.realExpanded;
     },
   },
-};
+});
 </script>

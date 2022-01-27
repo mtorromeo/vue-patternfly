@@ -1,13 +1,11 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import formStyles from '@patternfly/react-styles/css/components/Form/form';
-import { h, resolveDynamicComponent, mergeProps } from 'vue';
-import { findChildrenVNodes } from '../../util.ts';
+import { h, mergeProps, defineComponent, inject, ref, VNode, Component } from 'vue';
+import { findChildrenVNodes } from '../../util';
 
-export default {
+export default defineComponent({
   name: 'PfSelectMenu',
-
-  inject: ['select'],
 
   props: {
     custom: Boolean,
@@ -18,13 +16,20 @@ export default {
     inlineFilter: Boolean,
   },
 
+  setup() {
+    return {
+      childrenCount: ref(0),
+      select: inject<any>('select'),
+    };
+  },
+
   methods: {
-    extendChildren(children, grouped) {
-      if (this.select.variant === 'checkbox') {
+    extendChildren(children: any, grouped: any) {
+      if (this.select?.variant === 'checkbox') {
         return children;
       }
 
-      const randomId = this.select.inputIdPrefix;
+      const randomId = this.select?.inputIdPrefix;
 
       if (grouped) {
         // let index = 0;
@@ -47,7 +52,7 @@ export default {
       return children;
     },
 
-    extendCheckboxChildren(children, grouped) {
+    extendCheckboxChildren(children: any, grouped: any) {
       if (this.inlineFilter) {
         children.shift();
       }
@@ -56,31 +61,31 @@ export default {
       // const { isGrouped, checked, sendRef, keyHandler, hasInlineFilter } = this.props;
       const index = this.inlineFilter ? 1 : 0;
       if (grouped) {
-      //   return children.map(children, (group) => {
-      //     if (group.type === SelectOption || group.type === Divider) {
-      //       return group;
-      //     }
-      //     return React.cloneElement(group, {
-      //       titleId: group.props.label && group.props.label.replace(/\W/g, '-'),
-      //       children: (
-      //         <fieldset
-      //           aria-labelledby={group.props.label && group.props.label.replace(/\W/g, '-')}
-      //           className={css(styles.selectMenuFieldset)}
-      //         >
-      //           {children.map(group.props.children, (option: React.ReactElement) =>
-      //             option.type === Divider
-      //               ? option
-      //               : React.cloneElement(option, {
-      //                   isChecked: this.checkForValue(option.props.value, checked),
-      //                   sendRef,
-      //                   keyHandler,
-      //                   index: index++
-      //                 })
-      //           )}
-      //         </fieldset>
-      //       )
-      //     });
-      //   });
+        //   return children.map(children, (group) => {
+        //     if (group.type === SelectOption || group.type === Divider) {
+        //       return group;
+        //     }
+        //     return React.cloneElement(group, {
+        //       titleId: group.props.label && group.props.label.replace(/\W/g, '-'),
+        //       children: (
+        //         <fieldset
+        //           aria-labelledby={group.props.label && group.props.label.replace(/\W/g, '-')}
+        //           className={css(styles.selectMenuFieldset)}
+        //         >
+        //           {children.map(group.props.children, (option: React.ReactElement) =>
+        //             option.type === Divider
+        //               ? option
+        //               : React.cloneElement(option, {
+        //                   isChecked: this.checkForValue(option.props.value, checked),
+        //                   sendRef,
+        //                   keyHandler,
+        //                   index: index++
+        //                 })
+        //           )}
+        //         </fieldset>
+        //       )
+        //     });
+        //   });
       }
 
       // return children.map(children, (child) =>
@@ -99,25 +104,29 @@ export default {
   },
 
   render() {
-    let children = this.$slots.default
+    let children: VNode[] = this.$slots.default
       ? findChildrenVNodes(this.$slots.default())
       : [];
-    const grouped = children.length && children[0].type.name === 'PfSelectGroup';
+    const grouped = children.length
+      && typeof children[0].type === 'object'
+      && (children[0].type as Component).name === 'PfSelectGroup';
 
-    const component = !this.custom && this.select.variant !== 'checkbox' && !grouped
+    const tag = !this.custom && this.select?.variant !== 'checkbox' && !grouped
       ? 'ul'
       : 'div';
 
-    if (this.select.variant === 'checkbox') {
+    if (this.select?.variant === 'checkbox') {
       children = this.extendCheckboxChildren(children, grouped);
-      children = h('fieldset', mergeProps({
-        class: [children.length ? formStyles.formFieldset : styles.selectMenuFieldset],
-      }, this.$attrs), children);
+      children = [
+        h('fieldset', mergeProps({
+          class: [children.length ? formStyles.formFieldset : styles.selectMenuFieldset],
+        }, this.$attrs), children)
+      ];
     } else {
       children = this.extendChildren(children, grouped);
     }
 
-    return h(resolveDynamicComponent(component), {
+    return h(tag, {
       class: styles.selectMenu,
       style: {
         maxHeight: this.maxHeight,
@@ -125,5 +134,5 @@ export default {
       },
     }, children);
   },
-};
+});
 </script>

@@ -1,18 +1,18 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
-import { breakpoints } from '../../util.ts';
-import { h, resolveDynamicComponent } from 'vue';
+import { h, resolveDynamicComponent, defineComponent, DefineComponent } from 'vue';
+import { breakpoints } from '../../util';
 
 const gridSpans = {
   type: [String, Number],
-  default: null,
-  validator: v => {
+  default: null as string | number | null,
+  validator: (v: any) => {
     const numval = Number(v);
     return v === null || (!isNaN(numval) && numval >= 1 && numval <= 12);
   },
 };
 
-export default {
+export default defineComponent({
   name: 'PfGridItem',
 
   props: {
@@ -60,40 +60,45 @@ export default {
     xl2Offset: gridSpans,
   },
 
-  render() {
-    const classes = [
-      styles.gridItem,
-      this.span && styles.modifiers[`${this.span}Col`],
-      this.rowSpan && styles.modifiers[`${this.rowSpan}Row`],
-      this.offset && styles.modifiers[`offset_${this.offset}Col`],
-    ];
+  setup(props, { slots }) {
+    const Component = resolveDynamicComponent(props.component) as DefineComponent;
 
-    for (let breakpoint of breakpoints.filter(Boolean)) {
-      let prop = breakpoint.toLowerCase();
-      if (prop === '2xl') {
-        prop = 'xl2';
-        breakpoint = '_2xl';
+    return () => {
+      const modifiers = styles.modifiers as any;
+      const classes = [
+        styles.gridItem,
+        props.span && modifiers[`${props.span}Col`],
+        props.rowSpan && modifiers[`${props.rowSpan}Row`],
+        props.offset && modifiers[`offset_${props.offset}Col`],
+      ];
+
+      for (let breakpoint of breakpoints.filter(Boolean)) {
+        let prop = breakpoint.toLowerCase();
+        if (prop === '2xl') {
+          prop = 'xl2';
+          breakpoint = '_2xl';
+        }
+
+        const rowSpanProp = `${prop}RowSpan`;
+        const offsetProp = `${prop}Offset`;
+
+        const spanValue = (props as any)[prop];
+        const rowSpanValue = (props as any)[rowSpanProp];
+        const offsetValue = (props as any)[offsetProp];
+
+        if (spanValue) {
+          classes.push(modifiers[`${spanValue}ColOn${breakpoint}`]);
+        }
+        if (rowSpanValue) {
+          classes.push(modifiers[`${rowSpanValue}RowOn${breakpoint}`]);
+        }
+        if (offsetValue) {
+          classes.push(modifiers[`offset_${offsetValue}ColOn${breakpoint}`]);
+        }
       }
 
-      const rowSpanProp = `${prop}RowSpan`;
-      const offsetProp = `${prop}Offset`;
-
-      const spanValue = this.$props[prop];
-      const rowSpanValue = this.$props[rowSpanProp];
-      const offsetValue = this.$props[offsetProp];
-
-      if (spanValue) {
-        classes.push(styles.modifiers[`${spanValue}ColOn${breakpoint}`]);
-      }
-      if (rowSpanValue) {
-        classes.push(styles.modifiers[`${rowSpanValue}RowOn${breakpoint}`]);
-      }
-      if (offsetValue) {
-        classes.push(styles.modifiers[`offset_${offsetValue}ColOn${breakpoint}`]);
-      }
-    }
-
-    return h(resolveDynamicComponent(this.component), { class: classes }, this.$slots);
+      return h(Component, { class: classes }, slots);
+    };
   },
-};
+});
 </script>

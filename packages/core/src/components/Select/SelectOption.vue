@@ -1,5 +1,5 @@
 <template>
-  <template v-if="select.variant === 'checkbox'">
+  <template v-if="select?.variant === 'checkbox'">
     <button
       v-if="load"
       ref="menuItem"
@@ -44,16 +44,18 @@
     >
       <input
         v-model="managedChecked"
-        :name="select.name"
+        :name="select?.name"
         :value="value"
         :class="checkStyles.checkInput"
         type="checkbox"
         :disabled="disabled"
         @change="onCheckboxChange"
+      />
+      <span
+        :class="[checkStyles.checkLabel, {
+          [styles.modifiers.disabled]: disabled,
+        }]"
       >
-      <span :class="[checkStyles.checkLabel, {
-        [styles.modifiers.disabled]: disabled,
-      }]">
         <ItemDisplay :count="count">
           <slot>{{ value }}</slot>
         </ItemDisplay>
@@ -118,17 +120,18 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
-import { h, markRaw, inject, getCurrentInstance } from 'vue';
-import { useChildrenTracker, useFocused, useManagedProp } from '../../use.ts';
+import { h, markRaw, inject, getCurrentInstance, defineComponent, Ref, ref, Component, ComponentPublicInstance } from 'vue';
+import { Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
+import PfSelect, { SelectKey } from './Select.vue';
 
 import Void from '../Void';
 
-export default {
+export default defineComponent({
   name: 'PfSelectOption',
 
   components: {
@@ -148,8 +151,6 @@ export default {
       },
     },
   },
-
-  inject: ['select'],
 
   props: {
     /** Indicates which component will be used as select item */
@@ -213,13 +214,17 @@ export default {
   setup() {
     const instance = getCurrentInstance();
     useChildrenTracker();
-    const keydown = inject('keydown');
+    const select = inject(SelectKey);
+    const menuItem: Ref<HTMLElement | null> = ref(null);
+
     return {
-      keydown: e => keydown.call(instance.proxy, e, instance.refs.menuItem),
+      keydown: (e: KeyboardEvent) => select?.keydown?.call?.(instance.proxy as ComponentPublicInstance & Navigatable, e, menuItem.value),
+      menuItem,
       focused: useFocused(() => instance.refs.menuItem, instance),
       styles: markRaw(styles),
       checkStyles: markRaw(checkStyles),
       managedChecked: useManagedProp('checked', false),
+      select,
     };
   },
 
@@ -228,14 +233,14 @@ export default {
       this.focused = true;
     },
 
-    onCheckboxChange(event) {
+    onCheckboxChange(event: Event) {
       if (this.disabled) {
         return;
       }
       this.$emit('click', event);
       this.$emit('select', event, this.value);
-      this.select.$emit('select', event, this.value);
+      this.select?.$emit?.('select', event, this.value);
     },
   },
-};
+});
 </script>

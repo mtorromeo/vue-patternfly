@@ -1,10 +1,7 @@
 <template>
   <teleport :to="teleportTarget">
     <pf-backdrop v-if="open">
-      <pf-focus-trap
-        :class="bullsEyeStyles.bullseye"
-        :active="!disableFocusTrap"
-      >
+      <pf-focus-trap :class="bullsEyeStyles.bullseye" :active="!disableFocusTrap">
         <component
           :is="component"
           v-bind="$attrs"
@@ -20,56 +17,35 @@
             [styles.modifiers.md]: variant === 'medium',
             [styles.modifiers[titleIconVariant]]: titleIconVariant,
           }]"
-          :style="{[topSpacer.name]: positionOffset}"
+          :style="{ [topSpacer.name]: positionOffset }"
         >
-          <pf-close-button
-            v-if="!noClose"
-            @click="$emit('update:open', false)"
-          />
+          <pf-close-button v-if="!noClose" @click="$emit('update:open', false)" />
 
           <pf-modal-header>
             <slot name="header">
-              <component
-                :is="titleOverflowing ? 'pf-tooltip' : 'void'"
-                v-if="title"
-              >
+              <component :is="titleOverflowing ? 'pf-tooltip' : 'void'" v-if="title">
                 <h1
                   ref="titleRef"
                   :class="[styles.modalBoxTitle, {
                     [styles.modifiers.icon]: titleIconVariant,
                   }]"
                 >
-                  <span
-                    v-if="titleIconVariant"
-                    :class="styles.modalBoxTitleIcon"
-                  >
+                  <span v-if="titleIconVariant" :class="styles.modalBoxTitleIcon">
                     <CheckCircleIcon v-if="titleIconVariant === 'success'" />
                     <ExclamationCircleIcon v-else-if="titleIconVariant === 'danger'" />
                     <ExclamationTriangleIcon v-else-if="titleIconVariant === 'warning'" />
                     <InfoCircleIcon v-else-if="titleIconVariant === 'info'" />
                     <BellIcon v-else-if="titleIconVariant === 'default'" />
-                    <slot
-                      v-else
-                      name="title-icon"
-                    />
+                    <slot v-else name="title-icon" />
                   </span>
-                  <span
-                    v-if="label"
-                    :class="accessibleStyles.screenReader"
-                  >{{ label }}</span>
+                  <span v-if="label" :class="accessibleStyles.screenReader">{{ label }}</span>
                   <span :class="styles.modalBoxTitleText">{{ title }}</span>
                 </h1>
 
-                <template #content>
-                  {{ title }}
-                </template>
+                <template #content>{{ title }}</template>
               </component>
 
-              <div
-                v-if="$slots.description"
-                :id="descriptorId"
-                :class="styles.modalBoxDescription"
-              >
+              <div v-if="$slots.description" :id="descriptorId" :class="styles.modalBoxDescription">
                 <slot name="description" />
               </div>
             </slot>
@@ -87,10 +63,7 @@
             <slot />
           </component>
 
-          <footer
-            v-if="$slots.footer"
-            :class="styles.modalBoxFooter"
-          >
+          <footer v-if="$slots.footer" :class="styles.modalBoxFooter">
             <slot name="footer" />
           </footer>
         </component>
@@ -99,7 +72,7 @@
   </teleport>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
 import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
@@ -118,10 +91,10 @@ import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclam
 import InfoCircleIcon from '@vue-patternfly/icons/dist/esm/icons/info-circle-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import { capitalize } from '@vue/shared';
-import { ref, markRaw } from 'vue';
-import { useElementOverflow } from '../../use.ts';
+import { ref, markRaw, defineComponent, PropType } from 'vue';
+import { useElementOverflow } from '../../use';
 
-export default {
+export default defineComponent({
   name: 'PfModal',
 
   components: {
@@ -171,9 +144,9 @@ export default {
      * When the predefined alert types are used the default styling
      * will be automatically applied */
     titleIconVariant: {
-      type: String,
+      type: String as PropType<'default' | 'success' | 'danger' | 'warning' | 'info' | null>,
       default: null,
-      validator: v => [null, '', 'default', 'success', 'danger', 'warning', 'info'].includes(v),
+      validator: (v: any) => [null, '', 'default', 'success', 'danger', 'warning', 'info'].includes(v),
     },
 
     appendTo: {
@@ -201,16 +174,16 @@ export default {
 
     /** Variant of the modal */
     variant: {
-      type: String,
+      type: String as PropType<'default' | 'small' | 'medium' | 'large' | null>,
       default: 'default',
-      validator: v => [null, '', 'default', 'small', 'medium', 'large'].includes(v),
+      validator: (v: any) => [null, '', 'default', 'small', 'medium', 'large'].includes(v),
     },
 
     /** Alternate position of the modal */
     position: {
-      type: String,
+      type: String as PropType<'default' | 'top' | null>,
       default: 'default',
-      validator: v => [null, '', 'default', 'top'].includes(v),
+      validator: (v: any) => [null, '', 'default', 'top'].includes(v),
     },
 
     /** Offset from alternate position. Can be any valid CSS length/percentage */
@@ -286,5 +259,5 @@ export default {
   beforeUnmount() {
     this.teleportTarget.classList.remove(backdropStyles.backdropOpen);
   },
-};
+});
 </script>

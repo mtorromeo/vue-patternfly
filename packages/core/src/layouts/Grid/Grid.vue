@@ -1,24 +1,24 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
-import { breakpoints } from '../../util.ts';
-import { h, resolveDynamicComponent } from 'vue';
+import { breakpoints } from '../../util';
+import { DefineComponent, defineComponent, h, PropType, resolveDynamicComponent } from 'vue';
 
 const gridSpans = {
   type: [String, Number],
-  default: null,
-  validator: v => {
+  default: null as string | number,
+  validator: (v: any) => {
     const numval = Number(v);
     return v === null || (!isNaN(numval) && numval >= 1 && numval <= 12);
   },
 };
 
-export default {
+export default defineComponent({
   name: 'PfGrid',
 
   props: {
     /** The tag or component to use as container */
     component: {
-      type: [String, Object],
+      type: [String, Object] as PropType<string | DefineComponent>,
       default: 'div',
     },
 
@@ -41,7 +41,7 @@ export default {
   render() {
     const classes = [
       styles.grid,
-      this.span && styles.modifiers[`all_${this.span}Col`],
+      this.span && styles.modifiers[`all_${this.span}Col` as keyof typeof styles.modifiers],
       this.gutter && styles.modifiers.gutter,
     ];
 
@@ -51,13 +51,14 @@ export default {
         prop = 'xl2';
         breakpoint = '_2xl';
       }
-      const propValue = this.$props[prop];
+      const propValue = this.$props[prop as keyof typeof this.$props];
       if (propValue) {
-        classes.push(styles.modifiers[`all_${propValue}ColOn${breakpoint}`]);
+        classes.push(styles.modifiers[`all_${propValue}ColOn${breakpoint}` as keyof typeof styles.modifiers]);
       }
     }
 
-    return h(resolveDynamicComponent(this.component), { class: classes }, this.$slots);
+    const component = resolveDynamicComponent(this.component) as DefineComponent;
+    return h(component, { class: classes }, this.$slots);
   },
-};
+});
 </script>

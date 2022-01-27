@@ -1,5 +1,14 @@
 import { computed, Fragment, Comment, Prop, VNode, isVNode, VNodeNormalizedChildren, ComponentPublicInstance } from 'vue';
 
+export enum Breakpoints {
+  xs = '',
+  sm = 'Sm',
+  md = 'Md',
+  lg = 'Lg',
+  xl = 'Xl',
+  '2xl' = '2sl',
+}
+
 export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
 
 const camelize = (s: string) =>
@@ -10,13 +19,24 @@ const camelize = (s: string) =>
 
 export const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
+export const isComponentPublicInstance = (v: any): v is ComponentPublicInstance => v && typeof v === 'object' && '$' in v && '$options' in v && '$root' in v && '$el' in v;
+
 /**
  *
  * @param {string} s string to make camelCased
  */
-export const toCamel = (s: string) => s.replace(/([-_][a-z])/gi, camelize);
+export function toCamelCase<S extends string>(s: S): ToCamelCase<S> {
+  return s.replace(/([-_][a-z])/gi, camelize) as ToCamelCase<S>;
+}
 
 export const ucfirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+export type ToCamelCase<S extends string> =
+  S extends `${infer T}_${infer U}` ?
+  `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}` :
+  S extends `${infer T}-${infer U}` ?
+  `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}` :
+  S
 
 export function classesFromBreakpointProps(props: any, baseNames: string[], styles: any, { additional = [], short = false }: { additional?: string[], short?: boolean } = {}) {
   const c = [...additional];
@@ -32,14 +52,14 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
         if (value === true) {
           value = '';
         } else {
-          value = toCamel(value);
+          value = toCamelCase(value);
           if (value.match(/^[0-9]/)) {
             value = `_${value}`;
           }
         }
         let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}` : ''}`;
         if (!short) {
-          mod = `${toCamel(baseName)}${ucfirst(mod)}`;
+          mod = `${toCamelCase(baseName)}${ucfirst(mod)}`;
         }
         c.push(styles.modifiers[mod]);
       }
@@ -53,7 +73,11 @@ export function useBreakpointProp(props: any, baseNames: string[], styles: any, 
   return computed(() => classesFromBreakpointProps(props, baseNames, styles, options));
 }
 
-export function breakpointProp<T, D = T>(baseName: string, type: any, values?: string[]): { [index: string]: Prop<T, D> } {
+type BreakpointProps<Name extends string, T> = {
+  [K in keyof Breakpoints as `${Name}${Capitalize<string & K>}`]: Prop<T>;
+}
+
+export function breakpointProp<Name extends string, T extends BooleanConstructor | StringConstructor | ArrayConstructor | ObjectConstructor | DateConstructor>(baseName: Name, type: T, values?: string[]): BreakpointProps<Name, T> {
   return Object.fromEntries(breakpoints.map(b => {
     let _default = null;
     if (Array.isArray(values) && values.length) {
@@ -133,7 +157,7 @@ export function domFromRef(ref: ComponentPublicInstance | HTMLElement): HTMLElem
  *
  * @returns { boolean } True if the component is in View.
  */
-export function isElementInView(container: HTMLElement, element: HTMLElement, partial: boolean) {
+export function isElementInView(container: Element, element: Element, partial: boolean) {
   if (!container || !element) {
     return false;
   }

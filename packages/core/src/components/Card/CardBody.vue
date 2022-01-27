@@ -1,15 +1,15 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { h, resolveDynamicComponent } from 'vue';
+import { DefineComponent, defineComponent, h, PropType, resolveDynamicComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfCardBody',
 
   props: {
     /** Sets the base component to render. */
     component: {
-      type: [String, Object],
+      type: [String, Object] as PropType<string | DefineComponent>,
       default: 'div',
     },
 
@@ -18,11 +18,12 @@ export default {
   },
 
   render() {
-    return h(resolveDynamicComponent(this.component), {
+    const component = resolveDynamicComponent(this.component) as DefineComponent;
+    return h(component, {
       class: [styles.cardBody, {
         [styles.modifiers.noFill]: !this.filled,
       }],
     }, this.$slots);
   },
-};
+});
 </script>

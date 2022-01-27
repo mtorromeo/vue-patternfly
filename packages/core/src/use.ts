@@ -1,16 +1,16 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref } from 'vue';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
-export function provideChildrenTracker(symbol: Symbol) {
-  const items = ref<Component[]>([]);
+export function provideChildrenTracker<C extends Component = ComponentPublicInstance>(symbol?: Symbol) {
+  const items: Ref<C[]> = ref([]);
 
   provide(symbol || ChildrenTrackerSymbol, {
-    register: (item: Component) => items.value.push(item),
+    register: (item: C) => items.value.push(item),
 
-    unregister: (item: Component) => {
+    unregister: (item: C) => {
       const idx = items.value.findIndex(i => i === item);
       if (idx >= 0) {
         items.value.splice(idx, 1);
@@ -21,7 +21,7 @@ export function provideChildrenTracker(symbol: Symbol) {
   return items;
 }
 
-export function useChildrenTracker(symbol: Symbol) {
+export function useChildrenTracker(symbol?: Symbol) {
   const tracker = inject(symbol || ChildrenTrackerSymbol, null);
 
   if (tracker) {
@@ -67,15 +67,15 @@ export function useFocused(getFocusElement: () => RendererNode, instance: Compon
   return focused;
 }
 
-interface Disableable {
+export interface Disableable {
   disabled: boolean;
 }
 
-interface Focusable {
+export interface Focusable {
   focused: boolean;
 }
 
-interface Navigatable {
+export interface Navigatable {
   focusElement: () => HTMLElement;
   enterTriggersArrowDown?: boolean;
 }
@@ -242,25 +242,29 @@ export function isDefined(value: any): boolean {
   return value !== null && typeof value !== 'undefined';
 }
 
-export function useManagedProp(name: string, value: any = null, transform?: (value: any) => any) {
+export function useManagedProp<T>(name: string, value: T = null, transform?: (value: any) => T) {
   const instance = getCurrentInstance();
   if (!instance) {
     return;
   }
 
-  const inner = ref(value);
+  const inner = ref(value) as Ref<T>;
+
   return computed({
-    get() {
-      return isDefined(instance.props[name]) ? instance.props[name] : inner.value;
+    get(): T {
+      if (isDefined(instance.props[name])) {
+        return instance.props[name] as T;
+      }
+      return unref(inner);
     },
-    set(to) {
+    set(to: T) {
       if (typeof transform === 'function') {
         to = transform(to);
       }
       if (isDefined(instance.props[name])) {
         instance.emit(`update:${name}`, to);
       } else {
-        inner.value = to;
+        inner.value = unref(to as T);
       }
     },
   });

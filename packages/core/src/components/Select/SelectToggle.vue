@@ -6,7 +6,7 @@
       [styles.modifiers.plain]: plain,
       [styles.modifiers.active]: active,
     }]"
-    :style="{width}"
+    :style="{ width }"
     :disabled="disabled"
     @click="onClick"
     @keydown="onKeydown"
@@ -18,19 +18,18 @@
   </component>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Select/select';
 // import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
-import { markRaw } from 'vue';
+import { defineComponent, inject, markRaw, unref } from 'vue';
 
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
+import { SelectKey } from './Select.vue';
 
-export default {
+export default defineComponent({
   name: 'PfSelectToggle',
 
   components: { CaretDownIcon },
-
-  inject: ['select'],
 
   props: {
     open: Boolean,
@@ -49,7 +48,7 @@ export default {
     variant: {
       type: String,
       default: 'single',
-      validator: v => ['single', 'checkbox', 'typeahead', 'typeaheadmulti'].includes(v),
+      validator: (v: any) => ['single', 'checkbox', 'typeahead', 'typeaheadmulti'].includes(v),
     },
   },
 
@@ -58,6 +57,7 @@ export default {
   setup() {
     return {
       styles: markRaw(styles),
+      select: inject(SelectKey),
     };
   },
 
@@ -78,12 +78,12 @@ export default {
       this.$emit('update:open', !this.open);
     },
 
-    onDocClick(event) {
-      const clickedOnToggle = () => this.select && this.select.$refs.select.contains(event.target);
+    onDocClick(event: MouseEvent | TouchEvent) {
+      const clickedOnToggle = () => event.target instanceof Element && unref(this.select?.element)?.contains?.(event.target);
 
       const clickedWithinMenu = () => {
-        const menu = this.select && this.select.$refs.menu.$el;
-        return menu && menu.contains && menu.contains(event.target);
+        const menu = unref(this.select?.menu)?.$el;
+        return event.target instanceof HTMLElement && menu?.contains?.(event.target);
       };
 
       if (this.open && !(clickedOnToggle() || clickedWithinMenu())) {
@@ -92,7 +92,7 @@ export default {
       }
     },
 
-    handleGlobalKeys(event) {
+    handleGlobalKeys(event: KeyboardEvent) {
       if (
         this.open &&
         event.key === 'Tab' &&
@@ -111,8 +111,8 @@ export default {
       const escFromToggle = () => this.$parent && this.$parent.$el && this.$parent.$el.contains(event.target);
 
       const escFromWithinMenu = () => {
-        const menu = this.select && this.select.$refs.menu.$el;
-        return menu && menu.contains && menu.contains(event.target);
+        const menu = unref(this.select?.menu)?.$el;
+        return event.target instanceof HTMLElement && menu?.contains?.(event.target);
       };
 
       if (escFromToggle() || escFromWithinMenu()) {
@@ -122,7 +122,7 @@ export default {
       }
     },
 
-    onKeydown(event) {
+    onKeydown(event: KeyboardEvent) {
       if (['typeahead', 'typeaheadmulti'].includes(this.variant)) {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
           this.$emit('typeaheadKeys', (event.key === 'ArrowDown' && 'down') || (event.key === 'ArrowUp' && 'up'));
@@ -145,11 +145,11 @@ export default {
       }
 
       event.preventDefault();
-      if ((event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') && this.open) {
+      if (this.open) {
         this.toggle();
         this.$emit('close');
         this.$el.focus();
-      } else if ((event.key === 'Enter' || event.key === ' ') && !this.open) {
+      } else {
         this.toggle();
         this.$emit('enter');
       }
@@ -162,5 +162,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

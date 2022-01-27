@@ -16,23 +16,28 @@
   </component>
 </template>
 
-<script>
-import { ref, provide, markRaw } from 'vue';
+<script lang="ts">
+import { ref, provide, markRaw, defineComponent, PropType, InjectionKey, Ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
-export default {
+export const NavScrollablelKey = Symbol('NavScrollablelKey') as InjectionKey<Ref<boolean>>;
+export const NavHorizontalKey = Symbol('NavHorizontalKey') as InjectionKey<boolean>;
+export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<(event: Event, groupId: string, itemId: string) => void>;
+export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | null>>;
+
+export default defineComponent({
   name: 'PfNav',
 
   props: {
     theme: {
-      type: String,
+      type: String as PropType<'dark' | 'light'>,
       default: 'dark',
-      validator: v => ['dark', 'light'].includes(v),
+      validator: (v: any) => ['dark', 'light'].includes(v),
     },
     variant: {
-      type: String,
+      type: String as PropType<'default' | 'horizontal' | 'tertiary' | 'horizontal-subnav' | 'subnav'>,
       default: 'default',
-      validator: v => ['', 'default', 'horizontal', 'tertiary', 'horizontal-subnav', 'subnav'].includes(v),
+      validator: (v: any) => ['', 'default', 'horizontal', 'tertiary', 'horizontal-subnav', 'subnav'].includes(v),
     },
     ariaLabel: {
       type: String,
@@ -44,15 +49,15 @@ export default {
 
   setup(props, { emit }) {
     const scrollable = ref(false);
-    provide('scrollable', scrollable);
+    provide(NavScrollablelKey, scrollable);
 
     const horizontal = ['horizontal', 'tertiary', 'horizontal-subnav'].includes(props.variant);
-    provide('horizontal', horizontal);
+    provide(NavHorizontalKey, horizontal);
 
-    provide('onSelect', (e, groupId, itemId) => emit('select', e, groupId, itemId));
+    provide(NavOnSelectKey, (e, groupId, itemId) => emit('select', e, groupId, itemId));
 
-    const flyoutRef = ref(null);
-    provide('flyoutRef', flyoutRef);
+    const flyoutRef: Ref<HTMLElement | null> = ref(null);
+    provide(NavFlyoutRefKey, flyoutRef);
 
     return {
       horizontal,
@@ -60,5 +65,5 @@ export default {
       styles: markRaw(styles),
     };
   },
-};
+});
 </script>

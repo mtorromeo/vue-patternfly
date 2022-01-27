@@ -1,16 +1,11 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { h, mergeProps } from 'vue';
+import { defineComponent, h, inject, mergeProps } from 'vue';
+import { SimpleListValueKey } from './SimpleList.vue';
 
-export default {
+export default defineComponent({
   name: 'PfSimpleListItem',
-
-  inject: {
-    listValue: {
-      default: null,
-    },
-  },
 
   props: {
     /**
@@ -25,7 +20,7 @@ export default {
     component: {
       type: String,
       default: 'button',
-      validator: v => ['button', 'a'].includes(v),
+      validator: (v: any) => ['button', 'a'].includes(v),
     },
 
     /** Additional classes added to the SimpleList <a> or <button> */
@@ -44,7 +39,7 @@ export default {
     type: {
       type: String,
       default: 'button',
-      validator: v => ['button', 'a'].includes(v),
+      validator: (v: any) => ['button', 'a'].includes(v),
     },
 
     /** Default hyperlink location */
@@ -56,16 +51,27 @@ export default {
 
   emits: ['click'],
 
-  render() {
-    const current = this.listValue.value === (this.value === null ? this : this.value);
+  setup() {
+    return {
+      listValue: inject(SimpleListValueKey, null),
+    };
+  },
 
-    const itemProps = {};
+  render() {
+    const current = this.listValue === (this.value === null ? this : this.value);
+
+    const itemProps: {
+      type?: string;
+      href?: string;
+      tabIndex?: number;
+    } = {};
+
     if (this.component === 'button') {
       itemProps.type = this.type;
     } else {
       itemProps.href = this.href;
       itemProps.tabIndex = 0;
-    };
+    }
 
     return h(
       'li', {
@@ -76,9 +82,9 @@ export default {
           class: [styles.simpleListItemLink, this.componentClass, {
             [styles.modifiers.current]: current,
           }],
-          onClick: (e) => {
+          onClick: (e: MouseEvent | TouchEvent) => {
             this.$emit('click', e);
-            this.listValue.value = this.value === null ? this : this.value;
+            this.listValue = this.value === null ? this : this.value;
           },
           'aria-hidden': true,
           ...itemProps,
@@ -87,5 +93,5 @@ export default {
       ),
     );
   },
-};
+});
 </script>

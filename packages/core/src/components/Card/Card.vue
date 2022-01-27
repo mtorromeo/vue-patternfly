@@ -1,16 +1,19 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { h, provide, computed, resolveDynamicComponent } from 'vue';
-import { useManagedProp } from '../../use.ts';
+import { h, provide, computed, resolveDynamicComponent, defineComponent, DefineComponent, PropType, InjectionKey, Ref, ComputedRef } from 'vue';
+import { useManagedProp } from '../../use';
 
-export default {
+export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean>>;
+export const CardExpandableKey = Symbol('CardExpandableKey') as InjectionKey<ComputedRef<boolean>>;
+
+export default defineComponent({
   name: 'PfCard',
 
   props: {
     /** Content rendered inside the Card */
     component: {
-      type: [String, Object],
+      type: [String, Object] as PropType<string | DefineComponent>,
       default: 'article',
     },
 
@@ -55,15 +58,16 @@ export default {
 
   setup(props) {
     const managedExpanded = useManagedProp('expanded', false);
-    provide('expanded', managedExpanded);
-    provide('expandable', computed(() => props.expandable || props.expanded !== null));
+    provide(CardExpandedKey, managedExpanded);
+    provide(CardExpandableKey, computed(() => props.expandable || props.expanded !== null));
     return {
       managedExpanded,
     };
   },
 
   render() {
-    return h(resolveDynamicComponent(this.component), {
+    const component = resolveDynamicComponent(this.component) as DefineComponent;
+    return h(component, {
       class: [styles.card, {
         [styles.modifiers.hoverable]: this.hoverable,
         [styles.modifiers.compact]: this.compact,
@@ -78,5 +82,5 @@ export default {
       }],
     }, this.$slots);
   },
-};
+});
 </script>

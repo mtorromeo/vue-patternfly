@@ -1,18 +1,9 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Title/title';
 
-import {h, mergeProps} from 'vue';
+import { defineComponent, h, mergeProps, PropType } from 'vue';
 
-const TitleSizes = [
-  'md',
-  'lg',
-  'xl',
-  '2xl',
-  '3xl',
-  '4xl',
-];
-
-const headingLevelSizeMap = {
+const headingLevelSizeMap: Record<number, keyof typeof styles.modifiers> = {
   [1]: '2xl',
   [2]: 'xl',
   [3]: 'lg',
@@ -21,31 +12,29 @@ const headingLevelSizeMap = {
   [6]: 'md',
 };
 
-export default {
+export default defineComponent({
   name: 'PfTitle',
 
   props: {
     size: {
-      type: String,
+      type: String as PropType<keyof typeof styles.modifiers>,
       default: '',
-      validator: v => !v || TitleSizes.includes(v),
+      validator: (v: any) => !v || v in styles.modifiers,
     },
 
     h: {
       type: [Number, String],
       default: 1,
-      validator: v => typeof headingLevelSizeMap[Number(v)] !== 'undefined',
+      validator: (v: any) => typeof headingLevelSizeMap[Number(v) as keyof typeof headingLevelSizeMap] !== 'undefined',
     },
   },
 
   render() {
-    const size = this.size || headingLevelSizeMap[Number(this.h)];
+    const size = headingLevelSizeMap[Number(this.h) as keyof typeof headingLevelSizeMap];
 
     return h(`h${this.h}`, mergeProps({
-      class: [styles.title, {
-        [styles.modifiers[size]]: size,
-      }],
+      class: [styles.title, this.size in styles.modifiers ? styles.modifiers[this.size] : styles.modifiers[size]],
     }, this.$attrs), this.$slots);
   },
-};
+});
 </script>

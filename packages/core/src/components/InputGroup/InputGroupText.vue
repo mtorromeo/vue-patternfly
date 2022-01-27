@@ -1,15 +1,15 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
-import { h, mergeProps, resolveDynamicComponent } from 'vue';
+import { DefineComponent, defineComponent, h, mergeProps, PropType, resolveDynamicComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfInputGroupText',
 
   props: {
     /** Component that wraps the input group text. */
     component: {
-      type: [String, Object],
+      type: [String, Object] as PropType<DefineComponent>,
       default: 'span',
     },
 
@@ -18,7 +18,8 @@ export default {
   },
 
   render() {
-    return h(resolveDynamicComponent(this.component), mergeProps({
+    const component = resolveDynamicComponent(this.component) as DefineComponent;
+    return h(component, mergeProps({
       class: [
         styles.inputGroupText, {
           [styles.modifiers.plain]: this.plain,
@@ -26,5 +27,5 @@ export default {
       ],
     }, this.$props), this.$slots);
   },
-};
+});
 </script>

@@ -1,12 +1,6 @@
 <template>
-  <nav
-    :class="styles.paginationNav"
-    :aria-label="paginationTitle"
-  >
-    <div
-      v-if="!compact"
-      :class="[styles.paginationNavControl, styles.modifiers.first]"
-    >
+  <nav :class="styles.paginationNav" :aria-label="paginationTitle">
+    <div v-if="!compact" :class="[styles.paginationNavControl, styles.modifiers.first]">
       <pf-button
         variant="plain"
         :disabled="disabled || page === firstPage || page === 0"
@@ -30,10 +24,7 @@
       </pf-button>
     </div>
 
-    <div
-      v-if="!compact"
-      :class="styles.paginationNavPageSelect"
-    >
+    <div v-if="!compact" :class="styles.paginationNavPageSelect">
       <input
         v-model="userInputPage"
         :class="styles.formControl"
@@ -47,9 +38,7 @@
         @keydown="onKeydown"
         @change="onChange"
       >
-      <span aria-hidden="true">
-        of {{ pagesTitle ? pluralize(lastPage, pagesTitle) : lastPage }}
-      </span>
+      <span aria-hidden="true">of {{ pagesTitle ? pluralize(lastPage, pagesTitle) : lastPage }}</span>
     </div>
 
     <div :class="styles.paginationNavControl">
@@ -64,10 +53,7 @@
       </pf-button>
     </div>
 
-    <div
-      v-if="!compact"
-      :class="[styles.paginationNavControl, styles.modifiers.last]"
-    >
+    <div v-if="!compact" :class="[styles.paginationNavControl, styles.modifiers.last]">
       <pf-button
         variant="plain"
         :disabled="disabled || page === lastPage"
@@ -81,7 +67,7 @@
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 
 import PfButton from '../Button.vue';
@@ -90,10 +76,10 @@ import AngleDoubleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-doub
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import AngleDoubleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon';
 
-import { pluralize } from '../../util.ts';
-import { markRaw } from 'vue';
+import { pluralize } from '../../util';
+import { defineComponent, markRaw, ref } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfNavigation',
 
   components: {
@@ -119,6 +105,11 @@ export default {
     firstPage: {
       type: Number,
       default: 0,
+    },
+    /** Number of items per page. */
+    perPage: {
+      type: Number,
+      default: 10,
     },
 
     pagesTitle: {
@@ -161,21 +152,16 @@ export default {
     'set-page',
   ],
 
-  setup() {
+  setup(props) {
     return {
       styles: markRaw(styles),
-    };
-  },
-
-  data() {
-    return {
-      userInputPage: this.page,
+      userInputPage: ref<string | number>(props.page),
     };
   },
 
   watch: {
     page: {
-      handler(v) {
+      handler(v: number) {
         this.userInputPage = v;
       },
       immediate: true,
@@ -185,14 +171,14 @@ export default {
   methods: {
     pluralize,
 
-    handleNewPage(newPage) {
+    handleNewPage(newPage: number) {
       const startIdx = (newPage - 1) * this.perPage;
       const endIdx = newPage * this.perPage;
       this.$emit('set-page', newPage, this.perPage, startIdx, endIdx);
     },
 
-    parseInteger(input, lastPage) {
-      let inputPage = parseInt(input, 10);
+    parseInteger(input: string | number, lastPage: number) {
+      let inputPage = typeof input === 'number' ? input : parseInt(input, 10);
       if (!isNaN(inputPage)) {
         inputPage = inputPage > lastPage ? lastPage : inputPage;
         inputPage = inputPage < 1 ? 1 : inputPage;
@@ -200,7 +186,7 @@ export default {
       return inputPage;
     },
 
-    onKeydown(e) {
+    onKeydown(e: KeyboardEvent) {
       if (e.keyCode === 13) {
         // ENTER
         const inputPage = this.parseInteger(this.userInputPage, this.lastPage);
@@ -208,7 +194,10 @@ export default {
       }
     },
 
-    onChange(e) {
+    onChange(e: Event) {
+      if (!(e.target instanceof HTMLInputElement)) {
+        return;
+      }
       const inputPage = this.parseInteger(e.target.value, this.lastPage);
       this.userInputPage = isNaN(inputPage) ? e.target.value : inputPage;
     },
@@ -240,5 +229,5 @@ export default {
       this.handleNewPage(this.lastPage);
     },
   },
-};
+});
 </script>

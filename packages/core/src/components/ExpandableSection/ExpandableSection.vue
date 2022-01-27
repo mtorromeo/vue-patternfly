@@ -19,9 +19,7 @@
       <span :class="styles.expandableSectionToggleIcon">
         <pf-angle-right-icon aria-hidden />
       </span>
-      <span :class="styles.expandableSectionToggleText">
-        {{ computedToggleText }}
-      </span>
+      <span :class="styles.expandableSectionToggleText">{{ computedToggleText }}</span>
     </button>
 
     <div :id="contentId" :class="styles.expandableSectionContent" :hidden="!managedExpanded">
@@ -30,13 +28,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { useManagedProp } from '../../use.ts';
-import { markRaw } from 'vue';
+import { useManagedProp } from '../../use';
+import { defineComponent, markRaw } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfExpandableSection',
 
   components: {
@@ -104,5 +102,5 @@ export default {
       return this.toggleText;
     },
   },
-};
+});
 </script>

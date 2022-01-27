@@ -1,10 +1,10 @@
-<script>
-import { h } from 'vue';
+<script lang="ts">
+import { defineComponent, h, PropType } from 'vue';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useChildrenTracker, useManagedProp } from '../use.ts';
+import { useChildrenTracker, useManagedProp } from '../use';
 import InputValidationMixin from '../mixins/InputValidationMixin';
 
-export default {
+export default defineComponent({
   name: 'PfTextInput',
 
   mixins: [InputValidationMixin],
@@ -20,9 +20,9 @@ export default {
 
     /** @values calendar, clock, search */
     iconVariant: {
-      type: String,
-      default: '',
-      validator: v => ['', 'calendar', 'clock', 'search'].includes(v),
+      type: String as PropType<'calendar' | 'clock' | 'search' | null>,
+      default: null,
+      validator: (v: any) => [null, '', 'calendar', 'clock', 'search'].includes(v),
     },
 
     /** Custom icon url to set as the input's background-image */
@@ -48,13 +48,10 @@ export default {
   },
 
   render() {
-    const style = {};
-    if (this.iconUrl) {
-      style['background-image'] = `url('${this.iconUrl}')`;
-    }
-    if (this.iconDimensions) {
-      style['background-size'] = this.iconDimensions;
-    }
+    const style = {
+      backgroundImage: this.iconUrl ? `url(${this.iconUrl})` : undefined,
+      backgroundSize: this.iconDimensions ? this.iconDimensions : undefined,
+    };
 
     return h('input', {
       value: this.value,
@@ -76,5 +73,5 @@ export default {
       onKeyUp: this.onKeyUp,
     });
   },
-};
+});
 </script>

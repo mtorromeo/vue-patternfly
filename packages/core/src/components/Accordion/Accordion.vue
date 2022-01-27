@@ -1,22 +1,21 @@
-<script>
-import { h } from 'vue';
+<script lang="ts">
+import { defineComponent, h, InjectionKey, provide } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 
-export default {
-  name: 'PfAccordion',
+export const AccordionKey = Symbol('AccordionKey') as InjectionKey<{
+  dl: boolean;
+  level: number;
+}>;
 
-  provide() {
-    return {
-      accordion: this,
-    };
-  },
+export default defineComponent({
+  name: 'PfAccordion',
 
   props: {
     /** Heading level to use */
     level: {
       type: Number,
       default: 3,
-      validator: v => v >= 1 && v <= 6,
+      validator: (v: any) => v >= 1 && v <= 6,
     },
 
     /** Flag to indicate whether use definition list or div */
@@ -29,6 +28,13 @@ export default {
     large: Boolean,
   },
 
+  setup(props) {
+    provide(AccordionKey, {
+      dl: props.dl,
+      level: props.level,
+    });
+  },
+
   render() {
     return h(this.dl ? 'dl' : 'div', {
       class: [styles.accordion, {
@@ -37,5 +43,5 @@ export default {
       }],
     }, this.$slots);
   },
-};
+});
 </script>

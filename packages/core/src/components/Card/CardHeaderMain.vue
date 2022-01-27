@@ -1,11 +1,11 @@
-<script>
-import { h } from 'vue';
+<script lang="ts">
+import { defineComponent, h } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfCardHeaderMain',
 
   render() {
     return h('div', {}, this.$slots);
   },
-};
+});
 </script>

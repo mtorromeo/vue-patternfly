@@ -14,7 +14,12 @@
         </pf-button>
       </div>
 
-      <component :is="logoComponent" v-if="$slots.logo" :class="styles.pageHeaderBrandLink" v-bind="logoProps">
+      <component
+        :is="logoComponent"
+        v-if="$slots.logo"
+        :class="styles.pageHeaderBrandLink"
+        v-bind="logoProps"
+      >
         <slot name="logo" />
       </component>
     </div>
@@ -33,27 +38,19 @@
   </header>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import { markRaw } from 'vue';
+import { defineComponent, inject, markRaw } from 'vue';
 import BarsIcon from '@vue-patternfly/icons/dist/esm/icons/bars-icon';
 import PfButton from '../Button.vue';
+import { PageManagedSidebarKey, PageNavOpenKey } from './Page.vue';
 
-export default {
+export default defineComponent({
   name: 'PfPageHeader',
 
   components: {
     BarsIcon,
     PfButton,
-  },
-
-  inject: {
-    managedNavOpen: {
-      from: 'navOpen',
-    },
-    managedSidebar: {
-      from: 'managedSidebar',
-    },
   },
 
   props: {
@@ -81,20 +78,22 @@ export default {
   setup() {
     return {
       styles: markRaw(styles),
+      managedNavOpen: inject(PageNavOpenKey),
+      managedSidebar: inject(PageManagedSidebarKey),
     };
   },
 
   computed: {
     sidebarOpen: {
       get() {
-        return this.managedSidebar.value ? this.managedNavOpen.value : this.navOpen;
+        return this.managedSidebar ? this.managedNavOpen : this.navOpen;
       },
-      set(open) {
-        if (this.managedSidebar.value) {
-          this.managedNavOpen.value = open;
+      set(open: boolean) {
+        if (this.managedSidebar) {
+          this.managedNavOpen = open;
         }
       },
     },
   },
-};
+});
 </script>

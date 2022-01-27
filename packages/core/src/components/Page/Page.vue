@@ -17,10 +17,7 @@
           [styles.modifiers.stickyTop]: breadcrumbStickyTop,
         }]"
       >
-        <div
-          v-if="breadcrumbWidthLimited"
-          :class="styles.pageMainBody"
-        >
+        <div v-if="breadcrumbWidthLimited" :class="styles.pageMainBody">
           <slot name="breadcrumb" />
         </div>
         <template v-else>
@@ -32,13 +29,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
 import { useWindowSize } from '@vueuse/core';
-import { ref, provide, computed, markRaw } from 'vue';
+import { ref, provide, computed, markRaw, defineComponent, Ref, InjectionKey, ComputedRef } from 'vue';
 
-export default {
+export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
+export const PageNavOpenKey = Symbol('PageNavOpenKey') as InjectionKey<ComputedRef<boolean>>;
+
+export default defineComponent({
   name: 'PfPage',
 
   props: {
@@ -85,7 +85,7 @@ export default {
   },
 
   emits: {
-    'page-resize'({ mobileView, windowSize }) {
+    'page-resize'({ mobileView, windowSize }: { mobileView: boolean, windowSize: number }) {
       if (typeof mobileView !== 'boolean' || typeof windowSize !== 'number') {
         console.warn('Invalid page-resize event payload!');
         return false;
@@ -100,14 +100,14 @@ export default {
     const desktopNavOpen = ref(!props.managedSidebar || props.defaultManagedSidebarOpen);
 
     const managedSidebar = ref(props.managedSidebar);
-    provide('managedSidebar', managedSidebar);
+    provide(PageManagedSidebarKey, managedSidebar);
 
     const navOpen = computed({
       get() {
         return mobileView.value ? mobileNavOpen.value : desktopNavOpen.value;
       },
 
-      set(open) {
+      set(open: boolean) {
         if (mobileView.value) {
           mobileNavOpen.value = open;
         } else {
@@ -115,7 +115,7 @@ export default {
         }
       },
     });
-    provide('navOpen', navOpen);
+    provide(PageNavOpenKey, navOpen);
 
     const { width: windowWidth } = useWindowSize();
 
@@ -147,5 +147,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

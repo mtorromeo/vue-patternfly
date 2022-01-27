@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import { h, mergeProps, ref, resolveDynamicComponent } from 'vue';
-import { useElementOverflow } from '../use.ts';
+import { DefineComponent, defineComponent, h, mergeProps, PropType, ref, resolveDynamicComponent } from 'vue';
+import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton';
-import PfTooltip from './Tooltip/Tooltip.vue';
+import PfTooltip, { TooltipPosition } from './Tooltip/Tooltip.vue';
 
 const colorStyles = {
   blue: styles.modifiers.blue,
@@ -16,25 +16,25 @@ const colorStyles = {
   grey: '',
 };
 
-export default {
+export default defineComponent({
   name: 'PfLabel',
 
   props: {
     /** The color of the label outline/fill */
     color: {
-      type: String,
+      type: String as PropType<keyof typeof colorStyles>,
       default: 'grey',
-      validator: v => typeof colorStyles[v] !== 'undefined',
+      validator: (v: any) => v in colorStyles,
     },
     variant: {
-      type: String,
+      type: String as PropType<'outline' | 'filled'>,
       default: 'filled',
-      validator: v => ['outline', 'filled'].includes(v),
+      validator: (v: any) => ['outline', 'filled'].includes(v),
     },
     tooltipPosition: {
-      type: String,
+      type: String as PropType<TooltipPosition>,
       default: 'top',
-      validator: v => ['auto', 'top', 'bottom', 'left', 'right'].includes(v),
+      validator: (v: any) => v && v in TooltipPosition,
     },
     to: {
       type: [String, Object],
@@ -61,13 +61,13 @@ export default {
   },
 
   methods: {
-    onClose(e) {
+    onClose(e: Event) {
       this.$emit('close', e);
     },
   },
 
   render() {
-    let component = 'span';
+    let component: string | DefineComponent = 'span';
     if (this.href) {
       component = 'a';
     } else if (this.to) {
@@ -77,10 +77,11 @@ export default {
     const children = this.$slots.default();
     let content = children;
     if (this.truncated) {
-      content = h('span', { ref: 'textRef', class: styles.labelText }, children);
+      content = [h('span', { ref: 'textRef', class: styles.labelText }, children)];
     }
 
-    const labelChild = h(resolveDynamicComponent(component), {
+    component = resolveDynamicComponent(component) as DefineComponent;
+    const labelChild = h(component, {
       to: this.to,
       href: this.href,
       class: styles.labelContent,
@@ -108,5 +109,5 @@ export default {
       }),
     ]);
   },
-};
+});
 </script>

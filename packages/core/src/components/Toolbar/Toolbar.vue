@@ -1,7 +1,9 @@
 <template>
-  <div :class="[styles.toolbar, breakpointClasses, {
-    [styles.modifiers.pageInsets]: pageInsets,
-  }]">
+  <div
+    :class="[styles.toolbar, breakpointClasses, {
+      [styles.modifiers.pageInsets]: pageInsets,
+    }]"
+  >
     <slot />
     <pf-toolbar-chip-group-content
       :expanded="effectiveExpanded"
@@ -15,25 +17,35 @@
   </div>
 </template>
 
-<script>
-import { provide, ref, computed, markRaw } from 'vue';
-import { breakpointProp, classesFromBreakpointProps } from '../../util.ts';
+<script lang="ts">
+import { provide, ref, computed, markRaw, defineComponent, InjectionKey, Ref, PropType, ComputedRef } from 'vue';
+import { breakpointProp, classesFromBreakpointProps } from '../../util';
 import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
+import { globalBreakpoints } from './ToolbarUtils';
 
-export default {
+export const ToolbarToggleExpandedKey = Symbol('ToolbarToggleExpandedKey') as InjectionKey<() => void>;
+export const ToolbarClearFilterButtonTextKey = Symbol('ToolbarClearFilterButtonTextKey') as InjectionKey<string>;
+export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersButtonKey') as InjectionKey<boolean>;
+export const ToolbarClearAllFiltersKey = Symbol('ToolbarClearAllFiltersKey') as InjectionKey<() => void>;
+export const ToolbarUpdateNumberFiltersKey = Symbol('ToolbarUpdateNumberFiltersKey') as InjectionKey<(category: string, numberOfFilters: number) => void>;
+export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<Ref<boolean>>;
+export const ToolbarChipGroupContentRefKey = Symbol('ToolbarChipGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
+
+export default defineComponent({
   name: 'PfToolbar',
 
   components: { PfToolbarChipGroupContent },
 
   provide() {
     return {
-      toggleExpanded: this.toggleExpanded,
-      clearFiltersButtonText: this.clearFiltersButtonText,
-      showClearFiltersButton: this.showClearFiltersButton,
-      clearAllFilters: this.clearAllFilters,
-      updateNumberFilters: this.updateNumberFilters,
+      [ToolbarToggleExpandedKey as symbol]: this.toggleExpanded,
+      [ToolbarClearFilterButtonTextKey as symbol]: this.clearFiltersButtonText,
+      [ToolbarShowClearFiltersButtonKey as symbol]: this.showClearFiltersButton,
+      [ToolbarClearAllFiltersKey as symbol]: this.clearAllFilters,
+      [ToolbarUpdateNumberFiltersKey as symbol]: this.updateNumberFilters,
     };
   },
 
@@ -44,9 +56,9 @@ export default {
     },
 
     collapseListedFiltersBreakpoint: {
-      type: String,
+      type: String as PropType<keyof typeof globalBreakpoints>,
       default: 'lg',
-      validator: v => ['', 'all', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(v),
+      validator: (v: any) => v === 'all' || v in globalBreakpoints,
     },
 
     expanded: {
@@ -61,7 +73,7 @@ export default {
   emits: ['update:expanded', 'clear-all-filters'],
 
   setup(props, { emit }) {
-    const managedToggleExpanded = ref(false);
+    const managedToggleExpanded = ref<boolean>(false);
 
     const toggleManaged = computed(() => !props.expanded && props.expanded !== false);
 
@@ -69,7 +81,7 @@ export default {
       get() {
         return toggleManaged.value ? managedToggleExpanded.value : props.expanded;
       },
-      set(value) {
+      set(value: boolean) {
         if (toggleManaged.value) {
           managedToggleExpanded.value = value;
         }
@@ -77,16 +89,16 @@ export default {
       },
     });
 
-    provide('expanded', effectiveExpanded);
+    provide(ToolbarExpandedKey, effectiveExpanded);
 
-    const chipGroupContent = ref(null);
-    provide('chipGroupContentRef', chipGroupContent);
+    const chipGroupContent: Ref<HTMLDivElement | null> = ref(null);
+    provide(ToolbarChipGroupContentRefKey, chipGroupContent);
 
     const { width: windowWidth } = useWindowSize();
 
-    const filterInfo = ref({});
+    const filterInfo = ref<Record<string, number>>({});
     const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));
-    provide('numberOfFilters', numberOfFilters);
+    provide(ToolbarNumberOfFiltersKey, numberOfFilters);
 
     return {
       styles: markRaw(styles),
@@ -120,7 +132,7 @@ export default {
 
   beforeUnmount() {
     if (this.chipGroupContent) {
-      this.chipGroupContent.value = null;
+      this.chipGroupContent = null;
     }
   },
 
@@ -133,7 +145,7 @@ export default {
       this.effectiveExpanded = !this.effectiveExpanded;
     },
 
-    updateNumberFilters(category, numberOfFilters) {
+    updateNumberFilters(category: string, numberOfFilters: number) {
       this.filterInfo[category] = numberOfFilters;
     },
 
@@ -141,5 +153,5 @@ export default {
       this.$emit('clear-all-filters');
     },
   },
-};
+});
 </script>

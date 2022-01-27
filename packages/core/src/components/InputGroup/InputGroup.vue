@@ -1,11 +1,15 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
-import { h, mergeProps, cloneVNode } from 'vue';
+import { h, mergeProps, cloneVNode, defineComponent, Component, VNode } from 'vue';
 
 const formCtrls = ['PfFormSelect', 'PfTextArea', 'PfTextInput'];
 
-export default {
+function vnodeIsFormCtrls(vnode: VNode) {
+  return typeof vnode.type === 'object' && formCtrls.includes((vnode.type as Component).name);
+}
+
+export default defineComponent({
   name: 'PfInputGroup',
 
   render() {
@@ -14,15 +18,15 @@ export default {
     }, this.$props), {
       default: () => {
         const children = this.$slots.default ? this.$slots.default() : [];
-        const idItem = children.find(child => !formCtrls.includes(child.type.name) && child.props && child.props.id);
+        const idItem = children.find(child => !vnodeIsFormCtrls(child) && child.props && child.props.id);
 
         if (!idItem) {
           return children;
         }
 
-        return children.map(child => formCtrls.includes(child.type.name) ? cloneVNode(child, { 'aria-describedby': idItem.props.id }) : child);
+        return children.map(child => vnodeIsFormCtrls(child) ? cloneVNode(child, { 'aria-describedby': idItem.props.id }) : child);
       },
     });
   },
-};
+});
 </script>

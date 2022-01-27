@@ -11,8 +11,8 @@
       :checked="modelValue"
       :disabled="disabled"
       :aria-valid="!valid"
-      @change="$emit('update:modelValue', $event.target.checked)"
-    >
+      @change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
+    />
     <label
       v-if="label || $slots.label"
       :class="[styles.checkLabel, {
@@ -22,27 +22,21 @@
     >
       <slot name="label">{{ label }}</slot>
     </label>
-    <span
-      v-if="description || $slots.description"
-      :class="styles.checkDescription"
-    >
+    <span v-if="description || $slots.description" :class="styles.checkDescription">
       <slot name="description">{{ description }}</slot>
     </span>
-    <span
-      v-if="body || $slots.body"
-      :class="styles.checkBody"
-    >
+    <span v-if="body || $slots.body" :class="styles.checkBody">
       <slot name="body">{{ body }}</slot>
     </span>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { getUniqueId } from '../util.ts';
-import { markRaw } from 'vue';
+import { getUniqueId } from '../util';
+import { defineComponent, markRaw, ref, Ref } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfCheckbox',
 
   props: {
@@ -83,8 +77,10 @@ export default {
   emits: ['update:modelValue'],
 
   setup() {
+    const input: Ref<HTMLInputElement | null> = ref(null);
     return {
       styles: markRaw(styles),
+      input,
     };
   },
 
@@ -100,10 +96,10 @@ export default {
         if (!this.$refs.input) {
           return;
         }
-        this.$refs.input.indeterminate = this.modelValue === null;
+        this.input.indeterminate = this.modelValue === null;
       },
       immediate: true,
     },
   },
-};
+});
 </script>

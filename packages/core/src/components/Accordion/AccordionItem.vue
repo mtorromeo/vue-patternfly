@@ -1,13 +1,12 @@
-<script>
-import { h, mergeProps, resolveDynamicComponent } from 'vue';
+<script lang="ts">
+import { DefineComponent, defineComponent, h, inject, mergeProps, resolveDynamicComponent } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { useManagedProp } from '../../use.ts';
+import { useManagedProp } from '../../use';
+import { AccordionKey } from './Accordion.vue';
 
-export default {
+export default defineComponent({
   name: 'PfAccordionItem',
-
-  inject: ['accordion'],
 
   props: {
     title: {
@@ -33,6 +32,7 @@ export default {
 
   setup() {
     return {
+      accordion: inject(AccordionKey, null),
       managedExpanded: useManagedProp('expanded', false),
     };
   },
@@ -40,7 +40,8 @@ export default {
   render() {
     const Toggle = this.toggleComponent || (this.accordion.dl ? 'dt' : `h${this.accordion.level}`);
 
-    const Content = this.contentComponent || (this.accordion.dl ? 'dd' : 'div');
+    const content = this.contentComponent || (this.accordion.dl ? 'dd' : 'div');
+    const Component = resolveDynamicComponent(content) as DefineComponent;
 
     return [
       h(Toggle, {}, h('button', mergeProps({
@@ -60,7 +61,7 @@ export default {
         h('span', { class: styles.accordionToggleIcon }, h(AngleRightIcon)),
       ])),
 
-      h(resolveDynamicComponent(Content), mergeProps({
+      h(Component, mergeProps({
         class: [
           styles.accordionExpandedContent, {
             [styles.modifiers.fixed]: this.fixed,
@@ -75,5 +76,5 @@ export default {
       ),
     ];
   },
-};
+});
 </script>

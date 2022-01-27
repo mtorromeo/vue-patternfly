@@ -1,5 +1,7 @@
 <template>
-  <div :class="[styles.formFieldGroup, {[styles.modifiers.expanded]: managedExpandable && managedExpanded}]">
+  <div
+    :class="[styles.formFieldGroup, { [styles.modifiers.expanded]: managedExpandable && managedExpanded }]"
+  >
     <div v-if="managedExpandable" :class="styles.formFieldGroupToggle">
       <div :class="styles.formFieldGroupToggleButton">
         <pf-button
@@ -23,15 +25,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { useManagedProp } from '../../use.ts';
-import { getUniqueId } from '../../util.ts';
-import { markRaw } from 'vue';
+import { useManagedProp } from '../../use';
+import { getUniqueId } from '../../util';
+import { defineComponent, markRaw } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfFormFieldGroup',
 
   components: {
@@ -74,5 +76,5 @@ export default {
       return this.expandable || this.expanded !== null;
     },
   },
-};
+});
 </script>

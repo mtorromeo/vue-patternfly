@@ -2,14 +2,8 @@
   <pf-toolbar-item v-if="!hideToolbarItem">
     <slot />
   </pf-toolbar-item>
-  <teleport
-    v-if="mounted && teleportTarget"
-    :to="teleportTarget"
-  >
-    <pf-toolbar-item
-      v-if="chips.length"
-      variant="chip-group"
-    >
+  <teleport v-if="mounted && teleportTarget" :to="teleportTarget">
+    <pf-toolbar-item v-if="chips.length" variant="chip-group">
       <pf-chip-group
         :key="category"
         :category="category"
@@ -20,20 +14,26 @@
           v-for="chip of chips"
           :key="chipKey(chip)"
           @click="$emit('delete-chip', category, chipKey(chip))"
-        >
-          {{ chipLabel(chip) }}
-        </pf-chip>
+        >{{ chipLabel(chip) }}</pf-chip>
       </pf-chip-group>
     </pf-toolbar-item>
   </teleport>
 </template>
 
-<script>
-import PfChipGroup from '../ChipGroup/ChipGroup';
-import PfChip from '../ChipGroup/Chip';
+<script lang="ts">
+import PfChipGroup from '../ChipGroup/ChipGroup.vue';
+import PfChip from '../ChipGroup/Chip.vue';
 import PfToolbarItem from './ToolbarItem.vue';
+import { defineComponent, inject, PropType } from 'vue';
+import { ToolbarChipGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
+import { ToolbarContentChipContainerRefKey } from './ToolbarContent.vue';
 
-export default {
+export type FilterChip = {
+  key: string;
+  label: string;
+} | string;
+
+export default defineComponent({
   name: 'PfToolbarFilter',
 
   components: {
@@ -42,12 +42,10 @@ export default {
     PfToolbarItem,
   },
 
-  inject: ['expanded', 'chipContainerRef', 'chipGroupContentRef', 'updateNumberFilters'],
-
   props: {
     chips: {
-      type: Array,
-      default: () => [],
+      type: Array as PropType<FilterChip[]>,
+      default: (): FilterChip[] => [],
     },
     category: {
       type: String,
@@ -64,9 +62,18 @@ export default {
     };
   },
 
+  setup() {
+    return {
+      expanded: inject(ToolbarExpandedKey),
+      updateNumberFilters: inject(ToolbarUpdateNumberFiltersKey),
+      chipContainerRef: inject(ToolbarContentChipContainerRefKey),
+      chipGroupContentRef: inject(ToolbarChipGroupContentRefKey),
+    };
+  },
+
   computed: {
     teleportTarget() {
-      return this.expanded.value ? this.chipContainerRef.value : this.chipGroupContentRef.value;
+      return this.expanded ? this.chipContainerRef : this.chipGroupContentRef;
     },
   },
 
@@ -80,13 +87,13 @@ export default {
   },
 
   methods: {
-    chipKey(chip) {
+    chipKey(chip: FilterChip) {
       return typeof chip === 'string' ? chip : chip.key;
     },
 
-    chipLabel(chip) {
+    chipLabel(chip: FilterChip) {
       return typeof chip === 'string' ? chip : chip.label;
     },
   },
-};
+});
 </script>

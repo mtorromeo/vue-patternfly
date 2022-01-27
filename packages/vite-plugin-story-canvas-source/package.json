@@ -1,0 +1,29 @@
+{
+  "name": "vite-plugin-story-canvas-source",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsc --build --watch",
+    "build": "tsc --build"
+  },
+  "peerDependencies": {
+    "vite": "*"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
+    "typescript": "^4.6.2",
+    "vite": "^2.8.6"
+  },
+  "packageManager": "yarn@3.1.0",
+  "dependencies": {
+    "@rollup/pluginutils": "^4.2.0",
+    "@toycode/markdown-it-class": "^1.2.4",
+    "@vue/shared": "^3.2.31",
+    "markdown-it": "^12.3.2",
+    "node-html-parser": "^5.3.3",
+    "ts-dedent": "^2.2.0"
+  }
+}

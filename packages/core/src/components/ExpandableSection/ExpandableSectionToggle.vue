@@ -11,9 +11,11 @@
       :aria-controls="contentId"
       @click="managedExpanded = !managedExpanded"
     >
-      <span :class="[styles.expandableSectionToggleIcon, {
-        [styles.modifiers.expandTop]: direction === 'up',
-      }]">
+      <span
+        :class="[styles.expandableSectionToggleIcon, {
+          [styles.modifiers.expandTop]: direction === 'up',
+        }]"
+      >
         <pf-angle-right-icon aria-hidden />
       </span>
       <span :class="styles.expandableSectionToggleText">
@@ -23,13 +25,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import { useManagedProp } from '../../use.ts';
-import { markRaw } from 'vue';
+import { useManagedProp } from '../../use';
+import { defineComponent, markRaw } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfExpandableSectionToggle',
 
   components: {
@@ -50,7 +52,7 @@ export default {
     direction: {
       type: String,
       default: 'down',
-      validator: v => ['up', 'down'].includes(v),
+      validator: (v: any) => ['up', 'down'].includes(v),
     },
   },
 
@@ -62,5 +64,5 @@ export default {
       styles: markRaw(styles),
     };
   },
-};
+});
 </script>

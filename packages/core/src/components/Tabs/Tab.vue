@@ -1,24 +1,11 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
-import { h, unref } from 'vue';
+import { defineComponent, h, inject, unref } from 'vue';
+import { TabsActiveKeyKey, TabsClickHandlerKey } from './Tabs.vue';
 import PfTabTitleText from './TabTitleText.vue';
 
-export default {
+export default defineComponent({
   name: 'PfTab',
-
-  inject: {
-    activeKey: {
-      default: null,
-    },
-
-    idSuffix: {
-      default: '',
-    },
-
-    handleTabClick: {
-      default: () => null,
-    },
-  },
 
   props: {
     /** Content rendered in the tab title. */
@@ -45,6 +32,14 @@ export default {
     },
   },
 
+  setup() {
+    return {
+      activeKey: inject(TabsActiveKeyKey),
+      idSuffix: inject(TabsActiveKeyKey),
+      handleTabClick: inject(TabsClickHandlerKey),
+    };
+  },
+
   render() {
     const key = this.$.vnode.key;
     return h(
@@ -58,7 +53,7 @@ export default {
       h(
         'button',
         {
-          id: `pf-tab-${key}-${unref(this.idSuffix)}`,
+          id: `pf-tab-${String(key)}-${String(this.idSuffix)}`,
           type: 'button',
           class: [styles.tabsLink, {
             [styles.modifiers.disabled]: this.disabled && this.href,
@@ -66,9 +61,9 @@ export default {
           }],
           disabled: this.disabled && !this.href,
           'aria-disabled': this.disabled || this.ariaDisabled,
-          'aria-controls': `pf-tab-section-${key}-${unref(this.idSuffix)}`,
+          'aria-controls': `pf-tab-section-${String(key)}-${String(this.idSuffix)}`,
           tabindex: this.disabled || this.ariaDisabled ? (this.href ? -1 : null) : undefined,
-          onClick: e => this.handleTabClick(key),
+          onClick: (e: Event) => this.handleTabClick(key),
         },
         {
           default: () => {
@@ -84,5 +79,5 @@ export default {
       ),
     );
   },
-};
+});
 </script>

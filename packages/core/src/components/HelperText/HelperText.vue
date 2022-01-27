@@ -4,26 +4,28 @@
   </component>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
-import { markRaw, provide } from 'vue';
+import { defineComponent, InjectionKey, markRaw, PropType, provide } from 'vue';
 
-export default {
-  name: 'HelperText',
+export const HelperTextComponentKey = Symbol('HelperTextComponentKey') as InjectionKey<'div' | 'ul'>;
+
+export default defineComponent({
+  name: 'PfHelperText',
 
   props: {
     component: {
-      type: String,
+      type: String as PropType<'div' | 'ul'>,
       default: 'div',
-      validator: v => ['div', 'ul'].includes(v),
+      validator: (v: any) => ['div', 'ul'].includes(v),
     },
   },
 
   setup(props) {
-    provide('helperTextComponent', props.component);
+    provide(HelperTextComponentKey, props.component);
     return {
       styles: markRaw(styles),
     };
   },
-};
+});
 </script>

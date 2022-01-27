@@ -5,17 +5,17 @@
       [styles.modifiers.circle]: shape === 'circle',
       [styles.modifiers.square]: shape === 'square',
     }]"
-    :style="sizes"
+    :style="(sizes as any)"
   >
     <span class="pf-u-screen-reader">{{ screenreaderText }}</span>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Skeleton/skeleton';
-import { markRaw } from 'vue';
+import { defineComponent, markRaw, PropType } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'PfSkeleton',
 
   props: {
@@ -35,14 +35,14 @@ export default {
     fontSize: {
       type: String,
       default: null,
-      validator: v => ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(v),
+      validator: (v: any) => ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(v),
     },
 
     /** The shape of the Skeleton. */
     shape: {
-      type: String,
+      type: String as PropType<'circle' | 'square'>,
       default: null,
-      validator: v => ['circle', 'square'].includes(v),
+      validator: (v: any) => ['circle', 'square'].includes(v),
     },
 
     /** Text read just to screen reader users. */
@@ -66,15 +66,11 @@ export default {
     },
 
     sizes() {
-      const sizes = {};
-      if (this.width) {
-        sizes['--pf-c-skeleton--Width'] = this.width;
-      }
-      if (this.height) {
-        sizes['--pf-c-skeleton--Height'] = this.height;
-      }
-      return sizes;
+      return {
+        '--pf-c-skeleton--Width': this.width,
+        '--pf-c-skeleton--Height': this.height,
+      };
     },
   },
-};
+});
 </script>

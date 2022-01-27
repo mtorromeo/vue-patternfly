@@ -1,11 +1,13 @@
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { h, provide } from 'vue';
-import { findChildrenVNodes } from '../../util.ts';
-import { useManagedProp } from '../../use.ts';
+import { Component, ComputedRef, defineComponent, h, InjectionKey, provide } from 'vue';
+import { findChildrenVNodes } from '../../util';
+import { useManagedProp } from '../../use';
 
-export default {
+export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<ComputedRef<any>>;
+
+export default defineComponent({
   name: 'PfSimpleList',
 
   props: {
@@ -14,8 +16,8 @@ export default {
      * @model
      */
     modelValue: {
+      type: [String, Number, Boolean, Object],
       default: null,
-      validator: v => true,
     },
 
     /** Form element name */
@@ -29,7 +31,7 @@ export default {
 
   setup() {
     const value = useManagedProp('modelValue', null);
-    provide('listValue', value);
+    provide(SimpleListValueKey, value);
     return {
       value,
     };
@@ -37,7 +39,7 @@ export default {
 
   render() {
     const children = this.$slots.default ? findChildrenVNodes(this.$slots.default()) : [];
-    const grouped = children.length === 0 ? false : children[0].type.name === 'PfSimpleListGroup';
+    const grouped = children.length === 0 ? false : typeof children[0].type === 'object' && (children[0].type as Component).name === 'PfSimpleListGroup';
 
     let content = children;
     if (!grouped) {
@@ -52,5 +54,5 @@ export default {
       role: grouped ? 'list' : undefined,
     }, content);
   },
-};
+});
 </script>

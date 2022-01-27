@@ -1,16 +1,19 @@
 <template>
-  <div v-if="!dismissed"
-       :class="[styles.alert, {
-         [styles.modifiers.inline]: inline,
-         [styles.modifiers.plain]: plain,
-         [styles.modifiers.expandable]: expandable,
-         [styles.modifiers.expanded]: expanded,
-         [styles.modifiers[variant]]: variant !== 'default',
-       }]"
-       :aria-live="liveRegion ? 'polite' : null"
-       :aria-atomic="liveRegion ? 'false' : null"
-       @mouseenter="onMouseEnter"
-       @mouseleave="onMouseLeave"
+  <div
+    v-if="!dismissed"
+    :class="[
+      styles.alert,
+      variant === 'default' ? null : styles.modifiers[variant], {
+        [styles.modifiers.inline]: inline,
+        [styles.modifiers.plain]: plain,
+        [styles.modifiers.expandable]: expandable,
+        [styles.modifiers.expanded]: expanded,
+      }
+    ]"
+    :aria-live="liveRegion ? 'polite' : null"
+    :aria-atomic="liveRegion ? 'false' : null"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
   >
     <div v-if="expandable" :class="styles.alertToggle">
       <pf-button
@@ -32,19 +35,18 @@
     </pf-alert-icon>
 
     <component :is="tooltipVisible ? 'pf-tooltip' : 'void'" :position="tooltipPosition">
-      <h4 ref="titleRef"
-          :class="[styles.alertTitle, {
-            [styles.modifiers.truncate]: truncateTitle,
-          }]"
-          :style="truncateTitle ? `${maxLinesVar}: ${truncateTitle}` : null"
-          :tabindex="tooltipVisible ? '0' : null"
+      <h4
+        ref="titleRef"
+        :class="[styles.alertTitle, {
+          [styles.modifiers.truncate]: truncateTitle,
+        }]"
+        :style="truncateTitle ? `${maxLinesVar}: ${truncateTitle}` : null"
+        :tabindex="tooltipVisible ? '0' : null"
       >
         <span :class="accessibleStyles.screenReader">{{ variantLabel }}</span>
         {{ title }}
       </h4>
-      <template #content>
-        {{ title }}
-      </template>
+      <template #content>{{ title }}</template>
     </component>
 
     <div v-if="close" :class="styles.alertAction">
@@ -61,29 +63,29 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
 import Void from '../Void';
-import PfTooltip, { positions } from '../Tooltip/Tooltip.vue';
+import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton';
-import PfAlertIcon from './AlertIcon';
+import PfAlertIcon, { AlertVariantIcons } from './AlertIcon';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
-import { ref, watch, markRaw } from 'vue';
+import { ref, watch, markRaw, defineComponent, PropType } from 'vue';
 import { useElementSize } from '@vueuse/core';
-import { useManagedProp } from '../../use.ts';
+import { useManagedProp } from '../../use';
 
-export default {
+export default defineComponent({
   name: 'PfAlert',
 
   components: { PfAlertIcon, PfAngleRightIcon, PfButton, PfCloseButton, PfTooltip, Void },
 
   props: {
-  /** Flag to indicate if the alert is inline */
+    /** Flag to indicate if the alert is inline */
     inline: Boolean,
 
     /** Flag to indicate if the alert is plain */
@@ -124,9 +126,9 @@ export default {
 
     /** Adds alert variant styles  */
     variant: {
-      type: String,
+      type: String as PropType<keyof typeof AlertVariantIcons>,
       default: 'default',
-      validator: v => ['default', 'success', 'danger', 'warning', 'info'].includes(v),
+      validator: (v: any) => v in AlertVariantIcons,
     },
 
     /** If set to true, the timeout is 8000 milliseconds. If a number is provided, alert will be dismissed after that amount of time in milliseconds. */
@@ -142,9 +144,9 @@ export default {
     },
 
     tooltipPosition: {
-      type: String,
-      default: 'auto',
-      validator: v => positions.includes(v),
+      type: String as PropType<TooltipPosition>,
+      default: TooltipPosition.auto,
+      validator: (v: any) => v in TooltipPosition,
     },
   },
 
@@ -172,10 +174,11 @@ export default {
     };
   },
 
-  data() {
+  data(this: void) {
     return {
       maxLinesVar: maxLines.name,
-      timer: null,
+      timer: null as number | null,
+      animationTimer: null as number | null,
 
       timedOut: false,
       timedOutAnimation: true,
@@ -186,7 +189,7 @@ export default {
 
   computed: {
     variantLabel() {
-      return `${this.variant.charAt('').toUpperCase()}${this.variant.slice(1)} alert:`;
+      return `${this.variant.charAt(0).toUpperCase()}${this.variant.slice(1)} alert:`;
     },
 
     dismissed() {
@@ -204,14 +207,14 @@ export default {
 
   mounted() {
     if (this.timeout) {
-      this.timer = setTimeout(() => this.timedOut = true, this.timeout === true ? 8000 : this.timeout);
+      this.timer = setTimeout(() => (this.timedOut = true), this.timeout === true ? 8000 : this.timeout);
     }
 
     document.addEventListener('focus', this.onDocumentFocus, true);
 
-    this.$watch(() => [this.containsFocus, this.isMouseOver], ([containsFocus, isMouseOver]) => {
-      if (!containsFocus || !isMouseOver) {
-        this.animationTimer = setTimeout(() => this.timedOutAnimation = true, this.timeoutAnimation);
+    this.$watch(() => [this.containsFocus, this.isMouseOver], () => {
+      if (!this.containsFocus || !this.isMouseOver) {
+        this.animationTimer = setTimeout(() => (this.timedOutAnimation = true), this.timeoutAnimation);
       }
     });
   },
@@ -232,16 +235,16 @@ export default {
       }
     },
 
-    onMouseEnter(e) {
+    onMouseEnter(e: Event) {
       this.isMouseOver = true;
       this.timedOutAnimation = false;
       this.$emit('mouseenter', e);
     },
 
-    onMouseLeave(e) {
+    onMouseLeave(e: Event) {
       this.isMouseOver = false;
       this.$emit('mouseleave', e);
     },
   },
-};
+});
 </script>

@@ -12,21 +12,22 @@
       :class="{
         [styles.breadcrumbDropdown]: dropdown,
       }"
-      :type="['button', 'pf-button'].includes(tag) ? 'button' : undefined"
+      :type="typeof tag === 'string' && ['button', 'pf-button'].includes(tag) ? 'button' : undefined"
     >
       <slot />
     </component>
   </li>
 </template>
 
-<script>
+<script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
-import { markRaw } from 'vue';
+import { DefineComponent, defineComponent, markRaw, PropType } from 'vue';
+import { RouteLocationRaw } from 'vue-router';
 
 import Void from '../Void';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
-export default {
+export default defineComponent({
   name: 'PfBreadcrumbItem',
 
   components: {
@@ -44,7 +45,7 @@ export default {
 
     /** router-link destination for breadcrumb link. */
     to: {
-      type: [String, Object],
+      type: [String, Object] as PropType<RouteLocationRaw>,
       default: null,
     },
 
@@ -58,7 +59,7 @@ export default {
     showDivider: Boolean,
 
     component: {
-      type: [String, Object],
+      type: [String, Object] as PropType<string | DefineComponent>,
       default: null,
     },
 
@@ -80,6 +81,13 @@ export default {
       return this.active && !this.to ? 'page' : undefined;
     },
 
+    isButton() {
+      if (typeof this.component === 'object') {
+        return (this.component as DefineComponent).name === 'PfButton';
+      }
+      return this.component === 'button' || this.component === 'pf-button';
+    },
+
     tag() {
       if (this.component) {
         return this.component;
@@ -96,5 +104,5 @@ export default {
       return Void;
     },
   },
-};
+});
 </script>

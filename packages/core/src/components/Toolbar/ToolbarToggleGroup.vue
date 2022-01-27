@@ -4,17 +4,14 @@
       <pf-button
         variant="plain"
         aria-label="Show Filters"
-        :aria-expanded="expanded.value"
-        :aria-haspopup="expanded.value && isContentPopup"
+        :aria-expanded="expanded"
+        :aria-haspopup="expanded && isContentPopup"
         @click="toggleExpanded"
       >
         <slot name="icon" />
       </pf-button>
     </div>
-    <teleport
-      v-if="expanded.value && expandableRef.value"
-      :to="expandableRef.value"
-    >
+    <teleport v-if="expanded && expandableRef" :to="expandableRef">
       <slot />
     </teleport>
     <template v-else>
@@ -23,26 +20,26 @@
   </div>
 </template>
 
-<script>
-import { breakpointProp, classesFromBreakpointProps, toCamel } from '../../util.ts';
+<script lang="ts">
+import { breakpointProp, classesFromBreakpointProps, toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { markRaw } from 'vue';
+import { defineComponent, inject, markRaw, PropType } from 'vue';
+import { ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
+import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
 
-export default {
+export default defineComponent({
   name: 'PfToolbarToggleGroup',
 
   components: { PfButton },
 
-  inject: ['expanded', 'toggleExpanded', 'expandableRef'],
-
   props: {
     variant: {
-      type: String,
+      type: String as PropType<'filter-group' | 'icon-button-group' | 'button-group'>,
       default: '',
-      validator: v => ['', 'filter-group', 'icon-button-group', 'button-group'].includes(v),
+      validator: (v: any) => ['', 'filter-group', 'icon-button-group', 'button-group'].includes(v),
     },
     ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
     ...breakpointProp('alignment', String, ['', 'right', 'left']),
@@ -55,6 +52,9 @@ export default {
     return {
       styles: markRaw(styles),
       windowWidth,
+      expanded: inject(ToolbarExpandedKey),
+      toggleExpanded: inject(ToolbarToggleExpandedKey),
+      expandableRef: inject(ToolbarContentExpandableRefKey),
     };
   },
 
@@ -67,7 +67,7 @@ export default {
     },
 
     variantClass() {
-      return this.variant ? styles.modifiers[toCamel(this.variant)] : null;
+      return this.variant ? styles.modifiers[toCamelCase(this.variant)] : null;
     },
 
     isContentPopup() {
@@ -75,5 +75,5 @@ export default {
       return this.windowWidth < lgBreakpointValue;
     },
   },
-};
+});
 </script>
