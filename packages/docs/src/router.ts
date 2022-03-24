@@ -1,8 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
-import IntroductionPage from './pages/IntroductionPage.vue';
-import LayoutsPage from './pages/LayoutsPage.vue';
-
 const storyComponents = import.meta.glob('./stories/**/*.story.vue');
 
 type StoryPage = {
@@ -10,40 +7,43 @@ type StoryPage = {
   title: string;
 };
 
+const pathToTitle = (path: string) => path.replace(/\B[A-Z]/g, m => " " + m.toLowerCase());
+const pathToDashed = (path: string) => path.replace(/[A-Z]/g, m => "-" + m.toLowerCase()).replaceAll(/^-+|-+$/g, '');
+
+export const stories: Record<string, StoryPage[]> = {
+  Overview: [],
+  Components: [],
+  Layouts: [],
+};
+
+const defaultRoute = 'introduction';
+
 const routes: RouteRecordRaw[] = [];
-export const stories: StoryPage[] = [];
-
 for (const story in storyComponents) {
-  const match = story.match(/^\.\/stories\/(.*)\.story\.vue$/);
-  if (match) {
-    const name = match[1].replace(/[A-Z]/g, m => "-" + m.toLowerCase()).replaceAll(/^-+|-+$/g, '');
-    const route = `${name}.story`;
-
-    stories.push({
-      route,
-      title: match[1].replace(/\B[A-Z]/g, m => " " + m.toLowerCase()),
-    });
-    routes.push({
-      name: route,
-      path: `/stories/${name}`,
-      component: storyComponents[story],
-    });
+  const match = story.match(/^\.\/stories\/(?:([^/]+)\/)?([^/]+)\.story\.vue$/);
+  if (!match) {
+    continue;
   }
+
+  const category = match[1];
+  const name = pathToDashed(match[2]);
+
+  if (!(category in stories)) {
+    stories[category] = [];
+  }
+
+  stories[category].push({
+    route: name,
+    title: pathToTitle(match[2]),
+  });
+  routes.push({
+    name,
+    path: name === defaultRoute ? '/' : `/stories/${pathToDashed(category)}/${name}`,
+    component: storyComponents[story],
+  });
 }
 
 export default createRouter({
   history: createWebHashHistory(),
-  routes: [
-    ...routes,
-    {
-      name: 'home',
-      path: '/',
-      component: IntroductionPage,
-    },
-    {
-      name: 'layouts',
-      path: '/layouts',
-      component: LayoutsPage,
-    },
-  ],
+  routes,
 });

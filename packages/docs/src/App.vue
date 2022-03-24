@@ -3,7 +3,7 @@
     <template #skeleton>
       <pf-page-header show-nav-toggle>
         <template #logo>
-          <router-link :to="{ name: 'home' }">
+          <router-link :to="{ name: 'introduction' }">
             <pf-brand
               src="https://www.patternfly.org/assets/images/pf_logo.svg"
               style="height:40px;filter:invert(1)"
@@ -20,13 +20,8 @@
 
       <pf-page-sidebar nav="PfNavigation" nav-open>
         <pf-nav>
-          <pf-nav-group title="Overview">
-            <pf-nav-item :to="{ name: 'home' }">Introduction</pf-nav-item>
-            <pf-nav-item :to="{ name: 'layouts' }">Layouts</pf-nav-item>
-          </pf-nav-group>
-
-          <pf-nav-group title="Components">
-            <pf-nav-item v-for="story of stories" :key="story.route" :to="{ name: story.route }">{{ story.title }}</pf-nav-item>
+          <pf-nav-group v-for="(categoryStories, category) of stories" :key="category" :title="category">
+            <pf-nav-item v-for="story of categoryStories" :key="story.route" :to="{ name: story.route }">{{ story.title }}</pf-nav-item>
           </pf-nav-group>
         </pf-nav>
       </pf-page-sidebar>
