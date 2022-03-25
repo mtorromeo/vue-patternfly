@@ -12,7 +12,7 @@
     <story-canvas title="With pre icon">
       <pf-input-group>
         <pf-input-group-text>
-          <pf-at-icon />
+          <at-icon />
         </pf-input-group-text>
         <pf-text-input type="email" />
       </pf-input-group>
@@ -22,7 +22,7 @@
       <pf-input-group>
         <pf-text-input type="search" />
         <pf-input-group-text>
-          <pf-search-icon />
+          <search-icon />
         </pf-input-group-text>
       </pf-input-group>
     </story-canvas>
@@ -30,6 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import PfAtIcon from "../../../icons/dist/esm/icons/at-icon";
-import PfSearchIcon from "../../../icons/dist/esm/icons/search-icon";
+import AtIcon from "@vue-patternfly/icons/dist/esm/icons/at-icon";
+import SearchIcon from "@vue-patternfly/icons/dist/esm/icons/search-icon";
 </script>

@@ -34,42 +34,42 @@
       <pf-tabs>
         <pf-tab>
           <template #title>
-            <pf-tab-title-icon><pf-users-icon /></pf-tab-title-icon>
+            <pf-tab-title-icon><users-icon /></pf-tab-title-icon>
             <pf-tab-title-text>Users</pf-tab-title-text>
           </template>
           Users
         </pf-tab>
         <pf-tab key="containers-tab">
           <template #title>
-            <pf-tab-title-icon><pf-box-icon /></pf-tab-title-icon>
+            <pf-tab-title-icon><box-icon /></pf-tab-title-icon>
             <pf-tab-title-text>Containers</pf-tab-title-text>
           </template>
           Containers
         </pf-tab>
         <pf-tab disabled>
           <template #title>
-            <pf-tab-title-icon><pf-database-icon /></pf-tab-title-icon>
+            <pf-tab-title-icon><database-icon /></pf-tab-title-icon>
             <pf-tab-title-text>Database</pf-tab-title-text>
           </template>
           Database
         </pf-tab>
         <pf-tab>
           <template #title>
-            <pf-tab-title-icon><pf-server-icon /></pf-tab-title-icon>
+            <pf-tab-title-icon><server-icon /></pf-tab-title-icon>
             <pf-tab-title-text>Server</pf-tab-title-text>
           </template>
           Server
         </pf-tab>
         <pf-tab>
           <template #title>
-            <pf-tab-title-icon><pf-laptop-icon /></pf-tab-title-icon>
+            <pf-tab-title-icon><laptop-icon /></pf-tab-title-icon>
             <pf-tab-title-text>System</pf-tab-title-text>
           </template>
           System
         </pf-tab>
         <pf-tab>
           <template #title>
-            <pf-tab-title-icon><pf-project-diagram-icon /></pf-tab-title-icon>
+            <pf-tab-title-icon><project-diagram-icon /></pf-tab-title-icon>
             <pf-tab-title-text>Network</pf-tab-title-text>
           </template>
           Network
@@ -169,10 +169,10 @@
 </template>
 
 <script lang="ts" setup>
-import PfUsersIcon from "@vue-patternfly/icons/dist/esm/icons/users-icon";
-import PfBoxIcon from "@vue-patternfly/icons/dist/esm/icons/box-icon";
-import PfDatabaseIcon from "@vue-patternfly/icons/dist/esm/icons/database-icon";
-import PfServerIcon from "@vue-patternfly/icons/dist/esm/icons/server-icon";
-import PfLaptopIcon from "@vue-patternfly/icons/dist/esm/icons/laptop-icon";
-import PfProjectDiagramIcon from "@vue-patternfly/icons/dist/esm/icons/project-diagram-icon";
+import UsersIcon from "@vue-patternfly/icons/dist/esm/icons/users-icon";
+import BoxIcon from "@vue-patternfly/icons/dist/esm/icons/box-icon";
+import DatabaseIcon from "@vue-patternfly/icons/dist/esm/icons/database-icon";
+import ServerIcon from "@vue-patternfly/icons/dist/esm/icons/server-icon";
+import LaptopIcon from "@vue-patternfly/icons/dist/esm/icons/laptop-icon";
+import ProjectDiagramIcon from "@vue-patternfly/icons/dist/esm/icons/project-diagram-icon";
 </script>

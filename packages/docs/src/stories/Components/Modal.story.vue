@@ -34,7 +34,7 @@
         <template #help>
           <pf-tooltip>
             <pf-button variant="plain" aria-help="help">
-              <pf-help-icon />
+              <help-icon />
             </pf-button>
             <template #content>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla
@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import PfHelpIcon from "@vue-patternfly/icons/dist/esm/icons/help-icon";
+import HelpIcon from "@vue-patternfly/icons/dist/esm/icons/help-icon";
 import { ref } from "vue";
 
 const open1 = ref(false);

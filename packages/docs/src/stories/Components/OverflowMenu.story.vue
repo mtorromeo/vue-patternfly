@@ -44,13 +44,13 @@
           </pf-overflow-menu-group>
           <pf-overflow-menu-group type="icon" persistent>
             <pf-overflow-menu-item persistent>
-              <pf-button variant="plain"><pf-align-left-icon /></pf-button>
+              <pf-button variant="plain"><align-left-icon /></pf-button>
             </pf-overflow-menu-item>
             <pf-overflow-menu-item persistent>
-              <pf-button variant="plain"><pf-align-center-icon /></pf-button>
+              <pf-button variant="plain"><align-center-icon /></pf-button>
             </pf-overflow-menu-item>
             <pf-overflow-menu-item persistent>
-              <pf-button variant="plain"><pf-align-right-icon /></pf-button>
+              <pf-button variant="plain"><align-right-icon /></pf-button>
             </pf-overflow-menu-item>
           </pf-overflow-menu-group>
         </pf-overflow-menu-content>
@@ -70,9 +70,9 @@
 </template>
 
 <script lang="ts" setup>
-import PfAlignLeftIcon from "../../../icons/dist/esm/icons/align-left-icon";
-import PfAlignCenterIcon from "../../../icons/dist/esm/icons/align-center-icon";
-import PfAlignRightIcon from "../../../icons/dist/esm/icons/align-right-icon";
+import AlignLeftIcon from '@vue-patternfly/icons/dist/esm/icons/align-left-icon';
+import AlignCenterIcon from "@vue-patternfly/icons/dist/esm/icons/align-center-icon";
+import AlignRightIcon from "@vue-patternfly/icons/dist/esm/icons/align-right-icon";
 import { ref } from "vue";
 
 const open = ref(false);

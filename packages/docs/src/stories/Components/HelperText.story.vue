@@ -30,19 +30,19 @@
       <pf-helper-text>
         <pf-helper-text-item>
           <template #icon>
-            <pf-info-icon />
+            <info-icon />
           </template>
           This is default helper text
         </pf-helper-text-item>
         <pf-helper-text-item variant="indeterminate">
           <template #icon>
-            <pf-question-icon />
+            <question-icon />
           </template>
           This is indeterminate helper text
         </pf-helper-text-item>
         <pf-helper-text-item variant="warning">
           <template #icon>
-            <pf-exclamation-icon />
+            <exclamation-icon />
           </template>
           This is warning helper text
         </pf-helper-text-item>
@@ -54,7 +54,7 @@
         </pf-helper-text-item>
         <pf-helper-text-item variant="error">
           <template #icon>
-            <pf-times-icon />
+            <times-icon />
           </template>
           This is error helper text
         </pf-helper-text-item>
@@ -74,9 +74,9 @@
 </template>
 
 <script lang="ts" setup>
-import PfInfoIcon from "@vue-patternfly/icons/dist/esm/icons/info-icon";
-import PfQuestionIcon from "@vue-patternfly/icons/dist/esm/icons/question-icon";
-import PfExclamationIcon from "@vue-patternfly/icons/dist/esm/icons/exclamation-icon";
-import PfCheckIcon from "@vue-patternfly/icons/dist/esm/icons/check-icon";
-import PfTimesIcon from "@vue-patternfly/icons/dist/esm/icons/times-icon";
+import InfoIcon from "@vue-patternfly/icons/dist/esm/icons/info-icon";
+import QuestionIcon from "@vue-patternfly/icons/dist/esm/icons/question-icon";
+import ExclamationIcon from "@vue-patternfly/icons/dist/esm/icons/exclamation-icon";
+import CheckIcon from "@vue-patternfly/icons/dist/esm/icons/check-icon";
+import TimesIcon from "@vue-patternfly/icons/dist/esm/icons/times-icon";
 </script>

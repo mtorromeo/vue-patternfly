@@ -5,7 +5,7 @@
     <story-canvas title="Example">
       <pf-empty-state>
         <pf-empty-state-icon>
-          <pf-cubes-icon />
+          <cubes-icon />
         </pf-empty-state-icon>
         <pf-title size="lg">Empty state</pf-title>
         <pf-empty-state-body>
@@ -26,5 +26,5 @@
 </template>
 
 <script lang="ts" setup>
-import PfCubesIcon from "@vue-patternfly/icons/dist/esm/icons/cubes-icon";
+import CubesIcon from "@vue-patternfly/icons/dist/esm/icons/cubes-icon";
 </script>
