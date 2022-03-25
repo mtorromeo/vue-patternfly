@@ -2,7 +2,7 @@
   <doc-page title="Simple List">
     <component-title name="pf-simple-list" />
 
-    <md>
+    <pre v-md>
       A **simple list provides** a list of selectable items that can be shown within a page. Each item is described by a text label. The list may be divided into logical sections by introducing group headers.
       ## Differences from patternfly-react
       - The list can be used as a form element by specifying a `name`.
@@ -10,7 +10,7 @@
       - `PfSimpleListItem` has a `value` prop that replaces `itemId` and in conjunction with `PfSimpleList`'s `modelValue` prop, can be used like the native `select` and `option` elements.
       - The `active` prop of `PfSimpleListItem` has been removed. Use `modelValue`/`value` instead to control the selected item.
       See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
-    </md>
+    </pre>
 
     <story-canvas title="Simple">
       <pf-simple-list>

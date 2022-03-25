@@ -2,7 +2,7 @@
   <doc-page title="Form Select">
     <component-title name="pf-form-select" />
 
-    <md>
+    <pre v-md>
       A form **select** embeds browser native select lists into a form.
       ## Usage
       If your use case only calls for simple selects, you may opt to use a form select as an field inside a form. However, if your use case requires more customization and capability, use a custom select list.
@@ -15,7 +15,7 @@
       # PfFormSelectOption `pf-form-select-option`
       Wraps a native `&lt;option>` element and adds a `placeholder` identifier flag.
       You can either use the default slot or the `label` prop to render the content.
-    </md>
+    </pre>
 
     <story-canvas title="Example">
       <pf-form-select required>

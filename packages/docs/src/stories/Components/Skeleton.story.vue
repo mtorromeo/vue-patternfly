@@ -2,11 +2,11 @@
   <doc-page title="Skeleton">
     <component-title name="pf-skeleton" />
 
-    <md>
+    <pre v-md>
       A **skeleton** is a type of loading state that allows you to expose content incrementally. For content that may take a long time to load, use a progress bar in place of a skeleton.
       See full [Design guidelines](https://www.patternfly.org/v4/components/skeleton/design-guidelines) on the official patternfly documentation.
       ## Examples
-    </md>
+    </pre>
 
     <story-canvas title="Basic">
       <pf-skeleton />

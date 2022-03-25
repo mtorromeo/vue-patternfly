@@ -2,11 +2,11 @@
   <doc-page title="Progress">
     <component-title name="pf-progress" />
 
-    <md>
+    <pre v-md>
       A **progress** bar informs users about the completion status of an ongoing process or task.
       See full [Design guidelines](https://www.patternfly.org/v4/components/progress/design-guidelines) on the official patternfly documentation.
       ## Examples
-    </md>
+    </pre>
 
     <story-canvas title="Basic">
       <pf-progress :value="33" title="Title" />

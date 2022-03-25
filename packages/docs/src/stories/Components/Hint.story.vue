@@ -2,10 +2,10 @@
   <doc-page title="Hint">
     <component-title name="pf-hint" />
 
-    <md>
+    <pre v-md>
       A **hint** is in-app messaging that provides a one-step reminder, explanation, or call to action for a page or modal.
       See full [Design guidelines](https://www.patternfly.org/v4/components/hint/design-guidelines) on the official patternfly documentation.
-    </md>
+    </pre>
 
     <story-canvas title="Example">
       <pf-hint>

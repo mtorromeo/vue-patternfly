@@ -2,9 +2,9 @@
   <doc-page title="Text">
     <component-title name="pf-text" />
 
-    <md>
+    <pre v-md>
       ## Examples
-    </md>
+    </pre>
 
     <story-canvas title="Text">
       <pf-text>{{ sample_title }}</pf-text>

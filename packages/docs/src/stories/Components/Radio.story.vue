@@ -2,9 +2,9 @@
   <doc-page title="Radio">
     <component-title name="pf-radio" />
 
-    <md>
+    <pre v-md>
       ## Examples
-    </md>
+    </pre>
 
     <story-canvas title="Basic">
       <pf-radio id="radio" label="Radio" />

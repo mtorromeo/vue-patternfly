@@ -2,9 +2,9 @@
   <doc-page title="Tabs">
     <component-title name="pf-tabs" />
 
-    <md>
+    <pre v-md>
       ## Examples
-    </md>
+    </pre>
 
     <story-canvas title="Default">
       <pf-tabs>

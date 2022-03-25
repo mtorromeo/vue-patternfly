@@ -2,10 +2,6 @@
   <doc-page title="Overflow Menu">
     <component-title name="pf-overflow-menu" />
 
-    <md>
-      ## Examples
-    </md>
-
     <story-canvas title="Default" style="min-height: 350px">
       <pf-overflow-menu breakpoint="lg">
         <pf-overflow-menu-content>

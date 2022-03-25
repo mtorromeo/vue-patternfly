@@ -83,7 +83,7 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
           if (el instanceof HTMLElement && el.rawTagName === 'story-canvas') {
             addSourceToStoryCanvas(el);
           }
-          if (el instanceof HTMLElement && el.rawTagName === 'md') {
+          if (el instanceof HTMLElement && el.rawTagName === 'pre' && el.hasAttribute('v-md')) {
             replaceMarkdown(md, el);
           }
           return el;

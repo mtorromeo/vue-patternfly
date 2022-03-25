@@ -2,9 +2,9 @@
   <doc-page title="Helper Text">
     <component-title name="pf-helper-text" />
 
-    <md>
+    <pre v-md>
       See full [Design guidelines](https://www.patternfly.org/v4/components/helper-text/design-guidelines) on the official patternfly documentation.
-    </md>
+    </pre>
 
     <story-canvas title="Static">
       <pf-helper-text>

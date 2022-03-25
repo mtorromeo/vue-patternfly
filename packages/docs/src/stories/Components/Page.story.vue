@@ -2,12 +2,12 @@
   <doc-page title="Page">
     <component-title name="pf-page" />
 
-    <md>
+    <pre v-md>
       The **page** component is used to define the basic layout of a page with either vertical or horizontal navigation.
       See full [Design guidelines](https://www.patternfly.org/v4/components/page/design-guidelines) on the official patternfly documentation.
       ## Differences from patternfly-react
       - Tha additional `breadcrumbStickyTop` prop allows to set the breadcrumb slot as sticky.
-    </md>
+    </pre>
 
     <story-canvas title="Example">
       <pf-page managed-sidebar>
