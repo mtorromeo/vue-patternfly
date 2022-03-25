@@ -5,6 +5,7 @@ import { parse, HTMLElement, Node } from 'node-html-parser';
 import Markdown from 'markdown-it';
 import markdownItClass from '@toycode/markdown-it-class';
 import { escapeHtml } from '@vue/shared';
+import { getHighlighter } from 'shiki';
 
 export const PLUGIN_NAME = 'vue-canvas-source';
 
@@ -58,18 +59,28 @@ function replaceMarkdown(md: Markdown, el: HTMLElement) {
 export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugin {
   const filter = createFilter(options.include ?? DEFAULT_INCLUDE_RE, options.exclude);
 
-  const md = Markdown({
-    html: true,
-    linkify: true,
-  });
-  md.use(markdownItClass, {
-    h1: ['pf-c-title'],
-    h2: ['pf-c-title'],
-    h3: ['pf-c-title'],
-    h4: ['pf-c-title'],
-    h5: ['pf-c-title'],
-    h6: ['pf-c-title'],
-  });
+  const mdPromise = (async() => {
+    const highlighter = await getHighlighter({});
+
+    const md = Markdown({
+      html: true,
+      linkify: true,
+      highlight(str: string, lang: string) {
+        return highlighter.codeToHtml(str, { lang });
+      },
+    });
+
+    md.use(markdownItClass, {
+      h1: ['pf-c-title'],
+      h2: ['pf-c-title'],
+      h3: ['pf-c-title'],
+      h4: ['pf-c-title'],
+      h5: ['pf-c-title'],
+      h6: ['pf-c-title'],
+    });
+
+    return md;
+  })();
 
   return {
     name: PLUGIN_NAME,
@@ -77,6 +88,7 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
 
     async transform(code, id) {
       if (filter(id)) {
+        const md = await mdPromise;
         const html = parse(code);
 
         traverse(html.childNodes, (el) => {

@@ -58,3 +58,9 @@ body {
   margin-bottom: var(--pf-global--spacer--md);
   border-bottom: var(--pf-global--BorderWidth--sm) solid #f8f8f8;
 }
+
+.markdown pre.shiki {
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
