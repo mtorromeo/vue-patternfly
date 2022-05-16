@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "importHelpers": true,
+    "jsx": "preserve",
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": false,

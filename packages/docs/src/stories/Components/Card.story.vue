@@ -7,7 +7,7 @@
       See full [Design guidelines](https://www.patternfly.org/v4/components/card/design-guidelines) on the official patternfly documentation.
       ## Differences from patternfly-react
       - The expanded state is controlled by `v-model:expanded` or managed internally with the prop `expandable`.
-      See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
+      See [common differences from patternfly-react](#/).
       ## Examples
     </pre>
 

@@ -11,7 +11,7 @@
       ## Differences from patternfly-react
       - The `FormSelectOptionGroup` component is not implemented as it does not provide any value over native `&lt;optgroup>`.
       - The `value` prop is replaced by `modelValue` so that the component can be used with `v-model`.
-      See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
+      See [common differences from patternfly-react](#/).
       # PfFormSelectOption `pf-form-select-option`
       Wraps a native `&lt;option>` element and adds a `placeholder` identifier flag.
       You can either use the default slot or the `label` prop to render the content.

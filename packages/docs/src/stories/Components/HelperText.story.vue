@@ -77,6 +77,5 @@
 import InfoIcon from "@vue-patternfly/icons/dist/esm/icons/info-icon";
 import QuestionIcon from "@vue-patternfly/icons/dist/esm/icons/question-icon";
 import ExclamationIcon from "@vue-patternfly/icons/dist/esm/icons/exclamation-icon";
-import CheckIcon from "@vue-patternfly/icons/dist/esm/icons/check-icon";
 import TimesIcon from "@vue-patternfly/icons/dist/esm/icons/times-icon";
 </script>

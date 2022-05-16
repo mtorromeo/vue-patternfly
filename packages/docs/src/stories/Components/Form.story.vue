@@ -4,13 +4,17 @@
 
     <pre v-md>
       A **form** is a group of elements used to collect information from a user in a variety of contexts including in a modal, in a wizard, or on a page. Use cases for forms include tasks reliant on user-inputted information for completion like logging in, registering, configuring settings, or completing surveys.
+
       Use forms to accomplish tasks reliant on user-inputted information like logging in, registering for accounts or services, configuring settings, or completing surveys.
+
       See full [Design guidelines](https://www.patternfly.org/v4/components/form/design-guidelines) on the official patternfly documentation.
+
       ## Differences from patternfly-react
       - The `novalidate` attribute is not implicitly applied to the form but you can still add it yourself. This makes `pf-form` usable with the native form validation technique.
       - Allowed overriding the `component` used by the form. A typical use-case is when you have a parent form tag already present and you only need `pf-form` to apply the patternfly layout to its children.
       - There is no FormHelperText component. You can instead use the `helper-text` prop or the `helperText` and `helperTextIcon` slots on `pf-form-group`.
-      See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
+
+      See [common differences from patternfly-react](#/).
     </pre>
 
     <story-canvas title="Basic">

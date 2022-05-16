@@ -3,7 +3,18 @@
     <component-title name="pf-tabs" />
 
     <pre v-md>
-      ## Examples
+      **Tabs** allow users to navigate between views within the same page or context.
+
+      ## Usage
+      PatternFly offers a few types of tabs:
+
+      - Default tabs (recommended)
+      - Boxed tabs
+      - Vertical tabs
+
+      You can use as many tabs as you want in a page, although it is recommended you keep the total number of tabs to a minimum for a better user experience. If you have more tabs than fit on the page, you may use a default overflow which would allow a user to horizontal scroll through your tabs. The uses of both default and boxed stylings are flexible, so use either according to your needs and preferences.
+
+      See full [Design guidelines](https://www.patternfly.org/v4/components/tabs/design-guidelines) on the official patternfly documentation.
     </pre>
 
     <story-canvas title="Default">

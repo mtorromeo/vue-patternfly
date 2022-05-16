@@ -7,7 +7,7 @@
       [View PatternFly design guidelines](https://www.patternfly.org/v4/components/select/design-guidelines)
       ## Differences from patternfly-react
       - There is no `grouped` prop since the presence of groups is auto-detected.
-      See [common differences from patternfly-react](/story/intro--page#common-differences-from-patternfly-react).
+      See [common differences from patternfly-react](#/).
       ## Examples
     </pre>
 
