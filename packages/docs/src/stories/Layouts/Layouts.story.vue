@@ -1,5 +1,5 @@
 <template>
-  <pf-page-section>
+  <pf-page-section class="page__layouts">
     <pf-title size="4xl">Layouts</pf-title>
 
     <pf-title h="2">Bullseye</pf-title>
@@ -91,9 +91,40 @@
   </pf-page-section>
 </template>
 
-<style scoped>
-.pf-c-divider {
-  margin-bottom: 1rem;
+<style lang="scss">
+.page__layouts {
+  .pf-c-divider {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .pf-l-bullseye,
+  .pf-l-flex,
+  .pf-l-flex > div,
+  .pf-l-gallery,
+  .pf-l-gallery > div,
+  .pf-l-grid,
+  .pf-l-grid > div,
+  .pf-l-level,
+  .pf-l-level > div,
+  .pf-l-split,
+  .pf-l-split > div,
+  .pf-l-stack,
+  .pf-l-stack > div {
+    border-style: dashed !important;
+    border-width: 2px !important;
+    padding: 1rem !important;
+  }
+
+  .pf-l-bullseye,
+  .pf-l-flex,
+  .pf-l-gallery,
+  .pf-l-grid,
+  .pf-l-level,
+  .pf-l-split,
+  .pf-l-stack {
+    margin: 1rem 0 !important;
+  }
 }
 </style>
 
