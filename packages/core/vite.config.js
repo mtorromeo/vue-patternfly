@@ -12,13 +12,24 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['vue'],
-      output: {
-        exports: 'named',
+      output: [{
+        format: 'es',
         assetFileNames: 'core.[ext]',
+        esModule: true,
+        exports: 'named',
         globals: {
           vue: 'Vue',
         },
-      },
+      }, {
+        format: 'umd',
+        assetFileNames: 'core.[ext]',
+        inlineDynamicImports: true,
+        interop: 'esModule',
+        exports: 'named',
+        globals: {
+          vue: 'Vue',
+        },
+      }],
     },
   },
   plugins: [
