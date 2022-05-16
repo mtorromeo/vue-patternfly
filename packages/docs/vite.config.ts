@@ -4,6 +4,7 @@ import { vueCanvasPlugin } from 'vite-plugin-story-canvas-source';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     vueCanvasPlugin(),
     vue(),

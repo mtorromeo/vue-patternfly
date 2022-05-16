@@ -68,14 +68,14 @@ export default defineComponent({
 
       if (!highlighter) {
         setWasm({
-          data: await fetch('/onig.wasm').then(r => r.arrayBuffer()),
+          data: await fetch('./onig.wasm').then(r => r.arrayBuffer()),
         } as any);
 
         highlighter = await getHighlighter({
           themes: [theme as any],
           langs: ['vue-html'],
           paths: {
-            languages: '/languages/',
+            languages: './languages/',
           },
         });
       }
