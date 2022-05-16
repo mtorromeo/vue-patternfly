@@ -15,7 +15,7 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          yarn install --frozen-lockfile
+          yarn install
           cd packages/docs
           yarn build
 
