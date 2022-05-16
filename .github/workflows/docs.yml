@@ -15,7 +15,7 @@ jobs:
       - run: npm install --global yarn
       - run: yarn install
       - run: cd packages/vite-plugin-story-canvas-source && yarn build
-      - run: cd packages/icons && yarn generate
+      - run: cd packages/icons && yarn build
       - run: cd packages/core && yarn build
       - run: cd packages/docs && yarn build
 
