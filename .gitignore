@@ -2,6 +2,7 @@
 !.git*
 !.eslint*
 !.editorconfig
+!.vscode
 *.log
 *.gz
 dist
