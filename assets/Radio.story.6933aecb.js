@@ -1,0 +1,8 @@
+import{_ as s,c,w as t,a as i,o as l,b as e,d}from"./index.4a516379.js";const p={},h=d("div",{class:"markdown pf-c-content"},[d("h2",{class:"pf-c-title"},"Examples")],-1);function u(_,f){const n=i("component-title"),a=i("pf-radio"),o=i("story-canvas"),r=i("doc-page");return l(),c(r,{title:"Radio"},{default:t(()=>[e(n,{name:"pf-radio"}),h,e(o,{title:"Basic",source:'<pf-radio id="radio" label="Radio" />'},{default:t(()=>[e(a,{id:"radio",label:"Radio"})]),_:1}),e(o,{title:"With description",source:`<pf-radio
+id="radio-with-description"
+label="Radio with description"
+description="Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP." />`},{default:t(()=>[e(a,{id:"radio-with-description",label:"Radio with description",description:"Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP."})]),_:1}),e(o,{title:"With description and body",source:`<pf-radio
+id="radio-with-description-and-body"
+label="Radio with description and body"
+description="Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP."
+body="This is where custom content goes." />`},{default:t(()=>[e(a,{id:"radio-with-description-and-body",label:"Radio with description and body",description:"Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP.",body:"This is where custom content goes."})]),_:1})]),_:1})}var v=s(p,[["render",u]]);export{v as default};

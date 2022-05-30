@@ -1,0 +1,8 @@
+import{_ as s,c as r,w as t,a as o,o as d,b as e}from"./index.4a516379.js";const l={};function h(b,p){const a=o("component-title"),c=o("pf-checkbox"),i=o("story-canvas"),n=o("doc-page");return d(),r(n,{title:"Checkbox"},{default:t(()=>[e(a,{name:"pf-checkbox"}),e(i,{title:"Default",source:'<pf-checkbox id="basic-checkbox" label="Basic checkbox" />'},{default:t(()=>[e(c,{id:"basic-checkbox",label:"Basic checkbox"})]),_:1}),e(i,{title:"With description",source:`<pf-checkbox
+id="checkbox-with-description"
+label="Checkbox with description"
+description="Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP." />`},{default:t(()=>[e(c,{id:"checkbox-with-description",label:"Checkbox with description",description:"Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP."})]),_:1}),e(i,{title:"With description and body",source:`<pf-checkbox
+id="checkbox-with-description-and-body"
+label="Checkbox with description and body"
+description="Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP."
+body="This is where custom content goes." />`},{default:t(()=>[e(c,{id:"checkbox-with-description-and-body",label:"Checkbox with description and body",description:"Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP.",body:"This is where custom content goes."})]),_:1})]),_:1})}var _=s(l,[["render",h]]);export{_ as default};
