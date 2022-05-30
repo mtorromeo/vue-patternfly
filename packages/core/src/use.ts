@@ -4,7 +4,7 @@ import { useActiveElement } from '@vueuse/core';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
-export function provideChildrenTracker<C extends Component = ComponentPublicInstance>(symbol?: Symbol) {
+export function provideChildrenTracker<C extends Component = ComponentPublicInstance>(symbol?: symbol) {
   const items: Ref<C[]> = ref([]);
 
   provide(symbol || ChildrenTrackerSymbol, {
@@ -21,7 +21,7 @@ export function provideChildrenTracker<C extends Component = ComponentPublicInst
   return items;
 }
 
-export function useChildrenTracker(symbol?: Symbol) {
+export function useChildrenTracker(symbol?: symbol) {
   const tracker = inject(symbol || ChildrenTrackerSymbol, null);
 
   if (tracker) {
@@ -261,11 +261,10 @@ export function useManagedProp<T>(name: string, value: T = null, transform?: (va
       if (typeof transform === 'function') {
         to = transform(to);
       }
-      if (isDefined(instance.props[name])) {
-        instance.emit(`update:${name}`, to);
-      } else {
+      if (!isDefined(instance.props[name])) {
         inner.value = unref(to as T);
       }
+      instance.emit(`update:${name}`, to);
     },
   });
 }
