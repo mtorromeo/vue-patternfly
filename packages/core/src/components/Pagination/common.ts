@@ -3,7 +3,7 @@ import { defineComponent, PropType } from "vue";
 export interface PerPageOption {
   title: string,
   value: number,
-};
+}
 
 const defaultPerPageOptions: PerPageOption[] = [
   {
