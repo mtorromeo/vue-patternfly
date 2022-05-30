@@ -40,7 +40,10 @@ export default defineComponent({
 
   props: {
     /** Flag to indicate if the content is expanded */
-    expanded: Boolean,
+    expanded: {
+      type: Boolean,
+      default: null,
+    },
 
     /** ID of the content of the expandable section */
     contentId: {

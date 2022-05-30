@@ -43,7 +43,10 @@ export default defineComponent({
 
   props: {
     /** Flag to indicate if the content is expanded */
-    expanded: Boolean,
+    expanded: {
+      type: Boolean,
+      default: null,
+    },
 
     /** Text that appears in the attached toggle */
     toggleText: {
