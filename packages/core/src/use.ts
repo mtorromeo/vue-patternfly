@@ -145,7 +145,7 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
     }
   };
 
-  const onKeydown = function (this: N, e: KeyboardEvent, itemEl?: HTMLElement) {
+  const onKeydown = function(this: N, e: KeyboardEvent, itemEl?: HTMLElement) {
     if (!itemEl) {
       itemEl = this.focusElement();
     }
@@ -286,4 +286,4 @@ export function useElementOverflow(element: Ref<HTMLElement>): Ref<boolean> {
   onUpdated(testElementOverflow);
 
   return overflowing;
-};
+}

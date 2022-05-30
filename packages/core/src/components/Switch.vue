@@ -11,7 +11,7 @@
       type="checkbox"
       :checked="checked"
       @change="$emit('update:checked', ($event.target as HTMLInputElement).checked)"
-    />
+    >
 
     <template v-if="label">
       <span :class="styles.switchToggle" />

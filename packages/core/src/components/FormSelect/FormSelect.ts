@@ -36,6 +36,16 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    selectedOption() {
+      return this.options.find(option => option.$attrs.value === this.value);
+    },
+
+    selectedPlaceholder() {
+      return this.selectedOption && this.selectedOption.placeholder;
+    },
+  },
+
   render() {
     return h('select', {
       value: this.value,
@@ -50,15 +60,5 @@ export default defineComponent({
         }
       },
     }, this.$slots);
-  },
-
-  computed: {
-    selectedOption() {
-      return this.options.find(option => option.$attrs.value === this.value);
-    },
-
-    selectedPlaceholder() {
-      return this.selectedOption && this.selectedOption.placeholder;
-    },
   },
 });

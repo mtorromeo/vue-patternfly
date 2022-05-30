@@ -27,7 +27,7 @@
               type="hidden"
               :name="name"
               :value="modelValue"
-            />
+            >
             <span :class="styles.selectToggleText">
               <slot name="placeholder">{{ placeholder || childPlaceholderText }}</slot>
             </span>
@@ -58,7 +58,7 @@
               :disabled="disabled"
               @click="onClick"
               @change="onChange"
-            />
+            >
           </template>
         </div>
 
@@ -90,7 +90,7 @@
               autocomplete="off"
               @change="onChange"
               @keydown="onFilterKeydown"
-            />
+            >
           </div>
           <pf-divider />
         </template>

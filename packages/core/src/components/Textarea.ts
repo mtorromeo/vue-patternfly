@@ -56,7 +56,7 @@ export default defineComponent({
         if (props.pattern && value.value) {
           const $el: HTMLInputElement | null = getCurrentInstance()?.proxy.$el;
 
-          let error = !regexPattern.value.test(value.value);
+          const error = !regexPattern.value.test(value.value);
           if (error) {
             let error = 'Please match the format requested.';
             if ($el?.title) {
@@ -78,24 +78,6 @@ export default defineComponent({
     };
   },
 
-  render() {
-    return h('textarea', {
-      class: [styles.formControl, {
-        [styles.modifiers.resizeVertical]: this.resizeOrientation === 'vertical',
-        [styles.modifiers.resizeHorizontal]: this.resizeOrientation === 'horizontal',
-        [styles.modifiers.success]: this.validated === 'success',
-        [styles.modifiers.warning]: this.validated === 'warning',
-      }],
-      required: this.required,
-      'aria-invalid': this.effectiveValidated === 'error',
-      onChange: this.handleChange,
-      onInput: this.onInput,
-      onBlur: this.onBlur,
-      onInvalid: this.onInvalid,
-      onKeyUp: this.onKeyUp,
-    }, this.value);
-  },
-
   methods: {
     handleChange(event: Event) {
       // // https://gomakethings.com/automatically-expand-a-textarea-as-the-user-types-using-vanilla-javascript/
@@ -114,5 +96,23 @@ export default defineComponent({
       }
       this.onChange(event);
     },
+  },
+
+  render() {
+    return h('textarea', {
+      class: [styles.formControl, {
+        [styles.modifiers.resizeVertical]: this.resizeOrientation === 'vertical',
+        [styles.modifiers.resizeHorizontal]: this.resizeOrientation === 'horizontal',
+        [styles.modifiers.success]: this.validated === 'success',
+        [styles.modifiers.warning]: this.validated === 'warning',
+      }],
+      required: this.required,
+      'aria-invalid': this.effectiveValidated === 'error',
+      onChange: this.handleChange,
+      onInput: this.onInput,
+      onBlur: this.onBlur,
+      onInvalid: this.onInvalid,
+      onKeyUp: this.onKeyUp,
+    }, this.value);
   },
 });

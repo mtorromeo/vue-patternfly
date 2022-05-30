@@ -20,6 +20,20 @@ export default defineComponent({
     };
   },
 
+  watch: {
+    checked() {
+      if (this.checkbox) {
+        this.checkbox.indeterminate = this.checked === null;
+      }
+    },
+  },
+
+  mounted() {
+    if (this.checkbox) {
+      this.checkbox.indeterminate = this.checked === null;
+    }
+  },
+
   render() {
     const children = this.$slots.default ? findChildrenVNodes(this.$slots.default()) : [];
 
@@ -32,36 +46,22 @@ export default defineComponent({
     }
 
     return h('label',
-      {
-        class: styles.dropdownToggleCheck,
-      }, [
-      h('input', mergeProps({
-        ref: el => this.checkbox = el as HTMLInputElement,
-        type: 'checkbox',
-        'aria-label': this.ariaLabel,
-        checked: this.checked,
-        onChange: (e: Event) => {
-          if (e.target instanceof HTMLInputElement) {
-            this.$emit('change', e.target.checked);
-          }
-        },
-      }, this.$attrs)),
-      text,
-    ],
+             {
+               class: styles.dropdownToggleCheck,
+             }, [
+               h('input', mergeProps({
+                 ref: el => (this.checkbox = el as HTMLInputElement),
+                 type: 'checkbox',
+                 'aria-label': this.ariaLabel,
+                 checked: this.checked,
+                 onChange: (e: Event) => {
+                   if (e.target instanceof HTMLInputElement) {
+                     this.$emit('change', e.target.checked);
+                   }
+                 },
+               }, this.$attrs)),
+               text,
+             ],
     );
-  },
-
-  mounted() {
-    if (this.checkbox) {
-      this.checkbox.indeterminate = this.checked === null;
-    }
-  },
-
-  watch: {
-    checked() {
-      if (this.checkbox) {
-        this.checkbox.indeterminate = this.checked === null;
-      }
-    },
   },
 });

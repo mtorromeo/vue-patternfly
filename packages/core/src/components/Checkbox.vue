@@ -1,7 +1,8 @@
 <template>
-  <div :class="[styles.check, {
-    [styles.modifiers.standalone]: !label && !$slots.label,
-  }]">
+  <div
+    :class="[styles.check, {
+      [styles.modifiers.standalone]: !label && !$slots.label,
+    }]">
     <input
       :id="validId"
       ref="input"
@@ -12,7 +13,7 @@
       :disabled="disabled"
       :aria-valid="!valid"
       @change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
-    />
+    >
     <label
       v-if="label || $slots.label"
       :class="[styles.checkLabel, {

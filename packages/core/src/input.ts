@@ -27,7 +27,7 @@ export const inputProps = {
     default: null as string,
     validator: (v: any) => [null, 'default', 'success', 'warning', 'error'].includes(v),
   },
-}
+};
 
 export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
   const instance = getCurrentInstance()?.proxy;
