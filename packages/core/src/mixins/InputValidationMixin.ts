@@ -4,7 +4,7 @@ export default defineComponent({
   props: {
     /** @model */
     modelValue: {
-      type: [String, Number],
+      type: [String, Number] as PropType<string | number | undefined | null>,
       default: null,
     },
 

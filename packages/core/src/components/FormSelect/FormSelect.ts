@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 
-import { defineComponent, h } from 'vue';
+import { defineComponent, h, PropType } from 'vue';
 import { provideChildrenTracker, useManagedProp } from '../../use';
 import PfFormSelectOption from './FormSelectOption';
 
@@ -10,7 +10,7 @@ export default defineComponent({
   props: {
     /** @model */
     modelValue: {
-      type: String,
+      type: String as PropType<string | undefined | null>,
       default: null,
     },
 
@@ -55,7 +55,7 @@ export default defineComponent({
         [styles.modifiers.placeholder]: this.selectedPlaceholder,
       }],
       onChange: (e: Event) => {
-        if (e.target instanceof HTMLInputElement) {
+        if (e.target instanceof HTMLSelectElement) {
           this.value = e.target.value;
         }
       },
