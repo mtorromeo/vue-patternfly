@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "files": [
     "dist",
     "global.d.ts"
@@ -20,23 +20,24 @@
     "prepack": "npm run build"
   },
   "dependencies": {
-    "@patternfly/patternfly": "^4.159.2",
-    "@patternfly/react-styles": "^4.25.9",
-    "@patternfly/react-tokens": "^4.27.9",
-    "@popperjs/core": "^2.11.4",
+    "@patternfly/patternfly": "^4.196.5",
+    "@patternfly/react-styles": "^4.69.2",
+    "@patternfly/react-tokens": "^4.71.2",
+    "@popperjs/core": "^2.11.5",
     "@vue-patternfly/icons": "^0.2.0",
-    "@vueuse/core": "^8.1.2",
-    "@vueuse/integrations": "^8.1.2"
+    "@vueuse/core": "^8.5.0",
+    "@vueuse/integrations": "^8.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.4",
-    "@vue/compiler-sfc": "^3.2.31",
-    "focus-trap": "^6.7.3",
-    "fs-extra": "^10.0.1",
-    "typescript": "^4.6.2",
-    "vite": "^2.8.6",
-    "vue-router": "^4.0.14",
-    "vue-tsc": "^0.33.7"
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/compiler-sfc": "^3.2.36",
+    "focus-trap": "^6.9.3",
+    "fs-extra": "^10.1.0",
+    "typescript": "^4.7.2",
+    "vite": "^2.9.9",
+    "vue": "=3.2.33",
+    "vue-router": "^4.0.15",
+    "vue-tsc": "^0.35.2"
   },
   "peerDependencies": {
     "focus-trap": "*",

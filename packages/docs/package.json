@@ -10,17 +10,17 @@
   "dependencies": {
     "@vue-patternfly/core": "workspace:^",
     "shiki": "^0.10.1",
-    "vue": "^3.2.31",
-    "vue-router": "4.0.14"
+    "vue": "^3.2.36",
+    "vue-router": "4.0.15"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.4",
-    "@vue/compiler-sfc": "^3.2.31",
-    "@vueuse/core": "^8.1.2",
-    "sass": "^1.51.0",
-    "typescript": "^4.6.2",
-    "vite": "^2.8.6",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/compiler-sfc": "^3.2.36",
+    "@vueuse/core": "^8.5.0",
+    "sass": "^1.52.1",
+    "typescript": "^4.7.2",
+    "vite": "^2.9.9",
     "vite-plugin-story-canvas-source": "workspace:^",
-    "vue-tsc": "^0.33.7"
+    "vue-tsc": "^0.35.2"
   }
 }
