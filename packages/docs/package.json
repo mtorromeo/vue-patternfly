@@ -10,7 +10,7 @@
   "dependencies": {
     "@vue-patternfly/core": "workspace:^",
     "shiki": "^0.10.1",
-    "vue": "^3.2.36",
+    "vue": "=3.2.33",
     "vue-router": "4.0.15"
   },
   "devDependencies": {
