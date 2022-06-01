@@ -8,10 +8,16 @@
       </pf-expandable-section>
     </story-canvas>
 
+    <story-canvas title="Managed">
+      <pf-expandable-section toggle-text-expanded="Show less" toggle-text-collapsed="Show more">
+        This content is visible only when the component is expanded.
+      </pf-expandable-section>
+    </story-canvas>
+
     <story-canvas title="Detached">
       <pf-stack gutter>
         <pf-stack-item>
-          <pf-expandable-section v-model:expanded="expanded2" :expanded="expanded2" detached content-id="detached-toggle-content">
+          <pf-expandable-section v-model:expanded="expanded2" detached content-id="detached-toggle-content">
             This content is visible only when the component is expanded.
           </pf-expandable-section>
         </pf-stack-item>
