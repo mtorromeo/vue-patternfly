@@ -1,5 +1,5 @@
 <template>
-  <pf-page-section>
+  <doc-page>
     <pre v-md>
       # Vue PatternFly
 
@@ -70,5 +70,5 @@
       [link-contributors]: https://github.com/mtorromeo/vue-patternfly4/graphs/contributors
       [link-patternfly4]: https://www.patternfly.org/v4/
     </pre>
-  </pf-page-section>
+  </doc-page>
 </template>

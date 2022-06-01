@@ -1,7 +1,5 @@
 <template>
-  <pf-page-section class="page__layouts">
-    <pf-title size="4xl">Layouts</pf-title>
-
+  <doc-page class="page__layouts" title="Layouts">
     <pf-title h="2">Bullseye</pf-title>
     <pf-bullseye>Bullseye ◎ layout</pf-bullseye>
 
@@ -88,7 +86,7 @@
       <pf-stack-item filled>pf-m-fill</pf-stack-item>
       <pf-stack-item>content</pf-stack-item>
     </pf-stack>
-  </pf-page-section>
+  </doc-page>
 </template>
 
 <style lang="scss">

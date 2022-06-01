@@ -1,7 +1,7 @@
 <template>
   <pf-page-section variant="light">
     <div class="doc-content">
-      <pf-title size="4xl">{{ title }}</pf-title>
+      <pf-title v-if="title" size="4xl">{{ title }}</pf-title>
       <slot />
     </div>
   </pf-page-section>
@@ -20,10 +20,15 @@ export default defineComponent({
   name: 'DocPage',
 
   props: {
-    title: {
-      type: String,
-      required: true,
-    },
+    title: String,
+  },
+
+  mounted() {
+    if (this.title) {
+      document.title = `VuePatternfly 4 • ${this.title}`;
+    } else {
+      document.title = `VuePatternfly 4`;
+    }
   },
 });
 </script>
