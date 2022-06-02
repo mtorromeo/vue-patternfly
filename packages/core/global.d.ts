@@ -57,10 +57,10 @@ declare module 'vue' {
     PfKebabToggle: typeof import('@vue-patternfly/core').PfKebabToggle;
     PfToggle: typeof import('@vue-patternfly/core').PfToggle;
 
-    PpEmptyState: typeof import('@vue-patternfly/core').PfEmptyState;
-    PpEmptyStateBody: typeof import('@vue-patternfly/core').PfEmptyStateBody;
-    PpEmptyStateIcon: typeof import('@vue-patternfly/core').PfEmptyStateIcon;
-    PpEmptyStateSecondaryActions: typeof import('@vue-patternfly/core').PfEmptyStateSecondaryActions;
+    PfEmptyState: typeof import('@vue-patternfly/core').PfEmptyState;
+    PfEmptyStateBody: typeof import('@vue-patternfly/core').PfEmptyStateBody;
+    PfEmptyStateIcon: typeof import('@vue-patternfly/core').PfEmptyStateIcon;
+    PfEmptyStateSecondaryActions: typeof import('@vue-patternfly/core').PfEmptyStateSecondaryActions;
 
     PfExpandableSection: typeof import('@vue-patternfly/core').PfExpandableSection;
     PfExpandableSectionToggle: typeof import('@vue-patternfly/core').PfExpandableSectionToggle;
