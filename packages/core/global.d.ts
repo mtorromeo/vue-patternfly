@@ -149,6 +149,20 @@ declare module 'vue' {
     PfTooltip: typeof import('@vue-patternfly/core').PfTooltip;
     PfTooltipArrow: typeof import('@vue-patternfly/core').PfTooltipArrow;
     PfTooltipContent: typeof import('@vue-patternfly/core').PfTooltipContent;
+
+    PfFlex: typeof import('@vue-patternfly/core').PfFlex;
+    PfFlexItem: typeof import('@vue-patternfly/core').PfFlexItem;
+    PfGallery: typeof import('@vue-patternfly/core').PfGallery;
+    PfGalleryItem: typeof import('@vue-patternfly/core').PfGalleryItem;
+    PfGrid: typeof import('@vue-patternfly/core').PfGrid;
+    PfGridItem: typeof import('@vue-patternfly/core').PfGridItem;
+    PfLevel: typeof import('@vue-patternfly/core').PfLevel;
+    PfLevelItem: typeof import('@vue-patternfly/core').PfLevelItem;
+    PfSplit: typeof import('@vue-patternfly/core').PfSplit;
+    PfSplitItem: typeof import('@vue-patternfly/core').PfSplitItem;
+    PfStack: typeof import('@vue-patternfly/core').PfStack;
+    PfStackItem: typeof import('@vue-patternfly/core').PfStackItem;
+    PfBullseye: typeof import('@vue-patternfly/core').PfBullseye;
   }
 }
 
