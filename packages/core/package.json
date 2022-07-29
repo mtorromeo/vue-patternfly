@@ -25,19 +25,19 @@
     "@patternfly/react-tokens": "^4.71.2",
     "@popperjs/core": "^2.11.5",
     "@vue-patternfly/icons": "^0.2.0",
-    "@vueuse/core": "^8.5.0",
-    "@vueuse/integrations": "^8.5.0"
+    "@vueuse/core": "^9.0.2",
+    "@vueuse/integrations": "^9.0.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.3",
-    "@vue/compiler-sfc": "^3.2.36",
-    "focus-trap": "^6.9.3",
+    "@vitejs/plugin-vue": "^3.0.1",
+    "@vue/compiler-sfc": "^3.2.37",
+    "focus-trap": "^6.9.4",
     "fs-extra": "^10.1.0",
-    "typescript": "^4.7.2",
-    "vite": "^2.9.9",
-    "vue": "=3.2.33",
-    "vue-router": "^4.0.15",
-    "vue-tsc": "^0.35.2"
+    "typescript": "^4.7.4",
+    "vite": "^3.0.4",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.3",
+    "vue-tsc": "^0.39.2"
   },
   "peerDependencies": {
     "focus-trap": "*",

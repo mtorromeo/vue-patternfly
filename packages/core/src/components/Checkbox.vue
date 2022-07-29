@@ -80,7 +80,7 @@ export default defineComponent({
   setup() {
     const input: Ref<HTMLInputElement | null> = ref(null);
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       input,
     };
   },

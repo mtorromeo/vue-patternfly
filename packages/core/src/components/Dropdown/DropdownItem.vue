@@ -92,7 +92,7 @@ export default defineComponent({
 
     return {
       el,
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       focused: useFocused(focusElement, null),
       focusElement,
       itemClass: inject(DropdownItemClassKey, styles.dropdownMenuItem),

@@ -198,7 +198,7 @@ export default defineComponent({
     return {
       managedOpen,
       dialog,
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       visible: ref(managedOpen.value),
     };
   },

@@ -52,7 +52,7 @@ export default defineComponent({
       expanded: inject(ToolbarExpandedKey),
       showClearFiltersButton: inject(ToolbarShowClearFiltersButtonKey),
       clearFiltersButtonText: inject(ToolbarClearFilterButtonTextKey),
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
     };
   },
 

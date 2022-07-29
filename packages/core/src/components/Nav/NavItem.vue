@@ -96,7 +96,7 @@ export default defineComponent({
 
   setup() {
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       onSelect: inject(NavOnSelectKey, null),
       flyoutRef: inject(NavFlyoutRefKey, null),
       sidebarOpen: inject(SidebarOpenKey, false),

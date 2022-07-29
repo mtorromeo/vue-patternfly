@@ -101,7 +101,7 @@ export default defineComponent({
     provide(ToolbarNumberOfFiltersKey, numberOfFilters);
 
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       managedToggleExpanded,
       toggleManaged,
       effectiveExpanded,

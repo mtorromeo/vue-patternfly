@@ -120,7 +120,7 @@ export default defineComponent({
     const { width: windowWidth } = useWindowSize();
 
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       navOpen,
       mobileView,
       mobileNavOpen,

@@ -138,7 +138,7 @@ export default defineComponent({
     // components that use useInputValidation
     const inputs = provideChildrenTracker<ComponentPublicInstance & UnwrapNestedRefs<ReturnType<typeof useInputValidation>>>();
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       internalValidated: computed(() => {
         if (props.validated !== null) {
           return props.validated;

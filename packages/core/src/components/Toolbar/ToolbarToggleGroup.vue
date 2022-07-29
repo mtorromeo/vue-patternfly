@@ -50,7 +50,7 @@ export default defineComponent({
   setup() {
     const { width: windowWidth } = useWindowSize();
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       windowWidth,
       expanded: inject(ToolbarExpandedKey),
       toggleExpanded: inject(ToolbarToggleExpandedKey),

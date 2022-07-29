@@ -55,7 +55,7 @@ export default defineComponent({
     const navList: Ref<HTMLUListElement | null> = ref(null);
     return {
       navList,
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       horizontal: inject(NavHorizontalKey),
       scrollable: inject(NavScrollablelKey),
     };

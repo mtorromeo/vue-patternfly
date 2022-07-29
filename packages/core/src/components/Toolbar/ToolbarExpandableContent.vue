@@ -40,7 +40,7 @@ export default defineComponent({
 
   setup() {
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       numberOfFilters: inject(ToolbarNumberOfFiltersKey),
       clearAllFilters: inject(ToolbarClearAllFiltersKey),
     };

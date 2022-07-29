@@ -169,8 +169,8 @@ export default defineComponent({
       titleRef,
       tooltipVisible,
       managedExpanded: useManagedProp('expanded', false),
-      styles: markRaw(styles),
-      accessibleStyles: markRaw(accessibleStyles),
+      styles: markRaw(styles) as typeof styles,
+      accessibleStyles: markRaw(accessibleStyles) as typeof accessibleStyles,
     };
   },
 

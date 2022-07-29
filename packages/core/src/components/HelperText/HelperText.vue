@@ -24,7 +24,7 @@ export default defineComponent({
   setup(props) {
     provide(HelperTextComponentKey, props.component);
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
     };
   },
 });

@@ -71,7 +71,7 @@ export default defineComponent({
     const { width: windowWidth } = useWindowSize();
     return {
       windowWidth,
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
     };
   },
 

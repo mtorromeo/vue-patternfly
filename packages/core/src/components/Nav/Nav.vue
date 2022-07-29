@@ -62,7 +62,7 @@ export default defineComponent({
     return {
       horizontal,
       scrollable,
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
     };
   },
 });

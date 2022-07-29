@@ -50,7 +50,7 @@
         type="checkbox"
         :disabled="disabled"
         @change="onCheckboxChange"
-      />
+      >
       <span
         :class="[checkStyles.checkLabel, {
           [styles.modifiers.disabled]: disabled,
@@ -221,8 +221,8 @@ export default defineComponent({
       keydown: (e: KeyboardEvent) => select?.keydown?.call?.(instance.proxy as ComponentPublicInstance & Navigatable, e, menuItem.value),
       menuItem,
       focused: useFocused(() => instance.refs.menuItem, instance),
-      styles: markRaw(styles),
-      checkStyles: markRaw(checkStyles),
+      styles: markRaw(styles) as typeof styles,
+      checkStyles: markRaw(checkStyles) as typeof checkStyles,
       managedChecked: useManagedProp('checked', false),
       select,
     };

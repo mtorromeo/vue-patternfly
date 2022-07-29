@@ -154,7 +154,7 @@ export default defineComponent({
 
   setup(props) {
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       userInputPage: ref<string | number>(props.page),
     };
   },

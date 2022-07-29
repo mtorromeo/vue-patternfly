@@ -47,7 +47,7 @@ export default defineComponent({
     return {
       expandable: inject(CardExpandableKey),
       expanded: inject(CardExpandedKey),
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
     };
   },
 

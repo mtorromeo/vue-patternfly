@@ -56,7 +56,7 @@ export default defineComponent({
 
   setup() {
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       select: inject(SelectKey),
     };
   },

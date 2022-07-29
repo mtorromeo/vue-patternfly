@@ -116,7 +116,7 @@ export default defineComponent({
     provide(DropdownToggleClassKey, styles.optionsMenuToggleButton);
 
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
     };
   },
 

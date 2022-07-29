@@ -43,7 +43,7 @@ export default defineComponent({
     provide(SidebarOpenKey, sidebarOpen);
 
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       sidebarOpen,
       managedNavOpen,
       managedSidebar,

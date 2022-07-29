@@ -77,7 +77,7 @@ export default defineComponent({
 
   setup() {
     return {
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
       managedNavOpen: inject(PageNavOpenKey),
       managedSidebar: inject(PageManagedSidebarKey),
     };

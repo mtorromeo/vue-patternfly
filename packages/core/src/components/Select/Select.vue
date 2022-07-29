@@ -222,10 +222,10 @@ export default defineComponent({
       options,
       menuOnKeydown: onKeydown,
       managedOpen: useManagedProp('open', false),
-      styles: markRaw(styles),
-      buttonStyles: markRaw(buttonStyles),
-      badgeStyles: markRaw(badgeStyles),
-      formStyles: markRaw(formStyles),
+      styles: markRaw(styles) as typeof styles,
+      buttonStyles: markRaw(buttonStyles) as typeof buttonStyles,
+      badgeStyles: markRaw(badgeStyles) as typeof badgeStyles,
+      formStyles: markRaw(formStyles) as typeof formStyles,
     };
   },
 

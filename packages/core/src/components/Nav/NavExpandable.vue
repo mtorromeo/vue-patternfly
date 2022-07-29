@@ -80,8 +80,8 @@ export default defineComponent({
     const expandable: Ref<HTMLButtonElement> = ref(null);
     return {
       expandable,
-      styles: markRaw(styles),
-      a11yStyles: markRaw(a11yStyles),
+      styles: markRaw(styles) as typeof styles,
+      a11yStyles: markRaw(a11yStyles) as typeof a11yStyles,
       expandedState: ref(props.expanded),
     };
   },

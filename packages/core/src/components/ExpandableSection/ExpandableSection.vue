@@ -90,7 +90,7 @@ export default defineComponent({
   setup() {
     return {
       managedExpanded: useManagedProp('expanded', false),
-      styles: markRaw(styles),
+      styles: markRaw(styles) as typeof styles,
     };
   },
 
