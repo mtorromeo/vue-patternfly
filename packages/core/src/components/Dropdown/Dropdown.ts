@@ -139,7 +139,7 @@ export default defineComponent({
 
     if (this.menuAppendTo === 'inline' && this.managedOpen) {
       const menu = h(PfDropdownMenu, {
-        ref: (component) => (this.menuRef = component as typeof PfDropdownMenu),
+        ref: (component) => (this.menuRef = component as any as typeof PfDropdownMenu),
         class: classesFromBreakpointProps(this.$props, ['align'], styles),
         position: this.position,
         grouped: this.grouped,
