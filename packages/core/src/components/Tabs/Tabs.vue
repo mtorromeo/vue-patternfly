@@ -3,7 +3,7 @@ import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import { breakpointProp, classesFromBreakpointProps, findChildrenVNodes, isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { h, provide, computed, reactive, defineComponent, PropType, InjectionKey, ComputedRef, Ref, ref, DefineComponent } from 'vue';
+import { h, provide, computed, reactive, defineComponent, PropType, InjectionKey, ComputedRef, Ref, ref } from 'vue';
 
 import PfTabContent from './TabContent.vue';
 import PfAngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
@@ -254,7 +254,7 @@ export default defineComponent({
     const tabList =
       h('ul',
         {
-          ref: el => this.tablistRef = el as HTMLUListElement,
+          ref: el => (this.tablistRef = el as HTMLUListElement),
           role: 'tablist',
           class: styles.tabsList,
           onScroll: this.handleScrollButtons,
@@ -276,22 +276,22 @@ export default defineComponent({
     return [
       h(
         this.component, {
-        id: this.id,
-        'aria-label': this.ariaLabel,
-        class: [styles.tabs, this.breakpointClasses, {
-          [styles.modifiers.fill]: this.filled,
-          [styles.modifiers.secondary]: this.secondary,
-          [styles.modifiers.vertical]: this.vertical,
-          [styles.modifiers.box]: this.box,
-          [styles.modifiers.scrollable]: !this.vertical && this.showScrollButtons,
-          [styles.modifiers.pageInsets]: this.pageInsets,
-          [styles.modifiers.colorSchemeLight_300]: this.variant === 'light300',
-        }],
-      }, [
-        leftButton,
-        tabList,
-        rightButton,
-      ],
+          id: this.id,
+          'aria-label': this.ariaLabel,
+          class: [styles.tabs, this.breakpointClasses, {
+            [styles.modifiers.fill]: this.filled,
+            [styles.modifiers.secondary]: this.secondary,
+            [styles.modifiers.vertical]: this.vertical,
+            [styles.modifiers.box]: this.box,
+            [styles.modifiers.scrollable]: !this.vertical && this.showScrollButtons,
+            [styles.modifiers.pageInsets]: this.pageInsets,
+            [styles.modifiers.colorSchemeLight_300]: this.variant === 'light300',
+          }],
+        }, [
+          leftButton,
+          tabList,
+          rightButton,
+        ],
       ),
       ...tabs
         .filter(tab =>
