@@ -1,4 +1,4 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance } from 'vue';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance, WritableComputedRef } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
 
@@ -242,27 +242,24 @@ export function isDefined(value: any): boolean {
   return value !== null && typeof value !== 'undefined';
 }
 
-export function useManagedProp<T>(name: string, value: T = null, transform?: (value: any) => T) {
+export function useManagedProp<T>(name: string, value: T): WritableComputedRef<T>;
+export function useManagedProp<T, Accept = T>(name: string, value: T, transform?: (value: Accept | T) => T) {
   const instance = getCurrentInstance();
   if (!instance) {
     return;
   }
 
-  const inner = ref(value) as Ref<T>;
-
+  const inner = ref(value);
   return computed({
     get(): T {
-      if (isDefined(instance.props[name])) {
-        return instance.props[name] as T;
-      }
-      return unref(inner);
+      return isDefined(instance.props[name]) ? (instance.props[name] as any) : inner.value;
     },
-    set(to: T) {
+    set(to: Accept | T) {
       if (typeof transform === 'function') {
         to = transform(to);
       }
       if (!isDefined(instance.props[name])) {
-        inner.value = unref(to as T);
+        inner.value = to as any;
       }
       instance.emit(`update:${name}`, to);
     },

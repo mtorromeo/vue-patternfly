@@ -21,6 +21,7 @@ declare module 'vue' {
     PfTextInput: typeof import('@vue-patternfly/core').PfTextInput,
     PfTitle: typeof import('@vue-patternfly/core').PfTitle,
     Void: typeof import('@vue-patternfly/core').Void,
+    OverridableWrapper: typeof import('@vue-patternfly/core').OverridableWrapper,
 
     PfAccordion: typeof import('@vue-patternfly/core').PfAccordion,
     PfAccordionItem: typeof import('@vue-patternfly/core').PfAccordionItem,
@@ -45,6 +46,16 @@ declare module 'vue' {
 
     PfChip: typeof import('@vue-patternfly/core').PfChip;
     PfChipGroup: typeof import('@vue-patternfly/core').PfChipGroup;
+
+    PfDataList: typeof import('@vue-patternfly/core').PfDataList;
+    PfDataListAction: typeof import('@vue-patternfly/core').PfDataListAction;
+    PfDataListCell: typeof import('@vue-patternfly/core').PfDataListCell;
+    PfDataListCheck: typeof import('@vue-patternfly/core').PfDataListCheck;
+    PfDataListContent: typeof import('@vue-patternfly/core').PfDataListContent;
+    PfDataListItem: typeof import('@vue-patternfly/core').PfDataListItem;
+    PfDataListItemRow: typeof import('@vue-patternfly/core').PfDataListItemRow;
+    PfDataListItemCells: typeof import('@vue-patternfly/core').PfDataListItemCells;
+    PfDataListToggle: typeof import('@vue-patternfly/core').PfDataListToggle;
 
     PfBadgeToggle: typeof import('@vue-patternfly/core').PfBadgeToggle;
     PfDropdown: typeof import('@vue-patternfly/core').PfDropdown;

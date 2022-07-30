@@ -101,6 +101,54 @@ export function breakpointProp<Name extends string, T extends BooleanConstructor
   }));
 }
 
+export interface Mods {
+  default?: string;
+  sm?: string;
+  md?: string;
+  lg?: string;
+  xl?: string;
+  '2xl'?: string;
+  '3xl'?: string;
+}
+
+/**
+ * This function is a helper for turning arrays of breakpointMod objects for data toolbar and flex into classes
+ *
+ * @param {object} mods The modifiers object
+ * @param {any} styles The appropriate styles object for the component
+ */
+export const formatBreakpointMods = (
+  mods: Mods,
+  styles: any,
+  stylePrefix = '',
+  breakpoint?: 'default' | 'sm' | 'md' | 'lg' | 'xl' | '2xl',
+) => {
+  if (!mods) {
+    return '';
+  }
+  if (breakpoint) {
+    if (breakpoint in mods) {
+      return styles.modifiers[toCamelCase(`${stylePrefix}${mods[breakpoint as keyof Mods]}`)];
+    }
+    // the current breakpoint is not specified in mods, so we try to find the next nearest
+    const breakpointsOrder = ['2xl', 'xl', 'lg', 'md', 'sm', 'default'];
+    const breakpointsIndex = breakpointsOrder.indexOf(breakpoint);
+    for (let i = breakpointsIndex; i < breakpointsOrder.length; i++) {
+      if (breakpointsOrder[i] in mods) {
+        return styles.modifiers[toCamelCase(`${stylePrefix}${mods[breakpointsOrder[i] as keyof Mods]}`)];
+      }
+    }
+    return '';
+  }
+  return Object.entries(mods || {})
+    .map(([breakpoint, mod]) => `${stylePrefix}${mod}${breakpoint !== 'default' ? `-on-${breakpoint}` : ''}`)
+    .map(toCamelCase)
+    .map(mod => mod.replace(/-?(\dxl)/gi, (_res, group) => `_${group}`))
+    .map(modifierKey => styles.modifiers[modifierKey])
+    .filter(Boolean)
+    .join(' ');
+};
+
 export function debounce<T>(func: (args: T[]) => any, wait: number) {
   let timeout: number;
   return (...args: T[]) => {
