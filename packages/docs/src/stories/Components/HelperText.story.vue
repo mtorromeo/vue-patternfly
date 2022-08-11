@@ -48,7 +48,7 @@
         </pf-helper-text-item>
         <pf-helper-text-item variant="success">
           <template #icon>
-            <pf-check-icon />
+            <xmark-icon />
           </template>
           This is success helper text
         </pf-helper-text-item>
