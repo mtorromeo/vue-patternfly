@@ -51,7 +51,7 @@ function addSourceToStoryCanvas(el: HTMLElement) {
 }
 
 function replaceMarkdown(md: Markdown, el: HTMLElement) {
-  const mdDiv = new HTMLElement('div', { class: 'markdown pf-c-content' }, '', null);
+  const mdDiv = new HTMLElement('div', { class: 'markdown pf-c-content' }, '', null, [0,0]);
   mdDiv.innerHTML = md.render(dedent(el.innerText.replaceAll('&lt;', '<').replaceAll('&gt;', '>')));
   el.parentNode.exchangeChild(el, mdDiv);
 }
