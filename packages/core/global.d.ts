@@ -11,7 +11,6 @@ declare module 'vue' {
     PfLabel: typeof import('@vue-patternfly/core').PfLabel,
     PfNotificationBadge: typeof import('@vue-patternfly/core').PfNotificationBadge,
     PfPopover: typeof import('@vue-patternfly/core').PfPopover,
-    PfPopper: typeof import('@vue-patternfly/core').PfPopper,
     PfProgress: typeof import('@vue-patternfly/core').PfProgress,
     PfRadio: typeof import('@vue-patternfly/core').PfRadio,
     PfSkeleton: typeof import('@vue-patternfly/core').PfSkeleton,

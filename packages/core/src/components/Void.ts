@@ -19,6 +19,10 @@ export default defineComponent({
     template: Boolean,
   },
 
+  emits: {
+    children: (c: VNode[]) => Array.isArray(c),
+  },
+
   setup() {
     return {
       templateFn: null as Slot,
@@ -26,21 +30,22 @@ export default defineComponent({
   },
 
   render() {
+    const retEmit = (children: VNode[]) => {
+      this.$emit('children', children);
+      return children;
+    };
+
     if (this.template) {
       this.templateFn = this.$slots.default;
-      return [];
+      return retEmit([]);
     }
 
     if (this.useRef && this.useRef.templateFn) {
-      return this.useRef.templateFn();
+      return retEmit(this.useRef.templateFn());
     }
 
     if (!this.$slots.default) {
-      return;
-    }
-
-    if (!this.$slots.default) {
-      return [];
+      return retEmit([]);
     }
 
     let children = this.$slots.default();
@@ -48,6 +53,6 @@ export default defineComponent({
       children = this.alter(children);
     }
 
-    return children;
+    return retEmit(children);
   },
 });

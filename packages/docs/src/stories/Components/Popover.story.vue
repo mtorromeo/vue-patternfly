@@ -3,8 +3,9 @@
     <component-title name="pf-popover" />
 
     <story-canvas title="Example">
-      <pf-popover style="margin: 50px">
+      <pf-popover>
         <pf-button>Toggle popover</pf-button>
+
         <template #header>
           <div>Popover header</div>
         </template>

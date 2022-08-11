@@ -94,7 +94,7 @@ export default defineComponent({
   watch: {
     modelValue: {
       handler() {
-        if (!this.$refs.input) {
+        if (!this.input) {
           return;
         }
         this.input.indeterminate = this.modelValue === null;

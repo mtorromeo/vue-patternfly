@@ -198,10 +198,11 @@ export default defineComponent({
       if (!(e.target instanceof HTMLElement)) {
         return;
       }
-      if (e && e.target && e.target.offsetWidth < e.target.scrollWidth) {
+      if (e.target.offsetWidth < e.target.scrollWidth) {
         this.tooltip = this.title || e.target.innerHTML;
+      } else {
+        this.tooltip = '';
       }
-      this.tooltip = '';
     },
   },
 });

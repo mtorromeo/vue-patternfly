@@ -1,44 +1,39 @@
 <template>
-  <pf-popper
-    :top="styles.modifiers.top"
-    :bottom="styles.modifiers.bottom"
-    :left="styles.modifiers.left"
-    :right="styles.modifiers.right"
-    :distance="distance"
-    :placement="position"
-    :visible="visible"
-    @click="click"
-    @mouseenter="visible = true"
-    @mouseleave="visible = false"
-  >
+  <void @children="findReference">
     <slot />
+  </void>
 
-    <template #popper>
-      <div
-        :class="styles.tooltip"
-        :style="{
-          maxWidth,
-          opacity: 1,
-          transition: 'opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s',
-        }"
-        role="tooltip"
-      >
-        <pf-tooltip-arrow />
-        <pf-tooltip-content :left-aligned="leftAligned">
-          <slot name="content" />
-        </pf-tooltip-content>
-      </div>
-    </template>
-  </pf-popper>
+  <div
+    ref="tooltipElement"
+    :class="styles.tooltip"
+    :style="{
+      maxWidth,
+      opacity: visible ? 1 : 0,
+      transition: 'opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s',
+      position: floatingUI.strategy,
+      zIndex: 9999,
+      top: 0,
+      left: 0,
+      transform: `translate3d(${Math.round(floatingUI.x)}px,${Math.round(floatingUI.y)}px,0)`
+    }"
+    role="tooltip"
+  >
+    <pf-tooltip-arrow />
+    <pf-tooltip-content :left-aligned="leftAligned">
+      <slot name="content" />
+    </pf-tooltip-content>
+  </div>
 </template>
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { defineComponent, markRaw, PropType } from 'vue';
+import { computed, defineComponent, markRaw, PropType, Ref, ref, watch } from 'vue';
 
-import PfPopper from '../Popper';
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
+import Void from '../Void';
+import { useFloatinUI, useHtmlElementFromVNodes } from '../../use';
+import { flip } from '@floating-ui/core';
 
 export enum TooltipPosition {
   auto = 'auto',
@@ -52,9 +47,9 @@ export default defineComponent({
   name: 'PfTooltip',
 
   components: {
-    PfPopper,
     PfTooltipArrow,
     PfTooltipContent,
+    Void,
   },
 
   props: {
@@ -103,21 +98,32 @@ export default defineComponent({
   },
 
   setup() {
+    const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
+    const tooltipElement: Ref<HTMLElement | null> = ref(null);
+    const visible = ref(false);
+
+    watch(referenceElement, (el) => {
+      el?.addEventListener('mouseenter', () => (visible.value = true));
+      el?.addEventListener('mouseleave', () => (visible.value = false));
+    });
+
+    const floatingUI = useFloatinUI(
+      referenceElement,
+      tooltipElement as any,
+      computed(() => ({
+        middleware: [
+          flip(),
+        ],
+      })),
+    );
+
     return {
       styles: markRaw(styles) as typeof styles,
+      findReference,
+      tooltipElement,
+      floatingUI,
+      visible,
     };
-  },
-
-  data() {
-    return {
-      visible: false,
-    };
-  },
-
-  methods: {
-    click(e: MouseEvent | TouchEvent) {
-      console.log(e, this.visible);
-    },
   },
 });
 </script>

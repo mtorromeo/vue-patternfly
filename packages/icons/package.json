@@ -11,16 +11,16 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.9",
+    "@babel/core": "^7.18.10",
     "@babel/plugin-transform-modules-commonjs": "^7.18.6",
-    "@fortawesome/free-brands-svg-icons": "^5.15.4",
-    "@fortawesome/free-regular-svg-icons": "^5.15.4",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@patternfly/patternfly": "^4.202.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.2",
+    "@fortawesome/free-regular-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@patternfly/patternfly": "^4.206.3",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "rimraf": "^3.0.2",
-    "ts-patch": "^2.0.1",
+    "ts-patch": "^2.0.2",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
   },

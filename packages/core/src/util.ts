@@ -191,8 +191,12 @@ export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren): V
     .flat() as VNode[];
 }
 
-export function domFromRef(ref: ComponentPublicInstance | HTMLElement): HTMLElement {
-  return (ref as any).$el ? (ref as any).$el : ref;
+export function domFromRef(ref: ComponentPublicInstance | Element): HTMLElement {
+  const el: HTMLElement = (ref as any).$el ? (ref as any).$el : ref;
+  if (el.nodeType === Node.TEXT_NODE) {
+    return el.nextElementSibling as HTMLElement;
+  }
+  return el;
 }
 
 // copied from react-core/src/helpers/util.ts

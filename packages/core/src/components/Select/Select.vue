@@ -108,7 +108,7 @@ import formStyles from '@patternfly/react-styles/css/components/FormControl/form
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 
 import Void from '../Void';
-import PfPopper from '../Popper';
+// import PfPopper from '../Popper';
 import PfSelectMenu from './SelectMenu.vue';
 import PfSelectOption from './SelectOption.vue';
 import PfSelectToggle from './SelectToggle.vue';
@@ -134,7 +134,7 @@ export default defineComponent({
     PfSelectMenu,
     PfSelectToggle,
     Void,
-    PfPopper,
+    // PfPopper,
     PfDivider,
     TimesCircleIcon,
   },

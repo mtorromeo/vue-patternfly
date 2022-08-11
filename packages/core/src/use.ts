@@ -1,8 +1,67 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance, WritableComputedRef } from 'vue';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance, WritableComputedRef, reactive, watch, ComputedRef, VNode } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
+import { computePosition, autoUpdate } from '@floating-ui/dom';
+import { findComponentVNode } from './util';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
+
+type FloatingOptions = Parameters<typeof computePosition>[2];
+
+export function useFloatinUI(reference: ComputedRef<HTMLElement | null>, floating: ComputedRef<HTMLElement | null>, options: ComputedRef<FloatingOptions>) {
+  const defaultFloatingData: Awaited<ReturnType<typeof computePosition>> = {
+    x: null,
+    y: null,
+    placement: 'top',
+    strategy: 'absolute',
+    middlewareData: {},
+  };
+  const floatingData = reactive(defaultFloatingData);
+
+  let cleanup = (): any => undefined;
+
+  watch([reference, floating, options], () => {
+    const referenceElement = unref(reference) as HTMLElement | null;
+    const floatingElement = unref(floating) as HTMLElement | null;
+    cleanup();
+    Object.assign(floatingData, defaultFloatingData);
+    if (referenceElement && floatingElement) {
+      cleanup = autoUpdate(referenceElement, floatingElement, async() => {
+        const data = await computePosition(referenceElement, floatingElement, unref(options) as FloatingOptions);
+        Object.assign(floatingData, data);
+      });
+    }
+  }, { immediate: true });
+
+  onBeforeUnmount(() => cleanup());
+
+  return floatingData;
+}
+
+export function useHtmlElementFromVNodes() {
+  const referenceVNode: Ref<VNode | null> = ref(null);
+
+  const element = computed(() => {
+    let el = referenceVNode.value?.el as Node;
+    if (!(el instanceof Node)) {
+      return null;
+    }
+    if (!(el instanceof HTMLElement)) {
+      el = (el as Element).nextElementSibling;
+    }
+    if (!(el instanceof HTMLElement)) {
+      return null;
+    }
+    return el;
+  });
+
+  return {
+    element,
+    findReference(children: VNode[]) {
+      referenceVNode.value = findComponentVNode(children);
+    },
+  };
+}
 
 export function provideChildrenTracker<C extends Component = ComponentPublicInstance>(symbol?: symbol) {
   const items: Ref<C[]> = ref([]);

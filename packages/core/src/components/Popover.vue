@@ -1,99 +1,89 @@
 <template>
-  <pf-popper
-    :top="styles.modifiers.top"
-    :bottom="styles.modifiers.bottom"
-    :left="styles.modifiers.left"
-    :right="styles.modifiers.right"
-    :top-start="styles.modifiers.topLeft"
-    :top-end="styles.modifiers.topRight"
-    :bottom-start="styles.modifiers.bottomLeft"
-    :bottom-end="styles.modifiers.bottomRight"
-    :left-start="styles.modifiers.leftTop"
-    :left-end="styles.modifiers.leftBottom"
-    :right-start="styles.modifiers.rightTop"
-    :right-end="styles.modifiers.rightBottom"
-    :distance="distance"
-    :placement="position"
-    :visible="visible"
-    :disable-flip="noFlip"
-    :flip-behavior="flipBehavior"
-    @click="managedOpen = !managedOpen"
-    @keydown.enter="managedOpen = true"
-  >
+  <void @children="findReference">
     <slot />
+  </void>
 
-    <template #popper>
-      <pf-focus-trap
-        ref="dialog"
-        :active="focusTrap && managedOpen"
-        :class="[styles.popover, {
-          [styles.modifiers.noPadding]: noPadding,
-          [styles.modifiers.widthAuto]: autoWidth,
-        }]"
-        role="dialog"
-        aria-modal="true"
-        :aria-label="$slots.header ? null : ariaLabel"
-        :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : null"
-        :aria-describedby="`popover-${uniqueId}-body`"
-        :style="{
-          minWidth: hasCustomMinWidth ? minWidth : null,
-          maxWidth: hasCustomMaxWidth ? maxWidth : null,
-          opacity,
-          transition: getOpacityTransition(animationDuration)
-        }"
+  <pf-focus-trap
+    v-if="visible"
+    ref="dialog"
+    v-bind="$attrs"
+    :active="focusTrap && managedOpen"
+    :class="[styles.popover, (styles.modifiers as any)[dialogUI.placement], {
+      [styles.modifiers.noPadding]: noPadding,
+      [styles.modifiers.widthAuto]: autoWidth,
+    }]"
+    role="dialog"
+    aria-modal="true"
+    :aria-label="$slots.header ? null : ariaLabel"
+    :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : null"
+    :aria-describedby="`popover-${uniqueId}-body`"
+    :style="{
+      minWidth: hasCustomMinWidth ? minWidth : null,
+      maxWidth: hasCustomMaxWidth ? maxWidth : null,
+      opacity,
+      transition: `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
+      position: dialogUI.strategy,
+      zIndex: 9999,
+      top: 0,
+      left: 0,
+      transform: `translate3d(${Math.round(dialogUI.x)}px,${Math.round(dialogUI.y)}px,0)`
+    }"
+    :data-popper-reference-hidden="dialogUI.middlewareData.hide?.referenceHidden"
+    :data-popper-escaped="dialogUI.middlewareData.hide?.escaped"
+    :data-popper-placement="dialogUI.placement"
+  >
+    <div :class="styles.popoverArrow" />
+    <div :class="styles.popoverContent">
+      <pf-close-button
+        v-if="showClose"
+        :aria-label="closeBtnAriaLabel"
+        @click.prevent="managedOpen = false"
+      />
+
+      <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" h="6" size="md">
+        <slot name="header" />
+      </pf-title>
+
+      <div :id="`popover-${uniqueId}-body`" :class="styles.popoverBody">
+        <slot name="body" />
+      </div>
+
+      <footer
+        v-if="$slots.footer"
+        :id="`popover-${uniqueId}-footer`"
+        :class="styles.popoverFooter"
       >
-        <div :class="styles.popoverArrow" />
-        <div :class="styles.popoverContent">
-          <pf-close-button
-            v-if="showClose"
-            :aria-label="closeBtnAriaLabel"
-            @click.prevent="managedOpen = false"
-          />
-
-          <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" h="6" size="md">
-            <slot name="header" />
-          </pf-title>
-
-          <div :id="`popover-${uniqueId}-body`" :class="styles.popoverBody">
-            <slot name="body" />
-          </div>
-
-          <footer
-            v-if="$slots.footer"
-            :id="`popover-${uniqueId}-footer`"
-            :class="styles.popoverFooter"
-          >
-            <slot name="footer" />
-          </footer>
-        </div>
-      </pf-focus-trap>
-    </template>
-  </pf-popper>
+        <slot name="footer" />
+      </footer>
+    </div>
+  </pf-focus-trap>
 </template>
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
-import { useManagedProp } from '../use';
-import { defineComponent, markRaw, PropType, Ref, ref } from 'vue';
+import { useFloatinUI, useHtmlElementFromVNodes, useManagedProp } from '../use';
+import { computed, defineComponent, markRaw, PropType, Ref, ref, watch } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
 import PfFocusTrap from './FocusTrap.vue';
-import PfPopper, { getOpacityTransition, positions } from './Popper';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
-import { Placement } from '@popperjs/core';
+import Void from './Void';
+import { offset, autoPlacement, Placement, hide, flip, FlipOptions, AutoPlacementOptions } from '@floating-ui/core';
 
 export default defineComponent({
   name: 'PfPopover',
 
   components: {
     PfFocusTrap,
-    PfPopper,
     PfCloseButton,
     PfTitle,
+    Void,
   },
+
+  inheritAttrs: false,
 
   props: {
     /** Whether to trap focus in the popover */
@@ -114,27 +104,12 @@ export default defineComponent({
      */
     noFlip: Boolean,
 
-    /**
-     * The desired position to flip the popover to if the initial position is not possible.
-     * By setting this prop to 'flip' it attempts to flip the popover to the opposite side if there is no space.
-     * You can also pass an array of positions that determines the flip order. It should contain the initial position
-     * followed by alternative positions if that position is unavailable.
-     * Example: Initial position is 'top'. Button with popover is in the top right corner. 'flipBehavior' is set to
-     * ['top', 'right', 'left']. Since there is no space to the top, it checks if right is available. There's also no
-     * space to the right, so it finally shows the popover on the left.
-     */
-    flipBehavior: {
-      type: [String, Array] as PropType<Placement | Placement[]>,
-      default: (): Placement[] => ['top', 'right', 'bottom', 'left', 'top', 'right', 'bottom'],
-      validator: (v: any) => {
-        if (v === 'flip') {
-          return true;
-        }
-        if (!Array.isArray(v)) {
-          return false;
-        }
-        return v.every(pos => positions.includes(pos));
-      },
+    flipOptions: {
+      type: [Object] as PropType<FlipOptions>,
+    },
+
+    placementOptions: {
+      type: [Object] as PropType<AutoPlacementOptions>,
     },
 
     /** Hides the popover when a click occurs outside (only works if isVisible is not controlled by the user) */
@@ -148,19 +123,18 @@ export default defineComponent({
     position: {
       type: String as PropType<Placement>,
       default: 'top',
-      validator: (v: any) => positions.includes(v),
     },
 
     /** Minimum width of the popover (default 6.25rem) */
     minWidth: {
       type: String,
-      default: popoverMinWidth && popoverMinWidth.value,
+      default: popoverMinWidth.value,
     },
 
     /** Maximum width of the popover (default 18.75rem) */
     maxWidth: {
       type: String,
-      default: popoverMaxWidth && popoverMaxWidth.value,
+      default: popoverMaxWidth.value,
     },
 
     /** CSS fade transition animation duration */
@@ -192,14 +166,43 @@ export default defineComponent({
 
   emits: ['update:open', 'show', 'shown', 'hide', 'hidden'],
 
-  setup() {
+  setup(props) {
     const managedOpen = useManagedProp('open', false);
     const dialog: Ref<InstanceType<typeof PfFocusTrap>> = ref(null);
+    const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
+
+    watch(referenceElement, (el) => {
+      el?.addEventListener('click', (e: Event) => {
+        e.stopPropagation();
+        managedOpen.value = !managedOpen.value;
+      });
+    });
+
+    const dialogUI = useFloatinUI(
+      referenceElement,
+      computed(() => dialog.value?.target),
+      computed(() => ({
+        placement: props.position,
+        middleware: [
+          props.noFlip
+            ? autoPlacement(props.placementOptions)
+            : flip(props.flipOptions),
+          offset(props.distance),
+          hide(),
+          hide({
+            strategy: 'escaped',
+          }),
+        ],
+      })),
+    );
+
     return {
       managedOpen,
       dialog,
+      findReference,
       styles: markRaw(styles) as typeof styles,
-      visible: ref(managedOpen.value),
+      visible: managedOpen,
+      dialogUI,
     };
   },
 
@@ -268,8 +271,6 @@ export default defineComponent({
   },
 
   methods: {
-    getOpacityTransition,
-
     onDocumentClick(event: MouseEvent | TouchEvent) {
       if (this.noHideOnOutsideClick || !this.visible) {
         return;
