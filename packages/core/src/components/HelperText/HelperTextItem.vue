@@ -11,10 +11,10 @@
   >
     <span v-if="icon || $slots.icon" :class="styles.helperTextItemIcon" aria-hidden>
       <slot name="icon">
-        <PfMinusIcon v-if="variant === 'default' || variant === 'indeterminate'" />
-        <PfExclamationTriangleIcon v-else-if="variant === 'warning'" />
-        <PfCheckCircleIcon v-else-if="variant === 'success'" />
-        <PfExclamationCircleIcon v-else-if="variant === 'error'" />
+        <minus-icon v-if="variant === 'default' || variant === 'indeterminate'" />
+        <triangle-exclamation-icon v-else-if="variant === 'warning'" />
+        <circle-check-icon v-else-if="variant === 'success'" />
+        <circle-exclamation-icon v-else-if="variant === 'error'" />
       </slot>
     </span>
     <span :class="styles.helperTextItemText">
@@ -27,20 +27,20 @@
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
 import { defineComponent, inject, markRaw, PropType } from 'vue';
 
-import PfMinusIcon from '@vue-patternfly/icons/dist/esm/icons/minus-icon';
-import PfExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-triangle-icon';
-import PfCheckCircleIcon from '@vue-patternfly/icons/dist/esm/icons/check-circle-icon';
-import PfExclamationCircleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon';
+import MinusIcon from '@vue-patternfly/icons/dist/esm/icons/minus-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
+import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon';
 import { HelperTextComponentKey } from './HelperText.vue';
 
 export default defineComponent({
   name: 'PfHelperTextItem',
 
   components: {
-    PfMinusIcon,
-    PfExclamationTriangleIcon,
-    PfCheckCircleIcon,
-    PfExclamationCircleIcon,
+    MinusIcon,
+    TriangleExclamationIcon,
+    CircleCheckIcon,
+    CircleExclamationIcon,
   },
 
   props: {

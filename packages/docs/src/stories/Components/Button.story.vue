@@ -12,13 +12,13 @@
       <br>
       <pf-button variant="link">
         <template #icon>
-          <plus-circle-icon />
+          <circle-plus-icon />
         </template>
         Link
       </pf-button>
       <pf-button variant="link" icon-position="right">
         <template #icon>
-          <external-link-square-alt-icon />
+          <square-arrow-up-right-icon />
         </template>
         Link
       </pf-button>
@@ -26,7 +26,7 @@
       <br>
       <br>
       <pf-button variant="plain" aria-label="Action">
-        <times-icon />
+        <xmark-icon />
       </pf-button>
       <br>
       <br>
@@ -46,13 +46,13 @@
       <br>
       <pf-button disabled variant="link">
         <template #icon>
-          <plus-circle-icon />
+          <circle-plus-icon />
         </template>
         Link disabled
       </pf-button>
       <pf-button disabled variant="link" inline>Inline link disabled</pf-button>
       <pf-button disabled variant="plain" aria-label="Action">
-        <times-icon />
+        <xmark-icon />
       </pf-button>
       <pf-button disabled variant="control">Control disabled</pf-button>
     </story-canvas>
@@ -67,13 +67,13 @@
       <br>
       <pf-button aria-disabled variant="link">
         <template #icon>
-          <plus-circle-icon />
+          <circle-plus-icon />
         </template>
         Link aria disabled
       </pf-button>
       <pf-button aria-disabled variant="link" inline>Inline link aria disabled</pf-button>
       <pf-button aria-disabled variant="plain" aria-label="Action">
-        <times-icon />
+        <xmark-icon />
       </pf-button>
       <pf-button aria-disabled variant="control">Control aria disabled</pf-button>
     </story-canvas>
@@ -226,10 +226,10 @@
 </style>
 
 <script lang="ts" setup>
-import PlusCircleIcon from '@vue-patternfly/icons/dist/esm/icons/plus-circle-icon';
-import ExternalLinkSquareAltIcon from '@vue-patternfly/icons/dist/esm/icons/external-link-square-alt-icon';
+import CirclePlusIcon from '@vue-patternfly/icons/dist/esm/icons/circle-plus-icon';
+import SquareArrowUpRightIcon from '@vue-patternfly/icons/dist/esm/icons/square-arrow-up-right-icon';
 import CopyIcon from '@vue-patternfly/icons/dist/esm/icons/copy-icon';
-import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
+import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
 import ArrowRightIcon from '@vue-patternfly/icons/dist/esm/icons/arrow-right-icon';
 import { ref } from 'vue';
 

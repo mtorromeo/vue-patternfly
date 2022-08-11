@@ -57,16 +57,16 @@
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
 import Void from './Void';
 import PfTooltip from './Tooltip/Tooltip.vue';
-import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
-import CheckCircleIcon from '@vue-patternfly/icons/dist/esm/icons/check-circle-icon';
-import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-triangle-icon';
+import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
 import { getUniqueId } from '../util';
 import { defineComponent, markRaw, PropType } from 'vue';
 
 const variantToIcon = {
-  danger: TimesCircleIcon,
-  success: CheckCircleIcon,
-  warning: ExclamationTriangleIcon,
+  danger: CircleXmarkIcon,
+  success: CircleCheckIcon,
+  warning: TriangleExclamationIcon,
 };
 
 export default defineComponent({

@@ -31,10 +31,10 @@
                   }]"
                 >
                   <span v-if="titleIconVariant" :class="styles.modalBoxTitleIcon">
-                    <CheckCircleIcon v-if="titleIconVariant === 'success'" />
-                    <ExclamationCircleIcon v-else-if="titleIconVariant === 'danger'" />
-                    <ExclamationTriangleIcon v-else-if="titleIconVariant === 'warning'" />
-                    <InfoCircleIcon v-else-if="titleIconVariant === 'info'" />
+                    <circle-check-icon v-if="titleIconVariant === 'success'" />
+                    <circle-exclamation-icon v-else-if="titleIconVariant === 'danger'" />
+                    <triangle-exclamation-icon v-else-if="titleIconVariant === 'warning'" />
+                    <circle-info-icon v-else-if="titleIconVariant === 'info'" />
                     <BellIcon v-else-if="titleIconVariant === 'default'" />
                     <slot v-else name="title-icon" />
                   </span>
@@ -85,10 +85,10 @@ import PfBackdrop from '../Backdrop';
 import PfFocusTrap from '../FocusTrap.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfCloseButton from '../CloseButton';
-import CheckCircleIcon from '@vue-patternfly/icons/dist/esm/icons/check-circle-icon';
-import ExclamationCircleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon';
-import ExclamationTriangleIcon from '@vue-patternfly/icons/dist/esm/icons/exclamation-triangle-icon';
-import InfoCircleIcon from '@vue-patternfly/icons/dist/esm/icons/info-circle-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
+import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
+import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import { capitalize } from 'vue';
 import { ref, markRaw, defineComponent, PropType } from 'vue';
@@ -104,10 +104,10 @@ export default defineComponent({
     PfBackdrop,
     PfFocusTrap,
     PfTooltip,
-    CheckCircleIcon,
-    ExclamationCircleIcon,
-    ExclamationTriangleIcon,
-    InfoCircleIcon,
+    CircleCheckIcon,
+    CircleExclamationIcon,
+    TriangleExclamationIcon,
+    CircleInfoIcon,
     BellIcon,
   },
 

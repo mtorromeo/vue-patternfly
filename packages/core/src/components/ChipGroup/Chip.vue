@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Chip/chip';
 
-import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
+import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
 import PfButton from '../Button.vue';
 import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';
@@ -63,7 +63,7 @@ export default defineComponent({
           id: `remove_${id}`,
           'aria-labelledby': `remove_${id} ${id}`,
         }, {
-          default: () => h(TimesIcon, { 'aria-hidden': true }),
+          default: () => h(XmarkIcon, { 'aria-hidden': true }),
         }));
       }
 

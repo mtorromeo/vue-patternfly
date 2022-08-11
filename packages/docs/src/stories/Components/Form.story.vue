@@ -46,16 +46,16 @@
             Please enter your age
           </template>
           <template #helperTextIcon>
-            <exclamation-circle-icon />
+            <circle-exclamation-icon />
           </template>
           <template #helperTextInvalidIcon>
-            <exclamation-circle-icon />
+            <circle-exclamation-icon />
           </template>
           <pf-text-input id="age" v-model="age" pattern="[0-9]+" required name="age" aria-describedby="age" />
         </pf-form-group>
         <pf-form-group label="Description" field-id="description" helper-text-invalid="No emails allowed in the description">
           <template #helperTextInvalidIcon>
-            <exclamation-circle-icon />
+            <circle-exclamation-icon />
           </template>
           <pf-textarea id="description" v-model="description" pattern="(?!.*[A-Za-z0-9]@[A-Za-z].*).*" name="description" aria-describedby="description" spellcheck="false" />
         </pf-form-group>
@@ -131,7 +131,7 @@
 <script lang="ts" setup>
 import HelpIcon from "@vue-patternfly/icons/dist/esm/icons/help-icon";
 import TrashIcon from "@vue-patternfly/icons/dist/esm/icons/trash-icon";
-import ExclamationCircleIcon from "@vue-patternfly/icons/dist/esm/icons/exclamation-circle-icon";
+import CircleExclamationIcon from "@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon";
 import { ref } from "vue";
 const age = ref('Five');
 const description = ref("Nice description\nmy email: mail@mail.com");

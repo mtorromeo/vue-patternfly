@@ -22,7 +22,7 @@
       <pf-input-group>
         <pf-text-input type="search" />
         <pf-input-group-text>
-          <search-icon />
+          <magnifying-glass-icon />
         </pf-input-group-text>
       </pf-input-group>
     </story-canvas>
@@ -31,5 +31,5 @@
 
 <script lang="ts" setup>
 import AtIcon from "@vue-patternfly/icons/dist/esm/icons/at-icon";
-import SearchIcon from "@vue-patternfly/icons/dist/esm/icons/search-icon";
+import MagnifyingGlassIcon from "@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon";
 </script>

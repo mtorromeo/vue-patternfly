@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, h, mergeProps, PropType, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ChipGroup/chip-group';
-import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
+import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 import PfChip from './Chip.vue';
 import PfButton from '../Button.vue';
 import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
@@ -150,7 +150,7 @@ export default defineComponent({
               'aria-label': this.closeBtnAriaLabel,
               onClick: () => this.$emit('click'),
             },
-              () => h(TimesCircleIcon, { 'aria-hidden': true }),
+              () => h(CircleXmarkIcon, { 'aria-hidden': true }),
             ),
           ],
         ),

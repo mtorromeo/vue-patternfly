@@ -1,6 +1,6 @@
 import { defineComponent, h, mergeProps } from 'vue';
 import PfToggle from './Toggle';
-import EllipsisVIcon from '@vue-patternfly/icons/dist/esm/icons/ellipsis-v-icon';
+import EllipsisVerticalIcon from '@vue-patternfly/icons/dist/esm/icons/ellipsis-vertical-icon';
 
 export default defineComponent({
   name: 'PfKebabToggle',
@@ -13,6 +13,12 @@ export default defineComponent({
     },
   },
 
+  methods: {
+    toggle() {
+      this.$emit('update:open', !this.open);
+    },
+  },
+
   render() {
     return h(PfToggle, mergeProps({
       open: this.open,
@@ -20,13 +26,7 @@ export default defineComponent({
       'onUpdate:open': (v: boolean) => this.$emit('update:open', v),
       onEnter: () => this.$emit('enter'),
     }, this.$attrs), {
-      default: () => h(EllipsisVIcon),
+      default: () => h(EllipsisVerticalIcon),
     });
-  },
-
-  methods: {
-    toggle() {
-      this.$emit('update:open', !this.open);
-    },
   },
 });

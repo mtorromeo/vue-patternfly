@@ -69,7 +69,7 @@
           :disabled="disabled"
           @click.stop="clearSelection"
         >
-          <TimesCircleIcon aria-hidden />
+          <circle-xmark-icon aria-hidden />
         </button>
       </pf-select-toggle>
 
@@ -113,7 +113,7 @@ import PfSelectMenu from './SelectMenu.vue';
 import PfSelectOption from './SelectOption.vue';
 import PfSelectToggle from './SelectToggle.vue';
 import PfDivider from '../Divider';
-import TimesCircleIcon from '@vue-patternfly/icons/dist/esm/icons/times-circle-icon';
+import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 
 import { useManagedProp, provideChildrenTracker, keyNavigation, Disableable, Focusable, Navigatable } from '../../use';
 import { Component, defineComponent, InjectionKey, markRaw, PropType, provide, Ref, ref } from 'vue';
@@ -136,7 +136,7 @@ export default defineComponent({
     Void,
     // PfPopper,
     PfDivider,
-    TimesCircleIcon,
+    CircleXmarkIcon,
   },
 
   props: {

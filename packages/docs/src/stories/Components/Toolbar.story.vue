@@ -9,7 +9,7 @@
             <pf-input-group>
               <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
-                <search-icon />
+                <magnifying-glass-icon />
               </pf-button>
             </pf-input-group>
           </pf-toolbar-item>
@@ -35,7 +35,7 @@
             <pf-input-group>
               <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
-                <search-icon />
+                <magnifying-glass-icon />
               </pf-button>
             </pf-input-group>
           </pf-toolbar-item>
@@ -121,7 +121,7 @@
           <pf-toolbar-group variant="icon-button-group">
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="edit">
-                <EditIcon />
+                <pen-to-square-icon />
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
@@ -131,7 +131,7 @@
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="sync">
-                <SyncIcon />
+                <rotate-icon />
               </pf-button>
             </pf-toolbar-item>
           </pf-toolbar-group>
@@ -162,7 +162,7 @@
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <SearchIcon />
+                  <magnifying-glass-icon />
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -203,7 +203,7 @@
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <SearchIcon />
+                  <magnifying-glass-icon />
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -249,7 +249,7 @@
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <SearchIcon />
+                  <magnifying-glass-icon />
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -287,7 +287,7 @@
           <pf-toolbar-group variant="icon-button-group">
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="edit">
-                <EditIcon />
+                <pen-to-square-icon />
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
@@ -297,7 +297,7 @@
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="sync">
-                <SyncIcon />
+                <rotate-icon />
               </pf-button>
             </pf-toolbar-item>
           </pf-toolbar-group>
@@ -423,11 +423,11 @@
 </template>
 
 <script lang="ts" setup>
-import SearchIcon from '@vue-patternfly/icons/dist/esm/icons/search-icon';
+import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';
 import FilterIcon from '@vue-patternfly/icons/dist/esm/icons/filter-icon';
 import CloneIcon from '@vue-patternfly/icons/dist/esm/icons/clone-icon';
-import EditIcon from '@vue-patternfly/icons/dist/esm/icons/edit-icon';
-import SyncIcon from '@vue-patternfly/icons/dist/esm/icons/sync-icon';
+import PenToSquareIcon from '@vue-patternfly/icons/dist/esm/icons/pen-to-square-icon';
+import RotateIcon from '@vue-patternfly/icons/dist/esm/icons/rotate-icon';
 
 import { reactive, ref } from "vue";
 

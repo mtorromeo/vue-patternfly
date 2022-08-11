@@ -103,7 +103,7 @@
         <template #toggle>
           <pf-dropdown-toggle aria-label="Applications">
             <template #icon>
-              <th-icon />
+              <table-cells-icon />
             </template>
           </pf-dropdown-toggle>
         </template>
@@ -309,7 +309,7 @@
 <script lang="ts" setup>
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import CubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
-import ThIcon from '@vue-patternfly/icons/dist/esm/icons/th-icon';
+import TableCellsIcon from '@vue-patternfly/icons/dist/esm/icons/table-cells-icon';
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 
 import { ref } from "vue";

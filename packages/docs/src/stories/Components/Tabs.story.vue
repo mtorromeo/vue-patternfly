@@ -80,7 +80,7 @@
         </pf-tab>
         <pf-tab>
           <template #title>
-            <pf-tab-title-icon><project-diagram-icon /></pf-tab-title-icon>
+            <pf-tab-title-icon><diagram-project-icon /></pf-tab-title-icon>
             <pf-tab-title-text>Network</pf-tab-title-text>
           </template>
           Network
@@ -185,5 +185,5 @@ import BoxIcon from "@vue-patternfly/icons/dist/esm/icons/box-icon";
 import DatabaseIcon from "@vue-patternfly/icons/dist/esm/icons/database-icon";
 import ServerIcon from "@vue-patternfly/icons/dist/esm/icons/server-icon";
 import LaptopIcon from "@vue-patternfly/icons/dist/esm/icons/laptop-icon";
-import ProjectDiagramIcon from "@vue-patternfly/icons/dist/esm/icons/project-diagram-icon";
+import DiagramProjectIcon from "@vue-patternfly/icons/dist/esm/icons/diagram-project-icon";
 </script>

@@ -110,7 +110,7 @@
         ref="menuItem"
         :class="[styles.selectMenuItem, styles.modifiers.action, styles.modifiers.favoriteAction]"
         :aria-label="favorite ? ariaFavoriteLabel : ariaNotFavoriteLabel"
-        @click="$emit('update:favorite', !favorite, this)"
+        @click="$emit('update:favorite', !favorite)"
       >
         <span :class="styles.selectMenuItemActionIcon">
           <StarIcon />
@@ -125,9 +125,9 @@ import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
-import { h, markRaw, inject, getCurrentInstance, defineComponent, Ref, ref, Component, ComponentPublicInstance } from 'vue';
+import { h, markRaw, inject, getCurrentInstance, defineComponent, Ref, ref, ComponentPublicInstance } from 'vue';
 import { Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
-import PfSelect, { SelectKey } from './Select.vue';
+import { SelectKey } from './Select.vue';
 
 import Void from '../Void';
 

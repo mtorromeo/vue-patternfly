@@ -8,7 +8,7 @@
         data-action="first"
         @click="goToFirstPage"
       >
-        <angle-double-left-icon />
+        <angles-left-icon />
       </pf-button>
     </div>
 
@@ -61,7 +61,7 @@
         data-action="last"
         @click="goToLastPage"
       >
-        <angle-double-right-icon />
+        <angles-right-icon />
       </pf-button>
     </div>
   </nav>
@@ -72,9 +72,9 @@ import styles from '@patternfly/react-styles/css/components/Pagination/paginatio
 
 import PfButton from '../Button.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import AngleDoubleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-left-icon';
+import AnglesLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angles-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import AngleDoubleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-double-right-icon';
+import AnglesRightIcon from '@vue-patternfly/icons/dist/esm/icons/angles-right-icon';
 
 import { pluralize } from '../../util';
 import { defineComponent, markRaw, ref } from 'vue';
@@ -85,9 +85,9 @@ export default defineComponent({
   components: {
     PfButton,
     AngleLeftIcon,
-    AngleDoubleLeftIcon,
+    AnglesLeftIcon,
     AngleRightIcon,
-    AngleDoubleRightIcon,
+    AnglesRightIcon,
   },
 
   props: {

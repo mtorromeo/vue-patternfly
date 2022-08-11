@@ -1,6 +1,6 @@
 import { defineComponent, h } from 'vue';
 import PfButton from './Button.vue';
-import TimesIcon from '@vue-patternfly/icons/dist/esm/icons/times-icon';
+import XIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
 
 export default defineComponent({
   name: 'PfCloseButton',
@@ -11,7 +11,7 @@ export default defineComponent({
       variant: 'plain',
       'aria-label': 'Close',
     }, {
-      default: () => h(TimesIcon),
+      default: () => h(XIcon),
     });
   },
 });
