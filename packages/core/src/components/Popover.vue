@@ -99,10 +99,10 @@ export default defineComponent({
     showClose: Boolean,
 
     /**
-     * If false, tries to keep the popover in view by flipping it if necessary
-     * If the position is set to 'auto', this prop is ignored
+     * If true, tries to keep the popover in view by flipping it if necessary.
+     * Otherwise it uses an auto-placement strategy.
      */
-    noFlip: Boolean,
+    flip: Boolean,
 
     flipOptions: {
       type: [Object] as PropType<FlipOptions>,
@@ -116,9 +116,9 @@ export default defineComponent({
     noHideOnOutsideClick: Boolean,
 
     /**
-     * Popover position. Note: With 'noFlip' set to false,
-     * it will change the position if there is not enough space for the starting position.
-     * The behavior of where it flips to can be controlled through the flipBehavior prop.
+     * Popover position.
+     * Notice: it will change the position if there is not enough space for the starting position.
+     * The behavior of where it flips to can be controlled through the flip, flipOptions or placementOptions props.
      */
     position: {
       type: String as PropType<Placement>,
@@ -184,9 +184,9 @@ export default defineComponent({
       computed(() => ({
         placement: props.position,
         middleware: [
-          props.noFlip
-            ? autoPlacement(props.placementOptions)
-            : flip(props.flipOptions),
+          props.flip
+            ? flip(props.flipOptions)
+            : autoPlacement(props.placementOptions),
           offset(props.distance),
           hide(),
           hide({
