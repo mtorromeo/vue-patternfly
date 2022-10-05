@@ -16,16 +16,16 @@
     "build:generate": "lerna run generate --parallel --stream"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.1.4",
-    "@vue/eslint-config-typescript": "^11.0.0",
-    "concurrently": "^7.3.0",
-    "eslint": "^8.21.0",
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@vue/eslint-config-typescript": "^11.0.2",
+    "concurrently": "^7.4.0",
+    "eslint": "^8.24.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-vue": "^9.3.0",
-    "lerna": "^5.4.0"
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-vue": "^9.6.0",
+    "lerna": "^5.6.1"
   },
   "packageManager": "yarn@3.1.0",
   "name": "vue-patternfly4"

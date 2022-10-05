@@ -9,18 +9,18 @@
   },
   "dependencies": {
     "@vue-patternfly/core": "workspace:^",
-    "shiki": "^0.11.0",
-    "vue": "^3.2.37",
-    "vue-router": "4.1.3"
+    "shiki": "^0.11.1",
+    "vue": "^3.2.40",
+    "vue-router": "4.1.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.1",
-    "@vue/compiler-sfc": "^3.2.37",
-    "@vueuse/core": "^9.1.0",
-    "sass": "^1.54.4",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.5",
+    "@vitejs/plugin-vue": "^3.1.2",
+    "@vue/compiler-sfc": "^3.2.40",
+    "@vueuse/core": "^9.3.0",
+    "sass": "^1.55.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.4",
     "vite-plugin-story-canvas-source": "workspace:^",
-    "vue-tsc": "^0.40.1"
+    "vue-tsc": "^0.40.13"
   }
 }

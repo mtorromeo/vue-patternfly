@@ -11,18 +11,18 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.10",
+    "@babel/core": "^7.19.3",
     "@babel/plugin-transform-modules-commonjs": "^7.18.6",
-    "@fortawesome/free-brands-svg-icons": "^6.1.2",
-    "@fortawesome/free-regular-svg-icons": "^6.1.2",
-    "@fortawesome/free-solid-svg-icons": "^6.1.2",
-    "@patternfly/patternfly": "^4.206.3",
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@patternfly/patternfly": "^4.217.0",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "rimraf": "^3.0.2",
     "ts-patch": "^2.0.2",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "vue": "^3"

@@ -14,16 +14,16 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.5"
+    "typescript": "^4.8.4",
+    "vite": "^3.1.4"
   },
   "packageManager": "yarn@3.1.0",
   "dependencies": {
     "@rollup/pluginutils": "^4.2.1",
     "@toycode/markdown-it-class": "^1.2.4",
-    "@vue/shared": "^3.2.37",
+    "@vue/shared": "^3.2.40",
     "markdown-it": "^13.0.1",
-    "node-html-parser": "^5.4.1",
+    "node-html-parser": "^6.1.1",
     "ts-dedent": "^2.2.0"
   }
 }
