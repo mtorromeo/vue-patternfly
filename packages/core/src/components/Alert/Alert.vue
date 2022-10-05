@@ -35,7 +35,8 @@
     </pf-alert-icon>
 
     <component :is="tooltipVisible ? 'pf-tooltip' : 'void'" :position="tooltipPosition">
-      <h4
+      <component
+        :is="titleHeadingLevel"
         ref="titleRef"
         :class="[styles.alertTitle, {
           [styles.modifiers.truncate]: truncateTitle,
@@ -45,7 +46,7 @@
       >
         <span :class="accessibleStyles.screenReader">{{ variantLabel }}</span>
         {{ title }}
-      </h4>
+      </component>
       <template #content>{{ title }}</template>
     </component>
 
@@ -147,6 +148,12 @@ export default defineComponent({
       type: String as PropType<TooltipPosition>,
       default: TooltipPosition.auto,
       validator: (v: any) => v in TooltipPosition,
+    },
+
+    /** Sets the heading level to use for the alert title. Default is h4. */
+    titleHeadingLevel: {
+      type: String as PropType<'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>,
+      default: 'h4',
     },
   },
 
