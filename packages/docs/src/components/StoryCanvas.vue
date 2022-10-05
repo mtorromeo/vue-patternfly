@@ -1,6 +1,8 @@
 <template>
   <pf-title v-if="title" h="3">{{ title }}</pf-title>
 
+  <slot name="intro" />
+
   <section class="story-canvas">
     <div class="canvas" :class="{ dark }">
       <div class="inner-canvas" v-bind="$attrs" :style="{ 'max-width': maxWidth }">

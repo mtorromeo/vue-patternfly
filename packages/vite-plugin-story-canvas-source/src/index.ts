@@ -46,7 +46,9 @@ function fixSelfClosingTag(code: string) {
 }
 
 function addSourceToStoryCanvas(el: HTMLElement) {
-  const source = el.childNodes.map(node => fixAttrsNewLine(fixSelfClosingTag(node.toString()))).join('');
+  const source = el.childNodes
+    .filter(node => !(node instanceof HTMLElement) || node.rawTagName !== 'template')
+    .map(node => fixAttrsNewLine(fixSelfClosingTag(node.toString()))).join('');
   el.rawAttrs += ` source="${escapeHtml(dedent(source.trim()))}"`;
 }
 

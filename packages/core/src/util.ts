@@ -1,4 +1,4 @@
-import { computed, Fragment, Comment, Prop, VNode, isVNode, VNodeNormalizedChildren, ComponentPublicInstance } from 'vue';
+import { computed, Fragment, Comment, Prop, VNode, isVNode, VNodeNormalizedChildren, ComponentPublicInstance, CSSProperties } from 'vue';
 
 export enum Breakpoints {
   xs = '',
@@ -51,6 +51,8 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
       if (value) {
         if (value === true) {
           value = '';
+        } else if (typeof value !== 'string') {
+          continue;
         } else {
           value = toCamelCase(value);
           if (value.match(/^[0-9]/)) {
@@ -69,6 +71,24 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
   return c.filter(Boolean);
 }
 
+export function cssVarsFromBreakpointProps(props: any, baseName: string, cssVar: string) {
+  const vars: Record<string, string> = {};
+
+  for (const breakpointSuffix of breakpoints) {
+    const prop = `${baseName}${breakpointSuffix}`;
+    let name = cssVar;
+    if (breakpointSuffix) {
+      name = `${name}-on-${breakpointSuffix.toLowerCase()}`;
+    }
+    const value = props[prop];
+    if (value !== undefined && value !== null) {
+      vars[name] = props[prop];
+    }
+  }
+
+  return vars;
+}
+
 export function useBreakpointProp(props: any, baseNames: string[], styles: any, options: any) {
   return computed(() => classesFromBreakpointProps(props, baseNames, styles, options));
 }
@@ -77,7 +97,10 @@ type BreakpointProps<Name extends string, T> = {
   [K in keyof Breakpoints as `${Name}${Capitalize<string & K>}`]: Prop<T>;
 }
 
-export function breakpointProp<Name extends string, T extends BooleanConstructor | StringConstructor | ArrayConstructor | ObjectConstructor | DateConstructor>(baseName: Name, type: T, values?: string[]): BreakpointProps<Name, T> {
+export function breakpointProp<
+  Name extends string,
+  T extends BooleanConstructor | StringConstructor | ArrayConstructor | ObjectConstructor | DateConstructor
+>(baseName: Name, type: T, values?: string[]): BreakpointProps<Name, T> {
   return Object.fromEntries(breakpoints.map(b => {
     let _default = null;
     if (Array.isArray(values) && values.length) {
@@ -86,7 +109,7 @@ export function breakpointProp<Name extends string, T extends BooleanConstructor
       _default = false;
     }
     const definition: {
-      type?: any;
+      type?: T;
       required?: boolean;
       default?: any;
       validator?(value: any): boolean;
@@ -94,60 +117,12 @@ export function breakpointProp<Name extends string, T extends BooleanConstructor
       type,
       default: _default,
     };
-    if (Array.isArray(values)) {
+    if (Array.isArray(values) && values.length) {
       definition.validator = v => values.includes(v);
     }
     return [`${baseName}${b}`, definition];
   }));
 }
-
-export interface Mods {
-  default?: string;
-  sm?: string;
-  md?: string;
-  lg?: string;
-  xl?: string;
-  '2xl'?: string;
-  '3xl'?: string;
-}
-
-/**
- * This function is a helper for turning arrays of breakpointMod objects for data toolbar and flex into classes
- *
- * @param {object} mods The modifiers object
- * @param {any} styles The appropriate styles object for the component
- */
-export const formatBreakpointMods = (
-  mods: Mods,
-  styles: any,
-  stylePrefix = '',
-  breakpoint?: 'default' | 'sm' | 'md' | 'lg' | 'xl' | '2xl',
-) => {
-  if (!mods) {
-    return '';
-  }
-  if (breakpoint) {
-    if (breakpoint in mods) {
-      return styles.modifiers[toCamelCase(`${stylePrefix}${mods[breakpoint as keyof Mods]}`)];
-    }
-    // the current breakpoint is not specified in mods, so we try to find the next nearest
-    const breakpointsOrder = ['2xl', 'xl', 'lg', 'md', 'sm', 'default'];
-    const breakpointsIndex = breakpointsOrder.indexOf(breakpoint);
-    for (let i = breakpointsIndex; i < breakpointsOrder.length; i++) {
-      if (breakpointsOrder[i] in mods) {
-        return styles.modifiers[toCamelCase(`${stylePrefix}${mods[breakpointsOrder[i] as keyof Mods]}`)];
-      }
-    }
-    return '';
-  }
-  return Object.entries(mods || {})
-    .map(([breakpoint, mod]) => `${stylePrefix}${mod}${breakpoint !== 'default' ? `-on-${breakpoint}` : ''}`)
-    .map(toCamelCase)
-    .map(mod => mod.replace(/-?(\dxl)/gi, (_res, group) => `_${group}`))
-    .map(modifierKey => styles.modifiers[modifierKey])
-    .filter(Boolean)
-    .join(' ');
-};
 
 export function debounce<T>(func: (args: T[]) => any, wait: number) {
   let timeout: number;

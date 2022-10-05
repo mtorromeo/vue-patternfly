@@ -124,7 +124,7 @@
             aria-labelledby="check-action-item2 check-action-action2"
             aria-label="Actions"
             plain-button
-            :visibility="{ lg: 'hidden' }"
+            visibility-lg="hidden"
           >
             <pf-dropdown plain position="right">
               <template #toggle>
@@ -141,7 +141,8 @@
             aria-labelledby="check-action-item2 check-action-action3"
             aria-label="Actions"
             plain-button
-            :visibility="{ default: 'hidden', lg: 'visible' }"
+            visibility="hidden"
+            visibility-lg="visible"
           >
             <pf-button variant="primary">Primary</pf-button>
             <pf-button variant="secondary">Secondary</pf-button>
@@ -164,7 +165,7 @@
             aria-labelledby="check-action-item3 check-action-action3"
             aria-label="Actions"
             plain-button
-            :visibility="{ xl: 'hidden' }"
+            visibility-xl="hidden"
           >
             <pf-dropdown plain position="right">
               <template #toggle>
@@ -183,7 +184,8 @@
             aria-labelledby="check-action-item3 check-action-action3"
             aria-label="Actions"
             plain-button
-            :visibility="{ default: 'hidden', xl: 'visible' }"
+            visibility="hidden"
+            visibility-xl="visible"
           >
             <pf-button variant="primary">Primary</pf-button>
             <pf-button variant="secondary">Secondary</pf-button>
