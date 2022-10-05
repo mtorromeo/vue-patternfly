@@ -84,5 +84,47 @@
         </pf-card-expandable-content>
       </pf-card>
     </story-canvas>
+
+    <story-canvas title="Selectable cards">
+      <template #intro>
+        <pre v-md>
+          Selectable cards can only be selected one at a time, and are intended for use with primary-detail layout.
+        </pre>
+      </template>
+
+      <pf-card selectable-raised selectable-input>
+        <pf-card-header>
+          <pf-card-actions>
+            <pf-dropdown plain position="right">
+              <template #toggle>
+                <pf-kebab-toggle />
+              </template>
+              <pf-dropdown-item>Link</pf-dropdown-item>
+              <pf-dropdown-item component="button">
+                Action
+              </pf-dropdown-item>
+              <pf-dropdown-item disabled>
+                Disabled Link
+              </pf-dropdown-item>
+              <pf-dropdown-item disabled component="button">
+                Disabled Action
+              </pf-dropdown-item>
+            </pf-dropdown>
+          </pf-card-actions>
+        </pf-card-header>
+        <pf-card-title>First card</pf-card-title>
+        <pf-card-body>This is a selectable card. Click me to select me. Click again to deselect me.</pf-card-body>
+      </pf-card>
+      <br>
+      <pf-card selectable-raised selectable-input>
+        <pf-card-title>Second card</pf-card-title>
+        <pf-card-body>This is a selectable card. Click me to select me. Click again to deselect me.</pf-card-body>
+      </pf-card>
+      <br>
+      <pf-card selectable-raised selectable-input selectable-disabled>
+        <pf-card-title>Third card</pf-card-title>
+        <pf-card-body>This is a raised but disabled card.</pf-card-body>
+      </pf-card>
+    </story-canvas>
   </doc-page>
 </template>
