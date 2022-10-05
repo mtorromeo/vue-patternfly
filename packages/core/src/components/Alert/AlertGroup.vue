@@ -1,6 +1,12 @@
 <template>
   <teleport :disabled="!toast" :to="appendTo">
-    <pf-alert-group-inline :toast="toast" :live-region="liveRegion" v-bind="$attrs">
+    <pf-alert-group-inline
+      v-bind="$attrs"
+      :toast="toast"
+      :live-region="liveRegion"
+      :overflow-message="overflowMessage"
+      @overflow-click="e => $emit('overflowClick', e)"
+    >
       <slot />
     </pf-alert-group-inline>
   </teleport>
@@ -29,6 +35,13 @@ export default defineComponent({
       type: String,
       default: 'body',
     },
+
+    /** Custom text to show for the overflow message */
+    overflowMessage: String,
+  },
+
+  emits: {
+    overflowClick: (e: MouseEvent | TouchEvent) => e !== undefined,
   },
 });
 </script>

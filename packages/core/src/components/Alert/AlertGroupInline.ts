@@ -9,6 +9,11 @@ export default defineComponent({
   props: {
     toast: Boolean,
     liveRegion: Boolean,
+    overflowMessage: String,
+  },
+
+  emits: {
+    overflowClick: (e: MouseEvent | TouchEvent) => e !== undefined,
   },
 
   render() {
@@ -20,8 +25,20 @@ export default defineComponent({
       'aria-atomic': this.liveRegion ? false : null,
     }, {
       default: () => {
-        const children = findChildrenVNodes(this.$slots.default());
-        return children.map((e, index) => h('li', { key: index }, e));
+        let children = findChildrenVNodes(this.$slots.default());
+        children = children.map((e, index) => h('li', { key: index }, e));
+
+        if (this.overflowMessage) {
+          const li = h('li', {}, [
+            h('button', {
+              class: styles.alertGroupOverflowButton,
+              onClick: (e: MouseEvent | TouchEvent) => this.$emit('overflowClick', e),
+            }, this.overflowMessage),
+          ]);
+          children.push(li);
+        }
+
+        return children;
       },
     });
   },
