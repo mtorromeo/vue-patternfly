@@ -1,5 +1,6 @@
 <template>
-  <div
+  <component
+    :is="component"
     :class="[styles.check, {
       [styles.modifiers.standalone]: !label && !$slots.label,
     }]">
@@ -29,18 +30,23 @@
     <span v-if="body || $slots.body" :class="styles.checkBody">
       <slot name="body">{{ body }}</slot>
     </span>
-  </div>
+  </component>
 </template>
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Check/check';
 import { getUniqueId } from '../util';
-import { defineComponent, markRaw, ref, Ref } from 'vue';
+import { DefineComponent, defineComponent, markRaw, PropType, ref, Ref } from 'vue';
 
 export default defineComponent({
   name: 'PfCheckbox',
 
   props: {
+    component: {
+      type: [String, Object] as PropType<string | DefineComponent>,
+      default: 'div',
+    },
+
     /** Flag to show if the radio is checked. */
     modelValue: Boolean,
 
