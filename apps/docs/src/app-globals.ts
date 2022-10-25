@@ -2,7 +2,7 @@ import { App } from "vue";
 import DocPage from './components/DocPage.vue';
 import ComponentTitle from './components/ComponentTitle.vue';
 import StoryCanvas from './components/StoryCanvas.vue';
-import type CoreGlobals from '../../core/global'; // eslint-disable-line @typescript-eslint/no-unused-vars
+import type CoreGlobals from '@vue-patternfly/core/global'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 export function install(app: App) {
   app.component('DocPage', DocPage);
