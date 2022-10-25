@@ -8,7 +8,9 @@
   "scripts": {
     "clean": "rimraf dist src/icons src/index.js src/index.d.ts",
     "build": "rimraf dist/esm/icons dist/js/icons && node scripts/build.js",
-    "prepublishOnly": "npm run build"
+    "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
+    "build:esm": "tsc --build --verbose tsconfig.json",
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -22,9 +24,11 @@
     "rimraf": "^3.0.2",
     "ts-patch": "^2.0.2",
     "tslib": "^2.4.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "vue": "^3.2.40"
   },
   "peerDependencies": {
-    "vue": "^3"
-  }
+    "vue": "^3.2.40"
+  },
+  "packageManager": "pnpm@7.13.0"
 }

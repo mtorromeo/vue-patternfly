@@ -16,20 +16,26 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vue-tsc --declaration --emitDeclarationOnly",
+    "build": "vite build",
+    "build:declarations": "vue-tsc --declaration --emitDeclarationOnly",
+    "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
+    "build:esm": "tsc --build --verbose tsconfig.json",
+    "lint": "vue-tsc --noEmit",
     "watch": "concurrently 'npm:watch-*'",
     "watch-vite": "vite build --watch",
     "watch-tsc": "vue-tsc --declaration --emitDeclarationOnly --watch",
-    "prepack": "npm run build"
+    "prepack": "pnpm build"
   },
   "dependencies": {
+    "@floating-ui/core": "^1.0.1",
     "@floating-ui/dom": "^1.0.2",
     "@patternfly/patternfly": "^4.217.0",
     "@patternfly/react-styles": "^4.91.5",
     "@patternfly/react-tokens": "^4.93.5",
-    "@vue-patternfly/icons": "^0.2.0",
-    "@vueuse/core": "^9.3.0",
-    "@vueuse/integrations": "^9.3.0"
+    "@vue-patternfly/icons": "workspace:^0.2.0",
+    "@vueuse/core": "^9.4.0",
+    "@vueuse/integrations": "^9.4.0",
+    "@vueuse/shared": "^9.4.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.2",
@@ -37,6 +43,7 @@
     "concurrently": "^7.4.0",
     "focus-trap": "^7.0.0",
     "fs-extra": "^10.1.0",
+    "tslib": "^2.4.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.4",
     "vue": "^3.2.40",
@@ -46,5 +53,6 @@
   "peerDependencies": {
     "focus-trap": "*",
     "vue": "^3"
-  }
+  },
+  "packageManager": "pnpm@7.13.0"
 }

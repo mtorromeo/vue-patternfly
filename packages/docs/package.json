@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "lint": "vue-tsc --noEmit",
     "serve": "vite preview"
   },
   "dependencies": {
+    "@patternfly/patternfly": "^4.217.0",
     "@vue-patternfly/core": "workspace:^",
+    "@vue-patternfly/icons": "workspace:^",
     "shiki": "^0.11.1",
     "vue": "^3.2.40",
     "vue-router": "4.1.5"
@@ -22,5 +25,6 @@
     "vite": "^3.1.4",
     "vite-plugin-story-canvas-source": "workspace:^",
     "vue-tsc": "^0.40.13"
-  }
+  },
+  "packageManager": "pnpm@7.13.0"
 }

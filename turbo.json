@@ -1,0 +1,52 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**/*.{js,css,html,woff,woff2,jpg}"
+      ]
+    },
+    "build:declarations": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": [
+        "dist/**/*.d.ts",
+        "dist/**/*.d.ts.map"
+      ]
+    },
+    "build:cjs": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/js/**"
+      ]
+    },
+    "build:esm": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/esm/**",
+        "dist/types/**"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": [],
+      "inputs": [
+        "src/**/*.vue",
+        "src/**/*.ts"
+      ]
+    },
+    "lint": {
+      "outputs": []
+    }
+  }
+}

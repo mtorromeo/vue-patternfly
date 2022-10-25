@@ -12,12 +12,9 @@ jobs:
         with:
           node-version: '18'
 
-      - run: npm install --global yarn
-      - run: yarn install
-      - run: cd packages/vite-plugin-story-canvas-source && yarn build
-      - run: cd packages/icons && yarn build
-      - run: cd packages/core && yarn build
-      - run: cd packages/docs && yarn build
+      - run: npm install --global pnpm
+      - run: pnpm install
+      - run: pnpm build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
