@@ -61,12 +61,12 @@ import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-i
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
 import { getUniqueId } from '../util';
-import { defineComponent, markRaw, PropType } from 'vue';
+import { Component, defineComponent, markRaw, PropType } from 'vue';
 
 const variantToIcon = {
-  danger: CircleXmarkIcon,
-  success: CircleCheckIcon,
-  warning: TriangleExclamationIcon,
+  danger: CircleXmarkIcon as Component,
+  success: CircleCheckIcon as Component,
+  warning: TriangleExclamationIcon as Component,
 };
 
 export default defineComponent({

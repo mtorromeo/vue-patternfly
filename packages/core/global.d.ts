@@ -132,6 +132,9 @@ declare module 'vue' {
     PfPagination: typeof import('@vue-patternfly/core').PfPagination;
     PfPaginationOptionsMenu: typeof import('@vue-patternfly/core').PfPaginationOptionsMenu;
 
+    PfSearchInput: typeof import('@vue-patternfly/core').PfSearchInput;
+    PfAdvancedSearchMenu: typeof import('@vue-patternfly/core').PfAdvancedSearchMenu;
+
     PfSelect: typeof import('@vue-patternfly/core').PfSelect;
     PfSelectGroup: typeof import('@vue-patternfly/core').PfSelectGroup;
     PfSelectMenu: typeof import('@vue-patternfly/core').PfSelectMenu;

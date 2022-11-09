@@ -39,6 +39,7 @@ export * from './OverflowMenu';
 export * from './Page';
 export * from './Pagination';
 export * from './Panel';
+export * from './SearchInput';
 export * from './Select';
 export * from './SimpleList';
 export * from './Tabs';

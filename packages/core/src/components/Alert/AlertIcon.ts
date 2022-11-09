@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
 
-import { defineComponent, h, PropType } from 'vue';
+import { Component, defineComponent, h, PropType } from 'vue';
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
@@ -8,11 +8,11 @@ import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-ico
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 
 export const AlertVariantIcons = {
-  success: CircleCheckIcon,
-  danger: CircleExclamationIcon,
-  warning: TriangleExclamationIcon,
-  info: CircleInfoIcon,
-  default: BellIcon,
+  success: CircleCheckIcon as Component,
+  danger: CircleExclamationIcon as Component,
+  warning: TriangleExclamationIcon as Component,
+  info: CircleInfoIcon as Component,
+  default: BellIcon as Component,
 };
 
 export default defineComponent({
