@@ -122,6 +122,12 @@ declare module 'vue' {
     PfPageSection: typeof import('@vue-patternfly/core').PfPageSection;
     PfPageSidebar: typeof import('@vue-patternfly/core').PfPageSidebar;
 
+    PfPanel: typeof import('@vue-patternfly/core').PfPanel;
+    PfPanelMain: typeof import('@vue-patternfly/core').PfPanelMain;
+    PfPanelMainBody: typeof import('@vue-patternfly/core').PfPanelMainBody;
+    PfPanelHeader: typeof import('@vue-patternfly/core').PfPanelHeader;
+    PfPanelFooter: typeof import('@vue-patternfly/core').PfPanelFooter;
+
     PfNavigation: typeof import('@vue-patternfly/core').PfNavigation;
     PfPagination: typeof import('@vue-patternfly/core').PfPagination;
     PfPaginationOptionsMenu: typeof import('@vue-patternfly/core').PfPaginationOptionsMenu;

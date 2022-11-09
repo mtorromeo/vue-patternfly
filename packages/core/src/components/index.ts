@@ -38,6 +38,7 @@ export * from './Nav';
 export * from './OverflowMenu';
 export * from './Page';
 export * from './Pagination';
+export * from './Panel';
 export * from './Select';
 export * from './SimpleList';
 export * from './Tabs';

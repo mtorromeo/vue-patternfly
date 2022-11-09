@@ -23,7 +23,7 @@
   padding: 30px 20px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  background-color: white;
+  background-color: var(--pf-c-page__main-section--m-light-100--BackgroundColor);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: none;
 }
