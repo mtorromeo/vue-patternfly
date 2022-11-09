@@ -302,25 +302,32 @@ export function isDefined(value: any): boolean {
 }
 
 export function useManagedProp<T>(name: string, value: T): WritableComputedRef<T>;
-export function useManagedProp<T, Accept = T>(name: string, value: T, transform?: (value: Accept | T) => T) {
+export function useManagedProp<T>(name: string, value: T, props: Record<string, unknown>, emit: (event: any, ...args: any[]) => void): WritableComputedRef<T>;
+export function useManagedProp<T>(name: string, value: T, props?: Record<string, unknown>, emit?: (event: any, ...args: any[]) => void): WritableComputedRef<T> {
   const instance = getCurrentInstance();
-  if (!instance) {
-    return;
-  }
 
   const inner = ref(value);
   return computed({
     get(): T {
-      return isDefined(instance.props[name]) ? (instance.props[name] as any) : inner.value;
-    },
-    set(to: Accept | T) {
-      if (typeof transform === 'function') {
-        to = transform(to);
+      props = props || instance?.props;
+      emit = emit || instance?.emit;
+      if (!props || !emit) {
+        throw new Error('Missing instance');
       }
-      if (!isDefined(instance.props[name])) {
+
+      return isDefined(props[name]) ? (props[name] as any) : inner.value;
+    },
+    set(to: T) {
+      props = props || instance?.props;
+      emit = emit || instance?.emit;
+      if (!props || !emit) {
+        throw new Error('Missing instance');
+      }
+
+      if (inner.value || !isDefined(props[name])) {
         inner.value = to as any;
       }
-      instance.emit(`update:${name}`, to);
+      emit(`update:${name}`, to);
     },
   });
 }
