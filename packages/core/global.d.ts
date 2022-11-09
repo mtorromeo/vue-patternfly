@@ -153,6 +153,10 @@ declare module 'vue' {
     PfTextList: typeof import('@vue-patternfly/core').PfTextList;
     PfTextListItem: typeof import('@vue-patternfly/core').PfTextListItem;
 
+    PfTextInputGroup: typeof import('@vue-patternfly/core').PfPfTextInputGroup;
+    PfTextInputGroupMain: typeof import('@vue-patternfly/core').PfPfTextInputGroupMain;
+    PfTextInputGroupUtilities: typeof import('@vue-patternfly/core').PfPfTextInputGroupUtilities;
+
     PfToolbar: typeof import('@vue-patternfly/core').PfToolbar;
     PfToolbarChipGroupContent: typeof import('@vue-patternfly/core').PfToolbarChipGroupContent;
     PfToolbarContent: typeof import('@vue-patternfly/core').PfToolbarContent;
