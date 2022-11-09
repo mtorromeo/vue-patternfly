@@ -25,13 +25,15 @@
             </pf-page-header-tools>
           </pf-page-header>
           <pf-page-sidebar nav-open>
-            <pf-nav-group title="Overview">
-              <pf-nav-item>Home</pf-nav-item>
-            </pf-nav-group>
-            <pf-nav-group title="Components">
-              <pf-nav-item>Accordion</pf-nav-item>
-              <pf-nav-item>Alert</pf-nav-item>
-            </pf-nav-group>
+            <pf-nav>
+              <pf-nav-group title="Overview">
+                <pf-nav-item>Home</pf-nav-item>
+              </pf-nav-group>
+              <pf-nav-group title="Components">
+                <pf-nav-item>Accordion</pf-nav-item>
+                <pf-nav-item>Alert</pf-nav-item>
+              </pf-nav-group>
+            </pf-nav>
           </pf-page-sidebar>
         </template>
         <pf-page-section variant="darker">Section with darker background</pf-page-section>
