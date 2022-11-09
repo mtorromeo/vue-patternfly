@@ -1,5 +1,5 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance, WritableComputedRef, reactive, watch, ComputedRef, VNode } from 'vue';
-import { tryOnMounted } from '@vueuse/shared';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance, WritableComputedRef, reactive, watch, VNode } from 'vue';
+import { MaybeComputedRef, resolveUnref, tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
 import { computePosition, autoUpdate } from '@floating-ui/dom';
 import { findComponentVNode } from './util';
@@ -8,7 +8,7 @@ const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
 type FloatingOptions = Parameters<typeof computePosition>[2];
 
-export function useFloatinUI(reference: ComputedRef<HTMLElement | null>, floating: ComputedRef<HTMLElement | null>, options: ComputedRef<FloatingOptions>) {
+export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null>, floating: MaybeComputedRef<HTMLElement | null>, options: MaybeComputedRef<FloatingOptions>) {
   const defaultFloatingData: Awaited<ReturnType<typeof computePosition>> = {
     x: null,
     y: null,
@@ -21,8 +21,8 @@ export function useFloatinUI(reference: ComputedRef<HTMLElement | null>, floatin
   let cleanup = (): any => undefined;
 
   watch([reference, floating, options], () => {
-    const referenceElement = unref(reference) as HTMLElement | null;
-    const floatingElement = unref(floating) as HTMLElement | null;
+    const referenceElement = resolveUnref(reference);
+    const floatingElement = resolveUnref(floating);
     cleanup();
     Object.assign(floatingData, defaultFloatingData);
     if (referenceElement && floatingElement) {

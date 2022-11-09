@@ -32,7 +32,7 @@ import { computed, defineComponent, markRaw, PropType, Ref, ref, watch } from 'v
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
 import Void from '../Void';
-import { useFloatinUI, useHtmlElementFromVNodes } from '../../use';
+import { useFloatingUI, useHtmlElementFromVNodes } from '../../use';
 import { flip } from '@floating-ui/core';
 
 export enum TooltipPosition {
@@ -107,7 +107,7 @@ export default defineComponent({
       el?.addEventListener('mouseleave', () => (visible.value = false));
     });
 
-    const floatingUI = useFloatinUI(
+    const floatingUI = useFloatingUI(
       referenceElement,
       tooltipElement as any,
       computed(() => ({

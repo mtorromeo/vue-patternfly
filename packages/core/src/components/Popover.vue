@@ -62,7 +62,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
-import { useFloatinUI, useHtmlElementFromVNodes, useManagedProp } from '../use';
+import { useFloatingUI, useHtmlElementFromVNodes, useManagedProp } from '../use';
 import { computed, defineComponent, markRaw, PropType, Ref, ref, watch } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
@@ -178,7 +178,7 @@ export default defineComponent({
       });
     });
 
-    const dialogUI = useFloatinUI(
+    const dialogUI = useFloatingUI(
       referenceElement,
       computed(() => dialog.value?.target),
       computed(() => ({
