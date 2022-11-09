@@ -18,11 +18,11 @@
           <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">{{ ' *' }}</span>
         </label>
         {{ ' ' }}
-        <slot name="labelIcon" />
+        <slot name="label-icon" />
       </component>
 
       <div v-if="labelInfo || $slots.labelInfo" :class="styles.formGroupLabelInfo">
-        <slot name="labelInfo">{{ labelInfo }}</slot>
+        <slot name="label-info">{{ labelInfo }}</slot>
       </div>
     </div>
 
@@ -46,16 +46,16 @@
       >
         <template v-if="internalValidated === 'error'">
           <span v-if="$slots.helperTextInvalidIcon" :class="styles.formHelperTextIcon">
-            <slot name="helperTextInvalidIcon" />
+            <slot name="helper-text-invalid-icon" />
           </span>
-          <slot name="helperTextInvalid">{{ helperTextInvalid }}</slot>
+          <slot name="helper-text-invalid">{{ helperTextInvalid }}</slot>
         </template>
 
         <template v-else-if="helperText || $slots.helperText">
           <span v-if="$slots.helperTextIcon" :class="styles.formHelperTextIcon">
-            <slot name="helperTextIcon" />
+            <slot name="helper-text-icon" />
           </span>
-          <slot name="helperText">{{ helperText }}</slot>
+          <slot name="helper-text">{{ helperText }}</slot>
         </template>
       </div>
       <slot v-if="helperTextBeforeField" />

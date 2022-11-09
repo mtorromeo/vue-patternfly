@@ -20,7 +20,7 @@
     <story-canvas title="Basic">
       <pf-form>
         <pf-form-group label="Name" required field-id="simple-form-name-01" helper-text="Please provide your full name">
-          <template #labelIcon>
+          <template #label-icon>
             <pf-tooltip>
               <template #content>
                 Several patterns can be added in Filename mask with "," delimiter.
@@ -45,16 +45,16 @@
           <template v-if="age === ''" #helperText>
             Please enter your age
           </template>
-          <template #helperTextIcon>
+          <template #helper-text-icon>
             <circle-exclamation-icon />
           </template>
-          <template #helperTextInvalidIcon>
+          <template #helper-text-invalid-icon>
             <circle-exclamation-icon />
           </template>
           <pf-text-input id="age" v-model="age" pattern="[0-9]+" required name="age" aria-describedby="age" />
         </pf-form-group>
         <pf-form-group label="Description" field-id="description" helper-text-invalid="No emails allowed in the description">
-          <template #helperTextInvalidIcon>
+          <template #helper-text-invalid-icon>
             <circle-exclamation-icon />
           </template>
           <pf-textarea id="description" v-model="description" pattern="(?!.*[A-Za-z0-9]@[A-Za-z].*).*" name="description" aria-describedby="description" spellcheck="false" />

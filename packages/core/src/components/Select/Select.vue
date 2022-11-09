@@ -78,7 +78,7 @@
         ref="menu"
         :v-slot="appendTo === 'inline' ? null : 'popper'"
       >
-        <slot name="customContent" />
+        <slot name="custom-content" />
 
         <template v-if="inlineFilter">
           <div :class="styles.selectMenuSearch">
