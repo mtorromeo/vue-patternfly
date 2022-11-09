@@ -82,6 +82,11 @@ export default defineComponent({
 
   render() {
     const children = this.$slots.default ? findChildrenVNodes(this.$slots.default()) : [];
+
+    if (!children.length) {
+      return;
+    }
+
     const chipArray = this.open ? children : children.slice(0, this.numChips);
 
     const lis = chipArray.map((child, i) => h('li', { key: i, class: styles.chipGroupListItem }, child));
