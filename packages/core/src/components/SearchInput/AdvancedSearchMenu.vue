@@ -15,18 +15,16 @@
             />
           </pf-form-group>
 
-          <generate-id #="{id}">
-            <pf-form-group :field-id="id">
-              <template #label>
-                <slot name="words-attr-label">Has words</slot>
-              </template>
-              <pf-text-input
-                type="text"
-                :id="id"
-                v-model="hasWords"
-              />
-            </pf-form-group>
-          </generate-id>
+          <pf-form-group :field-id="hasWordsId">
+            <template #label>
+              <slot name="words-attr-label">Has words</slot>
+            </template>
+            <pf-text-input
+              type="text"
+              :id="hasWordsId"
+              v-model="hasWords"
+            />
+          </pf-form-group>
 
           <slot />
 
@@ -49,7 +47,6 @@ import { computed, inject, ref } from 'vue';
 import { useManagedProp } from '../../use';
 import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
 
-import GenerateId from '../../helpers/GenerateId.vue';
 import PfTextInput from '../TextInput.vue';
 import PfButton from '../Button.vue';
 import PfPanel from '../Panel/Panel.vue';
@@ -59,6 +56,7 @@ import PfForm from '../Form/Form';
 import PfFormGroup from '../Form/FormGroup.vue';
 import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
+import { getUniqueId } from '../../util';
 
 const props = withDefaults(defineProps<{
   /** Value of the search input. */
@@ -103,6 +101,7 @@ const emit = defineEmits({
 const value = useManagedProp('modelValue', '', to => emit('change', to));
 const firstAttrRef = ref<InstanceType<typeof PfTextInput> | null>(null);
 const searchInput = inject(SearchInputKey);
+const hasWordsId = getUniqueId();
 
 useEventListener('mousedown', onDocClick);
 useEventListener('touchstart', onDocClick);
