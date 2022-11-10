@@ -11,7 +11,6 @@
             :placeholder="placeholder"
             :aria-label="ariaLabel"
             @keydown="onEnter"
-            @change="onChange"
           >
             <template #icon>
               <magnifying-glass-icon  />
@@ -112,7 +111,6 @@
           :search-menu-open="searchMenuOpen"
           @search="onSearch"
           @clear="onClear"
-          @change="onChange"
           @toggle-advanced-menu="onToggle"
         >
           <template #words-attr-label>
@@ -271,7 +269,7 @@ const emit = defineEmits({
   'update:expanded': (v: boolean) => true,
 
   /** A callback for when the input value changes. */
-  change: (value: string, event: Event) => true,
+  change: (value: string) => true,
 });
 
 
@@ -282,7 +280,7 @@ if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
   );
 }
 
-const value = useManagedProp('modelValue', '');
+const value = useManagedProp('modelValue', '', to => emit('change', to));
 const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
 const managedExpanded = useManagedProp('expanded', false);
 
@@ -313,13 +311,6 @@ provide(SearchInputKey, {
   el,
   input,
 });
-
-function onChange(e: Event) {
-  if (!(e.currentTarget instanceof HTMLInputElement)) {
-    return;
-  }
-  emit('change', value.value, e);
-}
 
 function onToggle(e: Event) {
   searchMenuOpen.value = !searchMenuOpen.value;

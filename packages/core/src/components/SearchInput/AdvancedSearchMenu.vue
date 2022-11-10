@@ -100,7 +100,7 @@ const emit = defineEmits({
   toggleAdvancedMenu: (event: Event) => true,
 });
 
-const value = useManagedProp('modelValue', '');
+const value = useManagedProp('modelValue', '', to => emit('change', to));
 const firstAttrRef = ref<InstanceType<typeof PfTextInput> | null>(null);
 const searchInput = inject(SearchInputKey);
 
@@ -130,7 +130,6 @@ function useAttributeValue(name: string) {
       });
 
       value.value = updatedValue.replace(/^\s+/g, '');
-      emit('change', value.value);
     },
   });
 }

@@ -301,33 +301,23 @@ export function isDefined(value: any): boolean {
   return value !== null && typeof value !== 'undefined';
 }
 
-export function useManagedProp<T>(name: string, value: T): WritableComputedRef<T>;
-export function useManagedProp<T>(name: string, value: T, props: Record<string, unknown>, emit: (event: any, ...args: any[]) => void): WritableComputedRef<T>;
-export function useManagedProp<T>(name: string, value: T, props?: Record<string, unknown>, emit?: (event: any, ...args: any[]) => void): WritableComputedRef<T> {
+export function useManagedProp<T>(name: string, value: T, onSet?: (to: T) => void): WritableComputedRef<T> {
   const instance = getCurrentInstance();
+  if (!instance) {
+    throw new Error('missing component instance');
+  }
 
   const inner = ref(value);
   return computed({
     get(): T {
-      props = props || instance?.props;
-      emit = emit || instance?.emit;
-      if (!props || !emit) {
-        throw new Error('Missing instance');
-      }
-
-      return isDefined(props[name]) ? (props[name] as any) : inner.value;
+      return isDefined(instance.props[name]) ? (instance.props[name] as any) : inner.value;
     },
     set(to: T) {
-      props = props || instance?.props;
-      emit = emit || instance?.emit;
-      if (!props || !emit) {
-        throw new Error('Missing instance');
-      }
-
-      if (inner.value || !isDefined(props[name])) {
+      if (inner.value || !isDefined(instance.props[name])) {
         inner.value = to as any;
       }
-      emit(`update:${name}`, to);
+      instance.emit(`update:${name}`, to);
+      onSet?.(to);
     },
   });
 }
