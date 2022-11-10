@@ -12,9 +12,9 @@ export const inputProps = {
    * @values blur, input, change, enter
    */
   autoValidate: {
-    type: String as PropType<'blur' | 'input' | 'change' | 'enter'>,
+    type: [String, Boolean] as PropType<'' | 'blur' | 'input' | 'change' | 'enter' | boolean>,
     default: 'change',
-    validator: (v: any) => ['blur', 'input', 'change', 'enter'].includes(v),
+    validator: (v: any) => typeof v === 'boolean' || ['', 'blur', 'input', 'change', 'enter'].includes(v),
   },
 
   /** Value to indicate if the textarea is modified to show that validation state.
@@ -77,7 +77,7 @@ export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
       instance.$emit('blur', event);
       if (props.autoValidate === 'blur') {
         reportValidity(true);
-      } else if (['input', 'change'].includes(props.autoValidate) && innerValidated.value === 'default') {
+      } else if (typeof props.autoValidate === 'string' && ['input', 'change'].includes(props.autoValidate) && innerValidated.value === 'default') {
         checkValidity();
       }
     },

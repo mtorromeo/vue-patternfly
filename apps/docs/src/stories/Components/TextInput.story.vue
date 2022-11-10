@@ -73,7 +73,7 @@
       <pf-text-input
         value="select all on click"
         aria-label="select-all"
-        @focus="($event.target as HTMLInputElement).select()"
+        @focus="($event.currentTarget as HTMLInputElement).select()"
       />
     </story-canvas>
 
