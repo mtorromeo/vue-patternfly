@@ -209,7 +209,7 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
       itemEl = this.focusElement();
     }
 
-    const innerIndex = itemEl === e.target ? 0 : 1;
+    const innerIndex = itemEl === e.currentTarget ? 0 : 1;
 
     const items = enabledItems();
     const index = items.findIndex(i => !Array.isArray(i) && i.focused);
@@ -223,8 +223,8 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
     } else if (e.key === 'ArrowLeft') {
       navigate(index, innerIndex, 'left');
     } else if (e.key === 'Enter' || e.key === ' ') {
-      if (e.target instanceof HTMLElement) {
-        e.target.click();
+      if (e.currentTarget instanceof HTMLElement) {
+        e.currentTarget.click();
       }
       if (this.enterTriggersArrowDown) {
         navigate(index, innerIndex, 'down');

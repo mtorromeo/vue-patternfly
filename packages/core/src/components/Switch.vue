@@ -10,7 +10,7 @@
       :class="styles.switchInput"
       type="checkbox"
       :checked="checked"
-      @change="$emit('update:checked', ($event.target as HTMLInputElement).checked)"
+      @change="$emit('update:checked', ($event.currentTarget as HTMLInputElement).checked)"
     >
 
     <template v-if="label">

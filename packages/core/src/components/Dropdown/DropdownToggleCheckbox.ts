@@ -55,8 +55,8 @@ export default defineComponent({
                  'aria-label': this.ariaLabel,
                  checked: this.checked,
                  onChange: (e: Event) => {
-                   if (e.target instanceof HTMLInputElement) {
-                     this.$emit('change', e.target.checked);
+                   if (e.currentTarget instanceof HTMLInputElement) {
+                     this.$emit('change', e.currentTarget.checked);
                    }
                  },
                }, this.$attrs)),

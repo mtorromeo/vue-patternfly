@@ -13,7 +13,7 @@
       :checked="modelValue"
       :disabled="disabled"
       :aria-valid="!valid"
-      @change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
+      @change="$emit('update:modelValue', ($event.currentTarget as HTMLInputElement).checked)"
     >
     <label
       v-if="label || $slots.label"

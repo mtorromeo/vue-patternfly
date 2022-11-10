@@ -195,11 +195,11 @@ export default defineComponent({
     },
 
     onChange(e: Event) {
-      if (!(e.target instanceof HTMLInputElement)) {
+      if (!(e.currentTarget instanceof HTMLInputElement)) {
         return;
       }
-      const inputPage = this.parseInteger(e.target.value, this.lastPage);
-      this.userInputPage = isNaN(inputPage) ? e.target.value : inputPage;
+      const inputPage = this.parseInteger(e.currentTarget.value, this.lastPage);
+      this.userInputPage = isNaN(inputPage) ? e.currentTarget.value : inputPage;
     },
 
     goToFirstPage() {

@@ -195,11 +195,11 @@ export default defineComponent({
 
   methods: {
     checkTooltip(e: MouseEvent) {
-      if (!(e.target instanceof HTMLElement)) {
+      if (!(e.currentTarget instanceof HTMLElement)) {
         return;
       }
-      if (e.target.offsetWidth < e.target.scrollWidth) {
-        this.tooltip = this.title || e.target.innerHTML;
+      if (e.currentTarget.offsetWidth < e.currentTarget.scrollWidth) {
+        this.tooltip = this.title || e.currentTarget.innerHTML;
       } else {
         this.tooltip = '';
       }

@@ -55,8 +55,8 @@ export default defineComponent({
         [styles.modifiers.placeholder]: this.selectedPlaceholder,
       }],
       onChange: (e: Event) => {
-        if (e.target instanceof HTMLSelectElement) {
-          this.value = e.target.value;
+        if (e.currentTarget instanceof HTMLSelectElement) {
+          this.value = e.currentTarget.value;
         }
       },
     }, this.$slots);
