@@ -24,7 +24,7 @@ import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrum
 import { DefineComponent, defineComponent, markRaw, PropType } from 'vue';
 import { RouteLocationRaw } from 'vue-router';
 
-import Void from '../Void';
+import Void from '../../helpers/Void';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
 export default defineComponent({

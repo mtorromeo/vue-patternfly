@@ -129,7 +129,7 @@ import { h, markRaw, inject, getCurrentInstance, defineComponent, Ref, ref, Comp
 import { Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
 import { SelectKey } from './Select.vue';
 
-import Void from '../Void';
+import Void from '../../helpers/Void';
 
 export default defineComponent({
   name: 'PfSelectOption',

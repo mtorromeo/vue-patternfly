@@ -107,8 +107,7 @@ import badgeStyles from '@patternfly/react-styles/css/components/Badge/badge';
 import formStyles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 
-import Void from '../Void';
-// import PfPopper from '../Popper';
+import Void from '../../helpers/Void';
 import PfSelectMenu from './SelectMenu.vue';
 import PfSelectOption from './SelectOption.vue';
 import PfSelectToggle from './SelectToggle.vue';

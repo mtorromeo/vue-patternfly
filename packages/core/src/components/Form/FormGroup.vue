@@ -68,7 +68,7 @@ import styles from '@patternfly/react-styles/css/components/Form/form';
 import { ComponentPublicInstance, computed, defineComponent, markRaw, UnwrapNestedRefs } from 'vue';
 import { useInputValidation } from '../../input';
 import { provideChildrenTracker } from '../../use';
-import Void from '../Void';
+import Void from '../../helpers/Void';
 
 export default defineComponent({
   name: 'PfFormGroup',

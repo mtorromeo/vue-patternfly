@@ -69,7 +69,7 @@ import styles from '@patternfly/react-styles/css/components/Alert/alert';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
-import Void from '../Void';
+import Void from '../../helpers/Void';
 import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton';

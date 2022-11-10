@@ -80,9 +80,9 @@ import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullse
 import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
 
 import PfModalHeader from './ModalHeader.vue';
-import Void from '../Void';
+import Void from '../../helpers/Void';
 import PfBackdrop from '../Backdrop';
-import PfFocusTrap from '../FocusTrap.vue';
+import PfFocusTrap from '../../helpers/FocusTrap.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfCloseButton from '../CloseButton';
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';

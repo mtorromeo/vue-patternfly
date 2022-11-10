@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
-import Void from './Void';
+import Void from '../helpers/Void';
 import PfTooltip from './Tooltip/Tooltip.vue';
 import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';

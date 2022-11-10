@@ -24,7 +24,7 @@ import { DataListWrapModifier } from './DataList.vue';
 import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
 import PfDataListToggle from './DataListToggle.vue';
-import OverridableWrapper from '../OverridableWrapper';
+import OverridableWrapper from '../../helpers/OverridableWrapper';
 import { DataListItemKey } from './DataListItem.vue';
 
 export default defineComponent({

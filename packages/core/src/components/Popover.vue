@@ -67,10 +67,10 @@ import { computed, defineComponent, markRaw, PropType, Ref, ref, watch } from 'v
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
-import PfFocusTrap from './FocusTrap.vue';
+import PfFocusTrap from '../helpers/FocusTrap.vue';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
-import Void from './Void';
+import Void from '../helpers/Void';
 import { offset, autoPlacement, Placement, hide, flip, FlipOptions, AutoPlacementOptions } from '@floating-ui/core';
 
 export default defineComponent({

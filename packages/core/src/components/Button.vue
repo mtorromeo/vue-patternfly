@@ -56,7 +56,7 @@ import styles from '@patternfly/react-styles/css/components/Button/button';
 import { DefineComponent, defineComponent, markRaw, PropType } from 'vue';
 
 import PfSpinner from './Spinner.vue';
-import Void from './Void';
+import Void from '../helpers/Void';
 
 export default defineComponent({
   name: 'PfButton',
