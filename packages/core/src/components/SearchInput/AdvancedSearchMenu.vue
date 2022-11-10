@@ -3,34 +3,30 @@
     <pf-panel-main>
       <pf-panel-main-body>
         <pf-form>
-          <template v-for="(attribute, index) in normalizedAttributes">
-            <pf-form-group :field-id="`${attribute.attr}_${index}`">
+          <pf-form-group v-for="(attribute, index) in normalizedAttributes" :field-id="`${attribute.attr}_${index}`">
+            <template #label>
+              <slot :name="`attribute:${attribute.attr}`">{{ attribute.display }}</slot>
+            </template>
+            <pf-text-input
+              :ref="el => index === 0 ? firstAttrRef = el as any : null"
+              type="text"
+              :id="`${attribute.attr}_${index}`"
+              v-model="attribute.computed.value"
+            />
+          </pf-form-group>
+
+          <generate-id #="{id}">
+            <pf-form-group :field-id="id">
               <template #label>
-                <slot :name="`attribute:${attribute.attr}`">{{ attribute.display }}</slot>
+                <slot name="words-attr-label">Has words</slot>
               </template>
               <pf-text-input
-                :ref="el => index === 0 ? firstAttrRef = el as any : null"
                 type="text"
-                :id="`${attribute.attr}_${index}`"
-                :value="getValue(attribute.attr)"
-                @change="onValueChange(attribute.attr, $event)"
+                :id="id"
+                v-model="hasWords"
               />
             </pf-form-group>
-
-            <generate-id #="{id}">
-              <pf-form-group :field-id="id">
-                <template #label>
-                  <slot name="words-attr-label">Has words</slot>
-                </template>
-                <pf-text-input
-                  type="text"
-                  :id="id"
-                  :value="getValue('haswords')"
-                  @change="onValueChange('haswords', $event)"
-                />
-              </pf-form-group>
-            </generate-id>
-          </template>
+          </generate-id>
 
           <slot />
 
@@ -93,7 +89,7 @@ const emit = defineEmits({
   'update:modelValue': (v: string) => true,
 
   /** A callback for when the input value changes. */
-  change: (value: string, event: Event) => true,
+  change: (value: string) => true,
   /** A callback for when the search button is clicked. */
   search: (
     value: string,
@@ -112,49 +108,53 @@ useEventListener('mousedown', onDocClick);
 useEventListener('touchstart', onDocClick);
 useEventListener('keydown', onEscPress);
 
+function useAttributeValue(name: string) {
+  return computed({
+    get() {
+      const map = props.getAttrValueMap();
+      return map.hasOwnProperty(name) ? map[name] : '';
+    },
+
+    set(attributeValue: string) {
+      const newMap = props.getAttrValueMap();
+      newMap[name] = attributeValue;
+      let updatedValue = '';
+      Object.entries(newMap).forEach(([k, v]) => {
+        if (v.trim() !== '') {
+          if (k !== 'haswords') {
+            updatedValue = `${updatedValue} ${k}${props.advancedSearchDelimiter}${v}`;
+          } else {
+            updatedValue = `${updatedValue} ${v}`;
+          }
+        }
+      });
+
+      value.value = updatedValue.replace(/^\s+/g, '');
+      emit('change', value.value);
+    },
+  });
+}
+
 const normalizedAttributes = computed(() => {
   const norm = [];
   for (const attribute of props.attributes) {
+    const attr = typeof attribute === 'string' ? attribute : attribute.attr;
     norm.push({
-      attr: typeof attribute === 'string' ? attribute : attribute.attr,
+      attr,
       display: typeof attribute === 'string' ? attribute : attribute.display,
+      computed: useAttributeValue(attr),
     });
   }
   return norm;
 });
 
-function onValueChange(attribute: string, event: Event) {
-  if (!(event.currentTarget instanceof HTMLInputElement)) {
-    return;
-  }
-
-  const newMap = props.getAttrValueMap();
-  newMap[attribute] = event.currentTarget.value;
-  let updatedValue = '';
-  Object.entries(newMap).forEach(([k, v]) => {
-    if (v.trim() !== '') {
-      if (k !== 'haswords') {
-        updatedValue = `${updatedValue} ${k}${props.advancedSearchDelimiter}${v}`;
-      } else {
-        updatedValue = `${updatedValue} ${v}`;
-      }
-    }
-  });
-  updatedValue = updatedValue.replace(/^\s+/g, '');
-
-  emit('change', updatedValue, event);
-}
+const hasWords = useAttributeValue('haswords');
 
 const onSearch = (event: Event) => {
   emit('search', value.value, event, props.getAttrValueMap());
   if (props.searchMenuOpen) {
     emit('toggleAdvancedMenu', event);
   }
-}
-
-function getValue(attribute: string) {
-  const map = props.getAttrValueMap();
-  return map.hasOwnProperty(attribute) ? map[attribute] : '';
 }
 
 function onDocClick(event: Event) {
