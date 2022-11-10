@@ -9,6 +9,7 @@
     <component
       v-bind="$attrs"
       :is="buttonComponent"
+      ref="el"
       :type="buttonComponent === 'button' ? type : null"
       :disabled="effectiveDisabled"
       :aria-disabled="effectiveDisabled || ariaDisabled"
@@ -53,7 +54,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import { DefineComponent, defineComponent, markRaw, PropType } from 'vue';
+import { DefineComponent, defineComponent, markRaw, PropType, ref } from 'vue';
 
 import PfSpinner from './Spinner.vue';
 import Void from '../helpers/Void';
@@ -142,8 +143,10 @@ export default defineComponent({
   emits: ['click'],
 
   setup() {
+    const el = ref<HTMLElement | null>(null);
     return {
       styles: markRaw(styles) as typeof styles,
+      el,
     };
   },
 

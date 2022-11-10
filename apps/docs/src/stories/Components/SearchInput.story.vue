@@ -24,6 +24,14 @@
       />
     </story-canvas>
 
+    <story-canvas title="With expandable button">
+      <pf-search-input
+        v-model="filter3"
+        expandable
+        @clear="filter3 = ''"
+      />
+    </story-canvas>
+
     <story-canvas title="Advanced">
       <template #intro>
         <pre v-md>
@@ -32,7 +40,7 @@
       </template>
 
       <pf-search-input
-        v-model="filter3"
+        v-model="filter4"
         :attributes="[
           { attr: 'username', display: 'Username' },
           { attr: 'firstname', display: 'First name' }
@@ -40,7 +48,7 @@
         advanced-search-delimiter=":"
         placeholder="Find by name"
         @search="void(0)"
-        @clear="filter3 = ''"
+        @clear="filter4 = ''"
       />
     </story-canvas>
   </doc-page>
@@ -51,5 +59,6 @@ import { ref } from 'vue';
 
 const filter = ref('');
 const filter2 = ref('');
-const filter3 = ref('username:player firstname:john');
+const filter3 = ref('');
+const filter4 = ref('username:player firstname:john');
 </script>

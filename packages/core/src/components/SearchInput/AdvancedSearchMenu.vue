@@ -65,22 +65,23 @@ import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
 
 const props = withDefaults(defineProps<{
-  /** Value of the search input */
+  /** Value of the search input. */
   modelValue?: string;
-  /** Flag for toggling the open/close state of the advanced search menu */
+  /** Flag for toggling the open/close state of the advanced search menu. */
   searchMenuOpen?: boolean;
-  /** Label for the buttons which reset the advanced search form and clear the search input */
+  /** Label for the button which resets the advanced search form and clears the search input. */
   resetButtonLabel?: string;
-  /** Label for the buttons which called the onSearch event handler */
+  /** Label for the button which calls the onSearch event handler. */
   submitSearchButtonLabel?: string;
-  /** Array of attribute values used for dynamically generated advanced search */
+  /** Array of attribute values used for dynamically generated advanced search. */
   attributes?: (string | SearchAttribute)[];
   /** Delimiter in the query string for pairing attributes with search values.
-   * Required whenever attributes are passed as props */
+   * Required whenever attributes are passed as props.
+   */
   advancedSearchDelimiter?: string;
-  /** A callback for when the user clicks the clear button */
+  /** A callback for when the user clicks the clear button. */
   onClear?: (event: Event) => void;
-  /** Function which builds an attribute-value map by parsing the value in the search input */
+  /** Function which builds an attribute-value map by parsing the value in the search input. */
   getAttrValueMap?: () => { [key: string]: string };
 }>(), {
   attributes: [] as any,
@@ -91,15 +92,15 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits({
   'update:modelValue': (v: string) => true,
 
-  /** A callback for when the input value changes */
+  /** A callback for when the input value changes. */
   change: (value: string, event: Event) => true,
-  /** A callback for when the search button clicked changes */
+  /** A callback for when the search button is clicked. */
   search: (
     value: string,
     event: Event,
     attrValueMap: { [key: string]: string }
   ) => true,
-  /** Function called to toggle the advanced search menu */
+  /** A callback for when the open advanced search button is clicked. */
   toggleAdvancedMenu: (event: Event) => true,
 });
 
@@ -164,10 +165,9 @@ function onDocClick(event: Event) {
 }
 
 function onEscPress(event: KeyboardEvent) {
-  const keyCode = event.keyCode || event.which;
   if (
     props.searchMenuOpen &&
-    keyCode === 27 && // Escape
+    event.key === 'Escape' &&
     searchInput?.el.value?.contains(event.target as Node)
   ) {
     emit('toggleAdvancedMenu', event);
