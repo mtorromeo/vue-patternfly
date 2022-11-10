@@ -56,6 +56,17 @@ declare module 'vue' {
     PfDataListItemCells: typeof import('@vue-patternfly/core').PfDataListItemCells;
     PfDataListToggle: typeof import('@vue-patternfly/core').PfDataListToggle;
 
+    PfDrawer: typeof import('@vue-patternfly/core').PfDrawer;
+    PfDrawerActions: typeof import('@vue-patternfly/core').PfDrawerActions;
+    PfDrawerCloseButton: typeof import('@vue-patternfly/core').PfDrawerCloseButton;
+    PfDrawerContent: typeof import('@vue-patternfly/core').PfDrawerContent;
+    PfDrawerContentBody: typeof import('@vue-patternfly/core').PfDrawerContentBody;
+    PfDrawerHead: typeof import('@vue-patternfly/core').PfDrawerHead;
+    PfDrawerMain: typeof import('@vue-patternfly/core').PfDrawerMain;
+    PfDrawerPanelBody: typeof import('@vue-patternfly/core').PfDrawerPanelBody;
+    PfDrawerPanelContent: typeof import('@vue-patternfly/core').PfDrawerPanelContent;
+    PfDrawerSection: typeof import('@vue-patternfly/core').PfDrawerSection;
+
     PfBadgeToggle: typeof import('@vue-patternfly/core').PfBadgeToggle;
     PfDropdown: typeof import('@vue-patternfly/core').PfDropdown;
     PfDropdownGroup: typeof import('@vue-patternfly/core').PfDropdownGroup;
