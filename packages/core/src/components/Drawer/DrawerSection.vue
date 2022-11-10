@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { DrawerColorVariant } from './Drawer.vue';
+import { DrawerColorVariant } from './common';
 
 withDefaults(defineProps<{
   /** Color variant of the background of the drawer Section */

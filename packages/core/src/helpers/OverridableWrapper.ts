@@ -1,7 +1,7 @@
-import { Component, DefineComponent, defineComponent, h, PropType, resolveDynamicComponent, VNode, VNodeTypes } from "vue";
+import { Component, ComponentOptionsMixin, DefineComponent, defineComponent, h, PropType, ref, resolveDynamicComponent, VNode, VNodeTypes } from "vue";
 import { findChildrenVNodes } from "../util";
 
-function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component {
+function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & ComponentOptionsMixin {
   return typeof vtype === 'object' && !(vtype as any).type;
 }
 
@@ -30,7 +30,7 @@ export default defineComponent({
   props: {
     /**
      * Defines the component to look for in children.
-     * If there is already a matching component the children are left untouched, otherwise a new component of this type is created and children matching the optional childrenFilter are nested inside it.
+     * If there is already a matching component the children are left untouched, otherwise a new component of this type is created and children matching the optional include/exclude filters are nested inside it.
      */
     component: {
       type: [String, Object] as PropType<string | VNodeTypes>,
@@ -54,6 +54,15 @@ export default defineComponent({
       type: [String, Object, Array, Function] as PropType<string | VNodeTypes | (string | VNodeTypes)[] | ((vnode: VNode) => boolean)>,
       default: null,
     },
+
+    /** Flag to always create the wrapping component */
+    force: Boolean,
+  },
+
+  setup() {
+    return {
+      el: ref(null),
+    };
   },
 
   render() {
@@ -66,14 +75,15 @@ export default defineComponent({
     }
 
     const children = this.$slots.default();
+    const childrenNodes = findChildrenVNodes(children);
 
-    if (findChildrenVNodes(children).find(vnode => {
+    if (!this.force && childrenNodes.find(vnode => {
       if (typeof this.component === 'string') {
         let tag = null;
         if (typeof vnode.type === 'string') {
           tag = vnode.type;
         } else if (vnodeTypeIsComponent(vnode.type)) {
-          tag = vnode.type.name;
+          tag = vnode.type.name || vnode.type.__name;
         }
         return tag === this.component;
       } else {
@@ -89,7 +99,7 @@ export default defineComponent({
     let firstMatch: number | null = null;
     const outsideChildren: VNode[] = [];
     const insideChildren: VNode[] = [];
-    for (const [index, child] of findChildrenVNodes(children).entries()) {
+    for (const [index, child] of childrenNodes.entries()) {
       if (includeFn(child) && !excludeFn(child)) {
         firstMatch ??= index;
         insideChildren.push(child);
@@ -99,7 +109,10 @@ export default defineComponent({
     }
 
     const component = resolveDynamicComponent(this.component) as DefineComponent;
-    outsideChildren.splice(firstMatch ?? 0, 0, h(component, this.$attrs, () => insideChildren));
+    const defaultSlot = typeof component === 'string' ? insideChildren : () => insideChildren;
+    const props = {...this.$attrs, ref: 'el'};
+
+    outsideChildren.splice(firstMatch ?? 0, 0, h(component, props, defaultSlot));
 
     return outsideChildren;
   },

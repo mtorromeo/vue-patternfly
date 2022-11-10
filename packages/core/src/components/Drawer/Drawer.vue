@@ -6,30 +6,19 @@
     [styles.modifiers.panelLeft]: position === 'left',
     [styles.modifiers.panelBottom]: position === 'bottom',
   }]">
-    <slot />
+    <overridable-wrapper :component="PfDrawerContent" :exclude="PfDrawerSection">
+      <slot />
+    </overridable-wrapper>
   </div>
 </template>
 
-<script lang="ts">
-export enum DrawerColorVariant {
-  default = 'default',
-  light200 = 'light-200'
-}
-
-export type DrawerProvide = {
-  el: Ref<HTMLDivElement | null>;
-  expanded: ComputedRef<boolean>;
-  inline: ComputedRef<boolean>;
-  static: ComputedRef<boolean>;
-  position: ComputedRef<'left' | 'right' | 'bottom'>;
-}
-
-export const DrawerKey = Symbol('DrawerKey') as InjectionKey<DrawerProvide>;
-</script>
-
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, ComputedRef, InjectionKey, provide, Ref, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
+import OverridableWrapper from '../../helpers/OverridableWrapper';
+import { DrawerKey } from './common';
+import PfDrawerContent from './DrawerContent.vue';
+import PfDrawerSection from './DrawerSection.vue';
 
 const props = withDefaults(defineProps<{
   /** Indicates if the drawer is expanded */

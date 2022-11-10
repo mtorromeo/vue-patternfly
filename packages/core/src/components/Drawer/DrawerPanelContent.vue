@@ -33,18 +33,28 @@
       >
         <div :class="styles.drawerSplitterHandle" aria-hidden></div>
       </div>
-      <div :class="styles.drawerPanelMain"><slot /></div>
+      <div :class="styles.drawerPanelMain">
+        <overridable-wrapper :component="PfDrawerHead">
+          <slot />
+        </overridable-wrapper>
+      </div>
     </template>
-    <slot v-else />
+
+    <overridable-wrapper v-else :component="PfDrawerHead">
+      <slot />
+    </overridable-wrapper>
   </div>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { computed, inject, ref, unref } from 'vue';
-import { DrawerColorVariant, DrawerKey } from './Drawer.vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
+import { DrawerColorVariant, DrawerKey } from './common';
+import OverridableWrapper from '../../helpers/OverridableWrapper';
+import PfDrawerHead from './DrawerHead.vue';
+import { resolveOverridableComponent } from '../../helpers';
 
 const props = withDefaults(defineProps<{
   /** ID of the drawer panel */
@@ -100,10 +110,12 @@ function calcValueNow() {
   let splitterPos;
   let drawerSize;
 
+  const drawerContentEl = resolveOverridableComponent(drawerContentRef.value);
+
   const paR = panel.value.getBoundingClientRect();
   const spR = splitterRef.value.getBoundingClientRect();
   const drR = drawerRef.value.getBoundingClientRect();
-  const dCR = drawerContentRef.value.getBoundingClientRect();
+  const dCR = drawerContentEl.getBoundingClientRect();
 
   if (inline.value && position.value === 'right') {
     splitterPos = paR.right - spR.left;
@@ -115,7 +127,6 @@ function calcValueNow() {
     splitterPos = dCR.right - spR.left;
     drawerSize = dCR.right - dCR.left;
   } else if (position.value === 'left') {
-    console.log(splitterRef.value, drawerContentRef.value);
     splitterPos = spR.right - dCR.left;
     drawerSize = dCR.right - dCR.left;
   } else if (position.value === 'bottom') {
