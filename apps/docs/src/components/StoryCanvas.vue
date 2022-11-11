@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { computedAsync } from '@vueuse/core';
-import { getHighlighter, Highlighter, setWasm } from 'shiki';
+import { getHighlighter, type Highlighter, setWasm } from 'shiki';
 import theme from 'shiki/themes/nord.json';
 import { defineComponent } from 'vue';
 

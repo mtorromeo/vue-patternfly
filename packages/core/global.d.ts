@@ -167,9 +167,9 @@ declare module '@vue/runtime-core' {
     PfTextList: typeof import('@vue-patternfly/core').PfTextList;
     PfTextListItem: typeof import('@vue-patternfly/core').PfTextListItem;
 
-    PfTextInputGroup: typeof import('@vue-patternfly/core').PfPfTextInputGroup;
-    PfTextInputGroupMain: typeof import('@vue-patternfly/core').PfPfTextInputGroupMain;
-    PfTextInputGroupUtilities: typeof import('@vue-patternfly/core').PfPfTextInputGroupUtilities;
+    PfTextInputGroup: typeof import('@vue-patternfly/core').PfTextInputGroup;
+    PfTextInputGroupMain: typeof import('@vue-patternfly/core').PfTextInputGroupMain;
+    PfTextInputGroupUtilities: typeof import('@vue-patternfly/core').PfTextInputGroupUtilities;
 
     PfToolbar: typeof import('@vue-patternfly/core').PfToolbar;
     PfToolbarChipGroupContent: typeof import('@vue-patternfly/core').PfToolbarChipGroupContent;
