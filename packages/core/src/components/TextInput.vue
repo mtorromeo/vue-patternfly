@@ -1,77 +1,127 @@
-<script lang="ts">
-import { defineComponent, h, PropType } from 'vue';
+<template>
+  <input
+    ref="input"
+    :value="value"
+    :class="[
+      styles.formControl, {
+        [styles.modifiers.iconSprite]: iconSprite,
+        [styles.modifiers.plain]: readOnlyVariant === 'plain',
+        [styles.modifiers.success]: effectiveValidated === 'success',
+        [styles.modifiers.warning]: effectiveValidated === 'warning',
+        [styles.modifiers.icon]: (iconVariant && iconVariant !== 'search') || iconUrl,
+        [styles.modifiers[iconVariant]]: iconVariant,
+      },
+    ]"
+    :type="type"
+    :style="{
+      backgroundImage: iconUrl ? `url(${iconUrl})` : undefined,
+      backgroundSize: iconDimensions ? iconDimensions : undefined,
+    }"
+    :aria-invalid="effectiveValidated === 'error'"
+    :disabled="disabled || undefined"
+    :required="required || undefined"
+    :readonly="!!readOnlyVariant || readonly"
+    @change="onChange"
+    @input="onInput"
+    @blur="onBlur"
+    @invalid="onInvalid"
+    @keyup="onKeyUp"
+  />
+</template>
+
+<script lang="ts" setup>
+import { Ref, ref } from 'vue';
+import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useChildrenTracker, useManagedProp } from '../use';
-import InputValidationMixin from '../mixins/InputValidationMixin';
+import { useInputValidation } from '../input';
 
-export default defineComponent({
-  name: 'PfTextInput',
+const props = withDefaults(defineProps<{
+  /** Flag to show if the text input is disabled. */
+  disabled?: boolean;
+  readonly?: boolean;
+  /** Read only variant. */
+  readOnlyVariant?: 'plain' | 'default';
+  required?: boolean;
+  /** Value to indicate if the text input is modified to show that validation state.
+   * If set to success, text input will be modified to indicate valid state.
+   * If set to error, text input will be modified to indicate error state.
+   */
+  validated?: 'success' | 'warning' | 'error' | 'default';
+  /** Type that the text input accepts. */
+  type?:
+    | 'text'
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'tel'
+    | 'time'
+    | 'url';
+  /** Value of the text input. */
+  modelValue?: string | number;
+  /** Aria-label. The text input requires an associated id or aria-label. */
+  ariaLabel?: string;
+  /** Trim text on left */
+  leftTruncated?: boolean;
+  /** icon variant */
+  iconVariant?: 'calendar' | 'clock' | 'search';
+  /** Use the external file instead of a data URI */
+  iconSprite?: boolean;
+  /** Custom icon url to set as the text input's background-image */
+  iconUrl?: string;
+  /** Dimensions for the custom icon set as the text input's background-size */
+  iconDimensions?: string;
+  /** Value to overwrite the randomly generated data-ouia-component-id.*/
+  ouiaId?: number | string;
+  /** Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false. */
+  ouiaSafe?: boolean;
+  autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
+}>(), {
+  type: 'text',
+  autoValidate: 'change',
+  modelValue: undefined,
+});
 
-  mixins: [InputValidationMixin],
+const emit = defineEmits({
+  /** A callback for when the text input value changes. */
+  change: (event: Event) => true,
+  /** Callback function when text input is focused */
+  focus: (event: Event) => true,
+  /** Callback function when text input is blurred (focus leaves) */
+  blur: (event: FocusEvent) => true,
+  input: (event: Event) => true,
+  invalid: (event: Event) => true,
+  keyup: (event: KeyboardEvent) => true,
+  'update:modelValue': () => true,
+  'update:validated': () => true,
+});
 
-  props: {
-    type: {
-      type: String,
-      default: 'text',
-    },
+const input: Ref<HTMLInputElement | undefined> = ref();
 
-    /** Trim text on left */
-    leftTruncated: Boolean,
+useChildrenTracker();
+const {
+  value,
+  effectiveValidated,
+  innerValidated,
+  onBlur,
+  onChange,
+  onInput,
+  onInvalid,
+  onKeyUp,
+  ...inputValidationData
+} = useInputValidation({inputElement: input, ...props});
 
-    /** @values calendar, clock, search */
-    iconVariant: {
-      type: String as PropType<'calendar' | 'clock' | 'search' | null>,
-      default: null,
-      validator: (v: any) => [null, '', 'calendar', 'clock', 'search'].includes(v),
-    },
+function focus() {
+  input.value?.focus();
+}
 
-    /** Custom icon url to set as the input's background-image */
-    iconUrl: {
-      type: String,
-      default: '',
-    },
-
-    /** Dimensions for the custom icon set as the input's background-size */
-    iconDimensions: {
-      type: String,
-      default: '',
-    },
-  },
-
-  emits: ['input', 'blur', 'change', 'invalid', 'keyup', 'update:modelValue', 'update:validated'],
-
-  setup() {
-    useChildrenTracker();
-    return {
-      value: useManagedProp('modelValue', ''),
-    };
-  },
-
-  render() {
-    const style = {
-      backgroundImage: this.iconUrl ? `url(${this.iconUrl})` : undefined,
-      backgroundSize: this.iconDimensions ? this.iconDimensions : undefined,
-    };
-
-    return h('input', {
-      value: this.value,
-      class: [
-        styles.formControl, {
-          [styles.modifiers.success]: this.effectiveValidated === 'success',
-          [styles.modifiers.warning]: this.effectiveValidated === 'warning',
-          [styles.modifiers.icon]: (this.iconVariant && this.iconVariant !== 'search') || this.iconUrl,
-          [styles.modifiers[this.iconVariant]]: this.iconVariant,
-        },
-      ],
-      type: this.type,
-      style,
-      'aria-invalid': this.effectiveValidated === 'error',
-      onChange: this.onChange,
-      onInput: this.onInput,
-      onBlur: this.onBlur,
-      onInvalid: this.onInvalid,
-      onKeyUp: this.onKeyUp,
-    });
-  },
+defineExpose({
+  input,
+  focus,
+  value,
+  ...inputValidationData,
 });
 </script>

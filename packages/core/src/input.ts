@@ -1,11 +1,11 @@
-import { computed, ExtractPropTypes, getCurrentInstance, PropType, ref, watch } from "vue";
-import { useManagedProp } from "./use";
+import { MaybeRef } from "@vueuse/shared";
+import { computed, getCurrentInstance, PropType, ref, unref, watch } from "vue";
+import { isDefined, useManagedProp } from "./use";
 
 export const inputProps = {
   /** @model */
   modelValue: {
     type: [String, Number],
-    default: null as string,
   },
 
   /**
@@ -23,23 +23,30 @@ export const inputProps = {
    * @values default, success, warning, error
    */
   validated: {
-    type: String,
-    default: null as string,
+    type: String as PropType<'success' | 'warning' | 'error' | 'default' | null>,
     validator: (v: any) => [null, 'default', 'success', 'warning', 'error'].includes(v),
   },
 };
 
-export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
+export function useInputValidation({
+  autoValidate,
+  validated,
+  inputElement,
+}: {
+  autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
+  validated?: 'success' | 'warning' | 'error' | 'default' | null;
+  inputElement?: MaybeRef<HTMLInputElement | HTMLTextAreaElement>;
+}) {
   const instance = getCurrentInstance()?.proxy;
 
   const innerValidated = ref('default');
-  const validated = computed(() => props.validated === null ? innerValidated.value : props.validated);
-  watch(validated, () => instance.$emit('update:validated', validated.value));
+  const effectiveValidated = computed(() => validated ?? innerValidated.value);
+  watch(effectiveValidated, () => instance.$emit('update:validated', effectiveValidated.value));
 
   const value = useManagedProp('modelValue', '');
 
   function checkValidity() {
-    if (instance.$el && instance.$el.checkValidity()) {
+    if ((unref(inputElement) ?? instance.$el)?.checkValidity()) {
       innerValidated.value = 'success';
       return true;
     }
@@ -50,7 +57,7 @@ export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
     const validatedWas = innerValidated.value;
     const valid = checkValidity();
     if (!once || (valid && validatedWas !== 'success') || (!valid && validatedWas !== 'error')) {
-      instance.$el && instance.$el.reportValidity();
+      (unref(inputElement) ?? instance.$el)?.reportValidity();
     }
     return valid;
   }
@@ -58,7 +65,7 @@ export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
   return {
     value,
     innerValidated,
-    effectiveValidated: validated,
+    effectiveValidated,
 
     checkValidity,
     reportValidity,
@@ -66,7 +73,7 @@ export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
     onInput(event: InputEvent) {
       instance.$emit('input', event);
       value.value = (event.target as HTMLInputElement).value;
-      if (props.autoValidate === 'input') {
+      if (autoValidate === 'input') {
         reportValidity();
       } else {
         innerValidated.value = 'default';
@@ -75,16 +82,16 @@ export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
 
     onBlur(event: FocusEvent) {
       instance.$emit('blur', event);
-      if (props.autoValidate === 'blur') {
+      if (autoValidate === 'blur') {
         reportValidity(true);
-      } else if (typeof props.autoValidate === 'string' && ['input', 'change'].includes(props.autoValidate) && innerValidated.value === 'default') {
+      } else if (typeof autoValidate === 'string' && ['input', 'change'].includes(autoValidate) && innerValidated.value === 'default') {
         checkValidity();
       }
     },
 
     onChange(event: Event) {
       instance.$emit('change', event);
-      if (props.autoValidate === 'change') {
+      if (autoValidate === 'change') {
         reportValidity();
       }
     },
@@ -96,13 +103,13 @@ export function useInputValidation(props: ExtractPropTypes<typeof inputProps>) {
 
     onKeyUp(event: KeyboardEvent) {
       instance.$emit('keyup', event);
-      if (event.key === 'Enter' && props.autoValidate) {
+      if (event.key === 'Enter' && (autoValidate === true || autoValidate === '')) {
         reportValidity();
       }
     },
 
     setCustomValidity(error: string) {
-      instance.$el.setCustomValidity(error);
+      (unref(inputElement) ?? instance.$el).setCustomValidity(error);
     },
   };
 }
