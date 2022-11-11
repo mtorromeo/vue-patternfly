@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, ref } from 'vue';
+import { computed, inject, Ref, ref } from 'vue';
 import { useManagedProp } from '../../use';
 import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
 
@@ -99,7 +99,7 @@ const emit = defineEmits({
 });
 
 const value = useManagedProp('modelValue', '', to => emit('change', to));
-const firstAttrRef = ref<InstanceType<typeof PfTextInput> | null>(null);
+const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
 const searchInput = inject(SearchInputKey);
 const hasWordsId = getUniqueId();
 

@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { inject, ref } from 'vue';
+import { inject, Ref, ref } from 'vue';
 import { useManagedProp } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
 
@@ -73,7 +73,7 @@ const emit = defineEmits({
 
 const value = useManagedProp('modelValue', '');
 const disabled = inject(TextInputGroupDisabledKey, false);
-const input = ref<HTMLInputElement | null>(null);
+const input: Ref<HTMLInputElement | null> = ref(null);
 
 defineExpose({
   focus(options?: FocusOptions) {

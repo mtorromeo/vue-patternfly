@@ -284,10 +284,10 @@ const value = useManagedProp('modelValue', '', to => emit('change', to));
 const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
 const managedExpanded = useManagedProp('expanded', false);
 
-const el = ref<HTMLDivElement | null>(null);
-const floatingElement = ref<HTMLSpanElement | null>(null);
-const expandButton = ref<InstanceType<typeof PfButton> | null>(null);
-const input = ref<InstanceType<typeof PfTextInputGroupMain> | null>(null);
+const el: Ref<HTMLDivElement | null> = ref(null);
+const floatingElement: Ref<HTMLSpanElement | null> = ref(null);
+const expandButton: Ref<InstanceType<typeof PfButton> | null> = ref(null);
+const input: Ref<InstanceType<typeof PfTextInputGroupMain> | null> = ref(null);
 
 const menuUI = useFloatingUI(
   el as any,

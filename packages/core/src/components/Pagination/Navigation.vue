@@ -77,7 +77,7 @@ import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-ico
 import AnglesRightIcon from '@vue-patternfly/icons/dist/esm/icons/angles-right-icon';
 
 import { pluralize } from '../../util';
-import { defineComponent, markRaw, ref } from 'vue';
+import { defineComponent, markRaw, Ref, ref } from 'vue';
 
 export default defineComponent({
   name: 'PfNavigation',
@@ -155,7 +155,7 @@ export default defineComponent({
   setup(props) {
     return {
       styles: markRaw(styles) as typeof styles,
-      userInputPage: ref<string | number>(props.page),
+      userInputPage: ref(props.page) as Ref<string | number>,
     };
   },
 

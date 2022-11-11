@@ -138,7 +138,7 @@ export default defineComponent({
     Void,
     CheckIcon,
     StarIcon,
-    ItemDisplay: {
+    ItemDisplay: defineComponent({
       props: ['count'],
       render() {
         if (this.count || this.count === 0) {
@@ -149,7 +149,7 @@ export default defineComponent({
         }
         return this.$slots.default();
       },
-    },
+    }),
   },
 
   props: {

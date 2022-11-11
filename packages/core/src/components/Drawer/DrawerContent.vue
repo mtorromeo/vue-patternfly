@@ -37,6 +37,6 @@ withDefaults(defineProps<{
   colorVariant: DrawerColorVariant.default,
 });
 
-const el = ref<HTMLDivElement | null>(null);
+const el: Ref<HTMLDivElement | null> = ref(null);
 provide(DrawerContentRefKey, el);
 </script>

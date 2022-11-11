@@ -48,7 +48,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, inject, ref, unref } from 'vue';
+import { computed, inject, Ref, ref, unref } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';
@@ -92,16 +92,16 @@ const emit = defineEmits({
   resize: (width: number, id: string) => true,
 });
 
-const panel = ref<HTMLDivElement | null>(null);
+const panel: Ref<HTMLElement | null> = ref(null);
 const panelId = computed(() => props.id || getUniqueId('pf-drawer-panel-'));
 
 const { el: drawerRef, position, expanded, inline, static: isStatic } = inject(DrawerKey);
 const drawerContentRef = inject(DrawerContentRefKey);
 const hidden = computed(() => unref(isStatic) || !unref(expanded));
-const splitterRef = ref<HTMLDivElement | null>(null);
+const splitterRef: Ref<HTMLDivElement | null> = ref(null);
 
 let isResizing: boolean | null = null;
-let panelSize = ref<number | null>(null);
+let panelSize: Ref<number | null> = ref(null);
 let panelRect: DOMRect;
 let setInitialVals = true;
 const separatorValue = ref(0);

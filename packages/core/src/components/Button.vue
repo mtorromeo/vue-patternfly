@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import { DefineComponent, defineComponent, markRaw, PropType, ref } from 'vue';
+import { DefineComponent, defineComponent, markRaw, PropType, Ref, ref } from 'vue';
 
 import PfSpinner from './Spinner.vue';
 import Void from '../helpers/Void';
@@ -143,7 +143,7 @@ export default defineComponent({
   emits: ['click'],
 
   setup() {
-    const el = ref<HTMLElement | null>(null);
+    const el: Ref<HTMLElement | null> = ref(null);
     return {
       styles: markRaw(styles) as typeof styles,
       el,

@@ -73,7 +73,7 @@ export default defineComponent({
   emits: ['update:expanded', 'clear-all-filters'],
 
   setup(props, { emit }) {
-    const managedToggleExpanded = ref<boolean>(false);
+    const managedToggleExpanded = ref(false);
 
     const toggleManaged = computed(() => !props.expanded && props.expanded !== false);
 
@@ -96,7 +96,7 @@ export default defineComponent({
 
     const { width: windowWidth } = useWindowSize();
 
-    const filterInfo = ref<Record<string, number>>({});
+    const filterInfo: Ref<Record<string, number>> = ref({});
     const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));
     provide(ToolbarNumberOfFiltersKey, numberOfFilters);
 
