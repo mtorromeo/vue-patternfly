@@ -18,6 +18,7 @@
     "strictNullChecks": false,
     "isolatedModules": true,
     "allowJs": true,
+    "noUnusedLocals": true,
     "plugins": [
       {
         "transform": "transformer-cjs-imports"

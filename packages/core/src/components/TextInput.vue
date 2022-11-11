@@ -85,7 +85,7 @@ const props = withDefaults(defineProps<{
   modelValue: undefined,
 });
 
-const emit = defineEmits({
+defineEmits({
   /** A callback for when the text input value changes. */
   change: (event: Event) => true,
   /** Callback function when text input is focused */

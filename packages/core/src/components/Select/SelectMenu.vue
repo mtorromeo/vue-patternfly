@@ -29,7 +29,7 @@ export default defineComponent({
         return children;
       }
 
-      const randomId = this.select?.inputIdPrefix;
+      // const randomId = this.select?.inputIdPrefix;
 
       if (grouped) {
         // let index = 0;
@@ -59,7 +59,7 @@ export default defineComponent({
       this.childrenCount = children.length;
 
       // const { isGrouped, checked, sendRef, keyHandler, hasInlineFilter } = this.props;
-      const index = this.inlineFilter ? 1 : 0;
+      // const index = this.inlineFilter ? 1 : 0;
       if (grouped) {
         //   return children.map(children, (group) => {
         //     if (group.type === SelectOption || group.type === Divider) {

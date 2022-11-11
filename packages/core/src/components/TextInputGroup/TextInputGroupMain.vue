@@ -23,6 +23,9 @@
         :disabled="disabled || undefined"
         v-model="value"
         :placeholder="placeholder"
+        @change="emit('change', $event)"
+        @focus="emit('focus', $event)"
+        @blur="emit('blur', $event)"
       >
     </span>
   </div>
@@ -34,7 +37,7 @@ import { inject, Ref, ref } from 'vue';
 import { useManagedProp } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   /** Type that the input accepts. */
   type?:
     | 'text'
@@ -64,11 +67,11 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits({
   'update:modelValue': (v: string) => true,
   /** Callback for when there is a change in the input field*/
-  change: (value: string, event: Event) => true,
+  change: (event: Event) => true,
   /** Callback for when the input field is focused*/
-  focus: (event?: any) => true,
+  focus: (event: FocusEvent) => true,
   /** Callback for when focus is lost on the input field*/
-  blur: (event?: any) => true,
+  blur: (event: FocusEvent) => true,
 });
 
 const value = useManagedProp('modelValue', '');

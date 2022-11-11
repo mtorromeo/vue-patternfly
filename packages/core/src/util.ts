@@ -1,4 +1,4 @@
-import { computed, Fragment, Comment, Prop, VNode, isVNode, VNodeNormalizedChildren, ComponentPublicInstance, CSSProperties } from 'vue';
+import { computed, Fragment, Comment, Prop, VNode, isVNode, VNodeNormalizedChildren, ComponentPublicInstance } from 'vue';
 
 export enum Breakpoints {
   xs = '',
