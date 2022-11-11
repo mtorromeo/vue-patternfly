@@ -4,6 +4,7 @@
     "outDir": "./dist/js",
     "module": "commonjs",
     "composite": true,
+    "preserveValueImports": false,
     "tsBuildInfoFile": "dist/cjs.tsbuildinfo"
   }
 }

@@ -1,4 +1,4 @@
-import { defineComponent, h, PropType } from 'vue';
+import { defineComponent, h, type PropType } from 'vue';
 
 export enum IconSize {
   sm = 'sm',
