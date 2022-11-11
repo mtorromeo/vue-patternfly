@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import heightToken from '@patternfly/react-tokens/dist/esm/c_form_control_textarea_Height';
 
-import { computed, defineComponent, getCurrentInstance, h, PropType } from 'vue';
+import { computed, defineComponent, getCurrentInstance, h, type PropType } from 'vue';
 import { inputProps, useInputValidation } from '../input';
 import { useChildrenTracker, useManagedProp } from '../use';
 import { canUseDOM } from '../util';

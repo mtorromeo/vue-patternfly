@@ -76,7 +76,7 @@ import PfCloseButton from '../CloseButton';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
-import { ref, watch, markRaw, defineComponent, PropType } from 'vue';
+import { ref, watch, markRaw, defineComponent, type PropType } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
 

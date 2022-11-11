@@ -1,5 +1,5 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
-import { DefineComponent, defineComponent, h, inject, InjectionKey, mergeProps, provide, ref, Ref, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, inject, type InjectionKey, mergeProps, provide, ref, type Ref, resolveDynamicComponent } from 'vue';
 import PfDropdownToggle from './DropdownToggle';
 import PfDropdownMenu from './DropdownMenu.vue';
 import { breakpointProp, classesFromBreakpointProps, isComponentPublicInstance } from '../../util';

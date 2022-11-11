@@ -42,7 +42,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import { defineComponent, inject, markRaw, ref, Ref } from 'vue';
+import { defineComponent, inject, markRaw, ref, type Ref } from 'vue';
 import { useChildrenTracker, useFocused } from '../../use';
 import { DropdownToggleElementRefKey, DropdownDisabledClassKey, DropdownItemClassKey } from './Dropdown';
 import { DropdownMenuOnKeydownKey } from './DropdownMenu.vue';

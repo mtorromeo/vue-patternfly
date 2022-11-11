@@ -24,7 +24,7 @@
 import PfChipGroup from '../ChipGroup/ChipGroup.vue';
 import PfChip from '../ChipGroup/Chip.vue';
 import PfToolbarItem from './ToolbarItem.vue';
-import { defineComponent, inject, PropType } from 'vue';
+import { defineComponent, inject, type PropType } from 'vue';
 import { ToolbarChipGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
 import { ToolbarContentChipContainerRefKey } from './ToolbarContent.vue';
 

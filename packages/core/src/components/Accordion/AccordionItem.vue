@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DefineComponent, defineComponent, h, inject, mergeProps, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, inject, mergeProps, resolveDynamicComponent } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';

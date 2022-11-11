@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 
-import { h, mergeProps, resolveDynamicComponent, DefineComponent, defineComponent } from 'vue';
+import { h, mergeProps, resolveDynamicComponent, type DefineComponent, defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'PfBullseye',

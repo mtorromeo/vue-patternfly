@@ -125,8 +125,8 @@ import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
-import { h, markRaw, inject, getCurrentInstance, defineComponent, Ref, ref, ComponentPublicInstance } from 'vue';
-import { Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
+import { h, markRaw, inject, getCurrentInstance, defineComponent, type Ref, ref, type ComponentPublicInstance } from 'vue';
+import { type Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
 import { SelectKey } from './Select.vue';
 
 import Void from '../../helpers/Void';

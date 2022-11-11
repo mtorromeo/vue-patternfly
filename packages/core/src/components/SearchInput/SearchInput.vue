@@ -147,7 +147,7 @@ export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInp
 </script>
 
 <script lang="ts" setup>
-import { computed, InjectionKey, nextTick, provide, Ref, ref } from 'vue';
+import { computed, type InjectionKey, nextTick, provide, type Ref, ref } from 'vue';
 import { useFloatingUI, useManagedProp } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';

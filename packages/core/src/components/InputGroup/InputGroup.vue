@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
-import { h, mergeProps, cloneVNode, defineComponent, Component, VNode } from 'vue';
+import { h, mergeProps, cloneVNode, defineComponent, type Component, type VNode } from 'vue';
 
 const formCtrls = ['PfFormSelect', 'PfTextArea', 'PfTextInput'];
 

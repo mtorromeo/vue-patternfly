@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { provide, ref, computed, markRaw, defineComponent, InjectionKey, Ref, PropType, ComputedRef } from 'vue';
+import { provide, ref, computed, markRaw, defineComponent, type InjectionKey, type Ref, type PropType, type ComputedRef } from 'vue';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
 import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';

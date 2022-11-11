@@ -1,5 +1,5 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, Component, ComponentInternalInstance, RendererNode, Ref, ComponentPublicInstance, WritableComputedRef, reactive, watch, VNode } from 'vue';
-import { MaybeComputedRef, resolveUnref, tryOnMounted } from '@vueuse/shared';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, type Component, type ComponentInternalInstance, type RendererNode, type Ref, type ComponentPublicInstance, type WritableComputedRef, reactive, watch, type VNode } from 'vue';
+import { type MaybeComputedRef, resolveUnref, tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
 import { computePosition, autoUpdate } from '@floating-ui/dom';
 import { findComponentVNode } from './util';

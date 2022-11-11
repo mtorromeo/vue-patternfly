@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
 
-import { Component, defineComponent, h, PropType } from 'vue';
+import { type Component, defineComponent, h, type PropType } from 'vue';
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';

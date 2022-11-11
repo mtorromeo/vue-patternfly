@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Skeleton/skeleton';
-import { defineComponent, markRaw, PropType } from 'vue';
+import { defineComponent, markRaw, type PropType } from 'vue';
 
 export default defineComponent({
   name: 'PfSkeleton',

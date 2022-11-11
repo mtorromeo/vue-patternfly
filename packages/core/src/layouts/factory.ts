@@ -1,4 +1,4 @@
-import { h, resolveDynamicComponent, DefineComponent, ComponentPublicInstance } from 'vue';
+import { h, resolveDynamicComponent, type DefineComponent, type ComponentPublicInstance } from 'vue';
 
 type LayoutComponent = ComponentPublicInstance<{
   component: string | DefineComponent;

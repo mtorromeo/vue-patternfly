@@ -23,7 +23,7 @@ export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { InjectionKey, provide, Ref, ref } from 'vue';
+import { type InjectionKey, provide, type Ref, ref } from 'vue';
 import { DrawerColorVariant } from './common';
 
 import OverridableWrapper from '../../helpers/OverridableWrapper';

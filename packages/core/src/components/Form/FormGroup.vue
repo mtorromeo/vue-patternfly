@@ -65,8 +65,8 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { ComponentPublicInstance, computed, defineComponent, markRaw, UnwrapNestedRefs } from 'vue';
-import { useInputValidation } from '../../input';
+import { type ComponentPublicInstance, computed, defineComponent, markRaw, type UnwrapNestedRefs } from 'vue';
+import type { useInputValidation } from '../../input';
 import { provideChildrenTracker } from '../../use';
 import Void from '../../helpers/Void';
 

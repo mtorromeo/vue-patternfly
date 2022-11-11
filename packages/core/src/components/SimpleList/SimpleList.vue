@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { Component, ComputedRef, defineComponent, h, InjectionKey, provide } from 'vue';
+import { type Component, type ComputedRef, defineComponent, h, type InjectionKey, provide } from 'vue';
 import { findChildrenVNodes } from '../../util';
 import { useManagedProp } from '../../use';
 

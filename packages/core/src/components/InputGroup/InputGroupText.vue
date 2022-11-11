@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
-import { DefineComponent, defineComponent, h, mergeProps, PropType, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, mergeProps, type PropType, resolveDynamicComponent } from 'vue';
 
 export default defineComponent({
   name: 'PfInputGroupText',

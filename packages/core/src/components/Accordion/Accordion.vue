@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, InjectionKey, provide } from 'vue';
+import { defineComponent, h, type InjectionKey, provide } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 
 export const AccordionKey = Symbol('AccordionKey') as InjectionKey<{

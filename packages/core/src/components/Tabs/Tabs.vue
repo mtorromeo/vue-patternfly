@@ -3,7 +3,7 @@ import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import { breakpointProp, classesFromBreakpointProps, findChildrenVNodes, isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { h, provide, computed, reactive, defineComponent, PropType, InjectionKey, ComputedRef, Ref, ref } from 'vue';
+import { h, provide, computed, reactive, defineComponent, type PropType, type InjectionKey, type ComputedRef, type Ref, ref } from 'vue';
 
 import PfTabContent from './TabContent.vue';
 import PfAngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';

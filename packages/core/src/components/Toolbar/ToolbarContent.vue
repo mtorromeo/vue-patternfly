@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { ref, provide, markRaw, defineComponent, InjectionKey, Ref, inject } from 'vue';
+import { ref, provide, markRaw, defineComponent, type InjectionKey, type Ref, inject } from 'vue';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';

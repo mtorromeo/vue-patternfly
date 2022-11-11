@@ -1,4 +1,4 @@
-import { DefineComponent, defineComponent, PropType, Slot, VNode } from "vue";
+import { type DefineComponent, defineComponent, type PropType, type Slot, type VNode } from "vue";
 
 export default defineComponent({
   name: 'Void',

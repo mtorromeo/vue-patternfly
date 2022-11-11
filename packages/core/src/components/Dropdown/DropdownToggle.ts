@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import { defineComponent, h, inject, mergeProps, VNode } from 'vue';
+import { defineComponent, h, inject, mergeProps, type VNode } from 'vue';
 import PfToggle from './Toggle';
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 import { DropdownDisabledClassKey, DropdownToggleIndicatorClassKey, DropdownToggleTextClassKey } from './Dropdown';

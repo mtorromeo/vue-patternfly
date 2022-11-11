@@ -33,7 +33,7 @@ import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { defineComponent, markRaw, PropType } from 'vue';
+import { defineComponent, markRaw, type PropType } from 'vue';
 
 export default defineComponent({
   name: 'PfToolbarChipGroupContent',

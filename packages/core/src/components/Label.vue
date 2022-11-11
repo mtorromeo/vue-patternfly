@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import { DefineComponent, defineComponent, h, mergeProps, PropType, ref, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, mergeProps, type PropType, ref, resolveDynamicComponent } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton';
 import PfTooltip, { TooltipPosition } from './Tooltip/Tooltip.vue';

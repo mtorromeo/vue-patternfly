@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Title/title';
 
-import { defineComponent, h, mergeProps, PropType } from 'vue';
+import { defineComponent, h, mergeProps, type PropType } from 'vue';
 
 const headingLevelSizeMap: Record<number, keyof typeof styles.modifiers> = {
   [1]: '2xl',

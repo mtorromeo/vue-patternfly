@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
-import { defineComponent, h, PropType } from 'vue';
+import { defineComponent, h, type PropType } from 'vue';
 
 const variantTypes = {
   default: styles.pageMainSection,

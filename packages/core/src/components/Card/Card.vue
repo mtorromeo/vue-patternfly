@@ -30,7 +30,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { provide, computed, defineComponent, DefineComponent, PropType, InjectionKey, Ref, ComputedRef, markRaw } from 'vue';
+import { provide, computed, defineComponent, type DefineComponent, type PropType, type InjectionKey, type Ref, type ComputedRef, markRaw } from 'vue';
 import { useManagedProp } from '../../use';
 
 export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean>>;

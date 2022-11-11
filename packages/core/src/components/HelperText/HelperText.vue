@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
-import { defineComponent, InjectionKey, markRaw, PropType, provide } from 'vue';
+import { defineComponent, type InjectionKey, markRaw, type PropType, provide } from 'vue';
 
 export const HelperTextComponentKey = Symbol('HelperTextComponentKey') as InjectionKey<'div' | 'ul'>;
 

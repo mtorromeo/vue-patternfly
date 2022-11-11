@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { inject, Ref, ref } from 'vue';
+import { inject, type Ref, ref } from 'vue';
 import { useManagedProp } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
 

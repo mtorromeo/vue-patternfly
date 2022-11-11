@@ -1,4 +1,4 @@
-declare module 'vue' {
+declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     PfAvatar: typeof import('@vue-patternfly/core').PfAvatar,
     PfBackdrop: typeof import('@vue-patternfly/core').PfBackdrop,

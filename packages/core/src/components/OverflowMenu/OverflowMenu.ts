@@ -1,4 +1,4 @@
-import { defineComponent, h, InjectionKey, mergeProps, PropType, provide, Ref, ref } from 'vue';
+import { defineComponent, h, type InjectionKey, mergeProps, type PropType, provide, type Ref, ref } from 'vue';
 import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 import { globalBreakpoints } from '../Toolbar/ToolbarUtils';

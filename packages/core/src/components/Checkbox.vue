@@ -36,7 +36,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Check/check';
 import { getUniqueId } from '../util';
-import { DefineComponent, defineComponent, markRaw, PropType, ref, Ref } from 'vue';
+import { type DefineComponent, defineComponent, markRaw, type PropType, ref, type Ref } from 'vue';
 
 export default defineComponent({
   name: 'PfCheckbox',

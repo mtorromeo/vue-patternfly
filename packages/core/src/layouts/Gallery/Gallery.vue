@@ -1,6 +1,6 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Gallery/gallery';
-import { DefineComponent, defineComponent, PropType } from 'vue';
+import { type DefineComponent, defineComponent, type PropType } from 'vue';
 
 import { render } from '../factory';
 

@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import { computed, ComputedRef, defineComponent, inject, InjectionKey, markRaw, provide } from 'vue';
+import { computed, type ComputedRef, defineComponent, inject, type InjectionKey, markRaw, provide } from 'vue';
 import { PageManagedSidebarKey, PageNavOpenKey } from './Page.vue';
 
 export const SidebarOpenKey = Symbol('SidebarOpenKey') as InjectionKey<ComputedRef<boolean> | boolean>;

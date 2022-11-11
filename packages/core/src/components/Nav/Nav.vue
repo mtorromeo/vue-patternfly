@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { ref, provide, markRaw, defineComponent, PropType, InjectionKey, Ref } from 'vue';
+import { ref, provide, markRaw, defineComponent, type PropType, type InjectionKey, type Ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 export const NavScrollablelKey = Symbol('NavScrollablelKey') as InjectionKey<Ref<boolean>>;

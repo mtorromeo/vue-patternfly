@@ -41,7 +41,7 @@ import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/acc
 
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { getUniqueId } from '../../util';
-import { defineComponent, markRaw, Ref, ref } from 'vue';
+import { defineComponent, markRaw, type Ref, ref } from 'vue';
 
 export default defineComponent({
   name: 'PfNavExpandable',

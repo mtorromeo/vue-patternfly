@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref } from 'vue';
+import { type Ref, ref } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation } from '../input';

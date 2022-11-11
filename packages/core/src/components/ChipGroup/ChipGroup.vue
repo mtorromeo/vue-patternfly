@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, mergeProps, PropType, ref } from 'vue';
+import { defineComponent, h, mergeProps, type PropType, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ChipGroup/chip-group';
 import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 import PfChip from './Chip.vue';

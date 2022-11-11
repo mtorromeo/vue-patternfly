@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, provide, Ref, ref } from 'vue';
+import { computed, provide, type Ref, ref } from 'vue';
 import OverridableWrapper from '../../helpers/OverridableWrapper';
 import { DrawerKey } from './common';
 import PfDrawerContent from './DrawerContent.vue';

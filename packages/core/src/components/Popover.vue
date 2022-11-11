@@ -63,7 +63,7 @@
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
 import { useFloatingUI, useHtmlElementFromVNodes, useManagedProp } from '../use';
-import { computed, defineComponent, markRaw, PropType, Ref, ref, watch } from 'vue';
+import { computed, defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
@@ -71,7 +71,7 @@ import PfFocusTrap from '../helpers/FocusTrap.vue';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
 import Void from '../helpers/Void';
-import { offset, autoPlacement, Placement, hide, flip, FlipOptions, AutoPlacementOptions } from '@floating-ui/core';
+import { offset, autoPlacement, type Placement, hide, flip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
 
 export default defineComponent({
   name: 'PfPopover',

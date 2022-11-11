@@ -109,13 +109,13 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 
 import Void from '../../helpers/Void';
 import PfSelectMenu from './SelectMenu.vue';
-import PfSelectOption from './SelectOption.vue';
+import type PfSelectOption from './SelectOption.vue';
 import PfSelectToggle from './SelectToggle.vue';
 import PfDivider from '../Divider';
 import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 
-import { useManagedProp, provideChildrenTracker, keyNavigation, Disableable, Focusable, Navigatable } from '../../use';
-import { Component, defineComponent, InjectionKey, markRaw, PropType, provide, Ref, ref } from 'vue';
+import { useManagedProp, provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type Navigatable } from '../../use';
+import { type Component, defineComponent, type InjectionKey, markRaw, type PropType, provide, type Ref, ref } from 'vue';
 
 export const SelectKey = Symbol('SelectKey') as InjectionKey<{
   $emit: (event: 'select', ...args: any[]) => void;

@@ -7,7 +7,7 @@
 <script lang="ts">
 import { breakpointProp, classesFromBreakpointProps, toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { defineComponent, markRaw, PropType } from 'vue';
+import { defineComponent, markRaw, type PropType } from 'vue';
 
 export default defineComponent({
   name: 'PfToolbarGroup',

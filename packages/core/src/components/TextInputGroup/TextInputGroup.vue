@@ -13,7 +13,7 @@ export const TextInputGroupDisabledKey = Symbol('TextInputGroupDisabledKey') as 
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { InjectionKey, provide } from 'vue';
+import { type InjectionKey, provide } from 'vue';
 
 const props = defineProps<{
   /** Adds disabled styling and a disabled context value which text input group main hooks into for the input itself */

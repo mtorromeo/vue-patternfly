@@ -1,4 +1,4 @@
-import { Component, ComponentOptionsMixin, DefineComponent, defineComponent, h, PropType, ref, resolveDynamicComponent, VNode, VNodeTypes } from "vue";
+import { type Component, type ComponentOptionsMixin, type DefineComponent, defineComponent, h, type PropType, ref, resolveDynamicComponent, type VNode, type VNodeTypes } from "vue";
 import { findChildrenVNodes } from "../util";
 
 function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & ComponentOptionsMixin {

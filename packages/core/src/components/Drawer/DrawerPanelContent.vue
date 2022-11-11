@@ -48,7 +48,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, inject, Ref, ref, unref } from 'vue';
+import { computed, inject, type Ref, ref, unref } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';

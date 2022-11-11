@@ -1,22 +1,15 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
     "assumeChangesOnlyAffectDirectDependencies": true,
     "lib": [
-      "es2021",
+      "ES2021",
       "DOM",
       "DOM.Iterable"
     ],
-    "target": "es2015",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
     "importHelpers": true,
-    "jsx": "preserve",
     "sourceMap": true,
-    "strict": true,
     "strictNullChecks": false,
-    "isolatedModules": true,
     "allowJs": true,
     "noUnusedLocals": true,
     "plugins": [

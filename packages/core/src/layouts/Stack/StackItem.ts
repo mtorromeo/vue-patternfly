@@ -1,5 +1,5 @@
 import styles from '@patternfly/react-styles/css/layouts/Stack/stack';
-import { h, resolveDynamicComponent, defineComponent, DefineComponent } from 'vue';
+import { h, resolveDynamicComponent, defineComponent, type DefineComponent } from 'vue';
 
 export default defineComponent({
   name: 'PfStackItem',

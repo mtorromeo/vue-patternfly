@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, Ref, ref } from 'vue';
+import { computed, inject, type Ref, ref } from 'vue';
 import { useManagedProp } from '../../use';
 import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
 

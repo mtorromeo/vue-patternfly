@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Card/card';
 
-import { defineComponent, DefineComponent, h, PropType, resolveDynamicComponent } from 'vue';
+import { defineComponent, type DefineComponent, h, type PropType, resolveDynamicComponent } from 'vue';
 
 export default defineComponent({
   name: 'PfCardFooter',

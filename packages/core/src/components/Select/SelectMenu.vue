@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Select/select';
 import formStyles from '@patternfly/react-styles/css/components/Form/form';
-import { h, mergeProps, defineComponent, inject, ref, VNode, Component } from 'vue';
+import { h, mergeProps, defineComponent, inject, ref, type VNode, type Component } from 'vue';
 import { findChildrenVNodes } from '../../util';
 
 export default defineComponent({

@@ -1,9 +1,9 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import { h, mergeProps, provide, computed, resolveDynamicComponent, DefineComponent, defineComponent, inject, PropType, InjectionKey } from 'vue';
-import PfDropdownItem from './DropdownItem.vue';
-import { provideChildrenTracker, keyNavigation, Disableable, Focusable } from '../../use';
+import { h, mergeProps, provide, computed, resolveDynamicComponent, type DefineComponent, defineComponent, inject, type PropType, type InjectionKey } from 'vue';
+import type PfDropdownItem from './DropdownItem.vue';
+import { provideChildrenTracker, keyNavigation, type Disableable, type Focusable } from '../../use';
 import { DropdownMenuClassKey } from './Dropdown';
 
 export const DropdownMenuOnKeydownKey = Symbol('DropdownMenuOnKeydownKey') as InjectionKey<(event: KeyboardEvent, itemEl?: HTMLElement) => void>;

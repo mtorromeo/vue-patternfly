@@ -1,4 +1,4 @@
-import { defineComponent, h, PropType } from 'vue';
+import { defineComponent, h, type PropType } from 'vue';
 import PfBadge from '../Badge';
 import PfToggle from './Toggle';
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';

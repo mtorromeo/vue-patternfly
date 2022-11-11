@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/Form/form';
 
-import { DefineComponent, defineComponent, h, PropType, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, type PropType, resolveDynamicComponent } from 'vue';
 
 export default defineComponent({
   name: 'PfForm',

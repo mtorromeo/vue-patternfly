@@ -1,5 +1,5 @@
-import { MaybeRef } from "@vueuse/shared";
-import { computed, getCurrentInstance, PropType, ref, unref, watch } from "vue";
+import type { MaybeRef } from "@vueuse/shared";
+import { computed, getCurrentInstance, type PropType, ref, unref, watch } from "vue";
 import { useManagedProp } from "./use";
 
 export const inputProps = {

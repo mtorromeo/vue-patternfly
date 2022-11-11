@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 
 import { breakpointProp, classesFromBreakpointProps } from '../util';
-import { DefineComponent, defineComponent, h, inject, PropType, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, inject, type PropType, resolveDynamicComponent } from 'vue';
 import { DividerComponentKey } from './Dropdown/Dropdown';
 
 export default defineComponent({

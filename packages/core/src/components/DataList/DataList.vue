@@ -17,7 +17,7 @@
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
 
-import { computed, ComputedRef, defineComponent, InjectionKey, markRaw, PropType, provide, Ref, ref, WritableComputedRef } from "vue";
+import { computed, type ComputedRef, defineComponent, type InjectionKey, markRaw, type PropType, provide, type Ref, ref, type WritableComputedRef } from "vue";
 import { useManagedProp } from '../../use';
 
 export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';

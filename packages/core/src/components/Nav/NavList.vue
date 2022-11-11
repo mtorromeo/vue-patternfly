@@ -27,7 +27,7 @@ import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon'
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
-import { defineComponent, inject, markRaw, ref, Ref } from 'vue';
+import { defineComponent, inject, markRaw, ref, type Ref } from 'vue';
 import { NavHorizontalKey, NavScrollablelKey } from './Nav.vue';
 
 export default defineComponent({

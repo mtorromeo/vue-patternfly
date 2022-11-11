@@ -1,4 +1,4 @@
-import { defineComponent, h, inject, mergeProps, PropType } from 'vue';
+import { defineComponent, h, inject, mergeProps, type PropType } from 'vue';
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 import { OverflowMenuIsBelowBreakpointKey } from './OverflowMenu';
 

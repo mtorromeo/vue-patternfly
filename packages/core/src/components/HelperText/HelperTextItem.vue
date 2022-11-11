@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
-import { defineComponent, inject, markRaw, PropType } from 'vue';
+import { defineComponent, inject, markRaw, type PropType } from 'vue';
 
 import MinusIcon from '@vue-patternfly/icons/dist/esm/icons/minus-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';

@@ -26,7 +26,7 @@ import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { defineComponent, inject, markRaw, PropType } from 'vue';
+import { defineComponent, inject, markRaw, type PropType } from 'vue';
 import { ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
 import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
 

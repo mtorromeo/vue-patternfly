@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import { DefineComponent, defineComponent, markRaw, PropType, Ref, ref } from 'vue';
+import { type DefineComponent, defineComponent, markRaw, type PropType, type Ref, ref } from 'vue';
 
 import PfSpinner from './Spinner.vue';
 import Void from '../helpers/Void';

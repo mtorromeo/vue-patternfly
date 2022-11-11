@@ -5,7 +5,7 @@ import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
 import PfButton from '../Button.vue';
 import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';
-import { DefineComponent, defineComponent, h, mergeProps, PropType, ref, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, mergeProps, type PropType, ref, resolveDynamicComponent } from 'vue';
 import { useElementOverflow } from '../../use';
 
 export default defineComponent({

@@ -25,7 +25,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
-import { computed, ComputedRef, defineComponent, getCurrentInstance, inject, InjectionKey, markRaw, PropType, provide, ref, WritableComputedRef } from "vue";
+import { computed, type ComputedRef, defineComponent, getCurrentInstance, inject, type InjectionKey, markRaw, type PropType, provide, ref, type WritableComputedRef } from "vue";
 import { DataListKey } from './DataList.vue';
 import OverridableWrapper from '../../helpers/OverridableWrapper';
 import PfDataListItemRow from './DataListItemRow.vue';

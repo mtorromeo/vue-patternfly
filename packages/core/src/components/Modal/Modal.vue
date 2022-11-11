@@ -91,7 +91,7 @@ import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triang
 import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import { capitalize } from 'vue';
-import { ref, markRaw, defineComponent, PropType } from 'vue';
+import { ref, markRaw, defineComponent, type PropType } from 'vue';
 import { useElementOverflow } from '../../use';
 
 export default defineComponent({

@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { defineComponent, h, mergeProps, PropType } from 'vue';
+import { defineComponent, h, mergeProps, type PropType } from 'vue';
 
 export default defineComponent({
   name: 'PfSimpleListGroup',

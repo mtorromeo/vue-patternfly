@@ -19,8 +19,8 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
-import { defineComponent, inject, markRaw, PropType } from "vue";
-import { DataListWrapModifier } from './DataList.vue';
+import { defineComponent, inject, markRaw, type PropType } from "vue";
+import type { DataListWrapModifier } from './DataList.vue';
 import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
 import PfDataListToggle from './DataListToggle.vue';

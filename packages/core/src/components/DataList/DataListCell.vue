@@ -17,8 +17,8 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
-import { defineComponent, markRaw, PropType } from "vue";
-import { DataListWrapModifier } from './DataList.vue';
+import { defineComponent, markRaw, type PropType } from "vue";
+import type { DataListWrapModifier } from './DataList.vue';
 
 export default defineComponent({
   name: 'PfDataListCell',

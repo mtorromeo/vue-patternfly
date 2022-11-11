@@ -38,6 +38,7 @@
     "@vueuse/shared": "^9.5.0"
   },
   "devDependencies": {
+    "@types/web-bluetooth": "^0.0.16",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "^3.2.45",
     "concurrently": "^7.5.0",

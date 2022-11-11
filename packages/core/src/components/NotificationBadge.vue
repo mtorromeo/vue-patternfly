@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/NotificationBadge/notification-badge';
-import { defineComponent, markRaw, PropType } from 'vue';
+import { defineComponent, markRaw, type PropType } from 'vue';
 import PfButton from './Button.vue';
 import PfBellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import PfAttentionBellIcon from '@vue-patternfly/icons/dist/esm/icons/attention-bell-icon';

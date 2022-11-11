@@ -1,6 +1,6 @@
 <script lang="ts">
-import { useFocusTrap, UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
-import { defineComponent, h, ref, PropType } from 'vue';
+import { useFocusTrap, type UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
+import { defineComponent, h, ref, type PropType } from 'vue';
 
 export default defineComponent({
   name: 'PfFocusTrap',

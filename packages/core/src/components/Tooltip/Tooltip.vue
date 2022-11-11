@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { computed, defineComponent, markRaw, PropType, Ref, ref, watch } from 'vue';
+import { computed, defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';

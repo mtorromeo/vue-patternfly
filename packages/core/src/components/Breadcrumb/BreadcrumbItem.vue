@@ -21,8 +21,8 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
-import { DefineComponent, defineComponent, markRaw, PropType } from 'vue';
-import { RouteLocationRaw } from 'vue-router';
+import { type DefineComponent, defineComponent, markRaw, type PropType } from 'vue';
+import type { RouteLocationRaw } from 'vue-router';
 
 import Void from '../../helpers/Void';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
