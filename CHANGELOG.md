@@ -1,57 +1,134 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Bug Fixes
+
+- *(ExpandableSection)* Fixed managed prop "expanded"
+- *(Pagination)* Re-emitted update:page event
+- *(types)* Typo in type exports for EmptyState components
+- *(types)* Export global types for layout components
+- *(docs)* Import global core types in docs app
+- *(types)* Workaround for export of missing private name RawSymbol from vue
+- *(types)* Force cast of self referential type
+- Updated icons for fontawesome 6
+- *(docs)* Icon name type
+- *(ChipGroup)* Do not render group container if it does not contains any chips
+- *(SearchInput)* Working advanced menu form
+- *(TextInput)* Fixed validation of auto-validate prop
+- Removed underperforming GenerateId component
+- Replaced every ref<T> instance with var:Ref<T> improving type exports
+- Fixed type imports in docs
+
+### Documentation
+
+- Locked vue to the same version used by core
+- Managed expandable section example
+- Setup proper window title for every page
+- *(Page)* Fixed navigation sidebar
+
+### Features
+
+- *(DataList)* Implemented pf-data-list components (no draggable) ([#5](https://github.com/mtorromeo/vue-patternfly4/issues/5))
+- *(Alert)* Allow all heading levels for title
+- *(AlertGroup)* Alert group overflow
+- *(Brand)* Allow picture with child elements and breakpoints
+- *(Card)* Add disabled and selectableRaised card with optional input
+- *(Checkbox)* Allow specifying the container component of checkboxes
+- *(Panel)* Implemented Panel components
+- *(TextInputGroup)* Implemented text input group components
+- *(TextInputGroup)* Added focus() method
+- *(SearchInput)* Implemented search input component
+- *(SearchInput)* Expandable search input
+- *(Drawer)* Implemented drawer
+- *(Drawer)* Improved by allowing to specify fewer tags to compose a complete drawer
+
+### Refactor
+
+- Completed popover and tooltip implementations
+- Inverted no-flip prop of popover
+- Reorganized project layout of packages
+- Updated useManagedProp utility function
+- Replaced usage of useFloatingUI with new helper component FloatingUi
+- *(FloatingUi)* Renamed sameSize prop to sameWidth
+- Renamed Void helper to PassThrough
+
+## [0.1.0-beta.3] - 2022-05-30
+
+### Bug Fixes
+
+- *(docs)* Use <pre v-md> tag instead of <md> so that formatters won't modify the content
+- *(docs)* Internal links and typescript validation of vue templates
+- *(docs)* Small fixes
+- Managed props always emit update event
+- *(FormSelect, TextInput)* Allow null values
+
+### Documentation
+
+- Autogenerate the entire navigation menu
+- Restored the introduction page and implemented code highlight in markdown
+- Uniformed use of icon components
+
+### Features
+
+- *(docs)* Added github workflow to publish new docs on gh-pages
+
+## [0.1.0-beta.2] - 2022-03-24
+
+### Refactor
+
+- Rewrote the entire codebase in typescript
+
 ## [0.1.0-beta.1] - 2021-11-24
 
 ### Bug Fixes
 
-- *(Avatar)* Fixed export of the component
 - *(docs)* Set relative path for assets and downgraded storybook to stable
+- *(Avatar)* Fixed export of the component
 - *(docs)* Updated imports of components and updated storybook
 - *(docs)* Restored introduction as first page
 
 ### Documentation
 
-- *(Form)* Clarified helperText usage- Removed unresolved export of TextVariants
-
+- Removed unresolved export of TextVariants
+- *(Form)* Clarified helperText usage
 
 ### Features
+
 - ActionGroup component
 - HelperText component
 - NotificationBadge component
-
 
 ## [0.1.0-alpha.13] - 2021-11-10
 
 ### Bug Fixes
 
-- *(BreadcrumbItem)* Let router-link set the href of the link
-- *(Void)* Prevent warnings for inherited attributes being passed on to children
-- *(build)* Set correct ts target for use of Object.fromEntries and Array.flat
 - *(docs)* Renamed links
 - *(docs)* Prevent error accessing docgeninfo on null
+- *(Void)* Prevent warnings for inherited attributes being passed on to children
+- *(BreadcrumbItem)* Let router-link set the href of the link
 
 ### Documentation
-- Layout examples using skeleton as items' component
-- Migrated storybook builder to vite
 
+- Layout examples using skeleton as items' component
 
 ### Features
 
-- *(Button)* Allow use of buttons as router-links- Skeleton component
+- Skeleton component
 - Allowed all unconstrained `component` props to accept Objects
-
+- *(Button)* Allow use of buttons as router-links
 
 ### Performance
-- Patternfly style objects are no longer made reactive
 
+- Patternfly style objects are no longer made reactive
 
 ### Refactor
 
-- *(Button)* Simplified disabled attribute handling
 - *(Select)* Made some progress
-- *(Select)* Made some progress- Initial typescript conversion of use.js and util.js
-
+- *(Select)* Made some progress
+- Initial typescript conversion of use.js and util.js
+- *(Button)* Simplified disabled attribute handling
 
 ## [0.1.0-alpha.12] - 2021-09-24
 
@@ -66,9 +143,9 @@ All notable changes to this project will be documented in this file.
 ### Features
 
 - *(Form)* Allow setting alternative component
-- *(Tabs)* Add Support for disabled state- Added Hint component
+- *(Tabs)* Add Support for disabled state
+- Added Hint component
 - Added Progress
-
 
 ### Refactor
 
@@ -78,7 +155,6 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- *(Icons)* Updated vue peer-dependency and added prepublish build script
 - *(core)* Correctly resolve children vnodes with nested fragments
 
 ### Features
@@ -91,13 +167,13 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - *(Alert)* Fixed reactivity of truncateTitle
+- All component props are resolved dynamically allowing the use of custom components and not just html tags
 - *(Checkbox)* Modified checked prop and @change event to modalValue and update:modelValue to allow use with v-model
-- *(Checkbox)* Fixed attribute binding- All component props are resolved dynamically allowing the use of custom components and not just html tags
-
+- *(Checkbox)* Fixed attribute binding
 
 ### Documentation
-- Added PageSection to subcomponents
 
+- Added PageSection to subcomponents
 
 ### Features
 
@@ -107,90 +183,87 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- *(build)* We do not need our own css. Skip every css imports from core.
-- *(build)* Fixed incorrect ignore-css-imports custom vite plugin
-- *(docs)* Instruct importing createApp from vue- Fixed example app
-
+- Fixed example app
+- *(docs)* Instruct importing createApp from vue
 
 ### Documentation
+
 - Documented stylesheet inclusion
 - Fixed css import path
-- Fixed build issue with latest vueuse + webpack
-
 
 ### Features
 
 - *(Alert)* Add plain variant, add expandable inline
+- *(Nav)* Added flyout
+- Tabs
 - *(Alert)* Show tooltip on overflowing title
-- *(Nav)* Added flyout- Tabs
-
 
 ## [0.1.0-alpha.7] - 2021-08-26
 
 ### Bug Fixes
 
-- *(SimpleList)* Inject the hidden input outside of the ul to respect the html spec which only allows li items
-- *(Textarea)* Added 's' modifier to pattern matching to make it easier to validate multiline values
 - *(docs)* Call default value function for complex props
+- *(useChildrenTracker)* Fail silently if the component is not used in a container with childrentracker
+- *(Textarea)* Added 's' modifier to pattern matching to make it easier to validate multiline values
+- *(SimpleList)* Inject the hidden input outside of the ul to respect the html spec which only allows li items
 - *(docs)* Fixed internal links
 - *(docs)* Removed empty line escape from the code examples
-- *(useChildrenTracker)* Fail silently if the component is not used in a container with childrentracker
 
 ### Features
 
-- *(Dropdown)* Implemented managed open prop so that it's not required anymore to bind a variable to open the dropdown
-- *(FormGroup)* Autodetect validation state of inner textareas- FormSelect
+- FormSelect
 - TextArea
+- *(FormGroup)* Autodetect validation state of inner textareas
 - SimpleList
+- *(Dropdown)* Implemented managed open prop so that it's not required anymore to bind a variable to open the dropdown
 - Card
-
 
 ### Refactor
 
-- *(TextInput)* Moved validation logic in InputValidationMixin
-- *(docs)* Converted storied to mdx format
 - *(useManagedProp)* No longer require passing props and emit
+- *(docs)* Converted storied to mdx format
+- *(TextInput)* Moved validation logic in InputValidationMixin
 
 ## [0.1.0-alpha.6] - 2021-08-24
 
 ### Bug Fixes
 
-- *(ChildrenTracker)* Do not fail when the tracked is not provided by a parent component
-- *(Chip, ChipGroup, Label)* Fixed detection of overflowing text
-- *(Dropdown)* Fix focus on toggle after click off menu
-- *(Dropdown, Select)* Fix scrollbar click closing menu
-- *(Nav)* Added missing class to grouped nav items wrapper
 - *(Popover)* Corrected import path
-- *(Popover)* Call setVisible before animation
-- *(tooltip)* Change default entry and exit delay- Wrong name used for beforeUnmount hook in Dropdown, Nav, Popper and Popover
+- Wrong name used for beforeUnmount hook in Dropdown, Nav, Popper and Popover
 - Better auto-placement of popovers and tooltips
-
+- *(Nav)* Added missing class to grouped nav items wrapper
+- *(ChildrenTracker)* Do not fail when the tracked is not provided by a parent component
+- *(Dropdown, Select)* Fix scrollbar click closing menu
+- *(Dropdown)* Fix focus on toggle after click off menu
+- *(tooltip)* Change default entry and exit delay
+- *(Popover)* Call setVisible before animation
+- *(Chip, ChipGroup, Label)* Fixed detection of overflowing text
 
 ### Documentation
 
-- *(Form)* Label-info example- Form
+- Form
+- *(Form)* Label-info example
 - Small fixes to example app
-
 
 ### Features
 
-- *(Accordion)* Added support for bordered modifiers, display large and mutilple body content
-- *(AlertGroup)* Make dynamic alerts more accessible
-- *(Button)* Add danger modifier to link/secondary buttons
-- *(Dropdown)* Add alignment breakpoints
+- Form and FormGroup
 - *(Form)* Inherit validation state from children text-inputs
-- *(Form)* Add stack variant to FormGroup
-- *(Form)* Add form group label info
-- *(Navigation, PageSection)* Add horizontal subnav variant
-- *(Page)* Add tabs and wizard PageSection variants
-- *(Popover)* Support diagonal positions
-- *(Switch)* Add isReversed prop/layout
-- *(Text)* Added support for visited link styling
-- *(Toolbar)* Add widths on breakpoints
-- *(avatar)* Add border prop- Form and FormGroup
 - FormAlert, FormFieldGroup and FormFieldGroupHeader
 - FormSection
-
+- *(Form)* Add stack variant to FormGroup
+- *(Toolbar)* Add widths on breakpoints
+- *(Dropdown)* Add alignment breakpoints
+- *(Button)* Add danger modifier to link/secondary buttons
+- *(Text)* Added support for visited link styling
+- *(AlertGroup)* Make dynamic alerts more accessible
+- *(Page)* Add tabs and wizard PageSection variants
+- *(avatar)* Add border prop
+- *(Switch)* Add isReversed prop/layout
+- *(Accordion)* Added support for bordered modifiers, display large and mutilple body content
+- *(Form)* Add form group label info
+- *(Navigation, PageSection)* Add horizontal subnav variant
+- *(Popover)* Support diagonal positions
 
 ### Refactor
 
@@ -200,12 +273,13 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-- *(Popper)* Fixed popper placement direction and auto-flip behavior
 - *(docs)* Assume false as default value for boolean props
-- *(docs)* Fixed opening of modals- Assigned explicit name property to every component
-
+- Assigned explicit name property to every component
+- *(docs)* Fixed opening of modals
+- *(Popper)* Fixed popper placement direction and auto-flip behavior
 
 ### Documentation
+
 - Modal story
 - Toolbar story
 - Simplified example code
@@ -217,16 +291,15 @@ All notable changes to this project will be documented in this file.
 - Breadcrumb
 - Popover
 
-
 ### Features
 
-- *(Modal)* Allow to override the container tag for the modal- EmptyState
+- EmptyState
 - ExpandableSection
 - Radio
 - Checkbox
+- *(Modal)* Allow to override the container tag for the modal
 - Breadcrumb
 - Popover
-
 
 ## [0.1.0-alpha.4] - 2021-08-19
 
@@ -236,26 +309,26 @@ All notable changes to this project will be documented in this file.
 - *(close-button)* Better aria-label
 
 ### Features
+
 - Added Backdrop component
 - Implemented FocusTrap component
 - Implemented Modal component
 
-
 ### Refactor
+
 - Migrated custom useWindowWidth to useWindowsSize from @vueuse/core
 - Moved text overflowing logic in dedicated useElementOverflowing
-
 
 ## [0.1.0-alpha.3] - 2021-08-19
 
 ### Styling
-- Toolbar code format
 
+- Toolbar code format
 
 ## [0.1.0-alpha.2] - 2021-08-19
 
 ### Bug Fixes
-- Removed usage of Vue.use
 
+- Removed usage of Vue.use
 
 <!-- generated by git-cliff -->

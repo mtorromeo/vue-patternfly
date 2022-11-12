@@ -1,11 +1,12 @@
-# configuration file for git-cliff (0.1.0)
+# configuration file for git-cliff
 
 [changelog]
 # changelog header
-header = """
-# Changelog
-All notable changes to this project will be documented in this file.\n
+header = """# Changelog
+All notable changes to this project will be documented in this file.
+
 """
+
 # template for the changelog body
 # https://tera.netlify.app/docs/#introduction
 body = """
@@ -16,24 +17,9 @@ body = """
 {% endif %}\
 {% for group, commits in commits | group_by(attribute="group") %}
     ### {{ group | upper_first }}
-    {% for commit in commits
-    | filter(attribute="scope")
-    | sort(attribute="scope") %}
-        - *({{commit.scope}})* {{ commit.message | upper_first }}
-        {%- if commit.breaking %}
-        {% raw %}  {% endraw %}- **BREAKING**: {{commit.breaking_description}}
-        {%- endif -%}
-    {%- endfor -%}
-    {%- for commit in commits %}
-        {%- if commit.scope -%}
-        {% else -%}
-            - {{ commit.message | upper_first }}
-            {% if commit.breaking -%}
-            {% raw %}  {% endraw %}- **BREAKING**: {{commit.breaking_description}}
-            {% endif -%}
-        {% endif -%}
-    {% endfor -%}
-    {% raw %}\n{% endraw %}\
+    {% for commit in commits %}
+        - {% if commit.scope %}*({{ commit.scope }})* {% endif %}{% if commit.breaking %}[**breaking**] {% endif %}{{ commit.message | upper_first }}\
+    {% endfor %}
 {% endfor %}\n
 """
 # remove the leading and trailing whitespaces from the template
@@ -44,24 +30,29 @@ footer = """
 """
 
 [git]
-# allow only conventional commits
-# https://www.conventionalcommits.org
+# parse the commits based on https://www.conventionalcommits.org
 conventional_commits = true
+# process each line of a commit as an individual commit
+split_commits = true
+# regex for preprocessing the commit messages
+commit_preprocessors = [
+  { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/mtorromeo/vue-patternfly4/issues/${2}))" },
+]
 # regex for parsing and grouping commits
 commit_parsers = [
-    { message = "^feat", group = "Features"},
-    { message = "^fix", group = "Bug Fixes"},
-    { message = "^doc", group = "Documentation"},
-    { message = "^perf", group = "Performance"},
-    { message = "^refactor", group = "Refactor"},
-    { message = "^style", group = "Styling"},
-    { message = "^test", group = "Testing"},
-    { message = "^chore", skip = true},
-    { body = ".*security", group = "Security"},
+  { message = "^(fix|feat)\\(test|build|ci\\):", skip = true },
+  { message = "^feat", group = "Features" },
+  { message = "^fix", group = "Bug Fixes" },
+  { message = "^doc", group = "Documentation" },
+  { message = "^perf", group = "Performance" },
+  { message = "^refactor", group = "Refactor" },
+  { message = "^style", group = "Styling" },
+  { message = "^chore", skip = true },
+  { body = ".*security", group = "Security" },
 ]
 # filter out the commits that are not matched by commit parsers
-filter_commits = false
+filter_commits = true
 # glob pattern for matching git tags
 tag_pattern = "v[0-9]*"
 # regex for skipping tags
-skip_tags = "v0.0.0"
+skip_tags = ""
