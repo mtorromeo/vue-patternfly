@@ -1,7 +1,7 @@
 <template>
-  <void @children="findReference">
+  <pass-through @children="findReference">
     <slot />
-  </void>
+  </pass-through>
 
   <floating-ui
     :reference="referenceElement"
@@ -73,7 +73,7 @@ import PfFocusTrap from '../helpers/FocusTrap.vue';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
-import Void from '../helpers/Void';
+import PassThrough from '../helpers/PassThrough';
 import { offset, autoPlacement, type Placement, hide, flip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
 
 export default defineComponent({
@@ -84,7 +84,7 @@ export default defineComponent({
     PfCloseButton,
     PfTitle,
     FloatingUi,
-    Void,
+    PassThrough,
   },
 
   inheritAttrs: false,

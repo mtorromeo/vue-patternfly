@@ -1,7 +1,7 @@
 <template>
-  <void @children="findReference">
+  <pass-through @children="findReference">
     <slot />
-  </void>
+  </pass-through>
 
   <floating-ui :reference="referenceElement" flip>
     <div
@@ -29,7 +29,7 @@ import { defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'v
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 import { useHtmlElementFromVNodes } from '../../use';
 
 export enum TooltipPosition {
@@ -47,7 +47,7 @@ export default defineComponent({
     PfTooltipArrow,
     PfTooltipContent,
     FloatingUi,
-    Void,
+    PassThrough,
   },
 
   props: {

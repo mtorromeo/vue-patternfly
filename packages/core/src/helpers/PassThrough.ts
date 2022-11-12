@@ -1,7 +1,7 @@
 import { type DefineComponent, defineComponent, type PropType, type Slot, type VNode } from "vue";
 
 export default defineComponent({
-  name: 'Void',
+  name: 'PassThrough',
 
   inheritAttrs: false,
 

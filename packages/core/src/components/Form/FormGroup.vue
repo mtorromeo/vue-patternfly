@@ -8,7 +8,7 @@
       }]"
     >
       <component
-        :is="(labelInfo || $slots.labelInfo) ? 'div' : 'void'"
+        :is="(labelInfo || $slots.labelInfo) ? 'div' : 'pass-through'"
         :class="styles.formGroupLabelMain"
       >
         <label :class="styles.formLabel" :for="fieldId">
@@ -68,13 +68,13 @@ import styles from '@patternfly/react-styles/css/components/Form/form';
 import { type ComponentPublicInstance, computed, defineComponent, markRaw, type UnwrapNestedRefs } from 'vue';
 import type { useInputValidation } from '../../input';
 import { provideChildrenTracker } from '../../use';
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 
 export default defineComponent({
   name: 'PfFormGroup',
 
   components: {
-    Void,
+    PassThrough,
   },
 
   props: {

@@ -12,7 +12,7 @@
       },
     ]"
   >
-    <component :is="tooltip ? 'pf-tooltip' : 'void'" :position="tooltipPosition">
+    <component :is="tooltip ? 'pf-tooltip' : 'pass-through'" :position="tooltipPosition">
       <div
         :id="`${validId}-description`"
         :class="[styles.progressDescription, {
@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
-import Void from '../helpers/Void';
+import PassThrough from '../helpers/PassThrough';
 import PfTooltip from './Tooltip/Tooltip.vue';
 import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
@@ -72,7 +72,7 @@ const variantToIcon = {
 export default defineComponent({
   name: 'PfProgress',
 
-  components: { Void, PfTooltip },
+  components: { PassThrough, PfTooltip },
 
   props: {
     /** Id of the progress component. */

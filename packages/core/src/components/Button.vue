@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? 'router-link' : 'void'"
+    :is="to ? 'router-link' : 'pass-through'"
     v-slot="routerCtx"
     :to="to"
     :replace="replace"
@@ -57,12 +57,12 @@ import styles from '@patternfly/react-styles/css/components/Button/button';
 import { type DefineComponent, defineComponent, markRaw, type PropType, type Ref, ref } from 'vue';
 
 import PfSpinner from './Spinner.vue';
-import Void from '../helpers/Void';
+import PassThrough from '../helpers/PassThrough';
 
 export default defineComponent({
   name: 'PfButton',
 
-  components: { PfSpinner, Void },
+  components: { PfSpinner, PassThrough },
 
   inheritAttrs: false,
 

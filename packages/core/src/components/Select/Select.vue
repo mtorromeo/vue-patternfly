@@ -1,5 +1,5 @@
 <template>
-  <component :is="appendTo === 'inline' ? 'void' : 'pf-popper'">
+  <component :is="appendTo === 'inline' ? 'pass-through' : 'pf-popper'">
     <div
       ref="select"
       :class="[styles.select, {
@@ -107,7 +107,7 @@ import badgeStyles from '@patternfly/react-styles/css/components/Badge/badge';
 import formStyles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 import PfSelectMenu from './SelectMenu.vue';
 import type PfSelectOption from './SelectOption.vue';
 import PfSelectToggle from './SelectToggle.vue';
@@ -132,7 +132,7 @@ export default defineComponent({
   components: {
     PfSelectMenu,
     PfSelectToggle,
-    Void,
+    PassThrough,
     // PfPopper,
     PfDivider,
     CircleXmarkIcon,

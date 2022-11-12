@@ -1,6 +1,6 @@
 <template>
-  <component :is="attributes.length > 0 ? 'div' : Void" ref="$el">
-    <component :is="(!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable) ? PfInputGroup : Void">
+  <component :is="attributes.length > 0 ? 'div' : PassThrough" ref="$el">
+    <component :is="(!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable) ? PfInputGroup : PassThrough">
       <template v-if="!expandable || managedExpanded">
         <pf-text-input-group :disabled="disabled">
           <pf-text-input-group-main
@@ -91,7 +91,7 @@
     <teleport :to="appendTo" :disabled="!appendTo || appendTo === 'inline'">
       <floating-ui :reference="$el" :z-index="zIndex" flip same-width>
         <component
-          :is="appendTo === 'inline' ? Void : 'div'"
+          :is="appendTo === 'inline' ? PassThrough : 'div'"
           v-if="attributes.length > 0"
           ref="floatingElement"
         >
@@ -151,7 +151,7 @@ import PfTextInputGroupUtilities from '../TextInputGroup/TextInputGroupUtilities
 import PfAdvancedSearchMenu from './AdvancedSearchMenu.vue';
 import PfBadge from '../Badge';
 import PfButton from '../Button.vue';
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 
 import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';

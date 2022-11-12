@@ -93,7 +93,7 @@
         type="button"
         @keydown="keydown"
       >
-        <component :is="description ? 'span' : 'void'" :class="styles.selectMenuItemMain">
+        <component :is="description ? 'span' : 'pass-through'" :class="styles.selectMenuItemMain">
           <ItemDisplay :count="count">
             <slot>{{ value.toString() }}</slot>
           </ItemDisplay>
@@ -129,13 +129,13 @@ import { h, markRaw, inject, getCurrentInstance, defineComponent, type Ref, ref,
 import { type Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
 import { SelectKey } from './Select.vue';
 
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 
 export default defineComponent({
   name: 'PfSelectOption',
 
   components: {
-    Void,
+    PassThrough,
     CheckIcon,
     StarIcon,
     ItemDisplay: defineComponent({

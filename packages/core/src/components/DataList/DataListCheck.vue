@@ -1,5 +1,5 @@
 <template>
-  <component :is="otherControls ? 'void' : 'div'" :class="styles.dataListItemControl">
+  <component :is="otherControls ? 'pass-through' : 'div'" :class="styles.dataListItemControl">
     <div :class="styles.dataListCheck">
       <input
         v-model="managedChecked"

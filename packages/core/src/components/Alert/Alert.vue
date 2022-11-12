@@ -34,7 +34,7 @@
       </template>
     </pf-alert-icon>
 
-    <component :is="tooltipVisible ? 'pf-tooltip' : 'void'" :position="tooltipPosition">
+    <component :is="tooltipVisible ? 'pf-tooltip' : 'pass-through'" :position="tooltipPosition">
       <component
         :is="titleHeadingLevel"
         ref="titleRef"
@@ -69,7 +69,7 @@ import styles from '@patternfly/react-styles/css/components/Alert/alert';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton';
@@ -83,7 +83,7 @@ import { useManagedProp } from '../../use';
 export default defineComponent({
   name: 'PfAlert',
 
-  components: { PfAlertIcon, PfAngleRightIcon, PfButton, PfCloseButton, PfTooltip, Void },
+  components: { PfAlertIcon, PfAngleRightIcon, PfButton, PfCloseButton, PfTooltip, PassThrough },
 
   props: {
     /** Flag to indicate if the alert is inline */

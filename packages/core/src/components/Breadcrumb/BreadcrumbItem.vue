@@ -24,7 +24,7 @@ import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrum
 import { type DefineComponent, defineComponent, markRaw, type PropType } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
 
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
 export default defineComponent({
@@ -101,7 +101,7 @@ export default defineComponent({
       if (this.href) {
         return 'a';
       }
-      return Void;
+      return PassThrough;
     },
   },
 });

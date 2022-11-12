@@ -19,8 +19,6 @@ declare module '@vue/runtime-core' {
     PfTextarea: typeof import('@vue-patternfly/core').PfTextarea,
     PfTextInput: typeof import('@vue-patternfly/core').PfTextInput,
     PfTitle: typeof import('@vue-patternfly/core').PfTitle,
-    Void: typeof import('@vue-patternfly/core').Void,
-    OverridableWrapper: typeof import('@vue-patternfly/core').OverridableWrapper,
 
     PfAccordion: typeof import('@vue-patternfly/core').PfAccordion,
     PfAccordionItem: typeof import('@vue-patternfly/core').PfAccordionItem,

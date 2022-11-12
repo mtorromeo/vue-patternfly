@@ -1,7 +1,7 @@
 export { default as FloatingUi } from './FloatingUi.vue';
 export { default as FocusTrap } from './FocusTrap.vue';
 export { default as OverridableWrapper } from './OverridableWrapper';
-export { default as Void } from './Void';
+export { default as PassThrough } from './PassThrough';
 
 import OverridableWrapper from "./OverridableWrapper";
 

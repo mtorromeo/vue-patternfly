@@ -23,7 +23,7 @@
 
           <pf-modal-header>
             <slot name="header">
-              <component :is="titleOverflowing ? 'pf-tooltip' : 'void'" v-if="title">
+              <component :is="titleOverflowing ? 'pf-tooltip' : 'pass-through'" v-if="title">
                 <h1
                   ref="titleRef"
                   :class="[styles.modalBoxTitle, {
@@ -56,7 +56,7 @@
           </pf-modal-header>
 
           <component
-            :is="noBodyWrapper ? 'void' : 'div'"
+            :is="noBodyWrapper ? 'pass-through' : 'div'"
             :id="$slots.description || ariaDescribedby ? null : descriptorId"
             :class="styles.modalBoxBody"
           >
@@ -80,7 +80,7 @@ import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullse
 import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
 
 import PfModalHeader from './ModalHeader.vue';
-import Void from '../../helpers/Void';
+import PassThrough from '../../helpers/PassThrough';
 import PfBackdrop from '../Backdrop';
 import PfFocusTrap from '../../helpers/FocusTrap.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
@@ -100,7 +100,7 @@ export default defineComponent({
   components: {
     PfModalHeader,
     PfCloseButton,
-    Void,
+    PassThrough,
     PfBackdrop,
     PfFocusTrap,
     PfTooltip,
