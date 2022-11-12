@@ -2,8 +2,8 @@
 const ts = require('typescript');
 
 /**
- * We import `@vue-patternfly4/icons/dist/esm` to avoid parsing massive modules.
- * HOWEVER we would like for the CJS output to reference `@vue-patternfly/icons/dist/cjs`
+ * We import `@vue-patternfly/icons/dist/esm` to avoid parsing massive modules.
+ * HOWEVER we would like for the CJS output to reference `@vue-patternfly/icons/dist/js`
  * for better tree-shaking and smaller bundlers.
  * A large offender of this is Tooltip's Popover helper.
  *
@@ -22,7 +22,7 @@ function transformerCJSImports(context) {
    * @param {object} node TS Node
    */
   function visit(node) {
-    if (ts.isImportDeclaration(node) && /@vue-patternfly4\/.*\/dist\/esm/.test(node.moduleSpecifier.text)) {
+    if (ts.isImportDeclaration(node) && /@vue-patternfly\/.*\/dist\/esm/.test(node.moduleSpecifier.text)) {
       const newNode = ts.getMutableClone(node);
       const newPath = node.moduleSpecifier.text.replace(/dist\/esm/, 'dist/js');
       newNode.moduleSpecifier = ts.createStringLiteral(newPath, true);

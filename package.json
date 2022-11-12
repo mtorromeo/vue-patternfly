@@ -8,10 +8,9 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "ts-patch install -s",
     "pub": "npm publish --access public -w packages/core -w packages/icons",
-    "build": "turbo run build build:declarations build:cjs build:esm",
-    "lint": "turbo run lint",
-    "build:cjs": "tsc --build --verbose packages/tsconfig.cjs.json",
-    "build:esm": "tsc --build --verbose packages/tsconfig.json"
+    "clean": "turbo run clean",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

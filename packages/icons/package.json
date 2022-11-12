@@ -7,7 +7,8 @@
   "sideEffects": false,
   "scripts": {
     "clean": "rimraf dist src/icons src/index.js src/index.d.ts",
-    "build": "rimraf dist/esm/icons dist/js/icons && node scripts/build.js",
+    "build": "concurrently 'npm:build:*'",
+    "build:icons": "node scripts/build.js",
     "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
     "build:esm": "tsc --build --verbose tsconfig.json",
     "prepublishOnly": "pnpm build"
@@ -19,6 +20,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@patternfly/patternfly": "^4.219.2",
+    "concurrently": "^7.5.0",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "rimraf": "^3.0.2",

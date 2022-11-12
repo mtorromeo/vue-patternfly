@@ -7,7 +7,7 @@
   ],
   "main": "dist/core.umd.js",
   "module": "dist/core.es.js",
-  "typings": "dist/types/main.d.ts",
+  "typings": "dist/esm/main.d.ts",
   "exports": {
     ".": {
       "import": "./dist/core.es.js",
@@ -16,7 +16,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "clean": "rimraf dist",
+    "build": "concurrently 'npm:build:*'",
+    "build:vite": "vite build",
     "build:declarations": "vue-tsc --declaration --emitDeclarationOnly",
     "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
     "build:esm": "tsc --build --verbose tsconfig.json",
@@ -44,6 +46,7 @@
     "concurrently": "^7.5.0",
     "focus-trap": "^7.0.0",
     "fs-extra": "^10.1.0",
+    "rimraf": "^3.0.2",
     "tslib": "^2.4.1",
     "typescript": "^4.8.4",
     "vite": "^3.2.3",

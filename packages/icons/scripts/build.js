@@ -55,7 +55,9 @@ async function esm2cjs(dest, code) {
 }
 
 (async function(icons) {
-  await fs.copy(srcDir, path.join(outDir, 'esm'));
+  await fs.copy(srcDir, path.join(outDir, 'esm'), {
+    filter: (src) => !src.endsWith('.ts'),
+  });
   for (const js of glob.sync(path.join(srcDir, '**/*.js'))) {
     const relFilename = js.slice(srcDir.length);
     const dest = path.join(outDir, 'js', relFilename);
