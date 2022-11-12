@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<{
   disable?: boolean;
   placement?: Placement;
   flip?: boolean;
-  sameSize?: boolean;
+  sameWidth?: boolean;
   zIndex?: number;
   middleware?: Middleware[];
 }>(), {
@@ -37,7 +37,7 @@ const floatingOptions = computed<FloatingOptions>(() => {
   if (props.flip) {
     middleware.push(flip());
   }
-  if (props.sameSize && htmlElement.value) {
+  if (props.sameWidth && htmlElement.value) {
     middleware.push(size({
       apply({rects}) {
         Object.assign(htmlElement.value.style, {

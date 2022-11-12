@@ -89,12 +89,11 @@
     </component>
 
     <teleport :to="appendTo" :disabled="!appendTo || appendTo === 'inline'">
-      <floating-ui :reference="$el" flip same-size>
+      <floating-ui :reference="$el" :z-index="zIndex" flip same-width>
         <component
           :is="appendTo === 'inline' ? Void : 'div'"
           v-if="attributes.length > 0"
           ref="floatingElement"
-          :style="{ zIndex }"
         >
           <pf-advanced-search-menu
             v-model="value"
