@@ -156,7 +156,7 @@ const onSearch = (event: Event) => {
 }
 
 function onDocClick(event: Event) {
-  const clickedWithinSearchInput = searchInput?.el.value?.contains(event.target as Node);
+  const clickedWithinSearchInput = searchInput?.$el.value?.contains(event.target as Node);
   if (props.searchMenuOpen && !clickedWithinSearchInput) {
     emit('toggleAdvancedMenu', event);
   }
@@ -166,7 +166,7 @@ function onEscPress(event: KeyboardEvent) {
   if (
     props.searchMenuOpen &&
     event.key === 'Escape' &&
-    searchInput?.el.value?.contains(event.target as Node)
+    searchInput?.$el.value?.contains(event.target as Node)
   ) {
     emit('toggleAdvancedMenu', event);
     searchInput?.input.value?.focus();

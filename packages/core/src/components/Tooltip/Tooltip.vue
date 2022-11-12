@@ -3,37 +3,34 @@
     <slot />
   </void>
 
-  <div
-    ref="tooltipElement"
-    :class="styles.tooltip"
-    :style="{
-      maxWidth,
-      opacity: visible ? 1 : 0,
-      transition: 'opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s',
-      position: floatingUI.strategy,
-      zIndex: 9999,
-      top: 0,
-      left: 0,
-      transform: `translate3d(${Math.round(floatingUI.x)}px,${Math.round(floatingUI.y)}px,0)`
-    }"
-    role="tooltip"
-  >
-    <pf-tooltip-arrow />
-    <pf-tooltip-content :left-aligned="leftAligned">
-      <slot name="content" />
-    </pf-tooltip-content>
-  </div>
+  <floating-ui :reference="referenceElement" flip>
+    <div
+      ref="tooltipElement"
+      :class="styles.tooltip"
+      :style="{
+        maxWidth,
+        opacity: visible ? 1 : 0,
+        transition: 'opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s',
+      }"
+      role="tooltip"
+    >
+      <pf-tooltip-arrow />
+      <pf-tooltip-content :left-aligned="leftAligned">
+        <slot name="content" />
+      </pf-tooltip-content>
+    </div>
+  </floating-ui>
 </template>
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { computed, defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'vue';
+import { defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
+import FloatingUi from '../../helpers/FloatingUi.vue';
 import Void from '../../helpers/Void';
-import { useFloatingUI, useHtmlElementFromVNodes } from '../../use';
-import { flip } from '@floating-ui/core';
+import { useHtmlElementFromVNodes } from '../../use';
 
 export enum TooltipPosition {
   auto = 'auto',
@@ -49,6 +46,7 @@ export default defineComponent({
   components: {
     PfTooltipArrow,
     PfTooltipContent,
+    FloatingUi,
     Void,
   },
 
@@ -107,21 +105,11 @@ export default defineComponent({
       el?.addEventListener('mouseleave', () => (visible.value = false));
     });
 
-    const floatingUI = useFloatingUI(
-      referenceElement,
-      tooltipElement as any,
-      computed(() => ({
-        middleware: [
-          flip(),
-        ],
-      })),
-    );
-
     return {
+      referenceElement,
       styles: markRaw(styles) as typeof styles,
       findReference,
       tooltipElement,
-      floatingUI,
       visible,
     };
   },

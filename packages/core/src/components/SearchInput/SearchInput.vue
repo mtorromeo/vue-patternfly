@@ -1,5 +1,5 @@
 <template>
-  <component :is="attributes.length > 0 ? 'div' : Void" ref="el">
+  <component :is="attributes.length > 0 ? 'div' : Void" ref="$el">
     <component :is="(!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable) ? PfInputGroup : Void">
       <template v-if="!expandable || managedExpanded">
         <pf-text-input-group :disabled="disabled">
@@ -89,36 +89,32 @@
     </component>
 
     <teleport :to="appendTo" :disabled="!appendTo || appendTo === 'inline'">
-      <component
-        :is="appendTo === 'inline' ? Void : 'div'"
-        v-if="attributes.length > 0"
-        ref="floatingElement"
-        :style="{
-          position: menuUI.strategy,
-          zIndex,
-          top: 0,
-          left: 0,
-          transform: `translate3d(${Math.round(menuUI.x)}px,${Math.round(menuUI.y)}px,0)`
-        }"
-      >
-        <pf-advanced-search-menu
-          v-model="value"
-          :reset-button-label="resetButtonLabel"
-          :submit-search-button-label="submitSearchButtonLabel"
-          :attributes="attributes"
-          :advanced-search-delimiter="advancedSearchDelimiter"
-          :get-attr-value-map="getAttrValueMap"
-          :search-menu-open="searchMenuOpen"
-          @search="onSearch"
-          @clear="onClear"
-          @toggle-advanced-menu="onToggle"
+      <floating-ui :reference="$el" flip same-size>
+        <component
+          :is="appendTo === 'inline' ? Void : 'div'"
+          v-if="attributes.length > 0"
+          ref="floatingElement"
+          :style="{ zIndex }"
         >
-          <template #words-attr-label>
-            <slot name="words-attr-label" />
-          </template>
-          <slot name="form-additional-items" />
-        </pf-advanced-search-menu>
-      </component>
+          <pf-advanced-search-menu
+            v-model="value"
+            :reset-button-label="resetButtonLabel"
+            :submit-search-button-label="submitSearchButtonLabel"
+            :attributes="attributes"
+            :advanced-search-delimiter="advancedSearchDelimiter"
+            :get-attr-value-map="getAttrValueMap"
+            :search-menu-open="searchMenuOpen"
+            @search="onSearch"
+            @clear="onClear"
+            @toggle-advanced-menu="onToggle"
+          >
+            <template #words-attr-label>
+              <slot name="words-attr-label" />
+            </template>
+            <slot name="form-additional-items" />
+          </pf-advanced-search-menu>
+        </component>
+      </floating-ui>
     </teleport>
   </component>
 </template>
@@ -139,7 +135,7 @@ export interface SearchAttribute {
 }
 
 export type SearchInputProvide = {
-  el: Ref<HTMLDivElement | null>;
+  $el: Ref<HTMLDivElement | null>;
   input: Ref<InstanceType<typeof PfTextInputGroupMain> | null>;
 }
 
@@ -147,8 +143,8 @@ export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInp
 </script>
 
 <script lang="ts" setup>
-import { computed, type InjectionKey, nextTick, provide, type Ref, ref } from 'vue';
-import { useFloatingUI, useManagedProp } from '../../use';
+import { type InjectionKey, nextTick, provide, type Ref, ref } from 'vue';
+import { useManagedProp } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
 import PfTextInputGroupMain from '../TextInputGroup/TextInputGroupMain.vue';
@@ -157,6 +153,7 @@ import PfAdvancedSearchMenu from './AdvancedSearchMenu.vue';
 import PfBadge from '../Badge';
 import PfButton from '../Button.vue';
 import Void from '../../helpers/Void';
+import FloatingUi from '../../helpers/FloatingUi.vue';
 
 import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';
 import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
@@ -164,7 +161,6 @@ import AngleUpIcon from '@vue-patternfly/icons/dist/esm/icons/angle-up-icon';
 import AngleDownIcon from '@vue-patternfly/icons/dist/esm/icons/angle-down-icon';
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 import ArrowRightIcon from '@vue-patternfly/icons/dist/esm/icons/arrow-right-icon';
-import { flip, size } from '@floating-ui/core';
 
 const props = withDefaults(defineProps<{
   /** Value of the search input. */
@@ -284,31 +280,13 @@ const value = useManagedProp('modelValue', '', to => emit('change', to));
 const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
 const managedExpanded = useManagedProp('expanded', false);
 
-const el: Ref<HTMLDivElement | null> = ref(null);
+const $el: Ref<HTMLDivElement | null> = ref(null);
 const floatingElement: Ref<HTMLSpanElement | null> = ref(null);
 const expandButton: Ref<InstanceType<typeof PfButton> | null> = ref(null);
 const input: Ref<InstanceType<typeof PfTextInputGroupMain> | null> = ref(null);
 
-const menuUI = useFloatingUI(
-  el as any,
-  floatingElement as any,
-  computed(() => ({
-    placement: 'bottom',
-    middleware: [
-      flip(),
-      size({
-        apply({rects}) {
-          Object.assign(floatingElement.value.style, {
-            width: `${rects.reference.width}px`,
-          });
-        },
-      })
-    ],
-  })),
-);
-
 provide(SearchInputKey, {
-  el,
+  $el,
   input,
 });
 

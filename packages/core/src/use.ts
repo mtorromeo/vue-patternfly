@@ -6,7 +6,7 @@ import { findComponentVNode } from './util';
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
 
-type FloatingOptions = Parameters<typeof computePosition>[2];
+export type FloatingOptions = Parameters<typeof computePosition>[2];
 
 export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null>, floating: MaybeComputedRef<HTMLElement | null>, options: MaybeComputedRef<FloatingOptions>) {
   const defaultFloatingData: Awaited<ReturnType<typeof computePosition>> = {

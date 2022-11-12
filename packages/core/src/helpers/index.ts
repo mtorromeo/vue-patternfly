@@ -1,3 +1,8 @@
+export { default as FloatingUi } from './FloatingUi.vue';
+export { default as FocusTrap } from './FocusTrap.vue';
+export { default as OverridableWrapper } from './OverridableWrapper';
+export { default as Void } from './Void';
+
 import OverridableWrapper from "./OverridableWrapper";
 
 export function isOverridableWrapper(el: any): el is InstanceType<typeof OverridableWrapper> {

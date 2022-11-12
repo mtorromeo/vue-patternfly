@@ -3,66 +3,68 @@
     <slot />
   </void>
 
-  <pf-focus-trap
-    v-if="visible"
-    ref="dialog"
-    v-bind="$attrs"
-    :active="focusTrap && managedOpen"
-    :class="[styles.popover, (styles.modifiers as any)[dialogUI.placement], {
-      [styles.modifiers.noPadding]: noPadding,
-      [styles.modifiers.widthAuto]: autoWidth,
-    }]"
-    role="dialog"
-    aria-modal="true"
-    :aria-label="$slots.header ? null : ariaLabel"
-    :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : null"
-    :aria-describedby="`popover-${uniqueId}-body`"
-    :style="{
-      minWidth: hasCustomMinWidth ? minWidth : null,
-      maxWidth: hasCustomMaxWidth ? maxWidth : null,
-      opacity,
-      transition: `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
-      position: dialogUI.strategy,
-      zIndex: 9999,
-      top: 0,
-      left: 0,
-      transform: `translate3d(${Math.round(dialogUI.x)}px,${Math.round(dialogUI.y)}px,0)`
-    }"
-    :data-popper-reference-hidden="dialogUI.middlewareData.hide?.referenceHidden"
-    :data-popper-escaped="dialogUI.middlewareData.hide?.escaped"
-    :data-popper-placement="dialogUI.placement"
+  <floating-ui
+    :reference="referenceElement"
+    :placement="position"
+    :middleware="floatingMiddleware"
+    #default="{ placement, middlewareData }"
   >
-    <div :class="styles.popoverArrow" />
-    <div :class="styles.popoverContent">
-      <pf-close-button
-        v-if="showClose"
-        :aria-label="closeBtnAriaLabel"
-        @click.prevent="managedOpen = false"
-      />
+    <pf-focus-trap
+      v-if="visible"
+      ref="dialog"
+      v-bind="$attrs"
+      :active="focusTrap && managedOpen"
+      :class="[styles.popover, (styles.modifiers as any)[placement], {
+        [styles.modifiers.noPadding]: noPadding,
+        [styles.modifiers.widthAuto]: autoWidth,
+      }]"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="$slots.header ? null : ariaLabel"
+      :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : null"
+      :aria-describedby="`popover-${uniqueId}-body`"
+      :style="{
+        minWidth: hasCustomMinWidth ? minWidth : null,
+        maxWidth: hasCustomMaxWidth ? maxWidth : null,
+        opacity,
+        transition: `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
+      }"
+      :data-popper-reference-hidden="middlewareData.hide?.referenceHidden"
+      :data-popper-escaped="middlewareData.hide?.escaped"
+      :data-popper-placement="placement"
+    >
+      <div :class="styles.popoverArrow" />
+      <div :class="styles.popoverContent">
+        <pf-close-button
+          v-if="showClose"
+          :aria-label="closeBtnAriaLabel"
+          @click.prevent="managedOpen = false"
+        />
 
-      <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" h="6" size="md">
-        <slot name="header" />
-      </pf-title>
+        <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" h="6" size="md">
+          <slot name="header" />
+        </pf-title>
 
-      <div :id="`popover-${uniqueId}-body`" :class="styles.popoverBody">
-        <slot name="body" />
+        <div :id="`popover-${uniqueId}-body`" :class="styles.popoverBody">
+          <slot name="body" />
+        </div>
+
+        <footer
+          v-if="$slots.footer"
+          :id="`popover-${uniqueId}-footer`"
+          :class="styles.popoverFooter"
+        >
+          <slot name="footer" />
+        </footer>
       </div>
-
-      <footer
-        v-if="$slots.footer"
-        :id="`popover-${uniqueId}-footer`"
-        :class="styles.popoverFooter"
-      >
-        <slot name="footer" />
-      </footer>
-    </div>
-  </pf-focus-trap>
+    </pf-focus-trap>
+  </floating-ui>
 </template>
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
-import { useFloatingUI, useHtmlElementFromVNodes, useManagedProp } from '../use';
+import { useHtmlElementFromVNodes, useManagedProp } from '../use';
 import { computed, defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
@@ -70,6 +72,7 @@ import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth
 import PfFocusTrap from '../helpers/FocusTrap.vue';
 import PfCloseButton from './CloseButton';
 import PfTitle from './Title.vue';
+import FloatingUi from '../helpers/FloatingUi.vue';
 import Void from '../helpers/Void';
 import { offset, autoPlacement, type Placement, hide, flip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
 
@@ -80,6 +83,7 @@ export default defineComponent({
     PfFocusTrap,
     PfCloseButton,
     PfTitle,
+    FloatingUi,
     Void,
   },
 
@@ -178,23 +182,16 @@ export default defineComponent({
       });
     });
 
-    const dialogUI = useFloatingUI(
-      referenceElement,
-      computed(() => dialog.value?.target),
-      computed(() => ({
-        placement: props.position,
-        middleware: [
-          props.flip
-            ? flip(props.flipOptions)
-            : autoPlacement(props.placementOptions),
-          offset(props.distance),
-          hide(),
-          hide({
-            strategy: 'escaped',
-          }),
-        ],
-      })),
-    );
+    const floatingMiddleware = computed(() => [
+      props.flip
+        ? flip(props.flipOptions)
+        : autoPlacement(props.placementOptions),
+      offset(props.distance),
+      hide(),
+      hide({
+        strategy: 'escaped',
+      }),
+    ]);
 
     return {
       managedOpen,
@@ -202,7 +199,8 @@ export default defineComponent({
       findReference,
       styles: markRaw(styles) as typeof styles,
       visible: managedOpen,
-      dialogUI,
+      referenceElement,
+      floatingMiddleware,
     };
   },
 
