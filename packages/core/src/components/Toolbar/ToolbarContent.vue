@@ -26,8 +26,8 @@ import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import { ToolbarClearFilterButtonTextKey, ToolbarExpandedKey, ToolbarShowClearFiltersButtonKey } from './Toolbar.vue';
 
-export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
-export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
+export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
 
 export default defineComponent({
   name: 'PfToolbarContent',
@@ -40,10 +40,10 @@ export default defineComponent({
   },
 
   setup() {
-    const expandable: Ref<HTMLDivElement | null> = ref(null);
+    const expandable: Ref<HTMLDivElement | undefined> = ref();
     provide(ToolbarContentExpandableRefKey, expandable);
 
-    const chipContainer: Ref<HTMLDivElement | null> = ref(null);
+    const chipContainer: Ref<HTMLDivElement | undefined> = ref();
     provide(ToolbarContentChipContainerRefKey, chipContainer);
 
     return {
@@ -66,10 +66,10 @@ export default defineComponent({
 
   beforeUnmount() {
     if (this.expandable) {
-      this.expandable = null;
+      this.expandable = undefined;
     }
     if (this.chipContainer) {
-      this.chipContainer = null;
+      this.chipContainer = undefined;
     }
   },
 });

@@ -3,15 +3,15 @@
     v-if="!dismissed"
     :class="[
       styles.alert,
-      variant === 'default' ? null : styles.modifiers[variant], {
+      variant === 'default' ? undefined : styles.modifiers[variant], {
         [styles.modifiers.inline]: inline,
         [styles.modifiers.plain]: plain,
         [styles.modifiers.expandable]: expandable,
         [styles.modifiers.expanded]: expanded,
       }
     ]"
-    :aria-live="liveRegion ? 'polite' : null"
-    :aria-atomic="liveRegion ? 'false' : null"
+    :aria-live="liveRegion ? 'polite' : undefined"
+    :aria-atomic="liveRegion ? 'false' : undefined"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
@@ -76,7 +76,7 @@ import PfCloseButton from '../CloseButton';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
-import { ref, watch, markRaw, defineComponent, type PropType } from 'vue';
+import { ref, watch, markRaw, defineComponent, type PropType, type Ref } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
 
@@ -160,7 +160,7 @@ export default defineComponent({
   emits: ['close', 'timeout', 'mouseenter', 'mouseleave'],
 
   setup(props) {
-    const titleRef = ref(null);
+    const titleRef: Ref<HTMLElement | undefined> = ref();
     const { width, height } = useElementSize(titleRef);
 
     const tooltipVisible = ref(false);
@@ -184,8 +184,8 @@ export default defineComponent({
   data(this: void) {
     return {
       maxLinesVar: maxLines.name,
-      timer: null as number | null,
-      animationTimer: null as number | null,
+      timer: undefined as number | undefined,
+      animationTimer: undefined as number | undefined,
 
       timedOut: false,
       timedOutAnimation: true,

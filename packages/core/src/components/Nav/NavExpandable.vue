@@ -7,7 +7,7 @@
     @click="handleToggle"
   >
     <button
-      :id="srText ? null : validId"
+      :id="srText ? undefined : validId"
       ref="expandable"
       type="button"
       :class="styles.navLink"
@@ -25,7 +25,7 @@
     <section
       :class="styles.navSubnav"
       :aria-labelledby="validId"
-      :hidden="realExpanded ? null : true"
+      :hidden="!realExpanded || undefined"
     >
       <h2 v-if="srText" :id="validId" :class="a11yStyles.screenReader">{{ srText }}</h2>
       <ul :class="styles.navList">
@@ -77,7 +77,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const expandable: Ref<HTMLButtonElement> = ref(null);
+    const expandable: Ref<HTMLButtonElement | undefined> = ref();
     return {
       expandable,
       styles: markRaw(styles) as typeof styles,

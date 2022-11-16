@@ -12,7 +12,7 @@ import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-i
 export const TabsVariantKey = Symbol('TabsVariantKey') as InjectionKey<'default' | 'light300'>;
 export const TabsActiveKeyKey = Symbol('TabsActiveKeyKey') as InjectionKey<ComputedRef<string | number | symbol>>;
 export const TabsIdSuffixKey = Symbol('TabsIdSuffixKey') as InjectionKey<ComputedRef<string>>;
-export const TabsClickHandlerKey = Symbol('TabsClickHandlerKey') as InjectionKey<(key: string | number | symbol) => void>;
+export const TabsClickHandlerKey = Symbol('TabsClickHandlerKey') as InjectionKey<(key: string | number | symbol | null) => void>;
 
 export default defineComponent({
   name: 'PfTabs',
@@ -100,7 +100,7 @@ export default defineComponent({
     const idSuffix = computed(() => props.id || getUniqueId(''));
     provide(TabsIdSuffixKey, idSuffix);
 
-    const shownKeys = reactive([]);
+    const shownKeys: (string | number | symbol)[] = reactive([]);
 
     provide(TabsClickHandlerKey, (key: string | number | symbol) => {
       localActiveKey.value = key;
@@ -110,7 +110,7 @@ export default defineComponent({
       }
     });
 
-    const tablistRef: Ref<HTMLUListElement | null> = ref(null);
+    const tablistRef: Ref<HTMLUListElement | undefined> = ref();
 
     return {
       localActiveKey,
@@ -242,7 +242,7 @@ export default defineComponent({
       onClick: this.scrollRight,
     }, h(PfAngleRightIcon));
 
-    const tabs = findChildrenVNodes(this.$slots.default())
+    const tabs = findChildrenVNodes(this.$slots.default?.())
       .filter(tab => !tab.props || !(tab.props.hidden === '' || tab.props.hidden))
       .map((tab, index) => {
         if (!tab.key) {
@@ -296,12 +296,12 @@ export default defineComponent({
       ...tabs
         .filter(tab =>
           !(this.unmountOnExit && tab.key !== this.localActiveKey) &&
-          !(this.mountOnEnter && !this.shownKeys.includes(tab.key)),
+          !(this.mountOnEnter && !(tab.key && this.shownKeys.includes(tab.key))),
         )
         .map(tab =>
           h(PfTabContent as any, {
             id: `pf-tab-section-${String(tab.key)}-${String(this.idSuffix)}`,
-            key: tab.key,
+            key: tab.key ?? undefined,
             eventKey: tab.key,
             activeKey: this.localActiveKey,
           }, {

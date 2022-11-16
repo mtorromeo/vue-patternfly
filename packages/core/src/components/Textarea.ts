@@ -3,7 +3,7 @@ import heightToken from '@patternfly/react-tokens/dist/esm/c_form_control_textar
 
 import { computed, defineComponent, getCurrentInstance, h, type PropType } from 'vue';
 import { inputProps, useInputValidation } from '../input';
-import { useChildrenTracker, useManagedProp } from '../use';
+import { useChildrenTracker } from '../use';
 import { canUseDOM } from '../util';
 
 export default defineComponent({
@@ -39,8 +39,7 @@ export default defineComponent({
   setup(props) {
     useChildrenTracker();
 
-    const { checkValidity, ...inputValidationData } = useInputValidation(props);
-    const value = useManagedProp('modelValue', '');
+    const { checkValidity, value, ...inputValidationData } = useInputValidation(props);
 
     const regexPattern = computed(() => {
       if (props.pattern instanceof RegExp) {
@@ -54,7 +53,7 @@ export default defineComponent({
 
       checkValidity() {
         if (props.pattern && value.value) {
-          const $el: HTMLInputElement | null = getCurrentInstance()?.proxy.$el;
+          const $el: HTMLInputElement | null = getCurrentInstance()?.proxy?.$el;
 
           const error = !regexPattern.value.test(value.value);
           if (error) {

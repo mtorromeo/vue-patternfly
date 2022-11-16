@@ -52,7 +52,7 @@ export default defineComponent({
   },
 
   setup() {
-    const navList: Ref<HTMLUListElement | null> = ref(null);
+    const navList: Ref<HTMLUListElement | undefined> = ref();
     return {
       navList,
       styles: markRaw(styles) as typeof styles,

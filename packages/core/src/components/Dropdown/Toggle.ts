@@ -23,7 +23,7 @@ export default defineComponent({
   setup() {
     return {
       menuRef: inject(DropdownMenuRefKey),
-      toggleClass: inject(DropdownToggleClassKey, null),
+      toggleClass: inject(DropdownToggleClassKey, undefined),
     };
   },
 
@@ -52,7 +52,7 @@ export default defineComponent({
       const clickedOnToggle = () => this.$parent && this.$parent.$el && this.$parent.$el.contains(event.target);
 
       const clickedWithinMenu = () => {
-        const menu = this.menuRef.$el;
+        const menu = this.menuRef?.$el;
         return menu && menu.contains && menu.contains(event.target);
       };
 
@@ -71,7 +71,7 @@ export default defineComponent({
       const escFromToggle = () => this.$parent && this.$parent.$el && this.$parent.$el.contains(event.target);
 
       const escFromWithinMenu = () => {
-        const menu = this.menuRef.$el;
+        const menu = this.menuRef?.$el;
         return menu && menu.contains && menu.contains(event.target);
       };
 

@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[styles.skeleton, {
-      [fontHeightClassName]: fontSize,
+      [fontHeightClassName ?? styles.modifiers.circle]: fontSize,
       [styles.modifiers.circle]: shape === 'circle',
       [styles.modifiers.square]: shape === 'square',
     }]"

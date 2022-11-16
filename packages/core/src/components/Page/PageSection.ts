@@ -1,7 +1,7 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
-import { defineComponent, h, type PropType } from 'vue';
+import { defineComponent, h, type PropType, type Slots, type VNode } from 'vue';
 
 const variantTypes = {
   default: styles.pageMainSection,
@@ -55,11 +55,11 @@ export default defineComponent({
       'padding',
     ], styles, { short: true });
 
-    let children = this.$slots.default();
+    let children: Slots | VNode;
     if (this.widthLimited) {
-      children = [
-        h('div', { class: styles.pageMainBody }, children),
-      ];
+      children = h('div', { class: styles.pageMainBody }, this.$slots);
+    } else {
+      children = this.$slots;
     }
 
     return h('section', {

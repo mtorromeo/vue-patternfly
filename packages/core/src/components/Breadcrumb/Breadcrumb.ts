@@ -23,9 +23,11 @@ export default defineComponent({
         class: styles.breadcrumbList,
       }, {
         default: () => {
-          const children = findChildrenVNodes(this.$slots.default());
+          const children = findChildrenVNodes(this.$slots.default?.());
           return children.map((e, index) => {
-            e.props.showDivider = index > 0;
+            if (e.props) {
+              e.props.showDivider = index > 0;
+            }
             return e;
           });
         },

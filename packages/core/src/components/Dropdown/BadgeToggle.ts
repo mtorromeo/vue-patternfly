@@ -30,7 +30,7 @@ export default defineComponent({
       {
         default: () => h(PfBadge, this.badge, {
           default: () => [
-            this.$slots.default(),
+            this.$slots.default?.(),
             h('span', { class: styles.dropdownToggleIcon }, h(CaretDownIcon)),
           ],
         }),

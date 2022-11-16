@@ -1,11 +1,11 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { type Component, type ComputedRef, defineComponent, h, type InjectionKey, provide } from 'vue';
+import { type Component, defineComponent, h, type InjectionKey, provide, type WritableComputedRef } from 'vue';
 import { findChildrenVNodes } from '../../util';
 import { useManagedProp } from '../../use';
 
-export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<ComputedRef<any>>;
+export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<WritableComputedRef<any>>;
 
 export default defineComponent({
   name: 'PfSimpleList',

@@ -27,8 +27,6 @@ export default defineComponent({
     return h(PfDropdownItem, mergeProps({
       component: 'button',
       index: this.index,
-    }, this.$attrs), {
-      default: () => this.$slots.default(),
-    });
+    }, this.$attrs), this.$slots);
   },
 });

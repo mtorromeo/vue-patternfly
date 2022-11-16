@@ -39,7 +39,7 @@ export default defineComponent({
     const managedNavOpen = inject(PageNavOpenKey);
     const managedSidebar = inject(PageManagedSidebarKey);
 
-    const sidebarOpen = computed(() => managedSidebar.value ? managedNavOpen.value : props.navOpen);
+    const sidebarOpen = computed(() => managedSidebar?.value ? !!managedNavOpen?.value : props.navOpen);
     provide(SidebarOpenKey, sidebarOpen);
 
     return {

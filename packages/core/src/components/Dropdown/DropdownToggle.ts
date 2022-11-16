@@ -91,7 +91,7 @@ export default defineComponent({
           },
         ],
       }, [
-        this.$slots.buttons(),
+        this.$slots.buttons?.(),
         toggle,
       ]);
     }

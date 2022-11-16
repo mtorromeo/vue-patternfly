@@ -16,6 +16,6 @@ export default defineComponent({
 
   setup(props, { slots, attrs }) {
     const Component = resolveDynamicComponent(props.component) as DefineComponent;
-    return () => h(Component, mergeProps({ class: styles.bullseye }, attrs), slots.default());
+    return () => h(Component, mergeProps({ class: styles.bullseye }, attrs), slots);
   },
 });

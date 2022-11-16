@@ -76,7 +76,7 @@ const emit = defineEmits({
 
 const value = useManagedProp('modelValue', '');
 const disabled = inject(TextInputGroupDisabledKey, false);
-const input: Ref<HTMLInputElement | null> = ref(null);
+const input: Ref<HTMLInputElement | undefined> = ref();
 
 defineExpose({
   focus(options?: FocusOptions) {

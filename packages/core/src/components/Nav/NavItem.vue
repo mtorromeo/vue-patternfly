@@ -97,8 +97,8 @@ export default defineComponent({
   setup() {
     return {
       styles: markRaw(styles) as typeof styles,
-      onSelect: inject(NavOnSelectKey, null),
-      flyoutRef: inject(NavFlyoutRefKey, null),
+      onSelect: inject(NavOnSelectKey, undefined),
+      flyoutRef: inject(NavFlyoutRefKey, undefined),
       sidebarOpen: inject(SidebarOpenKey, false),
     };
   },
@@ -137,10 +137,10 @@ export default defineComponent({
       }
       if (this.flyoutVisible) {
         const flyoutMenu = this.flyoutTarget.nextElementSibling;
-        const flyoutItems = Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
+        const flyoutItems = flyoutMenu ? Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
           el => !(el.classList.contains('pf-m-disabled') || el.classList.contains('pf-c-divider')),
-        );
-        const child = flyoutItems[0].firstElementChild;
+        ) : [];
+        const child = flyoutItems.length ? flyoutItems[0].firstElementChild : null;
         if (child instanceof HTMLElement) {
           child.focus();
         }
@@ -189,7 +189,7 @@ export default defineComponent({
           e.preventDefault();
           let closestFlyout = e.target.closest('.pf-c-nav__item.pf-m-flyout');
           if (e.target.parentElement === closestFlyout) {
-            closestFlyout = closestFlyout.parentElement.closest('.pf-c-nav__item.pf-m-flyout');
+            closestFlyout = closestFlyout?.parentElement?.closest('.pf-c-nav__item.pf-m-flyout') ?? null;
           }
 
           if (closestFlyout) {

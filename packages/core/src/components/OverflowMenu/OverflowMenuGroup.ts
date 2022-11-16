@@ -32,8 +32,6 @@ export default defineComponent({
           [styles.modifiers.iconButtonGroup]: this.type === 'icon',
         },
       ],
-    }, this.$attrs), {
-      default: () => this.$slots.default(),
-    });
+    }, this.$attrs), this.$slots);
   },
 });

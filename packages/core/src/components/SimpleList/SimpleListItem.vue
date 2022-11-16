@@ -2,6 +2,7 @@
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
 import { defineComponent, h, inject, mergeProps } from 'vue';
+import { isDefined } from '../../use';
 import { SimpleListValueKey } from './SimpleList.vue';
 
 export default defineComponent({
@@ -53,7 +54,7 @@ export default defineComponent({
 
   setup() {
     return {
-      listValue: inject(SimpleListValueKey, null),
+      listValue: inject(SimpleListValueKey, undefined),
     };
   },
 
@@ -84,7 +85,9 @@ export default defineComponent({
           }],
           onClick: (e: MouseEvent | TouchEvent) => {
             this.$emit('click', e);
-            this.listValue = this.value === null ? this : this.value;
+            if (isDefined(this.listValue)) {
+              this.listValue = this.value === null ? this : this.value as any;
+            }
           },
           'aria-hidden': true,
           ...itemProps,

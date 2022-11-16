@@ -172,7 +172,7 @@ export default defineComponent({
 
   setup(props) {
     const managedOpen = useManagedProp('open', false);
-    const dialog: Ref<InstanceType<typeof PfFocusTrap>> = ref(null);
+    const dialog: Ref<InstanceType<typeof PfFocusTrap> | undefined> = ref();
     const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 
     watch(referenceElement, (el) => {
@@ -207,9 +207,9 @@ export default defineComponent({
   data() {
     return {
       opacity: 0,
-      hideTimer: null,
-      showTimer: null,
-      transitionTimer: null,
+      hideTimer: undefined as number | undefined,
+      showTimer: undefined as number | undefined,
+      transitionTimer: undefined as number | undefined,
     };
   },
 
@@ -274,7 +274,7 @@ export default defineComponent({
         return;
       }
       // check if we clicked within the popper, if so don't do anything
-      if (this.dialog.$el?.contains(event.target)) {
+      if (this.dialog?.$el?.contains(event.target)) {
         return;
       }
       this.managedOpen = false;

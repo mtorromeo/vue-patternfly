@@ -121,7 +121,7 @@ export function breakpointProp<
       definition.validator = v => values.includes(v);
     }
     return [`${baseName}${b}`, definition];
-  }));
+  })) as any;
 }
 
 export function debounce<T>(func: (args: T[]) => any, wait: number) {
@@ -132,9 +132,9 @@ export function debounce<T>(func: (args: T[]) => any, wait: number) {
   };
 }
 
-export function findComponentVNode(vnodes: VNode[] | VNodeNormalizedChildren): VNode | null {
+export function findComponentVNode(vnodes: VNode[] | VNodeNormalizedChildren): VNode | undefined {
   if (!Array.isArray(vnodes)) {
-    return null;
+    return;
   }
 
   for (const n of vnodes) {
@@ -151,11 +151,9 @@ export function findComponentVNode(vnodes: VNode[] | VNodeNormalizedChildren): V
       }
     }
   }
-
-  return null;
 }
 
-export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren): VNode[] {
+export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren | undefined): VNode[] {
   if (!Array.isArray(vnodes)) {
     return [];
   }
@@ -184,7 +182,7 @@ export function domFromRef(ref: ComponentPublicInstance | Element): HTMLElement 
  *
  * @returns { boolean } True if the component is in View.
  */
-export function isElementInView(container: Element, element: Element, partial: boolean) {
+export function isElementInView(container: Element | null, element: Element | null, partial: boolean) {
   if (!container || !element) {
     return false;
   }
@@ -285,6 +283,9 @@ export function getTextWidth(text: string, node: HTMLElement) {
 
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
+  if (context === null) {
+    throw new Error('Unexpected null context');
+  }
   context.font = computedStyle.font || getFontFromComputedStyle();
 
   return context.measureText(text).width;

@@ -143,7 +143,7 @@ export default defineComponent({
   emits: ['click'],
 
   setup() {
-    const el: Ref<HTMLElement | null> = ref(null);
+    const el: Ref<HTMLElement | undefined> = ref();
     return {
       styles: markRaw(styles) as typeof styles,
       el,

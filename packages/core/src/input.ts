@@ -35,18 +35,18 @@ export function useInputValidation({
 }: {
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
   validated?: 'success' | 'warning' | 'error' | 'default' | null;
-  inputElement?: MaybeRef<HTMLInputElement | HTMLTextAreaElement>;
+  inputElement?: MaybeRef<HTMLInputElement | HTMLTextAreaElement | undefined>;
 }) {
   const instance = getCurrentInstance()?.proxy;
 
   const innerValidated = ref('default');
   const effectiveValidated = computed(() => validated ?? innerValidated.value);
-  watch(effectiveValidated, () => instance.$emit('update:validated', effectiveValidated.value));
+  watch(effectiveValidated, () => instance?.$emit('update:validated', effectiveValidated.value));
 
   const value = useManagedProp('modelValue', '');
 
   function checkValidity() {
-    if ((unref(inputElement) ?? instance.$el)?.checkValidity()) {
+    if ((unref(inputElement) ?? instance?.$el)?.checkValidity()) {
       innerValidated.value = 'success';
       return true;
     }
@@ -57,7 +57,7 @@ export function useInputValidation({
     const validatedWas = innerValidated.value;
     const valid = checkValidity();
     if (!once || (valid && validatedWas !== 'success') || (!valid && validatedWas !== 'error')) {
-      (unref(inputElement) ?? instance.$el)?.reportValidity();
+      (unref(inputElement) ?? instance?.$el)?.reportValidity();
     }
     return valid;
   }
@@ -71,7 +71,7 @@ export function useInputValidation({
     reportValidity,
 
     onInput(event: InputEvent) {
-      instance.$emit('input', event);
+      instance?.$emit('input', event);
       value.value = (event.target as HTMLInputElement).value;
       if (autoValidate === 'input') {
         reportValidity();
@@ -81,7 +81,7 @@ export function useInputValidation({
     },
 
     onBlur(event: FocusEvent) {
-      instance.$emit('blur', event);
+      instance?.$emit('blur', event);
       if (autoValidate === 'blur') {
         reportValidity(true);
       } else if (typeof autoValidate === 'string' && ['input', 'change'].includes(autoValidate) && innerValidated.value === 'default') {
@@ -90,26 +90,26 @@ export function useInputValidation({
     },
 
     onChange(event: Event) {
-      instance.$emit('change', event);
+      instance?.$emit('change', event);
       if (autoValidate === 'change') {
         reportValidity();
       }
     },
 
     onInvalid(event: Event) {
-      instance.$emit('invalid', event);
+      instance?.$emit('invalid', event);
       innerValidated.value = 'error';
     },
 
     onKeyUp(event: KeyboardEvent) {
-      instance.$emit('keyup', event);
+      instance?.$emit('keyup', event);
       if (event.key === 'Enter' && (autoValidate === true || autoValidate === '')) {
         reportValidity();
       }
     },
 
     setCustomValidity(error: string) {
-      (unref(inputElement) ?? instance.$el).setCustomValidity(error);
+      (unref(inputElement) ?? instance?.$el).setCustomValidity(error);
     },
   };
 }

@@ -87,18 +87,18 @@ export default defineComponent({
 
   setup() {
     useChildrenTracker();
-    const el: Ref<HTMLLIElement> = ref(null);
+    const el: Ref<HTMLLIElement | undefined> = ref();
     const focusElement = () => el.value?.querySelector('[tabindex], a, button');
 
     return {
       el,
       styles: markRaw(styles) as typeof styles,
-      focused: useFocused(focusElement, null),
+      focused: useFocused(focusElement),
       focusElement,
       itemClass: inject(DropdownItemClassKey, styles.dropdownMenuItem),
       disabledClass: inject(DropdownDisabledClassKey, styles.modifiers.disabled),
-      toggleElement: inject(DropdownToggleElementRefKey, null),
-      keydown: inject(DropdownMenuOnKeydownKey, null),
+      toggleElement: inject(DropdownToggleElementRefKey, undefined),
+      keydown: inject(DropdownMenuOnKeydownKey, undefined),
     };
   },
 

@@ -134,8 +134,8 @@ export interface SearchAttribute {
 }
 
 export type SearchInputProvide = {
-  $el: Ref<HTMLDivElement | null>;
-  input: Ref<InstanceType<typeof PfTextInputGroupMain> | null>;
+  $el: Ref<HTMLDivElement | undefined>;
+  input: Ref<InstanceType<typeof PfTextInputGroupMain> | undefined>;
 }
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
@@ -243,7 +243,7 @@ const props = withDefaults(defineProps<{
     attrValueMap: { [key: string]: string }
   ) => void,
 }>(), {
-  attributes: [] as any,
+  attributes: () => [],
   ariaLabel: 'Search input',
   advancedSearchOpen: undefined,
   expanded: undefined,
@@ -279,10 +279,10 @@ const value = useManagedProp('modelValue', '', to => emit('change', to));
 const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
 const managedExpanded = useManagedProp('expanded', false);
 
-const $el: Ref<HTMLDivElement | null> = ref(null);
-const floatingElement: Ref<HTMLSpanElement | null> = ref(null);
-const expandButton: Ref<InstanceType<typeof PfButton> | null> = ref(null);
-const input: Ref<InstanceType<typeof PfTextInputGroupMain> | null> = ref(null);
+const $el: Ref<HTMLDivElement | undefined> = ref();
+const floatingElement: Ref<HTMLSpanElement | undefined> = ref();
+const expandButton: Ref<InstanceType<typeof PfButton> | undefined> = ref();
+const input: Ref<InstanceType<typeof PfTextInputGroupMain> | undefined> = ref();
 
 provide(SearchInputKey, {
   $el,
@@ -303,7 +303,7 @@ function getAttrValueMap () {
   const attrValue: { [key: string]: string } = {};
   const pairs = value.value.split(' ');
   pairs.map(pair => {
-    const splitPair = pair.split(props.advancedSearchDelimiter);
+    const splitPair = props.advancedSearchDelimiter ? pair.split(props.advancedSearchDelimiter) : [];
     if (splitPair.length === 2) {
       attrValue[splitPair[0]] = splitPair[1];
     } else if (splitPair.length === 1) {
@@ -336,7 +336,7 @@ function onExpand(e: Event) {
     if (managedExpanded.value) {
       input.value?.focus();
     } else {
-      expandButton.value?.el.focus();
+      expandButton.value?.el?.focus();
     }
   });
 }

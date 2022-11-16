@@ -14,7 +14,7 @@ export default defineComponent({
   },
 
   setup() {
-    const checkbox: Ref<HTMLInputElement | null> = ref(null);
+    const checkbox: Ref<HTMLInputElement | undefined> = ref();
     return {
       checkbox,
     };

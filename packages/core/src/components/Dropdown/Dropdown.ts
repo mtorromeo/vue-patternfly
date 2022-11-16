@@ -7,7 +7,7 @@ import { useManagedProp } from '../../use';
 
 let currentId = 0;
 
-export const DropdownToggleElementRefKey = Symbol('DropdownToggleElementRefKey') as InjectionKey<Ref<HTMLElement | null>>;
+export const DropdownToggleElementRefKey = Symbol('DropdownToggleElementRefKey') as InjectionKey<Ref<HTMLElement | undefined>>;
 export const DropdownBaseClassKey = Symbol('DropdownBaseClassKey') as InjectionKey<string>;
 export const DropdownDisabledClassKey = Symbol('DropdownDisabledClassKey') as InjectionKey<string>;
 export const DropdownMenuClassKey = Symbol('DropdownMenuClassKey') as InjectionKey<string>;
@@ -15,7 +15,7 @@ export const DropdownItemClassKey = Symbol('DropdownItemClassKey') as InjectionK
 export const DropdownToggleIndicatorClassKey = Symbol('DropdownToggleIndicatorClassKey') as InjectionKey<string>;
 export const DropdownToggleTextClassKey = Symbol('DropdownToggleTextClassKey') as InjectionKey<string>;
 export const DropdownToggleClassKey = Symbol('DropdownToggleClassKey') as InjectionKey<string>;
-export const DropdownMenuRefKey = Symbol('DropdownMenuRefKey') as InjectionKey<Ref<typeof PfDropdownMenu | null>>;
+export const DropdownMenuRefKey = Symbol('DropdownMenuRefKey') as InjectionKey<Ref<typeof PfDropdownMenu | undefined>>;
 export const DividerComponentKey = Symbol('DividerComponentKey') as InjectionKey<string>;
 
 export default defineComponent({
@@ -65,17 +65,17 @@ export default defineComponent({
   emits: ['update:open'],
 
   setup() {
-    const menuRef: Ref<typeof PfDropdownMenu | null> = ref(null);
+    const menuRef: Ref<typeof PfDropdownMenu | undefined> = ref();
     provide(DropdownMenuRefKey, menuRef);
 
-    const toggleElementRef: Ref<HTMLElement | null> = ref(null);
+    const toggleElementRef: Ref<HTMLElement | undefined> = ref();
     provide(DropdownToggleElementRefKey, toggleElementRef);
 
     return {
       menuRef,
       toggleElementRef,
       managedOpen: useManagedProp('open', false),
-      baseClass: inject(DropdownBaseClassKey, null),
+      baseClass: inject(DropdownBaseClassKey, undefined),
     };
   },
 
@@ -105,7 +105,7 @@ export default defineComponent({
 
     const toggleProps = {
       id,
-      ref: (toggle: object) => {
+      ref: (toggle: object | null) => {
         if (toggle instanceof HTMLElement) {
           this.toggleElementRef = toggle;
         } else if (isComponentPublicInstance(toggle) && toggle.$el instanceof HTMLElement) {
@@ -123,7 +123,7 @@ export default defineComponent({
     if (this.$slots.toggle) {
       const toggles = this.$slots.toggle();
       for (const t of toggles) {
-        t.props = mergeProps(t.props, toggleProps);
+        t.props = mergeProps(t.props ?? {}, toggleProps);
       }
       children.push(...toggles);
     } else {

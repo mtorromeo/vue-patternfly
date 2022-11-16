@@ -16,9 +16,9 @@
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/plugin-transform-modules-commonjs": "^7.19.6",
-    "@fortawesome/free-brands-svg-icons": "^6.2.0",
-    "@fortawesome/free-regular-svg-icons": "^6.2.0",
-    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@patternfly/patternfly": "^4.219.2",
     "concurrently": "^7.5.0",
     "fs-extra": "^10.1.0",
@@ -26,7 +26,7 @@
     "rimraf": "^3.0.2",
     "ts-patch": "^2.0.2",
     "tslib": "^2.4.1",
-    "typescript": "^4.8.4",
+    "typescript": "^4.9.3",
     "vue": "^3.2.45"
   },
   "peerDependencies": {

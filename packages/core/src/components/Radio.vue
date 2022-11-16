@@ -69,7 +69,7 @@ export default defineComponent({
       if (!this.labelWrapped) {
         labelProps.for = this.id;
       }
-      label = h(this.labelWrapped ? 'span' : 'label', labelProps, this.label || this.$slots.label());
+      label = h(this.labelWrapped ? 'span' : 'label', labelProps, this.label || this.$slots.label?.());
     }
 
     const input = h('input', mergeProps({
@@ -94,11 +94,11 @@ export default defineComponent({
     }
 
     if (this.description || this.$slots.description) {
-      children.push(h('span', { class: styles.radioDescription }, this.description || this.$slots.description()));
+      children.push(h('span', { class: styles.radioDescription }, this.description || this.$slots.description?.()));
     }
 
     if (this.body || this.$slots.body) {
-      children.push(h('span', { class: styles.radioBody }, this.body || this.$slots.body()));
+      children.push(h('span', { class: styles.radioBody }, this.body || this.$slots.body?.()));
     }
 
     if (this.labelWrapped) {

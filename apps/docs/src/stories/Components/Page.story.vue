@@ -39,6 +39,7 @@
         <pf-page-section variant="darker">Section with darker background</pf-page-section>
         <pf-page-section variant="dark">Section with dark background</pf-page-section>
         <pf-page-section variant="light">Section with light background</pf-page-section>
+        <pf-page-section width-limited>Section with limited width</pf-page-section>
       </pf-page>
     </story-canvas>
   </doc-page>

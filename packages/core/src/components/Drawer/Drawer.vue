@@ -38,7 +38,7 @@ defineEmits({
   expand: () => true,
 });
 
-const el: Ref<HTMLElement | null> = ref(null);
+const el: Ref<HTMLElement | undefined> = ref();
 
 provide(DrawerKey, {
   el,

@@ -1,17 +1,22 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, type Component, type ComponentInternalInstance, type RendererNode, type Ref, type ComponentPublicInstance, type WritableComputedRef, reactive, watch, type VNode } from 'vue';
+import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, type Component, type ComponentInternalInstance, type RendererNode, type Ref, type ComponentPublicInstance, type WritableComputedRef, reactive, watch, type VNode, type InjectionKey } from 'vue';
 import { type MaybeComputedRef, resolveUnref, tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
 import { computePosition, autoUpdate } from '@floating-ui/dom';
 import { findComponentVNode } from './util';
 
-const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol');
+export type ChildrenTracker<C extends Component> = {
+  register: (item: C) => void;
+  unregister: (item: C) => void;
+}
+
+export const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol') as InjectionKey<ChildrenTracker<ComponentPublicInstance>>;
 
 export type FloatingOptions = Parameters<typeof computePosition>[2];
 
-export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null>, floating: MaybeComputedRef<HTMLElement | null>, options: MaybeComputedRef<FloatingOptions>) {
+export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null | undefined>, floating: MaybeComputedRef<HTMLElement | null | undefined>, options: MaybeComputedRef<FloatingOptions>) {
   const defaultFloatingData: Awaited<ReturnType<typeof computePosition>> = {
-    x: null,
-    y: null,
+    x: 0,
+    y: 0,
     placement: 'top',
     strategy: 'absolute',
     middlewareData: {},
@@ -39,18 +44,18 @@ export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null>, f
 }
 
 export function useHtmlElementFromVNodes() {
-  const referenceVNode: Ref<VNode | null> = ref(null);
+  const referenceVNode: Ref<VNode | undefined> = ref();
 
   const element = computed(() => {
-    let el = referenceVNode.value?.el as Node;
+    let el = referenceVNode.value?.el;
     if (!(el instanceof Node)) {
-      return null;
+      return;
     }
     if (!(el instanceof HTMLElement)) {
       el = (el as Element).nextElementSibling;
     }
     if (!(el instanceof HTMLElement)) {
-      return null;
+      return;
     }
     return el;
   });
@@ -66,8 +71,10 @@ export function useHtmlElementFromVNodes() {
 export function provideChildrenTracker<C extends Component = ComponentPublicInstance>(symbol?: symbol) {
   const items: Ref<C[]> = ref([]);
 
-  provide(symbol || ChildrenTrackerSymbol, {
-    register: (item: C) => items.value.push(item),
+  provide((symbol || ChildrenTrackerSymbol) as InjectionKey<ChildrenTracker<C>>, {
+    register: (item: C) => {
+      items.value.push(item);
+    },
 
     unregister: (item: C) => {
       const idx = items.value.findIndex(i => i === item);
@@ -81,19 +88,19 @@ export function provideChildrenTracker<C extends Component = ComponentPublicInst
 }
 
 export function useChildrenTracker(symbol?: symbol) {
-  const tracker = inject(symbol || ChildrenTrackerSymbol, null);
+  const tracker = inject(symbol || ChildrenTrackerSymbol, undefined);
 
   if (tracker) {
     tryOnMounted(() => {
       const instance = getCurrentInstance();
-      if (instance) {
+      if (instance?.proxy) {
         tracker.register(instance.proxy);
       }
     });
 
     onBeforeUnmount(() => {
       const instance = getCurrentInstance();
-      if (instance) {
+      if (instance?.proxy) {
         tracker.unregister(instance.proxy);
       }
     });
@@ -102,24 +109,24 @@ export function useChildrenTracker(symbol?: symbol) {
   return tracker;
 }
 
-export function useFocused(getFocusElement: () => RendererNode, instance: ComponentInternalInstance) {
+export function useFocused(getFocusElement: () => RendererNode | null | undefined, instance?: ComponentInternalInstance | null) {
   if (!instance) {
     instance = getCurrentInstance();
   }
 
   if (!getFocusElement) {
-    getFocusElement = () => instance.vnode.el;
+    getFocusElement = () => instance?.vnode.el ?? null;
   }
 
   const activeElement = useActiveElement();
   const focused = computed({
-    get() {
+    get(): boolean {
       const el = getFocusElement();
       return activeElement.value === el || (el && el.contains(activeElement.value));
     },
     set(focus) {
       const el = getFocusElement();
-      focus ? el.focus() : el.blur();
+      focus ? el?.focus() : el?.blur();
     },
   });
 
@@ -297,7 +304,7 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
   // };
 }
 
-export function isDefined(value: any): boolean {
+export function isDefined<T>(value: T | undefined | null): value is T {
   return value !== null && typeof value !== 'undefined';
 }
 
@@ -322,7 +329,7 @@ export function useManagedProp<T>(name: string, value: T, onSet?: (to: T) => voi
   });
 }
 
-export function useElementOverflow(element: Ref<HTMLElement>): Ref<boolean> {
+export function useElementOverflow(element: Ref<HTMLElement | undefined>): Ref<boolean> {
   const overflowing = ref(false);
 
   const testElementOverflow = () => {

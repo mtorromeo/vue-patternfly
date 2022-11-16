@@ -23,7 +23,7 @@ import styles from '@patternfly/react-styles/css/components/Nav/nav';
 export const NavScrollablelKey = Symbol('NavScrollablelKey') as InjectionKey<Ref<boolean>>;
 export const NavHorizontalKey = Symbol('NavHorizontalKey') as InjectionKey<boolean>;
 export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<(event: Event, groupId: string, itemId: string) => void>;
-export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | null>>;
+export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | undefined>>;
 
 export default defineComponent({
   name: 'PfNav',
@@ -56,7 +56,7 @@ export default defineComponent({
 
     provide(NavOnSelectKey, (e, groupId, itemId) => emit('select', e, groupId, itemId));
 
-    const flyoutRef: Ref<HTMLElement | null> = ref(null);
+    const flyoutRef: Ref<HTMLElement | undefined> = ref();
     provide(NavFlyoutRefKey, flyoutRef);
 
     return {

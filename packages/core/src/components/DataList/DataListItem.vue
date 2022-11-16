@@ -87,8 +87,8 @@ export default defineComponent({
       const getValue = () => {
         if (props.selectionInputValue !== undefined) {
           return props.selectionInputValue;
-        } else if (instance.vnode.key !== null) {
-          return instance.vnode.key;
+        } else if (instance?.vnode.key !== null) {
+          return instance?.vnode.key;
         }
         return uniqueId;
       };
@@ -96,10 +96,10 @@ export default defineComponent({
       return computed({
         get(): boolean {
           if (selectable.value) {
-            return props.selected;
+            return !!props.selected;
           }
 
-          if (datalist.selectable.value) {
+          if (datalist?.selectable.value) {
             const value = getValue();
             if (Array.isArray(datalist.itemSelection.value)) {
               return datalist.itemSelection.value.includes(value);
@@ -112,7 +112,7 @@ export default defineComponent({
 
         set(s: boolean) {
           if (!selectable.value) {
-            if (datalist.selectable.value) {
+            if (datalist?.selectable.value) {
               const value = getValue();
 
               if (datalist.multipleSelection.value) {
@@ -144,7 +144,7 @@ export default defineComponent({
       });
     })();
 
-    const isExpandable = computed(() => props.expandable !== undefined || datalist.expandable.value);
+    const isExpandable = computed(() => props.expandable !== undefined || !!datalist?.expandable.value);
 
     const managedExpanded = useManagedProp('expanded', false);
 
@@ -159,14 +159,14 @@ export default defineComponent({
 
       managedExpanded,
       managedSelected,
-      multiple: datalist.multipleSelection,
+      multiple: datalist?.multipleSelection,
       select() {
         managedSelected.value = !managedSelected.value;
       },
       isExpandable,
-      selectable: computed(() => selectable.value || datalist.selectable.value),
-      name: computed(() => props.selectionInputName || datalist.inputName.value),
-      value: computed(() => props.selectionInputValue || datalist.inputValue.value),
+      selectable: computed(() => selectable.value || !!datalist?.selectable.value),
+      name: computed(() => props.selectionInputName || datalist?.inputName.value),
+      value: computed(() => props.selectionInputValue || datalist?.inputValue.value),
       dragging: ref(false),
       styles: markRaw(styles) as typeof styles,
     };

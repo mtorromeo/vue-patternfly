@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import { defineComponent, h, inject, unref } from 'vue';
-import { TabsActiveKeyKey, TabsClickHandlerKey } from './Tabs.vue';
+import { TabsActiveKeyKey, TabsClickHandlerKey, TabsIdSuffixKey } from './Tabs.vue';
 import PfTabTitleText from './TabTitleText.vue';
 
 export default defineComponent({
@@ -35,7 +35,7 @@ export default defineComponent({
   setup() {
     return {
       activeKey: inject(TabsActiveKeyKey),
-      idSuffix: inject(TabsActiveKeyKey),
+      idSuffix: inject(TabsIdSuffixKey),
       handleTabClick: inject(TabsClickHandlerKey),
     };
   },
@@ -45,7 +45,7 @@ export default defineComponent({
     return h(
       'li',
       {
-        key,
+        key: key ?? undefined,
         class: [styles.tabsItem, {
           [styles.modifiers.current]: key === unref(this.activeKey),
         }],
@@ -63,7 +63,7 @@ export default defineComponent({
           'aria-disabled': this.disabled || this.ariaDisabled,
           'aria-controls': `pf-tab-section-${String(key)}-${String(this.idSuffix)}`,
           tabindex: this.disabled || this.ariaDisabled ? (this.href ? -1 : null) : undefined,
-          onClick: (e: Event) => this.handleTabClick(key),
+          onClick: (e: Event) => this.handleTabClick?.(key),
         },
         {
           default: () => {

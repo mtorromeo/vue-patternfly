@@ -21,7 +21,7 @@ export default defineComponent({
         e.props = mergeProps({
           class: styles.emptyStateIcon,
           'aria-hidden': 'true',
-        }, e.props);
+        }, e.props ?? {});
         return e;
       });
     }

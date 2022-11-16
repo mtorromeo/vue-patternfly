@@ -89,19 +89,25 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits({
   /** Callback for resize end. */
-  resize: (width: number, id: string) => true,
+  resize: (width: number, id?: string) => true,
 });
 
-const panel: Ref<HTMLElement | null> = ref(null);
+const panel: Ref<HTMLElement | undefined> = ref();
 const panelId = computed(() => props.id || getUniqueId('pf-drawer-panel-'));
 
-const { el: drawerRef, position, expanded, inline, static: isStatic } = inject(DrawerKey);
+const drawerProvide = inject(DrawerKey);
+
+if (!drawerProvide) {
+  throw new Error('DrawerPanelContent can only be used inside Drawer components');
+}
+
+const { el: drawerRef, position, expanded, inline, static: isStatic } = drawerProvide;
 const drawerContentRef = inject(DrawerContentRefKey);
 const hidden = computed(() => unref(isStatic) || !unref(expanded));
-const splitterRef: Ref<HTMLDivElement | null> = ref(null);
+const splitterRef: Ref<HTMLDivElement | undefined> = ref();
 
 let isResizing: boolean | null = null;
-let panelSize: Ref<number | null> = ref(null);
+let panelSize: Ref<number | undefined> = ref();
 let panelRect: DOMRect;
 let setInitialVals = true;
 const separatorValue = ref(0);
@@ -110,12 +116,12 @@ function calcValueNow() {
   let splitterPos;
   let drawerSize;
 
-  const drawerContentEl = resolveOverridableComponent(drawerContentRef.value);
+  const drawerContentEl = resolveOverridableComponent(drawerContentRef?.value);
 
-  const paR = panel.value.getBoundingClientRect();
-  const spR = splitterRef.value.getBoundingClientRect();
-  const drR = drawerRef.value.getBoundingClientRect();
-  const dCR = drawerContentEl.getBoundingClientRect();
+  const paR = panel.value?.getBoundingClientRect() ?? { left: 0, right: 0 };
+  const spR = splitterRef.value?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
+  const drR = drawerRef.value?.getBoundingClientRect() ?? { left: 0, right: 0 };
+  const dCR = drawerContentEl?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
 
   if (inline.value && position.value === 'right') {
     splitterPos = paR.right - spR.left;
@@ -123,7 +129,7 @@ function calcValueNow() {
   } else if (inline.value && position.value === 'left') {
     splitterPos = spR.right - paR.left;
     drawerSize = drR.right - drR.left;
-  } else if (position .value=== 'right') {
+  } else if (position.value === 'right') {
     splitterPos = dCR.right - spR.left;
     drawerSize = dCR.right - dCR.left;
   } else if (position.value === 'left') {
@@ -132,6 +138,8 @@ function calcValueNow() {
   } else if (position.value === 'bottom') {
     splitterPos = dCR.bottom - spR.top;
     drawerSize = dCR.bottom - dCR.top;
+  } else {
+    return 0;
   }
 
   const newSplitterPos = (splitterPos / drawerSize) * 100;
@@ -150,7 +158,7 @@ function handleMouseDown(e: MouseEvent) {
   e.preventDefault();
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', handleMouseUp);
-  drawerRef.value.classList.add(styles.modifiers.resizing);
+  drawerRef.value?.classList.add(styles.modifiers.resizing);
   isResizing = true;
   setInitialVals = true;
 }
@@ -169,7 +177,7 @@ function handleTouchMove(e: TouchEvent) {
 
 function handleControlMove(e: MouseEvent | TouchEvent, mousePos: number) {
   e.stopPropagation();
-  if (!isResizing) {
+  if (!isResizing || !panel.value) {
     return;
   }
 
@@ -194,9 +202,9 @@ function handleMouseUp() {
   if (!isResizing) {
     return;
   }
-  drawerRef.value.classList.remove(styles.modifiers.resizing);
+  drawerRef.value?.classList.remove(styles.modifiers.resizing);
   isResizing = false;
-  emit('resize', panelSize.value, props.id);
+  emit('resize', panelSize.value ?? 0, props.id);
   setInitialVals = true;
   document.removeEventListener('mousemove', handleMouseMove);
   document.removeEventListener('mouseup', handleMouseUp);
@@ -208,12 +216,16 @@ function handleTouchEnd(e: TouchEvent) {
     return;
   }
   isResizing = false;
-  emit('resize', panelSize.value, props.id);
+  emit('resize', panelSize.value ?? 0, props.id);
   document.removeEventListener('touchmove', handleTouchMove);
   document.removeEventListener('touchend', handleTouchEnd);
 };
 
 function handleKeys(e: KeyboardEvent) {
+  if (!panel.value) {
+    return;
+  }
+
   const key = e.key;
   if (
     key !== 'Escape' &&
@@ -231,7 +243,7 @@ function handleKeys(e: KeyboardEvent) {
   e.preventDefault();
 
   if (key === 'Escape' || key === 'Enter') {
-    emit('resize', panelSize.value, props.id);
+    emit('resize', panelSize.value ?? 0, props.id);
   }
   const panelRect = panel.value.getBoundingClientRect();
   let newSize = position.value === 'bottom' ? panelRect.height : panelRect.width;

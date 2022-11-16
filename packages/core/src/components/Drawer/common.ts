@@ -6,7 +6,7 @@ export enum DrawerColorVariant {
 }
 
 export type DrawerProvide = {
-  el: Ref<HTMLDivElement | null>;
+  el: Ref<HTMLDivElement | undefined>;
   expanded: ComputedRef<boolean>;
   inline: ComputedRef<boolean>;
   static: ComputedRef<boolean>;

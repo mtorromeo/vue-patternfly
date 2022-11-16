@@ -5,7 +5,7 @@ import { type DefineComponent, defineComponent, h, type PropType, resolveDynamic
 
 const gridSpans = {
   type: [String, Number],
-  default: null as string | number,
+  default: null as string | number | null,
   validator: (v: any) => {
     const numval = Number(v);
     return v === null || (!isNaN(numval) && numval >= 1 && numval <= 12);

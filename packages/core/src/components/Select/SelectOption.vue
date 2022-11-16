@@ -143,11 +143,11 @@ export default defineComponent({
       render() {
         if (this.count || this.count === 0) {
           return h('span', { class: styles.selectMenuItemRow }, [
-            h('span', { class: styles.selectMenuItemText }, this.$slots.default()),
+            h('span', { class: styles.selectMenuItemText }, this.$slots),
             h('span', { class: styles.selectMenuItemCount }, this.count),
           ]);
         }
-        return this.$slots.default();
+        return this.$slots.default?.();
       },
     }),
   },
@@ -215,12 +215,12 @@ export default defineComponent({
     const instance = getCurrentInstance();
     useChildrenTracker();
     const select = inject(SelectKey);
-    const menuItem: Ref<HTMLElement | null> = ref(null);
+    const menuItem: Ref<HTMLElement | undefined> = ref();
 
     return {
-      keydown: (e: KeyboardEvent) => select?.keydown?.call?.(instance.proxy as ComponentPublicInstance & Navigatable, e, menuItem.value),
+      keydown: (e: KeyboardEvent) => select?.keydown?.call?.(instance?.proxy as ComponentPublicInstance & Navigatable, e, menuItem.value ?? undefined),
       menuItem,
-      focused: useFocused(() => instance.refs.menuItem, instance),
+      focused: useFocused(() => menuItem.value, instance),
       styles: markRaw(styles) as typeof styles,
       checkStyles: markRaw(checkStyles) as typeof checkStyles,
       managedChecked: useManagedProp('checked', false),

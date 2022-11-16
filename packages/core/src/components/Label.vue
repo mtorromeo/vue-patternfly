@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import { type DefineComponent, defineComponent, h, mergeProps, type PropType, ref, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, mergeProps, type PropType, ref, resolveDynamicComponent, type Ref } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton';
 import PfTooltip, { TooltipPosition } from './Tooltip/Tooltip.vue';
@@ -52,7 +52,7 @@ export default defineComponent({
   emits: ['close'],
 
   setup() {
-    const textRef = ref(null);
+    const textRef: Ref<HTMLSpanElement | undefined> = ref();
 
     return {
       textRef,
@@ -74,7 +74,7 @@ export default defineComponent({
       component = 'router-link';
     }
 
-    const children = this.$slots.default();
+    const children = this.$slots.default?.();
     let content = children;
     if (this.truncated) {
       content = [h('span', { ref: 'textRef', class: styles.labelText }, children)];

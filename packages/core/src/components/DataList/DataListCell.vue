@@ -3,10 +3,10 @@
     :class="[
       styles.dataListCell, {
         [styles.modifiers.noFill]: noFill,
-        [styles.modifiers[wrapModifier]]: wrapModifier,
+        [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,
         [styles.modifiers.alignRight]: alignRight,
         [styles.modifiers.icon]: icon,
-        [styles.modifiers[`flex_${width}` as 'flex_2' | 'flex_3' | 'flex_4' | 'flex_5']]: width > 1,
+        [styles.modifiers[`flex_${width}` as 'flex_2' | 'flex_3' | 'flex_4' | 'flex_5']]: (width ?? 0) > 1,
       },
     ]"
   >

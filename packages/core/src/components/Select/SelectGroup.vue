@@ -23,9 +23,9 @@ export default defineComponent({
   render() {
     let children;
     if (this.select?.variant === 'checkbox') {
-      children = this.$slots.default();
+      children = this.$slots.default?.();
     } else {
-      children = h('ul', { role: 'listbox' }, this.$slots.default());
+      children = h('ul', { role: 'listbox' }, this.$slots.default?.());
     }
 
     return h('div', mergeProps({

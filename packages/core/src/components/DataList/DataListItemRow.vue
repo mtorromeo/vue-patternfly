@@ -2,7 +2,7 @@
   <div
     :class="[
       styles.dataListItemRow, {
-        [styles.modifiers[wrapModifier]]: wrapModifier,
+        [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,
       },
     ]"
   >
@@ -46,8 +46,8 @@ export default defineComponent({
       PfDataListItemCells,
       PfDataListCell,
 
-      expandable: datalistItem.expandable,
-      expanded: datalistItem.expanded,
+      expandable: !!datalistItem?.expandable,
+      expanded: !!datalistItem?.expanded,
       styles: markRaw(styles) as typeof styles,
     };
   },

@@ -4,7 +4,7 @@
       styles.dataList,
       gridBreackpointClass, {
         [styles.modifiers.compact]: compact,
-        [styles.modifiers[wrapModifier]]: wrapModifier,
+        [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,
         [styles.modifiers.dragOver]: dragging,
       },
     ]"

@@ -122,8 +122,8 @@ export const SelectKey = Symbol('SelectKey') as InjectionKey<{
   name: string;
   variant: string;
   keydown: (this: Component & Navigatable, event: KeyboardEvent, itemEl?: HTMLElement) => void;
-  element: Ref<HTMLSelectElement | null>,
-  menu: Ref<InstanceType<typeof PfSelectMenu> | null>,
+  element: Ref<HTMLSelectElement | undefined>,
+  menu: Ref<InstanceType<typeof PfSelectMenu> | undefined>,
 }>;
 
 export default defineComponent({
@@ -201,9 +201,9 @@ export default defineComponent({
     const options = provideChildrenTracker<InstanceType<typeof PfSelectOption> & Disableable & Focusable>();
     const onKeydown = keyNavigation(options);
 
-    const select: Ref<HTMLSelectElement | null> = ref(null);
-    const menu: Ref<InstanceType<typeof PfSelectMenu> | null> = ref(null);
-    const filter: Ref<HTMLInputElement | null> = ref(null);
+    const select: Ref<HTMLSelectElement | undefined> = ref();
+    const menu: Ref<InstanceType<typeof PfSelectMenu> | undefined> = ref();
+    const filter: Ref<HTMLInputElement | undefined> = ref();
 
     provide(SelectKey, {
       $emit: emit,
@@ -232,7 +232,7 @@ export default defineComponent({
     return {
       typeaheadInputValue: null as string | null,
       typeaheadCurrIndex: -1,
-      typeaheadActiveChild: null as HTMLElement | null,
+      typeaheadActiveChild: undefined as HTMLElement | undefined,
       typeAheadAriaLabel: '',
       // tabbedIntoFavoritesMenu: false,
     };
@@ -287,7 +287,7 @@ export default defineComponent({
       const escFromToggle = () => event.target instanceof HTMLElement && this.select?.contains?.(event.target);
 
       const escFromWithinMenu = () => {
-        const menu = this.menu.$el;
+        const menu = this.menu?.$el;
         return menu?.contains?.(event.target);
       };
 

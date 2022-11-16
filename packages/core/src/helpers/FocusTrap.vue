@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useFocusTrap, type UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
-import { defineComponent, h, ref, type PropType } from 'vue';
+import { defineComponent, h, ref, type PropType, type Ref } from 'vue';
 
 export default defineComponent({
   name: 'PfFocusTrap',
@@ -16,7 +16,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const target = ref(null);
+    const target: Ref<HTMLDivElement | undefined> = ref();
     const { activate, deactivate, pause, unpause } = useFocusTrap(target, {
       immediate: props.active,
       ...props.focusTrapOptions,

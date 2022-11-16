@@ -11,7 +11,7 @@ export default defineComponent({
         class: styles.dropdownGroupTitle,
         'aria-hidden': '',
       }, this.$slots.label()),
-      h('ul', { role: 'none' }, this.$slots.default()),
+      h('ul', { role: 'none' }, this.$slots),
     ]);
   },
 });

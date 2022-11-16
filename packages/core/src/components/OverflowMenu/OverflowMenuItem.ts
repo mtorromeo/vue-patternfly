@@ -22,8 +22,6 @@ export default defineComponent({
 
     return h('div', mergeProps({
       class: styles.overflowMenuItem,
-    }, this.$attrs), {
-      default: () => this.$slots.default(),
-    });
+    }, this.$attrs), this.$slots);
   },
 });

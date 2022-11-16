@@ -6,7 +6,7 @@ import { h, mergeProps, cloneVNode, defineComponent, type Component, type VNode 
 const formCtrls = ['PfFormSelect', 'PfTextArea', 'PfTextInput'];
 
 function vnodeIsFormCtrls(vnode: VNode) {
-  return typeof vnode.type === 'object' && formCtrls.includes((vnode.type as Component).name);
+  return typeof vnode.type === 'object' && formCtrls.includes((vnode.type as Component).name ?? '');
 }
 
 export default defineComponent({
@@ -24,7 +24,7 @@ export default defineComponent({
           return children;
         }
 
-        return children.map(child => vnodeIsFormCtrls(child) ? cloneVNode(child, { 'aria-describedby': idItem.props.id }) : child);
+        return children.map(child => vnodeIsFormCtrls(child) ? cloneVNode(child, { 'aria-describedby': idItem.props?.id }) : child);
       },
     });
   },

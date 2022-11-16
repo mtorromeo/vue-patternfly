@@ -25,7 +25,7 @@ export default defineComponent({
       'aria-atomic': this.liveRegion ? false : null,
     }, {
       default: () => {
-        let children = findChildrenVNodes(this.$slots.default());
+        let children = findChildrenVNodes(this.$slots.default?.());
         children = children.map((e, index) => h('li', { key: index }, e));
 
         if (this.overflowMessage) {

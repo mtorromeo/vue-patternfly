@@ -10,7 +10,7 @@
       v-bind="$attrs"
       :class="styles.checkInput"
       type="checkbox"
-      :checked="modelValue"
+      :checked="modelValue === null ? undefined : modelValue"
       :disabled="disabled"
       :aria-valid="!valid"
       @change="$emit('update:modelValue', ($event.currentTarget as HTMLInputElement).checked)"
@@ -33,80 +33,47 @@
   </component>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
+import { computed, ref, watch, type DefineComponent, type Ref } from 'vue';
 import { getUniqueId } from '../util';
-import { type DefineComponent, defineComponent, markRaw, type PropType, ref, type Ref } from 'vue';
 
-export default defineComponent({
-  name: 'PfCheckbox',
+const props = defineProps<{
+  component?: string | DefineComponent;
+  /** Flag to show if the radio is checked. */
+  modelValue?: boolean | null;
+  /** Flag to show if the radio is disabled. */
+  disabled?: boolean;
+  /** Flag to show if the radio selection is valid or invalid. */
+  valid?: boolean;
+  /** Id of the radio. */
+  id?: string;
+  /** Label text of the radio. */
+  label?: string;
+  /** Body of the radio. */
+  body?: string;
+  /** Description text of the radio. */
+  description?: string;
+  name?: string;
+}>();
 
-  props: {
-    component: {
-      type: [String, Object] as PropType<string | DefineComponent>,
-      default: 'div',
-    },
+defineEmits({
+  'update:modelValue': (value: boolean) => true,
+});
 
-    /** Flag to show if the radio is checked. */
-    modelValue: Boolean,
+const input: Ref<HTMLInputElement | undefined> = ref();
+const validId = computed(() => props.id || getUniqueId());
 
-    /** Flag to show if the radio is disabled. */
-    disabled: Boolean,
+watch(() => props.modelValue, () => {
+  if (!input.value) {
+    return;
+  }
+  input.value.indeterminate = props.modelValue === null;
+}, {
+  immediate: true,
+})
 
-    /** Flag to show if the radio selection is valid or invalid. */
-    valid: Boolean,
-
-    /** Id of the radio. */
-    id: {
-      type: String,
-      default: null,
-    },
-
-    /** Label text of the radio. */
-    label: {
-      type: String,
-      default: '',
-    },
-
-    /** Body of the radio. */
-    body: {
-      type: String,
-      default: '',
-    },
-
-    /** Description text of the radio. */
-    description: {
-      type: String,
-      default: '',
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  setup() {
-    const input: Ref<HTMLInputElement | null> = ref(null);
-    return {
-      styles: markRaw(styles) as typeof styles,
-      input,
-    };
-  },
-
-  computed: {
-    validId() {
-      return this.id || getUniqueId();
-    },
-  },
-
-  watch: {
-    modelValue: {
-      handler() {
-        if (!this.input) {
-          return;
-        }
-        this.input.indeterminate = this.modelValue === null;
-      },
-      immediate: true,
-    },
-  },
+defineExpose({
+  input,
 });
 </script>

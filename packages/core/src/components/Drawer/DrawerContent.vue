@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-export type DrawerContentRef = Ref<HTMLDivElement | InstanceType<typeof OverridableWrapper> | null>;
+export type DrawerContentRef = Ref<HTMLDivElement | InstanceType<typeof OverridableWrapper> | undefined>;
 export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey<DrawerContentRef>;
 </script>
 
@@ -37,6 +37,6 @@ withDefaults(defineProps<{
   colorVariant: DrawerColorVariant.default,
 });
 
-const el: Ref<HTMLDivElement | null> = ref(null);
+const el: Ref<HTMLDivElement | undefined> = ref();
 provide(DrawerContentRefKey, el);
 </script>

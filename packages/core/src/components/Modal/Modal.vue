@@ -15,7 +15,7 @@
             [styles.modifiers.lg]: variant === 'large',
             [styles.modifiers.sm]: variant === 'small',
             [styles.modifiers.md]: variant === 'medium',
-            [styles.modifiers[titleIconVariant]]: titleIconVariant,
+            [styles.modifiers[titleIconVariant ?? 'default']]: titleIconVariant,
           }]"
           :style="{ [topSpacer.name]: positionOffset }"
         >
@@ -90,7 +90,7 @@ import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-e
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
 import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
-import { capitalize } from 'vue';
+import { capitalize, type Ref } from 'vue';
 import { ref, markRaw, defineComponent, type PropType } from 'vue';
 import { useElementOverflow } from '../../use';
 
@@ -207,7 +207,7 @@ export default defineComponent({
   emits: ['update:open'],
 
   setup() {
-    const titleRef = ref(null);
+    const titleRef: Ref<HTMLElement | undefined> = ref();
 
     return {
       titleRef,

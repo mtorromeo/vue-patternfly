@@ -5,7 +5,7 @@
       styles.progress,
       styles.modifiers[variant],
       measureLocation === 'inside' || measureLocation === 'outside' && styles.modifiers[measureLocation],
-      measureLocation !== 'inside' && size !== 'md' && styles.modifiers[size],
+      measureLocation !== 'inside' && size && size !== 'md' && styles.modifiers[size],
       {
         [styles.modifiers.lg]: measureLocation === 'inside',
         [styles.modifiers.singleline]: !title,

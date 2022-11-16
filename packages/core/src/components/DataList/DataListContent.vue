@@ -34,7 +34,7 @@ export default defineComponent({
 
     return {
       styles: markRaw(styles) as typeof styles,
-      sectionHidden: computed(() => props.hidden !== undefined ? props.hidden : !(datalistItem.expandable.value && datalistItem.expanded.value)),
+      sectionHidden: computed(() => props.hidden !== undefined ? props.hidden : !(datalistItem?.expandable.value && datalistItem.expanded.value)),
     };
   },
 });

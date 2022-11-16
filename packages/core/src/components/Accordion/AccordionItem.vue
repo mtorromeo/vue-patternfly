@@ -32,15 +32,15 @@ export default defineComponent({
 
   setup() {
     return {
-      accordion: inject(AccordionKey, null),
+      accordion: inject(AccordionKey, undefined),
       managedExpanded: useManagedProp('expanded', false),
     };
   },
 
   render() {
-    const Toggle = this.toggleComponent || (this.accordion.dl ? 'dt' : `h${this.accordion.level}`);
+    const Toggle = this.toggleComponent || (this.accordion?.dl ? 'dt' : `h${this.accordion?.level}`);
 
-    const content = this.contentComponent || (this.accordion.dl ? 'dd' : 'div');
+    const content = this.contentComponent || (this.accordion?.dl ? 'dd' : 'div');
     const Component = resolveDynamicComponent(content) as DefineComponent;
 
     return [

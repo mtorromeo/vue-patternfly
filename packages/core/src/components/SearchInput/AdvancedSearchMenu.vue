@@ -78,7 +78,7 @@ const props = withDefaults(defineProps<{
   /** Function which builds an attribute-value map by parsing the value in the search input. */
   getAttrValueMap?: () => { [key: string]: string };
 }>(), {
-  attributes: [] as any,
+  attributes: () => [] as (string | SearchAttribute)[],
   resetButtonLabel: 'Reset',
   submitSearchButtonLabel: 'Search',
 });
@@ -99,7 +99,7 @@ const emit = defineEmits({
 });
 
 const value = useManagedProp('modelValue', '', to => emit('change', to));
-const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
+const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | undefined> = ref();
 const searchInput = inject(SearchInputKey);
 const hasWordsId = getUniqueId();
 
@@ -110,12 +110,12 @@ useEventListener('keydown', onEscPress);
 function useAttributeValue(name: string) {
   return computed({
     get() {
-      const map = props.getAttrValueMap();
+      const map = props.getAttrValueMap?.() ?? {};
       return map.hasOwnProperty(name) ? map[name] : '';
     },
 
     set(attributeValue: string) {
-      const newMap = props.getAttrValueMap();
+      const newMap = props.getAttrValueMap?.() ?? {};
       newMap[name] = attributeValue;
       let updatedValue = '';
       Object.entries(newMap).forEach(([k, v]) => {
@@ -149,7 +149,7 @@ const normalizedAttributes = computed(() => {
 const hasWords = useAttributeValue('haswords');
 
 const onSearch = (event: Event) => {
-  emit('search', value.value, event, props.getAttrValueMap());
+  emit('search', value.value, event, props.getAttrValueMap?.() ?? {});
   if (props.searchMenuOpen) {
     emit('toggleAdvancedMenu', event);
   }

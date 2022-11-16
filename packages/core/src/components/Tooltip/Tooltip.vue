@@ -97,7 +97,7 @@ export default defineComponent({
 
   setup() {
     const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
-    const tooltipElement: Ref<HTMLElement | null> = ref(null);
+    const tooltipElement: Ref<HTMLElement | undefined> = ref();
     const visible = ref(false);
 
     watch(referenceElement, (el) => {

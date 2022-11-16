@@ -43,7 +43,7 @@ export default defineComponent({
 
     return {
       items,
-      menuClass: inject(DropdownMenuClassKey, null),
+      menuClass: inject(DropdownMenuClassKey, undefined),
     };
   },
 

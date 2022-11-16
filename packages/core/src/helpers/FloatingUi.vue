@@ -8,7 +8,7 @@ import { cloneVNode, computed, ref, useSlots, withDirectives, type Ref } from 'v
 import { useFloatingUI, type FloatingOptions } from '../use';
 
 const props = withDefaults(defineProps<{
-  reference: string | HTMLElement;
+  reference: string | HTMLElement | undefined;
   disable?: boolean;
   placement?: Placement;
   flip?: boolean;
@@ -23,26 +23,28 @@ const props = withDefaults(defineProps<{
 
 const slots = useSlots();
 
-const referenceElement = computed<HTMLElement | null>(() => {
+const referenceElement = computed<HTMLElement | undefined>(() => {
   const reference = typeof props.reference === 'string'
     ? document.querySelector(props.reference)
     : props.reference;
-  return reference instanceof HTMLElement ? reference : null;
+  return reference instanceof HTMLElement ? reference : undefined;
 });
 
-const htmlElement: Ref<HTMLElement | null> = ref(null);
+const htmlElement: Ref<HTMLElement | undefined> = ref();
 
 const floatingOptions = computed<FloatingOptions>(() => {
   const middleware: Middleware[] = [...props.middleware];
   if (props.flip) {
     middleware.push(flip());
   }
-  if (props.sameWidth && htmlElement.value) {
+  if (props.sameWidth) {
     middleware.push(size({
       apply({rects}) {
-        Object.assign(htmlElement.value.style, {
-          width: `${rects.reference.width}px`,
-        });
+        if (htmlElement.value) {
+          Object.assign(htmlElement.value.style, {
+            width: `${rects.reference.width}px`,
+          });
+        }
       },
     }));
   }
@@ -56,7 +58,7 @@ const ui = useFloatingUI(referenceElement, htmlElement, floatingOptions);
 
 const floatingElement = () => {
   if (props.disable) {
-    return () => slots.default({});
+    return () => slots.default?.({});
   }
 
   const children = slots.default?.(ui);
@@ -70,7 +72,7 @@ const floatingElement = () => {
   }
 
   const onElementMounted = (el: unknown) => {
-    htmlElement.value = el instanceof HTMLElement ? el : null;
+    htmlElement.value = el instanceof HTMLElement ? el : undefined;
   };
 
   return withDirectives(cloneVNode(children[0], {

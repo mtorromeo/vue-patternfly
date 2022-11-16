@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, mergeProps, type PropType, ref } from 'vue';
+import { defineComponent, h, mergeProps, type PropType, ref, type Ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ChipGroup/chip-group';
 import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 import PfChip from './Chip.vue';
@@ -55,7 +55,7 @@ export default defineComponent({
   emits: ['click', 'overflow-chip-click'],
 
   setup() {
-    const labelRef = ref(null);
+    const labelRef: Ref<HTMLSpanElement | undefined> = ref();
 
     return {
       labelRef,

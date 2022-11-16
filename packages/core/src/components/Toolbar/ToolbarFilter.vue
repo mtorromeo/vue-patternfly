@@ -78,12 +78,12 @@ export default defineComponent({
   },
 
   mounted() {
-    this.updateNumberFilters(this.category, this.chips.length);
+    this.updateNumberFilters?.(this.category, this.chips.length);
     this.mounted = true;
   },
 
   updated() {
-    this.updateNumberFilters(this.category, this.chips.length);
+    this.updateNumberFilters?.(this.category, this.chips.length);
   },
 
   methods: {

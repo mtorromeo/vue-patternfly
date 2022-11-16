@@ -9,7 +9,7 @@
         [styles.modifiers.success]: effectiveValidated === 'success',
         [styles.modifiers.warning]: effectiveValidated === 'warning',
         [styles.modifiers.icon]: (iconVariant && iconVariant !== 'search') || iconUrl,
-        [styles.modifiers[iconVariant]]: iconVariant,
+        [styles.modifiers[iconVariant ?? 'search']]: iconVariant,
       },
     ]"
     :type="type"

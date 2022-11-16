@@ -5,11 +5,9 @@
     "dist",
     "global.d.ts"
   ],
-  "main": "dist/core.umd.js",
-  "module": "dist/core.es.js",
-  "typings": "dist/esm/main.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/esm/main.d.ts",
       "import": "./dist/core.es.js",
       "require": "./dist/core.umd.js"
     }
@@ -29,8 +27,8 @@
     "prepack": "pnpm build"
   },
   "dependencies": {
-    "@floating-ui/core": "^1.0.1",
-    "@floating-ui/dom": "^1.0.4",
+    "@floating-ui/core": "^1.0.2",
+    "@floating-ui/dom": "^1.0.6",
     "@patternfly/patternfly": "^4.219.2",
     "@patternfly/react-styles": "^4.91.10",
     "@patternfly/react-tokens": "^4.93.10",
@@ -44,12 +42,12 @@
     "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "^3.2.45",
     "concurrently": "^7.5.0",
-    "focus-trap": "^7.0.0",
+    "focus-trap": "^7.1.0",
     "fs-extra": "^10.1.0",
     "rimraf": "^3.0.2",
     "tslib": "^2.4.1",
-    "typescript": "^4.8.4",
-    "vite": "^3.2.3",
+    "typescript": "^4.9.3",
+    "vite": "^3.2.4",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vue-tsc": "^1.0.9"
