@@ -7,26 +7,26 @@ export * from './children-tracker';
 export * from './floating';
 
 export function useHtmlElementFromVNodes() {
-  const referenceVNode: Ref<VNode | undefined> = ref();
-
-  const element = computed(() => {
-    let el = referenceVNode.value?.el;
-    if (!(el instanceof Node)) {
-      return;
-    }
-    if (!(el instanceof HTMLElement)) {
-      el = (el as Element).nextElementSibling;
-    }
-    if (!(el instanceof HTMLElement)) {
-      return;
-    }
-    return el;
-  });
+  const element: Ref<HTMLElement | undefined> = ref();
 
   return {
     element,
     findReference(children: VNode[]) {
-      referenceVNode.value = findComponentVNode(children);
+      const vnode = findComponentVNode(children);
+
+      element.value = (() => {
+        let el = vnode?.el;
+        if (!(el instanceof Node)) {
+          return;
+        }
+        if (!(el instanceof HTMLElement)) {
+          el = (el as Element).nextElementSibling;
+        }
+        if (!(el instanceof HTMLElement)) {
+          return;
+        }
+        return el;
+      })();
     },
   };
 }
