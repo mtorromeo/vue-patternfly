@@ -3,6 +3,7 @@ import styles from '@patternfly/react-styles/css/components/Select/select';
 import formStyles from '@patternfly/react-styles/css/components/Form/form';
 import { h, mergeProps, defineComponent, inject, ref, type VNode, type Component } from 'vue';
 import { findChildrenVNodes } from '../../util';
+import { SelectKey } from './Select.vue';
 
 export default defineComponent({
   name: 'PfSelectMenu',
@@ -17,9 +18,11 @@ export default defineComponent({
   },
 
   setup() {
+    const select = inject(SelectKey);
+
     return {
       childrenCount: ref(0),
-      select: inject<any>('select'),
+      select,
     };
   },
 
@@ -120,7 +123,7 @@ export default defineComponent({
       children = [
         h('fieldset', mergeProps({
           class: [children.length ? formStyles.formFieldset : styles.selectMenuFieldset],
-        }, this.$attrs), children)
+        }, this.$attrs), children),
       ];
     } else {
       children = this.extendChildren(children, grouped);

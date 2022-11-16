@@ -56,9 +56,9 @@
           [styles.modifiers.disabled]: disabled,
         }]"
       >
-        <ItemDisplay :count="count">
+        <select-item-count :count="count">
           <slot>{{ value }}</slot>
-        </ItemDisplay>
+        </select-item-count>
       </span>
       <div v-if="description" :class="checkStyles.checkDescription">{{ description }}</div>
     </label>
@@ -74,6 +74,7 @@
       [styles.modifiers.favorite]: favorite,
       [styles.modifiers.focus]: focused,
     }"
+    tabindex="0"
   >
     <slot v-if="loading" />
 
@@ -94,12 +95,12 @@
         @keydown="keydown"
       >
         <component :is="description ? 'span' : 'pass-through'" :class="styles.selectMenuItemMain">
-          <ItemDisplay :count="count">
+          <select-item-count :count="count">
             <slot>{{ value.toString() }}</slot>
-          </ItemDisplay>
+          </select-item-count>
 
           <span v-if="selected" :class="styles.selectMenuItemIcon">
-            <CheckIcon aria-hidden />
+            <check-icon aria-hidden />
           </span>
         </component>
         <span v-if="description" :class="styles.selectMenuItemDescription">{{ description }}</span>
@@ -113,7 +114,7 @@
         @click="$emit('update:favorite', !favorite)"
       >
         <span :class="styles.selectMenuItemActionIcon">
-          <StarIcon />
+          <star-icon />
         </span>
       </button>
     </template>
@@ -125,11 +126,13 @@ import styles from '@patternfly/react-styles/css/components/Select/select';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
-import { h, markRaw, inject, getCurrentInstance, defineComponent, type Ref, ref, type ComponentPublicInstance } from 'vue';
-import { type Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
+import { markRaw, inject, getCurrentInstance, defineComponent, type Ref, ref, type ComponentPublicInstance } from 'vue';
+import { type Navigatable, useChildrenTracker, useManagedProp } from '../../use';
 import { SelectKey, SelectOptionsKey } from './Select.vue';
+import SelectItemCount from './SelectItemCount.vue';
 
 import PassThrough from '../../helpers/PassThrough';
+import { useFocus } from '@vueuse/core';
 
 export default defineComponent({
   name: 'PfSelectOption',
@@ -138,18 +141,7 @@ export default defineComponent({
     PassThrough,
     CheckIcon,
     StarIcon,
-    ItemDisplay: defineComponent({
-      props: ['count'],
-      render() {
-        if (this.count || this.count === 0) {
-          return h('span', { class: styles.selectMenuItemRow }, [
-            h('span', { class: styles.selectMenuItemText }, this.$slots),
-            h('span', { class: styles.selectMenuItemCount }, this.count),
-          ]);
-        }
-        return this.$slots.default?.();
-      },
-    }),
+    SelectItemCount,
   },
 
   props: {
@@ -220,7 +212,7 @@ export default defineComponent({
     return {
       keydown: (e: KeyboardEvent) => select?.keydown?.call?.(instance?.proxy as ComponentPublicInstance & Navigatable, e, menuItem.value ?? undefined),
       menuItem,
-      focused: useFocused(() => menuItem.value, instance),
+      focused: useFocus(menuItem).focused,
       styles: markRaw(styles) as typeof styles,
       checkStyles: markRaw(checkStyles) as typeof checkStyles,
       managedChecked: useManagedProp('checked', false),

@@ -41,9 +41,10 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
+import { useFocus } from '@vueuse/core';
 
-import { defineComponent, inject, markRaw, ref, type Ref } from 'vue';
-import { useChildrenTracker, useFocused } from '../../use';
+import { computed, defineComponent, inject, markRaw, ref, type Ref } from 'vue';
+import { useChildrenTracker } from '../../use';
 import { DropdownToggleElementRefKey, DropdownDisabledClassKey, DropdownItemClassKey } from './Dropdown';
 import { DropdownMenuItemsKey, DropdownMenuOnKeydownKey } from './DropdownMenu.vue';
 
@@ -89,12 +90,12 @@ export default defineComponent({
     useChildrenTracker(DropdownMenuItemsKey);
 
     const el: Ref<HTMLLIElement | undefined> = ref();
-    const focusElement = () => el.value?.querySelector('[tabindex], a, button');
+    const focusElement = computed(() => el.value?.querySelector<HTMLElement>('[tabindex], a, button'));
 
     return {
       el,
       styles: markRaw(styles) as typeof styles,
-      focused: useFocused(focusElement),
+      focused: useFocus(focusElement).focused,
       focusElement,
       itemClass: inject(DropdownItemClassKey, styles.dropdownMenuItem),
       disabledClass: inject(DropdownDisabledClassKey, styles.modifiers.disabled),

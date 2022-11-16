@@ -1,10 +1,23 @@
-import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type ComponentInternalInstance, type RendererNode, type Ref, type WritableComputedRef, type VNode } from 'vue';
+import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type Ref, type WritableComputedRef, type VNode } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
-import { useActiveElement } from '@vueuse/core';
 import { findComponentVNode } from '../util';
 
 export * from './children-tracker';
 export * from './floating';
+
+export function findHtmlElementFromVNode(vnode: VNode | undefined) {
+  let el = vnode?.el;
+  if (!(el instanceof Node)) {
+    return;
+  }
+  if (!(el instanceof HTMLElement)) {
+    el = (el as Element).nextElementSibling;
+  }
+  if (!(el instanceof HTMLElement)) {
+    return;
+  }
+  return el;
+}
 
 export function useHtmlElementFromVNodes() {
   const element: Ref<HTMLElement | undefined> = ref();
@@ -13,46 +26,9 @@ export function useHtmlElementFromVNodes() {
     element,
     findReference(children: VNode[]) {
       const vnode = findComponentVNode(children);
-
-      element.value = (() => {
-        let el = vnode?.el;
-        if (!(el instanceof Node)) {
-          return;
-        }
-        if (!(el instanceof HTMLElement)) {
-          el = (el as Element).nextElementSibling;
-        }
-        if (!(el instanceof HTMLElement)) {
-          return;
-        }
-        return el;
-      })();
+      element.value = findHtmlElementFromVNode(vnode);
     },
   };
-}
-
-export function useFocused(getFocusElement: () => RendererNode | null | undefined, instance?: ComponentInternalInstance | null) {
-  if (!instance) {
-    instance = getCurrentInstance();
-  }
-
-  if (!getFocusElement) {
-    getFocusElement = () => instance?.vnode.el ?? null;
-  }
-
-  const activeElement = useActiveElement();
-  const focused = computed({
-    get(): boolean {
-      const el = getFocusElement();
-      return activeElement.value === el || (el && el.contains(activeElement.value));
-    },
-    set(focus) {
-      const el = getFocusElement();
-      focus ? el?.focus() : el?.blur();
-    },
-  });
-
-  return focused;
 }
 
 export interface Disableable {
