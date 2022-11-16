@@ -5,6 +5,7 @@ import { computed, defineComponent, getCurrentInstance, h, type PropType } from 
 import { inputProps, useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
 import { canUseDOM } from '../util';
+import { FormGroupInputsKey } from './Form/FormGroup.vue';
 
 export default defineComponent({
   name: 'PfTextarea',
@@ -37,7 +38,7 @@ export default defineComponent({
   emits: ['input', 'blur', 'change', 'invalid', 'keyup', 'update:modelValue', 'update:validated'],
 
   setup(props) {
-    useChildrenTracker();
+    useChildrenTracker(FormGroupInputsKey);
 
     const { checkValidity, value, ...inputValidationData } = useInputValidation(props);
 

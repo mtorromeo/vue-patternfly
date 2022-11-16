@@ -45,7 +45,7 @@ import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 import { defineComponent, inject, markRaw, ref, type Ref } from 'vue';
 import { useChildrenTracker, useFocused } from '../../use';
 import { DropdownToggleElementRefKey, DropdownDisabledClassKey, DropdownItemClassKey } from './Dropdown';
-import { DropdownMenuOnKeydownKey } from './DropdownMenu.vue';
+import { DropdownMenuItemsKey, DropdownMenuOnKeydownKey } from './DropdownMenu.vue';
 
 export default defineComponent({
   name: 'PfDropdownItem',
@@ -86,7 +86,8 @@ export default defineComponent({
   },
 
   setup() {
-    useChildrenTracker();
+    useChildrenTracker(DropdownMenuItemsKey);
+
     const el: Ref<HTMLLIElement | undefined> = ref();
     const focusElement = () => el.value?.querySelector('[tabindex], a, button');
 

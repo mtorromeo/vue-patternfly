@@ -1,5 +1,6 @@
 import { defineComponent, h } from 'vue';
 import { useChildrenTracker } from '../../use';
+import { FormSelectOptionsKey } from './FormSelect';
 
 export default defineComponent({
   name: 'PfFormSelectOption',
@@ -14,7 +15,7 @@ export default defineComponent({
   },
 
   setup() {
-    useChildrenTracker();
+    useChildrenTracker(FormSelectOptionsKey);
   },
 
   render() {

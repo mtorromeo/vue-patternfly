@@ -1,8 +1,10 @@
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 
 import { defineComponent, h, type PropType } from 'vue';
-import { provideChildrenTracker, useManagedProp } from '../../use';
+import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey } from '../../use';
 import type PfFormSelectOption from './FormSelectOption';
+
+export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey;
 
 export default defineComponent({
   name: 'PfFormSelect',
@@ -31,7 +33,7 @@ export default defineComponent({
 
   setup() {
     return {
-      options: provideChildrenTracker<InstanceType<typeof PfFormSelectOption>>(),
+      options: provideChildrenTracker<InstanceType<typeof PfFormSelectOption>>(FormSelectOptionsKey),
       value: useManagedProp('modelValue', ''),
     };
   },

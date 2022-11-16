@@ -3,9 +3,10 @@ import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 import { h, mergeProps, provide, computed, resolveDynamicComponent, type DefineComponent, defineComponent, inject, type PropType, type InjectionKey } from 'vue';
 import type PfDropdownItem from './DropdownItem.vue';
-import { provideChildrenTracker, keyNavigation, type Disableable, type Focusable } from '../../use';
+import { provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type ChildrenTrackerInjectionKey } from '../../use';
 import { DropdownMenuClassKey } from './Dropdown';
 
+export const DropdownMenuItemsKey = Symbol("DropdownMenuItemsKey") as ChildrenTrackerInjectionKey;
 export const DropdownMenuOnKeydownKey = Symbol('DropdownMenuOnKeydownKey') as InjectionKey<(event: KeyboardEvent, itemEl?: HTMLElement) => void>;
 
 export default defineComponent({
@@ -33,7 +34,7 @@ export default defineComponent({
   },
 
   setup() {
-    const children = provideChildrenTracker<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>();
+    const children = provideChildrenTracker<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>(DropdownMenuItemsKey);
     const items = computed(() => children.value.filter(
       c => Boolean(c.focusElement()) && !c.disabled,
     ));

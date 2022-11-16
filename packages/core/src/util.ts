@@ -1,4 +1,5 @@
-import { computed, Fragment, Comment, type Prop, type VNode, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance } from 'vue';
+import { computed, Fragment, Comment, type Prop, type VNode, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren } from 'vue';
+import { isDefined } from './use';
 
 export enum Breakpoints {
   xs = '',
@@ -164,6 +165,26 @@ export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren | u
     .flat() as VNode[];
 }
 
+export function walkChildrenVNodes<T extends VNode[] | VNodeNormalizedChildren | undefined>(vnodes: T, mapFn: (node: VNode, index: number) => VNode, startIndex?: number): T {
+  if (!Array.isArray(vnodes)) {
+    return vnodes;
+  }
+
+  return vnodes.map((n, index) => {
+    if (!isVNode(n)) {
+      return n;
+    }
+    if (n.type === Comment) {
+      return n;
+    }
+    if (n.type === Fragment) {
+      n.children = walkChildrenVNodes(n.children, mapFn, index + (startIndex ?? 0));
+      return n;
+    }
+    return mapFn(n,  index+ (startIndex ?? 0));
+  }) as T;
+}
+
 export function domFromRef(ref: ComponentPublicInstance | Element): HTMLElement {
   const el: HTMLElement = (ref as any).$el ? (ref as any).$el : ref;
   if (el.nodeType === Node.TEXT_NODE) {
@@ -294,4 +315,8 @@ export function getTextWidth(text: string, node: HTMLElement) {
 // copied from react-core/src/helpers/util.ts
 export function fillTemplate(templateString: string, templateVars: any) {
   return templateString.replace(/\${(.*?)}/g, (_, match) => templateVars[match] || '');
+}
+
+export function isRawSlots(children: VNodeNormalizedChildren | undefined): children is Exclude<VNodeNormalizedChildren, string | VNodeArrayChildren | null | undefined> {
+  return isDefined(children) && typeof children === 'object' && !Array.isArray(children);
 }

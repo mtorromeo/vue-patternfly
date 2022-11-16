@@ -1,47 +1,10 @@
-import { provide, inject, unref, computed, ref, onUpdated, onBeforeUnmount, getCurrentInstance, type Component, type ComponentInternalInstance, type RendererNode, type Ref, type ComponentPublicInstance, type WritableComputedRef, reactive, watch, type VNode, type InjectionKey } from 'vue';
-import { type MaybeComputedRef, resolveUnref, tryOnMounted } from '@vueuse/shared';
+import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type ComponentInternalInstance, type RendererNode, type Ref, type WritableComputedRef, type VNode } from 'vue';
+import { tryOnMounted } from '@vueuse/shared';
 import { useActiveElement } from '@vueuse/core';
-import { computePosition, autoUpdate } from '@floating-ui/dom';
-import { findComponentVNode } from './util';
+import { findComponentVNode } from '../util';
 
-export type ChildrenTracker<C extends Component> = {
-  register: (item: C) => void;
-  unregister: (item: C) => void;
-}
-
-export const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol') as InjectionKey<ChildrenTracker<ComponentPublicInstance>>;
-
-export type FloatingOptions = Parameters<typeof computePosition>[2];
-
-export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null | undefined>, floating: MaybeComputedRef<HTMLElement | null | undefined>, options: MaybeComputedRef<FloatingOptions>) {
-  const defaultFloatingData: Awaited<ReturnType<typeof computePosition>> = {
-    x: 0,
-    y: 0,
-    placement: 'top',
-    strategy: 'absolute',
-    middlewareData: {},
-  };
-  const floatingData = reactive(defaultFloatingData);
-
-  let cleanup = (): any => undefined;
-
-  watch([reference, floating, options], () => {
-    const referenceElement = resolveUnref(reference);
-    const floatingElement = resolveUnref(floating);
-    cleanup();
-    Object.assign(floatingData, defaultFloatingData);
-    if (referenceElement && floatingElement) {
-      cleanup = autoUpdate(referenceElement, floatingElement, async() => {
-        const data = await computePosition(referenceElement, floatingElement, unref(options) as FloatingOptions);
-        Object.assign(floatingData, data);
-      });
-    }
-  }, { immediate: true });
-
-  onBeforeUnmount(() => cleanup());
-
-  return floatingData;
-}
+export * from './children-tracker';
+export * from './floating';
 
 export function useHtmlElementFromVNodes() {
   const referenceVNode: Ref<VNode | undefined> = ref();
@@ -66,47 +29,6 @@ export function useHtmlElementFromVNodes() {
       referenceVNode.value = findComponentVNode(children);
     },
   };
-}
-
-export function provideChildrenTracker<C extends Component = ComponentPublicInstance>(symbol?: symbol) {
-  const items: Ref<C[]> = ref([]);
-
-  provide((symbol || ChildrenTrackerSymbol) as InjectionKey<ChildrenTracker<C>>, {
-    register: (item: C) => {
-      items.value.push(item);
-    },
-
-    unregister: (item: C) => {
-      const idx = items.value.findIndex(i => i === item);
-      if (idx >= 0) {
-        items.value.splice(idx, 1);
-      }
-    },
-  });
-
-  return items;
-}
-
-export function useChildrenTracker(symbol?: symbol) {
-  const tracker = inject(symbol || ChildrenTrackerSymbol, undefined);
-
-  if (tracker) {
-    tryOnMounted(() => {
-      const instance = getCurrentInstance();
-      if (instance?.proxy) {
-        tracker.register(instance.proxy);
-      }
-    });
-
-    onBeforeUnmount(() => {
-      const instance = getCurrentInstance();
-      if (instance?.proxy) {
-        tracker.unregister(instance.proxy);
-      }
-    });
-  }
-
-  return tracker;
 }
 
 export function useFocused(getFocusElement: () => RendererNode | null | undefined, instance?: ComponentInternalInstance | null) {

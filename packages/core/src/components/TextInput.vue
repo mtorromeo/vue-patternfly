@@ -26,7 +26,7 @@
     @blur="onBlur"
     @invalid="onInvalid"
     @keyup="onKeyUp"
-  />
+  >
 </template>
 
 <script lang="ts" setup>
@@ -34,6 +34,7 @@ import { type Ref, ref } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation } from '../input';
+import { FormGroupInputsKey } from './Form/FormGroup.vue';
 
 const props = withDefaults(defineProps<{
   /** Flag to show if the text input is disabled. */
@@ -101,7 +102,8 @@ defineEmits({
 
 const input: Ref<HTMLInputElement | undefined> = ref();
 
-useChildrenTracker();
+useChildrenTracker(FormGroupInputsKey);
+
 const {
   value,
   effectiveValidated,

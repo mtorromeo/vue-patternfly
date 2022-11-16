@@ -114,8 +114,10 @@ import PfSelectToggle from './SelectToggle.vue';
 import PfDivider from '../Divider';
 import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 
-import { useManagedProp, provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type Navigatable } from '../../use';
+import { useManagedProp, provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type Navigatable, type ChildrenTrackerInjectionKey } from '../../use';
 import { type Component, defineComponent, type InjectionKey, markRaw, type PropType, provide, type Ref, ref } from 'vue';
+
+export const SelectOptionsKey = Symbol("SelectOptionsKey") as ChildrenTrackerInjectionKey;
 
 export const SelectKey = Symbol('SelectKey') as InjectionKey<{
   $emit: (event: 'select', ...args: any[]) => void;
@@ -198,7 +200,7 @@ export default defineComponent({
   emits: ['select', 'clear', 'update:open'],
 
   setup(props, { emit }) {
-    const options = provideChildrenTracker<InstanceType<typeof PfSelectOption> & Disableable & Focusable>();
+    const options = provideChildrenTracker<InstanceType<typeof PfSelectOption> & Disableable & Focusable>(SelectOptionsKey);
     const onKeydown = keyNavigation(options);
 
     const select: Ref<HTMLSelectElement | undefined> = ref();

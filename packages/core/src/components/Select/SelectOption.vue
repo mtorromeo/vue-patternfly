@@ -127,7 +127,7 @@ import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
 import { h, markRaw, inject, getCurrentInstance, defineComponent, type Ref, ref, type ComponentPublicInstance } from 'vue';
 import { type Navigatable, useChildrenTracker, useFocused, useManagedProp } from '../../use';
-import { SelectKey } from './Select.vue';
+import { SelectKey, SelectOptionsKey } from './Select.vue';
 
 import PassThrough from '../../helpers/PassThrough';
 
@@ -213,7 +213,7 @@ export default defineComponent({
 
   setup() {
     const instance = getCurrentInstance();
-    useChildrenTracker();
+    useChildrenTracker(SelectOptionsKey);
     const select = inject(SelectKey);
     const menuItem: Ref<HTMLElement | undefined> = ref();
 
