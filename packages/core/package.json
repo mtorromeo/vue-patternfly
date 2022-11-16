@@ -5,9 +5,11 @@
     "dist",
     "global.d.ts"
   ],
+  "main": "dist/core.umd.js",
+  "module": "dist/core.es.js",
+  "types": "dist/esm/main.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/esm/main.d.ts",
       "import": "./dist/core.es.js",
       "require": "./dist/core.umd.js"
     }
@@ -18,6 +20,7 @@
     "build": "concurrently 'npm:build:*'",
     "build:vite": "vite build",
     "build:declarations": "vue-tsc --declaration --emitDeclarationOnly",
+    "build:global-types": "node scripts/build-global.mjs",
     "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
     "build:esm": "tsc --build --verbose tsconfig.json",
     "lint": "vue-tsc --noEmit",
@@ -46,7 +49,7 @@
     "fs-extra": "^10.1.0",
     "rimraf": "^3.0.2",
     "tslib": "^2.4.1",
-    "typescript": "^4.9.3",
+    "typescript": "^4.8.4",
     "vite": "^3.2.4",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
