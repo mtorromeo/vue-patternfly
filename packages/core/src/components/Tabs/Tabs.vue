@@ -1,21 +1,85 @@
+<template>
+  <component
+    :is="component"
+    :id="id"
+    :aria-label="ariaLabel"
+    :class="[styles.tabs, breakpointClasses, {
+      [styles.modifiers.fill]: filled,
+      [styles.modifiers.secondary]: secondary,
+      [styles.modifiers.vertical]: vertical,
+      [styles.modifiers.box]: box,
+      [styles.modifiers.scrollable]: !vertical && showScrollButtons,
+      [styles.modifiers.pageInsets]: pageInsets,
+      [styles.modifiers.colorSchemeLight_300]: variant === 'light300',
+    }]"
+  >
+    <button
+      type="button"
+      :class="[styles.tabsScrollButton, {
+        [buttonStyles.modifiers.secondary]: secondary,
+      }]"
+      :disabled="disableLeftScrollButton"
+      :aria-label="leftScrollAriaLabel"
+      :aria-hidden="disableLeftScrollButton"
+      @click="scrollLeft"
+    >
+      <angle-left-icon />
+    </button>
+
+    <ul
+      ref="tabListRef"
+      role="tablist"
+      :class="styles.tabsList"
+      @scroll="handleScrollButtons"
+    />
+
+    <button
+      type="button"
+      :class="[styles.tabsScrollButton, {
+        [buttonStyles.modifiers.secondary]: secondary,
+      }]"
+      :disabled="disableRightScrollButton"
+      :aria-label="rightScrollAriaLabel"
+      :aria-hidden="disableRightScrollButton"
+      @click="scrollRight"
+    >
+      <angle-right-icon />
+    </button>
+  </component>
+
+  <slot />
+</template>
+
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
-import { breakpointProp, classesFromBreakpointProps, findChildrenVNodes, isElementInView, getUniqueId } from '../../util';
+import { breakpointProp, classesFromBreakpointProps, isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { h, provide, computed, reactive, defineComponent, type PropType, type InjectionKey, type ComputedRef, type Ref, ref } from 'vue';
+import { provide, computed, reactive, defineComponent, type PropType, type InjectionKey, type ComputedRef, type Ref, ref, markRaw } from 'vue';
 
 import PfTabContent from './TabContent.vue';
-import PfAngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import { useEventListener } from '@vueuse/core';
 
-export const TabsVariantKey = Symbol('TabsVariantKey') as InjectionKey<'default' | 'light300'>;
-export const TabsActiveKeyKey = Symbol('TabsActiveKeyKey') as InjectionKey<ComputedRef<string | number | symbol>>;
-export const TabsIdSuffixKey = Symbol('TabsIdSuffixKey') as InjectionKey<ComputedRef<string>>;
-export const TabsClickHandlerKey = Symbol('TabsClickHandlerKey') as InjectionKey<(key: string | number | symbol | null) => void>;
+export type TabsProvide = {
+  variant: 'default' | 'light300';
+  activeKey: ComputedRef<string | number | symbol>;
+  idSuffix: ComputedRef<string>;
+  handleTabClick: (key: string | number | symbol | null) => void;
+  tabListRef: Ref<HTMLUListElement | undefined>;
+}
+
+export const TabsProvideKey = Symbol('TabsProvide') as InjectionKey<TabsProvide>;
 
 export default defineComponent({
   name: 'PfTabs',
+
+  components: {
+    PfTabContent,
+    AngleLeftIcon,
+    AngleRightIcon,
+  },
 
   props: {
     id: {
@@ -92,31 +156,32 @@ export default defineComponent({
   },
 
   setup(props) {
-    provide(TabsVariantKey, props.variant);
-
     const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);
-    provide(TabsActiveKeyKey, localActiveKey);
-
     const idSuffix = computed(() => props.id || getUniqueId(''));
-    provide(TabsIdSuffixKey, idSuffix);
-
     const shownKeys: (string | number | symbol)[] = reactive([]);
+    const tabListRef: Ref<HTMLUListElement | undefined> = ref();
 
-    provide(TabsClickHandlerKey, (key: string | number | symbol) => {
-      localActiveKey.value = key;
+    provide(TabsProvideKey, {
+      variant: props.variant,
+      activeKey: localActiveKey,
+      idSuffix,
+      handleTabClick: (key: string | number | symbol) => {
+        localActiveKey.value = key;
 
-      if (props.mountOnEnter) {
-        shownKeys.push(key);
-      }
+        if (props.mountOnEnter) {
+          shownKeys.push(key);
+        }
+      },
+      tabListRef,
     });
 
-    const tablistRef: Ref<HTMLUListElement | undefined> = ref();
-
     return {
+      styles: markRaw(styles) as typeof styles,
+      buttonStyles: markRaw(buttonStyles) as typeof buttonStyles,
       localActiveKey,
       idSuffix,
       shownKeys,
-      tablistRef,
+      tabListRef,
     };
   },
 
@@ -145,32 +210,27 @@ export default defineComponent({
 
   created() {
     this.shownKeys.push(this.defaultActiveKey || this.localActiveKey);
+
+    if (!this.vertical) {
+      useEventListener('resize', this.handleScrollButtons, false);
+    }
   },
 
   mounted() {
-    if (!this.vertical) {
-      window.addEventListener('resize', this.handleScrollButtons, false);
-      this.handleScrollButtons();
-    }
-  },
-
-  beforeUnmount() {
-    if (!this.vertical) {
-      window.removeEventListener('resize', this.handleScrollButtons, false);
-    }
+    this.$nextTick(this.handleScrollButtons);
   },
 
   methods: {
     handleScrollButtons() {
-      if (!this.tablistRef || this.vertical) {
+      if (!this.tabListRef || this.vertical) {
         return;
       }
 
       // get first element and check if it is in view
-      const overflowOnLeft = !isElementInView(this.tablistRef, this.tablistRef.firstElementChild, false);
+      const overflowOnLeft = !isElementInView(this.tabListRef, this.tabListRef.firstElementChild, false);
 
       // get last element and check if it is in view
-      const overflowOnRight = !isElementInView(this.tablistRef, this.tablistRef.lastElementChild, false);
+      const overflowOnRight = !isElementInView(this.tabListRef, this.tabListRef.lastElementChild, false);
 
       this.showScrollButtons = overflowOnLeft || overflowOnRight;
       this.disableLeftScrollButton = !overflowOnLeft;
@@ -179,137 +239,46 @@ export default defineComponent({
 
     scrollLeft() {
       // find first Element that is fully in view on the left, then scroll to the element before it
-      if (!this.tablistRef) {
+      if (!this.tabListRef) {
         return;
       }
 
-      const childrenArr = Array.from(this.tablistRef.children);
+      const childrenArr = Array.from(this.tabListRef.children);
       let firstElementInView;
       let lastElementOutOfView;
       let i;
       for (i = 0; i < childrenArr.length && !firstElementInView; i++) {
-        if (isElementInView(this.tablistRef, childrenArr[i], false)) {
+        if (isElementInView(this.tabListRef, childrenArr[i], false)) {
           firstElementInView = childrenArr[i];
           lastElementOutOfView = childrenArr[i - 1];
           break;
         }
       }
       if (lastElementOutOfView) {
-        this.tablistRef.scrollLeft -= lastElementOutOfView.scrollWidth;
+        this.tabListRef.scrollLeft -= lastElementOutOfView.scrollWidth;
       }
     },
 
     scrollRight() {
       // find last Element that is fully in view on the right, then scroll to the element after it
-      if (!this.tablistRef) {
+      if (!this.tabListRef) {
         return;
       }
 
-      const childrenArr = Array.from(this.tablistRef.children);
+      const childrenArr = Array.from(this.tabListRef.children);
       let lastElementInView;
       let firstElementOutOfView;
       for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
-        if (isElementInView(this.tablistRef, childrenArr[i], false)) {
+        if (isElementInView(this.tabListRef, childrenArr[i], false)) {
           lastElementInView = childrenArr[i];
           firstElementOutOfView = childrenArr[i + 1];
           break;
         }
       }
       if (firstElementOutOfView) {
-        this.tablistRef.scrollLeft += firstElementOutOfView.scrollWidth;
+        this.tabListRef.scrollLeft += firstElementOutOfView.scrollWidth;
       }
     },
-  },
-
-  render() {
-    const buttonProps = {
-      type: 'button',
-      class: [styles.tabsScrollButton, {
-        [buttonStyles.modifiers.secondary]: this.secondary,
-      }],
-      disabled: this.disableLeftScrollButton,
-      'aria-label': this.leftScrollAriaLabel,
-      'aria-hidden': this.disableLeftScrollButton,
-      onClick: this.scrollLeft,
-    };
-
-    const leftButton = h('button', buttonProps, h(PfAngleLeftIcon));
-    const rightButton = h('button', {
-      ...buttonProps,
-      disabled: this.disableRightScrollButton,
-      'aria-label': this.rightScrollAriaLabel,
-      'aria-hidden': this.disableRightScrollButton,
-      onClick: this.scrollRight,
-    }, h(PfAngleRightIcon));
-
-    const tabs = findChildrenVNodes(this.$slots.default?.())
-      .filter(tab => !tab.props || !(tab.props.hidden === '' || tab.props.hidden))
-      .map((tab, index) => {
-        if (!tab.key) {
-          tab.key = index.toString();
-        }
-        return tab;
-      });
-
-    const tabList =
-      h('ul',
-        {
-          ref: el => (this.tablistRef = el as HTMLUListElement),
-          role: 'tablist',
-          class: styles.tabsList,
-          onScroll: this.handleScrollButtons,
-        },
-        tabs.map((tab, index) => {
-          if (tab.props && tab.props['content-ref'] && tab.props['content-ref'].$el) {
-            tab.props['content-ref'].$el.hidden = tab.key !== this.localActiveKey;
-          }
-          return {
-            ...tab,
-            children: {
-              // the title is in the title slot of pf-tab
-              default: () => (tab.children as any)?.title?.() ?? [],
-            },
-          };
-        }),
-      );
-
-    return [
-      h(
-        this.component, {
-          id: this.id,
-          'aria-label': this.ariaLabel,
-          class: [styles.tabs, this.breakpointClasses, {
-            [styles.modifiers.fill]: this.filled,
-            [styles.modifiers.secondary]: this.secondary,
-            [styles.modifiers.vertical]: this.vertical,
-            [styles.modifiers.box]: this.box,
-            [styles.modifiers.scrollable]: !this.vertical && this.showScrollButtons,
-            [styles.modifiers.pageInsets]: this.pageInsets,
-            [styles.modifiers.colorSchemeLight_300]: this.variant === 'light300',
-          }],
-        }, [
-          leftButton,
-          tabList,
-          rightButton,
-        ],
-      ),
-      ...tabs
-        .filter(tab =>
-          !(this.unmountOnExit && tab.key !== this.localActiveKey) &&
-          !(this.mountOnEnter && !(tab.key && this.shownKeys.includes(tab.key))),
-        )
-        .map(tab =>
-          h(PfTabContent as any, {
-            id: `pf-tab-section-${String(tab.key)}-${String(this.idSuffix)}`,
-            key: tab.key ?? undefined,
-            eventKey: tab.key,
-            activeKey: this.localActiveKey,
-          }, {
-            // the content is in the default slot of pf-tab
-            default: () => (tab.children as any)?.default?.() ?? [],
-          }),
-        ),
-    ];
   },
 });
 </script>

@@ -28,8 +28,9 @@
         <pf-tab title="Database">
           Database
         </pf-tab>
-        <pf-tab title="Server" hidden>
+        <pf-tab title="Server" mount-on-enter unmount-on-exit>
           Server
+          <keep-alive-test />
         </pf-tab>
         <pf-tab>
           <template #title>System</template>
@@ -162,10 +163,10 @@
 
     <story-canvas title="Separate content">
       <pf-tabs>
-        <pf-tab title="Users" :content-ref="$refs.tabUsers" />
-        <pf-tab title="Containers" :content-ref="$refs.tabContainers" />
-        <pf-tab title="Database" :content-ref="$refs.tabDatabase" />
-        <pf-tab title="Server" hidden>
+        <pf-tab title="Users" :content-ref="tabUsers" />
+        <pf-tab title="Containers" :content-ref="tabContainers" />
+        <pf-tab title="Database" :content-ref="tabDatabase" />
+        <pf-tab title="Server">
           Server
         </pf-tab>
         <pf-tab title="Network">
@@ -180,10 +181,16 @@
 </template>
 
 <script lang="ts" setup>
+import KeepAliveTest from "../../components/KeepAliveTest.vue";
 import UsersIcon from "@vue-patternfly/icons/dist/esm/icons/users-icon";
 import BoxIcon from "@vue-patternfly/icons/dist/esm/icons/box-icon";
 import DatabaseIcon from "@vue-patternfly/icons/dist/esm/icons/database-icon";
 import ServerIcon from "@vue-patternfly/icons/dist/esm/icons/server-icon";
 import LaptopIcon from "@vue-patternfly/icons/dist/esm/icons/laptop-icon";
 import DiagramProjectIcon from "@vue-patternfly/icons/dist/esm/icons/diagram-project-icon";
+import { ref } from "vue";
+
+const tabUsers = ref();
+const tabContainers = ref();
+const tabDatabase = ref();
 </script>
