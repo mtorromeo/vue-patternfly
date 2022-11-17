@@ -67,10 +67,9 @@
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import { type ComponentPublicInstance, computed, defineComponent, markRaw, type UnwrapNestedRefs } from 'vue';
 import type { useInputValidation } from '../../input';
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
+import { provideChildrenTracker } from '../../use';
+import { FormGroupInputsKey } from './common';
 import PassThrough from '../../helpers/PassThrough';
-
-export const FormGroupInputsKey = Symbol("FormGroupInputsKey") as ChildrenTrackerInjectionKey;
 
 export default defineComponent({
   name: 'PfFormGroup',

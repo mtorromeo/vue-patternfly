@@ -5,7 +5,7 @@ import { computed, defineComponent, getCurrentInstance, h, type PropType } from 
 import { inputProps, useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
 import { canUseDOM } from '../util';
-import { FormGroupInputsKey } from './Form/FormGroup.vue';
+import { FormGroupInputsKey } from './Form/common';
 
 export default defineComponent({
   name: 'PfTextarea',

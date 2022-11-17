@@ -36,7 +36,7 @@ export default defineComponent({
   setup() {
     const children = provideChildrenTracker<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>(DropdownMenuItemsKey);
     const items = computed(() => children.value.filter(
-      c => Boolean(c.focusElement()) && !c.disabled,
+      c => Boolean(c.focusElement) && !c.disabled,
     ));
 
     const onKeydown = keyNavigation(items);

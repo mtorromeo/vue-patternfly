@@ -34,7 +34,7 @@ import { type Ref, ref } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation } from '../input';
-import { FormGroupInputsKey } from './Form/FormGroup.vue';
+import { FormGroupInputsKey } from './Form/common';
 
 const props = withDefaults(defineProps<{
   /** Flag to show if the text input is disabled. */
