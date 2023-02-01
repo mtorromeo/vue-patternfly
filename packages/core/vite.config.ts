@@ -22,6 +22,7 @@ export default defineConfig({
         },
       }, {
         format: 'umd',
+        name: 'VuePatternfly4',
         assetFileNames: 'core.[ext]',
         inlineDynamicImports: true,
         interop: 'esModule',
