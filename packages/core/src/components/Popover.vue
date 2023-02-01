@@ -4,10 +4,10 @@
   </pass-through>
 
   <floating-ui
+    v-slot="{ placement, middlewareData }"
     :reference="referenceElement"
     :placement="position"
     :middleware="floatingMiddleware"
-    #default="{ placement, middlewareData }"
   >
     <pf-focus-trap
       v-if="visible"
@@ -109,11 +109,11 @@ export default defineComponent({
     flip: Boolean,
 
     flipOptions: {
-      type: [Object] as PropType<FlipOptions>,
+      type: Object as PropType<FlipOptions>,
     },
 
     placementOptions: {
-      type: [Object] as PropType<AutoPlacementOptions>,
+      type: Object as PropType<AutoPlacementOptions>,
     },
 
     /** Hides the popover when a click occurs outside (only works if isVisible is not controlled by the user) */

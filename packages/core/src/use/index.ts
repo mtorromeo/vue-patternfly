@@ -1,4 +1,4 @@
-import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type Ref, type WritableComputedRef, type VNode } from 'vue';
+import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type Ref, type WritableComputedRef, type VNode, nextTick } from 'vue';
 import { tryOnMounted } from '@vueuse/shared';
 import { findComponentVNode } from '../util';
 
@@ -26,7 +26,11 @@ export function useHtmlElementFromVNodes() {
     element,
     findReference(children: VNode[]) {
       const vnode = findComponentVNode(children);
-      element.value = findHtmlElementFromVNode(vnode);
+      if (vnode?.el === null) { // not mounted yet
+        nextTick(() => (element.value = findHtmlElementFromVNode(vnode)));
+      } else {
+        element.value = findHtmlElementFromVNode(vnode);
+      }
     },
   };
 }
