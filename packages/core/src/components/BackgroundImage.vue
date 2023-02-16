@@ -9,7 +9,19 @@
       [cssVarNameFilter.name]: `url(#${filterId})`
     }">
     <svg xmlns="http://www.w3.org/2000/svg" className="pf-c-background-image__filter" width="0" height="0">
-      <slot />
+      <pass-through :alter="setFilterId">
+        <slot>
+          <filter>
+            <feColorMatrix type="matrix" values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 0" />
+            <feComponentTransfer colorInterpolationFilters="sRGB" result="duotone">
+              <feFuncR type="table" tableValues="0.086274509803922 0.43921568627451" />
+              <feFuncG type="table" tableValues="0.086274509803922 0.43921568627451" />
+              <feFuncB type="table" tableValues="0.086274509803922 0.43921568627451" />
+              <feFuncA type="table" tableValues="0 1" />
+            </feComponentTransfer>
+          </filter>
+        </slot>
+      </pass-through>
     </svg>
   </div>
 </template>
@@ -27,6 +39,9 @@ import cssVarNameSm from '@patternfly/react-tokens/dist/esm/c_background_image_B
 import cssVarNameSm2x from '@patternfly/react-tokens/dist/esm/c_background_image_BackgroundImage_sm_2x';
 import cssVarNameLg from '@patternfly/react-tokens/dist/esm/c_background_image_BackgroundImage_lg';
 import cssVarNameFilter from '@patternfly/react-tokens/dist/esm/c_background_image_Filter';
+import PassThrough from '../helpers/PassThrough';
+import { cloneVNode, type VNode } from 'vue';
+import { findChildrenVNodes } from '../util';
 
 export interface BackgroundImageSrcMap {
   xs: string;
@@ -51,4 +66,14 @@ const getUrlValue = (size: keyof BackgroundImageSrcMap) => {
 };
 
 const filterId = `patternfly-background-image-filter-overlay${filterCounter++}`;
+
+function setFilterId(nodes: VNode[]) {
+  nodes = findChildrenVNodes(nodes);
+  if (nodes.length && !nodes[0].props?.id) {
+    nodes[0] = cloneVNode(nodes[0], {
+      id: filterId,
+    });
+  }
+  return nodes;
+}
 </script>
