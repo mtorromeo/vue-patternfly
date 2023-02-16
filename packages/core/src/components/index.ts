@@ -34,6 +34,7 @@ export * from './HelperText';
 export * from './Hint';
 export * from './InputGroup';
 export * from './List';
+export * from './LoginPage';
 export * from './Menu';
 export * from './Modal';
 export * from './Nav';
