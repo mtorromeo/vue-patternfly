@@ -1,43 +1,49 @@
+<template>
+  <svg
+    :class="[
+      styles.spinner,
+      inline ? [styles.modifiers.inline] : styles.modifiers[size],
+    ]"
+    role="progressbar"
+    viewBox="0 0 100 100"
+    :style="diameter ? {
+      '--pf-c-spinner-diameter': diameter,
+    } : undefined"
+    :aria-valuetext="ariaValueText"
+    :aria-label="!ariaLabel && !ariaLabelledby ? 'Contents' : ariaLabel"
+    :aria-labelledby="ariaLabelledby"
+  >
+    <circle :class="styles.spinnerPath" cx="50" cy="50" r="45" fill="none" />
+  </svg>
+</template>
+
 <script lang="ts">
+export enum spinnerSize {
+  sm = 'sm',
+  md = 'md',
+  lg = 'lg',
+  xl = 'xl'
+}
+</script>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
 
-import { defineComponent, h, mergeProps } from 'vue';
-
-const spinnerSizes = [
-  'sm',
-  'md',
-  'lg',
-  'xl',
-];
-
-export default defineComponent({
-  name: 'PfSpinner',
-
-  props: {
-    size: {
-      type: String,
-      default: 'xl',
-      validator: (v: any) => spinnerSizes.includes(v),
-    },
-    ariaValueText: {
-      type: String,
-      default: 'Loading...',
-    },
-  },
-
-  render() {
-    return h(
-      'span',
-      mergeProps({
-        class: [styles.spinner, styles.modifiers[this.size as keyof typeof styles.modifiers]],
-        'aria-valuetext': this.ariaValueText,
-      }, this.$attrs),
-      [
-        h('span', { class: styles.spinnerClipper }),
-        h('span', { class: styles.spinnerLeadBall }),
-        h('span', { class: styles.spinnerTailBall }),
-      ],
-    );
-  },
+withDefaults(defineProps<{
+  /** Size variant of progress. */
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Text describing that current loading status or progress */
+  ariaValueText?: string;
+  /** Diameter of spinner set as CSS variable */
+  diameter?: string;
+  /** @beta Indicates the spinner is inline and the size should inherit the text font size. This will override the size prop. */
+  inline?: boolean;
+  /** Accessible label to describe what is loading */
+  ariaLabel?: string;
+  /** Id of element which describes what is being loaded */
+  ariaLabelledby?: string;
+}>(), {
+  size: 'xl',
+  ariaValueText: 'Loading...',
 });
 </script>
