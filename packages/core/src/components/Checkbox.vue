@@ -38,7 +38,7 @@ import styles from '@patternfly/react-styles/css/components/Check/check';
 import { computed, ref, watch, type DefineComponent, type Ref } from 'vue';
 import { getUniqueId } from '../util';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   component?: string | DefineComponent;
   /** Flag to show if the radio is checked. */
   modelValue?: boolean | null;
@@ -55,7 +55,9 @@ const props = defineProps<{
   /** Description text of the radio. */
   description?: string;
   name?: string;
-}>();
+}>(), {
+  component: 'div',
+});
 
 defineEmits({
   'update:modelValue': (value: boolean) => true,
@@ -71,7 +73,7 @@ watch(() => props.modelValue, () => {
   input.value.indeterminate = props.modelValue === null;
 }, {
   immediate: true,
-})
+});
 
 defineExpose({
   input,
