@@ -71,11 +71,5 @@ defineProps<{
   title: string;
   /** Subtitle for the login main body header of the login page */
   subtitle?: string;
-  /** Content rendered inside of login main footer band to display a sign up for account message */
-  // TODO: signUpForAccountMessage?: React.ReactNode;
-  /** Content rendered inside of login main footer band to display a forgot credentials link. */
-  // TODO: forgotCredentials?: React.ReactNode;
-  /** Content rendered inside of social media login footer section */
-  // TODO: socialMediaLoginContent?: React.ReactNode;
 }>();
 </script>
