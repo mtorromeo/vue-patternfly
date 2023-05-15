@@ -30,7 +30,7 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
-- *(DataList)* Implemented pf-data-list components (no draggable) ([#5](https://github.com/mtorromeo/vue-patternfly4/issues/5))
+- *(DataList)* Implemented pf-data-list components (no draggable) ([#5](https://github.com/mtorromeo/vue-patternfly/issues/5))
 - *(Alert)* Allow all heading levels for title
 - *(AlertGroup)* Alert group overflow
 - *(Brand)* Allow picture with child elements and breakpoints

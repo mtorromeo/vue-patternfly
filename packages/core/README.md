@@ -3,7 +3,7 @@
 [![LICENSE](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)][link-LICENSE]
 [![NPM](https://img.shields.io/npm/v/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
 [![Download](https://img.shields.io/npm/dw/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
-[![Issues](https://img.shields.io/github/issues/mtorromeo/vue-patternfly4.svg?style=flat-square)](https://github.com/mtorromeo/vue-patternfly4/issues)
+[![Issues](https://img.shields.io/github/issues/mtorromeo/vue-patternfly.svg?style=flat-square)](https://github.com/mtorromeo/vue-patternfly/issues)
 
 PatternFly 4 components for Vue 3.
 
@@ -70,9 +70,9 @@ If you discover any security related issues, please email massimiliano.torromeo@
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
-[link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly4/master/packages/core/LICENSE
-[link-CONDUCT]: https://github.com/mtorromeo/vue-patternfly4/blob/master/packages/core/CONDUCT.md
+[link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly/master/packages/core/LICENSE
+[link-CONDUCT]: https://github.com/mtorromeo/vue-patternfly/blob/master/packages/core/CONDUCT.md
 [link-author]: https://github.com/mtorromeo
 [link-contributors]: ../../contributors
 [link-patternfly4]: https://www.patternfly.org/v4/
-[link-storybook]: https://mtorromeo.github.io/vue-patternfly4/
+[link-storybook]: https://mtorromeo.github.io/vue-patternfly/

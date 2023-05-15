@@ -36,7 +36,7 @@ conventional_commits = true
 split_commits = true
 # regex for preprocessing the commit messages
 commit_preprocessors = [
-  { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/mtorromeo/vue-patternfly4/issues/${2}))" },
+  { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/mtorromeo/vue-patternfly/issues/${2}))" },
 ]
 # regex for parsing and grouping commits
 commit_parsers = [

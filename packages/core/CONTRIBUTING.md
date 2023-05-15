@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/mtorromeo/vue-patternfly4).
+We accept contributions via Pull Requests on [Github](https://github.com/mtorromeo/vue-patternfly).
 
 
 ## Pull Requests
