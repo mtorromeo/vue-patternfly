@@ -5,29 +5,18 @@
   </pf-title>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { computed } from 'vue';
+
+const props = defineProps<{
+  name: string;
+}>();
 
 const camelize = (s: string) =>
   s.toUpperCase().replace("-", "").replace("_", "");
 
-export default defineComponent({
-  name: "ComponentTitle",
-
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-  },
-
-  computed: {
-    camelName() {
-      return (
-        this.name.charAt(0).toUpperCase() +
-        this.name.substring(1).replace(/([-_][a-z])/gi, camelize)
-      );
-    },
-  },
-});
+const camelName = computed(() =>
+  props.name.charAt(0).toUpperCase() +
+  props.name.substring(1).replace(/([-_][a-z])/gi, camelize),
+);
 </script>

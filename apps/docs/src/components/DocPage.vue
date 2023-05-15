@@ -13,22 +13,18 @@
 }
 </style>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { onMounted } from 'vue';
 
-export default defineComponent({
-  name: 'DocPage',
+const props = defineProps<{
+  title?: string;
+}>();
 
-  props: {
-    title: String,
-  },
-
-  mounted() {
-    if (this.title) {
-      document.title = `VuePatternfly 4 • ${this.title}`;
-    } else {
-      document.title = `VuePatternfly 4`;
-    }
-  },
+onMounted(() => {
+  if (props.title) {
+    document.title = `VuePatternfly 4 • ${props.title}`;
+  } else {
+    document.title = `VuePatternfly 4`;
+  }
 });
 </script>

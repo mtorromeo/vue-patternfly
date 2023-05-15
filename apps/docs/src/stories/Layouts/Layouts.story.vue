@@ -1,91 +1,90 @@
 <template>
   <doc-page class="page__layouts" title="Layouts">
-    <pf-title h="2">Bullseye</pf-title>
-    <pf-bullseye>Bullseye ◎ layout</pf-bullseye>
+    <p>
+      <em>Dashed lines are for illustration purposes only.</em>
+    </p>
 
-    <pf-divider />
+    <story-canvas title="Bullseye">
+      <pf-bullseye>Bullseye ◎ layout</pf-bullseye>
+    </story-canvas>
 
-    <pf-title h="2">Flex</pf-title>
-    <pf-flex justify-content="space-between">
-      <pf-flex-item align-self-sm="flex-start">Flex 1</pf-flex-item>
-      <pf-flex-item align-self-sm="flex-start" :grow-md="grow">Flex 2</pf-flex-item>
-    </pf-flex>
+    <story-canvas title="Flex">
+      <template #intro>
+        <input v-model="grow" type="checkbox"> grow flex 2
+      </template>
 
-    <label>
-      <input v-model="grow" type="checkbox"> grow flex 2
-    </label>
-
-    <pf-flex>
-      <pf-flex flex="1">
-        <pf-flex-item>Flex item</pf-flex-item>
+      <pf-flex justify-content="space-between">
+        <pf-flex-item align-self-sm="flex-start">Flex 1</pf-flex-item>
+        <pf-flex-item align-self-sm="flex-start" :grow-md="grow">Flex 2</pf-flex-item>
       </pf-flex>
-      <pf-flex flex="1">
-        <pf-flex-item>Flex item</pf-flex-item>
-        <pf-flex-item>Flex item</pf-flex-item>
+
+      <pf-flex>
+        <pf-flex flex="1">
+          <pf-flex-item>Flex item</pf-flex-item>
+        </pf-flex>
+        <pf-flex flex="1">
+          <pf-flex-item>Flex item</pf-flex-item>
+          <pf-flex-item>Flex item</pf-flex-item>
+        </pf-flex>
+        <pf-flex flex="1">
+          <pf-flex-item>Flex item</pf-flex-item>
+          <pf-flex-item>Flex item</pf-flex-item>
+          <pf-flex-item>Flex item</pf-flex-item>
+        </pf-flex>
       </pf-flex>
-      <pf-flex flex="1">
-        <pf-flex-item>Flex item</pf-flex-item>
-        <pf-flex-item>Flex item</pf-flex-item>
-        <pf-flex-item>Flex item</pf-flex-item>
-      </pf-flex>
-    </pf-flex>
+    </story-canvas>
 
-    <pf-divider />
+    <story-canvas title="Gallery">
+      <pf-gallery gutter>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+      </pf-gallery>
+    </story-canvas>
 
-    <pf-title h="2">Gallery</pf-title>
-    <pf-gallery gutter>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-      <pf-gallery-item>Gallery Item</pf-gallery-item>
-    </pf-gallery>
+    <story-canvas title="Grid">
+      <pf-grid gutter>
+        <pf-grid-item span="8">span = 8</pf-grid-item>
+        <pf-grid-item span="4" row-span="2">span = 4, rowSpan = 2</pf-grid-item>
+        <pf-grid-item span="2" row-span="3">span = 2, rowSpan = 3</pf-grid-item>
+        <pf-grid-item span="2">span = 2</pf-grid-item>
+        <pf-grid-item span="4">span = 4</pf-grid-item>
+        <pf-grid-item span="2">span = 2</pf-grid-item>
+        <pf-grid-item span="2">span = 2</pf-grid-item>
+        <pf-grid-item span="2">span = 2</pf-grid-item>
+        <pf-grid-item span="4">span = 4</pf-grid-item>
+        <pf-grid-item span="2">span = 2</pf-grid-item>
+        <pf-grid-item span="4">span = 4</pf-grid-item>
+        <pf-grid-item span="4">span = 4</pf-grid-item>
+      </pf-grid>
+    </story-canvas>
 
-    <pf-divider />
+    <story-canvas title="Level">
+      <pf-level gutter>
+        <pf-level-item>Level Item</pf-level-item>
+        <pf-level-item>Level Item</pf-level-item>
+        <pf-level-item>Level Item</pf-level-item>
+      </pf-level>
+    </story-canvas>
 
-    <pf-title h="2">Grid</pf-title>
-    <pf-grid gutter>
-      <pf-grid-item span="8">span = 8</pf-grid-item>
-      <pf-grid-item span="4" row-span="2">span = 4, rowSpan = 2</pf-grid-item>
-      <pf-grid-item span="2" row-span="3">span = 2, rowSpan = 3</pf-grid-item>
-      <pf-grid-item span="2">span = 2</pf-grid-item>
-      <pf-grid-item span="4">span = 4</pf-grid-item>
-      <pf-grid-item span="2">span = 2</pf-grid-item>
-      <pf-grid-item span="2">span = 2</pf-grid-item>
-      <pf-grid-item span="2">span = 2</pf-grid-item>
-      <pf-grid-item span="4">span = 4</pf-grid-item>
-      <pf-grid-item span="2">span = 2</pf-grid-item>
-      <pf-grid-item span="4">span = 4</pf-grid-item>
-      <pf-grid-item span="4">span = 4</pf-grid-item>
-    </pf-grid>
+    <story-canvas title="Split">
+      <pf-split gutter>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item filled>pf-m-fill</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+      </pf-split>
+    </story-canvas>
 
-    <pf-divider />
-
-    <pf-title h="2">Level</pf-title>
-    <pf-level gutter>
-      <pf-level-item>Level Item</pf-level-item>
-      <pf-level-item>Level Item</pf-level-item>
-      <pf-level-item>Level Item</pf-level-item>
-    </pf-level>
-
-    <pf-divider />
-
-    <pf-title h="2">Split</pf-title>
-    <pf-split gutter>
-      <pf-split-item>content</pf-split-item>
-      <pf-split-item filled>pf-m-fill</pf-split-item>
-      <pf-split-item>content</pf-split-item>
-    </pf-split>
-
-    <pf-divider />
-
-    <pf-title h="2">Stack</pf-title>
-    <pf-stack gutter>
-      <pf-stack-item>content</pf-stack-item>
-      <pf-stack-item filled>pf-m-fill</pf-stack-item>
-      <pf-stack-item>content</pf-stack-item>
-    </pf-stack>
+    <story-canvas title="Stack">
+      <pf-stack gutter>
+        <pf-stack-item>content</pf-stack-item>
+        <pf-stack-item filled>pf-m-fill</pf-stack-item>
+        <pf-stack-item>content</pf-stack-item>
+      </pf-stack>
+    </story-canvas>
   </doc-page>
 </template>
 

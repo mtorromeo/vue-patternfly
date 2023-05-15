@@ -45,47 +45,36 @@
 }
 </style>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computedAsync } from '@vueuse/core';
 import { getHighlighter, type Highlighter, setWasm } from 'shiki';
 import theme from 'shiki/themes/nord.json';
-import { defineComponent } from 'vue';
 
 let highlighter: Highlighter;
 
-export default defineComponent({
-  name: 'StoryCanvas',
+const props = defineProps<{
+  source?: string;
+  title?: string;
+  dark?: boolean;
+  maxWidth?: string;
+}>();
 
-  props: {
-    source: String,
-    title: String,
-    dark: Boolean,
-    maxWidth: String,
-  },
+const highlighted = computedAsync(async() => {
+  if (!props.source) {
+    return '';
+  }
 
-  setup(props) {
-    const highlighted = computedAsync(async() => {
-      if (!props.source) {
-        return '';
-      }
-
-      if (!highlighter) {
-        setWasm(await fetch('./shiki/onig.wasm'));
-        highlighter = await getHighlighter({
-          themes: [theme as any],
-          langs: ['vue-html'],
-          paths: {
-            languages: './shiki/',
-          },
-        });
-      }
-
-      return highlighter.codeToHtml(props.source.replaceAll('\\n', '\n').trim(), { lang: 'vue-html' });
+  if (!highlighter) {
+    setWasm(await fetch('./shiki/onig.wasm'));
+    highlighter = await getHighlighter({
+      themes: [theme as any],
+      langs: ['vue-html'],
+      paths: {
+        languages: './shiki/',
+      },
     });
+  }
 
-    return {
-      highlighted,
-    };
-  },
+  return highlighter.codeToHtml(props.source.replaceAll('\\n', '\n').trim(), { lang: 'vue-html' });
 });
 </script>
