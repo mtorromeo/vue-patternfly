@@ -1,6 +1,6 @@
 <template>
   <header :class="styles.loginMainHeader">
-    <pf-title v-if="title" h="2" size="3xl">
+    <pf-title v-if="title" :h="2" size="3xl">
       {{ title }}
     </pf-title>
     <p v-if="subtitle" :class="styles.loginMainHeaderDesc">

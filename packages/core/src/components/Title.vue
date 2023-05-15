@@ -1,7 +1,13 @@
-<script lang="ts">
-import styles from '@patternfly/react-styles/css/components/Title/title';
+<template>
+  <component :is="`h${h}`" v-bind="ouiaProps" :class="[styles.title, size && size in styles.modifiers ? styles.modifiers[size] : styles.modifiers[hSize]]">
+    <slot />
+  </component>
+</template>
 
-import { defineComponent, h, mergeProps, type PropType } from 'vue';
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Title/title';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import { computed } from 'vue';
 
 const headingLevelSizeMap: Record<number, keyof typeof styles.modifiers> = {
   [1]: '2xl',
@@ -12,29 +18,20 @@ const headingLevelSizeMap: Record<number, keyof typeof styles.modifiers> = {
   [6]: 'md',
 };
 
-export default defineComponent({
+defineOptions({
   name: 'PfTitle',
-
-  props: {
-    size: {
-      type: String as PropType<keyof typeof styles.modifiers>,
-      default: '',
-      validator: (v: any) => !v || v in styles.modifiers,
-    },
-
-    h: {
-      type: [Number, String],
-      default: 1,
-      validator: (v: any) => typeof headingLevelSizeMap[Number(v) as keyof typeof headingLevelSizeMap] !== 'undefined',
-    },
-  },
-
-  render() {
-    const size = headingLevelSizeMap[Number(this.h) as keyof typeof headingLevelSizeMap];
-
-    return h(`h${this.h}`, mergeProps({
-      class: [styles.title, this.size in styles.modifiers ? styles.modifiers[this.size] : styles.modifiers[size]],
-    }, this.$attrs), this.$slots);
-  },
 });
+
+const props = withDefaults(defineProps<{
+  /** The size of the Title  */
+  size?: keyof typeof styles.modifiers;
+  /** Heading level to use */
+  h?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | number;
+} & OUIAProps>(), {
+  h: 1,
+});
+
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+
+const hSize = computed(() => headingLevelSizeMap[Number(props.h) as keyof typeof headingLevelSizeMap]);
 </script>

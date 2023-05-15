@@ -41,7 +41,7 @@
           @click.prevent="managedOpen = false"
         />
 
-        <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" h="6" size="md">
+        <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" :h="6" size="md">
           <slot name="header" />
         </pf-title>
 
