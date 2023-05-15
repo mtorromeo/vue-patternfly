@@ -44,14 +44,14 @@
       // alternatively include it in your html as a &lt;style&gt; tag
 
       import { createApp } from 'vue';
-      import VuePatternfly4 from '@vue-patternfly/core';
+      import VuePatternFly from '@vue-patternfly/core';
 
       const app = createApp({
         setup() {
           return {};
         },
       });
-      app.use(VuePatternfly4);
+      app.use(VuePatternFly);
       app.mount('#app');
       ```
 

@@ -22,9 +22,9 @@ const props = defineProps<{
 
 onMounted(() => {
   if (props.title) {
-    document.title = `VuePatternfly 4 • ${props.title}`;
+    document.title = `VuePatternFly • ${props.title}`;
   } else {
-    document.title = `VuePatternfly 4`;
+    document.title = `VuePatternFly`;
   }
 });
 </script>

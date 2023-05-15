@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/main.ts'),
-      name: 'VuePatternfly4',
+      name: 'VuePatternFly',
       fileName: format => `core.${format}.js`,
     },
     rollupOptions: {
@@ -22,7 +22,7 @@ export default defineConfig({
         },
       }, {
         format: 'umd',
-        name: 'VuePatternfly4',
+        name: 'VuePatternFly',
         assetFileNames: 'core.[ext]',
         inlineDynamicImports: true,
         interop: 'esModule',
