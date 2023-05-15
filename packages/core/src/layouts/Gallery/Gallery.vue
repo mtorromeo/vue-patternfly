@@ -1,6 +1,6 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Gallery/gallery';
-import { type DefineComponent, defineComponent, type PropType } from 'vue';
+import { type DefineComponent, defineComponent, type PropType, type SlotsType } from 'vue';
 
 import { render } from '../factory';
 
@@ -16,6 +16,10 @@ export default defineComponent({
     /** Adds space between children */
     gutter: Boolean,
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   render() {
     return render.call(this, styles.gallery, styles.modifiers);

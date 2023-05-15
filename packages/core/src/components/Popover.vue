@@ -20,8 +20,8 @@
       }]"
       role="dialog"
       aria-modal="true"
-      :aria-label="$slots.header ? null : ariaLabel"
-      :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : null"
+      :aria-label="$slots.header ? undefined : ariaLabel"
+      :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : undefined"
       :aria-describedby="`popover-${uniqueId}-body`"
       :style="{
         minWidth: hasCustomMinWidth ? minWidth : null,
@@ -70,7 +70,7 @@ import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
 import PfFocusTrap from '../helpers/FocusTrap.vue';
-import PfCloseButton from './CloseButton';
+import PfCloseButton from './CloseButton.vue';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
 import PassThrough from '../helpers/PassThrough';

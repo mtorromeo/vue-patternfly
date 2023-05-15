@@ -12,7 +12,7 @@
       },
     ]"
   >
-    <component :is="tooltip ? 'pf-tooltip' : 'pass-through'" :position="tooltipPosition">
+    <component :is="tooltip ? PfTooltip : 'pass-through'" :position="tooltipPosition">
       <div
         :id="`${validId}-description`"
         :class="[styles.progressDescription, {
@@ -20,8 +20,7 @@
         }]"
         @mouseenter="checkTooltip"
       >{{ title }}</div>
-
-      <template #content>{{ tooltip }}</template>
+      <template v-if="tooltip" #content>{{ tooltip }}</template>
     </component>
 
     <div :class="styles.progressStatus" aria-hidden="true">
@@ -162,6 +161,7 @@ export default defineComponent({
 
   setup() {
     return {
+      PfTooltip,
       styles: markRaw(styles) as typeof styles,
     };
   },

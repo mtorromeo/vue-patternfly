@@ -8,16 +8,18 @@
       [styles.modifiers.focus]: focused,
       [styles.modifiers.danger]: danger,
     }]"
-    @mouseover="onMouseOver"
     :role="check ? 'menuitem' : 'none'"
+    @mouseover="onMouseOver"
   >
+    <input v-if="name" type="hidden" :name="name" :value="value">
+
     <component
       :is="component"
       tabindex="-1"
       :class="[styles.menuItem, {[styles.modifiers.selected]: effectiveSelected && !check}]"
       :aria-current="ariaCurrent"
       :disabled="(disabled && !check && component !== 'a') || undefined"
-      :role="(!slots.flyoutMenu && !check) ? 'menuitem' : undefined"
+      :role="(!$slots.flyoutMenu && !check) ? 'menuitem' : undefined"
       :for="check ? undefined : randomId"
       :href="component === 'a' ? to : undefined"
       :aria-disabled="component === 'a' && disabled ? disabled : undefined"
@@ -29,7 +31,7 @@
         <span v-if="direction === 'up'" :class="styles.menuItemToggleIcon">
           <angle-left-icon aria-hidden />
         </span>
-        <span v-if="slots.icon" :class="styles.menuItemIcon">
+        <span v-if="$slots.icon" :class="styles.menuItemIcon">
           <slot name="icon" />
         </span>
         <span v-if="check" class="pf-c-menu__item-check">
@@ -37,25 +39,27 @@
             :id="randomId"
             :name="checkName"
             component="span"
-            :checked="selected"
-            @change="onItemSelect($event)"
+            :model-value="effectiveSelected"
             :disabled="disabled"
+            @change="onItemSelect($event)"
           />
         </span>
         <span :class="styles.menuItemText">
-          <slot />
+          <slot>
+            {{ value }}
+          </slot>
         </span>
         <span v-if="externalLink" :class="styles.menuItemExternalIcon">
           <up-right-from-square-icon aria-hidden />
         </span>
-        <span v-if="slots.flyoutMenu && direction === 'down'" :class="styles.menuItemToggleIcon">
+        <span v-if="$slots.flyoutMenu && direction === 'down'" :class="styles.menuItemToggleIcon">
           <angle-right-icon aria-hidden />
         </span>
         <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
           <check-icon aria-hidden />
         </span>
       </span>
-      <span v-if="(slots.description || description) && direction !== 'up'" :class="styles.menuItemDescription">
+      <span v-if="($slots.description || description) && direction !== 'up'" :class="styles.menuItemDescription">
         <span>
           <slot name="description">
             {{ description }}
@@ -71,9 +75,9 @@
       icon="favorites"
       :favorited="favorited"
       :aria-label="favorited ? 'starred' : 'not starred'"
-      @click="menu?.onActionClick?.($event)"
       tabindex="-1"
       action-id="fav"
+      @click="menu?.onActionClick?.($event)"
     />
   </li>
 </template>
@@ -93,13 +97,17 @@ import { computed, getCurrentInstance, inject, provide, ref, useSlots, type Comp
 import { getUniqueId } from '../../util';
 import { MenuInjectionKey, type MenuItemId } from './Menu.vue';
 import { isDefined } from '../../use';
+import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import UpRightFromSquareIcon from '@vue-patternfly/icons/dist/esm/icons/up-right-from-square-icon';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 
-const props = withDefaults(defineProps<{
+const $props = withDefaults(defineProps<{
+  name?: string;
+  value?: string;
+
   /** Target navigation link */
   to?: string;
   /** @beta Flag indicating the item has a checkbox */
@@ -140,21 +148,21 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits({
   /** Callback for item click */
-  click: (event: Event) => false,
+  click: (event: Event) => true,
   /** @beta Callback function when mouse leaves trigger */
-  showFlyout: (event?: Event) => false,
+  showFlyout: (event?: Event) => true,
 });
 
-const slots = useSlots();
+const $slots = useSlots();
 
 const instance = getCurrentInstance();
 
 const menu = inject(MenuInjectionKey);
 
-const itemId = computed(() => instance?.vnode.key);
+const itemId = computed(() => $props.value === undefined ? instance?.vnode.key : $props.value);
 
 provide(MenuItemInjectionKey, {
-  disabled: props.disabled,
+  disabled: $props.disabled,
   itemId,
 });
 
@@ -163,27 +171,27 @@ provide(MenuItemInjectionKey, {
 // }
 
 const component = computed(() => {
-  if (props.to) {
+  if ($props.to) {
     return 'a';
   }
-  if (props.check) {
+  if ($props.check) {
     return 'label';
   }
-  return props.component;
+  return $props.component;
 });
 
-const effectiveOnPath = computed(() => props.onPath/*  || (itemId.value && menu?.drilldownItemPath?.includes(itemId.value)) */);
+const effectiveOnPath = computed(() => $props.onPath/*  || (itemId.value && menu?.drilldownItemPath?.includes(itemId.value)) */);
 
 const effectiveSelected = computed(() => {
-  if (isDefined(props.selected)) {
-    return props.selected;
+  if (isDefined($props.selected)) {
+    return $props.selected;
   }
-  return false;
+  return menu?.selected?.value && Array.isArray(menu.selected.value) ? menu.selected.value.includes($props.value as any) : menu?.selected?.value === $props.value;
 });
 
 const ariaCurrent = computed(() => {
-  if (isDefined(props.active)) {
-    if (props.active) {
+  if (isDefined($props.active)) {
+    if ($props.active) {
       return 'page';
     } else {
       return null;
@@ -201,7 +209,7 @@ function onMouseOver() {
   if (!menu || menu.state.disableHover) {
     return;
   }
-  if (slots.flyoutMenu) {
+  if ($slots.flyoutMenu) {
     showFlyout(true);
   } else {
     menu.flyout.value = null;
@@ -239,12 +247,12 @@ function onClick(event: MouseEvent) {
   //   }
   // }
 
-  if (slots.flyoutMenu) {
+  if ($slots.flyoutMenu) {
     handleFlyout(event);
   }
 }
 
-function onItemSelect(event: MouseEvent) {
+function onItemSelect(event: Event) {
   menu?.onSelect?.(event, itemId.value);
   emit('click', event);
 }

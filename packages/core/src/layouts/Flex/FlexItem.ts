@@ -1,5 +1,5 @@
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
-import { h, resolveDynamicComponent, defineComponent, type DefineComponent } from 'vue';
+import { h, resolveDynamicComponent, defineComponent, type DefineComponent, type SlotsType } from 'vue';
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
 
 export default defineComponent({
@@ -21,6 +21,10 @@ export default defineComponent({
     ...breakpointProp('fullWidth', Boolean),
   },
 
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
+
   setup(props, { slots }) {
     const Component = resolveDynamicComponent(props.component) as DefineComponent;
     return () => h(Component, {
@@ -32,7 +36,7 @@ export default defineComponent({
         'grow',
         'align',
         'fullWidth',
-      ], styles)
+      ], styles),
     }, slots);
   },
 });

@@ -34,7 +34,7 @@
       </template>
     </pf-alert-icon>
 
-    <component :is="tooltipVisible ? 'pf-tooltip' : 'pass-through'" :position="tooltipPosition">
+    <component :is="tooltipVisible ? PfTooltip : 'pass-through'" :position="tooltipPosition">
       <component
         :is="titleHeadingLevel"
         ref="titleRef"
@@ -47,7 +47,7 @@
         <span :class="accessibleStyles.screenReader">{{ variantLabel }}</span>
         {{ title }}
       </component>
-      <template #content>{{ title }}</template>
+      <template v-if="tooltipVisible" #content>{{ title }}</template>
     </component>
 
     <div v-if="close" :class="styles.alertAction">
@@ -72,7 +72,7 @@ import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines
 import PassThrough from '../../helpers/PassThrough';
 import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
-import PfCloseButton from '../CloseButton';
+import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
@@ -157,7 +157,12 @@ export default defineComponent({
     },
   },
 
-  emits: ['close', 'timeout', 'mouseenter', 'mouseleave'],
+  emits: {
+    close: (e: Event) => e instanceof Event,
+    mouseenter: (e: Event) => e instanceof Event,
+    mouseleave: (e: Event) => e instanceof Event,
+    timeout: () => true,
+  },
 
   setup(props) {
     const titleRef: Ref<HTMLElement | undefined> = ref();
@@ -173,6 +178,7 @@ export default defineComponent({
     });
 
     return {
+      PfTooltip,
       titleRef,
       tooltipVisible,
       managedExpanded: useManagedProp('expanded', false),

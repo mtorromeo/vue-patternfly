@@ -1,4 +1,4 @@
-import { type Component, type ComponentOptionsMixin, type DefineComponent, defineComponent, h, type PropType, ref, resolveDynamicComponent, type VNode, type VNodeTypes, type Ref } from "vue";
+import { type Component, type ComponentOptionsMixin, type DefineComponent, defineComponent, h, type PropType, ref, resolveDynamicComponent, type VNode, type VNodeTypes, type Ref, type SlotsType } from "vue";
 import { findChildrenVNodes } from "../util";
 
 function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & ComponentOptionsMixin {
@@ -58,6 +58,10 @@ export default defineComponent({
     /** Flag to always create the wrapping component */
     force: Boolean,
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   setup() {
     const el: Ref<HTMLElement | undefined> = ref();

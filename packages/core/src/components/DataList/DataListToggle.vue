@@ -6,8 +6,9 @@
         variant="plain"
         :aria-controls="ariaControls && ariaControls"
         :aria-label="ariaLabel"
-        :aria-labelledby="ariaLabel !== 'Details' ? null : id"
+        :aria-labelledby="ariaLabel !== 'Details' ? undefined : id"
         :aria-expanded="expanded"
+        @click="emit('click', $event)"
       >
         <div :class="styles.dataListToggleIcon">
           <pf-angle-right-icon />
@@ -17,36 +18,28 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
-import { defineComponent, markRaw } from "vue";
-
+import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
-export default defineComponent({
+defineOptions({
   name: 'PfDataListToggle',
-
-  components: {
-    PfAngleRightIcon,
-  },
-
-  props: {
-    id: String,
-    expanded: Boolean,
-    noPadding: Boolean,
-    ariaLabelledby: String,
-    ariaLabel: {
-      type: String,
-      default: 'Details',
-    },
-    ariaControls: String,
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
 });
+
+withDefaults(defineProps<{
+  id?: string;
+  expanded?: boolean;
+  noPadding?: boolean;
+  ariaLabelledby?: string;
+  ariaLabel?: string;
+  ariaControls?: string;
+}>(), {
+  ariaLabel: 'Details',
+});
+
+const emit = defineEmits<{
+  (name: 'click', e: Event): any;
+}>();
 </script>

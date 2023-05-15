@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
 import { breakpoints } from '../../util';
-import { type DefineComponent, defineComponent, h, type PropType, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, type PropType, resolveDynamicComponent, type SlotsType } from 'vue';
 
 const gridSpans = {
   type: [String, Number],
@@ -37,6 +37,10 @@ export default defineComponent({
     /** the number of columns all grid items should span on a 2xLarge device */
     xl2: gridSpans,
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   render() {
     const classes = [

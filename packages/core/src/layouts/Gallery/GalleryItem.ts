@@ -1,4 +1,4 @@
-import { h, resolveDynamicComponent, defineComponent, type DefineComponent } from 'vue';
+import { h, resolveDynamicComponent, defineComponent, type DefineComponent, type SlotsType } from 'vue';
 
 export default defineComponent({
   name: 'PfGalleryItem',
@@ -10,6 +10,10 @@ export default defineComponent({
       default: 'div',
     },
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   setup(props, { slots }) {
     const Component = resolveDynamicComponent(props.component) as DefineComponent;

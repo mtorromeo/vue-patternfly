@@ -3,7 +3,7 @@ import styles from '@patternfly/react-styles/css/components/Label/label';
 
 import { type DefineComponent, defineComponent, h, mergeProps, type PropType, ref, resolveDynamicComponent, type Ref } from 'vue';
 import { useElementOverflow } from '../use';
-import PfCloseButton from './CloseButton';
+import PfCloseButton from './CloseButton.vue';
 import PfTooltip, { TooltipPosition } from './Tooltip/Tooltip.vue';
 
 const colorStyles = {

@@ -23,7 +23,7 @@
 
           <pf-modal-header>
             <slot name="header">
-              <component :is="titleOverflowing ? 'pf-tooltip' : 'pass-through'" v-if="title">
+              <component :is="titleOverflowing ? PfTooltip : 'pass-through'" v-if="title">
                 <h1
                   ref="titleRef"
                   :class="[styles.modalBoxTitle, {
@@ -42,7 +42,7 @@
                   <span :class="styles.modalBoxTitleText">{{ title }}</span>
                 </h1>
 
-                <template #content>{{ title }}</template>
+                <template v-if="titleOverflowing" #content>{{ title }}</template>
               </component>
 
               <div v-if="$slots.description" :id="descriptorId" :class="styles.modalBoxDescription">
@@ -84,7 +84,7 @@ import PassThrough from '../../helpers/PassThrough';
 import PfBackdrop from '../Backdrop';
 import PfFocusTrap from '../../helpers/FocusTrap.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
-import PfCloseButton from '../CloseButton';
+import PfCloseButton from '../CloseButton.vue';
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
@@ -210,6 +210,7 @@ export default defineComponent({
     const titleRef: Ref<HTMLElement | undefined> = ref();
 
     return {
+      PfTooltip,
       titleRef,
       titleOverflowing: useElementOverflow(titleRef),
       styles: markRaw(styles) as typeof styles,

@@ -8,6 +8,9 @@
       "vite/client"
     ]
   },
+  "vueCompilerOptions": {
+    "strictTemplates": true
+  },
   "include": [
     "./src/*",
     "./src/**/*",

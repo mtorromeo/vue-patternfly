@@ -1,12 +1,15 @@
 <template>
-  <div ref="el" :class="[styles.menu, {
-    [styles.modifiers.plain]: plain,
-    [styles.modifiers.scrollable]: scrollable,
-    [styles.modifiers.flyout]: containsFlyout,
-    [styles.modifiers.nav]: navFlyout,
+  <div
+    ref="el"
+    :class="[styles.menu, {
+      [styles.modifiers.plain]: plain,
+      [styles.modifiers.scrollable]: scrollable,
+      [styles.modifiers.flyout]: containsFlyout,
+      [styles.modifiers.nav]: navFlyout,
     // [styles.modifiers.drilldown]: containsDrilldown,
     // [styles.modifiers.drilledIn]: effectiveMenuDrilledIn,
-  }]">
+    }]"
+  >
     <slot />
   </div>
 </template>
@@ -14,12 +17,13 @@
 <script lang="ts">
 export type MenuProvide = {
   parentMenu: MenuProvide | undefined;
+  selected?: WritableComputedRef<MenuItemId | MenuItemId[] | null>;
   // drilldownItemPath: MenuItemId[];
   activeItemId?: MenuItemId;
   state: MenuState;
   flyout: Ref<ComponentInternalInstance | null>;
   onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: any) => void;
-  onSelect?: (event: MouseEvent, itemId?: MenuItemId | null) => void;
+  onSelect?: (event: Event, itemId: MenuItemId | null | undefined) => void;
   // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
   // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
 };
@@ -39,11 +43,12 @@ export type MenuItemId = string | number | symbol;
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, ref, type ComponentInternalInstance, type InjectionKey, type Ref } from 'vue';
+import { inject, provide, reactive, ref, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef } from 'vue';
+import { isDefined, useManagedProp } from '../../use';
 
-const props = withDefaults(defineProps<{
+const $props = withDefaults(defineProps<{
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
-  selected?: any | any[];
+  selected?: MenuItemId | MenuItemId[] | null;
   /** Search input of menu */
   searchInput?: boolean;
   /** @beta Indicates if menu contains a flyout menu */
@@ -52,8 +57,8 @@ const props = withDefaults(defineProps<{
   navFlyout?: boolean;
   // /** @beta Indicates if menu contains a drilldown menu */
   // containsDrilldown?: boolean;
-  // /** @beta Indicates if a menu is drilled into */
-  // menuDrilledIn?: boolean;
+  /** @beta Indicates if a menu is drilled into */
+  menuDrilledIn?: boolean;
   // /** @beta Indicates the path of drilled in menu itemIds */
   // drilldownItemPath?: MenuItemId[];
   // /** @beta Array of menus that are drilled in */
@@ -72,8 +77,6 @@ const props = withDefaults(defineProps<{
   ouiaSafe?: boolean;
   /** Callback called when an MenuItems's action button is clicked. You can also specify it within a MenuItemAction. */
   onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: any) => void;
-  /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
-  onSelect?: (event: MouseEvent, itemId?: MenuItemId | null) => void;
   // /** @beta Callback for drilling into a submenu */
   // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
   // /** @beta Callback for drilling out of a submenu */
@@ -82,17 +85,22 @@ const props = withDefaults(defineProps<{
   // drilldownItemPath: () => [],
 });
 
-defineEmits({
+const $emit = defineEmits({
   /** A callback for when the input value changes. */
   searchInputChange: (
     event: Event,
-    value: string
+    value: string,
   ) => true,
+
+  /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
+  select: (event: Event, itemId: MenuItemId | null | undefined) => true,
+  'update:selected': (value: MenuItemId | MenuItemId[] | null) => true,
 });
 
 // const instance = getCurrentInstance();
 
 const el: Ref<HTMLDivElement | undefined> = ref();
+const managedSelected = useManagedProp<MenuItemId | MenuItemId[] | null>('selected', null);
 
 const state: MenuState = reactive({
   // ouiaStateId: getDefaultOUIAId(Menu.displayName),
@@ -103,19 +111,41 @@ const state: MenuState = reactive({
 
 const flyout: Ref<ComponentInternalInstance | null> = ref(null);
 
-// const effectiveMenuDrilledIn = computed(() => props.menuDrilledIn || (instance?.vnode.key && props.drilledInMenus?.includes(instance?.vnode.key)));
+// const effectiveMenuDrilledIn = computed(() => $props.menuDrilledIn || (instance?.vnode.key && $props.drilledInMenus?.includes(instance?.vnode.key)));
 
 const parentMenu = inject(MenuInjectionKey, undefined);
 
 provide(MenuInjectionKey, {
   parentMenu,
-  // drilldownItemPath: props.drilldownItemPath,
-  activeItemId: props.activeItemId,
+  selected: managedSelected,
+  // drilldownItemPath: $props.drilldownItemPath,
+  activeItemId: $props.activeItemId,
   state,
   flyout,
-  onActionClick: props.onActionClick,
-  onSelect: props.onSelect,
-  // onDrillIn: props.onDrillIn,
-  // onDrillOut: props.onDrillOut,
+  onActionClick: $props.onActionClick,
+  onSelect(event: Event, itemId: MenuItemId | null | undefined) {
+    $emit('select', event, itemId);
+    if (!isDefined(itemId)) {
+      return;
+    }
+    if (Array.isArray(managedSelected.value)) {
+      const i = managedSelected.value.indexOf(itemId);
+      if (i >= 0) {
+        const value = [...managedSelected.value];
+        value.splice(i, 1);
+        $emit('update:selected', value);
+      } else {
+        $emit('update:selected', [...managedSelected.value, itemId]);
+      }
+    } else {
+      if (managedSelected.value === itemId) {
+        $emit('update:selected', null);
+      } else {
+        $emit('update:selected', itemId);
+      }
+    }
+  },
+  // onDrillIn: $props.onDrillIn,
+  // onDrillOut: $props.onDrillOut,
 });
 </script>

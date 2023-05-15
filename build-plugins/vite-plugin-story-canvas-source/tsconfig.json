@@ -5,8 +5,10 @@
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
-    "preserveValueImports": false,
     "module": "commonjs",
+    "moduleResolution": "node",
+    "preserveValueImports": false,
+    "verbatimModuleSyntax": false,
     "types": [
       "vite/client",
     ],

@@ -5,7 +5,7 @@
       :id="mainContainerId"
       :role="role"
       :class="styles.pageMain"
-      :tab-index="mainTabIndex"
+      :tabindex="mainTabIndex"
       :aria-label="mainAriaLabel"
       @click="mainClick"
       @touchstart="mainClick"
@@ -33,10 +33,10 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
 import { useWindowSize } from '@vueuse/core';
-import { ref, provide, computed, markRaw, defineComponent, type Ref, type InjectionKey, type ComputedRef } from 'vue';
+import { ref, provide, computed, markRaw, defineComponent, type Ref, type InjectionKey, type WritableComputedRef } from 'vue';
 
 export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
-export const PageNavOpenKey = Symbol('PageNavOpenKey') as InjectionKey<ComputedRef<boolean>>;
+export const PageNavOpenKey = Symbol('PageNavOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
 
 export default defineComponent({
   name: 'PfPage',

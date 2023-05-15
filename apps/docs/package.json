@@ -6,27 +6,28 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "vue-tsc --noEmit",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "postinstall": "cp node_modules/shiki/dist/onig.wasm node_modules/shiki/languages/vue*.tmLanguage.json node_modules/shiki/languages/javascript.tmLanguage.json public/shiki/; "
   },
   "dependencies": {
-    "@patternfly/patternfly": "^4.219.2",
+    "@patternfly/patternfly": "^4.224.2",
     "@vue-patternfly/core": "workspace:^",
     "@vue-patternfly/icons": "workspace:^",
-    "shiki": "^0.14.0",
-    "vue": "^3.2.45",
-    "vue-router": "4.1.6"
+    "shiki": "^0.14.2",
+    "vue": "^3.3.2",
+    "vue-router": "4.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "@vue/compiler-sfc": "^3.2.45",
-    "@vue/runtime-core": "^3.2.45",
-    "@vueuse/core": "^9.5.0",
-    "sass": "^1.56.1",
-    "tslib": "^2.4.1",
-    "typescript": "^4.9.3",
-    "vite": "^4.0.4",
-    "vite-plugin-story-canvas-source": "workspace:^",
-    "vue-tsc": "^1.0.9"
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/compiler-sfc": "^3.3.2",
+    "@vue/runtime-core": "^3.3.2",
+    "@vueuse/core": "^10.1.2",
+    "sass": "^1.62.1",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.5",
+    "vite-plugin-story-canvas-source": "workspace:^1.0.0",
+    "vue-tsc": "^1.6.5"
   },
   "packageManager": "pnpm@7.13.0"
 }

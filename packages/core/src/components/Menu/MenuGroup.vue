@@ -1,6 +1,6 @@
 <template>
   <section :class="styles.menuGroup">
-    <component v-if="label" :is="labelHeadingLevel" :class="styles.menuGroupTitle">
+    <component :is="labelHeadingLevel" v-if="label" :class="styles.menuGroupTitle">
       <slot name="label">{{ label }}</slot>
     </component>
     <slot />

@@ -1,366 +1,118 @@
 <template>
-  <component :is="appendTo === 'inline' ? 'pass-through' : 'pf-popper'">
-    <div
-      ref="select"
-      :class="[styles.select, {
-        [styles.modifiers.expanded]: managedOpen,
-        [styles.modifiers.top]: up,
-      }]"
-      :style="{ width }"
-    >
-      <pf-select-toggle
-        v-model:open="managedOpen"
-        :disabled="disabled"
-        :variant="variant"
-        @enter="onEnter"
-        @close="onClose"
-        @keydown="onKeydown"
+  <div ref="$el">
+    <slot name="toggle">
+      <pf-menu-toggle v-model:expanded="managedOpen">
+        <slot name="label">
+          Select a value
+        </slot>
+      </pf-menu-toggle>
+    </slot>
+
+    <floating-ui :reference="$el" :z-index="zIndex" flip same-width>
+      <pf-menu
+        v-if="managedOpen"
+        v-model:selected="managedSelected"
+        :plain="plain"
+        :style="{'--pf-c-menu--MinWidth': minWidth}"
+        :search-input="searchInput"
+        :contains-flyout="containsFlyout"
+        :nav-flyout="navFlyout"
+        :active-item-id="activeItemId"
+        :root-menu="rootMenu"
+        :scrollable="scrollable"
+        :ouia-id="ouiaId"
+        :ouia-safe="ouiaSafe"
+        @action-click="onActionClick"
+        @select="(event, itemId) => $emit('select', event)"
+        @search-input-change="(event, value) => $emit('searchInputChange', event, value)"
       >
-        <div :class="styles.selectToggleWrapper">
-          <span v-if="$slots['toggle-icon']" :class="styles.selectToggleIcon">
-            <slot name="toggle-icon" />
-          </span>
+        <pf-menu-content>
+          <overridable-wrapper :component="PfSelectList" :include="PfSelectOption">
+            <slot />
+          </overridable-wrapper>
+        </pf-menu-content>
+      </pf-menu>
+    </floating-ui>
 
-          <template v-if="$slots.customContent || ['single', 'checkbox'].includes(variant)">
-            <input
-              v-if="variant === 'single' && name"
-              type="hidden"
-              :name="name"
-              :value="modelValue"
-            >
-            <span :class="styles.selectToggleText">
-              <slot name="placeholder">{{ placeholder || childPlaceholderText }}</slot>
-            </span>
-            <div
-              v-if="!selectionBadgeHidden && checkedOptions.length"
-              :class="styles.selectToggleBadge"
-            >
-              <span
-                :class="[badgeStyles.badge, badgeStyles.modifiers.read]"
-              >{{ selectionBadgeText || checkedOptions.length || '' }}</span>
-            </div>
-          </template>
-
-          <template v-else-if="variant === 'typeahead'">
-            <input
-              :id="`${selectToggleId}-select-typeahead`"
-              :class="[formStyles.formControl, styles.selectToggleTypeahead]"
-              :aria-activedescendant="typeaheadActiveChild?.id"
-              :aria-label="typeAheadAriaLabel"
-              :placeholder="placeholder"
-              :value="
-                typeaheadInputValue !== null
-                  ? typeaheadInputValue
-                  : checkedOptions[0].value || ''
-              "
-              type="text"
-              autocomplete="off"
-              :disabled="disabled"
-              @click="onClick"
-              @change="onChange"
-            >
-          </template>
-        </div>
-
-        <button
-          v-if="$attrs.onClear && (checkedOptions.length || typeaheadInputValue)"
-          :class="[buttonStyles.button, buttonStyles.modifiers.plain, styles.selectToggleClear]"
-          type="button"
-          :disabled="disabled"
-          @click.stop="clearSelection"
-        >
-          <circle-xmark-icon aria-hidden />
-        </button>
-      </pf-select-toggle>
-
-      <pf-select-menu
-        v-show="managedOpen"
-        ref="menu"
-        :v-slot="appendTo === 'inline' ? null : 'popper'"
-      >
-        <slot name="custom-content" />
-
-        <template v-if="inlineFilter">
-          <div :class="styles.selectMenuSearch">
-            <input
-              ref="filter"
-              type="search"
-              :class="[formStyles.formControl, formStyles.modifiers.search]"
-              :placeholder="inlineFilterPlaceholderText"
-              autocomplete="off"
-              @change="onChange"
-              @keydown="onFilterKeydown"
-            >
-          </div>
-          <pf-divider />
-        </template>
-
-        <slot />
-      </pf-select-menu>
-    </div>
-  </component>
+  </div>
 </template>
 
-<script lang="ts">
-import styles from '@patternfly/react-styles/css/components/Select/select';
-import badgeStyles from '@patternfly/react-styles/css/components/Badge/badge';
-import formStyles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
+<script lang="ts" setup>
+import type { MenuItemId } from '../Menu/Menu.vue';
+import PfSelectList from './SelectList';
+import PfSelectOption from './SelectOption';
+import PfMenu from '../Menu/Menu.vue';
+import PfMenuContent from '../Menu/MenuContent.vue';
+import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
+import FloatingUi from '../../helpers/FloatingUi.vue';
+import OverridableWrapper from '../../helpers/OverridableWrapper';
+import { ref } from 'vue';
+import { useManagedProp } from '../../use';
 
-import PassThrough from '../../helpers/PassThrough';
-import PfSelectMenu from './SelectMenu.vue';
-import type PfSelectOption from './SelectOption.vue';
-import PfSelectToggle from './SelectToggle.vue';
-import PfDivider from '../Divider';
-import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
+withDefaults(defineProps<{
+  /** Flag to indicate if select is open */
+  open?: boolean;
+  /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the SelectOption. */
+  selected?: MenuItemId | MenuItemId[] | null;
+  /** Indicates if the select should be without the outer box-shadow */
+  plain?: boolean;
+  /** Minimum width of the select menu */
+  minWidth?: string;
+  /** z-index of the select menu */
+  zIndex?: number;
 
-import { useManagedProp, provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type Navigatable, type ChildrenTrackerInjectionKey } from '../../use';
-import { type Component, defineComponent, type InjectionKey, markRaw, type PropType, provide, type Ref, ref } from 'vue';
+  // PfMenuItem props
 
-export const SelectOptionsKey = Symbol("SelectOptionsKey") as ChildrenTrackerInjectionKey;
-
-export const SelectKey = Symbol('SelectKey') as InjectionKey<{
-  $emit: (event: 'select', ...args: any[]) => void;
-  name: string;
-  variant: string;
-  keydown: (this: Component & Navigatable, event: KeyboardEvent, itemEl?: HTMLElement) => void;
-  element: Ref<HTMLSelectElement | undefined>,
-  menu: Ref<InstanceType<typeof PfSelectMenu> | undefined>,
-}>;
-
-export default defineComponent({
-  name: 'PfSelect',
-
-  components: {
-    PfSelectMenu,
-    PfSelectToggle,
-    PassThrough,
-    // PfPopper,
-    PfDivider,
-    CircleXmarkIcon,
-  },
-
-  props: {
-    name: {
-      type: String,
-      default: '',
-    },
-    appendTo: {
-      type: [String, Element],
-      default: 'inline',
-    },
-    placeholder: {
-      type: String,
-      default: '',
-    },
-    open: {
-      type: Boolean,
-      default: null,
-    },
-    up: Boolean,
-    disabled: Boolean,
-    bubbleEvent: Boolean,
-    width: {
-      type: String,
-      default: null,
-    },
-    variant: {
-      type: String,
-      default: 'single',
-      validator: (v: any) => ['single', 'checkbox', 'typeahead', 'typeaheadmulti'].includes(v),
-    },
-    selections: {
-      type: [String, Array] as PropType<string | string[]>,
-      default: (): string | string[] => [],
-    },
-    selectionBadgeHidden: Boolean,
-    selectionBadgeText: {
-      type: String,
-      default: null,
-    },
-    /** Flag indicating if select should have an inline text input for filtering */
-    inlineFilter: Boolean,
-    /** Placeholder text for inline filter */
-    inlineFilterPlaceholderText: {
-      type: String,
-      default: '',
-    },
-
-    // TODO
-    selectToggleId: {
-      type: String,
-      default: '',
-    },
-    modelValue: {
-      type: String,
-      default: '',
-    },
-  },
-
-  emits: ['select', 'clear', 'update:open'],
-
-  setup(props, { emit }) {
-    const options = provideChildrenTracker<InstanceType<typeof PfSelectOption> & Disableable & Focusable>(SelectOptionsKey);
-    const onKeydown = keyNavigation(options);
-
-    const select: Ref<HTMLSelectElement | undefined> = ref();
-    const menu: Ref<InstanceType<typeof PfSelectMenu> | undefined> = ref();
-    const filter: Ref<HTMLInputElement | undefined> = ref();
-
-    provide(SelectKey, {
-      $emit: emit,
-      name: props.name,
-      variant: props.variant,
-      keydown: onKeydown,
-      element: select,
-      menu,
-    });
-
-    return {
-      select,
-      filter,
-      menu,
-      options,
-      menuOnKeydown: onKeydown,
-      managedOpen: useManagedProp('open', false),
-      styles: markRaw(styles) as typeof styles,
-      buttonStyles: markRaw(buttonStyles) as typeof buttonStyles,
-      badgeStyles: markRaw(badgeStyles) as typeof badgeStyles,
-      formStyles: markRaw(formStyles) as typeof formStyles,
-    };
-  },
-
-  data(this: void) {
-    return {
-      typeaheadInputValue: null as string | null,
-      typeaheadCurrIndex: -1,
-      typeaheadActiveChild: undefined as HTMLElement | undefined,
-      typeAheadAriaLabel: '',
-      // tabbedIntoFavoritesMenu: false,
-    };
-  },
-
-  computed: {
-    childPlaceholderText() {
-      if (this.$slots.customContent) {
-        return;
-      }
-      if (this.checkedOptions.length || this.placeholder) {
-        return;
-      }
-      const placeholder = this.options.find(i => i.placeholder === true);
-      return placeholder?.value || this.options[0]?.value;
-    },
-
-    checkedOptions() {
-      return this.options.filter(o => o.managedChecked);
-    },
-  },
-
-  mounted() {
-    document.addEventListener('keydown', this.onEscPress);
-  },
-
-  beforeUnmount() {
-    document.removeEventListener('keydown', this.onEscPress);
-  },
-
-  methods: {
-    clearSelection(e: Event) {
-      this.typeaheadInputValue = null;
-      // this.typeaheadFilteredChildren = React.Children.toArray(this.props.children);
-      this.typeaheadCurrIndex = -1;
-      this.$emit('clear', e);
-    },
-
-    onEnter() {
-      if (this.options.length) {
-        this.options[0].focused = true;
-      }
-    },
-
-    onEscPress(event: KeyboardEvent) {
-      const keyCode = event.keyCode || event.which;
-
-      if (!this.managedOpen || !(keyCode === 27 /* ESC */ || event.key === 'Tab')) {
-        return;
-      }
-
-      const escFromToggle = () => event.target instanceof HTMLElement && this.select?.contains?.(event.target);
-
-      const escFromWithinMenu = () => {
-        const menu = this.menu?.$el;
-        return menu?.contains?.(event.target);
-      };
-
-      if (escFromToggle() || escFromWithinMenu()) {
-        this.managedOpen = false;
-        this.select?.focus();
-      }
-    },
-
-    onClose() {
-      this.typeaheadInputValue = null;
-      // this.typeaheadFilteredChildren = React.Children.toArray(this.props.children);
-      this.typeaheadCurrIndex = -1;
-      // this.tabbedIntoFavoritesMenu = false;
-    },
-
-    onKeydown(event: KeyboardEvent) {
-      if (event.key === 'Tab' && !this.managedOpen) {
-        return;
-      }
-
-      const stopEvent = () => {
-        if (!this.bubbleEvent) {
-          event.stopPropagation();
-        }
-        event.preventDefault();
-      };
-
-      if (!this.managedOpen) {
-        if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
-          this.managedOpen = true;
-          stopEvent();
-        }
-        return;
-      }
-
-      const keyCode = event.keyCode || event.which;
-
-      if (!this.bubbleEvent && keyCode === 27 /* ESC */) {
-        this.onEscPress(event);
-        stopEvent();
-      } else if (event.key === 'Tab' || event.key === 'Enter' || event.key === ' ') {
-        this.managedOpen = false;
-        stopEvent();
-      } else if (event.key === 'ArrowDown') {
-        if (this.options.length) {
-          this.options[0].focused = true;
-          stopEvent();
-        }
-      }
-    },
-
-    onFilterKeydown(event: KeyboardEvent) {
-      if (event.key === 'Tab' && this.variant === 'checkbox') {
-        // More modal-like experience for checkboxes
-        // Let SelectOption handle this
-        // this.menuOnKeydown.navigate(0, 0, event.shiftKey ? 'up' : 'down');
-        event.stopPropagation();
-        event.preventDefault();
-      } else {
-        // this.menuOnKeydown(event, this.filter);
-      }
-    },
-
-    onClick(event: MouseEvent | TouchEvent) {
-
-    },
-
-    onChange(event: Event) {
-
-    },
-  },
+  /** Search input of menu */
+  searchInput?: boolean;
+  /** @beta Indicates if menu contains a flyout menu */
+  containsFlyout?: boolean;
+  /** @beta Indicating that the menu should have nav flyout styling */
+  navFlyout?: boolean;
+  // /** @beta Indicates if menu contains a drilldown menu */
+  // containsDrilldown?: boolean;
+  // /** @beta Indicates if a menu is drilled into */
+  // menuDrilledIn?: boolean;
+  // /** @beta Indicates the path of drilled in menu itemIds */
+  // drilldownItemPath?: MenuItemId[];
+  // /** @beta Array of menus that are drilled in */
+  // drilledInMenus?: MenuItemId[];
+  /** @beta itemId of the currently active item. You can also specify isActive on the MenuItem. */
+  activeItemId?: MenuItemId;
+  /** Internal flag indicating if the Menu is the root of a menu tree */
+  rootMenu?: boolean;
+  /** Indicates if the menu should be srollable */
+  scrollable?: boolean;
+  /** Value to overwrite the randomly generated data-ouia-component-id.*/
+  ouiaId?: number | string;
+  /** Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false. */
+  ouiaSafe?: boolean;
+  /** Callback called when an MenuItems's action button is clicked. You can also specify it within a MenuItemAction. */
+  onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: any) => void;
+  // /** @beta Callback for drilling into a submenu */
+  // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
+  // /** @beta Callback for drilling out of a submenu */
+  // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
+}>(), {
+  open: undefined,
+  selected: undefined,
+  // drilldownItemPath: () => [],
 });
+
+defineEmits({
+  /** A callback for when the input value changes. */
+  searchInputChange: (
+    event: Event,
+    value: string,
+  ) => true,
+
+  /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
+  select: (event: MouseEvent, itemId?: MenuItemId | null | undefined) => true,
+  'update:open': (value: boolean) => true,
+  'update:selected': (value: MenuItemId | MenuItemId[] | null) => true,
+});
+
+const managedSelected = useManagedProp('selected', null);
+const managedOpen = useManagedProp('open', false);
+const $el = ref();
 </script>

@@ -47,6 +47,7 @@ import { computed, defineComponent, inject, markRaw, ref, type Ref } from 'vue';
 import { useChildrenTracker } from '../../use';
 import { DropdownToggleElementRefKey, DropdownDisabledClassKey, DropdownItemClassKey } from './Dropdown';
 import { DropdownMenuItemsKey, DropdownMenuOnKeydownKey } from './DropdownMenu.vue';
+import type { PropType, Component } from 'vue';
 
 export default defineComponent({
   name: 'PfDropdownItem',
@@ -56,7 +57,7 @@ export default defineComponent({
   props: {
     hovered: Boolean,
     component: {
-      type: [String, Object, Function],
+      type: [String, Object, Function] as PropType<string | Component>,
       default: 'a',
     },
     role: {

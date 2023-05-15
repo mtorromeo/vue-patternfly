@@ -1,11 +1,12 @@
 <template>
-  <div ref="el" :class="[styles.drawer, {
-    [styles.modifiers.expanded]: expanded,
-    [styles.modifiers.inline]: inline,
-    [styles.modifiers.static]: static,
-    [styles.modifiers.panelLeft]: position === 'left',
-    [styles.modifiers.panelBottom]: position === 'bottom',
-  }]">
+  <div
+    ref="el" :class="[styles.drawer, {
+      [styles.modifiers.expanded]: expanded,
+      [styles.modifiers.inline]: inline,
+      [styles.modifiers.static]: static,
+      [styles.modifiers.panelLeft]: position === 'left',
+      [styles.modifiers.panelBottom]: position === 'bottom',
+    }]">
     <overridable-wrapper :component="PfDrawerContent" :exclude="PfDrawerSection">
       <slot />
     </overridable-wrapper>
@@ -38,7 +39,7 @@ defineEmits({
   expand: () => true,
 });
 
-const el: Ref<HTMLElement | undefined> = ref();
+const el: Ref<HTMLDivElement | undefined> = ref();
 
 provide(DrawerKey, {
   el,

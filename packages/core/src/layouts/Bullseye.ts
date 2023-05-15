@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 
-import { h, mergeProps, resolveDynamicComponent, type DefineComponent, defineComponent } from 'vue';
+import { h, mergeProps, resolveDynamicComponent, type DefineComponent, defineComponent, type SlotsType } from 'vue';
 
 export default defineComponent({
   name: 'PfBullseye',
@@ -13,6 +13,10 @@ export default defineComponent({
       default: 'div',
     },
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   setup(props, { slots, attrs }) {
     const Component = resolveDynamicComponent(props.component) as DefineComponent;

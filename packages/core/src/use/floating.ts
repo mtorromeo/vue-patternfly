@@ -1,10 +1,9 @@
 import { autoUpdate, computePosition } from "@floating-ui/dom";
-import { resolveUnref, type MaybeComputedRef } from "@vueuse/shared";
-import { onBeforeUnmount, reactive, unref, watch } from "vue";
+import { onBeforeUnmount, reactive, toValue, unref, watch, type MaybeRef } from "vue";
 
 export type FloatingOptions = Parameters<typeof computePosition>[2];
 
-export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null | undefined>, floating: MaybeComputedRef<HTMLElement | null | undefined>, options: MaybeComputedRef<FloatingOptions>) {
+export function useFloatingUI(reference: MaybeRef<HTMLElement | null | undefined>, floating: MaybeRef<HTMLElement | null | undefined>, options: MaybeRef<FloatingOptions>) {
   const defaultFloatingData: Awaited<ReturnType<typeof computePosition>> = {
     x: 0,
     y: 0,
@@ -17,8 +16,8 @@ export function useFloatingUI(reference: MaybeComputedRef<HTMLElement | null | u
   let cleanup = (): any => undefined;
 
   watch([reference, floating, options], () => {
-    const referenceElement = resolveUnref(reference);
-    const floatingElement = resolveUnref(floating);
+    const referenceElement = toValue(reference);
+    const floatingElement = toValue(floating);
     cleanup();
     Object.assign(floatingData, defaultFloatingData);
     if (referenceElement && floatingElement) {

@@ -53,7 +53,7 @@ const height = computed(() => {
         ? parseFloat(
           getComputedStyle(rootMenuList.value.parentMenu?.el.value)
             .getPropertyValue('border-bottom-width')
-            .replace(/px/g, '')
+            .replace(/px/g, ''),
         )
         : 0)
       ;
@@ -65,5 +65,5 @@ const height = computed(() => {
 
 watch(height, () => {
   props.onHeight?.(String(height.value));
-})
+});
 </script>

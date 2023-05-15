@@ -24,13 +24,12 @@ export function useHtmlElementFromVNodes() {
 
   return {
     element,
-    findReference(children: VNode[]) {
+    async findReference(children: VNode[]) {
       const vnode = findComponentVNode(children);
-      if (vnode?.el === null) { // not mounted yet
-        nextTick(() => (element.value = findHtmlElementFromVNode(vnode)));
-      } else {
-        element.value = findHtmlElementFromVNode(vnode);
+      if (vnode?.component === null) {
+        await nextTick();
       }
+      element.value = findHtmlElementFromVNode(vnode);
     },
   };
 }

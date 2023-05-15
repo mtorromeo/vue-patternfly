@@ -9,8 +9,15 @@
       "vite/client"
     ]
   },
+  "vueCompilerOptions": {
+    "strictTemplates": true,
+    "dataAttributes": [
+      "data-popper-*",
+      "data-action"
+    ]
+  },
   "include": [
-    "./src/*",
-    "./src/**/*"
+    "src/*",
+    "src/**/*"
   ]
 }

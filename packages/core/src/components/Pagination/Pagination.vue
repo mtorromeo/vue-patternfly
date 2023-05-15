@@ -26,7 +26,6 @@
       :last-index="itemsEnd !== null ? count - itemsEnd : lastIndex"
       :default-to-full-page="defaultToFullPage"
       :count="count"
-      :last-page="lastPage"
       :drop-up="dropUp"
       :widget-id="widgetId"
       :disabled="disabled"

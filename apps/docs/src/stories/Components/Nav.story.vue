@@ -66,7 +66,6 @@
               </pf-nav-item>
               <pf-nav-item item-id="link3" :active="activeLink == 'link3'">
                 Link 3
-                \
                 <template #flyout>
                   <pf-nav variant="subnav">
                     <pf-nav-list>

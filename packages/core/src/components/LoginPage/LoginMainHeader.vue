@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts" setup>
+import PfTitle from '../Title.vue';
 import styles from '@patternfly/react-styles/css/components/Login/login';
 
 defineProps<{

@@ -31,6 +31,10 @@ export default defineComponent({
     },
   },
 
+  emits: {
+    click: (e: MouseEvent | TouchEvent) => e instanceof Event,
+  },
+
   setup() {
     const textRef: Ref<HTMLSpanElement | undefined> = ref();
 

@@ -1,60 +1,51 @@
-<script lang="ts">
+<template>
+  <div ref="target">
+    <slot />
+  </div>
+</template>
+
+<script lang="ts" setup>
 import { useFocusTrap, type UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
-import { defineComponent, h, ref, type PropType, type Ref } from 'vue';
+import { watch } from 'vue';
+import { ref, type Ref } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfFocusTrap',
+});
 
-  props: {
-    active: Boolean,
-    paused: Boolean,
-    // preventScrollOnDeactivate: Boolean,
-    focusTrapOptions: {
-      type: Object as PropType<UseFocusTrapOptions>,
-      default: (): UseFocusTrapOptions => ({}),
-    },
-  },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-  setup(props) {
-    const target: Ref<HTMLDivElement | undefined> = ref();
-    const { activate, deactivate, pause, unpause } = useFocusTrap(target, {
-      immediate: props.active,
-      ...props.focusTrapOptions,
-    });
+const props = defineProps<{
+  active?: boolean;
+  paused?: boolean;
+  focusTrapOptions?: UseFocusTrapOptions,
+}>();
 
-    if (props.paused) {
-      pause();
-    }
+const target: Ref<HTMLDivElement | undefined> = ref();
+const { activate, deactivate, pause, unpause } = useFocusTrap(target, {
+  immediate: props.active,
+  ...props.focusTrapOptions,
+});
 
-    return {
-      target,
-      activate,
-      deactivate,
-      pause,
-      unpause,
-    };
-  },
+if (props.paused) {
+  pause();
+}
 
-  watch: {
-    active() {
-      if (this.active) {
-        this.activate();
-      } else {
-        this.deactivate();
-      }
-    },
+watch(() => props.active, () => {
+  if (props.active) {
+    activate();
+  } else {
+    deactivate();
+  }
+});
 
-    paused() {
-      if (this.paused) {
-        this.pause();
-      } else {
-        this.unpause();
-      }
-    },
-  },
-
-  render() {
-    return h('div', { ...this.$attrs, ref: 'target' }, this.$slots);
-  },
+watch(() => props.paused, () => {
+  if (props.paused) {
+    pause();
+  } else {
+    unpause();
+  }
 });
 </script>

@@ -10,6 +10,7 @@
       </div>
     </div>
 
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div class="language-vue" v-html="highlighted" />
   </section>
 </template>
@@ -69,15 +70,12 @@ export default defineComponent({
       }
 
       if (!highlighter) {
-        setWasm({
-          data: await fetch('./onig.wasm').then(r => r.arrayBuffer()),
-        } as any);
-
+        setWasm(await fetch('./shiki/onig.wasm'));
         highlighter = await getHighlighter({
           themes: [theme as any],
           langs: ['vue-html'],
           paths: {
-            languages: './languages/',
+            languages: './shiki/',
           },
         });
       }

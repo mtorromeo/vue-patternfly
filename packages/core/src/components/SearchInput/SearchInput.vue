@@ -5,15 +5,15 @@
         <pf-text-input-group :disabled="disabled">
           <pf-text-input-group-main
             ref="input"
+            v-model="value"
             :type="type"
             :hint="hint"
-            v-model="value"
             :placeholder="placeholder"
             :aria-label="ariaLabel"
             @keydown="onEnter"
           >
             <template #icon>
-              <magnifying-glass-icon  />
+              <magnifying-glass-icon />
             </template>
           </pf-text-input-group-main>
 
@@ -271,7 +271,7 @@ const emit = defineEmits({
 if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
   // eslint-disable-next-line no-console
   console.error(
-    'An advancedSearchDelimiter prop is required when advanced search attributes are provided using the attributes prop'
+    'An advancedSearchDelimiter prop is required when advanced search attributes are provided using the attributes prop',
   );
 }
 
@@ -299,7 +299,7 @@ function onSearchHandler(e: Event) {
   props.onSearch?.(value.value, e, getAttrValueMap());
 }
 
-function getAttrValueMap () {
+function getAttrValueMap() {
   const attrValue: { [key: string]: string } = {};
   const pairs = value.value.split(' ');
   pairs.map(pair => {

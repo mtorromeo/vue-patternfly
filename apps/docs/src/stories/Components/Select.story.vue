@@ -13,7 +13,9 @@
 
     <story-canvas title="Single">
       <pf-select>
-        <pf-select-option value="Please Choose" placeholder disabled />
+        <pf-select-option placeholder disabled>
+          Please Choose
+        </pf-select-option>
         <pf-select-option value="Mr" />
         <pf-select-option value="Miss" />
         <pf-select-option value="Mrs" />
@@ -53,56 +55,66 @@
 
     <story-canvas title="Checkbox input">
       <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-select-option value="Please Choose" placeholder disabled />
-        <pf-select-option value="Mr" />
-        <pf-select-option value="Miss" />
-        <pf-select-option value="Mrs" />
-        <pf-select-option value="Ms" />
-        <pf-select-option value="Dr" disabled />
+        <pf-select-option placeholder disabled>
+          Please Choose
+        </pf-select-option>
+        <pf-select-option check value="Mr" />
+        <pf-select-option check value="Miss" />
+        <pf-select-option check value="Mrs" />
+        <pf-select-option check value="Ms" />
+        <pf-select-option check value="Dr" disabled />
       </pf-select>
     </story-canvas>
 
     <story-canvas title="Checkbox input with counts">
       <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-select-option value="Please Choose" placeholder disabled />
-        <pf-select-option value="Mr" />
-        <pf-select-option value="Miss" />
-        <pf-select-option value="Mrs" />
-        <pf-select-option value="Ms" />
-        <pf-select-option value="Dr" disabled />
+        <pf-select-option placeholder disabled>
+          Please Choose
+        </pf-select-option>
+        <pf-select-option check value="Mr" />
+        <pf-select-option check value="Miss" />
+        <pf-select-option check value="Mrs" />
+        <pf-select-option check value="Ms" />
+        <pf-select-option check value="Dr" disabled />
       </pf-select>
     </story-canvas>
 
     <story-canvas title="Checkbox input no badge">
       <pf-select placeholder="Filter by status" variant="checkbox" selection-badge-hidden>
-        <pf-select-option value="Please Choose" placeholder disabled />
-        <pf-select-option value="Mr" />
-        <pf-select-option value="Miss" />
-        <pf-select-option value="Mrs" />
-        <pf-select-option value="Ms" />
-        <pf-select-option value="Dr" disabled />
+        <pf-select-option placeholder disabled>
+          Please Choose
+        </pf-select-option>
+        <pf-select-option check value="Mr" />
+        <pf-select-option check value="Miss" />
+        <pf-select-option check value="Mrs" />
+        <pf-select-option check value="Ms" />
+        <pf-select-option check value="Dr" disabled />
       </pf-select>
     </story-canvas>
 
     <story-canvas title="Grouped checkbox input">
       <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-select-option value="Please Choose" placeholder disabled />
-        <pf-select-option value="Mr" />
-        <pf-select-option value="Miss" />
-        <pf-select-option value="Mrs" />
-        <pf-select-option value="Ms" />
-        <pf-select-option value="Dr" disabled />
+        <pf-select-option placeholder disabled>
+          Please Choose
+        </pf-select-option>
+        <pf-select-option check value="Mr" />
+        <pf-select-option check value="Miss" />
+        <pf-select-option check value="Mrs" />
+        <pf-select-option check value="Ms" />
+        <pf-select-option check value="Dr" disabled />
       </pf-select>
     </story-canvas>
 
     <story-canvas title="Grouped single with filtering">
       <pf-select placeholder="Filter by status" variant="checkbox" inline-filter>
-        <pf-select-option value="Please Choose" placeholder disabled />
-        <pf-select-option value="Mr" />
-        <pf-select-option value="Miss" />
-        <pf-select-option value="Mrs" />
-        <pf-select-option value="Ms" />
-        <pf-select-option value="Dr" disabled />
+        <pf-select-option placeholder disabled>
+          Please Choose
+        </pf-select-option>
+        <pf-select-option check value="Mr" />
+        <pf-select-option check value="Miss" />
+        <pf-select-option check value="Mrs" />
+        <pf-select-option check value="Ms" />
+        <pf-select-option check value="Dr" disabled />
       </pf-select>
     </story-canvas>
 

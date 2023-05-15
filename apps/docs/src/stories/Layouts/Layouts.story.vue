@@ -126,16 +126,7 @@
 }
 </style>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: 'LayoutsPage',
-
-  data() {
-    return {
-      grow: false,
-    };
-  },
-});
+<script lang="ts" setup>
+import { ref } from "vue";
+const grow = ref(false);
 </script>

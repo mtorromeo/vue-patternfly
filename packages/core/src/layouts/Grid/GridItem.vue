@@ -1,6 +1,6 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
-import { h, resolveDynamicComponent, defineComponent, type DefineComponent } from 'vue';
+import { h, resolveDynamicComponent, defineComponent, type DefineComponent, type SlotsType } from 'vue';
 import { breakpoints } from '../../util';
 
 const gridSpans = {
@@ -59,6 +59,10 @@ export default defineComponent({
     /** the number of columns the grid item is offset on 2xLarge device. Value should be a number 1-12   */
     xl2Offset: gridSpans,
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   setup(props, { slots }) {
     const Component = resolveDynamicComponent(props.component) as DefineComponent;

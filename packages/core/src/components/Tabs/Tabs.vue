@@ -55,7 +55,7 @@ import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import { breakpointProp, classesFromBreakpointProps, isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { provide, computed, reactive, defineComponent, type PropType, type InjectionKey, type ComputedRef, type Ref, ref, markRaw } from 'vue';
+import { provide, computed, reactive, defineComponent, type PropType, type InjectionKey, type ComputedRef, type Ref, ref, markRaw, type WritableComputedRef } from 'vue';
 
 import PfTabContent from './TabContent.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
@@ -64,9 +64,9 @@ import { useEventListener } from '@vueuse/core';
 
 export type TabsProvide = {
   variant: 'default' | 'light300';
-  activeKey: ComputedRef<string | number | symbol>;
+  activeKey: WritableComputedRef<string | number | symbol>;
   idSuffix: ComputedRef<string>;
-  handleTabClick: (key: string | number | symbol | null) => void;
+  handleTabClick: (key: string | number | symbol) => void;
   tabListRef: Ref<HTMLUListElement | undefined>;
 }
 

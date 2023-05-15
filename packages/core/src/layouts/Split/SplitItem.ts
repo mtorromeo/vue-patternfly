@@ -1,5 +1,5 @@
 import styles from '@patternfly/react-styles/css/layouts/Split/split';
-import { h, resolveDynamicComponent, defineComponent, type DefineComponent } from 'vue';
+import { h, resolveDynamicComponent, defineComponent, type DefineComponent, type SlotsType } from 'vue';
 
 export default defineComponent({
   name: 'PfSplitItem',
@@ -12,6 +12,10 @@ export default defineComponent({
     },
     filled: Boolean,
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   setup(props, { slots }) {
     const Component = resolveDynamicComponent(props.component) as DefineComponent;

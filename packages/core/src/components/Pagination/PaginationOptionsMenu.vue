@@ -19,12 +19,7 @@
             :id="widgetId"
             ref="toggle"
             :disabled="disabled"
-            :items-per-page-title="itemsPerPageTitle"
             :open="open"
-            :first-index="firstIndex"
-            :last-index="lastIndex"
-            :count="count"
-            :items-title="itemsTitle"
             @click="open = !open"
           />
         </template>

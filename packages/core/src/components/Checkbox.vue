@@ -12,8 +12,7 @@
       type="checkbox"
       :checked="modelValue === null ? undefined : modelValue"
       :disabled="disabled"
-      :aria-valid="!valid"
-      @change="$emit('update:modelValue', ($event.currentTarget as HTMLInputElement).checked)"
+      @change="onChange"
     >
     <label
       v-if="label || $slots.label"
@@ -59,8 +58,9 @@ const props = withDefaults(defineProps<{
   component: 'div',
 });
 
-defineEmits({
-  'update:modelValue': (value: boolean) => true,
+const emit = defineEmits({
+  'change': (e: Event) => e instanceof Event,
+  'update:modelValue': (value: boolean) => typeof value === 'boolean',
 });
 
 const input: Ref<HTMLInputElement | undefined> = ref();
@@ -78,4 +78,9 @@ watch(() => props.modelValue, () => {
 defineExpose({
   input,
 });
+
+function onChange(e: Event) {
+  emit('change', e);
+  emit('update:modelValue', (e.currentTarget as HTMLInputElement).checked);
+}
 </script>

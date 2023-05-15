@@ -2,7 +2,7 @@
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
 import { breakpointProp, classesFromBreakpointProps } from '../../util';
-import { type DefineComponent, defineComponent, h, resolveDynamicComponent } from 'vue';
+import { type DefineComponent, defineComponent, h, resolveDynamicComponent, type SlotsType } from 'vue';
 
 export default defineComponent({
   name: 'PfFlex',
@@ -10,7 +10,7 @@ export default defineComponent({
   props: {
     /** The tag or component to use as container */
     component: {
-      type: [String, Object],
+      type: [String],
       default: 'div',
     },
 
@@ -29,6 +29,10 @@ export default defineComponent({
     ...breakpointProp('fullWidth', Boolean),
     ...breakpointProp('flexWrap', String, ['', 'wrap', 'wrap-reverse', 'nowrap']),
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   setup(props, { slots }) {
     const Component = resolveDynamicComponent(props.component) as DefineComponent;

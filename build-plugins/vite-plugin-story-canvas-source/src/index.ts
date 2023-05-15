@@ -1,4 +1,4 @@
-import { createFilter, FilterPattern } from '@rollup/pluginutils';
+import { createFilter, type FilterPattern } from '@rollup/pluginutils';
 import type { Plugin as VitePlugin } from 'vite';
 import { dedent } from "ts-dedent";
 import { parse, HTMLElement, Node } from 'node-html-parser';

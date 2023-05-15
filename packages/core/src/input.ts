@@ -1,5 +1,4 @@
-import type { MaybeRef } from "@vueuse/shared";
-import { computed, getCurrentInstance, type PropType, ref, unref, watch } from "vue";
+import { computed, getCurrentInstance, type PropType, ref, unref, watch, type MaybeRef } from "vue";
 import { useManagedProp } from "./use";
 
 export const inputProps = {
@@ -109,7 +108,7 @@ export function useInputValidation({
     },
 
     setCustomValidity(error: string) {
-      (unref(inputElement) ?? instance?.$el).setCustomValidity(error);
+      (unref(inputElement) ?? instance?.$el)?.setCustomValidity(error);
     },
   };
 }

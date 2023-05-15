@@ -7,6 +7,10 @@ import { flip, size, type Middleware, type Placement } from '@floating-ui/core';
 import { cloneVNode, computed, ref, useSlots, withDirectives, type Ref } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
 
+defineOptions({
+  name: 'PfFloatingUi',
+});
+
 const props = withDefaults(defineProps<{
   reference: string | HTMLElement | undefined;
   disable?: boolean;

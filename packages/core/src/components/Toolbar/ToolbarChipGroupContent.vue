@@ -6,9 +6,9 @@
     :hidden="numberOfFilters === 0 || expanded"
   >
     <pf-toolbar-group
-      :x-class="{ [styles.modifiers.hidden]: collapseListedFilters }"
-      :x-hidden="collapseListedFilters"
-      :x-aria-hidden="collapseListedFilters"
+      :class="{ [styles.modifiers.hidden]: collapseListedFilters }"
+      :hidden="collapseListedFilters"
+      :aria-hidden="collapseListedFilters"
       @mounted="$emit('mounted', $event)"
     />
 

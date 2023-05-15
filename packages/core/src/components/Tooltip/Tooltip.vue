@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'vue';
+import { defineComponent, markRaw, type PropType, type Ref, ref, watch, type SlotsType } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
@@ -94,6 +94,11 @@ export default defineComponent({
       default: null,
     },
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+    content?: Record<never, never>;
+  }>,
 
   setup() {
     const { element: referenceElement, findReference } = useHtmlElementFromVNodes();

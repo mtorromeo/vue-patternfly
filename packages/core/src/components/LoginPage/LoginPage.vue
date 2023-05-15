@@ -1,5 +1,5 @@
 <template>
-  <pf-background-image v-if="backgroundImgSrc" :src="backgroundImgSrc" :alt="backgroundImgAlt" />
+  <pf-background-image v-if="backgroundImgSrc" :src="backgroundImgSrc" />
 
   <pf-login>
     <template #header>

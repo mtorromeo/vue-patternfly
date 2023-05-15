@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? 'router-link' : 'pass-through'"
+    :is="to ? RouterLink : 'pass-through'"
     v-slot="routerCtx"
     :to="to"
     :replace="replace"
@@ -58,6 +58,7 @@ import { type DefineComponent, defineComponent, markRaw, type PropType, type Ref
 
 import PfSpinner from './Spinner.vue';
 import PassThrough from '../helpers/PassThrough';
+import { RouterLink } from 'vue-router';
 
 export default defineComponent({
   name: 'PfButton',
@@ -140,13 +141,16 @@ export default defineComponent({
     },
   },
 
-  emits: ['click'],
+  emits: {
+    click: (e: MouseEvent | TouchEvent) => e instanceof Event,
+  },
 
   setup() {
     const el: Ref<HTMLElement | undefined> = ref();
     return {
       styles: markRaw(styles) as typeof styles,
       el,
+      RouterLink,
     };
   },
 
@@ -177,7 +181,7 @@ export default defineComponent({
   },
 
   methods: {
-    onClick(e: Event, navigate: (e: Event) => void) {
+    onClick(e: MouseEvent | TouchEvent, navigate: (e: Event) => void) {
       if (this.effectiveDisabled) {
         e.preventDefault();
         return;

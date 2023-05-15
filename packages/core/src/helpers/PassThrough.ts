@@ -1,4 +1,4 @@
-import { type DefineComponent, defineComponent, type PropType, type Slot, type VNode } from "vue";
+import { type DefineComponent, defineComponent, type PropType, type Slot, type VNode, type SlotsType } from "vue";
 
 export default defineComponent({
   name: 'PassThrough',
@@ -22,6 +22,10 @@ export default defineComponent({
   emits: {
     children: (c: VNode[]) => Array.isArray(c),
   },
+
+  slots: Object as SlotsType<{
+    default?: Record<never, never>;
+  }>,
 
   setup() {
     return {
@@ -48,7 +52,7 @@ export default defineComponent({
       return retEmit([]);
     }
 
-    let children = this.$slots.default();
+    let children = this.$slots.default({});
     if (this.alter) {
       children = this.alter(children);
     }
