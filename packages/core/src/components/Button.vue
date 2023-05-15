@@ -1,13 +1,13 @@
 <template>
   <component
-    :is="to ? RouterLink : 'pass-through'"
+    :is="to ? RouterLink : (PassThrough as Component)"
     v-slot="routerCtx"
     :to="to"
     :replace="replace"
     custom
   >
     <component
-      v-bind="$attrs"
+      v-bind="{...$attrs, ...ouiaProps}"
       :is="buttonComponent"
       ref="el"
       :type="buttonComponent === 'button' ? type : null"
@@ -48,152 +48,136 @@
       >
         <slot name="icon" />
       </span>
+      <span v-if="$slots.badge" :class="[styles.buttonCount, badgeClass]">
+        <slot name="badge" />
+      </span>
     </component>
   </component>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import { type DefineComponent, defineComponent, markRaw, type PropType, type Ref, ref } from 'vue';
+import { type Component, type Ref, ref } from 'vue';
 
 import PfSpinner from './Spinner.vue';
 import PassThrough from '../helpers/PassThrough';
-import { RouterLink } from 'vue-router';
+import { RouterLink, type RouteLocationRaw } from 'vue-router';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import { computed } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfButton',
-
-  components: { PfSpinner, PassThrough },
-
   inheritAttrs: false,
+});
 
-  props: {
-    /** type of button */
-    type: {
-      type: String,
-      default: 'button',
-    },
+const props = withDefaults(defineProps<{
+  /** Sets the base component to render. defaults to button */
+  component?: string | Component;
+  /** Adds active styling to button. */
+  active?: boolean;
+  /** Adds block styling to button */
+  block?: boolean;
+  /** Adds disabled styling and disables the button using the disabled html attribute */
+  disabled?: boolean;
+  /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
+  ariaDisabled?: boolean;
+  /** Adds progress styling to button */
+  loading?: boolean;
+  /** Text describing that current loading status or progress */
+  spinnerAriaValueText?: string;
+  /** Accessible label for the spinner to describe what is loading */
+  spinnerAriaLabel?: string;
+  /** Id of element which describes what is being loaded */
+  spinnerAriaLabelledBy?: string;
+  /** Events to prevent when the button is in an aria-disabled state */
+  inoperableEvents?: string[];
+  /** Adds inline styling to a link button */
+  inline?: boolean;
+  /** Sets button type */
+  type?: 'button' | 'submit' | 'reset';
+  /** Adds button variant styles */
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'warning' | 'link' | 'plain' | 'control';
+  /** Sets position of the link icon */
+  iconPosition?: 'left' | 'right';
+  /** Adds accessible text to the button. */
+  ariaLabel?: string;
+  /** Sets the button tabindex. */
+  tabindex?: number;
+  /** Adds small styling to the button */
+  small?: boolean;
+  /** Adds large styling to the button */
+  large?: boolean;
+  /** Adds danger styling to secondary or link button variants */
+  danger?: boolean;
+  /** Class name for the badge container */
+  badgeClass?: string;
 
-    variant: {
-      type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'warning' | 'link' | 'plain' | 'control'>,
-      default: 'primary',
-      validator: (v: any) => ['primary', 'secondary', 'tertiary', 'danger', 'warning', 'link', 'plain', 'control'].includes(v),
-    },
+  // router-link attributes
+  /** Route Location the link should navigate to when clicked on. */
+  to?: RouteLocationRaw;
+  /** Calls `router.replace` instead of `router.push`. */
+  replace?: boolean;
+  href?: string;
+  ariaCurrentValue?: string;
+} & OUIAProps>(), {
+  type: 'button',
+  variant: 'primary',
+  iconPosition: 'left',
+  component: 'auto',
+});
 
-    iconPosition: {
-      type: String as PropType<'left' | 'right'>,
-      default: 'left',
-      validator: (v: any) => ['left', 'right'].includes(v),
-    },
+const emit = defineEmits<{
+  (name: 'click', e: MouseEvent | TouchEvent): void;
+}>();
 
-    component: {
-      type: [String, Object] as PropType<string | DefineComponent>,
-      default: 'auto',
-    },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  icon?: (props: Record<never, never>) => any;
+  badge?: (props: Record<never, never>) => any;
+}>();
 
-    spinnerAriaValueText: {
-      type: String,
-      default: '',
-    },
+const el: Ref<HTMLElement | undefined> = ref();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant});
 
-    active: Boolean,
-    block: Boolean,
-    disabled: Boolean,
-    loading: {
-      type: Boolean,
-      default: null,
-    },
+const buttonComponent = computed(() => {
+  if (props.component !== 'auto') {
+    return props.component;
+  }
+  return (props.href || props.to) ? 'a' : 'button';
+});
 
-    /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
-    ariaDisabled: Boolean,
+const effectiveDisabled = computed(() => {
+  return props.loading || props.disabled || null;
+});
 
-    /** Adds inline styling to a link button */
-    inline: Boolean,
+const tabIdx = computed(() => {
+  if (props.tabindex) {
+    return props.tabindex;
+  }
+  if (props.disabled) {
+    return props.component === 'button' ? null : -1;
+  }
+  if (!props.ariaDisabled && props.component === 'span') {
+    return 0;
+  }
+  return null;
+});
 
-    /** Adds small styling to the button */
-    small: Boolean,
+function onClick(e: MouseEvent | TouchEvent, navigate: (e: Event) => void) {
+  if (effectiveDisabled.value) {
+    e.preventDefault();
+    return;
+  }
 
-    /** Adds small styling to the button */
-    large: Boolean,
+  if (navigate) {
+    navigate(e);
+    return;
+  }
 
-    /** Adds danger styling to secondary or link button variants */
-    danger: Boolean,
+  emit('click', e);
+}
 
-    tabindex: {
-      type: [Number, String],
-      default: null,
-    },
-
-    href: {
-      type: String,
-      default: null,
-    },
-
-    // router-link attributes
-    to: {
-      type: [String, Object],
-      default: null,
-    },
-    replace: Boolean,
-    ariaCurrentValue: {
-      type: String,
-      default: null,
-    },
-  },
-
-  emits: {
-    click: (e: MouseEvent | TouchEvent) => e instanceof Event,
-  },
-
-  setup() {
-    const el: Ref<HTMLElement | undefined> = ref();
-    return {
-      styles: markRaw(styles) as typeof styles,
-      el,
-      RouterLink,
-    };
-  },
-
-  computed: {
-    buttonComponent() {
-      if (this.component !== 'auto') {
-        return this.component;
-      }
-      return (this.href || this.to) ? 'a' : 'button';
-    },
-
-    effectiveDisabled() {
-      return this.loading || this.disabled || null;
-    },
-
-    tabIdx() {
-      if (this.tabindex) {
-        return this.tabindex;
-      }
-      if (this.disabled) {
-        return this.component === 'button' ? null : -1;
-      }
-      if (!this.ariaDisabled && this.component === 'span') {
-        return 0;
-      }
-      return null;
-    },
-  },
-
-  methods: {
-    onClick(e: MouseEvent | TouchEvent, navigate: (e: Event) => void) {
-      if (this.effectiveDisabled) {
-        e.preventDefault();
-        return;
-      }
-
-      if (navigate) {
-        navigate(e);
-        return;
-      }
-
-      this.$emit('click', e);
-    },
-  },
+defineExpose({
+  el,
 });
 </script>

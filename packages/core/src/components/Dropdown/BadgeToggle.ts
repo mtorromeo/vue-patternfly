@@ -1,5 +1,5 @@
 import { defineComponent, h, type PropType } from 'vue';
-import PfBadge from '../Badge';
+import PfBadge from '../Badge.vue';
 import PfToggle from './Toggle';
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';

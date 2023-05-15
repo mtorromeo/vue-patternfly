@@ -216,6 +216,29 @@
       </pf-button>
       <pf-button v-if="secondaryLoading" @click="secondaryLoading = false">Stop</pf-button>
     </story-canvas>
+
+    <story-canvas title="With count">
+      <p>Unread:</p>
+      <pf-button variant="primary">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <pf-button variant="secondary">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <pf-button variant="tertiary">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <pf-button variant="link">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <p>Unread disabled:</p>
+      <pf-button disabled variant="primary">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <pf-button disabled variant="secondary">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <pf-button disabled variant="tertiary">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <pf-button disabled variant="link">View issues <template #badge><pf-badge>7</pf-badge></template></pf-button>
+      <p>Read:</p>
+      <pf-button variant="primary">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+      <pf-button variant="secondary">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+      <pf-button variant="tertiary">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+      <pf-button variant="link">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+      <p>Read disabled:</p>
+      <pf-button disabled variant="primary">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+      <pf-button disabled variant="secondary">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+      <pf-button disabled variant="tertiary">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+      <pf-button disabled variant="link">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
+    </story-canvas>
   </doc-page>
 </template>
 

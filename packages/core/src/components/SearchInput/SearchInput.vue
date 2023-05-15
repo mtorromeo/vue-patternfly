@@ -149,7 +149,7 @@ import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
 import PfTextInputGroupMain from '../TextInputGroup/TextInputGroupMain.vue';
 import PfTextInputGroupUtilities from '../TextInputGroup/TextInputGroupUtilities.vue';
 import PfAdvancedSearchMenu from './AdvancedSearchMenu.vue';
-import PfBadge from '../Badge';
+import PfBadge from '../Badge.vue';
 import PfButton from '../Button.vue';
 import PassThrough from '../../helpers/PassThrough';
 import FloatingUi from '../../helpers/FloatingUi.vue';
