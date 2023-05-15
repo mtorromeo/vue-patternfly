@@ -8,7 +8,7 @@
         :aria-label="ariaLabel"
         :aria-labelledby="ariaLabel !== 'Details' ? undefined : id"
         :aria-expanded="expanded"
-        @click="emit('click', $event)"
+        @click="$emit('click', $event)"
       >
         <div :class="styles.dataListToggleIcon">
           <pf-angle-right-icon />
@@ -39,7 +39,7 @@ withDefaults(defineProps<{
   ariaLabel: 'Details',
 });
 
-const emit = defineEmits<{
+defineEmits<{
   (name: 'click', e: Event): void;
 }>();
 </script>

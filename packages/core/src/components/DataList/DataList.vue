@@ -14,23 +14,25 @@
 </template>
 
 <script lang="ts">
-import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
-
-import { computed, type ComputedRef, defineComponent, type InjectionKey, markRaw, type PropType, provide, type Ref, ref, type WritableComputedRef } from "vue";
-import { useManagedProp } from '../../use';
-
-export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
-
 export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
   $emit: (event: 'update:selected', ...args: any[]) => void;
   selectable: Ref<boolean>,
-  expandable: ComputedRef<boolean>,
+  expandable: ComputedRef<boolean | undefined>,
   inputName: ComputedRef<string | undefined>,
   inputValue: ComputedRef<string | undefined>,
   itemSelection: WritableComputedRef<any>,
   multipleSelection: ComputedRef<boolean>,
 }>;
+
+export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/DataList/data-list';
+import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
+
+import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type WritableComputedRef } from "vue";
+import { useManagedProp } from '../../use';
 
 const gridBreakpointClasses = {
   none: stylesGrid.modifiers.gridNone,
@@ -42,66 +44,55 @@ const gridBreakpointClasses = {
   '2xl': stylesGrid.modifiers.grid_2xl,
 };
 
-export default defineComponent({
+defineOptions({
   name: 'PfDataList',
-
-  props: {
-    /** Flag indicating if pf-data-list should have compact styling */
-    compact: Boolean,
-
-    /** Flag indicating if pf-data-list-items are expandable */
-    expandable: Boolean,
-
-    /** Determines which wrapping modifier to apply to the DataList */
-    wrapModifier: String as PropType<DataListWrapModifier>,
-
-    /** Name of the item input (radio or checkbox) when item selection is enabled */
-    selectionInputName: String,
-
-    /** Defines the value for the input (radio or checkbox) */
-    selectionInputValue: String,
-
-    /** Flag indicating if multiple pf-data-list-items are selectable */
-    selectionMultiple: Boolean,
-
-    /** Array for multiple selection, single value for single selection, undefined to disable selection */
-    selected: [String, Number, Symbol, Array] as PropType<any>,
-
-    // declared as prop instead of emit to be able to detect attached listeners
-    'onUpdate:selected': Function as PropType<(s: any) => void>, // eslint-disable-line vue/prop-name-casing
-
-    /** Specifies the grid breakpoints  */
-    gridBreakpoint: {
-      type: String as PropType<'none' | 'always' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'>,
-      default: 'md',
-    },
-  },
-
-  emits: {
-    'update:selected': (s: any) => s !== undefined,
-  },
-
-  setup(props, { emit }) {
-    const managedSelected = useManagedProp('selected', null);
-
-    const selectable = computed(() => !!props['onUpdate:selected'] || props.selected !== undefined || !!props.selectionInputName);
-
-    provide(DataListKey, {
-      $emit: emit,
-      selectable,
-      expandable: computed(() => props.expandable),
-      inputName: computed(() => props.selectionInputName),
-      inputValue: computed(() => props.selectionInputValue),
-      itemSelection: managedSelected,
-      multipleSelection: computed(() => props.selectionMultiple),
-    });
-
-    return {
-      gridBreackpointClass: computed(() => gridBreakpointClasses[props.gridBreakpoint]),
-      dragging: ref(false),
-      styles: markRaw(styles) as typeof styles,
-      stylesGrid: markRaw(stylesGrid) as typeof stylesGrid,
-    };
-  },
 });
+
+const props = withDefaults(defineProps<{
+  /** Adds accessible text to the pf-data-list list */
+  ariaLabel: string;
+    /** Array for multiple selection, single value for single selection, undefined to disable selection */
+  selected?: string | number | symbol | (string | number | symbol)[];
+  /** Name of the item input (radio or checkbox) when item selection is enabled */
+  selectionInputName?: string;
+  /** Defines the value for the input (radio or checkbox) */
+  selectionInputValue?: string;
+  /** Flag indicating if multiple pf-data-list-items are selectable */
+  selectionMultiple?: boolean;
+  /** Flag indicating if pf-data-list should have compact styling */
+  compact?: boolean;
+  /** Flag indicating if pf-data-list-items should have expandable styling */
+  expandable?: boolean;
+  /** Specifies the grid breakpoints  */
+  gridBreakpoint?: 'none' | 'always' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  /** Determines which wrapping modifier to apply to the pf-data-list */
+  wrapModifier?: DataListWrapModifier | 'nowrap' | 'truncate' | 'breakWord';
+  // declared as prop instead of emit to be able to detect attached listeners
+  'onUpdate:selected'?: (s: any) => void; // eslint-disable-line vue/prop-name-casing
+}>(), {
+  gridBreakpoint: 'md',
+  selected: undefined,
+  expandable: undefined,
+});
+
+const emit = defineEmits<{
+  (name: 'update:selected', s: any): void;
+}>();
+
+const managedSelected = useManagedProp('selected', null);
+
+const selectable = computed(() => !!props['onUpdate:selected'] || props.selected !== undefined || !!props.selectionInputName);
+
+provide(DataListKey, {
+  $emit: emit,
+  selectable,
+  expandable: computed(() => props.expandable),
+  inputName: computed(() => props.selectionInputName),
+  inputValue: computed(() => props.selectionInputValue),
+  itemSelection: managedSelected,
+  multipleSelection: computed(() => props.selectionMultiple),
+});
+
+const gridBreackpointClass = computed(() => gridBreakpointClasses[props.gridBreakpoint]);
+const dragging = ref(false);
 </script>

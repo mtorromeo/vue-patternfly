@@ -6,8 +6,8 @@
       },
     ]"
   >
-    <slot v-if="expandable" name="toggle">
-      <pf-data-list-toggle @click="expanded = !expanded" />
+    <slot v-if="!!datalistItem?.expandable.value" name="toggle">
+      <pf-data-list-toggle @click="toggle" />
     </slot>
 
     <overridable-wrapper :component="PfDataListItemCells" :include="PfDataListCell">
@@ -16,10 +16,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
-import { defineComponent, inject, markRaw, type PropType } from "vue";
+import { inject } from "vue";
 import type { DataListWrapModifier } from './DataList.vue';
 import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
@@ -27,29 +27,23 @@ import PfDataListToggle from './DataListToggle.vue';
 import OverridableWrapper from '../../helpers/OverridableWrapper';
 import { DataListItemKey } from './DataListItem.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfDataListItemRow',
+});
 
-  components: {
-    PfDataListToggle,
-    OverridableWrapper,
-  },
+defineProps<{
+  wrapModifier?: DataListWrapModifier
+}>();
 
-  props: {
-    wrapModifier: String as PropType<DataListWrapModifier>,
-  },
+const datalistItem = inject(DataListItemKey);
 
-  setup() {
-    const datalistItem = inject(DataListItemKey);
+function toggle() {
+  if (datalistItem) {
+    datalistItem.expanded.value = !datalistItem.expanded.value;
+  }
+}
 
-    return {
-      PfDataListItemCells,
-      PfDataListCell,
-
-      expandable: !!datalistItem?.expandable,
-      expanded: !!datalistItem?.expanded,
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+defineExpose({
+  toggle,
 });
 </script>
