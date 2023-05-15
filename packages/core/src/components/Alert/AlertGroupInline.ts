@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/components/AlertGroup/alert-group';
 
-import { defineComponent, h } from 'vue';
+import { defineComponent, h, type SlotsType } from 'vue';
 import { findChildrenVNodes } from '../../util';
 
 export default defineComponent({
@@ -16,6 +16,10 @@ export default defineComponent({
     overflowClick: (e: MouseEvent | TouchEvent) => e !== undefined,
   },
 
+  slots: Object as SlotsType<{
+    default?: (props: Record<never, never>) => any;
+  }>,
+
   render() {
     return h('ul', {
       class: [styles.alertGroup, {
@@ -25,7 +29,7 @@ export default defineComponent({
       'aria-atomic': this.liveRegion ? false : null,
     }, {
       default: () => {
-        let children = findChildrenVNodes(this.$slots.default?.());
+        let children = findChildrenVNodes(this.$slots.default?.({}));
         children = children.map((e, index) => h('li', { key: index }, e));
 
         if (this.overflowMessage) {

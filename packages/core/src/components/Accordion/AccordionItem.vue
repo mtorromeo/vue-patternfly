@@ -1,7 +1,5 @@
 <template>
-  <component
-    :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))"
-  >
+  <component :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))">
     <button
       v-bind="$attrs"
       type="button"

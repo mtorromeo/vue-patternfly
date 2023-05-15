@@ -11,7 +11,7 @@
     </story-canvas>
 
     <story-canvas title="With action links">
-      <pf-alert title="Alert title" close @close="alert('Clicked the close button')">
+      <pf-alert title="Alert title" @close="alert('Clicked the close button')">
         <template #action-links>
           <pf-alert-action-link @click="alert('Clicked on View details')">View details</pf-alert-action-link>
           <pf-alert-action-link @click="alert('Clicked on Ignore')">Ignore</pf-alert-action-link>
@@ -33,7 +33,6 @@
         inline
         variant="success"
         title="Success alert title"
-        close
         @close="alert('Clicked the close button')"
       >
         <template #action-links>
@@ -198,22 +197,32 @@
 </style>
 
 <script lang="ts" setup>
+import { reactive, ref } from 'vue';
 import UsersIcon from '@vue-patternfly/icons/dist/esm/icons/users-icon';
 import BoxIcon from '@vue-patternfly/icons/dist/esm/icons/box-icon';
 import DatabaseIcon from '@vue-patternfly/icons/dist/esm/icons/database-icon';
 import ServerIcon from '@vue-patternfly/icons/dist/esm/icons/server-icon';
 import LaptopIcon from '@vue-patternfly/icons/dist/esm/icons/laptop-icon';
 
-import { reactive, ref } from 'vue';
+type AlertData = {
+  title: string;
+  variant: string;
+  liveRegion?: boolean;
+  key: number;
+  ariaLive?: string;
+  ariaRelevant?: string;
+  ariaAtomic?: string;
+};
+
 const sample_text = ref("Alert text");
 
-const alerts = reactive([]);
+const alerts: AlertData[] = reactive([]);
 const alert = (msg: string) => window.alert(msg);
 
 const getUniqueId = () => new Date().getTime();
 
-const asyncAlerts = reactive([]);
-let timer: number|null = null;
+const asyncAlerts: AlertData[] = reactive([]);
+let timer: number | undefined = undefined;
 
 const stopAsyncAlert = () => {
   clearInterval(timer);
@@ -224,7 +233,7 @@ const startAsyncAlert = () => {
     asyncAlerts.push({
       title: `This is a async alert number ${asyncAlerts.length + 1}`,
       variant: 'info',
-      isLiveRegion: true,
+      liveRegion: true,
       key: getUniqueId(),
     });
   }, 1500);
