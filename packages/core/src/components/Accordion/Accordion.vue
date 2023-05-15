@@ -1,47 +1,51 @@
+<template>
+  <component
+    :is="dl ? 'dl' : 'div'" :class="[styles.accordion, {
+      [styles.modifiers.bordered]: bordered,
+      [styles.modifiers.displayLg]: large,
+    }]">
+    <slot />
+  </component>
+</template>
+
 <script lang="ts">
-import { defineComponent, h, type InjectionKey, provide } from 'vue';
-import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
+type AccordionProps = {
+  /** Adds accessible text to the Accordion */
+  ariaLabel?: string;
+  /** Heading level to use */
+  level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | number;
+  /** Flag to indicate whether use definition list or div */
+  dl?: boolean;
+  /** Flag to indicate the accordion had a border */
+  bordered?: boolean;
+  /** Large display size variant. */
+  large?: boolean;
+};
 
 export const AccordionKey = Symbol('AccordionKey') as InjectionKey<{
-  dl: boolean;
-  level: number;
+  dl: AccordionProps['dl'];
+  level: AccordionProps['level'];
 }>;
+</script>
 
-export default defineComponent({
+<script lang="ts" setup>
+import { type InjectionKey, provide } from 'vue';
+import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
+
+defineOptions({
   name: 'PfAccordion',
+});
 
-  props: {
-    /** Heading level to use */
-    level: {
-      type: Number,
-      default: 3,
-      validator: (v: any) => v >= 1 && v <= 6,
-    },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-    /** Flag to indicate whether use definition list or div */
-    dl: Boolean,
+const props = withDefaults(defineProps<AccordionProps>(), {
+  level: 3,
+});
 
-    /** Flag to indicate the accordion had a border */
-    bordered: Boolean,
-
-    /** Large display size variant. */
-    large: Boolean,
-  },
-
-  setup(props) {
-    provide(AccordionKey, {
-      dl: props.dl,
-      level: props.level,
-    });
-  },
-
-  render() {
-    return h(this.dl ? 'dl' : 'div', {
-      class: [styles.accordion, {
-        [styles.modifiers.bordered]: this.bordered,
-        [styles.modifiers.displayLg]: this.large,
-      }],
-    }, this.$slots);
-  },
+provide(AccordionKey, {
+  dl: props.dl,
+  level: props.level,
 });
 </script>

@@ -1,80 +1,72 @@
-<script lang="ts">
-import { type DefineComponent, defineComponent, h, inject, mergeProps, resolveDynamicComponent } from 'vue';
+<template>
+  <component
+    :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))"
+  >
+    <button
+      v-bind="$attrs"
+      type="button"
+      :class="[
+        styles.accordionToggle, {
+          [styles.modifiers.expanded]: managedExpanded,
+        },
+      ]"
+      :aria-expanded="managedExpanded"
+      @click="managedExpanded = !managedExpanded"
+    >
+      <span :class="styles.accordionToggleText">
+        <slot name="toggle">{{ title }}</slot>
+      </span>
+      <span :class="styles.accordionToggleIcon">
+        <angle-right-icon />
+      </span>
+    </button>
+  </component>
+
+  <component
+    v-bind="$attrs"
+    :is="contentComponent || (accordion?.dl ? 'dd' : 'div')"
+    :class="[
+      styles.accordionExpandedContent, {
+        [styles.modifiers.fixed]: fixed,
+        [styles.modifiers.expanded]: managedExpanded,
+      },
+    ]"
+    :hidden="!managedExpanded"
+  >
+    <div :class="styles.accordionExpandedContentBody">
+      <slot />
+    </div>
+  </component>
+</template>
+
+<script lang="ts" setup>
+import { inject } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
 import { AccordionKey } from './Accordion.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfAccordionItem',
-
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-    toggleComponent: {
-      type: String,
-      default: null,
-    },
-    contentComponent: {
-      type: String,
-      default: null,
-    },
-    fixed: Boolean,
-    expanded: {
-      type: Boolean,
-      default: null,
-    },
-  },
-
-  emits: ['update:expanded'],
-
-  setup() {
-    return {
-      accordion: inject(AccordionKey, undefined),
-      managedExpanded: useManagedProp('expanded', false),
-    };
-  },
-
-  render() {
-    const Toggle = this.toggleComponent || (this.accordion?.dl ? 'dt' : `h${this.accordion?.level}`);
-
-    const content = this.contentComponent || (this.accordion?.dl ? 'dd' : 'div');
-    const Component = resolveDynamicComponent(content) as DefineComponent;
-
-    return [
-      h(Toggle, {}, h('button', mergeProps({
-        class: [
-          styles.accordionToggle, {
-            [styles.modifiers.expanded]: this.managedExpanded,
-          },
-        ],
-        'aria-expanded': this.managedExpanded,
-        onClick: () => {
-          this.managedExpanded = !this.managedExpanded;
-        },
-      }, this.$attrs), [
-        h('span', { class: styles.accordionToggleText }, {
-          default: () => this.$slots.toggle ? this.$slots.toggle() : this.title,
-        }),
-        h('span', { class: styles.accordionToggleIcon }, h(AngleRightIcon)),
-      ])),
-
-      h(Component, mergeProps({
-        class: [
-          styles.accordionExpandedContent, {
-            [styles.modifiers.fixed]: this.fixed,
-            [styles.modifiers.expanded]: this.managedExpanded,
-          },
-        ],
-        hidden: !this.managedExpanded,
-      }, this.$attrs),
-        h('div', { class: styles.accordionExpandedContentBody }, {
-          default: () => this.$slots.default ? this.$slots.default() : null,
-        }),
-      ),
-    ];
-  },
 });
+
+defineProps<{
+  title?: string;
+  toggleComponent?: string;
+  contentComponent?: string;
+  fixed?: boolean;
+  expanded?: boolean;
+}>();
+
+defineEmits<{
+  (name: 'expanded', value: boolean): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  toggle?: (props: Record<never, never>) => any;
+}>();
+
+const accordion = inject(AccordionKey, undefined);
+const managedExpanded = useManagedProp('expanded', false);
 </script>
