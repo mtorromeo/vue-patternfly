@@ -1,7 +1,8 @@
 <template>
-  <div :class="[styles.textInputGroupMain, {
-    [styles.modifiers.icon]: !!$slots.icon,
-  }]">
+  <div
+    :class="[styles.textInputGroupMain, {
+      [styles.modifiers.icon]: !!$slots.icon,
+    }]">
     <slot />
     <span :class="styles.textInputGroupText">
       <input
@@ -17,11 +18,11 @@
       </span>
       <input
         ref="input"
+        v-model="value"
         :type="type"
         :class="styles.textInputGroupTextInput"
         :aria-label="ariaLabel"
         :disabled="disabled || undefined"
-        v-model="value"
         :placeholder="placeholder"
         @change="emit('change', $event)"
         @focus="emit('focus', $event)"
@@ -64,15 +65,15 @@ withDefaults(defineProps<{
   type: 'text',
 });
 
-const emit = defineEmits({
-  'update:modelValue': (v: string) => true,
+const emit = defineEmits<{
+  (name: 'update:modelValue', v: string): void;
   /** Callback for when there is a change in the input field*/
-  change: (event: Event) => true,
+  (name: 'change', event: Event): void;
   /** Callback for when the input field is focused*/
-  focus: (event: FocusEvent) => true,
+  (name: 'focus', event: FocusEvent): void;
   /** Callback for when focus is lost on the input field*/
-  blur: (event: FocusEvent) => true,
-});
+  (name: 'blur', event: FocusEvent): void;
+}>();
 
 const value = useManagedProp('modelValue', '');
 const disabled = inject(TextInputGroupDisabledKey, false);

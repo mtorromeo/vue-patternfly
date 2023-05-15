@@ -58,10 +58,10 @@ const props = withDefaults(defineProps<{
   component: 'div',
 });
 
-const emit = defineEmits({
-  'change': (e: Event) => e instanceof Event,
-  'update:modelValue': (value: boolean) => typeof value === 'boolean',
-});
+const emit = defineEmits<{
+  (name: 'change', e: Event): void;
+  (name: 'update:modelValue', value: boolean): void;
+}>();
 
 const input: Ref<HTMLInputElement | undefined> = ref();
 const validId = computed(() => props.id || getUniqueId());

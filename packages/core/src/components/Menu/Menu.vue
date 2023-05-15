@@ -85,17 +85,13 @@ const $props = withDefaults(defineProps<{
   // drilldownItemPath: () => [],
 });
 
-const $emit = defineEmits({
+const emit = defineEmits<{
   /** A callback for when the input value changes. */
-  searchInputChange: (
-    event: Event,
-    value: string,
-  ) => true,
-
+  (name: 'searchInputChange', event: Event, value: string): void;
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
-  select: (event: Event, itemId: MenuItemId | null | undefined) => true,
-  'update:selected': (value: MenuItemId | MenuItemId[] | null) => true,
-});
+  (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
+  (name: 'update:selected', value: MenuItemId | MenuItemId[] | null): void;
+}>();
 
 // const instance = getCurrentInstance();
 
@@ -124,7 +120,7 @@ provide(MenuInjectionKey, {
   flyout,
   onActionClick: $props.onActionClick,
   onSelect(event: Event, itemId: MenuItemId | null | undefined) {
-    $emit('select', event, itemId);
+    emit('select', event, itemId);
     if (!isDefined(itemId)) {
       return;
     }
@@ -133,15 +129,15 @@ provide(MenuInjectionKey, {
       if (i >= 0) {
         const value = [...managedSelected.value];
         value.splice(i, 1);
-        $emit('update:selected', value);
+        emit('update:selected', value);
       } else {
-        $emit('update:selected', [...managedSelected.value, itemId]);
+        emit('update:selected', [...managedSelected.value, itemId]);
       }
     } else {
       if (managedSelected.value === itemId) {
-        $emit('update:selected', null);
+        emit('update:selected', null);
       } else {
-        $emit('update:selected', itemId);
+        emit('update:selected', itemId);
       }
     }
   },

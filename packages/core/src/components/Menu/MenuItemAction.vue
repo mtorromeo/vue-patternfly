@@ -39,10 +39,10 @@ const props = withDefaults(defineProps<{
   favorited: undefined,
 });
 
-const emit = defineEmits({
+const emit = defineEmits<{
   /** Callback on action click, can also specify onActionClick on the Menu instead */
-  click: (event: Event) => true,
-});
+  (name: 'click', event: Event): void;
+}>();
 
 const menu = inject(MenuInjectionKey);
 const item = inject(MenuItemInjectionKey);

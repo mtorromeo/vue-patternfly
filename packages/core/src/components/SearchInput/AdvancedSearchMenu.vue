@@ -3,15 +3,15 @@
     <pf-panel-main>
       <pf-panel-main-body>
         <pf-form>
-          <pf-form-group v-for="(attribute, index) in normalizedAttributes" :field-id="`${attribute.attr}_${index}`">
+          <pf-form-group v-for="(attribute, index) in normalizedAttributes" :key="`${attribute.attr}_${index}`" :field-id="`${attribute.attr}_${index}`">
             <template #label>
               <slot :name="`attribute:${attribute.attr}`">{{ attribute.display }}</slot>
             </template>
             <pf-text-input
-              :ref="el => index === 0 ? firstAttrRef = el as any : null"
-              type="text"
               :id="`${attribute.attr}_${index}`"
+              :ref="el => index === 0 ? firstAttrRef = el as any : null"
               v-model="attribute.computed.value"
+              type="text"
             />
           </pf-form-group>
 
@@ -20,16 +20,16 @@
               <slot name="words-attr-label">Has words</slot>
             </template>
             <pf-text-input
-              type="text"
               :id="hasWordsId"
               v-model="hasWords"
+              type="text"
             />
           </pf-form-group>
 
           <slot />
 
           <pf-action-group>
-            <pf-button variant="primary" type="submit" @click.prevent="onSearch" :disabled="!value">
+            <pf-button variant="primary" type="submit" :disabled="!value" @click.prevent="onSearch">
               {{ submitSearchButtonLabel }}
             </pf-button>
             <pf-button v-if="onClear" variant="link" type="reset" @click="onClear">
@@ -83,20 +83,15 @@ const props = withDefaults(defineProps<{
   submitSearchButtonLabel: 'Search',
 });
 
-const emit = defineEmits({
-  'update:modelValue': (v: string) => true,
-
+const emit = defineEmits<{
+  (name: 'update:modelValue', v: string): void;
   /** A callback for when the input value changes. */
-  change: (value: string) => true,
+  (name: 'change', value: string): void;
   /** A callback for when the search button is clicked. */
-  search: (
-    value: string,
-    event: Event,
-    attrValueMap: { [key: string]: string }
-  ) => true,
+  (name: 'search', value: string, event: Event, attrValueMap: { [key: string]: string }): void;
   /** A callback for when the open advanced search button is clicked. */
-  toggleAdvancedMenu: (event: Event) => true,
-});
+  (name: 'toggleAdvancedMenu', event: Event): void;
+}>();
 
 const value = useManagedProp('modelValue', '', to => emit('change', to));
 const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | undefined> = ref();
@@ -111,7 +106,7 @@ function useAttributeValue(name: string) {
   return computed({
     get() {
       const map = props.getAttrValueMap?.() ?? {};
-      return map.hasOwnProperty(name) ? map[name] : '';
+      return Object.hasOwnProperty.call(map, name) ? map[name] : '';
     },
 
     set(attributeValue: string) {
@@ -153,7 +148,7 @@ const onSearch = (event: Event) => {
   if (props.searchMenuOpen) {
     emit('toggleAdvancedMenu', event);
   }
-}
+};
 
 function onDocClick(event: Event) {
   const clickedWithinSearchInput = searchInput?.$el.value?.contains(event.target as Node);

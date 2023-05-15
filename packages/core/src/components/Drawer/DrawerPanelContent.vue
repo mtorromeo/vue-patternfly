@@ -1,7 +1,7 @@
 <template>
   <div
-    ref="panel"
     :id="panelId"
+    ref="panel"
     :class="[styles.drawerPanel, {
       [styles.modifiers.resizable]: resizable,
       [styles.modifiers.noBorder]: noBorder,
@@ -31,7 +31,7 @@
         @keydown="handleKeys"
         @touchstart="handleTouchStart"
       >
-        <div :class="styles.drawerSplitterHandle" aria-hidden></div>
+        <div :class="styles.drawerSplitterHandle" aria-hidden />
       </div>
       <div :class="styles.drawerPanelMain">
         <overridable-wrapper :component="PfDrawerHead">
@@ -87,10 +87,10 @@ const props = withDefaults(defineProps<{
   resizeAriaLabel: 'Resize',
 });
 
-const emit = defineEmits({
+const emit = defineEmits<{
   /** Callback for resize end. */
-  resize: (width: number, id?: string) => true,
-});
+  (name: 'resize', width: number, id?: string): void;
+}>();
 
 const panel: Ref<HTMLElement | undefined> = ref();
 const panelId = computed(() => props.id || getUniqueId('pf-drawer-panel-'));
@@ -107,7 +107,7 @@ const hidden = computed(() => unref(isStatic) || !unref(expanded));
 const splitterRef: Ref<HTMLDivElement | undefined> = ref();
 
 let isResizing: boolean | null = null;
-let panelSize: Ref<number | undefined> = ref();
+const panelSize: Ref<number | undefined> = ref();
 let panelRect: DOMRect;
 let setInitialVals = true;
 const separatorValue = ref(0);
@@ -151,7 +151,7 @@ function handleTouchStart(e: TouchEvent) {
   document.addEventListener('touchmove', handleTouchMove, { passive: false });
   document.addEventListener('touchend', handleTouchEnd);
   isResizing = true;
-};
+}
 
 function handleMouseDown(e: MouseEvent) {
   e.stopPropagation();
@@ -166,14 +166,14 @@ function handleMouseDown(e: MouseEvent) {
 function handleMouseMove(e: MouseEvent) {
   const mousePos = position.value === 'bottom' ? e.clientY : e.clientX;
   handleControlMove(e, mousePos);
-};
+}
 
 function handleTouchMove(e: TouchEvent) {
   e.preventDefault();
   e.stopImmediatePropagation();
   const touchPos = position.value === 'bottom' ? e.touches[0].clientY : e.touches[0].clientX;
   handleControlMove(e, touchPos);
-};
+}
 
 function handleControlMove(e: MouseEvent | TouchEvent, mousePos: number) {
   e.stopPropagation();
@@ -196,7 +196,7 @@ function handleControlMove(e: MouseEvent | TouchEvent, mousePos: number) {
 
   panelSize.value = newSize;
   separatorValue.value = calcValueNow();
-};
+}
 
 function handleMouseUp() {
   if (!isResizing) {
@@ -208,7 +208,7 @@ function handleMouseUp() {
   setInitialVals = true;
   document.removeEventListener('mousemove', handleMouseMove);
   document.removeEventListener('mouseup', handleMouseUp);
-};
+}
 
 function handleTouchEnd(e: TouchEvent) {
   e.stopPropagation();
@@ -219,7 +219,7 @@ function handleTouchEnd(e: TouchEvent) {
   emit('resize', panelSize.value ?? 0, props.id);
   document.removeEventListener('touchmove', handleTouchMove);
   document.removeEventListener('touchend', handleTouchEnd);
-};
+}
 
 function handleKeys(e: KeyboardEvent) {
   if (!panel.value) {
@@ -246,7 +246,7 @@ function handleKeys(e: KeyboardEvent) {
     emit('resize', panelSize.value ?? 0, props.id);
   }
   const panelRect = panel.value.getBoundingClientRect();
-  let newSize = position.value === 'bottom' ? panelRect.height : panelRect.width;
+  const newSize = position.value === 'bottom' ? panelRect.height : panelRect.width;
   let delta = 0;
   if (key === 'ArrowRight') {
     delta = position.value === 'left' ? props.increment : -props.increment;

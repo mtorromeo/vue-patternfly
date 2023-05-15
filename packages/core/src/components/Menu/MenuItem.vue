@@ -146,12 +146,12 @@ const $props = withDefaults(defineProps<{
   favorited: undefined,
 });
 
-const emit = defineEmits({
+const emit = defineEmits<{
   /** Callback for item click */
-  click: (event: Event) => true,
+  (name: 'click', event: Event): void;
   /** @beta Callback function when mouse leaves trigger */
-  showFlyout: (event?: Event) => true,
-});
+  (name: 'showFlyout', event?: Event): void;
+}>();
 
 const $slots = useSlots();
 

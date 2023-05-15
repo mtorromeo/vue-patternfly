@@ -83,9 +83,9 @@ const $props = withDefaults(defineProps<{
   expanded: undefined,
 });
 
-defineEmits({
-  'update:expanded': (value: boolean) => true,
-});
+defineEmits<{
+  (name: 'update:expanded', value: boolean): void;
+}>();
 
 const $slots = useSlots();
 

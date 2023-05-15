@@ -86,19 +86,19 @@ const props = withDefaults(defineProps<{
   modelValue: undefined,
 });
 
-defineEmits({
+defineEmits<{
   /** A callback for when the text input value changes. */
-  change: (event: Event) => true,
+  (name: 'change', event: Event): void;
   /** Callback function when text input is focused */
-  focus: (event: Event) => true,
+  (name: 'focus', event: Event): void;
   /** Callback function when text input is blurred (focus leaves) */
-  blur: (event: FocusEvent) => true,
-  input: (event: Event) => true,
-  invalid: (event: Event) => true,
-  keyup: (event: KeyboardEvent) => true,
-  'update:modelValue': () => true,
-  'update:validated': () => true,
-});
+  (name: 'blur', event: FocusEvent): void;
+  (name: 'input', event: Event): void;
+  (name: 'invalid', event: Event): void;
+  (name: 'keyup', event: KeyboardEvent): void;
+  (name: 'update:modelValue'): void;
+  (name: 'update:validated'): void;
+}>();
 
 const input: Ref<HTMLInputElement | undefined> = ref();
 
@@ -107,7 +107,6 @@ useChildrenTracker(FormGroupInputsKey);
 const {
   value,
   effectiveValidated,
-  innerValidated,
   onBlur,
   onChange,
   onInput,

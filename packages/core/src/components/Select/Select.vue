@@ -99,18 +99,14 @@ withDefaults(defineProps<{
   // drilldownItemPath: () => [],
 });
 
-defineEmits({
+defineEmits<{
   /** A callback for when the input value changes. */
-  searchInputChange: (
-    event: Event,
-    value: string,
-  ) => true,
-
+  (name: 'searchInputChange', event: Event, value: string): void;
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
-  select: (event: MouseEvent, itemId?: MenuItemId | null | undefined) => true,
-  'update:open': (value: boolean) => true,
-  'update:selected': (value: MenuItemId | MenuItemId[] | null) => true,
-});
+  (name: 'select', event: MouseEvent, itemId?: MenuItemId | null | undefined): void;
+  (name: 'update:open', value: boolean): void;
+  (name: 'update:selected', value: MenuItemId | MenuItemId[] | null): void;
+}>();
 
 const managedSelected = useManagedProp('selected', null);
 const managedOpen = useManagedProp('open', false);

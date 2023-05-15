@@ -1,6 +1,6 @@
 <template>
   <div :class="styles.drawerClose">
-    <pf-button variant="plain" @click="emit('close')" :aria-label="ariaLabel">
+    <pf-button variant="plain" :aria-label="ariaLabel" @click="emit('close')">
       <xmark-icon />
     </pf-button>
   </div>
@@ -17,8 +17,8 @@ defineProps<{
   ariaLabel?: string;
 }>();
 
-const emit = defineEmits({
+const emit = defineEmits<{
   /** A callback for when the close button is clicked  */
-  close: () => true,
-});
+  (name: 'close'): void;
+}>();
 </script>

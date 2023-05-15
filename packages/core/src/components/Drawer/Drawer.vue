@@ -34,10 +34,9 @@ const props = withDefaults(defineProps<{
   position: 'right',
 });
 
-defineEmits({
-  /** Callback when drawer panel is expanded after waiting 250ms for animation to complete. */
-  expand: () => true,
-});
+defineEmits<{
+  (name: 'expand'): void;
+}>();
 
 const el: Ref<HTMLDivElement | undefined> = ref();
 

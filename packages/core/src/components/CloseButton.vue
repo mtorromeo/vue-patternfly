@@ -13,6 +13,6 @@ defineOptions({
 });
 
 const emit = defineEmits<{
-  (name: 'click', e: Event): any;
+  (name: 'click', e: Event): void;
 }>();
 </script>

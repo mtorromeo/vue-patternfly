@@ -20,7 +20,7 @@
           <pf-text-input-group-utilities v-if="value && (resultsCount || (!!onNextClick && !!onPreviousClick) || (!!onClear && !expandable))">
             <pf-badge v-if="resultsCount" read>{{ resultsCount }}</pf-badge>
 
-            <div v-if="!!onNextClick && !!onPreviousClick" className="pf-c-text-input-group__group">
+            <div v-if="!!onNextClick && !!onPreviousClick" class="pf-c-text-input-group__group">
               <pf-button
                 :disabled="disabled || previousNavigationButtonDisabled"
                 :aria-label="previousNavigationButtonAriaLabel"
@@ -258,14 +258,13 @@ const props = withDefaults(defineProps<{
   type: 'text',
 });
 
-const emit = defineEmits({
-  'update:modelValue': (v: string) => true,
-  'update:advancedSearchOpen': (v: boolean) => true,
-  'update:expanded': (v: boolean) => true,
-
+const emit = defineEmits<{
+  (name: 'update:modelValue', v: string): void;
+  (name: 'update:advancedSearchOpen', v: boolean): void;
+  (name: 'update:expanded', v: boolean): void;
   /** A callback for when the input value changes. */
-  change: (value: string) => true,
-});
+  (name: 'change', value: string): void;
+}>();
 
 
 if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
@@ -307,7 +306,7 @@ function getAttrValueMap() {
     if (splitPair.length === 2) {
       attrValue[splitPair[0]] = splitPair[1];
     } else if (splitPair.length === 1) {
-      attrValue.haswords = attrValue.hasOwnProperty('haswords')
+      attrValue.haswords = Object.hasOwnProperty.call(attrValue, 'haswords')
         ? `${attrValue.haswords} ${splitPair[0]}`
         : splitPair[0];
     }
