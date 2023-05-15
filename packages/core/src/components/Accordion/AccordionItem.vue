@@ -48,13 +48,15 @@ defineOptions({
   name: 'PfAccordionItem',
 });
 
-defineProps<{
+withDefaults(defineProps<{
   title?: string;
   toggleComponent?: string;
   contentComponent?: string;
   fixed?: boolean;
   expanded?: boolean;
-}>();
+}>(), {
+  expanded: undefined,
+});
 
 defineEmits<{
   (name: 'expanded', value: boolean): void;

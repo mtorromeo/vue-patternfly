@@ -132,6 +132,7 @@ const props = withDefaults(defineProps<{
   /** Variant label text for screen readers. */
   variantLabel?: string;
 } & OUIAProps>(), {
+  expanded: undefined,
   variant: 'default',
   truncateTitle: 0,
   timeoutAnimation: 3000,
