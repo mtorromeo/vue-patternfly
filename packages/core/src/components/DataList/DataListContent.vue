@@ -12,30 +12,26 @@
   </section>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-
-import { computed, defineComponent, inject, markRaw } from "vue";
+import { computed, inject } from "vue";
 import { DataListItemKey } from './DataListItem.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfDataListContent',
-
-  props: {
-    noPadding: Boolean,
-    hidden: {
-      type: Boolean,
-      default: undefined,
-    },
-  },
-
-  setup(props) {
-    const datalistItem = inject(DataListItemKey);
-
-    return {
-      styles: markRaw(styles) as typeof styles,
-      sectionHidden: computed(() => props.hidden !== undefined ? props.hidden : !(datalistItem?.expandable.value && datalistItem.expanded.value)),
-    };
-  },
 });
+
+const props = withDefaults(defineProps<{
+  noPadding?: boolean;
+  hidden?: boolean;
+}>(), {
+  hidden: undefined,
+});
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
+const datalistItem = inject(DataListItemKey);
+const sectionHidden = computed(() => props.hidden !== undefined ? props.hidden : !(datalistItem?.expandable.value && datalistItem.expanded.value));
 </script>

@@ -1,12 +1,12 @@
 export { default as PfAvatar } from './Avatar.vue';
-export { default as PfBackdrop } from './Backdrop';
+export { default as PfBackdrop } from './Backdrop.vue';
 export { default as PfBackgroundImage } from './BackgroundImage.vue';
 export { default as PfBadge } from './Badge.vue';
-export { default as PfBrand } from './Brand';
+export { default as PfBrand } from './Brand.vue';
 export { default as PfButton } from './Button.vue';
 export { default as PfCheckbox } from './Checkbox.vue';
 export { default as PfCloseButton } from './CloseButton.vue';
-export { default as PfDivider } from './Divider';
+export { default as PfDivider } from './Divider.vue';
 export { default as PfLabel } from './Label.vue';
 export { default as PfNotificationBadge } from './NotificationBadge.vue';
 export { default as PfPopover } from './Popover.vue';

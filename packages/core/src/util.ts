@@ -1,16 +1,5 @@
-import { computed, Fragment, Comment, type Prop, type VNode, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren } from 'vue';
-import { isDefined } from './use';
-
-export enum Breakpoints {
-  xs = '',
-  sm = 'Sm',
-  md = 'Md',
-  lg = 'Lg',
-  xl = 'Xl',
-  '2xl' = '2sl',
-}
-
-export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
+import { isDefined } from '@vueuse/shared';
+import { Fragment, Comment, type VNode, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren } from 'vue';
 
 const camelize = (s: string) =>
   s
@@ -37,93 +26,7 @@ export type ToCamelCase<S extends string> =
   `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}` :
   S extends `${infer T}-${infer U}` ?
   `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}` :
-  S
-
-export function classesFromBreakpointProps(props: any, baseNames: string[], styles: any, { additional = [], short = false }: { additional?: string[], short?: boolean } = {}) {
-  const c = [...additional];
-
-  for (const baseName of baseNames) {
-    for (let breakpointSuffix of breakpoints) {
-      const prop = `${baseName}${breakpointSuffix}`;
-      if (breakpointSuffix.match(/^[0-9]/)) {
-        breakpointSuffix = `_${breakpointSuffix}`;
-      }
-      let value = props[prop];
-      if (value) {
-        if (value === true) {
-          value = '';
-        } else if (typeof value !== 'string') {
-          continue;
-        } else {
-          value = toCamelCase(value);
-          if (value.match(/^[0-9]/)) {
-            value = `_${value}`;
-          }
-        }
-        let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}` : ''}`;
-        if (!short) {
-          mod = `${toCamelCase(baseName)}${ucfirst(mod)}`;
-        }
-        c.push(styles.modifiers[mod]);
-      }
-    }
-  }
-
-  return c.filter(Boolean);
-}
-
-export function cssVarsFromBreakpointProps(props: any, baseName: string, cssVar: string) {
-  const vars: Record<string, string> = {};
-
-  for (const breakpointSuffix of breakpoints) {
-    const prop = `${baseName}${breakpointSuffix}`;
-    let name = cssVar;
-    if (breakpointSuffix) {
-      name = `${name}-on-${breakpointSuffix.toLowerCase()}`;
-    }
-    const value = props[prop];
-    if (value !== undefined && value !== null) {
-      vars[name] = props[prop];
-    }
-  }
-
-  return vars;
-}
-
-export function useBreakpointProp(props: any, baseNames: string[], styles: any, options: any) {
-  return computed(() => classesFromBreakpointProps(props, baseNames, styles, options));
-}
-
-type BreakpointProps<Name extends string, T> = {
-  [K in keyof Breakpoints as `${Name}${Capitalize<string & K>}`]: Prop<T>;
-}
-
-export function breakpointProp<
-  Name extends string,
-  T extends BooleanConstructor | StringConstructor | ArrayConstructor | ObjectConstructor | DateConstructor
->(baseName: Name, type: T, values?: string[]): BreakpointProps<Name, T> {
-  return Object.fromEntries(breakpoints.map(b => {
-    let _default = null;
-    if (Array.isArray(values) && values.length) {
-      _default = values[0];
-    } else if (type === Boolean) {
-      _default = false;
-    }
-    const definition: {
-      type?: T;
-      required?: boolean;
-      default?: any;
-      validator?(value: any): boolean;
-    } = {
-      type,
-      default: _default,
-    };
-    if (Array.isArray(values) && values.length) {
-      definition.validator = v => values.includes(v);
-    }
-    return [`${baseName}${b}`, definition];
-  })) as any;
-}
+  S;
 
 export function debounce<T>(func: (args: T[]) => any, wait: number) {
   let timeout: number;

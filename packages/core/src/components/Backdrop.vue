@@ -1,14 +1,14 @@
 <template>
-  <div :class="styles.dataListItemContent">
+  <div :class="styles.backdrop">
     <slot />
   </div>
 </template>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/DataList/data-list';
+import styles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
 
 defineOptions({
-  name: 'PfDataListItemCells',
+  name: 'PfBackdrop',
 });
 
 defineSlots<{

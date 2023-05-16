@@ -14,27 +14,23 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-
-import { defineComponent, markRaw, type PropType } from "vue";
 import type { DataListWrapModifier } from './DataList.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfDataListCell',
-
-  props: {
-    noFill: Boolean,
-    width: Number as PropType<1 | 2 | 3 | 4 | 5>,
-    alignRight: Boolean,
-    icon: Boolean,
-    wrapModifier: String as PropType<DataListWrapModifier>,
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
 });
+
+defineProps<{
+  noFill?: boolean;
+  width?: 1 | 2 | 3 | 4 | 5;
+  alignRight?: boolean;
+  icon?: boolean;
+  wrapModifier?: DataListWrapModifier;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 </script>

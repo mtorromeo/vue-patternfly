@@ -35,95 +35,66 @@
   </li>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { getUniqueId } from '../../util';
-import { defineComponent, markRaw, type Ref, ref } from 'vue';
+import { type Ref, ref } from 'vue';
+import { computed } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfNavExpandable',
+});
 
-  components: {
-    AngleRightIcon,
+const props = defineProps<{
+  title?: string;
+  srText?: string;
+  groupId?: string | number;
+  id?: string;
+  active?: boolean;
+  managed?: boolean;
+  expanded?: boolean;
+}>();
+
+const emit = defineEmits<{
+  (name: 'update:expanded', value: boolean, groupId: string | number | undefined): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
+const expandable: Ref<HTMLButtonElement | undefined> = ref();
+const expandedState = ref(props.expanded);
+
+const validId = computed(() => {
+  return props.id || getUniqueId();
+});
+
+const realExpanded = computed({
+  get() {
+    return props.managed ? expandedState.value : props.expanded;
   },
 
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-    srText: {
-      type: String,
-      default: '',
-    },
-    groupId: {
-      type: [String, Number],
-      default: '',
-    },
-    id: {
-      type: String,
-      default: '',
-    },
-    active: Boolean,
-    managed: Boolean,
-    expanded: Boolean,
-  },
-
-  emits: {
-    'update:expanded': (value: boolean, groupId: string | number) => value !== undefined && groupId !== undefined,
-  },
-
-  setup(props) {
-    const expandable: Ref<HTMLButtonElement | undefined> = ref();
-    return {
-      expandable,
-      styles: markRaw(styles) as typeof styles,
-      a11yStyles: markRaw(a11yStyles) as typeof a11yStyles,
-      expandedState: ref(props.expanded),
-    };
-  },
-
-  data(this: void) {
-    return {
-      scrollViewAtStart: false,
-      scrollViewAtEnd: false,
-    };
-  },
-
-  computed: {
-    validId() {
-      return this.id || getUniqueId();
-    },
-
-    realExpanded: {
-      get() {
-        return this.managed ? this.expandedState : this.expanded;
-      },
-
-      set(value: boolean) {
-        if (this.managed) {
-          this.expandedState = value;
-        } else {
-          this.$emit('update:expanded', value, this.groupId);
-        }
-      },
-    },
-  },
-
-  methods: {
-    handleToggle(e: Event) {
-      if (!(e.target instanceof Element)) {
-        return;
-      }
-      // Item events can bubble up, ignore those
-      if (!this.expandable?.contains(e.target)) {
-        return;
-      }
-      this.realExpanded = !this.realExpanded;
-    },
+  set(value: boolean) {
+    if (props.managed) {
+      expandedState.value = value;
+    } else {
+      emit('update:expanded', value, props.groupId);
+    }
   },
 });
+
+function handleToggle(e: Event) {
+  if (!(e.target instanceof Element)) {
+    return;
+  }
+  // Item events can bubble up, ignore those
+  if (!expandable.value?.contains(e.target)) {
+    return;
+  }
+  realExpanded.value = !realExpanded.value;
+}
 </script>

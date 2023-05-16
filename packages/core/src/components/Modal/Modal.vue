@@ -81,7 +81,7 @@ import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top
 
 import PfModalHeader from './ModalHeader.vue';
 import PassThrough from '../../helpers/PassThrough';
-import PfBackdrop from '../Backdrop';
+import PfBackdrop from '../Backdrop.vue';
 import PfFocusTrap from '../../helpers/FocusTrap.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfCloseButton from '../CloseButton.vue';

@@ -39,7 +39,6 @@ defineOptions({
   name: 'PfDataListItem',
 });
 
-
 const props = withDefaults(defineProps<{
   selected?: boolean;
   /** Name of the item inputs (radio or checkbox) when item selection is enabled */
@@ -59,6 +58,10 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   (name: 'update:selected', s: boolean): void;
   (name: 'update:expanded', s: boolean): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
 }>();
 
 const uniqueId = Symbol();

@@ -21,7 +21,8 @@
 </template>
 
 <script lang="ts">
-import { breakpointProp, classesFromBreakpointProps, toCamelCase } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
+import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';

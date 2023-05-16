@@ -11,34 +11,26 @@
   </component>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-
-import { defineComponent, markRaw } from "vue";
 import { useManagedProp } from '../../use';
 
-export default defineComponent({
+defineOptions({
   name: 'PfDataListCheck',
-
-  props: {
-    otherControls: Boolean,
-    disabled: Boolean,
-    invalid: Boolean,
-    checked: {
-      type: Boolean,
-      default: undefined,
-    },
-  },
-
-  emits: {
-    'update:checked': (checked: boolean) => typeof checked === 'boolean',
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-      managedChecked: useManagedProp('checked', false),
-    };
-  },
 });
+
+withDefaults(defineProps<{
+  otherControls?: boolean;
+  disabled?: boolean;
+  invalid?: boolean;
+  checked?: boolean;
+}>(), {
+  checked: undefined,
+});
+
+defineEmits<{
+  (name: 'update:checked', checked: boolean): void;
+}>();
+
+const managedChecked = useManagedProp('checked', false);
 </script>

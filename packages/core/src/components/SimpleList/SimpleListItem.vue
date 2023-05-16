@@ -2,8 +2,8 @@
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
 import { defineComponent, h, inject, mergeProps } from 'vue';
-import { isDefined } from '../../use';
 import { SimpleListValueKey } from './SimpleList.vue';
+import { isDefined } from '@vueuse/shared';
 
 export default defineComponent({
   name: 'PfSimpleListItem',

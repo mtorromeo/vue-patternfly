@@ -2,7 +2,8 @@ import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 import { type DefineComponent, defineComponent, h, inject, type InjectionKey, mergeProps, provide, ref, type Ref, resolveDynamicComponent } from 'vue';
 import PfDropdownToggle from './DropdownToggle';
 import PfDropdownMenu from './DropdownMenu.vue';
-import { breakpointProp, classesFromBreakpointProps, isComponentPublicInstance } from '../../util';
+import { isComponentPublicInstance } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
 import { useManagedProp } from '../../use';
 
 let currentId = 0;

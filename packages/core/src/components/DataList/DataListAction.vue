@@ -7,26 +7,21 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
+import { classesFromBreakpointProps, type VisibilityBreakpointProps } from '../../breakpoints';
 
-import { defineComponent, markRaw } from "vue";
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
-
-export default defineComponent({
+defineOptions({
   name: 'PfDataListAction',
-
-  props: {
-    plainButton: Boolean,
-    ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
-  },
-
-  setup(props) {
-    const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styles, { short: true });
-    return {
-      styles: markRaw(styles) as typeof styles,
-      breakpointClasses,
-    };
-  },
 });
+
+const props = defineProps<{
+  plainButton?: boolean;
+} & VisibilityBreakpointProps>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
+const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styles, { short: true });
 </script>

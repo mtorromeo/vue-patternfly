@@ -1,6 +1,6 @@
 import { defineComponent, h, provide } from 'vue';
 import PfDropdownItem from './DropdownItem.vue';
-import PfDivider from '../Divider';
+import PfDivider from '../Divider.vue';
 import { DividerComponentKey } from './Dropdown';
 
 export default defineComponent({

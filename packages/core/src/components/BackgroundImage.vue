@@ -56,6 +56,10 @@ const props = defineProps<{
   src: string | BackgroundImageSrcMap;
 }>();
 
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
 const getUrlValue = (size: keyof BackgroundImageSrcMap) => {
   if (typeof props.src === 'string') {
     return `url(${props.src})`;

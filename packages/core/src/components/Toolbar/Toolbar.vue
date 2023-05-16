@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { provide, ref, computed, markRaw, defineComponent, type InjectionKey, type Ref, type PropType, type ComputedRef } from 'vue';
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
 import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';

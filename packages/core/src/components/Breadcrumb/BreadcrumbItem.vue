@@ -12,97 +12,65 @@
       :class="{
         [styles.breadcrumbDropdown]: dropdown,
       }"
-      :type="typeof tag === 'string' && ['button', 'pf-button'].includes(tag) ? 'button' : undefined"
+      :type="isButton ? 'button' : undefined"
     >
       <slot />
     </component>
   </li>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
-import { type DefineComponent, defineComponent, markRaw, type PropType } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
-
+import { computed } from 'vue';
 import PassThrough from '../../helpers/PassThrough';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import type { Component } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfBreadcrumbItem',
-
-  components: {
-    PfAngleRightIcon,
-  },
-
   inheritAttrs: false,
+});
 
-  props: {
-    /** HREF for breadcrumb link. */
-    href: {
-      type: String,
-      default: undefined,
-    },
+const props = defineProps<{
+  href?: string;
+  to?: RouteLocationRaw;
+  active?: boolean;
+  dropdown?: boolean;
+  showDivider?: boolean;
+  component?: string | Component;
+  liAttrs: HTMLLIElement['attributes'];
+}>();
 
-    /** router-link destination for breadcrumb link. */
-    to: {
-      type: [String, Object] as PropType<RouteLocationRaw>,
-      default: null,
-    },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-    /** Flag indicating whether the item is active. */
-    active: Boolean,
+const ariaCurrent = computed(() => {
+  // router-link already handles the aria-current attribute
+  return props.active && !props.to ? 'page' : undefined;
+});
 
-    /** Flag indicating whether the item contains a dropdown. */
-    dropdown: Boolean,
+const isButton = computed(() => {
+  if (typeof props.component === 'object') {
+    return props.component.name === 'PfButton';
+  }
+  return props.component === 'button' || props.component === 'pf-button';
+});
 
-    /** Internal prop set by Breadcrumb on all but the first crumb */
-    showDivider: Boolean,
-
-    component: {
-      type: [String, Object] as PropType<string | DefineComponent>,
-      default: null,
-    },
-
-    liAttrs: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
-
-  computed: {
-    ariaCurrent() {
-      // router-link already handles the aria-current attribute
-      return this.active && !this.to ? 'page' : undefined;
-    },
-
-    isButton() {
-      if (typeof this.component === 'object') {
-        return (this.component as DefineComponent).name === 'PfButton';
-      }
-      return this.component === 'button' || this.component === 'pf-button';
-    },
-
-    tag() {
-      if (this.component) {
-        return this.component;
-      }
-      if (this.dropdown) {
-        return 'span';
-      }
-      if (this.to) {
-        return 'router-link';
-      }
-      if (this.href) {
-        return 'a';
-      }
-      return PassThrough;
-    },
-  },
+const tag = computed(() => {
+  if (props.component) {
+    return props.component;
+  }
+  if (props.dropdown) {
+    return 'span';
+  }
+  if (props.to) {
+    return 'router-link';
+  }
+  if (props.href) {
+    return 'a';
+  }
+  return PassThrough;
 });
 </script>

@@ -63,6 +63,12 @@ const emit = defineEmits<{
   (name: 'update:modelValue', value: boolean): void;
 }>();
 
+defineSlots<{
+  label?: (props: Record<never, never>) => any;
+  description?: (props: Record<never, never>) => any;
+  body?: (props: Record<never, never>) => any;
+}>();
+
 const input: Ref<HTMLInputElement | undefined> = ref();
 const validId = computed(() => props.id || getUniqueId());
 
@@ -75,12 +81,12 @@ watch(() => props.modelValue, () => {
   immediate: true,
 });
 
-defineExpose({
-  input,
-});
-
 function onChange(e: Event) {
   emit('change', e);
   emit('update:modelValue', (e.currentTarget as HTMLInputElement).checked);
 }
+
+defineExpose({
+  input,
+});
 </script>

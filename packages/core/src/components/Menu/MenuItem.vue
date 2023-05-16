@@ -96,13 +96,13 @@ import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { computed, getCurrentInstance, inject, provide, ref, useSlots, type ComputedRef, type InjectionKey, type Ref } from 'vue';
 import { getUniqueId } from '../../util';
 import { MenuInjectionKey, type MenuItemId } from './Menu.vue';
-import { isDefined } from '../../use';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import UpRightFromSquareIcon from '@vue-patternfly/icons/dist/esm/icons/up-right-from-square-icon';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
+import { isDefined } from '@vueuse/shared';
 
 const $props = withDefaults(defineProps<{
   name?: string;

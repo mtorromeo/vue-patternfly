@@ -1,6 +1,6 @@
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 import { h, resolveDynamicComponent, defineComponent, type DefineComponent, type SlotsType } from 'vue';
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
 
 export default defineComponent({
   name: 'PfFlexItem',

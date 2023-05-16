@@ -25,7 +25,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { type Ref, ref, watch } from 'vue';
+import { type Ref, ref, watch, computed } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
@@ -33,7 +33,6 @@ import FloatingUi from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough';
 import { useHtmlElementFromVNodes } from '../../use';
 import type { Placement } from '@floating-ui/core';
-import { computed } from 'vue';
 
 export type TooltipPosition = Placement | 'auto';
 
@@ -62,8 +61,8 @@ const props = withDefaults(defineProps<{
 });
 
 defineSlots<{
-  default?: Record<never, never>;
-  content?: Record<never, never>;
+  default?: (props: Record<never, never>) => any;
+  content?: (props: Record<never, never>) => any;
 }>();
 
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();

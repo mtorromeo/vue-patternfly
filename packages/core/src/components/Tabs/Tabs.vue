@@ -53,7 +53,8 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
-import { breakpointProp, classesFromBreakpointProps, isElementInView, getUniqueId } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
+import { isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
 import { provide, computed, reactive, defineComponent, type PropType, type InjectionKey, type ComputedRef, type Ref, ref, markRaw, type WritableComputedRef } from 'vue';
 

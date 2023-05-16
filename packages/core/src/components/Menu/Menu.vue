@@ -44,7 +44,8 @@ export type MenuItemId = string | number | symbol;
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { inject, provide, reactive, ref, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef } from 'vue';
-import { isDefined, useManagedProp } from '../../use';
+import { useManagedProp } from '../../use';
+import { isDefined } from '@vueuse/shared';
 
 const $props = withDefaults(defineProps<{
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */

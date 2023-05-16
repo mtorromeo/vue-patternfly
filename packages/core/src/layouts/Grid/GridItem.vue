@@ -1,7 +1,7 @@
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
 import { h, resolveDynamicComponent, defineComponent, type DefineComponent, type SlotsType } from 'vue';
-import { breakpoints } from '../../util';
+import { breakpoints } from '../../breakpoints';
 
 const gridSpans = {
   type: [String, Number],

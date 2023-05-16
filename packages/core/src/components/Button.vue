@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? RouterLink : (PassThrough as Component)"
+    :is="to ? 'router-link' : (PassThrough as Component)"
     v-slot="routerCtx"
     :to="to"
     :replace="replace"
@@ -17,7 +17,7 @@
         [styles.modifiers.block]: block,
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.ariaDisabled]: ariaDisabled,
-        [styles.modifiers.active]: active || routerCtx?.isActive,
+        [styles.modifiers.active]: active || (routerCtx as RouterLinkContext|undefined)?.isActive,
         [styles.modifiers.inline]: inline && variant === 'link',
         [styles.modifiers.danger]: danger && (variant === 'link' || variant === 'secondary'),
         [styles.modifiers.small]: small,
@@ -25,12 +25,12 @@
         [styles.modifiers.progress]: loading !== null,
         [styles.modifiers.inProgress]: loading,
       }]"
-      :aria-current="routerCtx?.isExactActive ? ariaCurrentValue : null"
-      :aria-pressed="active || routerCtx?.isActive || null"
+      :aria-current="(routerCtx as RouterLinkContext|undefined)?.isExactActive ? ariaCurrentValue : null"
+      :aria-pressed="active || (routerCtx as RouterLinkContext|undefined)?.isActive || null"
       :tabindex="tabIdx"
       :role="buttonComponent !== 'button' ? 'button' : null"
-      :href="href || (buttonComponent === 'a' ? routerCtx?.href : null)"
-      @click="onClick($event, routerCtx?.navigate)"
+      :href="href || (buttonComponent === 'a' ? (routerCtx as RouterLinkContext|undefined)?.href : null)"
+      @click="onClick($event, (routerCtx as RouterLinkContext|undefined)?.navigate)"
     >
       <span v-if="loading" :class="styles.buttonProgress">
         <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
@@ -57,13 +57,14 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import { type Component, type Ref, ref } from 'vue';
+import { type Component, type UnwrapRef, type Ref, ref, computed } from 'vue';
 
 import PfSpinner from './Spinner.vue';
 import PassThrough from '../helpers/PassThrough';
-import { RouterLink, type RouteLocationRaw } from 'vue-router';
+import type { RouteLocationRaw, useLink } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import { computed } from 'vue';
+
+type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
 defineOptions({
   name: 'PfButton',
@@ -163,14 +164,14 @@ const tabIdx = computed(() => {
   return null;
 });
 
-function onClick(e: MouseEvent | TouchEvent, navigate: (e: Event) => void) {
+function onClick(e: MouseEvent | TouchEvent, navigate: RouterLinkContext['navigate'] | undefined) {
   if (effectiveDisabled.value) {
     e.preventDefault();
     return;
   }
 
   if (navigate) {
-    navigate(e);
+    navigate(e as MouseEvent);
     return;
   }
 

@@ -5,7 +5,7 @@
     <template #header>
       <pf-login-header>
         <slot name="brand">
-          <pf-brand :src="brandImgSrc" :alt="brandImgAlt" />
+          <pf-brand v-if="brandImgSrc" :src="brandImgSrc" :alt="brandImgAlt" />
         </slot>
       </pf-login-header>
     </template>
@@ -50,7 +50,7 @@ import PfLoginMainBody from './LoginMainBody.vue';
 import PfLoginMainFooter from './LoginMainFooter.vue';
 import PfLoginHeader from './LoginHeader.vue';
 import PfLoginFooter from './LoginFooter.vue';
-import PfBrand from '../Brand';
+import PfBrand from '../Brand.vue';
 import PfList, { type ListVariant } from '../List/List.vue';
 import PfBackgroundImage, { type BackgroundImageSrcMap } from '../BackgroundImage.vue';
 

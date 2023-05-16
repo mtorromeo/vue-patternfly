@@ -1,5 +1,5 @@
 import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type Ref, type WritableComputedRef, type VNode, nextTick } from 'vue';
-import { tryOnMounted } from '@vueuse/shared';
+import { isDefined, tryOnMounted } from '@vueuse/shared';
 import { findComponentVNode } from '../util';
 
 export * from './children-tracker';
@@ -203,10 +203,6 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
   //     }
   //   }
   // };
-}
-
-export function isDefined<T>(value: T | undefined | null): value is T {
-  return value !== null && typeof value !== 'undefined';
 }
 
 export function useManagedProp<T>(name: string, value: T, onSet?: (to: T) => void): WritableComputedRef<T> {

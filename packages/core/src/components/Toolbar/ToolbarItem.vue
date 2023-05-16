@@ -14,8 +14,9 @@
 </template>
 
 <script lang="ts">
-import PfDivider from '../Divider';
-import { breakpoints, breakpointProp, classesFromBreakpointProps, toCamelCase } from '../../util';
+import PfDivider from '../Divider.vue';
+import { breakpoints, breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
+import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { defineComponent, markRaw, type PropType } from 'vue';
 

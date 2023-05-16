@@ -1,7 +1,7 @@
 
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
+import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
 import { defineComponent, h } from 'vue';
 
 export default defineComponent({

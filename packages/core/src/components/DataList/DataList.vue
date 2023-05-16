@@ -48,6 +48,10 @@ defineOptions({
   name: 'PfDataList',
 });
 
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
 const props = withDefaults(defineProps<{
   /** Adds accessible text to the pf-data-list list */
   ariaLabel: string;

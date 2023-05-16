@@ -35,6 +35,11 @@ defineProps<{
   wrapModifier?: DataListWrapModifier
 }>();
 
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  toggle?: (props: Record<never, never>) => any;
+}>();
+
 const datalistItem = inject(DataListItemKey);
 
 function toggle() {

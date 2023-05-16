@@ -19,10 +19,10 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { inject } from 'vue';
-import { isDefined } from '../../use';
 import { MenuInjectionKey } from './Menu.vue';
 import { MenuItemInjectionKey } from './MenuItem.vue';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
+import { isDefined } from '@vueuse/shared';
 
 const props = withDefaults(defineProps<{
   /** The action icon to use */

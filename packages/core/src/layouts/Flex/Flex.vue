@@ -1,59 +1,60 @@
-<script lang="ts">
+<template>
+  <component
+    :is="component"
+    :class="[styles.flex, classesFromBreakpointProps($props, [
+      'spacer',
+      'spaceItems',
+      'grow',
+      'shrink',
+      'flex',
+      'direction',
+      'alignItems',
+      'alignContent',
+      'alignSelf',
+      'align',
+      'justifyContent',
+      'display',
+      'fullWidth',
+      'flexWrap',
+    ], styles)]"
+  >
+    <slot />
+  </component>
+</template>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
-import { breakpointProp, classesFromBreakpointProps } from '../../util';
-import { type DefineComponent, defineComponent, h, resolveDynamicComponent, type SlotsType } from 'vue';
+import { type SpacerBreakpointProps, classesFromBreakpointProps, type SpaceItemsBreakpointProps, type GrowBreakpointProps, type ShrinkBreakpointProps, type FlexBreakpointProps, type DirectionBreakpointProps, type AlignItemsBreakpointProps, type AlignContentBreakpointProps, type AlignSelfBreakpointProps, type AlignBreakpointProps, type JustifyContentBreakpointProps, type DisplayBreakpointProps, type FullWidthBreakpointProps, type FlexWrapBreakpointProps } from '../../breakpoints';
+import type { Component } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfFlex',
-
-  props: {
-    /** The tag or component to use as container */
-    component: {
-      type: [String],
-      default: 'div',
-    },
-
-    ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-    ...breakpointProp('spaceItems', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-    ...breakpointProp('grow', Boolean),
-    ...breakpointProp('shrink', Boolean),
-    ...breakpointProp('flex', String, ['', 'default', 'none', '1', '2', '3', '4']),
-    ...breakpointProp('direction', String, ['', 'column', 'column-reverse', 'row', 'row-reverse']),
-    ...breakpointProp('alignItems', String, ['', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline']),
-    ...breakpointProp('alignContent', String, ['', 'flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around']),
-    ...breakpointProp('alignSelf', String, ['', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline']),
-    ...breakpointProp('align', String, ['', 'left', 'right']),
-    ...breakpointProp('justifyContent', String, ['', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly']),
-    ...breakpointProp('display', String, ['', 'flex', 'inline-flex']),
-    ...breakpointProp('fullWidth', Boolean),
-    ...breakpointProp('flexWrap', String, ['', 'wrap', 'wrap-reverse', 'nowrap']),
-  },
-
-  slots: Object as SlotsType<{
-    default?: Record<never, never>;
-  }>,
-
-  setup(props, { slots }) {
-    const Component = resolveDynamicComponent(props.component) as DefineComponent;
-    return () => h(Component, {
-      class: [styles.flex, classesFromBreakpointProps(props, [
-        'spacer',
-        'spaceItems',
-        'grow',
-        'shrink',
-        'flex',
-        'direction',
-        'alignItems',
-        'alignContent',
-        'alignSelf',
-        'align',
-        'justifyContent',
-        'display',
-        'fullWidth',
-        'flexWrap',
-      ], styles)],
-    }, slots);
-  },
 });
+
+withDefaults(defineProps<
+  {
+    component?: string | Component;
+  }
+  & SpacerBreakpointProps
+  & SpaceItemsBreakpointProps
+  & GrowBreakpointProps
+  & ShrinkBreakpointProps
+  & FlexBreakpointProps
+  & DirectionBreakpointProps
+  & AlignItemsBreakpointProps
+  & AlignContentBreakpointProps
+  & AlignSelfBreakpointProps
+  & AlignBreakpointProps
+  & JustifyContentBreakpointProps
+  & DisplayBreakpointProps
+  & FullWidthBreakpointProps
+  & FlexWrapBreakpointProps
+>(), {
+  component: 'div',
+});
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 </script>
