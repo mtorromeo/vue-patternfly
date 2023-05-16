@@ -1,12 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [0.1.0-beta.5] - 2023-05-16
 
 ### Bug Fixes
 
-- *(ExpandableSection)* Fixed managed prop "expanded"
-- *(Pagination)* Re-emitted update:page event
 - *(types)* Typo in type exports for EmptyState components
 - *(types)* Export global types for layout components
 - *(docs)* Import global core types in docs app
@@ -20,6 +18,15 @@ All notable changes to this project will be documented in this file.
 - Removed underperforming GenerateId component
 - Replaced every ref<T> instance with var:Ref<T> improving type exports
 - Fixed type imports in docs
+- *(Tooltip, Popover, FloatinUI)* Fixed recursive reactive dependency that caused loop in render functions
+- Block use of typescript 4.9 until supported by vue-tsc
+- *(Popover)* Events correctly attached to the reference element
+- *(Checkbox)* Assigned div as default container component of checkbox
+- *(BackgroundImage)* Applied default filter
+- *(DataList)* Fixed expandable state
+- *(Accordion, Alert)* Fixed managed expanded state
+- *(Tooltip)* Avoid hidden tooltips masking other elements
+- *(FloatingUi, Tooltip)* Fixed positioning and offset of tooltips
 
 ### Documentation
 
@@ -27,6 +34,7 @@ All notable changes to this project will be documented in this file.
 - Managed expandable section example
 - Setup proper window title for every page
 - *(Page)* Fixed navigation sidebar
+- Added code snippets to the layouts examples
 
 ### Features
 
@@ -43,6 +51,15 @@ All notable changes to this project will be documented in this file.
 - *(SearchInput)* Expandable search input
 - *(Drawer)* Implemented drawer
 - *(Drawer)* Improved by allowing to specify fewer tags to compose a complete drawer
+- *(Menu)* Implemented pf-menu components (no drilldown)
+- *(BackgroundImage)* Implemented
+- *(List)* Implemented
+- *(LoginPage)* Implemented
+- *(Spinner)* Updated to svg component
+- *(Form)* Implemented pf-form-helper-text
+- *(Alert)* Remove close prop, replaced titleHeadingLevel with component prop, added ouia props
+- *(Title)* Added ouia props
+- *(Button)* Implemented badge slot and ouia props
 
 ### Refactor
 
@@ -53,6 +70,21 @@ All notable changes to this project will be documented in this file.
 - Replaced usage of useFloatingUI with new helper component FloatingUi
 - *(FloatingUi)* Renamed sameSize prop to sameWidth
 - Renamed Void helper to PassThrough
+- Enabled strictNullChecks in typescript
+- Modified children tracker utility to enforce explicit tracking symbol
+- *(Tabs)* Simplified tabs implementation
+- Replaced custom implementation of useFocused with useFocus from vueuse
+- Updated vue and configurede vue-tsc to validate templates strictly
+- Converted accordion components to vue-sfc-setup
+- Uniformed emits definitions
+- Rewrote a bunch of components as sfc setup
+
+## [0.1.0-beta.4] - 2022-05-30
+
+### Bug Fixes
+
+- *(ExpandableSection)* Fixed managed prop "expanded"
+- *(Pagination)* Re-emitted update:page event
 
 ## [0.1.0-beta.3] - 2022-05-30
 
