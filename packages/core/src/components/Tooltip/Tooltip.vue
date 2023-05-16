@@ -13,6 +13,7 @@
         transition: 'opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s',
       }"
       role="tooltip"
+      @transitionend="hide"
     >
       <pf-tooltip-arrow />
       <pf-tooltip-content :left-aligned="leftAligned">
@@ -105,8 +106,19 @@ export default defineComponent({
     const tooltipElement: Ref<HTMLElement | undefined> = ref();
     const visible = ref(false);
 
+    watch(tooltipElement, (el) => {
+      if (el && !visible.value) {
+        el.style.display = 'none';
+      }
+    });
+
     watch(referenceElement, (el) => {
-      el?.addEventListener('mouseenter', () => (visible.value = true));
+      el?.addEventListener('mouseenter', () => {
+        visible.value = true;
+        if (tooltipElement.value) {
+          tooltipElement.value.style.display = 'initial';
+        }
+      });
       el?.addEventListener('mouseleave', () => (visible.value = false));
     });
 
@@ -117,6 +129,14 @@ export default defineComponent({
       tooltipElement,
       visible,
     };
+  },
+
+  methods: {
+    hide() {
+      if (!this.visible && this.tooltipElement) {
+        this.tooltipElement.style.display = 'none';
+      }
+    },
   },
 });
 </script>
