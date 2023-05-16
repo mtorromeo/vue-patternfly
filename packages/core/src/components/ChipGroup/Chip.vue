@@ -3,7 +3,7 @@ import styles from '@patternfly/react-styles/css/components/Chip/chip';
 
 import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
 import PfButton from '../Button.vue';
-import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
+import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';
 import { type DefineComponent, defineComponent, h, mergeProps, type PropType, ref, resolveDynamicComponent, type Ref } from 'vue';
 import { useElementOverflow } from '../../use';
@@ -23,7 +23,6 @@ export default defineComponent({
     tooltipPosition: {
       type: String as PropType<TooltipPosition>,
       default: 'top',
-      validator: (v: any) => v in TooltipPosition,
     },
     closeBtnAriaLabel: {
       type: String,

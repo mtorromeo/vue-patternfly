@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { flip, size, type Middleware, type Placement } from '@floating-ui/core';
-import { cloneVNode, computed, ref, useSlots, withDirectives, type Ref } from 'vue';
+import { flip, size, type Middleware, type Placement, type Strategy, offset, type OffsetOptions } from '@floating-ui/core';
+import { cloneVNode, computed, ref, withDirectives, type Ref } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
+import type { VNode } from 'vue';
 
 defineOptions({
   name: 'PfFloatingUi',
@@ -19,13 +20,17 @@ const props = withDefaults(defineProps<{
   sameWidth?: boolean;
   zIndex?: number;
   middleware?: Middleware[];
+  strategy?: Strategy,
+  offset?: OffsetOptions;
 }>(), {
   placement: 'bottom',
   zIndex: 9999,
   middleware: (): Middleware[] => [],
 });
 
-const slots = useSlots();
+const slots = defineSlots<{
+  default?: (props: ReturnType<typeof useFloatingUI>) => VNode[];
+}>();
 
 const referenceElement = computed<HTMLElement | undefined>(() => {
   const reference = typeof props.reference === 'string'
@@ -38,9 +43,11 @@ const htmlElement: Ref<HTMLElement | undefined> = ref();
 
 const floatingOptions = computed<FloatingOptions>(() => {
   const middleware: Middleware[] = [...props.middleware];
+
   if (props.flip) {
     middleware.push(flip());
   }
+
   if (props.sameWidth) {
     middleware.push(size({
       apply({rects}) {
@@ -52,7 +59,13 @@ const floatingOptions = computed<FloatingOptions>(() => {
       },
     }));
   }
+
+  if (props.offset) {
+    middleware.push(offset(props.offset));
+  }
+
   return {
+    strategy: props.strategy,
     placement: props.placement,
     middleware,
   };
@@ -62,7 +75,7 @@ const ui = useFloatingUI(referenceElement, htmlElement, floatingOptions);
 
 const floatingElement = () => {
   if (props.disable) {
-    return () => slots.default?.({});
+    return () => slots.default?.(ui);
   }
 
   const children = slots.default?.(ui);

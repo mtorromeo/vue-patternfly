@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import PfAlertGroupInline from './AlertGroupInline';
+import PfAlertGroupInline from './AlertGroupInline.vue';
 
 defineOptions({
   name: 'PfAlertGroup',

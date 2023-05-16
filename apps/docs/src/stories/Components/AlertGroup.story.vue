@@ -108,10 +108,20 @@
 <script lang="ts" setup>
 import { computed, reactive } from "vue";
 
-const alerts = reactive([]);
+type AlertData = {
+  title: string;
+  variant: string;
+  liveRegion?: boolean;
+  key: number;
+  ariaLive?: string;
+  ariaRelevant?: string;
+  ariaAtomic?: string;
+};
+
+const alerts: AlertData[] = reactive([]);
 const getUniqueId = () => new Date().getTime();
 
-const alerts2 = reactive([]);
+const alerts2: AlertData[] = reactive([]);
 const onOverflowClick = () => console.log('Overflow message clicked');
 const maxDisplayed = 4;
 const overflowMessage = computed(() => {

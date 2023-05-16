@@ -72,7 +72,7 @@ import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibili
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
 import PassThrough from '../../helpers/PassThrough';
-import PfTooltip, { TooltipPosition } from '../Tooltip/Tooltip.vue';
+import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
@@ -136,7 +136,7 @@ const props = withDefaults(defineProps<{
   variant: 'default',
   truncateTitle: 0,
   timeoutAnimation: 3000,
-  tooltipPosition: TooltipPosition.auto,
+  tooltipPosition: 'auto',
   component: 'h4',
 });
 

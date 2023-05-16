@@ -3,10 +3,10 @@
     <slot />
   </pass-through>
 
-  <floating-ui :reference="referenceElement" flip>
+  <floating-ui v-if="$slots.content" :reference="referenceElement" :placement="placement" :offset="distance" flip>
     <div
       ref="tooltipElement"
-      :class="styles.tooltip"
+      :class="[styles.tooltip, positionModifiers[placement]]"
       :style="{
         maxWidth,
         opacity: visible ? 1 : 0,
@@ -23,120 +23,90 @@
   </floating-ui>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { defineComponent, markRaw, type PropType, type Ref, ref, watch, type SlotsType } from 'vue';
+import { type Ref, ref, watch } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough';
 import { useHtmlElementFromVNodes } from '../../use';
+import type { Placement } from '@floating-ui/core';
+import { computed } from 'vue';
 
-export enum TooltipPosition {
-  auto = 'auto',
-  top = 'top',
-  bottom = 'bottom',
-  left = 'left',
-  right = 'right',
-}
+export type TooltipPosition = Placement | 'auto';
 
-export default defineComponent({
+defineOptions({
   name: 'PfTooltip',
-
-  components: {
-    PfTooltipArrow,
-    PfTooltipContent,
-    FloatingUi,
-    PassThrough,
-  },
-
-  props: {
-    position: {
-      type: String as PropType<TooltipPosition>,
-      default: TooltipPosition.top,
-      validator: (v: any) => v in TooltipPosition,
-    },
-
-    trigger: {
-      type: String,
-      default: 'mouseenter focus',
-    },
-
-    leftAligned: Boolean,
-
-    entryDelay: {
-      type: Number,
-      default: 300,
-    },
-
-    exitDelay: {
-      type: Number,
-      default: 0,
-    },
-
-    distance: {
-      type: Number,
-      default: 15,
-    },
-
-    aria: {
-      type: String,
-      default: 'describedby',
-    },
-
-    animationDuration: {
-      type: Number,
-      default: 300,
-    },
-
-    maxWidth: {
-      type: Number,
-      default: null,
-    },
-  },
-
-  slots: Object as SlotsType<{
-    default?: Record<never, never>;
-    content?: Record<never, never>;
-  }>,
-
-  setup() {
-    const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
-    const tooltipElement: Ref<HTMLElement | undefined> = ref();
-    const visible = ref(false);
-
-    watch(tooltipElement, (el) => {
-      if (el && !visible.value) {
-        el.style.display = 'none';
-      }
-    });
-
-    watch(referenceElement, (el) => {
-      el?.addEventListener('mouseenter', () => {
-        visible.value = true;
-        if (tooltipElement.value) {
-          tooltipElement.value.style.display = 'initial';
-        }
-      });
-      el?.addEventListener('mouseleave', () => (visible.value = false));
-    });
-
-    return {
-      referenceElement,
-      styles: markRaw(styles) as typeof styles,
-      findReference,
-      tooltipElement,
-      visible,
-    };
-  },
-
-  methods: {
-    hide() {
-      if (!this.visible && this.tooltipElement) {
-        this.tooltipElement.style.display = 'none';
-      }
-    },
-  },
 });
+
+const props = withDefaults(defineProps<{
+  position?: TooltipPosition;
+  trigger?: string;
+  leftAligned?: boolean,
+  entryDelay?: number;
+  exitDelay?: number;
+  distance?: number;
+  aria?: string;
+  animationDuration?: number;
+  maxWidth?: number;
+}>(), {
+  position: 'top',
+  trigger: 'mouseenter focus',
+  entryDelay: 300,
+  exitDelay: 0,
+  distance: 15,
+  aria: 'describedby',
+  animationDuration: 300,
+});
+
+defineSlots<{
+  default?: Record<never, never>;
+  content?: Record<never, never>;
+}>();
+
+const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
+const tooltipElement: Ref<HTMLElement | undefined> = ref();
+const visible = ref(false);
+
+const positionModifiers: Record<Placement, string> = {
+  top: styles.modifiers.top,
+  bottom: styles.modifiers.bottom,
+  left: styles.modifiers.left,
+  right: styles.modifiers.right,
+  'top-start': styles.modifiers.topLeft,
+  'top-end': styles.modifiers.topRight,
+  'bottom-start': styles.modifiers.bottomLeft,
+  'bottom-end': styles.modifiers.bottomRight,
+  'left-start': styles.modifiers.leftTop,
+  'left-end': styles.modifiers.leftBottom,
+  'right-start': styles.modifiers.rightTop,
+  'right-end': styles.modifiers.rightBottom,
+};
+
+// TODO: actual auto detect
+const placement = computed<Placement>(() => props.position === 'auto' ? 'top' : props.position);
+
+watch(tooltipElement, (el) => {
+  if (el && !visible.value) {
+    el.style.display = 'none';
+  }
+});
+
+watch(referenceElement, (el) => {
+  el?.addEventListener('mouseenter', () => {
+    visible.value = true;
+    if (tooltipElement.value) {
+      tooltipElement.value.style.display = 'initial';
+    }
+  });
+  el?.addEventListener('mouseleave', () => (visible.value = false));
+});
+
+function hide() {
+  if (!visible.value && tooltipElement.value) {
+    tooltipElement.value.style.display = 'none';
+  }
+}
 </script>
