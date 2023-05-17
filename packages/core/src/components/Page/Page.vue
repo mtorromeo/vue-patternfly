@@ -10,142 +10,103 @@
       @click="mainClick"
       @touchstart="mainClick"
     >
-      <section
-        v-if="$slots.breadcrumb"
-        :class="[styles.pageMainBreadcrumb, {
-          [styles.modifiers.limitWidth]: breadcrumbWidthLimited,
-          [styles.modifiers.stickyTop]: breadcrumbStickyTop,
-        }]"
-      >
-        <div v-if="breadcrumbWidthLimited" :class="styles.pageMainBody">
-          <slot name="breadcrumb" />
-        </div>
-        <template v-else>
-          <slot name="breadcrumb" />
-        </template>
-      </section>
       <slot />
     </main>
   </div>
 </template>
 
 <script lang="ts">
+export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
+export const PageNavOpenKey = Symbol('PageNavOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
+</script>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
 import { useWindowSize } from '@vueuse/core';
-import { ref, provide, computed, markRaw, defineComponent, type Ref, type InjectionKey, type WritableComputedRef } from 'vue';
+import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef } from 'vue';
 
-export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
-export const PageNavOpenKey = Symbol('PageNavOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
-
-export default defineComponent({
+defineOptions({
   name: 'PfPage',
+});
 
-  props: {
-    /** Sets the value for role on the <main> element */
-    role: {
-      type: String,
-      default: '',
-    },
+const props = withDefaults(defineProps<{
+  /** Sets the value for role on the <main> element */
+  role?: string;
+  /** an id to use for the [role="main"] element */
+  mainContainerId?: string;
+  /** tabIndex to use for the [role="main"] element, null to unset it */
+  mainTabIndex?: number;
+  /**
+   * If true, manages the sidebar open/close state and there is no need to pass the isNavOpen boolean into
+   * the sidebar component or add a callback onNavToggle function into the PageHeader component
+   */
+  managedSidebar?: boolean;
+  /** Flag indicating if tertiary nav width should be limited */
+  tertiaryNavWidthLimited?: boolean;
+  /** Flag indicating Notification drawer in expanded */
+  notificationDrawerExpanded?: boolean;
+  /** If true, the managed sidebar is initially open for desktop view */
+  defaultManagedSidebarOpen?: boolean;
+  /** Accessible label, can be used to name main section */
+  mainAriaLabel?: string;
+  /** Flag indicating if the tertiaryNav should be in a group */
+  tertiaryNavGrouped?: boolean;
+  /** Additional props of the group */
+  // groupProps?: PageGroupProps;
+}>(), {
+  defaultManagedSidebarOpen: true,
+});
 
-    /** an id to use for the [role="main"] element */
-    mainContainerId: {
-      type: String,
-      default: '',
-    },
+const emit = defineEmits<{
+  (name: 'page-resize', v: { mobileView: boolean, windowSize: number }): void;
+}>();
 
-    /** tabIndex to use for the [role="main"] element, null to unset it */
-    mainTabIndex: {
-      type: Number,
-      default: -1,
-    },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  skeleton?: (props: Record<never, never>) => any;
+}>();
 
-    /**
-     * If true, manages the sidebar open/close state and there is no need to pass the isNavOpen boolean into
-     * the sidebar component or add a callback onNavToggle function into the PageHeader component
-     */
-    managedSidebar: Boolean,
+const mobileView = ref(false);
+const mobileNavOpen = ref(false);
+const desktopNavOpen = ref(!props.managedSidebar || props.defaultManagedSidebarOpen);
 
-    /** If true, the managed sidebar is initially open for desktop view */
-    defaultManagedSidebarOpen: {
-      type: Boolean,
-      default: true,
-    },
+const managedSidebar = ref(props.managedSidebar);
+provide(PageManagedSidebarKey, managedSidebar);
 
-    /** Accessible label, can be used to name main section */
-    mainAriaLabel: {
-      type: String,
-      default: '',
-    },
-
-    /** Flag indicating if breadcrumb width should be limited */
-    breadcrumbWidthLimited: Boolean,
-    /** Flag indicating if breadcrumb should be sticky at top */
-    breadcrumbStickyTop: Boolean,
+const navOpen = computed({
+  get() {
+    return mobileView.value ? mobileNavOpen.value : desktopNavOpen.value;
   },
 
-  emits: {
-    'page-resize'({ mobileView, windowSize }: { mobileView: boolean, windowSize: number }) {
-      if (typeof mobileView !== 'boolean' || typeof windowSize !== 'number') {
-        console.warn('Invalid page-resize event payload!');
-        return false;
-      }
-      return true;
-    },
+  set(open: boolean) {
+    if (mobileView.value) {
+      mobileNavOpen.value = open;
+    } else {
+      desktopNavOpen.value = open;
+    }
   },
+});
+provide(PageNavOpenKey, navOpen);
 
-  setup(props) {
-    const mobileView = ref(false);
-    const mobileNavOpen = ref(false);
-    const desktopNavOpen = ref(!props.managedSidebar || props.defaultManagedSidebarOpen);
+const { width: windowWidth } = useWindowSize();
 
-    const managedSidebar = ref(props.managedSidebar);
-    provide(PageManagedSidebarKey, managedSidebar);
+watch(windowWidth, (width) => {
+  mobileView.value = width < Number.parseInt(globalBreakpointXl.value, 10);
+  emit('page-resize', { mobileView: mobileView.value, windowSize: width });
+});
 
-    const navOpen = computed({
-      get() {
-        return mobileView.value ? mobileNavOpen.value : desktopNavOpen.value;
-      },
+function navToggle() {
+  navOpen.value = !navOpen.value;
+}
 
-      set(open: boolean) {
-        if (mobileView.value) {
-          mobileNavOpen.value = open;
-        } else {
-          desktopNavOpen.value = open;
-        }
-      },
-    });
-    provide(PageNavOpenKey, navOpen);
+function mainClick() {
+  if (mobileView.value && navOpen.value) {
+    navOpen.value = false;
+  }
+}
 
-    const { width: windowWidth } = useWindowSize();
-
-    return {
-      styles: markRaw(styles) as typeof styles,
-      navOpen,
-      mobileView,
-      mobileNavOpen,
-      desktopNavOpen,
-      windowWidth,
-    };
-  },
-
-  watch: {
-    windowWidth(width) {
-      this.mobileView = width < Number.parseInt(globalBreakpointXl.value, 10);
-      this.$emit('page-resize', { mobileView: this.mobileView, windowSize: width });
-    },
-  },
-
-  methods: {
-    navToggle() {
-      this.navOpen = !this.navOpen;
-    },
-
-    mainClick() {
-      if (this.mobileView && this.navOpen) {
-        this.navOpen = false;
-      }
-    },
-  },
+defineExpose({
+  navToggle,
 });
 </script>

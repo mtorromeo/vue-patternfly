@@ -3,8 +3,8 @@
     <div v-if="showNavToggle || $slots.logo" :class="styles.pageHeaderBrand">
       <div v-if="showNavToggle" :class="styles.pageHeaderBrandToggle">
         <pf-button
-          id="nav-toggle"
-          aria-controls="page-sidebar"
+          :id="navToggleId"
+          :aria-controls="ariaControls"
           :aria-label="ariaLabel"
           :aria-expanded="sidebarOpen ? 'true' : 'false'"
           variant="plain"
@@ -24,12 +24,6 @@
       </component>
     </div>
 
-    <!-- Hide for now until we have the context selector component -->
-    <!--
-      <div className={css(styles.pageHeaderSelector)}>
-        pf-c-context-selector
-      </div>
-    -->
     <div v-if="$slots.topNav" :class="styles.pageHeaderNav">
       <slot name="top-nav" />
     </div>
@@ -38,62 +32,57 @@
   </header>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import { defineComponent, inject, markRaw } from 'vue';
+import { computed, inject, type Component } from 'vue';
 import BarsIcon from '@vue-patternfly/icons/dist/esm/icons/bars-icon';
 import PfButton from '../Button.vue';
 import { PageManagedSidebarKey, PageNavOpenKey } from './Page.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfPageHeader',
+});
 
-  components: {
-    BarsIcon,
-    PfButton,
+const props = withDefaults(defineProps<{
+  /** Additional props passed to the logo anchor container */
+  logoProps?: object;
+  /** Component to use to wrap the passed <logo> */
+  logoComponent?: string | Component;
+  /** Component to render the header tools, use <PageHeaderTools />  */
+  // headerTools?: React.ReactNode;
+  /** True to show the nav toggle button (toggles side nav) */
+  showNavToggle?: boolean;
+  /** Id for the nav toggle button */
+  navToggleId?: string;
+  /** True if the side nav is shown  */
+  navOpen?: boolean;
+  /** Aria Label for the nav toggle button */
+  ariaLabel?: string;
+  /** Aria controls for the nav toggle button */
+  ariaControls?: string;
+}>(), {
+  ariaLabel: 'Global navigation',
+  ariaControls: 'page-sidebar',
+  navToggleId: 'nav-toggle',
+});
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  logo?: (props: Record<never, never>) => any;
+  'top-nav'?: (props: Record<never, never>) => any;
+}>();
+
+const managedNavOpen = inject(PageNavOpenKey);
+const managedSidebar = inject(PageManagedSidebarKey);
+
+const sidebarOpen = computed({
+  get() {
+    return managedSidebar?.value && managedNavOpen ? managedNavOpen.value : props.navOpen;
   },
-
-  props: {
-    showNavToggle: Boolean,
-
-    navOpen: Boolean,
-
-    /** Aria label for the nav toggle button */
-    ariaLabel: {
-      type: String,
-      default: 'Global navigation',
-    },
-
-    logoComponent: {
-      type: String,
-      default: 'a',
-    },
-
-    logoProps: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-      managedNavOpen: inject(PageNavOpenKey),
-      managedSidebar: inject(PageManagedSidebarKey),
-    };
-  },
-
-  computed: {
-    sidebarOpen: {
-      get() {
-        return this.managedSidebar ? this.managedNavOpen : this.navOpen;
-      },
-      set(open: boolean) {
-        if (this.managedSidebar) {
-          this.managedNavOpen = open;
-        }
-      },
-    },
+  set(open: boolean) {
+    if (managedSidebar?.value && managedNavOpen) {
+      managedNavOpen.value = open;
+    }
   },
 });
 </script>

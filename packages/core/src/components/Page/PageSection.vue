@@ -23,6 +23,7 @@
     :style="{
       '--pf-c-page--section--m-limit-width--MaxWidth': maxWidth,
     }"
+    :tabindex="overflowScroll ? 0 : undefined"
   >
     <div v-if="isWidthLimited" :class="styles.pageMainBody">
       <slot />

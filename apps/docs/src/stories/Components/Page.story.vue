@@ -6,8 +6,7 @@
       The **page** component is used to define the basic layout of a page with either vertical or horizontal navigation.
       See full [Design guidelines](https://www.patternfly.org/v4/components/page/design-guidelines) on the official patternfly documentation.
       ## Differences from patternfly-react
-      - The additional `breadcrumb-sticky-top` prop allows to set the breadcrumb slot as sticky.
-      - `pf-page-section` can be limited in width by setting its `max-width` prop.
+      - `pf-page-breadcrumb` and `pf-page-section` can be limited in width by setting their `max-width` prop.
     </pre>
 
     <story-canvas title="Example">
@@ -37,6 +36,14 @@
             </pf-nav>
           </pf-page-sidebar>
         </template>
+        <pf-page-breadcrumb sticky="top" shadow-bottom>
+          <pf-breadcrumb>
+            <pf-breadcrumb-item href="#">Section home</pf-breadcrumb-item>
+            <pf-breadcrumb-item href="#">Section title</pf-breadcrumb-item>
+            <pf-breadcrumb-item href="#">Section title</pf-breadcrumb-item>
+            <pf-breadcrumb-item href="#" active>Section landing</pf-breadcrumb-item>
+          </pf-breadcrumb>
+        </pf-page-breadcrumb>
         <pf-page-section variant="darker">Section with darker background</pf-page-section>
         <pf-page-section variant="dark">Section with dark background</pf-page-section>
         <pf-page-section variant="light">Section with light background</pf-page-section>
