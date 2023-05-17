@@ -93,5 +93,56 @@
         </pf-page-section>
       </pf-page>
     </story-canvas>
+
+    <story-canvas title="With notification drawer">
+      <pf-page managed-sidebar :drawer-expanded="expanded">
+        <template #skeleton>
+          <pf-page-header show-nav-toggle>
+
+            <template #logo>
+              <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" style="height:40px;filter:invert(1)" />
+            </template>
+
+            <pf-page-header-tools>
+              <pf-page-header-tools-group>
+                <pf-page-header-tools-item>
+                  <pf-button variant="plain" @click="expanded = !expanded">
+                    <bell-icon />
+                  </pf-button>
+                </pf-page-header-tools-item>
+              </pf-page-header-tools-group>
+            </pf-page-header-tools>
+
+          </pf-page-header>
+
+          <pf-page-sidebar nav-open>
+            <pf-nav>
+              <pf-nav-group title="Overview">
+                <pf-nav-item>Home</pf-nav-item>
+              </pf-nav-group>
+              <pf-nav-group title="Components">
+                <pf-nav-item>Accordion</pf-nav-item>
+                <pf-nav-item>Alert</pf-nav-item>
+              </pf-nav-group>
+            </pf-nav>
+          </pf-page-sidebar>
+        </template>
+
+        <template #drawer>
+          Drawer content
+        </template>
+
+        <pf-page-section>
+          Main section
+        </pf-page-section>
+      </pf-page>
+    </story-canvas>
   </doc-page>
 </template>
+
+<script lang="ts" setup>
+import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
+import { ref } from 'vue';
+
+const expanded = ref(false);
+</script>

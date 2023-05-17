@@ -10,7 +10,23 @@
       @click="mainClick"
       @touchstart="mainClick"
     >
-      <slot />
+      <div v-if="$slots.drawer">
+        <pf-drawer :expanded="drawerExpanded">
+          <pf-drawer-content>
+            <template #content>
+              <pf-drawer-panel-content>
+                <slot name="drawer" />
+              </pf-drawer-panel-content>
+            </template>
+
+            <pf-drawer-content-body>
+              <slot />
+            </pf-drawer-content-body>
+          </pf-drawer-content>
+        </pf-drawer>
+      </div>
+
+      <slot v-else />
     </main>
   </div>
 </template>
@@ -25,6 +41,10 @@ import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
 import { useWindowSize } from '@vueuse/core';
 import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef } from 'vue';
+import PfDrawer from '../Drawer/Drawer.vue';
+import PfDrawerContent from '../Drawer/DrawerContent.vue';
+import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
+import PfDrawerContentBody from '../Drawer/DrawerContentBody.vue';
 
 defineOptions({
   name: 'PfPage',
@@ -50,6 +70,8 @@ const props = withDefaults(defineProps<{
   defaultManagedSidebarOpen?: boolean;
   /** Accessible label, can be used to name main section */
   mainAriaLabel?: string;
+  /** Flag indicating Notification drawer in expanded */
+  drawerExpanded?: boolean;
 }>(), {
   defaultManagedSidebarOpen: true,
 });
@@ -60,6 +82,7 @@ const emit = defineEmits<{
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;
+  drawer?: (props: Record<never, never>) => any;
   skeleton?: (props: Record<never, never>) => any;
 }>();
 

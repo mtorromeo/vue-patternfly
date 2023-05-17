@@ -21,6 +21,10 @@ import { DrawerKey } from './common';
 import PfDrawerContent from './DrawerContent.vue';
 import PfDrawerSection from './DrawerSection.vue';
 
+defineOptions({
+  name: 'PfDrawer',
+});
+
 const props = withDefaults(defineProps<{
   /** Indicates if the drawer is expanded */
   expanded?: boolean;
@@ -34,8 +38,8 @@ const props = withDefaults(defineProps<{
   position: 'right',
 });
 
-defineEmits<{
-  (name: 'expand'): void;
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
 }>();
 
 const el: Ref<HTMLDivElement | undefined> = ref();

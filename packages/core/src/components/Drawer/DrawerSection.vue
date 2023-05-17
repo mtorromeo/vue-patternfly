@@ -8,10 +8,18 @@
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { DrawerColorVariant } from './common';
 
+defineOptions({
+  name: 'PfDrawerSection',
+});
+
 withDefaults(defineProps<{
   /** Color variant of the background of the drawer Section */
   colorVariant?: DrawerColorVariant | 'light-200' | 'default';
 }>(), {
   colorVariant: DrawerColorVariant.default,
 });
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 </script>

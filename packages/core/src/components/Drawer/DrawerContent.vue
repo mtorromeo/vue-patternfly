@@ -1,10 +1,10 @@
 <template>
   <pf-drawer-main>
     <overridable-wrapper
+      ref="el"
       force
       component="div"
       :exclude="PfDrawerPanelContent"
-      ref="el"
       :class="[styles.drawerContent, {
         [styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200,
       }]"
@@ -30,12 +30,21 @@ import OverridableWrapper from '../../helpers/OverridableWrapper';
 import PfDrawerMain from './DrawerMain.vue';
 import PfDrawerPanelContent from './DrawerPanelContent.vue';
 
+defineOptions({
+  name: 'PfDrawerContent',
+});
+
 withDefaults(defineProps<{
   /** Color variant of the background of the drawer panel */
   colorVariant?: DrawerColorVariant | 'light-200' | 'default';
 }>(), {
   colorVariant: DrawerColorVariant.default,
 });
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  content?: (props: Record<never, never>) => any;
+}>();
 
 const el: Ref<HTMLDivElement | undefined> = ref();
 provide(DrawerContentRefKey, el);

@@ -56,6 +56,10 @@ import OverridableWrapper from '../../helpers/OverridableWrapper';
 import PfDrawerHead from './DrawerHead.vue';
 import { resolveOverridableComponent } from '../../helpers';
 
+defineOptions({
+  name: 'PfDrawerPanelContent',
+});
+
 const props = withDefaults(defineProps<{
   /** ID of the drawer panel */
   id?: string;
@@ -90,6 +94,10 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   /** Callback for resize end. */
   (name: 'resize', width: number, id?: string): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
 }>();
 
 const panel: Ref<HTMLElement | undefined> = ref();

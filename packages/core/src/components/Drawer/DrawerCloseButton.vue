@@ -12,6 +12,10 @@ import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import PfButton from '../Button.vue';
 import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
 
+defineOptions({
+  name: 'PfDrawerCloseButton',
+});
+
 defineProps<{
   /** Accessible label for the drawer close button */
   ariaLabel?: string;
