@@ -50,10 +50,6 @@ const props = withDefaults(defineProps<{
   defaultManagedSidebarOpen?: boolean;
   /** Accessible label, can be used to name main section */
   mainAriaLabel?: string;
-  /** Flag indicating if the tertiaryNav should be in a group */
-  tertiaryNavGrouped?: boolean;
-  /** Additional props of the group */
-  // groupProps?: PageGroupProps;
 }>(), {
   defaultManagedSidebarOpen: true,
 });

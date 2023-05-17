@@ -6,7 +6,7 @@
       The **page** component is used to define the basic layout of a page with either vertical or horizontal navigation.
       See full [Design guidelines](https://www.patternfly.org/v4/components/page/design-guidelines) on the official patternfly documentation.
       ## Differences from patternfly-react
-      - `pf-page-breadcrumb` and `pf-page-section` can be limited in width by setting their `max-width` prop.
+      - `pf-page-breadcrumb`, `pf-page-navigation` and `pf-page-section` can be limited in width by setting their `max-width` prop.
     </pre>
 
     <story-canvas title="Example">
