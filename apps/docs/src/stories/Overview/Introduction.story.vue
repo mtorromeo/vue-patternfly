@@ -41,7 +41,8 @@
 
       ```js
       import '@patternfly/patternfly/patternfly.css';
-      // alternatively include it in your html as a &lt;style&gt; tag
+      import '@patternfly/patternfly/patternfly-addons.css';
+      // alternatively include them in your html as a &lt;style&gt; tag
 
       import { createApp } from 'vue';
       import VuePatternFly from '@vue-patternfly/core';
