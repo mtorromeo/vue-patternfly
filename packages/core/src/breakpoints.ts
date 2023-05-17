@@ -59,7 +59,7 @@ export type SpacerBreakpointProps = {
   spacerLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spacerXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spacer_2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-};
+}
 
 export type SpaceItemsBreakpointProps = {
   spaceItems?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
@@ -68,7 +68,7 @@ export type SpaceItemsBreakpointProps = {
   spaceItemsLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spaceItemsXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spaceItems_2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-};
+}
 
 export type GrowBreakpointProps = {
   grow?: boolean;
@@ -77,7 +77,7 @@ export type GrowBreakpointProps = {
   growLg?: boolean;
   growXl?: boolean;
   grow_2xl?: boolean;
-};
+}
 
 export type ShrinkBreakpointProps = {
   shrink?: boolean;
@@ -86,7 +86,7 @@ export type ShrinkBreakpointProps = {
   shrinkLg?: boolean;
   shrinkXl?: boolean;
   shrink_2xl?: boolean;
-};
+}
 
 export type FlexBreakpointProps = {
   flex?: 'default' | 'none' | '1' | '2' | '3' | '4';
@@ -95,7 +95,7 @@ export type FlexBreakpointProps = {
   flexLg?: 'default' | 'none' | '1' | '2' | '3' | '4';
   flexXl?: 'default' | 'none' | '1' | '2' | '3' | '4';
   flex_2xl?: 'default' | 'none' | '1' | '2' | '3' | '4';
-};
+}
 
 export type DirectionBreakpointProps = {
   direction?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
@@ -104,7 +104,7 @@ export type DirectionBreakpointProps = {
   directionLg?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   directionXl?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   direction_2xl?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
-};
+}
 
 export type AlignItemsBreakpointProps = {
   alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
@@ -113,7 +113,7 @@ export type AlignItemsBreakpointProps = {
   alignItemsLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignItemsXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignItems_2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-};
+}
 
 export type AlignContentBreakpointProps = {
   alignContent?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
@@ -122,7 +122,7 @@ export type AlignContentBreakpointProps = {
   alignContentLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
   alignContentXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
   alignContent_2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
-};
+}
 
 export type AlignSelfBreakpointProps = {
   alignSelf?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
@@ -131,7 +131,7 @@ export type AlignSelfBreakpointProps = {
   alignSelfLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignSelfXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignSelf_2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-};
+}
 
 export type AlignBreakpointProps = {
   align?: 'left' | 'right';
@@ -140,7 +140,7 @@ export type AlignBreakpointProps = {
   alignLg?: 'left' | 'right';
   alignXl?: 'left' | 'right';
   align_2xl?: 'left' | 'right';
-};
+}
 
 export type JustifyContentBreakpointProps = {
   justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
@@ -149,7 +149,7 @@ export type JustifyContentBreakpointProps = {
   justifyContentLg?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   justifyContentXl?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   justifyContent_2xl?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
-};
+}
 
 export type DisplayBreakpointProps = {
   display?: 'flex' | 'inline-flex';
@@ -158,7 +158,7 @@ export type DisplayBreakpointProps = {
   displayLg?: 'flex' | 'inline-flex';
   displayXl?: 'flex' | 'inline-flex';
   display_2xl?: 'flex' | 'inline-flex';
-};
+}
 
 export type FullWidthBreakpointProps = {
   fullWidth?: boolean;
@@ -167,7 +167,7 @@ export type FullWidthBreakpointProps = {
   fullWidthLg?: boolean;
   fullWidthXl?: boolean;
   fullWidth_2xl?: boolean;
-};
+}
 
 export type FlexWrapBreakpointProps = {
   flexWrap?: 'wrap' | 'wrap-reverse' | 'nowrap';
@@ -176,9 +176,9 @@ export type FlexWrapBreakpointProps = {
   flexWrapLg?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrapXl?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrap_2xl?: 'wrap' | 'wrap-reverse' | 'nowrap';
-};
+}
 
-export type InsetBreakpointPropps = {
+export type InsetBreakpointProps = {
   inset?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   insetSm?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   insetMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
@@ -187,7 +187,25 @@ export type InsetBreakpointPropps = {
   inset_2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 }
 
-export function classesFromBreakpointProps(props: any, baseNames: string[], styles: any, { additional = [], short = false }: { additional?: string[], short?: boolean } = {}) {
+export type PaddingBreakpointProps = {
+  padding?: 'padding' | 'no-padding';
+  paddingSm?: 'padding' | 'no-padding';
+  paddingMd?: 'padding' | 'no-padding';
+  paddingLg?: 'padding' | 'no-padding';
+  paddingXl?: 'padding' | 'no-padding';
+  padding_2xl?: 'padding' | 'no-padding';
+}
+
+export type StickyBreakpointProps = {
+  sticky?: 'top' | 'bottom';
+  stickySm?: 'top' | 'bottom';
+  stickyMd?: 'top' | 'bottom';
+  stickyLg?: 'top' | 'bottom';
+  stickyXl?: 'top' | 'bottom';
+  sticky_2xl?: 'top' | 'bottom';
+}
+
+export function classesFromBreakpointProps(props: any, baseNames: string[], styles: any, { additional = [], short = false, vertical = false }: { additional?: string[], short?: boolean, vertical?: boolean } = {}) {
   const c = [...additional];
 
   for (const baseName of baseNames) {
@@ -208,7 +226,7 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
             value = `_${value}`;
           }
         }
-        let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}` : ''}`;
+        let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}${vertical ? 'Height' : ''}` : ''}`;
         if (!short) {
           mod = `${toCamelCase(baseName)}${ucfirst(mod)}`;
         }

@@ -16,7 +16,7 @@
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 import { inject } from 'vue';
 import { DividerComponentKey } from './Dropdown/Dropdown';
-import { classesFromBreakpointProps, type InsetBreakpointPropps } from '../breakpoints';
+import { classesFromBreakpointProps, type InsetBreakpointProps } from '../breakpoints';
 
 defineOptions({
   name: 'PfDivider',
@@ -25,7 +25,7 @@ defineOptions({
 const props = withDefaults(defineProps<{
   component?: 'hr' | 'li' | 'div';
   vertical?: boolean;
-} & InsetBreakpointPropps>(), {
+} & InsetBreakpointProps>(), {
   component: 'hr',
 });
 

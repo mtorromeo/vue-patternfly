@@ -94,11 +94,12 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
         const html = parse(code);
 
         traverse(html.childNodes, (el) => {
-          if (el instanceof HTMLElement && el.rawTagName === 'story-canvas') {
-            addSourceToStoryCanvas(el);
-          }
-          if (el instanceof HTMLElement && el.rawTagName === 'pre' && el.hasAttribute('v-md')) {
-            replaceMarkdown(md, el);
+          if (el instanceof HTMLElement) {
+            if (el.rawTagName === 'story-canvas') {
+              addSourceToStoryCanvas(el);
+            } else if (el.rawTagName === 'pre' && el.hasAttribute('v-md')) {
+              replaceMarkdown(md, el);
+            }
           }
           return el;
         });
