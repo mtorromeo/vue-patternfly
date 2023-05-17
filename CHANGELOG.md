@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.6] - 2023-05-17
+
+### Features
+
+- *(PageSection)* Implemented `component`, `max-width`, `center-aligned`, `shadow-top`, `shadow-bottom`, `overflow-scroll` props and `sticky*` breakpoint props
+- *(Page)* Added `pf-page-breadcrumb` component and remove the `breadcrumb` slot from `pf-page`
+- *(Page)* Added `pf-page-group` component
+- *(Page)* Added `pf-page-navigation` component
+- *(Page)* Integrated drawer panel into `pf-page`
+
 ## [0.1.0-beta.5] - 2023-05-16
 
 ### Bug Fixes

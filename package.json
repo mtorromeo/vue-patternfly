@@ -7,7 +7,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "ts-patch install -s",
-    "pub": "npm publish --access public -w packages/core -w packages/icons",
+    "pub": "pnpm publish -r --filter ./packages/core --filter ./packages/icons",
     "clean": "turbo run clean",
     "build": "turbo run build",
     "lint": "turbo run lint"
