@@ -1,6 +1,26 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.7] - 2023-05-18
+
+### Bug Fixes
+
+- Added export of types to package.json
+
+### Documentation
+
+- Documented inclusion of patternfly-addons.css
+
+### Features
+
+- *(NotificationBadge)* Implemented expanded state
+- Implemented Wrap utility component
+- Implemented Sort and SortBy utility components
+
+### Refactor
+
+- *(Radio)* Rewrote `pf-radio` component with script setup and html template
+
 ## [0.1.0-beta.6] - 2023-05-17
 
 ### Features
