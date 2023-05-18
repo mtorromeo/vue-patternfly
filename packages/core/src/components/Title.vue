@@ -31,6 +31,10 @@ const props = withDefaults(defineProps<{
   h: 1,
 });
 
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const hSize = computed(() => headingLevelSizeMap[Number(props.h) as keyof typeof headingLevelSizeMap]);
