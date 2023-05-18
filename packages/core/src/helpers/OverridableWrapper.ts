@@ -1,9 +1,5 @@
-import { type Component, type ComponentOptionsMixin, type DefineComponent, defineComponent, h, type PropType, ref, resolveDynamicComponent, type VNode, type VNodeTypes, type Ref, type SlotsType } from "vue";
-import { findChildrenVNodes } from "../util";
-
-function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & ComponentOptionsMixin {
-  return typeof vtype === 'object' && !(vtype as any).type;
-}
+import { type DefineComponent, defineComponent, h, type PropType, ref, resolveDynamicComponent, type VNode, type VNodeTypes, type Ref, type SlotsType } from "vue";
+import { findChildrenVNodes, vnodeTypeIsComponent } from "../util";
 
 function makeFilterFunction(filter: string | VNodeTypes | (string | VNodeTypes)[] | ((vnode: VNode) => boolean) | null, fallback = true): (vnode: VNode) => boolean {
   if (typeof filter === 'function') {

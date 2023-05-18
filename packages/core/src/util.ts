@@ -1,5 +1,5 @@
 import { isDefined } from '@vueuse/shared';
-import { Fragment, Comment, type VNode, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren } from 'vue';
+import { Fragment, Comment, type VNode, type VNodeTypes, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren, type Component, type ComponentOptionsMixin } from 'vue';
 
 const camelize = (s: string) =>
   s
@@ -42,7 +42,7 @@ export function findComponentVNode(vnodes: VNode[] | VNodeNormalizedChildren): V
   }
 
   for (const n of vnodes) {
-    if (isVNode(n) && n.type !== Fragment) {
+    if (isVNode(n) && vnodeTypeIsComponent(n.type)) {
       return n;
     }
   }
@@ -55,6 +55,10 @@ export function findComponentVNode(vnodes: VNode[] | VNodeNormalizedChildren): V
       }
     }
   }
+}
+
+export function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & ComponentOptionsMixin {
+  return vtype !== Fragment && typeof vtype === 'object' && !(vtype as any).type;
 }
 
 export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren | undefined): VNode[] {
