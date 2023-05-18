@@ -1,115 +1,93 @@
-<script lang="ts">
+<template>
+  <component
+    :is="labelWrapped ? 'label' : 'div'"
+    :class="[styles.radio, {
+      [styles.modifiers.standalone]: !labelWrapped && !(label || $slots.label),
+    }]"
+    :for="labelWrapped ? id : undefined"
+  >
+    <sort>
+      <sort-by :weight="labelBeforeButton ? -1 : 1">
+        <component
+          :is="labelWrapped ? 'span' : 'label'"
+          :class="[styles.radioLabel, {
+            [styles.modifiers.disabled]: disabled,
+          }]"
+          :for="labelWrapped ? undefined : id"
+        >
+          <slot name="label">{{ label }}</slot>
+        </component>
+      </sort-by>
+
+      <input
+        :id="id"
+        v-bind="{...ouiaProps, ...$attrs}"
+        type="radio"
+        :class="styles.radioInput"
+        :aria-invalid="!valid"
+        :disabled="disabled"
+        :checked="checked"
+        :aria-label="(label || $slots.label) ? undefined : ariaLabel"
+        @change="(e: Event) => emit('change', e)"
+      >
+    </sort>
+
+    <span v-if="description || $slots.description" :class="styles.radioDescription">
+      <slot name="description">{{ description }}</slot>
+    </span>
+
+    <span v-if="body || $slots.body" :class="styles.radioBody">
+      <slot name="body">{{ body }}</slot>
+    </span>
+  </component>
+</template>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Radio/radio';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import Sort from '../helpers/Sort.vue';
+import SortBy from '../helpers/SortBy.vue';
 
-import { defineComponent, h, mergeProps } from 'vue';
-
-export default defineComponent({
+defineOptions({
   name: 'PfRadio',
-
-  props: {
-    /** Flag to show if the radio label is wrapped on small screen. */
-    labelWrapped: Boolean,
-
-    /** Flag to show if the radio label is shown before the radio button. */
-    labelBeforeButton: Boolean,
-
-    /** Flag to show if the radio is checked. */
-    checked: Boolean,
-
-    /** Flag to show if the radio is disabled. */
-    disabled: Boolean,
-
-    /** Flag to show if the radio selection is valid or invalid. */
-    valid: Boolean,
-
-    /** Id of the radio. */
-    id: {
-      type: String,
-      required: true,
-    },
-
-    /** Label text of the radio. */
-    label: {
-      type: String,
-      default: '',
-    },
-
-    /** Body of the radio. */
-    body: {
-      type: String,
-      default: '',
-    },
-
-    /** Description text of the radio. */
-    description: {
-      type: String,
-      default: '',
-    },
-
-    /** Aria label for the radio. */
-    ariaLabel: {
-      type: String,
-      default: '',
-    },
-  },
-
-  emits: ['change'],
-
-  render() {
-    const children = [];
-
-    let label = null;
-    if (this.label || this.$slots.label) {
-      const labelProps = {
-        class: [styles.radioLabel, {
-          [styles.modifiers.disabled]: this.disabled,
-        }],
-        for: undefined as string | undefined,
-      };
-      if (!this.labelWrapped) {
-        labelProps.for = this.id;
-      }
-      label = h(this.labelWrapped ? 'span' : 'label', labelProps, this.label || this.$slots.label?.());
-    }
-
-    const input = h('input', mergeProps({
-      id: this.id,
-      type: 'radio',
-      class: styles.radioInput,
-      'aria-invalid': !this.valid,
-      disabled: this.disabled,
-      checked: this.checked,
-      'aria-label': (this.label || this.$slots.label) ? null : this.ariaLabel,
-      onChange: (e: Event) => this.$emit('change', e),
-    }, this.$attrs));
-
-    if (this.labelBeforeButton) {
-      children.push(label);
-    }
-
-    children.push(input);
-
-    if (!this.labelBeforeButton) {
-      children.push(label);
-    }
-
-    if (this.description || this.$slots.description) {
-      children.push(h('span', { class: styles.radioDescription }, this.description || this.$slots.description?.()));
-    }
-
-    if (this.body || this.$slots.body) {
-      children.push(h('span', { class: styles.radioBody }, this.body || this.$slots.body?.()));
-    }
-
-    if (this.labelWrapped) {
-      return h('label', { class: styles.radio, for: this.id }, children);
-    }
-
-    return h('div', {
-      class: [styles.radio, {
-        [styles.modifiers.standalone]: !(this.label || this.$slots.label),
-      }],
-    }, children);
-  },
+  inheritAttrs: false,
 });
+
+const props = defineProps<{
+  /** Id of the radio. */
+  id?: string;
+  /** Flag to show if the radio label is wrapped on small screen. */
+  labelWrapped?: boolean;
+  /** Flag to show if the radio label is shown before the radio button. */
+  labelBeforeButton?: boolean;
+  /** Flag to show if the radio is checked. */
+  checked?: boolean;
+  /** Flag to show if the radio is disabled. */
+  disabled?: boolean;
+  /** Flag to show if the radio selection is valid or invalid. */
+  valid?: boolean;
+  /** Label text of the radio. */
+  label?: string;
+  /** Name for group of radios */
+  name: string;
+  /** Aria label for the radio. */
+  ariaLabel?: string;
+  /** Description text of the radio. */
+  description?: string;
+  /** Body of the radio. */
+  body?: string;
+} & OUIAProps>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  label?: (props: Record<never, never>) => any;
+  description?: (props: Record<never, never>) => any;
+  body?: (props: Record<never, never>) => any;
+}>();
+
+const emit = defineEmits<{
+  (name: 'change', e: Event): void;
+}>();
+
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>
