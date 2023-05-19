@@ -96,7 +96,7 @@
 
 <script lang="ts" setup>
 import { ref, type Ref } from "vue";
-const activeLink: Ref<string | undefined> = ref('link1');
+const activeLink: Ref<(string | undefined)> = ref('link1');
 const theme = ref('dark');
 const variant = ref('default');
 

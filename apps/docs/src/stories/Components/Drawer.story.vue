@@ -82,7 +82,7 @@ import { ref, type Ref } from 'vue';
 import type { ComponentProps, PfDrawer } from '@vue-patternfly/core';
 
 const expanded = ref(false);
-const position: Ref<ComponentProps<typeof PfDrawer>['position']> = ref('right');
+const position: Ref<ComponentProps<(typeof PfDrawer)>['position']> = ref('right');
 const inline = ref(false);
 const contentPadding = ref(true);
 const noPanelPadding = ref(false);
