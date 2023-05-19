@@ -18,13 +18,17 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject } from 'vue';
+import { inject, type ButtonHTMLAttributes } from 'vue';
 import { MenuInjectionKey } from './Menu.vue';
 import { MenuItemInjectionKey } from './MenuItem.vue';
 import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
 import { isDefined } from '@vueuse/shared';
 
-const props = withDefaults(defineProps<{
+defineOptions({
+  name: 'PfMenuItemAction',
+});
+
+export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick'> {
   /** The action icon to use */
   icon?: 'favorites';
   /** Accessibility label */
@@ -35,7 +39,9 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   /** Identifies the action item in the onActionClick on the Menu */
   actionId?: any;
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   favorited: undefined,
 });
 

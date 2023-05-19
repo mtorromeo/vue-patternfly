@@ -21,21 +21,23 @@ export const NavScrollablelKey = Symbol('NavScrollablelKey') as InjectionKey<Ref
 export const NavHorizontalKey = Symbol('NavHorizontalKey') as InjectionKey<boolean>;
 export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<(event: Event, groupId: string | undefined, itemId: string | undefined) => void>;
 export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | undefined>>;
+
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
+  theme?: 'dark' | 'light';
+  variant?: 'default' | 'horizontal' | 'tertiary' | 'horizontal-subnav' | 'subnav';
+  ariaLabel?: string;
+}
 </script>
 
 <script lang="ts" setup>
-import { ref, provide, type InjectionKey, type Ref } from 'vue';
+import { ref, provide, type InjectionKey, type Ref, type HTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 defineOptions({
   name: 'PfNav',
 });
 
-const props = withDefaults(defineProps<{
-  theme?: 'dark' | 'light';
-  variant?: 'default' | 'horizontal' | 'tertiary' | 'horizontal-subnav' | 'subnav';
-  ariaLabel?: string;
-}>(), {
+const props = withDefaults(defineProps<Props>(), {
   theme: 'dark',
   variant: 'default',
 });

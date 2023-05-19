@@ -22,25 +22,26 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import type { RouteLocationRaw } from 'vue-router';
-import { computed } from 'vue';
+import { computed, type Component, type LiHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import type { Component } from 'vue';
 
 defineOptions({
   name: 'PfBreadcrumbItem',
   inheritAttrs: false,
 });
 
-const props = defineProps<{
+export interface Props extends /* @vue-ignore */ AnchorHTMLAttributes {
   href?: string;
   to?: RouteLocationRaw;
   active?: boolean;
   dropdown?: boolean;
   showDivider?: boolean;
   component?: string | Component;
-  liAttrs: HTMLLIElement['attributes'];
-}>();
+  liAttrs?: LiHTMLAttributes;
+}
+
+const props = defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

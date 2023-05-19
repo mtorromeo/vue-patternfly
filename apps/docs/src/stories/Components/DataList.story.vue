@@ -24,7 +24,7 @@
 
     <story-canvas title="Basic">
       <pf-data-list aria-label="Simple data list example">
-        <pf-data-list-item aria-labelledby="simple-item1" debug>
+        <pf-data-list-item aria-labelledby="simple-item1">
           <pf-data-list-cell>
             <span id="simple-item1">Primary content</span>
           </pf-data-list-cell>
@@ -485,7 +485,7 @@
             id="width-ex3-action1"
             aria-labelledby="width-ex3-item1 width-ex3-action1"
             aria-label="Actions"
-            is-plain-button-action
+            plain-button
           >
             <pf-dropdown plain position="right">
               <template #toggle>

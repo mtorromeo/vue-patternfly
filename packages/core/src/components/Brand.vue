@@ -9,15 +9,18 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Brand/brand';
 import { cssVarsFromBreakpointProps, type WidthBreakpointProps, type HeightBreakpointProps } from '../breakpoints';
+import type { ImgHTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfBrand',
 });
 
-const props = defineProps<{
+export interface Props extends WidthBreakpointProps, HeightBreakpointProps, /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height'> {
   src: string;
   alt?: string;
-} & WidthBreakpointProps & HeightBreakpointProps>();
+}
+
+const props = defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

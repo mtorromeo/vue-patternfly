@@ -23,19 +23,22 @@ import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
 import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfDataListToggle',
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   id?: string;
   expanded?: boolean;
   noPadding?: boolean;
   ariaLabelledby?: string;
   ariaLabel?: string;
   ariaControls?: string;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   ariaLabel: 'Details',
 });
 

@@ -11,11 +11,20 @@ export type MenuListProvide = {
 };
 
 export const MenuListInjectionKey = Symbol('MenuListInjectionKey') as InjectionKey<MenuListProvide>;
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+}
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, ref, type InjectionKey, type Ref } from 'vue';
+import { inject, provide, ref, type InjectionKey, type Ref, type HTMLAttributes } from 'vue';
+
+defineOptions({
+  name: 'PfMenuList',
+});
+
+defineProps<Props>();
 
 const el: Ref<HTMLUListElement | undefined> = ref();
 const parentMenu = inject(MenuListInjectionKey, undefined);

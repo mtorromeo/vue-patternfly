@@ -12,9 +12,11 @@
 import type { VNode } from 'vue';
 import { vnodeTypeIsComponent } from "../util";
 
-const props = defineProps<{
+export interface Props {
   reverse?: boolean;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const slots = defineSlots<{
   default: (props: Record<never, never>) => VNode[];

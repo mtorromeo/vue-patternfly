@@ -19,18 +19,20 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/AlertGroup/alert-group';
 
-import { h } from 'vue';
+import { h, type HTMLAttributes } from 'vue';
 import { findChildrenVNodes } from '../../util';
 
 defineOptions({
   name: 'PfAlertGroupInline',
-});
+});// expands object types one level deep
 
-defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   toast?: boolean;
   liveRegion?: boolean;
   overflowMessage?: string;
-}>();
+}
+
+defineProps<Props>();
 
 const emit = defineEmits<{
   (name: 'overflowClick', e: MouseEvent | TouchEvent): void;

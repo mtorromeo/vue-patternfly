@@ -48,7 +48,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, inject, type Ref, ref, unref } from 'vue';
+import { computed, inject, type Ref, ref, unref, type HTMLAttributes } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';
@@ -60,7 +60,7 @@ defineOptions({
   name: 'PfDrawerPanelContent',
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** ID of the drawer panel */
   id?: string;
   /** Flag indicating that the drawer panel should not have a border. */
@@ -86,7 +86,9 @@ const props = withDefaults(defineProps<{
   };
   /** Color variant of the background of the drawer panel */
   colorVariant?: DrawerColorVariant | 'light-200' | 'default';
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   increment: 5,
   resizeAriaLabel: 'Resize',
 });

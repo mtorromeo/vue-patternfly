@@ -46,10 +46,14 @@ import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 import OverridableWrapper from '../../helpers/OverridableWrapper';
-import { ref } from 'vue';
+import { ref, type HTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 
-withDefaults(defineProps<{
+defineOptions({
+  name: 'PfSelect',
+});
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Flag to indicate if select is open */
   open?: boolean;
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the SelectOption. */
@@ -93,7 +97,9 @@ withDefaults(defineProps<{
   // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
   // /** @beta Callback for drilling out of a submenu */
   // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   open: undefined,
   selected: undefined,
   // drilldownItemPath: () => [],

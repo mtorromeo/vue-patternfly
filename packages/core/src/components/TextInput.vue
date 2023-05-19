@@ -30,13 +30,17 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref } from 'vue';
+import { type Ref, ref, type InputHTMLAttributes } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation } from '../input';
 import { FormGroupInputsKey } from './Form/common';
 
-const props = withDefaults(defineProps<{
+defineOptions({
+  name: 'PfTextInput',
+});
+
+export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   readonly?: boolean;
@@ -80,7 +84,9 @@ const props = withDefaults(defineProps<{
   /** Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false. */
   ouiaSafe?: boolean;
   autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   autoValidate: 'change',
   modelValue: undefined,

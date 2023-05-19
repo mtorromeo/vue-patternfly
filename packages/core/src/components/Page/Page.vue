@@ -34,23 +34,8 @@
 <script lang="ts">
 export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
 export const PageNavOpenKey = Symbol('PageNavOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
-</script>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Page/page';
-import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
-import { useWindowSize } from '@vueuse/core';
-import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef } from 'vue';
-import PfDrawer from '../Drawer/Drawer.vue';
-import PfDrawerContent from '../Drawer/DrawerContent.vue';
-import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
-import PfDrawerContentBody from '../Drawer/DrawerContentBody.vue';
-
-defineOptions({
-  name: 'PfPage',
-});
-
-const props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Sets the value for role on the <main> element */
   role?: string;
   /** an id to use for the [role="main"] element */
@@ -72,7 +57,24 @@ const props = withDefaults(defineProps<{
   mainAriaLabel?: string;
   /** Flag indicating Notification drawer in expanded */
   drawerExpanded?: boolean;
-}>(), {
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Page/page';
+import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
+import { useWindowSize } from '@vueuse/core';
+import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes } from 'vue';
+import PfDrawer from '../Drawer/Drawer.vue';
+import PfDrawerContent from '../Drawer/DrawerContent.vue';
+import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
+import PfDrawerContentBody from '../Drawer/DrawerContentBody.vue';
+
+defineOptions({
+  name: 'PfPage',
+});
+
+const props = withDefaults(defineProps<Props>(), {
   defaultManagedSidebarOpen: true,
 });
 

@@ -29,12 +29,8 @@ export enum ListComponent {
   ol = 'ol',
   ul = 'ul'
 }
-</script>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/List/list';
-
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Adds list variant styles */
   variant?: ListVariant.inline;
   /** Modifies the list to add borders between items */
@@ -46,7 +42,18 @@ withDefaults(defineProps<{
   /** Sets the way items are numbered if variant is set to ordered */
   type?: OrderType;
   component?: 'ol' | 'ul';
-}>(), {
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/List/list';
+import type { HTMLAttributes } from 'vue';
+
+defineOptions({
+  name: 'PfList',
+});
+
+withDefaults(defineProps<Props>(), {
   iconSize: 'default',
   type: OrderType.number,
   component: ListComponent.ul,

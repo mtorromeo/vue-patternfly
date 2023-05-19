@@ -4,24 +4,21 @@
       [styles.modifiers.light]: border === 'light',
       [styles.modifiers.dark]: border === 'dark',
     }]"
-    :src="src"
-    :alt="alt"
   >
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Avatar/avatar';
+import type { ImgHTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfAvatar',
 });
 
-defineProps<{
-  /** Attribute that specifies the URL of the image for the Avatar. */
-  src?: string;
-  /** Attribute that specifies the alternate text of the image for the Avatar. */
-  alt: string;
+export interface Props extends /* @vue-ignore */ ImgHTMLAttributes {
   /** Border to add */
   border: 'light' | 'dark' | null;
-}>();
+}
+
+defineProps<Props>();
 </script>

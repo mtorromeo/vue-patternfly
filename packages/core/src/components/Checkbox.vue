@@ -34,11 +34,11 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, ref, watch, type DefineComponent, type Ref } from 'vue';
+import { computed, ref, watch, type Component, type Ref, type HTMLAttributes } from 'vue';
 import { getUniqueId } from '../util';
 
-const props = withDefaults(defineProps<{
-  component?: string | DefineComponent;
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onChange'> {
+  component?: string | Component;
   /** Flag to show if the radio is checked. */
   modelValue?: boolean | null;
   /** Flag to show if the radio is disabled. */
@@ -54,7 +54,9 @@ const props = withDefaults(defineProps<{
   /** Description text of the radio. */
   description?: string;
   name?: string;
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   component: 'div',
 });
 

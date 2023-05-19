@@ -36,7 +36,7 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 
 import { type PaddingBreakpointProps, type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
-import { computed, type Component } from 'vue';
+import { computed, type Component, type HTMLAttributes } from 'vue';
 import { isDefined } from '@vueuse/shared';
 
 const variantTypes = {
@@ -59,7 +59,7 @@ defineOptions({
   name: 'PfPageSection',
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Section background color variant */
   variant?: keyof typeof variantStyles;
   /** Section type variant */
@@ -80,11 +80,13 @@ const props = withDefaults(defineProps<{
   overflowScroll?: boolean;
   /** Sets the base component to render. Defaults to section */
   component?: string | Component;
-} & PaddingBreakpointProps & StickyBreakpointProps>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   type: 'default',
   filled: undefined,
-  component: 'section',
+  component: 'section' as any,
 });
 
 defineSlots<{

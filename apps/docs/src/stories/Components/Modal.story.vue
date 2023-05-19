@@ -33,7 +33,7 @@
         {{ sample_content }}
         <template #help>
           <pf-tooltip>
-            <pf-button variant="plain" aria-help="help">
+            <pf-button variant="plain">
               <help-icon />
             </pf-button>
             <template #content>

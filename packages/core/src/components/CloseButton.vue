@@ -5,12 +5,18 @@
 </template>
 
 <script lang="ts" setup>
+import type { ComponentProps } from '../util';
 import PfButton from './Button.vue';
 import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
 
 defineOptions({
   name: 'PfCloseButton',
 });
+
+export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick'> {
+}
+
+defineProps<Props>();
 
 const emit = defineEmits<{
   (name: 'click', e: Event): void;

@@ -13,17 +13,23 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, inject, ref, watch, type Ref } from 'vue';
+import { computed, inject, ref, watch, type Ref, type HTMLAttributes } from 'vue';
 import { MenuListInjectionKey, type MenuListProvide } from './MenuList.vue';
 
-const props = defineProps<{
+defineOptions({
+  name: 'PfMenuContent',
+});
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Height of the menu content */
   menuHeight?: string;
   /** Maximum height of menu content */
   maxMenuHeight?: string;
   /** Callback to return the height of the menu content */
   onHeight?: (height: string) => void;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const el: Ref<HTMLDivElement | undefined> = ref();
 const menuList = inject(MenuListInjectionKey, undefined);

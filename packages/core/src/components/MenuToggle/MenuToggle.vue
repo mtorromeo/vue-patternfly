@@ -53,20 +53,18 @@
   </component>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'PfMenuToggle',
-});
-</script>
-
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
 import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
-import { computed, defineComponent, useSlots } from 'vue';
+import { computed, useSlots, type ButtonHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough';
 import { useManagedProp } from '../../use';
 
-const $props = withDefaults(defineProps<{
+defineOptions({
+  name: 'PfMenuToggle',
+});
+
+export interface Props extends /* @vue-ignore */ ButtonHTMLAttributes {
   /** Flag indicating the toggle has expanded styling */
   expanded?: boolean;
   /** Flag indicating the toggle is disabled */
@@ -79,7 +77,9 @@ const $props = withDefaults(defineProps<{
   splitButton?: boolean | 'default' | 'action' | 'checkbox';
   /** Variant styles of the menu toggle */
   variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
-}>(), {
+}
+
+const $props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
 });
 

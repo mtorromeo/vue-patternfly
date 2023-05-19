@@ -176,7 +176,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-const page = ref(1);
-const perPage = ref(10);
+// import { ref } from "vue";
+// const page = ref(1);
+// const perPage = ref(10);
 </script>

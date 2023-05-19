@@ -68,7 +68,7 @@
 
     <story-canvas title="Checkbox input with counts">
       <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-select-option placeholder disabled>
+        <pf-select-option disabled>
           Please Choose
         </pf-select-option>
         <pf-select-option check value="Mr" />
@@ -81,7 +81,7 @@
 
     <story-canvas title="Checkbox input no badge">
       <pf-select placeholder="Filter by status" variant="checkbox" selection-badge-hidden>
-        <pf-select-option placeholder disabled>
+        <pf-select-option disabled>
           Please Choose
         </pf-select-option>
         <pf-select-option check value="Mr" />
@@ -94,7 +94,7 @@
 
     <story-canvas title="Grouped checkbox input">
       <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-select-option placeholder disabled>
+        <pf-select-option disabled>
           Please Choose
         </pf-select-option>
         <pf-select-option check value="Mr" />
@@ -107,7 +107,7 @@
 
     <story-canvas title="Grouped single with filtering">
       <pf-select placeholder="Filter by status" variant="checkbox" inline-filter>
-        <pf-select-option placeholder disabled>
+        <pf-select-option disabled>
           Please Choose
         </pf-select-option>
         <pf-select-option check value="Mr" />

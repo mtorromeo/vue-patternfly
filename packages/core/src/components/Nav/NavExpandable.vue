@@ -41,14 +41,13 @@ import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/acc
 
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { getUniqueId } from '../../util';
-import { type Ref, ref } from 'vue';
-import { computed } from 'vue';
+import { type Ref, ref, computed, type LiHTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfNavExpandable',
 });
 
-const props = defineProps<{
+export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
   title?: string;
   srText?: string;
   groupId?: string | number;
@@ -56,7 +55,9 @@ const props = defineProps<{
   active?: boolean;
   managed?: boolean;
   expanded?: boolean;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
   (name: 'update:expanded', value: boolean, groupId: string | number | undefined): void;

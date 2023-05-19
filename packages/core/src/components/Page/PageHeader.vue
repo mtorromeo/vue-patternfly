@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import { computed, inject, type Component } from 'vue';
+import { computed, inject, type Component, type HTMLAttributes } from 'vue';
 import BarsIcon from '@vue-patternfly/icons/dist/esm/icons/bars-icon';
 import PfButton from '../Button.vue';
 import { PageManagedSidebarKey, PageNavOpenKey } from './Page.vue';
@@ -43,7 +43,7 @@ defineOptions({
   name: 'PfPageHeader',
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Additional props passed to the logo anchor container */
   logoProps?: object;
   /** Component to use to wrap the passed <logo> */
@@ -60,7 +60,9 @@ const props = withDefaults(defineProps<{
   ariaLabel?: string;
   /** Aria controls for the nav toggle button */
   ariaControls?: string;
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   ariaLabel: 'Global navigation',
   ariaControls: 'page-sidebar',
   navToggleId: 'nav-toggle',

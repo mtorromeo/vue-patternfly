@@ -7,15 +7,18 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { DrawerColorVariant } from './common';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfDrawerSection',
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Color variant of the background of the drawer Section */
   colorVariant?: DrawerColorVariant | 'light-200' | 'default';
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   colorVariant: DrawerColorVariant.default,
 });
 

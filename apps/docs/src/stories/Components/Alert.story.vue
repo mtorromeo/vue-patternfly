@@ -49,7 +49,6 @@
         live-region
         variant="info"
         title="Default live region configuration"
-        close
         @close="alert('Clicked the close button')"
       >
         This Alert uses the recommended
@@ -63,7 +62,6 @@
         aria-atomic="true"
         variant="info"
         title="Customized live region"
-        close
         @close="alert('Clicked the close button')"
       >
         You can alternatively omit the
@@ -197,7 +195,8 @@
 </style>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, type HTMLAttributes } from 'vue';
+import type { ComponentProps, PfAlert } from '@vue-patternfly/core';
 import UsersIcon from '@vue-patternfly/icons/dist/esm/icons/users-icon';
 import BoxIcon from '@vue-patternfly/icons/dist/esm/icons/box-icon';
 import DatabaseIcon from '@vue-patternfly/icons/dist/esm/icons/database-icon';
@@ -206,12 +205,12 @@ import LaptopIcon from '@vue-patternfly/icons/dist/esm/icons/laptop-icon';
 
 type AlertData = {
   title: string;
-  variant: string;
+  variant: ComponentProps<(typeof PfAlert)>['variant'];
   liveRegion?: boolean;
   key: number;
-  ariaLive?: string;
-  ariaRelevant?: string;
-  ariaAtomic?: string;
+  ariaLive?: HTMLAttributes['aria-live'];
+  ariaRelevant?: HTMLAttributes['aria-relevant'];
+  ariaAtomic?: HTMLAttributes['aria-atomic'];
 };
 
 const sample_text = ref("Alert text");

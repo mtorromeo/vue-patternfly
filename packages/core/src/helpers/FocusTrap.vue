@@ -17,11 +17,13 @@ defineSlots<{
   default?: (props: Record<never, never>) => any;
 }>();
 
-const props = defineProps<{
+export interface Props {
   active?: boolean;
   paused?: boolean;
   focusTrapOptions?: UseFocusTrapOptions,
-}>();
+}
+
+const props = defineProps<Props>();
 
 const target: Ref<HTMLDivElement | undefined> = ref();
 const { activate, deactivate, pause, unpause } = useFocusTrap(target, {

@@ -27,14 +27,14 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
-import { computed } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 import { isDefined } from '@vueuse/shared';
 
 defineOptions({
   name: 'PfPageNavigation',
 });
 
-const props = defineProps<{
+export interface Props extends StickyBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Limits the width of the breadcrumb */
   widthLimited?: boolean;
   /** Limits the width of the section and sets the --pf-c-page--section--m-limit-width--MaxWidth variable to this value */
@@ -45,7 +45,9 @@ const props = defineProps<{
   shadowBottom?: boolean;
   /** Flag indicating if the PageBreadcrumb has a scrolling overflow */
   overflowScroll?: boolean;
-} & StickyBreakpointProps>();
+}
+
+const props = defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

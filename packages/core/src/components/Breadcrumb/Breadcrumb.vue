@@ -9,14 +9,17 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import { findChildrenVNodes } from '../../util';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfBreadcrumb',
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   ariaLabel?: string;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   ariaLabel: 'Breadcrumb',
 });
 

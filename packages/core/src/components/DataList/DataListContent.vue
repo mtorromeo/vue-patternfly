@@ -14,17 +14,19 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-import { computed, inject } from "vue";
+import { computed, inject, type HTMLAttributes } from "vue";
 import { DataListItemKey } from './DataListItem.vue';
 
 defineOptions({
   name: 'PfDataListContent',
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   noPadding?: boolean;
   hidden?: boolean;
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   hidden: undefined,
 });
 

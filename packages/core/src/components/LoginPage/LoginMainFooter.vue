@@ -13,4 +13,14 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Login/login';
+import type { HTMLAttributes } from 'vue';
+
+defineOptions({
+  name: 'PfLoginMainFooter',
+});
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+}
+
+defineProps<Props>();
 </script>

@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject } from 'vue';
+import { inject, type HTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
@@ -48,13 +48,15 @@ defineOptions({
   name: 'PfAccordionItem',
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   title?: string;
   toggleComponent?: string;
   contentComponent?: string;
   fixed?: boolean;
   expanded?: boolean;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   expanded: undefined,
 });
 

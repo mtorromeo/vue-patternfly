@@ -39,15 +39,8 @@ export interface MenuState {
 }
 
 export type MenuItemId = string | number | symbol;
-</script>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, ref, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef } from 'vue';
-import { useManagedProp } from '../../use';
-import { isDefined } from '@vueuse/shared';
-
-const $props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
   selected?: MenuItemId | MenuItemId[] | null;
   /** Search input of menu */
@@ -82,7 +75,20 @@ const $props = withDefaults(defineProps<{
   // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
   // /** @beta Callback for drilling out of a submenu */
   // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
-}>(), {
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Menu/menu';
+import { inject, provide, reactive, ref, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
+import { useManagedProp } from '../../use';
+import { isDefined } from '@vueuse/shared';
+
+defineOptions({
+  name: 'PfMenu',
+});
+
+const props = withDefaults(defineProps<Props>(), {
   // drilldownItemPath: () => [],
 });
 
@@ -116,10 +122,10 @@ provide(MenuInjectionKey, {
   parentMenu,
   selected: managedSelected,
   // drilldownItemPath: $props.drilldownItemPath,
-  activeItemId: $props.activeItemId,
+  activeItemId: props.activeItemId,
   state,
   flyout,
-  onActionClick: $props.onActionClick,
+  onActionClick: props.onActionClick,
   onSelect(event: Event, itemId: MenuItemId | null | undefined) {
     emit('select', event, itemId);
     if (!isDefined(itemId)) {

@@ -57,12 +57,11 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import { type Component, type UnwrapRef, type Ref, ref, computed } from 'vue';
-
 import PfSpinner from './Spinner.vue';
 import PassThrough from '../helpers/PassThrough';
 import type { RouteLocationRaw, useLink } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import { type Component, type UnwrapRef, type Ref, ref, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from 'vue';
 
 type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
@@ -71,7 +70,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick'> {
   /** Sets the base component to render. defaults to button */
   component?: string | Component;
   /** Adds active styling to button. */
@@ -100,8 +99,6 @@ const props = withDefaults(defineProps<{
   variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'warning' | 'link' | 'plain' | 'control';
   /** Sets position of the link icon */
   iconPosition?: 'left' | 'right';
-  /** Adds accessible text to the button. */
-  ariaLabel?: string;
   /** Sets the button tabindex. */
   tabindex?: number;
   /** Adds small styling to the button */
@@ -120,7 +117,9 @@ const props = withDefaults(defineProps<{
   replace?: boolean;
   href?: string;
   ariaCurrentValue?: string;
-} & OUIAProps>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   type: 'button',
   variant: 'primary',
   iconPosition: 'left',

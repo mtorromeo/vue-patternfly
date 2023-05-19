@@ -78,21 +78,16 @@ import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 
-import { ref, watch, type Ref } from 'vue';
+import { ref, watch, type Ref, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
-import { onBeforeUnmount } from 'vue';
-import { onMounted } from 'vue';
-import { computed } from 'vue';
-import type { Component } from 'vue';
-import type { OUIAProps } from '../../helpers/ouia';
-import { useOUIAProps } from '../../helpers/ouia';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfAlert',
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds accessible text to the alert. */
   ariaLabel?: string;
   /** Uniquely identifies the alert. */
@@ -131,7 +126,9 @@ const props = withDefaults(defineProps<{
   variant?: keyof typeof AlertVariantIcons;
   /** Variant label text for screen readers. */
   variantLabel?: string;
-} & OUIAProps>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
   variant: 'default',
   truncateTitle: 0,

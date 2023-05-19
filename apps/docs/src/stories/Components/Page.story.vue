@@ -18,7 +18,7 @@
             </template>
             <pf-page-header-tools>
               <pf-page-header-tools-group>
-                <pf-page-header-tools-item visibility-xs="hidden">
+                <pf-page-header-tools-item visibility-sm="hidden">
                   header-tools
                 </pf-page-header-tools-item>
               </pf-page-header-tools-group>
@@ -60,7 +60,7 @@
             </template>
             <pf-page-header-tools>
               <pf-page-header-tools-group>
-                <pf-page-header-tools-item visibility-xs="hidden">
+                <pf-page-header-tools-item visibility-sm="hidden">
                   header-tools
                 </pf-page-header-tools-item>
               </pf-page-header-tools-group>

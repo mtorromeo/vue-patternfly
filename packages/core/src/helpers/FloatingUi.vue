@@ -12,7 +12,7 @@ defineOptions({
   name: 'PfFloatingUi',
 });
 
-const props = withDefaults(defineProps<{
+export interface Props {
   reference: string | HTMLElement | undefined;
   disable?: boolean;
   placement?: Placement;
@@ -22,7 +22,9 @@ const props = withDefaults(defineProps<{
   middleware?: Middleware[];
   strategy?: Strategy,
   offset?: OffsetOptions;
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   placement: 'bottom',
   zIndex: 9999,
   middleware: (): Middleware[] => [],

@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, provide, type Ref, ref } from 'vue';
+import { computed, provide, type Ref, ref, type HTMLAttributes } from 'vue';
 import OverridableWrapper from '../../helpers/OverridableWrapper';
 import { DrawerKey } from './common';
 import PfDrawerContent from './DrawerContent.vue';
@@ -25,7 +25,7 @@ defineOptions({
   name: 'PfDrawer',
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Indicates if the drawer is expanded */
   expanded?: boolean;
   /** Indicates if the content element and panel element are displayed side by side. */
@@ -34,7 +34,9 @@ const props = withDefaults(defineProps<{
   static?: boolean;
   /** Position of the drawer panel */
   position?: 'left' | 'right' | 'bottom';
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   position: 'right',
 });
 

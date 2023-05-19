@@ -132,7 +132,7 @@
               Action 2 disabled
             </pf-menu-item>
             <pf-menu-item
-            description="Nunc non ornare ex, et pretium dui. Duis nec augue at urna elementum blandit tincidunt eget metus. Aenean sed metus id urna dignissim interdum. Aenean vel nisl vitae arcu vehicula pulvinar eget nec turpis. Cras sit amet est est."
+              description="Nunc non ornare ex, et pretium dui. Duis nec augue at urna elementum blandit tincidunt eget metus. Aenean sed metus id urna dignissim interdum. Aenean vel nisl vitae arcu vehicula pulvinar eget nec turpis. Cras sit amet est est."
             >
               <template #icon><code-branch-icon /></template>
               Action 3
@@ -143,7 +143,7 @@
     </story-canvas>
 
     <story-canvas title="With actions">
-      <pf-menu @select="(event: Event, itemKey: string | number | symbol | null) => toggle(itemKey)">
+      <pf-menu @select="(event: Event, itemKey: string | number | symbol | null | undefined) => toggle(itemKey)">
         <pf-menu-content>
           <pf-menu-group label="Actions" label-heading-level="h3">
             <pf-menu-list>
@@ -217,7 +217,7 @@ import { reactive } from 'vue';
 
 const selected: (string | number | symbol | null)[] = reactive(['item3', 'item4']);
 
-function toggle(itemKey: string | number | symbol | null) {
+function toggle(itemKey: string | number | symbol | null | undefined) {
   const i = selected.indexOf(itemKey);
   if (i < 0) {
     selected.push(itemKey);

@@ -6,10 +6,16 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfBackdrop',
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+}
+
+defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

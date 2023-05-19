@@ -8,6 +8,10 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 const counter = ref(0);
 
 onMounted(() => console.log('KeepAliveTest mounted'));

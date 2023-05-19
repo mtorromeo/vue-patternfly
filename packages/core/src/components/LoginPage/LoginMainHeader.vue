@@ -14,13 +14,20 @@
 </template>
 
 <script lang="ts" setup>
+import type { HTMLAttributes } from 'vue';
 import PfTitle from '../Title.vue';
 import styles from '@patternfly/react-styles/css/components/Login/login';
 
-defineProps<{
+defineOptions({
+  name: 'PfLoginMainHeader',
+});
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Title for the login main header */
   title?: string;
   /** Subtitle that contains the text, URL, and URL text for the login main header */
   subtitle?: string;
-}>();
+}
+
+defineProps<Props>();
 </script>

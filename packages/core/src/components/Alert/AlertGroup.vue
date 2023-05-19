@@ -14,13 +14,14 @@
 
 <script lang="ts" setup>
 import PfAlertGroupInline from './AlertGroupInline.vue';
+import type { ComponentProps } from '../../util';
 
 defineOptions({
   name: 'PfAlertGroup',
   inheritAttrs: false,
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfAlertGroupInline> {
   /** Toast notifications are positioned at the top right corner of the viewport */
   toast?: boolean;
   /** Turns the container into a live region so that changes to content within the AlertGroup, such as appending an Alert, are reliably announced to assistive technology. */
@@ -29,7 +30,9 @@ withDefaults(defineProps<{
   appendTo?: string;
   /** Custom text to show for the overflow message */
   overflowMessage?: string;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   appendTo: 'body',
 });
 

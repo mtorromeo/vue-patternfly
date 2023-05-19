@@ -42,6 +42,7 @@ import cssVarNameFilter from '@patternfly/react-tokens/dist/esm/c_background_ima
 import PassThrough from '../helpers/PassThrough';
 import { cloneVNode, type VNode } from 'vue';
 import { findChildrenVNodes } from '../util';
+import type { HTMLAttributes } from 'vue';
 
 export interface BackgroundImageSrcMap {
   xs: string;
@@ -51,10 +52,12 @@ export interface BackgroundImageSrcMap {
   lg: string;
 }
 
-const props = defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Override image styles using a string or BackgroundImageSrc */
   src: string | BackgroundImageSrcMap;
-}>();
+}
+
+const props = defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

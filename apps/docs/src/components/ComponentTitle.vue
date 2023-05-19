@@ -1,5 +1,5 @@
 <template>
-  <pf-title h="2" size="2xl">
+  <pf-title :h="2" size="2xl">
     {{ camelName }}
     <code>{{ name }}</code>
   </pf-title>
@@ -7,10 +7,13 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import type { ComponentProps, PfTitle } from '@vue-patternfly/core';
 
-const props = defineProps<{
+interface Props extends /* @vue-ignore */ ComponentProps<typeof PfTitle> {
   name: string;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const camelize = (s: string) =>
   s.toUpperCase().replace("-", "").replace("_", "");

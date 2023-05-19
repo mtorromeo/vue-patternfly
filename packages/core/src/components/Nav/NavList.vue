@@ -27,7 +27,7 @@ import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon'
 import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
-import { inject, ref, type Ref, onMounted, onBeforeUnmount } from 'vue';
+import { inject, ref, type Ref, onMounted, onBeforeUnmount, type HTMLAttributes } from 'vue';
 import { NavHorizontalKey, NavScrollablelKey } from './Nav.vue';
 
 defineOptions({
@@ -35,10 +35,12 @@ defineOptions({
   inheritAttrs: false,
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   ariaLeftScroll?: string;
   ariaRightScroll?: string;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   ariaLeftScroll: 'Scroll left',
   ariaRightScroll: 'Scroll right',
 });

@@ -24,6 +24,7 @@ module.exports = {
       ? 'warn'
       : 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
     'vue/component-definition-name-casing': 'off',
     'vue/html-closing-bracket-newline': 'off',
     'vue/max-attributes-per-line': 'off',

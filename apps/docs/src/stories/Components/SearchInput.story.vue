@@ -19,8 +19,8 @@
       <pf-search-input
         v-model="filter2"
         placeholder="Find by name"
-        @clear="filter2 = ''"
         :results-count="[...filter2.matchAll(/[a-z]/g)].length"
+        @clear="filter2 = ''"
       />
     </story-canvas>
 

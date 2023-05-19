@@ -9,9 +9,11 @@
 
 import type { VNode } from 'vue';
 
-defineProps<{
+export interface Props {
   weight: number;
-}>();
+}
+
+defineProps<Props>();
 
 defineSlots<{
   default: (props: Record<never, never>) => VNode[];

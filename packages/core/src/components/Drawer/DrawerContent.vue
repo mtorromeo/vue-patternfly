@@ -19,13 +19,18 @@
 <script lang="ts">
 export type DrawerContentRef = Ref<HTMLDivElement | InstanceType<typeof OverridableWrapper> | undefined>;
 export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey<DrawerContentRef>;
+
+export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
+  /** Color variant of the background of the drawer panel */
+  colorVariant?: DrawerColorVariant | 'light-200' | 'default';
+}
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { type InjectionKey, provide, type Ref, ref } from 'vue';
 import { DrawerColorVariant } from './common';
-
+import type { ComponentProps } from '../../util';
 import OverridableWrapper from '../../helpers/OverridableWrapper';
 import PfDrawerMain from './DrawerMain.vue';
 import PfDrawerPanelContent from './DrawerPanelContent.vue';
@@ -34,10 +39,7 @@ defineOptions({
   name: 'PfDrawerContent',
 });
 
-withDefaults(defineProps<{
-  /** Color variant of the background of the drawer panel */
-  colorVariant?: DrawerColorVariant | 'light-200' | 'default';
-}>(), {
+withDefaults(defineProps<Props>(), {
   colorVariant: DrawerColorVariant.default,
 });
 

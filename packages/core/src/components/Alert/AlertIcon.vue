@@ -12,6 +12,7 @@ import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-e
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
 import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
+import type { HTMLAttributes } from 'vue';
 
 export const AlertVariantIcons = {
   success: CircleCheckIcon,
@@ -20,6 +21,10 @@ export const AlertVariantIcons = {
   info: CircleInfoIcon,
   default: BellIcon,
 };
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  variant?: keyof typeof AlertVariantIcons;
+}
 </script>
 
 <script lang="ts" setup>
@@ -29,9 +34,7 @@ defineOptions({
   name: 'PfAlertIcon',
 });
 
-withDefaults(defineProps<{
-  variant?: keyof typeof AlertVariantIcons;
-}>(), {
+withDefaults(defineProps<Props>(), {
   variant: 'default',
 });
 

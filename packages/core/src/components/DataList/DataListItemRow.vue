@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
-import { inject } from "vue";
+import { inject, type HTMLAttributes } from "vue";
 import type { DataListWrapModifier } from './DataList.vue';
 import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
@@ -31,9 +31,11 @@ defineOptions({
   name: 'PfDataListItemRow',
 });
 
-defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   wrapModifier?: DataListWrapModifier
-}>();
+}
+
+defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

@@ -139,29 +139,8 @@ export type SearchInputProvide = {
 }
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
-</script>
 
-<script lang="ts" setup>
-import { type InjectionKey, nextTick, provide, type Ref, ref } from 'vue';
-import { useManagedProp } from '../../use';
-import PfInputGroup from '../InputGroup/InputGroup.vue';
-import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
-import PfTextInputGroupMain from '../TextInputGroup/TextInputGroupMain.vue';
-import PfTextInputGroupUtilities from '../TextInputGroup/TextInputGroupUtilities.vue';
-import PfAdvancedSearchMenu from './AdvancedSearchMenu.vue';
-import PfBadge from '../Badge.vue';
-import PfButton from '../Button.vue';
-import PassThrough from '../../helpers/PassThrough';
-import FloatingUi from '../../helpers/FloatingUi.vue';
-
-import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';
-import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
-import AngleUpIcon from '@vue-patternfly/icons/dist/esm/icons/angle-up-icon';
-import AngleDownIcon from '@vue-patternfly/icons/dist/esm/icons/angle-down-icon';
-import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
-import ArrowRightIcon from '@vue-patternfly/icons/dist/esm/icons/arrow-right-icon';
-
-const props = withDefaults(defineProps<{
+export interface Props {
   /** Value of the search input. */
   modelValue?: string;
   /** Flag indicating if search input is disabled. */
@@ -231,18 +210,46 @@ const props = withDefaults(defineProps<{
   /** A callback for when the user clicks the clear button. */
   onClear?: (event: Event) => void;
   /** A callback for when the user clicks to navigate to next result. */
-  onNextClick: (event: Event) => void;
+  onNextClick?: (event: Event) => void;
   /** A callback for when the user clicks to navigate to previous result. */
-  onPreviousClick: (event: Event) => void;
+  onPreviousClick?: (event: Event) => void;
   /** A callback for when the open advanced search button is clicked. */
-  onToggleAdvancedSearch: (event: Event, isOpen?: boolean) => void;
+  onToggleAdvancedSearch?: (event: Event, isOpen?: boolean) => void;
   /** A callback for when the search button is clicked. */
-  onSearch: (
+  onSearch?: (
     value: string,
     event: Event,
     attrValueMap: { [key: string]: string }
   ) => void,
-}>(), {
+}
+</script>
+
+<script lang="ts" setup>
+import { type InjectionKey, nextTick, provide, type Ref, ref } from 'vue';
+import { useManagedProp } from '../../use';
+import PfInputGroup from '../InputGroup/InputGroup.vue';
+import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
+import PfTextInputGroupMain from '../TextInputGroup/TextInputGroupMain.vue';
+import PfTextInputGroupUtilities from '../TextInputGroup/TextInputGroupUtilities.vue';
+import PfAdvancedSearchMenu from './AdvancedSearchMenu.vue';
+import PfBadge from '../Badge.vue';
+import PfButton from '../Button.vue';
+import PassThrough from '../../helpers/PassThrough';
+import FloatingUi from '../../helpers/FloatingUi.vue';
+
+import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';
+import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
+import AngleUpIcon from '@vue-patternfly/icons/dist/esm/icons/angle-up-icon';
+import AngleDownIcon from '@vue-patternfly/icons/dist/esm/icons/angle-down-icon';
+import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
+import ArrowRightIcon from '@vue-patternfly/icons/dist/esm/icons/arrow-right-icon';
+
+defineOptions({
+  name: 'PfSearchInput',
+  inheritAttrs: false,
+});
+
+const props = withDefaults(defineProps<Props>(), {
   attributes: () => [],
   ariaLabel: 'Search input',
   advancedSearchOpen: undefined,

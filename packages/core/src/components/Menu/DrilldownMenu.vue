@@ -15,11 +15,18 @@
 import PfMenu from './Menu.vue';
 import PfMenuContent from './MenuContent.vue';
 import PfMenuList from './MenuList.vue';
+import type { ComponentProps } from '../../util';
 
-defineProps<{
+defineOptions({
+  name: 'PfDrilldownMenu',
+});
+
+export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfMenu> {
   /** Flag indicating whether the menu is drilled in */
   menuDrilledIn?: boolean;
   /** Optional callback to get the height of the sub menu */
   onHeight?: (height: string) => void;
-}>();
+}
+
+defineProps<Props>();
 </script>

@@ -47,13 +47,14 @@ import styles from '@patternfly/react-styles/css/components/Radio/radio';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfRadio',
   inheritAttrs: false,
 });
 
-const props = defineProps<{
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Id of the radio. */
   id?: string;
   /** Flag to show if the radio label is wrapped on small screen. */
@@ -76,7 +77,9 @@ const props = defineProps<{
   description?: string;
   /** Body of the radio. */
   body?: string;
-} & OUIAProps>();
+}
+
+const props = defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

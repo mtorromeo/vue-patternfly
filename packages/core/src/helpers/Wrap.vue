@@ -11,9 +11,11 @@
 import { h, type VNode } from 'vue';
 import { findChildrenVNodes } from '../util';
 
-const props = defineProps<{
+export interface Props {
   disabled?: boolean;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const slots = defineSlots<{
   default: (props: Record<never, never>) => VNode[];

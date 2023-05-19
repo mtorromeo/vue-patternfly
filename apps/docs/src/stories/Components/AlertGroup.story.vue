@@ -50,7 +50,6 @@
           :variant="a.variant"
           :title="a.title"
           live-region
-          close
           @close="alerts.splice(index, 1)"
         />
       </pf-alert-group>
@@ -97,7 +96,6 @@
           :variant="a.variant"
           :title="a.title"
           live-region
-          close
           @close="alerts2.splice(index, 1)"
         />
       </pf-alert-group>
@@ -106,16 +104,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from "vue";
+import { reactive, computed, type HTMLAttributes } from 'vue';
+import type { ComponentProps, PfAlert } from '@vue-patternfly/core';
 
 type AlertData = {
   title: string;
-  variant: string;
+  variant: ComponentProps<(typeof PfAlert)>['variant'];
   liveRegion?: boolean;
   key: number;
-  ariaLive?: string;
-  ariaRelevant?: string;
-  ariaAtomic?: string;
+  ariaLive?: HTMLAttributes['aria-live'];
+  ariaRelevant?: HTMLAttributes['aria-relevant'];
+  ariaAtomic?: HTMLAttributes['aria-atomic'];
 };
 
 const alerts: AlertData[] = reactive([]);

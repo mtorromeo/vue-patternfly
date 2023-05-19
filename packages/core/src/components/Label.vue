@@ -26,12 +26,11 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import { ref, type Ref } from 'vue';
+import { ref, type Ref, type HTMLAttributes, type VNode } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton.vue';
 import PfTooltip, { type TooltipPosition } from './Tooltip/Tooltip.vue';
 import type { RouteLocationRaw } from 'vue-router';
-import type { VNode } from 'vue';
 
 const colorStyles = {
   blue: styles.modifiers.blue,
@@ -47,7 +46,7 @@ defineOptions({
   name: 'PfLabel',
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** The color of the label outline/fill */
   color?: keyof typeof colorStyles,
   variant?: 'outline' | 'filled';
@@ -57,7 +56,9 @@ withDefaults(defineProps<{
   outline?: boolean;
   close?: boolean;
   truncated?: boolean;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   color: 'grey',
   variant: 'filled',
   tooltipPosition: 'top',

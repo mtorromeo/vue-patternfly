@@ -6,6 +6,7 @@
   <floating-ui v-if="$slots.content" :reference="referenceElement" :placement="placement" :offset="distance" flip>
     <div
       ref="tooltipElement"
+      v-bind="$attrs"
       :class="[styles.tooltip, positionModifiers[placement]]"
       :style="{
         maxWidth,
@@ -17,7 +18,7 @@
     >
       <pf-tooltip-arrow />
       <pf-tooltip-content :left-aligned="leftAligned">
-        <slot name="content" />
+        <slot name="content">{{ content }}</slot>
       </pf-tooltip-content>
     </div>
   </floating-ui>
@@ -25,7 +26,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { type Ref, ref, watch, computed } from 'vue';
+import { type Ref, ref, watch, computed, type HTMLAttributes } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
@@ -38,9 +39,10 @@ export type TooltipPosition = Placement | 'auto';
 
 defineOptions({
   name: 'PfTooltip',
+  inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   position?: TooltipPosition;
   trigger?: string;
   leftAligned?: boolean,
@@ -50,7 +52,10 @@ const props = withDefaults(defineProps<{
   aria?: string;
   animationDuration?: number;
   maxWidth?: number;
-}>(), {
+  content?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
   position: 'top',
   trigger: 'mouseenter focus',
   entryDelay: 300,

@@ -6,4 +6,8 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
+
+defineOptions({
+  name: 'PfTextInputGroupUtilities',
+});
 </script>

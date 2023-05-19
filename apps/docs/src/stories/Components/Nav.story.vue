@@ -95,12 +95,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-const activeLink = ref('link1');
+import { ref, type Ref } from "vue";
+const activeLink: Ref<string | undefined> = ref('link1');
 const theme = ref('dark');
 const variant = ref('default');
 
-function selectLink(e: Event, groupid: string, itemid: string) {
+function selectLink(e: Event, groupid: string | undefined, itemid: string | undefined) {
   activeLink.value = itemid;
 }
 </script>

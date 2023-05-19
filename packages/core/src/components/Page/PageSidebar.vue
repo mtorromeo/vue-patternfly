@@ -15,24 +15,26 @@
 
 <script lang="ts">
 export const SidebarOpenKey = Symbol('SidebarOpenKey') as InjectionKey<ComputedRef<boolean> | boolean>;
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
+  navOpen?: boolean;
+
+  /** Indicates the color scheme of the sidebar */
+  theme?: 'light' | 'dark';
+}
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import { computed, type ComputedRef, inject, type InjectionKey, provide } from 'vue';
+import { computed, type ComputedRef, inject, type InjectionKey, provide, type HTMLAttributes } from 'vue';
 import { PageManagedSidebarKey, PageNavOpenKey } from './Page.vue';
 
 defineOptions({
   name: 'PfPageSidebar',
 });
 
-const props = withDefaults(defineProps<{
-  /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
-  navOpen?: boolean;
-
-  /** Indicates the color scheme of the sidebar */
-  theme?: 'light' | 'dark';
-}>(), {
+const props = withDefaults(defineProps<Props>(), {
   theme: 'dark',
 });
 

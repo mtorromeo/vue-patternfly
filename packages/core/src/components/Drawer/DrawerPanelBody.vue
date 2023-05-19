@@ -6,15 +6,18 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfDrawerPanelBody',
 });
 
-defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Indicates if there should be no padding around the drawer panel body */
   noPadding?: boolean;
-}>();
+}
+
+defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

@@ -10,14 +10,17 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { classesFromBreakpointProps, type VisibilityBreakpointProps } from '../../breakpoints';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfDataListAction',
 });
 
-const props = defineProps<{
+export interface Props extends VisibilityBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   plainButton?: boolean;
-} & VisibilityBreakpointProps>();
+}
+
+const props = defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

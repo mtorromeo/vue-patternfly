@@ -27,7 +27,7 @@
           </template>
         </pf-text-input-group-main>
         <pf-text-input-group-utilities v-if="!!inputValue">
-          <pf-button variant="plain" @click="inputValue = ''" aria-label="Clear button and input">
+          <pf-button variant="plain" aria-label="Clear button and input" @click="inputValue = ''">
             <xmark-icon />
           </pf-button>
         </pf-text-input-group-utilities>
@@ -37,15 +37,15 @@
     <story-canvas title="Filters">
       <pf-text-input-group>
         <pf-text-input-group-main v-model="inputValue2">
-          <template #icon v-if="!chips.length">
-            <magnifying-glass-icon  />
+          <template v-if="!chips.length" #icon>
+            <magnifying-glass-icon />
           </template>
           <pf-chip-group>
-            <pf-chip v-for="(chip, index) in chips" @click="chips.splice(index, 1)">{{ chip }}</pf-chip>
+            <pf-chip v-for="(chip, index) in chips" :key="index" @click="chips.splice(index, 1)">{{ chip }}</pf-chip>
           </pf-chip-group>
         </pf-text-input-group-main>
         <pf-text-input-group-utilities v-if="!!inputValue2">
-          <pf-button variant="plain" @click="inputValue2 = ''" aria-label="Clear button and input">
+          <pf-button variant="plain" aria-label="Clear button and input" @click="inputValue2 = ''">
             <xmark-icon />
           </pf-button>
         </pf-text-input-group-utilities>

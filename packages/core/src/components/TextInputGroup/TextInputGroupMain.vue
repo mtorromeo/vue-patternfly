@@ -18,12 +18,10 @@
       </span>
       <input
         ref="input"
+        v-bind="$attrs"
         v-model="value"
-        :type="type"
         :class="styles.textInputGroupTextInput"
-        :aria-label="ariaLabel"
         :disabled="disabled || undefined"
-        :placeholder="placeholder"
         @change="emit('change', $event)"
         @focus="emit('focus', $event)"
         @blur="emit('blur', $event)"
@@ -34,36 +32,23 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { inject, type Ref, ref } from 'vue';
+import { inject, type Ref, ref, type InputHTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
 
-withDefaults(defineProps<{
-  /** Type that the input accepts. */
-  type?:
-    | 'text'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'search'
-    | 'tel'
-    | 'time'
-    | 'url';
+defineOptions({
+  name: 'PfTextInputGroupMain',
+  inheritAttrs: false,
+});
+
+export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
   /** Suggestion that will show up like a placeholder even with text in the input */
   hint?: string;
-  /** Accessibility label for the input */
-  ariaLabel?: string;
   /** Value for the input */
   modelValue?: string | number;
-  /** Placeholder value for the input */
-  placeholder?: string;
-}>(), {
-  ariaLabel: 'Type to filter',
-  type: 'text',
-});
+}
+
+defineProps<Props>();
 
 const emit = defineEmits<{
   (name: 'update:modelValue', v: string): void;

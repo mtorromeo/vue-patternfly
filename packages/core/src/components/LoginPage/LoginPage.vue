@@ -1,7 +1,7 @@
 <template>
   <pf-background-image v-if="backgroundImgSrc" :src="backgroundImgSrc" />
 
-  <pf-login>
+  <pf-login v-bind="$attrs">
     <template #header>
       <pf-login-header>
         <slot name="brand">
@@ -53,8 +53,14 @@ import PfLoginFooter from './LoginFooter.vue';
 import PfBrand from '../Brand.vue';
 import PfList, { type ListVariant } from '../List/List.vue';
 import PfBackgroundImage, { type BackgroundImageSrcMap } from '../BackgroundImage.vue';
+import type { ComponentProps } from '../../util';
 
-defineProps<{
+defineOptions({
+  name: 'PfLoginPage',
+  inheritAttrs: false,
+});
+
+export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfLogin> {
   /** Attribute that specifies the URL of the brand image for the login page */
   brandImgSrc?: string;
   /** Attribute that specifies the alt text of the brand image for the login page */
@@ -71,5 +77,7 @@ defineProps<{
   title: string;
   /** Subtitle for the login main body header of the login page */
   subtitle?: string;
-}>();
+}
+
+defineProps<Props>();
 </script>

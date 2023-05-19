@@ -23,12 +23,24 @@ export const DataListItemKey = Symbol('DataListItemKey') as InjectionKey<{
   expanded: WritableComputedRef<boolean>,
   expandable: ComputedRef<boolean>,
 }>;
+
+export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+  selected?: boolean;
+  /** Name of the item inputs (radio or checkbox) when item selection is enabled */
+  selectionInputName?: string;
+  /** Defines the value for the inputs (radio or checkbox) of the pf-data-list-item */
+  selectionInputValue?: string;
+  /** Flag indicating if the pf-data-list-item is expandable */
+  expandable?: boolean;
+  /** Flag to show if the expanded content of the pf-data-list-item is visible */
+  expanded?: boolean;
+}
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
-import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type WritableComputedRef } from "vue";
+import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type WritableComputedRef, type LiHTMLAttributes } from "vue";
 import { DataListKey } from './DataList.vue';
 import OverridableWrapper from '../../helpers/OverridableWrapper';
 import PfDataListItemRow from './DataListItemRow.vue';
@@ -39,17 +51,7 @@ defineOptions({
   name: 'PfDataListItem',
 });
 
-const props = withDefaults(defineProps<{
-  selected?: boolean;
-  /** Name of the item inputs (radio or checkbox) when item selection is enabled */
-  selectionInputName?: string;
-  /** Defines the value for the inputs (radio or checkbox) of the pf-data-list-item */
-  selectionInputValue?: string;
-  /** Flag indicating if the pf-data-list-item is expandable */
-  expandable?: boolean;
-  /** Flag to show if the expanded content of the pf-data-list-item is visible */
-  expanded?: boolean;
-}>(), {
+const props = withDefaults(defineProps<Props>(), {
   selected: undefined,
   expanded: undefined,
   expandable: undefined,

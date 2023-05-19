@@ -11,15 +11,18 @@
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 
 import { getUniqueId } from '../../util';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfNavGroup',
 });
 
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   title: string;
   id?: string;
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   id: () => getUniqueId(),
 });
 

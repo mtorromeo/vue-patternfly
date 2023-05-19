@@ -1,5 +1,5 @@
 <template>
-  <pf-title v-if="title" h="3">{{ title }}</pf-title>
+  <pf-title v-if="title" :h="3">{{ title }}</pf-title>
 
   <slot name="intro" />
 
@@ -49,15 +49,22 @@
 import { computedAsync } from '@vueuse/core';
 import { getHighlighter, type Highlighter, setWasm } from 'shiki';
 import theme from 'shiki/themes/nord.json';
+import type { HTMLAttributes } from 'vue';
 
 let highlighter: Highlighter;
 
-const props = defineProps<{
+defineOptions({
+  inheritAttrs: false,
+});
+
+interface Props extends /* @vue-ignore */ HTMLAttributes {
   source?: string;
   title?: string;
   dark?: boolean;
   maxWidth?: string;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const highlighted = computedAsync(async() => {
   if (!props.source) {

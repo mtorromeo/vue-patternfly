@@ -89,22 +89,8 @@ export type MenuItemProvide = {
 };
 
 export const MenuItemInjectionKey = Symbol('MenuItemInjectionKey') as InjectionKey<MenuItemProvide>;
-</script>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, getCurrentInstance, inject, provide, ref, useSlots, type ComputedRef, type InjectionKey, type Ref } from 'vue';
-import { getUniqueId } from '../../util';
-import { MenuInjectionKey, type MenuItemId } from './Menu.vue';
-import PfCheckbox from '../Checkbox.vue';
-import PfMenuItemAction from './MenuItemAction.vue';
-import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import UpRightFromSquareIcon from '@vue-patternfly/icons/dist/esm/icons/up-right-from-square-icon';
-import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
-import { isDefined } from '@vueuse/shared';
-
-const $props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
   name?: string;
   value?: string;
 
@@ -140,7 +126,27 @@ const $props = withDefaults(defineProps<{
   direction?: 'down' | 'up';
   /** @beta True if item is on current selection path */
   onPath?: boolean;
-}>(), {
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Menu/menu';
+import { computed, getCurrentInstance, inject, provide, ref, useSlots, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes } from 'vue';
+import { getUniqueId } from '../../util';
+import { MenuInjectionKey, type MenuItemId } from './Menu.vue';
+import PfCheckbox from '../Checkbox.vue';
+import PfMenuItemAction from './MenuItemAction.vue';
+import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import UpRightFromSquareIcon from '@vue-patternfly/icons/dist/esm/icons/up-right-from-square-icon';
+import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
+import { isDefined } from '@vueuse/shared';
+
+defineOptions({
+  name: 'PfMenuItem',
+});
+
+const $props = withDefaults(defineProps<Props>(), {
   component: 'button',
   selected: undefined,
   favorited: undefined,

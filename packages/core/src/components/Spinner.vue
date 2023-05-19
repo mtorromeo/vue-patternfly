@@ -24,12 +24,8 @@ export enum spinnerSize {
   lg = 'lg',
   xl = 'xl'
 }
-</script>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
-
-withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Size variant of progress. */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Text describing that current loading status or progress */
@@ -42,7 +38,14 @@ withDefaults(defineProps<{
   ariaLabel?: string;
   /** Id of element which describes what is being loaded */
   ariaLabelledby?: string;
-}>(), {
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
+import type { HTMLAttributes } from 'vue';
+
+withDefaults(defineProps<Props>(), {
   size: 'xl',
   ariaValueText: 'Loading...',
 });

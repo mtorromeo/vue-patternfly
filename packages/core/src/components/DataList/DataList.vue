@@ -25,36 +25,8 @@ export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
 }>;
 
 export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
-</script>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
-
-import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type WritableComputedRef } from "vue";
-import { useManagedProp } from '../../use';
-
-const gridBreakpointClasses = {
-  none: stylesGrid.modifiers.gridNone,
-  always: 'pf-m-grid', // Placeholder per https://github.com/patternfly/patternfly-react/issues/4965#issuecomment-704984236
-  sm: stylesGrid.modifiers.gridSm,
-  md: stylesGrid.modifiers.gridMd,
-  lg: stylesGrid.modifiers.gridLg,
-  xl: stylesGrid.modifiers.gridXl,
-  '2xl': stylesGrid.modifiers.grid_2xl,
-};
-
-defineOptions({
-  name: 'PfDataList',
-});
-
-defineSlots<{
-  default?: (props: Record<never, never>) => any;
-}>();
-
-const props = withDefaults(defineProps<{
-  /** Adds accessible text to the pf-data-list list */
-  ariaLabel: string;
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
     /** Array for multiple selection, single value for single selection, undefined to disable selection */
   selected?: string | number | symbol | (string | number | symbol)[];
   /** Name of the item input (radio or checkbox) when item selection is enabled */
@@ -73,7 +45,31 @@ const props = withDefaults(defineProps<{
   wrapModifier?: DataListWrapModifier | 'nowrap' | 'truncate' | 'breakWord';
   // declared as prop instead of emit to be able to detect attached listeners
   'onUpdate:selected'?: (s: any) => void; // eslint-disable-line vue/prop-name-casing
-}>(), {
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/DataList/data-list';
+import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
+
+import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from "vue";
+import { useManagedProp } from '../../use';
+
+const gridBreakpointClasses = {
+  none: stylesGrid.modifiers.gridNone,
+  always: 'pf-m-grid', // Placeholder per https://github.com/patternfly/patternfly-react/issues/4965#issuecomment-704984236
+  sm: stylesGrid.modifiers.gridSm,
+  md: stylesGrid.modifiers.gridMd,
+  lg: stylesGrid.modifiers.gridLg,
+  xl: stylesGrid.modifiers.gridXl,
+  '2xl': stylesGrid.modifiers.grid_2xl,
+};
+
+defineOptions({
+  name: 'PfDataList',
+});
+
+const props = withDefaults(defineProps<Props>(), {
   gridBreakpoint: 'md',
   selected: undefined,
   expandable: undefined,
@@ -81,6 +77,10 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   (name: 'update:selected', s: any): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
 }>();
 
 const managedSelected = useManagedProp('selected', null);

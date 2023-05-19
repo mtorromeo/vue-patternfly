@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watchEffect, inject, type Ref, ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { watchEffect, inject, type Ref, ref, computed, onMounted, onBeforeUnmount, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { isDefined, useElementHover } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
@@ -53,7 +53,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<{
+export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect'> {
   component?: string;
   linkComponent?: string;
   groupId?: string;
@@ -64,7 +64,9 @@ const props = withDefaults(defineProps<{
   itemAttrs?: Record<string, any>;
   to?: RouteLocationRaw;
   tabindex?: string | number;
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   component: 'li',
 });
 

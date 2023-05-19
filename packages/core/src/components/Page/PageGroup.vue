@@ -20,19 +20,22 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfPageGroup',
 });
 
-defineProps<{
+export interface Props extends StickyBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag indicating if PageBreadcrumb should have a shadow at the top */
   shadowTop?: boolean;
   /** Flag indicating if PageBreadcrumb should have a shadow at the bottom */
   shadowBottom?: boolean;
   /** Flag indicating if the PageBreadcrumb has a scrolling overflow */
   overflowScroll?: boolean;
-} & StickyBreakpointProps>();
+}
+
+defineProps<Props>();
 
 defineSlots<{
   default?: (props: Record<never, never>) => any;

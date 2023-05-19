@@ -56,9 +56,13 @@ import PfForm from '../Form/Form';
 import PfFormGroup from '../Form/FormGroup.vue';
 import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
-import { getUniqueId } from '../../util';
+import { getUniqueId, type ComponentProps } from '../../util';
 
-const props = withDefaults(defineProps<{
+defineOptions({
+  name: 'PfAdvancedSearchMenu',
+});
+
+export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfPanel> {
   /** Value of the search input. */
   modelValue?: string;
   /** Flag for toggling the open/close state of the advanced search menu. */
@@ -77,7 +81,9 @@ const props = withDefaults(defineProps<{
   onClear?: (event: Event) => void;
   /** Function which builds an attribute-value map by parsing the value in the search input. */
   getAttrValueMap?: () => { [key: string]: string };
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   attributes: () => [] as (string | SearchAttribute)[],
   resetButtonLabel: 'Reset',
   submitSearchButtonLabel: 'Search',
