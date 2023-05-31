@@ -125,6 +125,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'primary',
   iconPosition: 'left',
   component: 'auto',
+  loading: undefined,
 });
 
 const emit = defineEmits<{
