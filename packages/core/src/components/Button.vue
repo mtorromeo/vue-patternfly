@@ -22,7 +22,7 @@
         [styles.modifiers.danger]: danger && (variant === 'link' || variant === 'secondary'),
         [styles.modifiers.small]: small,
         [styles.modifiers.displayLg]: large,
-        [styles.modifiers.progress]: loading !== null,
+        [styles.modifiers.progress]: isDefined(loading),
         [styles.modifiers.inProgress]: loading,
       }]"
       :aria-current="(routerCtx as RouterLinkContext|undefined)?.isExactActive ? ariaCurrentValue : null"
@@ -62,6 +62,7 @@ import PassThrough from '../helpers/PassThrough';
 import type { RouteLocationRaw, useLink } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import { type Component, type UnwrapRef, type Ref, ref, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from 'vue';
+import { isDefined } from '@vueuse/shared';
 
 type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
