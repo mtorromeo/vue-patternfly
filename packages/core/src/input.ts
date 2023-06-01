@@ -31,10 +31,12 @@ export function useInputValidation({
   autoValidate,
   validated,
   inputElement,
+  customCheckValidity,
 }: {
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
   validated?: 'success' | 'warning' | 'error' | 'default' | null;
   inputElement?: MaybeRef<HTMLInputElement | HTMLTextAreaElement | undefined>;
+  customCheckValidity?: () => boolean;
 }) {
   const instance = getCurrentInstance()?.proxy;
 
@@ -45,6 +47,10 @@ export function useInputValidation({
   const value = useManagedProp('modelValue', '');
 
   function checkValidity() {
+    if (customCheckValidity) {
+      return customCheckValidity();
+    }
+
     if ((unref(inputElement) ?? instance?.$el)?.checkValidity()) {
       innerValidated.value = 'success';
       return true;
