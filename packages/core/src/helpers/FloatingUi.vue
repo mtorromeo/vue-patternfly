@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { flip, size, type Middleware, type Placement, type Strategy, offset, type OffsetOptions } from '@floating-ui/core';
+import { flip as uiFlip, size, type Middleware, type Placement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
 import { cloneVNode, computed, ref, withDirectives, type Ref } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
 import type { VNode } from 'vue';
@@ -47,7 +47,7 @@ const floatingOptions = computed<FloatingOptions>(() => {
   const middleware: Middleware[] = [...props.middleware];
 
   if (props.flip) {
-    middleware.push(flip());
+    middleware.push(uiFlip());
   }
 
   if (props.sameWidth) {
@@ -63,7 +63,7 @@ const floatingOptions = computed<FloatingOptions>(() => {
   }
 
   if (props.offset) {
-    middleware.push(offset(props.offset));
+    middleware.push(uiOffset(props.offset));
   }
 
   return {
