@@ -13,7 +13,7 @@
       v-if="visible"
       ref="dialog"
       v-bind="$attrs"
-      :active="focusTrap && managedOpen"
+      :active="focusTrap && visible"
       :class="[styles.popover, (styles.modifiers as any)[placement], {
         [styles.modifiers.noPadding]: noPadding,
         [styles.modifiers.widthAuto]: autoWidth,
@@ -38,7 +38,7 @@
         <pf-close-button
           v-if="showClose"
           :aria-label="closeBtnAriaLabel"
-          @click.prevent="managedOpen = false"
+          @click.prevent="visible = false"
         />
 
         <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" :h="6" size="md">
@@ -61,11 +61,11 @@
   </floating-ui>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
 import { useHtmlElementFromVNodes, useManagedProp } from '../use';
-import { computed, defineComponent, markRaw, type PropType, type Ref, ref, watch } from 'vue';
+import { computed, type Ref, ref, watch, type HTMLAttributes, onMounted, onBeforeUnmount } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
@@ -74,221 +74,180 @@ import PfCloseButton from './CloseButton.vue';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
 import PassThrough from '../helpers/PassThrough';
-import { offset, autoPlacement, type Placement, hide, flip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
+import { offset, autoPlacement, type Placement, hide, flip as uiFlip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
 
-export default defineComponent({
+defineOptions({
   name: 'PfPopover',
-
-  components: {
-    PfFocusTrap,
-    PfCloseButton,
-    PfTitle,
-    FloatingUi,
-    PassThrough,
-  },
-
   inheritAttrs: false,
+});
 
-  props: {
-    /** Whether to trap focus in the popover */
-    focusTrap: Boolean,
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Whether to trap focus in the popover */
+  focusTrap?: boolean;
 
-    /** Removes fixed-width and allows width to be defined by contents */
-    autoWidth: Boolean,
+  /** Removes fixed-width and allows width to be defined by contents */
+  autoWidth?: boolean;
 
-    /** Allows content to touch edges of popover container */
-    noPadding: Boolean,
+  /** Allows content to touch edges of popover container */
+  noPadding?: boolean;
 
-    /** Whether to show the close button */
-    showClose: Boolean,
+  /** Whether to show the close button */
+  showClose?: boolean;
 
-    /**
-     * If true, tries to keep the popover in view by flipping it if necessary.
-     * Otherwise it uses an auto-placement strategy.
-     */
-    flip: Boolean,
+  /**
+   * If true, tries to keep the popover in view by flipping it if necessary.
+   * Otherwise it uses an auto-placement strategy.
+   */
+  flip?: boolean;
 
-    flipOptions: {
-      type: Object as PropType<FlipOptions>,
-    },
+  flipOptions?: FlipOptions;
 
-    placementOptions: {
-      type: Object as PropType<AutoPlacementOptions>,
-    },
+  placementOptions?: AutoPlacementOptions;
 
-    /** Hides the popover when a click occurs outside (only works if isVisible is not controlled by the user) */
-    noHideOnOutsideClick: Boolean,
+  /** Hides the popover when a click occurs outside (only works if isVisible is not controlled by the user) */
+  noHideOnOutsideClick?: boolean,
 
-    /**
-     * Popover position.
-     * Notice: it will change the position if there is not enough space for the starting position.
-     * The behavior of where it flips to can be controlled through the flip, flipOptions or placementOptions props.
-     */
-    position: {
-      type: String as PropType<Placement>,
-      default: 'top',
-    },
+  /**
+   * Popover position.
+   * Notice: it will change the position if there is not enough space for the starting position.
+   * The behavior of where it flips to can be controlled through the flip, flipOptions or placementOptions props.
+   */
+  position?: Placement;
 
-    /** Minimum width of the popover (default 6.25rem) */
-    minWidth: {
-      type: String,
-      default: popoverMinWidth.value,
-    },
+  /** Minimum width of the popover (default 6.25rem) */
+  minWidth?: string;
 
-    /** Maximum width of the popover (default 18.75rem) */
-    maxWidth: {
-      type: String,
-      default: popoverMaxWidth.value,
-    },
+  /** Maximum width of the popover (default 18.75rem) */
+  maxWidth?: string;
 
-    /** CSS fade transition animation duration */
-    animationDuration: {
-      type: Number,
-      default: 300,
-    },
+  /** CSS fade transition animation duration */
+  animationDuration?: number;
 
-    open: {
-      type: Boolean,
-      default: null,
-    },
+  open?: boolean;
 
-    closeBtnAriaLabel: {
-      type: String,
-      default: 'Close',
-    },
+  closeBtnAriaLabel?: string;
 
-    distance: {
-      type: Number,
-      default: 25,
-    },
+  distance?: number;
 
-    ariaLabel: {
-      type: String,
-      default: undefined,
-    },
-  },
+  ariaLabel?: string;
+}
 
-  emits: ['update:open', 'show', 'shown', 'hide', 'hidden'],
+const props = withDefaults(defineProps<Props>(), {
+  position: 'top',
+  closeBtnAriaLabel: 'Close',
+  minWidth: popoverMinWidth.value,
+  maxWidth: popoverMaxWidth.value,
+  animationDuration: 300,
+  distance: 25,
+  open: undefined,
+});
 
-  setup(props) {
-    const managedOpen = useManagedProp('open', false);
-    const dialog: Ref<InstanceType<typeof PfFocusTrap> | undefined> = ref();
-    const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
+const emit = defineEmits<{
+  (name: 'update:open', value: boolean): void;
+  (name: 'show'): void;
+  (name: 'shown'): void;
+  (name: 'hide'): void;
+  (name: 'hidden'): void;
+}>();
 
-    watch(referenceElement, (el) => {
-      el?.addEventListener('click', (e: Event) => {
-        e.stopPropagation();
-        managedOpen.value = !managedOpen.value;
-      });
-    });
+const visible = useManagedProp('open', false);
+const dialog: Ref<InstanceType<typeof PfFocusTrap> | undefined> = ref();
+const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 
-    const floatingMiddleware = computed(() => [
-      props.flip
-        ? flip(props.flipOptions)
-        : autoPlacement(props.placementOptions),
-      offset(props.distance),
-      hide(),
-      hide({
-        strategy: 'escaped',
-      }),
-    ]);
+watch(referenceElement, (el) => {
+  el?.addEventListener('click', (e: Event) => {
+    e.stopPropagation();
+    visible.value = !visible.value;
+  });
+});
 
-    return {
-      managedOpen,
-      dialog,
-      findReference,
-      styles: markRaw(styles) as typeof styles,
-      visible: managedOpen,
-      referenceElement,
-      floatingMiddleware,
-    };
-  },
+const floatingMiddleware = computed(() => [
+  props.flip
+    ? uiFlip(props.flipOptions)
+    : autoPlacement(props.placementOptions),
+  offset(props.distance),
+  hide(),
+  hide({
+    strategy: 'escaped',
+  }),
+]);
 
-  data() {
-    return {
-      opacity: 0,
-      hideTimer: undefined as number | undefined,
-      showTimer: undefined as number | undefined,
-      transitionTimer: undefined as number | undefined,
-    };
-  },
+const opacity = ref(0);
+const hideTimer: Ref<number | undefined> = ref();
+const showTimer: Ref<number | undefined> = ref();
+const transitionTimer: Ref<number | undefined> = ref();
 
-  computed: {
-    uniqueId() {
-      return getUniqueId();
-    },
+const uniqueId = computed(getUniqueId);
 
-    hasCustomMinWidth() {
-      return this.minWidth !== popoverMinWidth.value;
-    },
+const hasCustomMinWidth = computed(() => {
+  return props.minWidth !== popoverMinWidth.value;
+});
 
-    hasCustomMaxWidth() {
-      return this.maxWidth !== popoverMaxWidth.value;
-    },
-  },
+const hasCustomMaxWidth = computed(() => {
+  return props.maxWidth !== popoverMaxWidth.value;
+});
 
-  watch: {
-    managedOpen(open) {
-      if (open) {
-        this.$emit('show');
-        if (this.transitionTimer) {
-          clearTimeout(this.transitionTimer);
-        }
-        if (this.hideTimer) {
-          clearTimeout(this.hideTimer);
-        }
-        this.showTimer = setTimeout(() => {
-          this.visible = true;
-          this.opacity = 1;
-          this.$emit('shown');
-        }, 0);
-      } else {
-        this.$emit('hide');
-        if (this.showTimer) {
-          clearTimeout(this.showTimer);
-        }
-        this.hideTimer = setTimeout(() => {
-          this.visible = false;
-          this.opacity = 0;
-          this.transitionTimer = setTimeout(() => {
-            this.$emit('hidden');
-          }, this.animationDuration);
-        }, 0);
-      }
-    },
-  },
+watch(visible, (open) => {
+  if (open) {
+    emit('show');
+    if (transitionTimer.value) {
+      clearTimeout(transitionTimer.value);
+    }
+    if (hideTimer.value) {
+      clearTimeout(hideTimer.value);
+    }
+    showTimer.value = setTimeout(() => {
+      visible.value = true;
+      opacity.value = 1;
+      emit('shown');
+    }, 0);
+  } else {
+    emit('hide');
+    if (showTimer.value) {
+      clearTimeout(showTimer.value);
+    }
+    hideTimer.value = setTimeout(() => {
+      visible.value = false;
+      opacity.value = 0;
+      transitionTimer.value = setTimeout(() => {
+        emit('hidden');
+      }, props.animationDuration);
+    }, 0);
+  }
+});
 
-  mounted() {
-    document.addEventListener('click', this.onDocumentClick);
-    document.addEventListener('keydown', this.onEscPress, { capture: true });
-  },
+onMounted(() => {
+  document.addEventListener('click', onDocumentClick);
+  document.addEventListener('keydown', onEscPress, { capture: true });
+});
 
-  beforeUnmount() {
-    document.removeEventListener('click', this.onDocumentClick);
-    document.removeEventListener('keydown', this.onEscPress, { capture: true });
-  },
+onBeforeUnmount(() => {
+  document.removeEventListener('click', onDocumentClick);
+  document.removeEventListener('keydown', onEscPress, { capture: true });
+});
 
-  methods: {
-    onDocumentClick(event: MouseEvent | TouchEvent) {
-      if (this.noHideOnOutsideClick || !this.visible) {
-        return;
-      }
-      // check if we clicked within the popper, if so don't do anything
-      if (this.dialog?.$el?.contains(event.target)) {
-        return;
-      }
-      this.managedOpen = false;
-    },
+function onDocumentClick(event: MouseEvent | TouchEvent) {
+  if (props.noHideOnOutsideClick || !visible.value) {
+    return;
+  }
+  // check if we clicked within the popper, if so don't do anything
+  if (dialog.value?.$el?.contains(event.target)) {
+    return;
+  }
+  visible.value = false;
+}
 
-    onEscPress(event: KeyboardEvent) {
-      const keyCode = event.keyCode || event.which;
+function onEscPress(event: KeyboardEvent) {
+  const keyCode = event.keyCode || event.which;
 
-      if (!this.managedOpen || !(keyCode === 27 /* ESC */)) {
-        return;
-      }
+  if (!visible.value || !(keyCode === 27 /* ESC */)) {
+    return;
+  }
 
-      this.managedOpen = false;
-    },
-  },
+  visible.value = false;
+}
+
+defineExpose({
+  visible,
 });
 </script>
