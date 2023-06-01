@@ -6,8 +6,7 @@
 
 <script lang="ts" setup>
 import { useFocusTrap, type UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
-import { watch } from 'vue';
-import { ref, type Ref } from 'vue';
+import { watch, ref, type Ref, type HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfFocusTrap',
@@ -17,10 +16,10 @@ defineSlots<{
   default?: (props: Record<never, never>) => any;
 }>();
 
-export interface Props {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   active?: boolean;
   paused?: boolean;
-  focusTrapOptions?: UseFocusTrapOptions,
+  focusTrapOptions?: UseFocusTrapOptions;
 }
 
 const props = defineProps<Props>();
