@@ -1,31 +1,37 @@
-<script lang="ts">
+<template>
+  <component
+    :is="component"
+    :class="[
+      styles.inputGroupText, {
+        [styles.modifiers.plain]: plain,
+      },
+    ]"
+  >
+    <slot />
+  </component>
+</template>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 
-import { type DefineComponent, defineComponent, h, mergeProps, type PropType, resolveDynamicComponent } from 'vue';
+import { type Component, type HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfInputGroupText',
-
-  props: {
-    /** Component that wraps the input group text. */
-    component: {
-      type: [String, Object] as PropType<DefineComponent>,
-      default: 'span',
-    },
-
-    /** Input group plain variant */
-    plain: Boolean,
-  },
-
-  render() {
-    const component = resolveDynamicComponent(this.component) as DefineComponent;
-    return h(component, mergeProps({
-      class: [
-        styles.inputGroupText, {
-          [styles.modifiers.plain]: this.plain,
-        },
-      ],
-    }, this.$props), this.$slots);
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+    /** Component that wraps the input group text. */
+  component?: string | Component;
+  /** Input group plain variant */
+  plain: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  component: 'span',
+});
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 </script>

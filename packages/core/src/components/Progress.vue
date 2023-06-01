@@ -3,7 +3,7 @@
     :id="validId"
     :class="[
       styles.progress,
-      styles.modifiers[variant],
+      variant && styles.modifiers[variant],
       measureLocation === 'inside' || measureLocation === 'outside' && styles.modifiers[measureLocation],
       measureLocation !== 'inside' && size && size !== 'md' && styles.modifiers[size],
       {
@@ -12,7 +12,7 @@
       },
     ]"
   >
-    <component :is="tooltip ? PfTooltip : 'pass-through'" :position="tooltipPosition">
+    <component :is="tooltip ? PfTooltip : (PassThrough as Component)" :position="tooltipPosition">
       <div
         :id="`${validId}-description`"
         :class="[styles.progressDescription, {
@@ -24,7 +24,7 @@
     </component>
 
     <div :class="styles.progressStatus" aria-hidden="true">
-      <span v-if="['top', 'outside'].includes(measureLocation)" :class="styles.progressMeasure">
+      <span v-if="measureLocation && ['top', 'outside'].includes(measureLocation)" :class="styles.progressMeasure">
         <slot name="label">{{ label || `${value}%` }}</slot>
       </span>
 
@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
 import PassThrough from '../helpers/PassThrough';
 import PfTooltip from './Tooltip/Tooltip.vue';
@@ -60,7 +60,7 @@ import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-i
 import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
 import { getUniqueId } from '../util';
-import { type Component, defineComponent, markRaw, type PropType } from 'vue';
+import { type Component, ref, computed, type HTMLAttributes } from 'vue';
 
 const variantToIcon = {
   danger: CircleXmarkIcon as Component,
@@ -68,142 +68,89 @@ const variantToIcon = {
   warning: TriangleExclamationIcon as Component,
 };
 
-export default defineComponent({
+defineOptions({
   name: 'PfProgress',
-
-  components: { PassThrough, PfTooltip },
-
-  props: {
-    /** Id of the progress component. */
-    id: {
-      type: String,
-      default: null,
-    },
-
-    /** Actual value of progress. */
-    value: {
-      type: Number,
-      default: 0,
-    },
-
-    /** Minimal value of progress. */
-    min: {
-      type: Number,
-      default: 0,
-    },
-
-    /** Maximum value of progress. */
-    max: {
-      type: Number,
-      default: 100,
-    },
-
-    /** Accessible text description of current progress value, for when value is not a percentage. Use with label. */
-    valueText: {
-      type: String,
-      default: '',
-    },
-
-    /** Title above progress. */
-    title: {
-      type: String,
-      default: null,
-    },
-
-    /** Text description of current progress value to display instead of percentage. */
-    label: {
-      type: String,
-      default: null,
-    },
-
-    titleTruncated: Boolean,
-
-    /** Position of the tooltip which is displayed if title is truncated */
-    tooltipPosition: {
-      type: String as PropType<'auto' | 'top' | 'bottom' | 'left' | 'right'>,
-      default: 'top',
-      validator: (v: any) => ['auto', 'top', 'bottom', 'left', 'right'].includes(v),
-    },
-
-    /** Size variant of progress. */
-    size: {
-      type: String as PropType<'sm' | 'md' | 'lg' | null>,
-      default: null,
-      validator: (v: any) => !v || ['sm', 'md', 'lg'].includes(v),
-    },
-
-    /** Where the measure percent will be located. */
-    measureLocation: {
-      type: String as PropType<'outside' | 'inside' | 'top' | 'none'>,
-      default: 'top',
-      validator: (v: any) => ['outside', 'inside', 'top', 'none'].includes(v),
-    },
-
-    /** Status variant of progress. */
-    variant: {
-      type: String as PropType<'success' | 'warning' | 'danger'>,
-      default: '',
-      validator: (v: any) => !v || ['danger', 'success', 'warning'].includes(v),
-    },
-
-    /** Adds accessible text to the ProgressBar. Required when title not used and there is not any label associated with the progress bar */
-    ariaLabel: {
-      type: String,
-      default: undefined,
-    },
-
-    /** Associates the ProgressBar with it's label for accessibility purposes. Required when title not used */
-    ariaLabelledby: {
-      type: String,
-      default: undefined,
-    },
-  },
-
-  setup() {
-    return {
-      PfTooltip,
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
-
-  data() {
-    return {
-      tooltip: '',
-    };
-  },
-
-  computed: {
-    validId() {
-      return this.id || getUniqueId();
-    },
-
-    scaledValue() {
-      return Math.min(100, Math.max(0, Math.floor(((this.value - this.min) / (this.max - this.min)) * 100)));
-    },
-
-    progressLabelledBy() {
-      return this.title ? `${this.validId}-description` : this.ariaLabelledby;
-    },
-
-    variantIcon() {
-      if (Object.prototype.hasOwnProperty.call(variantToIcon, this.variant)) {
-        return variantToIcon[this.variant];
-      }
-      return null;
-    },
-  },
-
-  methods: {
-    checkTooltip(e: MouseEvent) {
-      if (!(e.currentTarget instanceof HTMLElement)) {
-        return;
-      }
-      if (e.currentTarget.offsetWidth < e.currentTarget.scrollWidth) {
-        this.tooltip = this.title || e.currentTarget.innerHTML;
-      } else {
-        this.tooltip = '';
-      }
-    },
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Id of the progress component. */
+  id?: string;
+
+  /** Actual value of progress. */
+  value?: number;
+
+  /** Minimal value of progress. */
+  min?: number;
+
+  /** Maximum value of progress. */
+  max?: number;
+
+  /** Accessible text description of current progress value, for when value is not a percentage. Use with label. */
+  valueText?: string;
+
+  /** Title above progress. */
+  title?: string;
+
+  /** Text description of current progress value to display instead of percentage. */
+  label?: string;
+
+  titleTruncated?: boolean,
+
+  /** Position of the tooltip which is displayed if title is truncated */
+  tooltipPosition?: 'auto' | 'top' | 'bottom' | 'left' | 'right';
+
+  /** Size variant of progress. */
+  size?: 'sm' | 'md' | 'lg' | null;
+
+  /** Where the measure percent will be located. */
+  measureLocation?: 'outside' | 'inside' | 'top' | 'none';
+
+  /** Status variant of progress. */
+  variant?: 'success' | 'warning' | 'danger';
+
+  /** Adds accessible text to the ProgressBar. Required when title not used and there is not any label associated with the progress bar */
+  ariaLabel?: string;
+
+  /** Associates the ProgressBar with it's label for accessibility purposes. Required when title not used */
+  ariaLabelledby?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  valueText: '',
+  value: 0,
+  min: 0,
+  max: 100,
+});
+
+const tooltip = ref('');
+
+const validId = computed(() => {
+  return props.id || getUniqueId();
+});
+
+const scaledValue = computed(() => {
+  return Math.min(100, Math.max(0, Math.floor(((props.value - props.min) / (props.max - props.min)) * 100)));
+});
+
+const progressLabelledBy = computed(() => {
+  return props.title ? `${validId.value}-description` : props.ariaLabelledby;
+});
+
+const variantIcon = computed(() => {
+  if (props.variant && Object.prototype.hasOwnProperty.call(variantToIcon, props.variant)) {
+    return variantToIcon[props.variant];
+  }
+  return null;
+});
+
+function checkTooltip(e: MouseEvent) {
+  if (!(e.currentTarget instanceof HTMLElement)) {
+    return;
+  }
+  if (e.currentTarget.offsetWidth < e.currentTarget.scrollWidth) {
+    tooltip.value = props.title || e.currentTarget.innerHTML;
+  } else {
+    tooltip.value = '';
+  }
+}
 </script>

@@ -30,48 +30,34 @@
   </label>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
-import { defineComponent, markRaw } from 'vue';
+import type { HTMLAttributes, InputHTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfSwitch',
-
-  components: { CheckIcon },
-
   inheritAttrs: false,
+});
 
-  props: {
-    checked: Boolean,
+export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
+    checked?: boolean;
 
     /** Flag to reverse the layout of toggle and label (toggle on right). */
-    reversed: Boolean,
+    reversed?: boolean;
 
     /** Text value for the label when on */
-    label: {
-      type: String,
-      default: null,
-    },
+    label?: string;
 
     /** Text value for the label when off */
-    labelOff: {
-      type: String,
-      default: null,
-    },
+    labelOff?: string;
 
-    labelAttrs: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
+    labelAttrs?: HTMLAttributes;
+}
 
-  emits: ['update:checked'],
+defineProps<Props>();
 
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
-});
+defineEmits<{
+  (name: 'update:checked', value: boolean): void;
+}>();
 </script>

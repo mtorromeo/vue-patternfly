@@ -11,66 +11,42 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Skeleton/skeleton';
-import { defineComponent, markRaw, type PropType } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfSkeleton',
+});
 
-  props: {
-    /** The width of the Skeleton. Must specify pixels or percentage. */
-    width: {
-      type: String,
-      default: null,
-    },
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** The width of the Skeleton. Must specify pixels or percentage. */
+  width?: string;
+  /** The height of the Skeleton. Must specify pixels or percentage. */
+  height?: string;
 
-    /** The height of the Skeleton. Must specify pixels or percentage. */
-    height: {
-      type: String,
-      default: null,
-    },
+  /** Position of the tooltip which is displayed if title is truncated. */
+  fontSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 
-    /** Position of the tooltip which is displayed if title is truncated. */
-    fontSize: {
-      type: String,
-      default: null,
-      validator: (v: any) => ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(v),
-    },
+  /** The shape of the Skeleton. */
+  shape?: 'circle' | 'square';
 
-    /** The shape of the Skeleton. */
-    shape: {
-      type: String as PropType<'circle' | 'square'>,
-      default: null,
-      validator: (v: any) => ['circle', 'square'].includes(v),
-    },
+  /** Text read just to screen reader users. */
+  screenreaderText?: string;
+}
 
-    /** Text read just to screen reader users. */
-    screenreaderText: {
-      type: String,
-      default: undefined,
-    },
-  },
+const props = defineProps<Props>();
 
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+const fontHeightClassName = computed(() => {
+  return props.fontSize
+    ? Object.values(styles.modifiers).find(k => k === `pf-m-text-${props.fontSize}`)
+    : undefined;
+});
 
-  computed: {
-    fontHeightClassName() {
-      return this.fontSize
-        ? Object.values(styles.modifiers).find(k => k === `pf-m-text-${this.fontSize}`)
-        : undefined;
-    },
-
-    sizes() {
-      return {
-        '--pf-c-skeleton--Width': this.width,
-        '--pf-c-skeleton--Height': this.height,
-      };
-    },
-  },
+const sizes = computed(() => {
+  return {
+    '--pf-c-skeleton--Width': props.width,
+    '--pf-c-skeleton--Height': props.height,
+  };
 });
 </script>
