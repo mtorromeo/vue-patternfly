@@ -2,6 +2,7 @@
   <input
     ref="input"
     :value="value"
+    v-bind="ouiaProps"
     :class="[
       styles.formControl, {
         [styles.modifiers.iconSprite]: iconSprite,
@@ -35,6 +36,7 @@ import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation } from '../input';
 import { FormGroupInputsKey } from './Form/common';
+import { useOUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfTextInput',
@@ -95,8 +97,6 @@ const props = withDefaults(defineProps<Props>(), {
 defineEmits<{
   /** A callback for when the text input value changes. */
   (name: 'change', event: Event): void;
-  /** Callback function when text input is focused */
-  (name: 'focus', event: Event): void;
   /** Callback function when text input is blurred (focus leaves) */
   (name: 'blur', event: FocusEvent): void;
   (name: 'input', event: Event): void;
@@ -105,6 +105,8 @@ defineEmits<{
   (name: 'update:modelValue'): void;
   (name: 'update:validated'): void;
 }>();
+
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const input: Ref<HTMLInputElement | undefined> = ref();
 
@@ -126,9 +128,9 @@ function focus() {
 }
 
 defineExpose({
+  ...inputValidationData,
   input,
   focus,
   value,
-  ...inputValidationData,
 });
 </script>
