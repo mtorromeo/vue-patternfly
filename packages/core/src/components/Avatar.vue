@@ -17,7 +17,7 @@ defineOptions({
 
 export interface Props extends /* @vue-ignore */ ImgHTMLAttributes {
   /** Border to add */
-  border: 'light' | 'dark' | null;
+  border?: 'light' | 'dark' | null;
 }
 
 defineProps<Props>();

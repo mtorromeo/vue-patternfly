@@ -280,7 +280,7 @@
         <template #toggle>
           <pf-dropdown-toggle indicator>
             <template #icon>
-              <pf-avatar src="/avatar.svg" alt="avatar" />
+              <pf-avatar src="avatar.svg" alt="avatar" />
             </template>
             Ned Username
           </pf-dropdown-toggle>
