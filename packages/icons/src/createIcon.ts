@@ -1,4 +1,4 @@
-import { defineComponent, h, type PropType } from 'vue';
+import { defineComponent, h, type SVGAttributes, type PropType, type ExtractPublicPropTypes } from 'vue';
 
 export enum IconSize {
   sm = 'sm',
@@ -33,6 +33,20 @@ export interface IconDefinition {
 
 let currentId = 0;
 
+const props = {
+  color: {
+    type: String,
+    default: 'currentColor',
+  },
+  size: {
+    type: String as PropType<IconSize | keyof typeof IconSize>,
+    default: IconSize.sm,
+    validator: (v: any) => Object.keys(IconSize).includes(v),
+  },
+  title: String,
+  noVerticalAlign: Boolean,
+};
+
 /**
  * Factory to create Icon class components for consumers
  */
@@ -44,29 +58,15 @@ export function createIcon({
   height,
   svgPath,
 }: IconDefinition) {
-  return defineComponent({
+  const Icon = defineComponent<ExtractPublicPropTypes<typeof props> & SVGAttributes>({
     name,
-
-    props: {
-      color: {
-        type: String,
-        default: 'currentColor',
-      },
-      size: {
-        type: String as PropType<IconSize | keyof typeof IconSize>,
-        default: IconSize.sm,
-        validator: (v: any) => Object.keys(IconSize).includes(v),
-      },
-      title: String,
-      noVerticalAlign: Boolean,
-    },
 
     render() {
       const id = `icon-title-${currentId++}`;
 
-      const heightWidth = getSize(this.size);
+      const heightWidth = getSize(this.size ?? IconSize.sm);
       const baseAlign = -0.125 * Number.parseFloat(heightWidth);
-      const style = this.noVerticalAlign ? null : { verticalAlign: `${baseAlign}em` };
+      const style = this.noVerticalAlign ? undefined : { verticalAlign: `${baseAlign}em` };
       const viewBox = [xOffset, yOffset, width, height].join(' ');
 
       const children = [];
@@ -81,10 +81,14 @@ export function createIcon({
         height: heightWidth,
         width: heightWidth,
         viewBox,
-        'aria-labelled-by': this.title ? id : null,
-        'aria-hidden': this.title ? null : true,
+        'aria-labelled-by': this.title ? id : undefined,
+        'aria-hidden': this.title ? undefined : true,
         role: 'img',
       }, children);
     },
   });
+
+  Icon.props = props;
+
+  return Icon;
 }
