@@ -1,42 +1,38 @@
-<script lang="ts">
+<template>
+  <section :class="styles.simpleListSection">
+    <h2 :id="id" :class="[styles.simpleListTitle, titleClass]" aria-hidden>
+      <slot name="title">{{ title }}</slot>
+    </h2>
+    <ul :class="$attrs.class" :aria-labelledby="id">
+      <slot />
+    </ul>
+  </section>
+</template>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
+import type { HTMLAttributes } from 'vue';
 
-import { defineComponent, h, mergeProps, type PropType } from 'vue';
-
-export default defineComponent({
+defineOptions({
   name: 'PfSimpleListGroup',
-
   inheritAttrs: false,
-
-  props: {
-    /** ID of SimpleList group */
-    id: {
-      type: String,
-      default: '',
-    },
-
-    /** Title of the SimpleList group */
-    title: {
-      type: String,
-      default: '',
-    },
-
-    /** Additional classes added to the SimpleList group title */
-    titleClass: {
-      type: [String, Array, Object] as PropType<string | string[] | Record<string, string>>,
-      default: null,
-    },
-  },
-
-  render() {
-    const { class: className, ...attrs } = this.$attrs;
-
-    return h('section', mergeProps({
-      class: styles.simpleListSection,
-    }, attrs), [
-      h('h2', { id: this.id, class: [styles.simpleListTitle, this.titleClass], 'aria-hidden': true }, this.$slots.title ? this.$slots.title() : this.title),
-      h('ul', { class: className, 'aria-labelledby': this.id }, this.$slots.default && this.$slots.default()),
-    ]);
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** ID of SimpleList group */
+  id?: string;
+
+  /** Title of the SimpleList group */
+  title?: string,
+
+  /** Additional classes added to the SimpleList group title */
+  titleClass?: string | string[] | Record<string, string>;
+}
+
+defineProps<Props>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  title?: (props: Record<never, never>) => any;
+}>();
 </script>

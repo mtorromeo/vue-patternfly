@@ -14,7 +14,7 @@
 
     <story-canvas title="Simple">
       <pf-simple-list>
-        <pf-simple-list-item value="1" active>List item 1</pf-simple-list-item>
+        <pf-simple-list-item value="1">List item 1</pf-simple-list-item>
         <pf-simple-list-item value="2" component="a" href="#" @click.prevent>List item 2</pf-simple-list-item>
         <pf-simple-list-item value="3">List item 3</pf-simple-list-item>
       </pf-simple-list>
@@ -22,7 +22,7 @@
 
     <story-canvas title="List as form element">
       <pf-simple-list v-model="sample_selection" name="selection">
-        <pf-simple-list-item value="1" active>List item 1</pf-simple-list-item>
+        <pf-simple-list-item value="1">List item 1</pf-simple-list-item>
         <pf-simple-list-item value="2" component="a" href="#" @click.prevent>List item 2</pf-simple-list-item>
         <pf-simple-list-item value="3">List item 3</pf-simple-list-item>
       </pf-simple-list>
@@ -31,12 +31,12 @@
     <story-canvas title="Grouped">
       <pf-simple-list>
         <pf-simple-list-group title="Group 1">
-          <pf-simple-list-item active>List item 1</pf-simple-list-item>
+          <pf-simple-list-item>List item 1</pf-simple-list-item>
           <pf-simple-list-item component="a" href="#" @click.prevent>List item 2</pf-simple-list-item>
           <pf-simple-list-item>List item 3</pf-simple-list-item>
         </pf-simple-list-group>
         <pf-simple-list-group title="Group 2">
-          <pf-simple-list-item active>List item 4</pf-simple-list-item>
+          <pf-simple-list-item>List item 4</pf-simple-list-item>
           <pf-simple-list-item component="a" href="#" @click.prevent>List item 5</pf-simple-list-item>
           <pf-simple-list-item>List item 6</pf-simple-list-item>
         </pf-simple-list-group>
