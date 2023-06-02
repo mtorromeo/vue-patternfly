@@ -1,2 +1,2 @@
-export { default as PfFormSelect } from './FormSelect';
-export { default as PfFormSelectOption } from './FormSelectOption';
+export { default as PfFormSelect } from './FormSelect.vue';
+export { default as PfFormSelectOption } from './FormSelectOption.vue';
