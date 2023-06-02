@@ -143,7 +143,7 @@
     </story-canvas>
 
     <story-canvas title="With actions">
-      <pf-menu @select="(event: Event, itemKey: string | number | symbol | null | undefined) => toggle(itemKey)">
+      <pf-menu @select="(event: Event, itemKey: string | number | symbol | null) => toggle(itemKey)">
         <pf-menu-content>
           <pf-menu-group label="Actions" label-heading-level="h3">
             <pf-menu-list>
@@ -217,7 +217,7 @@ import { reactive } from 'vue';
 
 const selected: (string | number | symbol | null)[] = reactive(['item3', 'item4']);
 
-function toggle(itemKey: string | number | symbol | null | undefined) {
+function toggle(itemKey: string | number | symbol | null) {
   const i = selected.indexOf(itemKey);
   if (i < 0) {
     selected.push(itemKey);
