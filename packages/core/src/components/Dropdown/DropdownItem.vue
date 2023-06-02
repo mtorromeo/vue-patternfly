@@ -39,91 +39,85 @@
   </li>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 import { useFocus } from '@vueuse/core';
 
-import { computed, defineComponent, inject, markRaw, ref, type Ref } from 'vue';
+import { computed, inject, onMounted, nextTick, ref, type Ref, type Component, type HTMLAttributes } from 'vue';
 import { useChildrenTracker } from '../../use';
-import { DropdownToggleElementRefKey, DropdownDisabledClassKey, DropdownItemClassKey } from './Dropdown';
+import { DropdownToggleElementRefKey, DropdownDisabledClassKey, DropdownItemClassKey } from './Dropdown.vue';
 import { DropdownMenuItemsKey, DropdownMenuOnKeydownKey } from './DropdownMenu.vue';
-import type { PropType, Component } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfDropdownItem',
-
   inheritAttrs: false,
+});
 
-  props: {
-    hovered: Boolean,
-    component: {
-      type: [String, Object, Function] as PropType<string | Component>,
-      default: 'a',
-    },
-    role: {
-      type: String,
-      default: 'menuitem',
-    },
-    disabled: Boolean,
-    plain: Boolean,
-    tooltipProps: {
-      type: Object,
-      default: () => ({}),
-    },
-    index: {
-      type: Number,
-      default: -1,
-    },
-    tabindex: {
-      type: [Number, String],
-      default: -1,
-    },
-    enterTriggersArrowDown: Boolean,
-    styleChildren: Boolean,
-    description: {
-      type: String,
-      default: null,
-    },
-    autoFocus: Boolean,
-  },
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  hovered?: boolean;
+  component?: string | Component;
+  role?: string;
+  disabled?: boolean;
+  plain?: boolean;
+  index?: number;
+  tabindex?: number | string;
+  enterTriggersArrowDown?: boolean;
+  styleChildren?: boolean;
+  description?: string;
+  autoFocus?: boolean;
+}
 
-  setup() {
-    useChildrenTracker(DropdownMenuItemsKey);
+const props = withDefaults(defineProps<Props>(), {
+  component: 'a',
+  role: 'menuitem',
+  index: -1,
+  tabindex: -1,
+});
 
-    const el: Ref<HTMLLIElement | undefined> = ref();
-    const focusElement = computed(() => el.value?.querySelector<HTMLElement>('[tabindex], a, button'));
+const emit = defineEmits<{
+  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'select', e: MouseEvent | TouchEvent): void;
+}>();
 
-    return {
-      el,
-      styles: markRaw(styles) as typeof styles,
-      focused: useFocus(focusElement).focused,
-      focusElement,
-      itemClass: inject(DropdownItemClassKey, styles.dropdownMenuItem),
-      disabledClass: inject(DropdownDisabledClassKey, styles.modifiers.disabled),
-      toggleElement: inject(DropdownToggleElementRefKey, undefined),
-      keydown: inject(DropdownMenuOnKeydownKey, undefined),
-    };
-  },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  icon?: (props: Record<never, never>) => any;
+  additional?: (props: Record<never, never>) => any;
+}>();
 
-  mounted() {
-    if (this.autoFocus) {
-      this.$nextTick(() => (this.focused = true));
-    }
-  },
+useChildrenTracker(DropdownMenuItemsKey);
 
-  methods: {
-    focus() {
-      this.focused = true;
-    },
+const el: Ref<HTMLLIElement | undefined> = ref();
+const focusElement = computed(() => el.value?.querySelector<HTMLElement>('[tabindex], a, button'));
 
-    onClick(e: MouseEvent | TouchEvent) {
-      if (this.disabled) {
-        this.toggleElement?.focus();
-        return;
-      }
-      this.$emit('click', e);
-      this.$emit('select', e);
-    },
-  },
+const { focused } = useFocus(focusElement);
+
+const itemClass = inject(DropdownItemClassKey, styles.dropdownMenuItem);
+const disabledClass = inject(DropdownDisabledClassKey, styles.modifiers.disabled);
+const toggleElement = inject(DropdownToggleElementRefKey, undefined);
+const keydown = inject(DropdownMenuOnKeydownKey, undefined);
+
+onMounted(() => {
+  if (props.autoFocus) {
+    nextTick(() => (focused.value = true));
+  }
+});
+
+function focus() {
+  focused.value = true;
+}
+
+function onClick(e: MouseEvent | TouchEvent) {
+  if (props.disabled) {
+    toggleElement?.value?.focus();
+    return;
+  }
+  emit('click', e);
+  emit('select', e);
+}
+
+defineExpose({
+  focus,
+  focusElement,
 });
 </script>

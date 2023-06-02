@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 import { inject, type HTMLAttributes, type LiHTMLAttributes } from 'vue';
-import { DividerComponentKey } from './Dropdown/Dropdown';
+import { DividerComponentKey } from './Dropdown/Dropdown.vue';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../breakpoints';
 
 defineOptions({

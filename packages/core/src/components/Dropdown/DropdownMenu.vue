@@ -1,87 +1,70 @@
+<template>
+  <component
+    :is="grouped ? 'div' : component"
+    role="menu"
+    :class="[menuClass || styles.dropdownMenu, {
+      [styles.modifiers.alignRight]: position === 'right',
+    }]"
+    :hidden="!open"
+    @click="component === 'div' && $emit('select', $event)"
+  >
+    <slot />
+  </component>
+</template>
+
 <script lang="ts">
-import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
-
-import { h, mergeProps, provide, computed, resolveDynamicComponent, type DefineComponent, defineComponent, inject, type PropType, type InjectionKey } from 'vue';
-import type PfDropdownItem from './DropdownItem.vue';
-import { provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type ChildrenTrackerInjectionKey } from '../../use';
-import { DropdownMenuClassKey } from './Dropdown';
-
 export const DropdownMenuItemsKey = Symbol("DropdownMenuItemsKey") as ChildrenTrackerInjectionKey;
 export const DropdownMenuOnKeydownKey = Symbol('DropdownMenuOnKeydownKey') as InjectionKey<(event: KeyboardEvent, itemEl?: HTMLElement) => void>;
 
-export default defineComponent({
+export interface Props {
+  component?: string | Component;
+  position?: 'left' | 'right';
+  open?: boolean;
+  autoFocus?: boolean;
+  grouped?: boolean;
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
+
+import { provide, computed, type Component, onMounted, inject, type InjectionKey } from 'vue';
+import type PfDropdownItem from './DropdownItem.vue';
+import { provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type ChildrenTrackerInjectionKey } from '../../use';
+import { DropdownMenuClassKey } from './Dropdown.vue';
+
+defineOptions({
   name: 'PfDropdownMenu',
+});
 
-  props: {
-    component: {
-      type: [String, Object] as PropType<string | DefineComponent>,
-      default: 'ul',
-    },
-    position: {
-      type: String,
-      default: 'left',
-      validator: (v: any) => ['left', 'right'].includes(v),
-    },
-    open: {
-      type: Boolean,
-      default: true,
-    },
-    autoFocus: {
-      type: Boolean,
-      default: true,
-    },
-    grouped: Boolean,
-  },
+const props = withDefaults(defineProps<Props>(), {
+  component: 'ul',
+  default: 'left',
+  open: true,
+  autoFocus: true,
+});
 
-  setup() {
-    const children = provideChildrenTracker<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>(DropdownMenuItemsKey);
-    const items = computed(() => children.value.filter(
-      c => Boolean(c.focusElement) && !c.disabled,
-    ));
+defineEmits<{
+  (name: 'select', e: Event): void;
+}>();
 
-    const onKeydown = keyNavigation(items);
-    provide(DropdownMenuOnKeydownKey, onKeydown);
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-    return {
-      items,
-      menuClass: inject(DropdownMenuClassKey, undefined),
-    };
-  },
+const children = provideChildrenTracker<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>(DropdownMenuItemsKey);
+const items = computed(() => children.value.filter(
+  c => Boolean(c.focusElement) && !c.disabled,
+));
 
-  mounted() {
-    if (this.autoFocus && this.items.length) {
-      this.items[0].focused = true;
-    }
-  },
+const onKeydown = keyNavigation(items);
+provide(DropdownMenuOnKeydownKey, onKeydown);
 
-  render() {
-    const props = {
-      class: [this.menuClass || styles.dropdownMenu, {
-        [styles.modifiers.alignRight]: this.position === 'right',
-      }],
-      hidden: !this.open,
-    };
+const menuClass = inject(DropdownMenuClassKey, undefined);
 
-    const items = this.$slots.default ? this.$slots.default() : [];
-
-    if (this.component === 'div') {
-      return h(
-        'div',
-        mergeProps({
-          onClick: (e: MouseEvent | TouchEvent) => this.$emit('select', e),
-        }, props),
-        items,
-      );
-    }
-
-    const component = resolveDynamicComponent(this.grouped ? 'div' : this.component) as DefineComponent;
-    return h(
-      component,
-      mergeProps({
-        role: 'menu',
-      }, props),
-      items,
-    );
-  },
+onMounted(() => {
+  if (props.autoFocus && items.value.length) {
+    items.value[0].focused = true;
+  }
 });
 </script>

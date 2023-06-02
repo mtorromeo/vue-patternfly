@@ -55,9 +55,9 @@ import PfDropdown, {
   DropdownToggleIndicatorClassKey,
   DropdownToggleTextClassKey,
   DropdownToggleClassKey,
-} from '../Dropdown/Dropdown';
+} from '../Dropdown/Dropdown.vue';
 import PfDropdownItem from '../Dropdown/DropdownItem.vue';
-import PfDropdownToggle from '../Dropdown/DropdownToggle';
+import PfDropdownToggle from '../Dropdown/DropdownToggle.vue';
 import { defineComponent, markRaw, provide } from 'vue';
 
 export default defineComponent({

@@ -286,8 +286,8 @@
           </pf-dropdown-toggle>
         </template>
         <pf-dropdown-group>
-          <pf-dropdown-item component="div" plain-text>Text</pf-dropdown-item>
-          <pf-dropdown-item component="div" plain-text>More text</pf-dropdown-item>
+          <pf-dropdown-item component="div" plain>Text</pf-dropdown-item>
+          <pf-dropdown-item component="div" plain>More text</pf-dropdown-item>
         </pf-dropdown-group>
         <pf-dropdown-separator />
         <pf-dropdown-group>
