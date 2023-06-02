@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.8] - 2023-06-02
+
+### Bug Fixes
+
+- *(Button)* Fixed wrong application of the loading modifier
+- *(Button)* Fixed wrong application of the loading modifier
+- *(Avatar)* Made border prop optional on pf-avatar
+
+### Features
+
+- *(types)* Implemented type declarations for fallthrough attributes in all vue-sfc-setup components
+- *(Textarea)* Converted to vue-setup-sfc
+- *(FocusTrap)* Converted to vue-setup-sfc
+- *(FloatingUi)* Converted to vue-setup-sfc
+- *(Popover)* Converted to vue-setup-sfc
+- *(TextInput)* Added OUIA props
+- *(TextInputGroupUtilities)* Declared fallthrough attributes
+- *(InputGroup, Progress, Skeleton, Switch)* Converted to vue-setup-sfc
+- *(Dropbox)* Converted to vue-setup-sfc
+- *(Layouts)* Converted all layout components to vue-setup-sfc
+- *(Card, Modal)* Converted to vue-setup-sfc
+
 ## [0.1.0-beta.7] - 2023-05-18
 
 ### Bug Fixes
