@@ -1,11 +1,21 @@
-<script lang="ts">
-import { defineComponent, h } from 'vue';
+<template>
+  <div>
+    <slot />
+  </div>
+</template>
 
-export default defineComponent({
+<script lang="ts" setup>
+import type { HTMLAttributes } from 'vue';
+
+defineOptions({
   name: 'PfCardHeaderMain',
-
-  render() {
-    return h('div', {}, this.$slots);
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {}
+
+defineProps<Props>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 </script>

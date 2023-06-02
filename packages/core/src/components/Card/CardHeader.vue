@@ -17,44 +17,43 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import PfButton from '../Button.vue';
-import { defineComponent, inject, markRaw } from 'vue';
+import { default as PfButton, type Props as ButtonProps } from '../Button.vue';
+import { type HTMLAttributes, inject } from 'vue';
 import { CardExpandableKey, CardExpandedKey } from './Card.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfCardHeader',
+});
 
-  components: {
-    PfAngleRightIcon,
-    PfButton,
-  },
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Whether to right-align expandable toggle button */
+  toggleRightAligned?: boolean;
 
-  props: {
-    /** Whether to right-align expandable toggle button */
-    toggleRightAligned: Boolean,
+  /** Additional props for expandable toggle button */
+  toggleButtonAttrs?: ButtonProps,
+}
 
-    /** Additional props for expandable toggle button */
-    toggleButtonAttrs: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
+withDefaults(defineProps<Props>(), {
+  toggleButtonAttrs: () => ({}),
+});
 
-  setup() {
-    return {
-      expandable: inject(CardExpandableKey),
-      expanded: inject(CardExpandedKey),
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-  methods: {
-    toggle() {
-      this.expanded = !this.expanded;
-    },
-  },
+const expandable = inject(CardExpandableKey);
+const expanded = inject(CardExpandedKey);
+
+function toggle() {
+  if (expanded) {
+    expanded.value = !expanded.value;
+  }
+}
+
+defineExpose({
+  toggle,
 });
 </script>

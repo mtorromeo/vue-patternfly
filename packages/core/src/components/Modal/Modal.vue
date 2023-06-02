@@ -23,7 +23,7 @@
 
           <pf-modal-header>
             <slot name="header">
-              <component :is="titleOverflowing ? PfTooltip : 'pass-through'" v-if="title">
+              <component :is="titleOverflowing ? PfTooltip : (PassThrough as Component)" v-if="title">
                 <h1
                   ref="titleRef"
                   :class="[styles.modalBoxTitle, {
@@ -72,13 +72,15 @@
   </teleport>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
 import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
 
+import { capitalize, ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
+import type { Component, Ref, HTMLAttributes } from 'vue';
 import PfModalHeader from './ModalHeader.vue';
 import PassThrough from '../../helpers/PassThrough';
 import PfBackdrop from '../Backdrop.vue';
@@ -90,175 +92,120 @@ import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-e
 import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
 import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
-import { capitalize, type Ref } from 'vue';
-import { ref, markRaw, defineComponent, type PropType } from 'vue';
 import { useElementOverflow } from '../../use';
 
-export default defineComponent({
+defineOptions({
   name: 'PfModal',
-
-  components: {
-    PfModalHeader,
-    PfCloseButton,
-    PassThrough,
-    PfBackdrop,
-    PfFocusTrap,
-    PfTooltip,
-    CircleCheckIcon,
-    CircleExclamationIcon,
-    TriangleExclamationIcon,
-    CircleInfoIcon,
-    BellIcon,
-  },
-
   inheritAttrs: false,
+});
 
-  // inject: ['open'],
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Flag to show the modal */
+  open?: boolean,
 
-  props: {
-    /** Flag to show the modal */
-    open: Boolean,
+  /** Flag to remove the close button in the header area of the modal */
+  noClose?: boolean,
 
-    /** Flag to remove the close button in the header area of the modal */
-    noClose: Boolean,
+  /** Flag indicating if modal content should be placed in a modal box body wrapper */
+  noBodyWrapper?: boolean,
 
-    /** Flag indicating if modal content should be placed in a modal box body wrapper */
-    noBodyWrapper: Boolean,
+  /** Flag to disable focus trap */
+  disableFocusTrap?: boolean,
 
-    /** Flag to disable focus trap */
-    disableFocusTrap: Boolean,
+  /** Simple text content of the Modal Header, also used for aria-label on the body */
+  title?: string;
 
-    /** Simple text content of the Modal Header, also used for aria-label on the body */
-    title: {
-      type: String,
-      default: '',
-    },
+  /** Optional title label text for screen readers */
+  titleLabel?: string;
 
-    /** Optional title label text for screen readers */
-    titleLabel: {
-      type: String,
-      default: '',
-    },
+  /** Optional alert icon (or other) to show before the title of the Modal Header
+   * When the predefined alert types are used the default styling
+   * will be automatically applied */
+  titleIconVariant?: 'default' | 'success' | 'danger' | 'warning' | 'info';
 
-    /** Optional alert icon (or other) to show before the title of the Modal Header
-     * When the predefined alert types are used the default styling
-     * will be automatically applied */
-    titleIconVariant: {
-      type: String as PropType<'default' | 'success' | 'danger' | 'warning' | 'info' | null>,
-      default: null,
-      validator: (v: any) => [null, '', 'default', 'success', 'danger', 'warning', 'info'].includes(v),
-    },
+  appendTo?: HTMLElement | string | (() => HTMLElement);
 
-    appendTo: {
-      type: [Function, HTMLElement, String],
-      default: null,
-    },
+  /** Accessible descriptor of modal */
+  ariaLabel?: string;
 
-    /** Accessible descriptor of modal */
-    ariaLabel: {
-      type: String,
-      default: '',
-    },
+  /** Id of Modal Box description */
+  ariaDescribedby?: string;
 
-    /** Id of Modal Box description */
-    ariaDescribedby: {
-      type: String,
-      default: '',
-    },
+  /** Id of Modal Box label */
+  ariaLabelledby?: string;
 
-    /** Id of Modal Box label */
-    ariaLabelledby: {
-      type: String,
-      default: '',
-    },
+  /** Variant of the modal */
+  variant?: 'default' | 'small' | 'medium' | 'large';
 
-    /** Variant of the modal */
-    variant: {
-      type: String as PropType<'default' | 'small' | 'medium' | 'large' | null>,
-      default: 'default',
-      validator: (v: any) => [null, '', 'default', 'small', 'medium', 'large'].includes(v),
-    },
+  /** Alternate position of the modal */
+  position?: 'default' | 'top';
 
-    /** Alternate position of the modal */
-    position: {
-      type: String as PropType<'default' | 'top' | null>,
-      default: 'default',
-      validator: (v: any) => [null, '', 'default', 'top'].includes(v),
-    },
+  /** Offset from alternate position. Can be any valid CSS length/percentage */
+  positionOffset?: string;
 
-    /** Offset from alternate position. Can be any valid CSS length/percentage */
-    positionOffset: {
-      type: String,
-      default: '',
-    },
+  /** Id of the ModalBoxBody */
+  descriptorId?: string;
 
-    /** Id of the ModalBoxBody */
-    descriptorId: {
-      type: String,
-      default: '',
-    },
+  component?: string | Component;
+}
 
-    component: {
-      type: [String, Object],
-      default: 'div',
-    },
-  },
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'default',
+  position: 'default',
+  component: 'div',
+});
 
-  emits: ['update:open'],
+defineEmits<{
+  (name: 'update:open', value: boolean): void;
+}>();
 
-  setup() {
-    const titleRef: Ref<HTMLElement | undefined> = ref();
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  header?: (props: Record<never, never>) => any;
+  footer?: (props: Record<never, never>) => any;
+  help?: (props: Record<never, never>) => any;
+  description?: (props: Record<never, never>) => any;
+  'title-icon'?: (props: Record<never, never>) => any;
+}>();
 
-    return {
-      PfTooltip,
-      titleRef,
-      titleOverflowing: useElementOverflow(titleRef),
-      styles: markRaw(styles) as typeof styles,
-      accessibleStyles: markRaw(accessibleStyles) as typeof accessibleStyles,
-      bullsEyeStyles: markRaw(bullsEyeStyles) as typeof bullsEyeStyles,
-      topSpacer: markRaw(topSpacer) as typeof topSpacer,
-    };
-  },
+// inject: ['open'],
+const titleRef: Ref<HTMLElement | undefined> = ref();
+const titleOverflowing = useElementOverflow(titleRef);
 
-  computed: {
-    teleportTarget() {
-      if (typeof this.appendTo === 'function') {
-        return this.appendTo();
-      }
-      if (typeof this.appendTo === 'string') {
-        return document.getElementById(this.appendTo);
-      }
-      return this.appendTo || document.body;
-    },
+const teleportTarget = computed(() => {
+  if (typeof props.appendTo === 'function') {
+    return props.appendTo();
+  }
+  if (typeof props.appendTo === 'string') {
+    return document.getElementById(props.appendTo) ?? document.body;
+  }
+  return props.appendTo ?? document.body;
+});
 
-    label() {
-      if (!this.titleLabel && this.titleIconVariant) {
-        return `${capitalize(this.titleIconVariant)} alert:`;
-      }
-      return this.titleLabel;
-    },
-  },
+const label = computed(() => {
+  if (!props.titleLabel && props.titleIconVariant) {
+    return `${capitalize(props.titleIconVariant)} alert:`;
+  }
+  return props.titleLabel;
+});
 
-  watch: {
-    open() {
-      if (this.open) {
-        this.teleportTarget.classList.add(backdropStyles.backdropOpen);
-      } else {
-        this.teleportTarget.classList.remove(backdropStyles.backdropOpen);
-      }
-    },
-  },
+watch(() => props.open, () => {
+  if (props.open) {
+    teleportTarget.value.classList.add(backdropStyles.backdropOpen);
+  } else {
+    teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
+  }
+});
 
-  mounted() {
-    if (this.open) {
-      this.teleportTarget.classList.add(backdropStyles.backdropOpen);
-    } else {
-      this.teleportTarget.classList.remove(backdropStyles.backdropOpen);
-    }
-  },
+onMounted(() => {
+  if (props.open) {
+    teleportTarget.value.classList.add(backdropStyles.backdropOpen);
+  } else {
+    teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
+  }
+});
 
-  beforeUnmount() {
-    this.teleportTarget.classList.remove(backdropStyles.backdropOpen);
-  },
+onBeforeUnmount(() => {
+  teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
 });
 </script>

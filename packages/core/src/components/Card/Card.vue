@@ -11,6 +11,7 @@
   >
   <component
     :is="component"
+    v-bind="$attrs"
     :class="[styles.card, ...selectableModifiers, {
       [styles.modifiers.compact]: compact,
       [styles.modifiers.expanded]: managedExpanded,
@@ -28,106 +29,107 @@
 </template>
 
 <script lang="ts">
-import styles from '@patternfly/react-styles/css/components/Card/card';
-
-import { provide, computed, defineComponent, type DefineComponent, type PropType, type InjectionKey, type Ref, type ComputedRef, markRaw } from 'vue';
-import { useManagedProp } from '../../use';
-
 export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean>>;
 export const CardExpandableKey = Symbol('CardExpandableKey') as InjectionKey<ComputedRef<boolean>>;
 
-export default defineComponent({
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Content rendered inside the Card */
+  component?: string | Component;
+
+  /** Modifies the card to include compact styling. Should not be used with isLarge. */
+  compact?: boolean;
+
+  /** Modifies the card to include selectable styling */
+  selectable?: boolean;
+
+  /** Specifies the card is selectable, and applies the new raised styling on hover and select */
+  selectableRaised?: boolean;
+
+  /** Flag indicating that the card should render a hidden input to make it selectable */
+  selectableInput?: boolean;
+
+  /** Modifies a raised selectable card to have disabled styling */
+  selectableDisabled?: boolean;
+
+  /** Name of the optional hidden input that tracks the selected status */
+  name?: string;
+
+  /** Modifies the card to include selected styling */
+  selected?: boolean,
+
+  /** Modifies the card to include flat styling */
+  flat?: boolean;
+
+  /** Modifies the card to include rounded styling */
+  rounded?: boolean;
+
+  /** Modifies the card to be large. Should not be used with isCompact. */
+  large?: boolean;
+
+  /** Cause component to consume the available height of its container */
+  fullHeight?: boolean;
+
+  /** Modifies the card to include plain styling; this removes border and background */
+  plain?: boolean;
+
+  /** Modifies the card to be expandable */
+  expandable?: boolean;
+
+  /** Flag indicating if a card is expanded. Modifies the card to be expandable. */
+  expanded?: boolean;
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Card/card';
+import { provide, computed, type Component, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes } from 'vue';
+import { useManagedProp } from '../../use';
+import { isDefined } from '@vueuse/shared';
+
+defineOptions({
   name: 'PfCard',
-
-  props: {
-    /** Content rendered inside the Card */
-    component: {
-      type: [String, Object] as PropType<string | DefineComponent>,
-      default: 'article',
-    },
-
-    /** Modifies the card to include compact styling. Should not be used with isLarge. */
-    compact: Boolean,
-
-    /** Modifies the card to include selectable styling */
-    selectable: Boolean,
-
-    /** Specifies the card is selectable, and applies the new raised styling on hover and select */
-    selectableRaised: Boolean,
-
-    /** Flag indicating that the card should render a hidden input to make it selectable */
-    selectableInput: Boolean,
-
-    /** Modifies a raised selectable card to have disabled styling */
-    selectableDisabled: Boolean,
-
-    /** Name of the optional hidden input that tracks the selected status */
-    name: String,
-
-    /** Modifies the card to include selected styling */
-    selected: {
-      type: Boolean,
-      default: null,
-    },
-
-    /** Modifies the card to include flat styling */
-    flat: Boolean,
-
-    /** Modifies the card to include rounded styling */
-    rounded: Boolean,
-
-    /** Modifies the card to be large. Should not be used with isCompact. */
-    large: Boolean,
-
-    /** Cause component to consume the available height of its container */
-    fullHeight: Boolean,
-
-    /** Modifies the card to include plain styling; this removes border and background */
-    plain: Boolean,
-
-    /** Modifies the card to be expandable */
-    expandable: Boolean,
-
-    /** Flag indicating if a card is expanded. Modifies the card to be expandable. */
-    expanded: {
-      type: Boolean,
-      default: null,
-    },
-  },
-
-  emits: ['update:expanded', 'update:selected', 'click', 'change'],
-
-  setup(props) {
-    const managedExpanded = useManagedProp('expanded', false);
-    provide(CardExpandedKey, managedExpanded);
-    provide(CardExpandableKey, computed(() => props.expandable || props.expanded !== null));
-    return {
-      styles: markRaw(styles) as typeof styles,
-      managedExpanded,
-      managedSelected: useManagedProp('selected', false),
-    };
-  },
-
-  computed: {
-    selectableModifiers() {
-      if (this.selectableDisabled) {
-        return [styles.modifiers.nonSelectableRaised];
-      }
-      if (this.selectableRaised) {
-        return [styles.modifiers.selectableRaised, this.managedSelected && styles.modifiers.selectedRaised];
-      }
-      if (this.selectable) {
-        return [styles.modifiers.selectable, this.managedSelected && styles.modifiers.selected];
-      }
-      return [];
-    },
-  },
-
-  methods: {
-    onClick(e: MouseEvent | TouchEvent)  {
-      this.managedSelected = !this.managedSelected;
-      this.$emit('click', e);
-    },
-  },
+  inheritAttrs: false,
 });
+
+const props = withDefaults(defineProps<Props>(), {
+  component: 'article',
+  expanded: undefined,
+  selected: undefined,
+});
+
+const emit = defineEmits<{
+  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'change', e: Event): void;
+  (name: 'update:expanded', value: boolean): void;
+  (name: 'update:selected', value: boolean): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  icon?: (props: Record<never, never>) => any;
+  badge?: (props: Record<never, never>) => any;
+}>();
+
+const managedExpanded = useManagedProp('expanded', false);
+const managedSelected = useManagedProp('selected', false);
+provide(CardExpandedKey, managedExpanded);
+provide(CardExpandableKey, computed(() => props.expandable || isDefined(props.expanded)));
+
+const selectableModifiers = computed(() => {
+  if (props.selectableDisabled) {
+    return [styles.modifiers.nonSelectableRaised];
+  }
+  if (props.selectableRaised) {
+    return [styles.modifiers.selectableRaised, managedSelected.value && styles.modifiers.selectedRaised];
+  }
+  if (props.selectable) {
+    return [styles.modifiers.selectable, managedSelected.value && styles.modifiers.selected];
+  }
+  return [];
+});
+
+function onClick(e: MouseEvent | TouchEvent)  {
+  managedSelected.value = !managedSelected.value;
+  emit('click', e);
+}
 </script>

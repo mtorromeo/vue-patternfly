@@ -1,10 +1,12 @@
 <template>
-  <header :class="[styles.modalBoxHeader, {
-    [styles.modifiers.help]: $slots.help,
-  }]">
+  <header
+    :class="[styles.modalBoxHeader, {
+      [styles.modifiers.help]: $slots.help,
+    }]"
+  >
     <slot v-if="!$slots.help" />
 
-    <template v-else name="help">
+    <template v-else>
       <div :class="styles.modalBoxHeaderMain">
         <slot />
       </div>
@@ -15,17 +17,20 @@
   </header>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
-import { defineComponent, markRaw } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfModalHeader',
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {}
+
+defineProps<Props>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  help?: (props: Record<never, never>) => any;
+}>();
 </script>

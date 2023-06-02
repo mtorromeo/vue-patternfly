@@ -1,29 +1,30 @@
-<script lang="ts">
+<template>
+  <component :is="component" :class="[styles.cardBody, { [styles.modifiers.noFill]: !filled }]">
+    <slot />
+  </component>
+</template>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
+import type { Component, HTMLAttributes } from 'vue';
 
-import { type DefineComponent, defineComponent, h, type PropType, resolveDynamicComponent } from 'vue';
-
-export default defineComponent({
+defineOptions({
   name: 'PfCardBody',
-
-  props: {
-    /** Sets the base component to render. */
-    component: {
-      type: [String, Object] as PropType<string | DefineComponent>,
-      default: 'div',
-    },
-
-    /** Enables the body Content to fill the height of the card. */
-    filled: Boolean,
-  },
-
-  render() {
-    const component = resolveDynamicComponent(this.component) as DefineComponent;
-    return h(component, {
-      class: [styles.cardBody, {
-        [styles.modifiers.noFill]: !this.filled,
-      }],
-    }, this.$slots);
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Sets the base component to render. */
+  component?: string | Component;
+
+  /** Enables the body Content to fill the height of the card. */
+  filled?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  component: 'div',
+});
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 </script>
