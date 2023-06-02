@@ -1,0 +1,80 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "presentation": {
+    "echo": false,
+    "reveal": "always",
+    "focus": false,
+    "panel": "dedicated",
+    "showReuseMessage": true
+  },
+  "tasks": [
+    {
+      "label": "Start docs dev server",
+      "type": "shell",
+      "command": "pnpm dev",
+      "options": {
+        "cwd": "apps/docs"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "group": {
+        "kind": "build",
+        // this is the profile name you can use to color/iconise the terminal
+        "profile": "npm-server"
+      },
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen",
+        "instanceLimit": 1
+      }
+    },
+    {
+      "label": "Watch core",
+      "type": "shell",
+      "command": "pnpm watch",
+      "options": {
+        "cwd": "packages/core"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "group": {
+        "kind": "build",
+        // this is the profile name you can use to color/iconise the terminal
+        "profile": "npm-server"
+      },
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen",
+        "instanceLimit": 1
+      }
+    },
+    {
+      "label": "Start dev servers",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "Start docs dev server",
+        "Watch core"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true,
+        // this is the profile name you can use to color/iconise the terminal
+        "profile": "npm-server"
+      },
+    }
+  ]
+}
