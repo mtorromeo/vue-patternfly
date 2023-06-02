@@ -1,11 +1,11 @@
 import { computed, type Prop } from "vue";
 import { toCamelCase, ucfirst } from "./util";
 
-export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'];
+export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'] as const;
 
 // This would be nice but is not supported by vue's defineProps macro https://github.com/vuejs/core/issues/8286
 
-enum Breakpoints {
+export enum Breakpoints {
   xs = '',
   sm = 'Sm',
   md = 'Md',
@@ -209,7 +209,8 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
   const c = [...additional];
 
   for (const baseName of baseNames) {
-    for (let breakpointSuffix of breakpoints) {
+    for (const breakpoint of breakpoints) {
+      let breakpointSuffix: string = breakpoint;
       const prop = `${baseName}${breakpointSuffix}`;
       if (breakpointSuffix.match(/^[0-9]/)) {
         breakpointSuffix = `_${breakpointSuffix}`;

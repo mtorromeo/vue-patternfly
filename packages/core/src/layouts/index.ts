@@ -1,4 +1,4 @@
-export { default as PfBullseye } from './Bullseye';
+export { default as PfBullseye } from './Bullseye.vue';
 export * from './Flex';
 export * from './Gallery';
 export * from './Grid';

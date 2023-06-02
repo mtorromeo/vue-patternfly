@@ -1,108 +1,114 @@
-<script lang="ts">
+<template>
+  <component :is="component" :class="[styles.gridItem, ...gridClasses]">
+    <slot />
+  </component>
+</template>
+
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
-import { h, resolveDynamicComponent, defineComponent, type DefineComponent, type SlotsType } from 'vue';
 import { breakpoints } from '../../breakpoints';
+import type { HTMLAttributes, Component } from 'vue';
+import { computed } from 'vue';
+import type { GridSpan } from './Grid.vue';
 
-const gridSpans = {
-  type: [String, Number],
-  default: null as string | number | null,
-  validator: (v: any) => {
-    const numval = Number(v);
-    return v === null || (!isNaN(numval) && numval >= 1 && numval <= 12);
-  },
-};
-
-export default defineComponent({
+defineOptions({
   name: 'PfGridItem',
+});
 
-  props: {
-    /** The tag or component to use as container */
-    component: {
-      type: [String, Object],
-      default: 'div',
-    },
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** The tag or component to use as container */
+  component?: string | Component;
 
-    /** the number of columns the grid item spans. Value should be a number 1-12   */
-    span: gridSpans,
-    /** the number of rows the grid item spans. Value should be a number 1-12   */
-    rowSpan: gridSpans,
-    /** the number of columns a grid item is offset */
-    offset: gridSpans,
-    /** the number of columns the grid item spans on small device. Value should be a number 1-12   */
-    sm: gridSpans,
-    /** the number of rows the grid item spans on medium device. Value should be a number 1-12   */
-    smRowSpan: gridSpans,
-    /** the number of columns the grid item is offset on small device. Value should be a number 1-12   */
-    smOffset: gridSpans,
-    /** the number of columns the grid item spans on medium device. Value should be a number 1-12   */
-    md: gridSpans,
-    /** the number of rows the grid item spans on medium device. Value should be a number 1-12   */
-    mdRowSpan: gridSpans,
-    /** the number of columns the grid item is offset on medium device. Value should be a number 1-12   */
-    mdOffset: gridSpans,
-    /** the number of columns the grid item spans on large device. Value should be a number 1-12   */
-    lg: gridSpans,
-    /** the number of rows the grid item spans on large device. Value should be a number 1-12   */
-    lgRowSpan: gridSpans,
-    /** the number of columns the grid item is offset on large device. Value should be a number 1-12   */
-    lgOffset: gridSpans,
-    /** the number of columns the grid item spans on xLarge device. Value should be a number 1-12   */
-    xl: gridSpans,
-    /** the number of rows the grid item spans on large device. Value should be a number 1-12   */
-    xlRowSpan: gridSpans,
-    /** the number of columns the grid item is offset on xLarge device. Value should be a number 1-12   */
-    xlOffset: gridSpans,
-    /** the number of columns the grid item spans on 2xLarge device. Value should be a number 1-12   */
-    xl2: gridSpans,
-    /** the number of rows the grid item spans on 2xLarge device. Value should be a number 1-12   */
-    xl2RowSpan: gridSpans,
-    /** the number of columns the grid item is offset on 2xLarge device. Value should be a number 1-12   */
-    xl2Offset: gridSpans,
-  },
+  /** the number of columns the grid item spans. Value should be a number 1-12   */
+  span?: GridSpan;
+  /** the number of rows the grid item spans. Value should be a number 1-12   */
+  rowSpan?: GridSpan;
+  /** the number of columns a grid item is offset */
+  offset?: GridSpan;
+  /** the number of columns the grid item spans on small device. Value should be a number 1-12   */
+  sm?: GridSpan;
+  /** the number of rows the grid item spans on medium device. Value should be a number 1-12   */
+  smRowSpan?: GridSpan;
+  /** the number of columns the grid item is offset on small device. Value should be a number 1-12   */
+  smOffset?: GridSpan;
+  /** the number of columns the grid item spans on medium device. Value should be a number 1-12   */
+  md?: GridSpan;
+  /** the number of rows the grid item spans on medium device. Value should be a number 1-12   */
+  mdRowSpan?: GridSpan;
+  /** the number of columns the grid item is offset on medium device. Value should be a number 1-12   */
+  mdOffset?: GridSpan;
+  /** the number of columns the grid item spans on large device. Value should be a number 1-12   */
+  lg?: GridSpan;
+  /** the number of rows the grid item spans on large device. Value should be a number 1-12   */
+  lgRowSpan?: GridSpan;
+  /** the number of columns the grid item is offset on large device. Value should be a number 1-12   */
+  lgOffset?: GridSpan;
+  /** the number of columns the grid item spans on xLarge device. Value should be a number 1-12   */
+  xl?: GridSpan;
+  /** the number of rows the grid item spans on large device. Value should be a number 1-12   */
+  xlRowSpan?: GridSpan;
+  /** the number of columns the grid item is offset on xLarge device. Value should be a number 1-12   */
+  xlOffset?: GridSpan;
+  /** the number of columns the grid item spans on 2xLarge device. Value should be a number 1-12   */
+  xl2?: GridSpan;
+  /** the number of rows the grid item spans on 2xLarge device. Value should be a number 1-12   */
+  xl2RowSpan?: GridSpan;
+  /** the number of columns the grid item is offset on 2xLarge device. Value should be a number 1-12   */
+  xl2Offset?: GridSpan;
+}
 
-  slots: Object as SlotsType<{
-    default?: Record<never, never>;
-  }>,
+const props = withDefaults(defineProps<Props>(), {
+  component: 'div',
+});
 
-  setup(props, { slots }) {
-    const Component = resolveDynamicComponent(props.component) as DefineComponent;
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-    return () => {
-      const modifiers = styles.modifiers as any;
-      const classes = [
-        styles.gridItem,
-        props.span && modifiers[`${props.span}Col`],
-        props.rowSpan && modifiers[`${props.rowSpan}Row`],
-        props.offset && modifiers[`offset_${props.offset}Col`],
-      ];
+const gridClasses = computed(() => {
+  const classes: string[] = [];
 
-      for (let breakpoint of breakpoints.filter(Boolean)) {
-        let prop = breakpoint.toLowerCase();
-        if (prop === '2xl') {
-          prop = 'xl2';
-          breakpoint = '_2xl';
-        }
+  if (props.span) {
+    classes.push(styles.modifiers[`${props.span}Col`]);
+  }
 
-        const rowSpanProp = `${prop}RowSpan`;
-        const offsetProp = `${prop}Offset`;
+  if (props.rowSpan) {
+    classes.push(styles.modifiers[`${props.rowSpan}Row`]);
+  }
 
-        const spanValue = (props as any)[prop];
-        const rowSpanValue = (props as any)[rowSpanProp];
-        const offsetValue = (props as any)[offsetProp];
+  if (props.offset) {
+    classes.push(styles.modifiers[`offset_${props.offset}Col`]);
+  }
 
-        if (spanValue) {
-          classes.push(modifiers[`${spanValue}ColOn${breakpoint}`]);
-        }
-        if (rowSpanValue) {
-          classes.push(modifiers[`${rowSpanValue}RowOn${breakpoint}`]);
-        }
-        if (offsetValue) {
-          classes.push(modifiers[`offset_${offsetValue}ColOn${breakpoint}`]);
-        }
-      }
+  for (const breakpoint of breakpoints) {
+    let prop: 'sm' | 'md' | 'lg' | 'xl' | 'xl2';
+    if (breakpoint === '') {
+      continue;
+    }
+    let breakpointSuffix: 'Sm' | 'Md' | 'Lg' | 'Xl' | '_2xl';
+    if (breakpoint === '2xl') {
+      prop = 'xl2';
+      breakpointSuffix = '_2xl';
+    } else {
+      prop = breakpoint.toLowerCase() as Lowercase<typeof breakpoint>;
+      breakpointSuffix = breakpoint;
+    }
 
-      return h(Component, { class: classes }, slots);
-    };
-  },
+    const spanValue = props[prop];
+    const rowSpanValue = props[`${prop}RowSpan`];
+    const offsetValue = props[`${prop}Offset`];
+
+    if (spanValue) {
+      classes.push(styles.modifiers[`${spanValue}ColOn${breakpointSuffix}`]);
+    }
+    if (rowSpanValue) {
+      classes.push(styles.modifiers[`${rowSpanValue}RowOn${breakpointSuffix}`]);
+    }
+    if (offsetValue) {
+      classes.push(styles.modifiers[`offset_${offsetValue}ColOn${breakpointSuffix}`]);
+    }
+  }
+
+  return classes;
 });
 </script>

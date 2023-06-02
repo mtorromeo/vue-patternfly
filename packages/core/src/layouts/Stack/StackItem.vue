@@ -1,20 +1,20 @@
 <template>
-  <component :is="component" :class="[styles.gallery, { [styles.modifiers.gutter]: gutter }]">
+  <component :is="component" :class="[styles.stackItem, { [styles.modifiers.fill]: filled }]">
     <slot />
   </component>
 </template>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/layouts/Gallery/gallery';
+import styles from '@patternfly/react-styles/css/layouts/Stack/stack';
 import type { Component, HTMLAttributes } from 'vue';
 
 defineOptions({
-  name: 'PfGallery',
+  name: 'PfStackItem',
 });
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: string | Component;
-  gutter?: boolean;
+  filled?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
