@@ -24,7 +24,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
     /** Component that wraps the input group text. */
   component?: string | Component;
   /** Input group plain variant */
-  plain: boolean;
+  plain?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
