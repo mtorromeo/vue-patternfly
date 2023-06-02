@@ -49,7 +49,7 @@
     </story-canvas>
 
     <story-canvas title="Single line">
-      <pf-progress :value="33" aria-title="Title" measure-location="outside" />
+      <pf-progress :value="33" title="Title" measure-location="outside" />
     </story-canvas>
 
     <story-canvas title="Without measure">
