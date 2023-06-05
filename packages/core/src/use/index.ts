@@ -1,6 +1,6 @@
 import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type Ref, type WritableComputedRef, type VNode, nextTick } from 'vue';
 import { isDefined, tryOnMounted } from '@vueuse/shared';
-import { findComponentVNode } from '../util';
+import { findFirstChildVNode } from '../util';
 
 export * from './children-tracker';
 export * from './floating';
@@ -25,7 +25,7 @@ export function useHtmlElementFromVNodes() {
   return {
     element,
     async findReference(children: VNode[]) {
-      const vnode = findComponentVNode(children);
+      const vnode = findFirstChildVNode(children);
       if (vnode?.component === null) {
         await nextTick();
       }

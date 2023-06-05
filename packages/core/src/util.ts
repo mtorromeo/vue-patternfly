@@ -61,6 +61,22 @@ export function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & Co
   return vtype !== Fragment && typeof vtype === 'object' && !(vtype as any).type;
 }
 
+export function findFirstChildVNode(vnodes: VNode[] | VNodeNormalizedChildren | undefined): VNode | undefined {
+  if (!Array.isArray(vnodes)) {
+    return;
+  }
+
+  for (const vnode of vnodes) {
+    if (!isVNode(vnode) || vnode.type === Comment) {
+      continue;
+    }
+    if (vnode.type === Fragment) {
+      return findFirstChildVNode(vnode.children);
+    }
+    return vnode;
+  }
+}
+
 export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren | undefined): VNode[] {
   if (!Array.isArray(vnodes)) {
     return [];
