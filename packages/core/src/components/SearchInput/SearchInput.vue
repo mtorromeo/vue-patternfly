@@ -273,6 +273,10 @@ const emit = defineEmits<{
   (name: 'change', value: string): void;
 }>();
 
+defineSlots<{
+  'words-attr-label'?: (props: Record<never, never>) => any;
+  'form-additional-items'?: (props: Record<never, never>) => any;
+}>();
 
 if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
   // eslint-disable-next-line no-console

@@ -205,17 +205,28 @@ export type StickyBreakpointProps = {
   sticky_2xl?: 'top' | 'bottom';
 }
 
+export type BreakpointProps = {
+  sm?: boolean;
+  md?: boolean;
+  lg?: boolean;
+  xl?: boolean;
+  xl2?: boolean;
+}
+
 export function classesFromBreakpointProps(props: any, baseNames: string[], styles: any, { additional = [], short = false, vertical = false }: { additional?: string[], short?: boolean, vertical?: boolean } = {}) {
   const c = [...additional];
 
   for (const baseName of baseNames) {
     for (const breakpoint of breakpoints) {
       let breakpointSuffix: string = breakpoint;
-      const prop = `${baseName}${breakpointSuffix}`;
-      if (breakpointSuffix.match(/^[0-9]/)) {
+      const prop = baseName ? `${baseName}${breakpointSuffix}` : breakpointSuffix.toLowerCase();
+      if (!prop) {
+        continue;
+      }
+      if (baseName && breakpointSuffix.match(/^[0-9]/)) {
         breakpointSuffix = `_${breakpointSuffix}`;
       }
-      let value = props[prop];
+      let value = props[prop] === '' ? true : props[prop];
       if (value) {
         if (value === true) {
           value = '';
@@ -228,7 +239,9 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
           }
         }
         let mod = `${value}${breakpointSuffix ? `On${breakpointSuffix}${vertical ? 'Height' : ''}` : ''}`;
-        if (!short) {
+        if (!baseName) {
+          mod = `show${ucfirst(mod)}`;
+        } else if (!short) {
           mod = `${toCamelCase(baseName)}${ucfirst(mod)}`;
         }
         c.push(styles.modifiers[mod]);
@@ -261,7 +274,7 @@ export function useBreakpointProp(props: any, baseNames: string[], styles: any, 
   return computed(() => classesFromBreakpointProps(props, baseNames, styles, options));
 }
 
-type BreakpointProps<Name extends string, T> = {
+type TBreakpointProps<Name extends string, T> = {
   [K in keyof Breakpoints as `${Name}${Capitalize<string & K>}`]: Prop<T>;
 }
 
@@ -269,7 +282,7 @@ type BreakpointProps<Name extends string, T> = {
 export function breakpointProp<
   Name extends string,
   T extends BooleanConstructor | StringConstructor | ArrayConstructor | ObjectConstructor | DateConstructor
->(baseName: Name, type: T, values?: string[]): BreakpointProps<Name, T> {
+>(baseName: Name, type: T, values?: string[]): TBreakpointProps<Name, T> {
   return Object.fromEntries(breakpoints.map(b => {
     let _default = null;
     if (Array.isArray(values) && values.length) {

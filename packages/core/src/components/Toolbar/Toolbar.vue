@@ -18,140 +18,112 @@
 </template>
 
 <script lang="ts">
-import { provide, ref, computed, markRaw, defineComponent, type InjectionKey, type Ref, type PropType, type ComputedRef } from 'vue';
-import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
-import { useWindowSize } from '@vueuse/core';
-import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
-import { globalBreakpoints } from './ToolbarUtils';
-
 export const ToolbarToggleExpandedKey = Symbol('ToolbarToggleExpandedKey') as InjectionKey<() => void>;
 export const ToolbarClearFilterButtonTextKey = Symbol('ToolbarClearFilterButtonTextKey') as InjectionKey<string>;
-export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersButtonKey') as InjectionKey<boolean>;
+export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersButtonKey') as InjectionKey<ComputedRef<boolean>>;
 export const ToolbarClearAllFiltersKey = Symbol('ToolbarClearAllFiltersKey') as InjectionKey<() => void>;
 export const ToolbarUpdateNumberFiltersKey = Symbol('ToolbarUpdateNumberFiltersKey') as InjectionKey<(category: string, numberOfFilters: number) => void>;
 export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<Ref<boolean>>;
 export const ToolbarChipGroupContentRefKey = Symbol('ToolbarChipGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
 
-export default defineComponent({
+export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+  clearFiltersButtonText?: string;
+  collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints;
+  expanded?: boolean;
+  pageInsets?: boolean;
+}
+</script>
+
+<script lang="ts" setup>
+import { provide, ref, computed, watch, onBeforeUnmount, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes } from 'vue';
+import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
+import { useWindowSize } from '@vueuse/core';
+import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
+import { globalBreakpoints } from './common';
+
+defineOptions({
   name: 'PfToolbar',
+});
 
-  components: { PfToolbarChipGroupContent },
+const props = withDefaults(defineProps<Props>(), {
+  clearFiltersButtonText: 'Clear all filters',
+  collapseListedFiltersBreakpoint: 'lg',
+  expanded: undefined,
+});
 
-  provide() {
-    return {
-      [ToolbarToggleExpandedKey as symbol]: this.toggleExpanded,
-      [ToolbarClearFilterButtonTextKey as symbol]: this.clearFiltersButtonText,
-      [ToolbarShowClearFiltersButtonKey as symbol]: this.showClearFiltersButton,
-      [ToolbarClearAllFiltersKey as symbol]: this.clearAllFilters,
-      [ToolbarUpdateNumberFiltersKey as symbol]: this.updateNumberFilters,
-    };
+const emit = defineEmits<{
+  (name: 'update:expanded', value: boolean): void;
+  (name: 'clear-all-filters'): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
+const managedToggleExpanded = ref(false);
+
+const toggleManaged = computed(() => !props.expanded && props.expanded !== false);
+
+const effectiveExpanded = computed({
+  get() {
+    return toggleManaged.value ? managedToggleExpanded.value : props.expanded;
   },
-
-  props: {
-    clearFiltersButtonText: {
-      type: String,
-      default: 'Clear all filters',
-    },
-
-    collapseListedFiltersBreakpoint: {
-      type: String as PropType<keyof typeof globalBreakpoints>,
-      default: 'lg',
-      validator: (v: any) => v === 'all' || v in globalBreakpoints,
-    },
-
-    expanded: {
-      type: Boolean,
-      default: null,
-    },
-    pageInsets: Boolean,
-
-    ...breakpointProp('inset', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-  },
-
-  emits: ['update:expanded', 'clear-all-filters'],
-
-  setup(props, { emit }) {
-    const managedToggleExpanded = ref(false);
-
-    const toggleManaged = computed(() => !props.expanded && props.expanded !== false);
-
-    const effectiveExpanded = computed({
-      get() {
-        return toggleManaged.value ? managedToggleExpanded.value : props.expanded;
-      },
-      set(value: boolean) {
-        if (toggleManaged.value) {
-          managedToggleExpanded.value = value;
-        }
-        emit('update:expanded', value);
-      },
-    });
-
-    provide(ToolbarExpandedKey, effectiveExpanded);
-
-    const chipGroupContent: Ref<HTMLDivElement | undefined> = ref();
-    provide(ToolbarChipGroupContentRefKey, chipGroupContent);
-
-    const { width: windowWidth } = useWindowSize();
-
-    const filterInfo: Ref<Record<string, number>> = ref({});
-    const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));
-    provide(ToolbarNumberOfFiltersKey, numberOfFilters);
-
-    return {
-      styles: markRaw(styles) as typeof styles,
-      managedToggleExpanded,
-      toggleManaged,
-      effectiveExpanded,
-      chipGroupContent,
-      filterInfo,
-      numberOfFilters,
-      windowWidth,
-    };
-  },
-
-  computed: {
-    breakpointClasses() {
-      return classesFromBreakpointProps(this.$props, ['inset'], styles);
-    },
-
-    showClearFiltersButton() {
-      return this.numberOfFilters > 0;
-    },
-  },
-
-  watch: {
-    windowWidth() {
-      if (this.toggleManaged) {
-        this.closeExpandableContent();
-      }
-    },
-  },
-
-  beforeUnmount() {
-    if (this.chipGroupContent) {
-      this.chipGroupContent = undefined;
+  set(value: boolean) {
+    if (toggleManaged.value) {
+      managedToggleExpanded.value = value;
     }
-  },
-
-  methods: {
-    closeExpandableContent() {
-      this.effectiveExpanded = false;
-    },
-
-    toggleExpanded() {
-      this.effectiveExpanded = !this.effectiveExpanded;
-    },
-
-    updateNumberFilters(category: string, numberOfFilters: number) {
-      this.filterInfo[category] = numberOfFilters;
-    },
-
-    clearAllFilters() {
-      this.$emit('clear-all-filters');
-    },
+    emit('update:expanded', value);
   },
 });
+
+provide(ToolbarExpandedKey, effectiveExpanded);
+
+const chipGroupContent: Ref<HTMLDivElement | undefined> = ref();
+provide(ToolbarChipGroupContentRefKey, chipGroupContent);
+
+const { width: windowWidth } = useWindowSize();
+
+const filterInfo: Ref<Record<string, number>> = ref({});
+const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));
+provide(ToolbarNumberOfFiltersKey, numberOfFilters);
+
+const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['inset'], styles));
+
+const showClearFiltersButton = computed(() => numberOfFilters.value > 0);
+provide(ToolbarShowClearFiltersButtonKey, showClearFiltersButton);
+
+provide(ToolbarToggleExpandedKey, toggleExpanded);
+provide(ToolbarClearFilterButtonTextKey, props.clearFiltersButtonText);
+provide(ToolbarClearAllFiltersKey, clearAllFilters);
+provide(ToolbarUpdateNumberFiltersKey, updateNumberFilters);
+
+watch(windowWidth, () => {
+  if (toggleManaged.value) {
+    closeExpandableContent();
+  }
+});
+
+onBeforeUnmount(() => {
+  if (chipGroupContent.value) {
+    chipGroupContent.value = undefined;
+  }
+});
+
+function closeExpandableContent() {
+  effectiveExpanded.value = false;
+}
+
+function toggleExpanded() {
+  effectiveExpanded.value = !effectiveExpanded.value;
+}
+
+function updateNumberFilters(category: string, numberOfFilters: number) {
+  filterInfo.value[category] = numberOfFilters;
+}
+
+function clearAllFilters() {
+  emit('clear-all-filters');
+}
 </script>

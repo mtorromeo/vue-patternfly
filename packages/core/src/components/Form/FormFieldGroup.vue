@@ -25,56 +25,44 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
+import { type HTMLAttributes, computed } from 'vue';
 import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
 import { getUniqueId } from '../../util';
-import { defineComponent, markRaw } from 'vue';
+import { isDefined } from '@vueuse/shared';
 
-export default defineComponent({
+defineOptions({
   name: 'PfFormFieldGroup',
-
-  components: {
-    PfButton,
-    PfAngleRightIcon,
-  },
-
-  props: {
-    /** Flag indicating if the field group is expandable */
-    expandable: Boolean,
-
-    /** Flag indicate if the form field group is expanded. Modifies the card to be expandable. */
-    expanded: {
-      type: Boolean,
-      default: null,
-    },
-
-    /** Aria-label to use on the form filed group toggle button */
-    toggleAriaLabel: {
-      type: String,
-      default: '',
-    },
-  },
-
-  emits: ['update:expanded'],
-
-  setup() {
-    return {
-      managedExpanded: useManagedProp('expanded', false),
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
-
-  computed: {
-    uniqueId() {
-      return `form-field-group-toggle-${getUniqueId()}`;
-    },
-
-    managedExpandable() {
-      return this.expandable || this.expanded !== null;
-    },
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Flag indicating if the field group is expandable */
+  expandable?: boolean;
+
+  /** Flag indicate if the form field group is expanded. Modifies the card to be expandable. */
+  expanded?: boolean;
+
+  /** Aria-label to use on the form filed group toggle button */
+  toggleAriaLabel?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  expanded: undefined,
+});
+
+defineEmits<{
+  (name: 'update:expanded', value: boolean): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  header?: (props: Record<never, never>) => any;
+}>();
+
+const managedExpanded = useManagedProp('expanded', false);
+const managedExpandable = computed(() => props.expandable || isDefined(props.expanded));
+const uniqueId = computed(() => `form-field-group-toggle-${getUniqueId()}`);
 </script>

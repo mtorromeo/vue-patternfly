@@ -1,5 +1,42 @@
-<script lang="ts">
-import { defineComponent, h, mergeProps, type PropType, ref, type Ref } from 'vue';
+<template>
+  <div
+    v-if="$slots.default"
+    :id="id"
+    :class="[styles.chipGroup, {
+      [styles.modifiers.category]: category,
+    }]"
+  >
+    <div :class="styles.chipGroupMain">
+      <pf-tooltip v-if="category">
+        <template v-if="labelOverflowing" #content>
+          {{ category }}
+        </template>
+
+        <span ref="labelRef" :class="styles.chipGroupLabel">
+          {{ category }}
+        </span>
+      </pf-tooltip>
+
+      <ul
+        :class="styles.chipGroupList"
+        :aria-labelled-by="id"
+        :aria-label="ariaLabel"
+        role="list"
+      >
+        <render />
+      </ul>
+
+      <div v-if="closable" :class="styles.chipGroupClose">
+        <pf-button variant="plain" :aria-label="closeBtnAriaLabel" @click="$emit('click', $event)">
+          <circle-xmark-icon aria-hidden />
+        </pf-button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { h, ref, type Ref, type HTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ChipGroup/chip-group';
 import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
 import PfChip from './Chip.vue';
@@ -8,167 +45,76 @@ import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import { findChildrenVNodes, fillTemplate } from '../../util';
 import { useElementOverflow } from '../../use';
 
-export default defineComponent({
+defineOptions({
   name: 'PfChipGroup',
-
-  props: {
-    defaultOpen: Boolean,
-    closable: Boolean,
-
-    category: {
-      type: String,
-      default: '',
-    },
-
-    numChips: {
-      type: Number,
-      default: 3,
-    },
-
-    tooltipPosition: {
-      type: String as PropType<TooltipPosition>,
-      default: 'top',
-    },
-
-    closeBtnAriaLabel: {
-      type: String,
-      default: 'Close chip group',
-    },
-
-    ariaLabel: {
-      type: String,
-      default: 'Chip group category',
-    },
-
-    expandedText: {
-      type: String,
-      default: 'Show Less',
-    },
-
-    collapsedText: {
-      type: String,
-      default: '${remaining} more', // eslint-disable-line no-template-curly-in-string
-    },
-  },
-
-  emits: ['click', 'overflow-chip-click'],
-
-  setup() {
-    const labelRef: Ref<HTMLSpanElement | undefined> = ref();
-
-    return {
-      labelRef,
-      labelOverflowing: useElementOverflow(labelRef),
-    };
-  },
-
-  data() {
-    return {
-      open: this.defaultOpen,
-    };
-  },
-
-  methods: {
-    overflowChipClick(e: MouseEvent | TouchEvent) {
-      this.toggleCollapse();
-      this.$emit('overflow-chip-click', e);
-    },
-
-    toggleCollapse() {
-      this.open = !this.open;
-    },
-  },
-
-  render() {
-    const children = this.$slots.default ? findChildrenVNodes(this.$slots.default()) : [];
-
-    if (!children.length) {
-      return;
-    }
-
-    const chipArray = this.open ? children : children.slice(0, this.numChips);
-
-    const lis = chipArray.map((child, i) => h('li', { key: i, class: styles.chipGroupListItem }, child));
-
-    if (children.length > this.numChips) {
-      const collapsedTextResult = fillTemplate(this.collapsedText, {
-        remaining: children.length - chipArray.length,
-      });
-      lis.push(h('li', { class: styles.chipGroupListItem }, [
-        h(PfChip, {
-          component: 'button',
-          overflow: true,
-          onClick: this.overflowChipClick,
-        },
-          () => this.open ? this.expandedText : collapsedTextResult,
-        ),
-      ]));
-    }
-
-    let label = null;
-    if (this.category) {
-      if (this.labelOverflowing) {
-        label = h(PfTooltip, {},
-                  h('span', {
-                    ref: 'labelRef',
-                    class: styles.chipGroupLabel,
-                  },
-                    h('span', {
-                      'aria-hidden': true,
-                    }, this.category,
-                    ),
-                  ),
-        );
-      } else {
-        label = h('span', {
-          class: styles.chipGroupLabel,
-          'aria-hidden': true,
-        }, this.category);
-      }
-    }
-
-    const groupChildren = [
-      h('div', {
-        class: styles.chipGroupMain,
-      }, [
-        label,
-        h('ul', {
-          class: styles.chipGroupList,
-          'aria-labelled-by': this.$attrs.id,
-          'aria-label': this.ariaLabel,
-          role: 'list',
-        }, lis,
-        ),
-      ],
-      ),
-    ];
-
-    if (this.closable) {
-      groupChildren.push(
-        h('div', {
-          class: styles.chipGroupClose,
-        },
-          [
-            h(PfButton, {
-              variant: 'plain',
-              'aria-label': this.closeBtnAriaLabel,
-              onClick: () => this.$emit('click'),
-            },
-              () => h(CircleXmarkIcon, { 'aria-hidden': true }),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return h('div', mergeProps(this.$attrs,
-                               {
-                                 class: [styles.chipGroup, {
-                                   [styles.modifiers.category]: this.category,
-                                 }],
-                               }),
-             groupChildren,
-    );
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  id?: string;
+  defaultOpen?: boolean;
+  closable?: boolean;
+  category?: string;
+  numChips?: number;
+  tooltipPosition?: TooltipPosition;
+  closeBtnAriaLabel?: string;
+  ariaLabel?: string;
+  expandedText?: string;
+  collapsedText?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  numChips: 3,
+  tooltipPosition: 'top',
+  closeBtnAriaLabel: 'Close chip group',
+  ariaLabel: 'Chip group category',
+  expandedText: 'Show Less',
+  collapsedText: '${remaining} more',
+});
+
+const emit = defineEmits<{
+  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'overflow-chip-click', e: MouseEvent | TouchEvent): void;
+}>();
+
+const slots = defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
+const labelRef: Ref<HTMLSpanElement | undefined> = ref();
+const labelOverflowing = useElementOverflow(labelRef);
+const open = ref(props.defaultOpen);
+
+function overflowChipClick(e: MouseEvent | TouchEvent) {
+  toggleCollapse();
+  emit('overflow-chip-click', e);
+}
+
+function toggleCollapse() {
+  open.value = !open.value;
+}
+
+function render() {
+  const children = slots.default ? findChildrenVNodes(slots.default({})) : [];
+
+  const chipArray = open.value ? children : children.slice(0, props.numChips);
+
+  const lis = chipArray.map((child, i) => h('li', { key: i, class: styles.chipGroupListItem }, child));
+
+  if (children.length > props.numChips) {
+    const collapsedTextResult = fillTemplate(props.collapsedText, {
+      remaining: children.length - chipArray.length,
+    });
+    lis.push(h('li', { class: styles.chipGroupListItem }, [
+      h(PfChip, {
+        component: 'button',
+        overflow: true,
+        onClick: overflowChipClick,
+      },
+        () => open.value ? props.expandedText : collapsedTextResult,
+      ),
+    ]));
+  }
+
+  return lis;
+}
 </script>

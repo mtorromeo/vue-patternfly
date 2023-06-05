@@ -5,32 +5,27 @@
   </section>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { defineComponent, markRaw } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfFormSection',
+});
 
-  props: {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
     /** Title for the section */
-    title: {
-      type: String,
-      default: '',
-    },
+    title?: string;
 
     /** Header description */
-    titleElement: {
-      type: String,
-      default: 'div',
-      validator: (v: any) => ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(v),
-    },
-  },
+    titleElement?: string;
+}
 
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+withDefaults(defineProps<Props>(), {
+  titleElement: 'div',
 });
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 </script>

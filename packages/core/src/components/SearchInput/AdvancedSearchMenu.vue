@@ -52,7 +52,7 @@ import PfButton from '../Button.vue';
 import PfPanel from '../Panel/Panel.vue';
 import PfPanelMain from '../Panel/PanelMain.vue';
 import PfPanelMainBody from '../Panel/PanelMainBody.vue';
-import PfForm from '../Form/Form';
+import PfForm from '../Form/Form.vue';
 import PfFormGroup from '../Form/FormGroup.vue';
 import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
@@ -97,6 +97,13 @@ const emit = defineEmits<{
   (name: 'search', value: string, event: Event, attrValueMap: { [key: string]: string }): void;
   /** A callback for when the open advanced search button is clicked. */
   (name: 'toggleAdvancedMenu', event: Event): void;
+}>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  [K: `attribute:${string}`]: (props: Record<never, never>) => any;
+  'words-attr-label'?: (props: Record<never, never>) => any;
+  'form-additional-items'?: (props: Record<never, never>) => any;
 }>();
 
 const value = useManagedProp('modelValue', '', to => emit('change', to));

@@ -8,7 +8,7 @@
       }]"
     >
       <component
-        :is="(labelInfo || $slots.labelInfo) ? 'div' : 'pass-through'"
+        :is="(labelInfo || $slots.labelInfo) ? 'div' : PassThrough"
         :class="styles.formGroupLabelMain"
       >
         <label :class="styles.formLabel" :for="fieldId">
@@ -63,95 +63,74 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { type ComponentPublicInstance, computed, defineComponent, markRaw, type UnwrapNestedRefs } from 'vue';
-import type { useInputValidation } from '../../input';
-import { provideChildrenTracker } from '../../use';
-import { FormGroupInputsKey } from './common';
+import type { HTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough';
 
-export default defineComponent({
+defineOptions({
   name: 'PfFormGroup',
+});
 
-  components: {
-    PassThrough,
-  },
-
-  props: {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
     /** Label text before the field. */
-    label: {
-      type: String,
-      default: '',
-    },
+  label?: string;
 
-    /** Additional label information displayed after the label. */
-    labelInfo: {
-      type: String,
-      default: '',
-    },
+  /** Additional label information displayed after the label. */
+  labelInfo?: string;
 
-    /** Sets the FormGroup required. */
-    required: Boolean,
+  /** Sets the FormGroup required. */
+  required?: boolean,
 
-    /**
-     * Sets the FormGroup validated. If you set to success, text color of helper text will be modified to indicate valid state.
-     * If set to error, text color of helper text will be modified to indicate error state.
-     * If set to warning, text color of helper text will be modified to indicate warning state.
-     */
-    validated: {
-      type: String,
-      default: null,
-      validator: (v: any) => ['success', 'warning', 'error', 'default'].includes(v),
-    },
+  /**
+   * Sets the FormGroup validated. If you set to success, text color of helper text will be modified to indicate valid state.
+   * If set to error, text color of helper text will be modified to indicate error state.
+   * If set to warning, text color of helper text will be modified to indicate warning state.
+   */
+  validated?: InputValidateState,
 
-    inline: Boolean,
+  inline?: boolean,
 
-    /** Sets the FormGroupControl to be stacked */
-    stack: Boolean,
+  /** Sets the FormGroupControl to be stacked */
+  stack?: boolean,
 
-    /** Removes top spacer from label. */
-    noPaddingTop: Boolean,
+  /** Removes top spacer from label. */
+  noPaddingTop?: boolean,
 
-    /** Helper text regarding the field. */
-    helperText: {
-      type: String,
-      default: '',
-    },
+  /** Helper text regarding the field. */
+  helperText?: string;
 
-    /** Flag to position the helper text before the field. False by default */
-    helperTextBeforeField: Boolean,
+  /** Flag to position the helper text before the field. False by default */
+  helperTextBeforeField?: boolean,
 
-    /** Helper text after the field when the field is invalid. */
-    helperTextInvalid: {
-      type: String,
-      default: '',
-    },
+  /** Helper text after the field when the field is invalid. */
+  helperTextInvalid?: string;
 
-    /** ID of the included field. It has to be the same for proper working. */
-    fieldId: {
-      type: String,
-      default: '',
-    },
-  },
+  /** ID of the included field. It has to be the same for proper working. */
+  fieldId?: string;
+}
 
-  setup(props) {
-    // components that use useInputValidation
-    const inputs = provideChildrenTracker<ComponentPublicInstance & UnwrapNestedRefs<ReturnType<typeof useInputValidation>>>(FormGroupInputsKey);
-    return {
-      styles: markRaw(styles) as typeof styles,
-      internalValidated: computed(() => {
-        if (props.validated !== null) {
-          return props.validated;
-        }
-        for (const validation of ['error', 'warning', 'success', 'default']) {
-          if (inputs.value.some(input => input.effectiveValidated === validation)) {
-            return validation;
-          }
-        }
-        return 'default';
-      }),
-    };
-  },
+const props = defineProps<Props>();
+
+import { computed } from 'vue';
+import type { InputValidateState } from '../../input';
+import { provideChildrenTracker } from '../../use';
+import { FormGroupInputsKey } from './common';
+import { isDefined } from '@vueuse/shared';
+import { unref } from 'vue';
+
+// components that use useInputValidation
+const inputs = provideChildrenTracker(FormGroupInputsKey);
+
+const internalValidated = computed(() => {
+  if (isDefined(props.validated)) {
+    return props.validated;
+  }
+  for (const validation of ['error', 'warning', 'success', 'default'] as const) {
+    if (inputs.value.some(input => unref(input.$.exposed?.effectiveValidated) === validation)) {
+      return validation;
+    }
+  }
+  return 'default';
 });
 </script>

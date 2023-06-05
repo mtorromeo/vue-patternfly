@@ -1,5 +1,7 @@
-import { computed, getCurrentInstance, type PropType, ref, unref, watch, type MaybeRef } from "vue";
+import { computed, getCurrentInstance, type PropType, ref, unref, watch, type MaybeRef, type Ref } from "vue";
 import { useManagedProp } from "./use";
+
+export type InputValidateState = 'success' | 'warning' | 'error' | 'default';
 
 export const inputProps = {
   /** @model */
@@ -22,7 +24,7 @@ export const inputProps = {
    * @values default, success, warning, error
    */
   validated: {
-    type: String as PropType<'success' | 'warning' | 'error' | 'default' | null>,
+    type: String as PropType<InputValidateState | null>,
     validator: (v: any) => [null, 'default', 'success', 'warning', 'error'].includes(v),
   },
 };
@@ -34,13 +36,13 @@ export function useInputValidation({
   customCheckValidity,
 }: {
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
-  validated?: 'success' | 'warning' | 'error' | 'default' | null;
+  validated?: InputValidateState | null;
   inputElement?: MaybeRef<HTMLInputElement | HTMLTextAreaElement | undefined>;
   customCheckValidity?: () => boolean;
 }) {
   const instance = getCurrentInstance()?.proxy;
 
-  const innerValidated = ref('default');
+  const innerValidated: Ref<InputValidateState> = ref('default');
   const effectiveValidated = computed(() => validated ?? innerValidated.value);
   watch(effectiveValidated, () => instance?.$emit('update:validated', effectiveValidated.value));
 

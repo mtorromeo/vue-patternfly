@@ -153,7 +153,7 @@
     <story-canvas title="Component managed toggle groups">
       <pf-toolbar class="pf-m-toggle-group-container">
         <pf-toolbar-content>
-          <pf-toolbar-toggle-group breakpoint="xl">
+          <pf-toolbar-toggle-group xl>
             <template #icon>
               <FilterIcon />
             </template>
@@ -194,7 +194,7 @@
     <story-canvas title="Consumer managed toggle groups">
       <pf-toolbar v-model:expanded="expanded1" class="pf-m-toggle-group-container">
         <pf-toolbar-content>
-          <pf-toolbar-toggle-group breakpoint="xl">
+          <pf-toolbar-toggle-group xl>
             <template #icon>
               <FilterIcon />
             </template>
@@ -240,7 +240,7 @@
         @clear-all-filters="onDelete"
       >
         <pf-toolbar-content>
-          <pf-toolbar-toggle-group breakpoint="xl">
+          <pf-toolbar-toggle-group xl>
             <template #icon>
               <FilterIcon />
             </template>
@@ -324,7 +324,7 @@
     <story-canvas title="Stacked example">
       <pf-toolbar>
         <pf-toolbar-content>
-          <pf-toolbar-toggle-group breakpoint="lg">
+          <pf-toolbar-toggle-group lg>
             <template #icon>
               <FilterIcon />
             </template>
@@ -408,7 +408,7 @@
               <pf-dropdown-item key="disabled action" disabled component="button">Disabled Action</pf-dropdown-item>
             </pf-dropdown>
           </pf-toolbar-item>
-          <pf-toolbar-item variant="pagination" :align="{ default: 'alignRight' }">
+          <pf-toolbar-item variant="pagination" align="right">
             <pf-pagination
               v-model:page="page"
               v-model:per-page="perPage"

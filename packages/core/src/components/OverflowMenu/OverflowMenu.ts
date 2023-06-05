@@ -1,7 +1,7 @@
 import { defineComponent, h, type InjectionKey, mergeProps, type PropType, provide, type Ref, ref } from 'vue';
 import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
-import { globalBreakpoints } from '../Toolbar/ToolbarUtils';
+import { globalBreakpoints } from '../Toolbar/common';
 
 export const OverflowMenuIsBelowBreakpointKey = Symbol('OverflowMenuIsBelowBreakpointKey') as InjectionKey<Ref<boolean> | boolean>;
 
@@ -28,12 +28,6 @@ export default defineComponent({
     };
   },
 
-  render() {
-    return h('div', mergeProps({
-      class: styles.overflowMenu,
-    }, this.$attrs), this.$slots);
-  },
-
   watch: {
     windowWidth: {
       handler(width) {
@@ -43,5 +37,11 @@ export default defineComponent({
       },
       immediate: true,
     },
+  },
+
+  render() {
+    return h('div', mergeProps({
+      class: styles.overflowMenu,
+    }, this.$attrs), this.$slots);
   },
 });

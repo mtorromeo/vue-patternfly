@@ -1,5 +1,5 @@
 <template>
-  <div :class="[styles.toolbarGroup, styles.modifiers.toggleGroup, breakpointClasses]">
+  <div :class="[variantClass, styles.toolbarGroup, styles.modifiers.toggleGroup, breakpointClasses]">
     <div :class="styles.toolbarToggle">
       <pf-button
         variant="plain"
@@ -20,61 +20,51 @@
   </div>
 </template>
 
-<script lang="ts">
-import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
+<script lang="ts" setup>
+import { classesFromBreakpointProps, type BreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import globalBreakpointLg from '@patternfly/react-tokens/dist/js/global_breakpoint_lg';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { defineComponent, inject, markRaw, type PropType } from 'vue';
+import { computed, inject } from 'vue';
 import { ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
 import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
+import type { Props as ToolbarGroupProps } from './ToolbarGroup.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfToolbarToggleGroup',
+});
 
-  components: { PfButton },
+export interface Props extends ToolbarGroupProps, BreakpointProps {
+}
 
-  props: {
-    variant: {
-      type: String as PropType<'filter-group' | 'icon-button-group' | 'button-group'>,
-      default: '',
-      validator: (v: any) => ['', 'filter-group', 'icon-button-group', 'button-group'].includes(v),
-    },
-    ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
-    ...breakpointProp('alignment', String, ['', 'right', 'left']),
-    ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-    ...breakpointProp('spaceItems', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-  },
+const props = defineProps<Props>();
 
-  setup() {
-    const { width: windowWidth } = useWindowSize();
-    return {
-      styles: markRaw(styles) as typeof styles,
-      windowWidth,
-      expanded: inject(ToolbarExpandedKey),
-      toggleExpanded: inject(ToolbarToggleExpandedKey),
-      expandableRef: inject(ToolbarContentExpandableRefKey),
-    };
-  },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  icon?: (props: Record<never, never>) => any;
+}>();
 
-  computed: {
-    breakpointClasses() {
-      return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
-        ...classesFromBreakpointProps(this.$props, ['spacer', 'spaceItems'], styles),
-      ];
-    },
+const { width: windowWidth } = useWindowSize();
+const expanded = inject(ToolbarExpandedKey);
+const toggleExpanded = inject(ToolbarToggleExpandedKey);
+const expandableRef = inject(ToolbarContentExpandableRefKey);
 
-    variantClass() {
-      return this.variant ? styles.modifiers[toCamelCase(this.variant)] : null;
-    },
+const breakpointClasses = computed(() => {
+  return [
+    ...classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
+    ...classesFromBreakpointProps(props, ['spacer', 'spaceItems', 'align'], styles),
+    ...classesFromBreakpointProps(props, [''], styles),
+  ];
+});
 
-    isContentPopup() {
-      const lgBreakpointValue = parseInt(globalBreakpointLg.value);
-      return this.windowWidth < lgBreakpointValue;
-    },
-  },
+const variantClass = computed(() => {
+  return props.variant ? styles.modifiers[toCamelCase(props.variant)] : null;
+});
+
+const isContentPopup = computed(() => {
+  const lgBreakpointValue = parseInt(globalBreakpointLg.value);
+  return windowWidth.value < lgBreakpointValue;
 });
 </script>

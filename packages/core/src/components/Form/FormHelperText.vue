@@ -33,4 +33,9 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 withDefaults(defineProps<Props>(), {
   component: 'p',
 });
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  icon?: (props: Record<never, never>) => any;
+}>();
 </script>

@@ -1,5 +1,5 @@
 import { tryOnMounted } from "@vueuse/shared";
-import { getCurrentInstance, inject, onBeforeUnmount, provide, ref, type Component, type InjectionKey, type Ref } from "vue";
+import { getCurrentInstance, inject, onBeforeUnmount, provide, ref, type Component, type InjectionKey, type Ref, type ComponentPublicInstance } from "vue";
 
 type ChildrenTracker = {
   register: (item: Component) => void;
@@ -10,7 +10,7 @@ export type ChildrenTrackerInjectionKey = InjectionKey<ChildrenTracker>;
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol') as ChildrenTrackerInjectionKey;
 
-export function provideChildrenTracker<T extends Component = Component>(symbol: symbol | ChildrenTrackerInjectionKey) {
+export function provideChildrenTracker<T extends Component = ComponentPublicInstance>(symbol: symbol | ChildrenTrackerInjectionKey) {
   const items: Ref<T[]> = ref([]);
 
   provide(symbol || ChildrenTrackerSymbol, {

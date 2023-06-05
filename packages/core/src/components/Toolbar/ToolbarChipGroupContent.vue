@@ -26,62 +26,46 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { globalBreakpoints } from './ToolbarUtils';
+import { globalBreakpoints } from './common';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { defineComponent, markRaw, type PropType } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfToolbarChipGroupContent',
+});
 
-  components: {
-    PfToolbarGroup,
-    PfToolbarItem,
-    PfButton,
-  },
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  clearFiltersButtonText?: string;
+  collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
+  numberOfFilters?: number;
+  expanded?: boolean,
+  showClearFiltersButton?: boolean,
+}
 
-  props: {
-    clearFiltersButtonText: {
-      type: String,
-      default: 'Clear all filters',
-    },
+const props = withDefaults(defineProps<Props>(), {
+  clearFiltersButtonText: 'Clear all filters',
+  collapseListedFiltersBreakpoint: 'lg',
+  numberOfFilters: 0,
+});
 
-    collapseListedFiltersBreakpoint: {
-      type: String as PropType<keyof typeof globalBreakpoints | 'all'>,
-      default: 'lg',
-      validator: (v: any) => v === 'all' || v in globalBreakpoints,
-    },
+defineEmits<{
+  (name: 'clear-all-filters'): void;
+  (name: 'mounted', el: HTMLDivElement): void;
+}>();
 
-    numberOfFilters: {
-      type: Number,
-      default: 0,
-    },
+defineSlots<Record<string, never>>();
 
-    expanded: Boolean,
-    showClearFiltersButton: Boolean,
-  },
+const { width: windowWidth } = useWindowSize();
 
-  emits: ['clear-all-filters', 'mounted'],
-
-  setup() {
-    const { width: windowWidth } = useWindowSize();
-    return {
-      windowWidth,
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
-
-  computed: {
-    collapseListedFilters() {
-      if (this.collapseListedFiltersBreakpoint === 'all') {
-        return true;
-      }
-      return this.windowWidth < globalBreakpoints[this.collapseListedFiltersBreakpoint];
-    },
-  },
+const collapseListedFilters = computed(() => {
+  if (props.collapseListedFiltersBreakpoint === 'all') {
+    return true;
+  }
+  return windowWidth.value < globalBreakpoints[props.collapseListedFiltersBreakpoint];
 });
 </script>

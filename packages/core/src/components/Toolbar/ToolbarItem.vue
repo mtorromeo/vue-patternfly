@@ -13,63 +13,52 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import PfDivider from '../Divider.vue';
-import { breakpoints, breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
+import { breakpoints, classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type SpacerBreakpointProps, type WidthBreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { defineComponent, markRaw, type PropType } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfToolbarItem',
+});
 
-  components: { PfDivider },
+export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, WidthBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+  variant?: 'separator' | 'bulk-select' | 'overflow-menu' | 'pagination' | 'search-filter' | 'label' | 'chip-group' | 'expand-all';
+  allExpanded?: boolean;
+}
 
-  props: {
-    variant: {
-      type: String as PropType<'separator' | 'bulk-select' | 'overflow-menu' | 'pagination' | 'search-filter' | 'label' | 'chip-group' | 'expand-all' | null>,
-      default: null,
-      validator: (v: any) => ['', null, 'separator', 'bulk-select', 'overflow-menu', 'pagination', 'search-filter', 'label', 'chip-group', 'expand-all'].includes(v),
-    },
-    ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
-    ...breakpointProp('alignment', String, ['', 'right', 'left']),
-    ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-    ...breakpointProp('width', String),
+const props = defineProps<Props>();
 
-    allExpanded: Boolean,
-  },
+defineEmits<{
+  (name: 'clear-all-filters'): void;
+}>();
 
-  emits: ['clear-all-filters'],
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+const breakpointClasses = computed(() => {
+  return [
+    ...classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
+    ...classesFromBreakpointProps(props, ['spacer', 'align'], styles),
+  ];
+});
 
-  computed: {
-    breakpointClasses() {
-      return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
-        ...classesFromBreakpointProps(this.$props, ['spacer'], styles),
-      ];
-    },
+const breakpointWidths = computed(() => {
+  const widths: Record<string, any> = {};
+  for (const b of breakpoints) {
+    const prop = `width${b}`;
+    if (!props[prop as keyof Props]) {
+      continue;
+    }
+    widths[`--pf-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = props[prop as keyof Props];
+  }
+  return widths;
+});
 
-    breakpointWidths() {
-      const widths: Record<string, any> = {};
-      for (const b of breakpoints) {
-        const prop = `width${b}`;
-        if (!this.$props[prop as keyof typeof this.$props]) {
-          continue;
-        }
-        widths[`--pf-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = this.$props[prop as keyof typeof this.$props];
-      }
-      return widths;
-    },
-
-    variantClass() {
-      return this.variant && this.variant !== 'separator' ? styles.modifiers[toCamelCase(this.variant)] : null;
-    },
-  },
+const variantClass = computed(() => {
+  return props.variant && props.variant !== 'separator' ? styles.modifiers[toCamelCase(props.variant)] : null;
 });
 </script>

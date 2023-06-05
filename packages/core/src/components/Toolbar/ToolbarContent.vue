@@ -19,58 +19,51 @@
 </template>
 
 <script lang="ts">
-import { ref, provide, markRaw, defineComponent, type InjectionKey, type Ref, inject } from 'vue';
-import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
+export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
+export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
+
+export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, /* @vue-ignore */ HTMLAttributes {}
+</script>
+
+<script lang="ts" setup>
+import { computed, ref, provide, onBeforeUnmount, type InjectionKey, type Ref, type HTMLAttributes, inject } from 'vue';
+import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps } from '../../breakpoints';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import { ToolbarClearFilterButtonTextKey, ToolbarExpandedKey, ToolbarShowClearFiltersButtonKey } from './Toolbar.vue';
 
-export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
-export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
-
-export default defineComponent({
+defineOptions({
   name: 'PfToolbarContent',
+});
 
-  components: { PfToolbarExpandableContent, PfToolbarGroup },
+const props = defineProps<Props>();
 
-  props: {
-    ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
-    ...breakpointProp('alignment', String, ['', 'right', 'left']),
-  },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-  setup() {
-    const expandable: Ref<HTMLDivElement | undefined> = ref();
-    provide(ToolbarContentExpandableRefKey, expandable);
+const expandable: Ref<HTMLDivElement | undefined> = ref();
+provide(ToolbarContentExpandableRefKey, expandable);
 
-    const chipContainer: Ref<HTMLDivElement | undefined> = ref();
-    provide(ToolbarContentChipContainerRefKey, chipContainer);
+const chipContainer: Ref<HTMLDivElement | undefined> = ref();
+provide(ToolbarContentChipContainerRefKey, chipContainer);
 
-    return {
-      expandable,
-      chipContainer,
-      expanded: inject(ToolbarExpandedKey),
-      showClearFiltersButton: inject(ToolbarShowClearFiltersButtonKey),
-      clearFiltersButtonText: inject(ToolbarClearFilterButtonTextKey),
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+const expanded = inject(ToolbarExpandedKey);
+const showClearFiltersButton = inject(ToolbarShowClearFiltersButtonKey);
+const clearFiltersButtonText = inject(ToolbarClearFilterButtonTextKey);
 
-  computed: {
-    breakpointClasses() {
-      return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
-      ];
-    },
-  },
+const breakpointClasses = computed(() => [
+  ...classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
+  ...classesFromBreakpointProps(props, ['align'], styles),
+]);
 
-  beforeUnmount() {
-    if (this.expandable) {
-      this.expandable = undefined;
-    }
-    if (this.chipContainer) {
-      this.chipContainer = undefined;
-    }
-  },
+onBeforeUnmount(() => {
+  if (expandable.value) {
+    expandable.value = undefined;
+  }
+  if (chipContainer.value) {
+    chipContainer.value = undefined;
+  }
 });
 </script>

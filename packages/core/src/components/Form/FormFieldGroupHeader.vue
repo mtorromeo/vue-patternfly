@@ -12,31 +12,21 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { defineComponent, markRaw } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfFormFieldGroupHeader',
-
-  props: {
-    /** Header title */
-    title: {
-      type: String,
-      default: '',
-    },
-
-    /** Header description */
-    description: {
-      type: String,
-      default: '',
-    },
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Header title */
+  title?: string;
+
+  /** Header description */
+  description?: string;
+}
+
+defineProps<Props>();
 </script>

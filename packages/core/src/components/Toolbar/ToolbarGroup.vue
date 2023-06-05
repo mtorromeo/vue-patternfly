@@ -1,53 +1,50 @@
 <template>
-  <div :class="[styles.toolbarGroup, breakpointClasses, variantClass]">
+  <div ref="el" :class="[styles.toolbarGroup, breakpointClasses, variantClass]">
     <slot />
   </div>
 </template>
 
-<script lang="ts">
-import { breakpointProp, classesFromBreakpointProps } from '../../breakpoints';
+<script lang="ts" setup>
+import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type SpacerBreakpointProps, type SpaceItemsBreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { defineComponent, markRaw, type PropType } from 'vue';
+import { computed, onMounted, type HTMLAttributes, ref, type Ref } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfToolbarGroup',
+});
 
-  props: {
-    variant: {
-      type: String as PropType<'filter-group' | 'icon-button-group' | 'button-group'>,
-      default: '',
-      validator: (v: any) => ['', 'filter-group', 'icon-button-group', 'button-group'].includes(v),
-    },
-    ...breakpointProp('visibility', String, ['', 'hidden', 'visible']),
-    ...breakpointProp('alignment', String, ['', 'right', 'left']),
-    ...breakpointProp('spacer', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-    ...breakpointProp('spaceItems', String, ['', 'none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']),
-  },
+export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, SpaceItemsBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+  variant?: 'filter-group' | 'icon-button-group' | 'button-group';
+}
 
-  emits: ['clear-all-filters', 'mounted'],
+const props = defineProps<Props>();
 
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+const emit = defineEmits<{
+  (name: 'clear-all-filters'): void;
+  (name: 'mounted', el: HTMLDivElement): void;
+}>();
 
-  computed: {
-    breakpointClasses() {
-      return [
-        ...classesFromBreakpointProps(this.$props, ['visibility', 'alignment'], styles, { short: true }),
-        ...classesFromBreakpointProps(this.$props, ['spacer', 'spaceItems'], styles),
-      ];
-    },
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-    variantClass() {
-      return this.variant ? styles.modifiers[toCamelCase(this.variant)] : null;
-    },
-  },
+const el: Ref<HTMLDivElement | undefined> = ref();
 
-  mounted() {
-    this.$emit('mounted', this.$el);
-  },
+const breakpointClasses = computed(() => {
+  return [
+    ...classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
+    ...classesFromBreakpointProps(props, ['spacer', 'spaceItems', 'align'], styles),
+  ];
+});
+
+const variantClass = computed(() => {
+  return props.variant ? styles.modifiers[toCamelCase(props.variant)] : null;
+});
+
+onMounted(() => {
+  if (el.value) {
+    emit('mounted', el.value);
+  }
 });
 </script>

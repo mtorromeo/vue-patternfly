@@ -11,39 +11,33 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { defineComponent, inject, markRaw } from 'vue';
+import { inject, type HTMLAttributes } from 'vue';
 import PfButton from '../Button.vue';
 import { ToolbarClearAllFiltersKey, ToolbarNumberOfFiltersKey } from './Toolbar.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfToolbarExpandableContent',
-
-  components: {
-    PfToolbarGroup,
-    PfToolbarItem,
-    PfButton,
-  },
-
-  props: {
-    expanded: Boolean,
-    showClearFiltersButton: Boolean,
-
-    clearFiltersButtonText: {
-      type: String,
-      default: 'Clear all filters',
-    },
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-      numberOfFilters: inject(ToolbarNumberOfFiltersKey),
-      clearAllFilters: inject(ToolbarClearAllFiltersKey),
-    };
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  expanded?: boolean;
+  showClearFiltersButton?: boolean;
+  clearFiltersButtonText?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+  clearFiltersButtonText: 'Clear all filters',
+});
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+  'chip-container'?: (props: Record<never, never>) => any;
+}>();
+
+const numberOfFilters = inject(ToolbarNumberOfFiltersKey);
+const clearAllFilters = inject(ToolbarClearAllFiltersKey);
 </script>

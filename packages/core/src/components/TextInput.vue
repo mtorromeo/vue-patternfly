@@ -34,7 +34,7 @@
 import { type Ref, ref, type InputHTMLAttributes } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useInputValidation } from '../input';
+import { useInputValidation, type InputValidateState } from '../input';
 import { FormGroupInputsKey } from './Form/common';
 import { useOUIAProps } from '../helpers/ouia';
 
@@ -53,7 +53,7 @@ export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
    * If set to success, text input will be modified to indicate valid state.
    * If set to error, text input will be modified to indicate error state.
    */
-  validated?: 'success' | 'warning' | 'error' | 'default';
+  validated?: InputValidateState;
   /** Type that the text input accepts. */
   type?:
     | 'text'
@@ -132,5 +132,6 @@ defineExpose({
   input,
   focus,
   value,
+  effectiveValidated,
 });
 </script>
