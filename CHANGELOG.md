@@ -1,6 +1,22 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.9] - 2023-06-05
+
+### Bug Fixes
+
+- *(InputGroupText)* Made plain prop optional
+- *(docs)* Small typescript fixes
+- *(docs)* Small typescript fixes
+- *(Tooltip)* Correctly identify reference element even when it's not a component
+
+### Features
+
+- Declared fallthrough attributes
+- *(SimpleList)* Added required prop
+- *(FormSelect, Text)* Converted to vue-setup-sfc
+- *(Chip, ChipGroup, Form, SearchInput, Toolbar)* Converted to vue-setup-sfc
+
 ## [0.1.0-beta.8] - 2023-06-02
 
 ### Bug Fixes
