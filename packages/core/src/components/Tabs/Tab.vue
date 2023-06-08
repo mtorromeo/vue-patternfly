@@ -15,7 +15,7 @@
         :aria-disabled="disabled || ariaDisabled"
         :aria-controls="`pf-tab-section-${String(key)}-${String(idSuffix)}`"
         :tabindex="disabled || ariaDisabled ? (href ? -1 : undefined) : undefined"
-        @click="handleTabClick?.(key)"
+        @click="activeKey = key"
       >
         <pf-tab-title-text v-if="title">
           {{ title }}
@@ -30,83 +30,80 @@
     v-show="key === activeKey"
     :id="`pf-tab-section-${String(key)}-${String(idSuffix)}`"
     :key="key"
+    v-bind="$attrs"
   >
     <slot />
   </pf-tab-content>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
-import { computed, defineComponent, getCurrentInstance, inject, markRaw, ref, watch, watchEffect, type PropType } from 'vue';
-import { TabsProvideKey } from './Tabs.vue';
+import { computed, getCurrentInstance, inject, ref, watch, watchEffect } from 'vue';
+import { TabsKey, TabsProvideKey } from './Tabs.vue';
 import PfTabTitleText from './TabTitleText.vue';
-import PfTabContent from './TabContent.vue';
+import { default as PfTabContent, type Props as TabContentProps } from './TabContent.vue';
+import { useChildrenTracker } from '../../use';
 
-export default defineComponent({
+defineOptions({
   name: 'PfTab',
+  inheritAttrs: false,
+});
 
-  components: {
-    PfTabTitleText,
-    PfTabContent,
-  },
+export interface Props extends /* @vue-ignore */ TabContentProps {
+  /** Content rendered in the tab title. */
+  title?: string;
 
-  props: {
-    /** Content rendered in the tab title. */
-    title: {
-      type: String,
-      default: null,
-    },
+  /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */
+  href?: string;
 
-    /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */
-    href: {
-      type: String,
-      default: null,
-    },
+  /** Adds disabled styling and disables the button using the disabled html attribute */
+  disabled?: boolean;
+  /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
+  ariaDisabled?: boolean;
 
-    /** Adds disabled styling and disables the button using the disabled html attribute */
-    disabled: Boolean,
-    /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
-    ariaDisabled: Boolean,
+  contentRef?: InstanceType<typeof PfTabContent>;
 
-    contentRef: Object as PropType<InstanceType<typeof PfTabContent> | undefined>,
+  /** Waits until the first "enter" transition to mount tab children (add them to the DOM) */
+  mountOnEnter?: boolean;
 
-    /** Waits until the first "enter" transition to mount tab children (add them to the DOM) */
-    mountOnEnter: Boolean,
+  /** Unmounts tab children (removes them from the DOM) when they are no longer visible */
+  unmountOnExit?: boolean;
+}
 
-    /** Unmounts tab children (removes them from the DOM) when they are no longer visible */
-    unmountOnExit: Boolean,
-  },
+const props = defineProps<Props>();
 
-  setup(props) {
-    const instance = getCurrentInstance();
-    const key = computed(() => instance?.vnode.key ?? Symbol());
-    const tabs = inject(TabsProvideKey);
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
 
-    const keepAlive = ref(false);
-    watch([key, tabs?.activeKey], () => {
-      if (key.value === tabs?.activeKey?.value) {
-        keepAlive.value = true;
-      } else if (props.unmountOnExit) {
-        keepAlive.value = false;
-      }
-    }, { immediate: true });
+const instance = getCurrentInstance();
+const key = computed(() => instance?.vnode.key ?? Symbol());
+const tabs = inject(TabsProvideKey);
 
-    watchEffect(() => {
-      const tabContent = props.contentRef;
-      if (tabContent) {
-        tabContent.hidden = key.value !== tabs?.activeKey?.value;
-      }
-    });
+useChildrenTracker(TabsKey, key);
 
-    return {
-      keepAlive,
-      tabListRef: tabs?.tabListRef,
-      key,
-      activeKey: tabs?.activeKey,
-      styles: markRaw(styles) as typeof styles,
-      idSuffix: tabs?.idSuffix,
-      handleTabClick: tabs?.handleTabClick,
-    };
-  },
+const activeKey = tabs?.activeKey;
+const tabListRef = tabs?.tabListRef;
+const idSuffix = tabs?.idSuffix;
+const keepAlive = ref(false);
+
+watch([key, activeKey], () => {
+  if (key.value === activeKey?.value) {
+    keepAlive.value = true;
+  } else if (props.unmountOnExit) {
+    keepAlive.value = false;
+  }
+}, { immediate: true });
+
+watchEffect(() => {
+  const tabContent = props.contentRef;
+  if (tabContent) {
+    tabContent.hidden = key.value !== activeKey?.value;
+  }
+});
+
+
+defineExpose({
+  key,
 });
 </script>

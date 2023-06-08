@@ -11,21 +11,28 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, inject, markRaw, ref, type Ref } from 'vue';
+<script lang="ts" setup>
+import { inject, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/TabContent/tab-content';
 import { TabsProvideKey } from './Tabs.vue';
+import type { HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfTabContent',
+});
 
-  setup() {
-    return {
-      teleportTo: ref() as Ref<HTMLElement | undefined>,
-      hidden: ref(false),
-      styles: markRaw(styles) as typeof styles,
-      variant: inject(TabsProvideKey, undefined)?.variant,
-    };
-  },
+export interface Props extends /* @vue-ignore */ HTMLAttributes {}
+
+defineProps<Props>();
+
+defineSlots<{
+  default?: (props: Record<never, never>) => any;
+}>();
+
+const hidden = ref(false);
+const variant = inject(TabsProvideKey, undefined)?.variant;
+
+defineExpose({
+  hidden,
 });
 </script>

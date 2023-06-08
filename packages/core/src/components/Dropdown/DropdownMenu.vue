@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-export const DropdownMenuItemsKey = Symbol("DropdownMenuItemsKey") as ChildrenTrackerInjectionKey;
+export const DropdownMenuItemsKey = Symbol("DropdownMenuItemsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>;
 export const DropdownMenuOnKeydownKey = Symbol('DropdownMenuOnKeydownKey') as InjectionKey<(event: KeyboardEvent, itemEl?: HTMLElement) => void>;
 
 export interface Props {
@@ -52,8 +52,8 @@ defineSlots<{
   default?: (props: Record<never, never>) => any;
 }>();
 
-const children = provideChildrenTracker<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>(DropdownMenuItemsKey);
-const items = computed(() => children.value.filter(
+const children = provideChildrenTracker(DropdownMenuItemsKey);
+const items = computed(() => children.filter(
   c => Boolean(c.focusElement) && !c.disabled,
 ));
 

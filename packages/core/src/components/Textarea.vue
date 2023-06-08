@@ -88,8 +88,6 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const input: Ref<HTMLInputElement | undefined> = ref();
 
-useChildrenTracker(FormGroupInputsKey);
-
 const {
   value,
   effectiveValidated,
@@ -104,6 +102,8 @@ const {
   ...props,
   customCheckValidity: checkValidity,
 });
+
+useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 const regexPattern = computed(() => {
   if (props.pattern instanceof RegExp) {

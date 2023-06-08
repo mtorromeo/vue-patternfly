@@ -110,8 +110,6 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const input: Ref<HTMLInputElement | undefined> = ref();
 
-useChildrenTracker(FormGroupInputsKey);
-
 const {
   value,
   effectiveValidated,
@@ -122,6 +120,8 @@ const {
   onKeyUp,
   ...inputValidationData
 } = useInputValidation({inputElement: input, ...props});
+
+useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 function focus() {
   input.value?.focus();

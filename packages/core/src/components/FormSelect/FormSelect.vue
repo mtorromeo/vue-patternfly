@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey;
+export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfFormSelectOption>>;
 
 export interface Props extends /* @vue-ignore */ SelectHTMLAttributes {
     /** @model */
@@ -51,11 +51,11 @@ defineSlots<{
   default?: (props: Record<never, never>) => any;
 }>();
 
-const options = provideChildrenTracker<InstanceType<typeof PfFormSelectOption>>(FormSelectOptionsKey);
+const options = provideChildrenTracker(FormSelectOptionsKey);
 const value = useManagedProp('modelValue', '');
 
 const selectedOption = computed(() => {
-  return options.value.find(option => option.$attrs.value === value.value);
+  return options.find(option => option.$attrs.value === value.value);
 });
 
 const selectedPlaceholder = computed(() => selectedOption.value?.placeholder);

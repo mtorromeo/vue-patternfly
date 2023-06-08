@@ -129,7 +129,7 @@ const internalValidated = computed(() => {
     return props.validated;
   }
   for (const validation of ['error', 'warning', 'success', 'default'] as const) {
-    if (inputs.value.some(input => unref(input.$.exposed?.effectiveValidated) === validation)) {
+    if (inputs.some(validatedState => unref(validatedState) === validation)) {
       return validation;
     }
   }

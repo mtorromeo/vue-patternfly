@@ -1,25 +1,25 @@
 import { tryOnMounted } from "@vueuse/shared";
-import { getCurrentInstance, inject, onBeforeUnmount, provide, ref, type Component, type InjectionKey, type Ref, type ComponentPublicInstance } from "vue";
+import { getCurrentInstance, inject, onBeforeUnmount, provide, type Component, type InjectionKey, type ComponentPublicInstance, reactive } from "vue";
 
-type ChildrenTracker = {
-  register: (item: Component) => void;
-  unregister: (item: Component) => void;
+type ChildrenTracker<T> = {
+  register: (item: T) => void;
+  unregister: (item: T) => void;
 }
 
-export type ChildrenTrackerInjectionKey = InjectionKey<ChildrenTracker>;
+export type ChildrenTrackerInjectionKey<T> = InjectionKey<ChildrenTracker<T>>;
 
-const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol') as ChildrenTrackerInjectionKey;
+const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol') as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
 
-export function provideChildrenTracker<T extends Component = ComponentPublicInstance>(symbol: symbol | ChildrenTrackerInjectionKey) {
-  const items: Ref<T[]> = ref([]);
+export function provideChildrenTracker<T = ComponentPublicInstance>(symbol: symbol | ChildrenTrackerInjectionKey<T>) {
+  const items: T[] = reactive([]);
 
   provide(symbol || ChildrenTrackerSymbol, {
-    register: (item: Component) => items.value.push(item as any),
+    register: (item: Component) => items.push(item as any),
 
     unregister: (item: Component) => {
-      const idx = items.value.findIndex(i => i === item);
+      const idx = items.findIndex(i => i === item);
       if (idx >= 0) {
-        items.value.splice(idx, 1);
+        items.splice(idx, 1);
       }
     },
   });
@@ -27,21 +27,31 @@ export function provideChildrenTracker<T extends Component = ComponentPublicInst
   return items;
 }
 
-export function useChildrenTracker(symbol: symbol | ChildrenTrackerInjectionKey) {
+export function useChildrenTracker<T extends ComponentPublicInstance>(symbol: ChildrenTrackerInjectionKey<T>): ChildrenTracker<T> | null;
+export function useChildrenTracker<T>(symbol: ChildrenTrackerInjectionKey<T>, item: T): ChildrenTracker<T> | null;
+export function useChildrenTracker<T = ComponentPublicInstance>(symbol: symbol | ChildrenTrackerInjectionKey<T>, item?: T) {
   const tracker = inject(symbol || ChildrenTrackerSymbol, null);
 
   if (tracker) {
     tryOnMounted(() => {
+      if (item !== undefined) {
+        tracker.register(item);
+        return;
+      }
       const instance = getCurrentInstance();
       if (instance?.proxy) {
-        tracker.register(instance.proxy);
+        tracker.register(instance.proxy as T);
       }
     });
 
     onBeforeUnmount(() => {
+      if (item !== undefined) {
+        tracker.unregister(item);
+        return;
+      }
       const instance = getCurrentInstance();
       if (instance?.proxy) {
-        tracker.unregister(instance.proxy);
+        tracker.unregister(instance.proxy as T);
       }
     });
   }
