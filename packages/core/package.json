@@ -5,14 +5,17 @@
     "dist",
     "global.d.ts"
   ],
-  "main": "dist/core.umd.js",
-  "module": "dist/core.es.js",
-  "types": "dist/esm/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/core.es.js",
-      "require": "./dist/core.umd.js",
-      "types": "./dist/esm/main.d.ts"
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.js",
+      "types": "./dist/main.d.ts"
+    },
+    "./global": "./global.d.ts",
+    "./*": {
+      "import": "./dist/*.mjs",
+      "require": "./dist/*.js",
+      "types": "./dist/*.d.ts"
     }
   },
   "scripts": {
@@ -31,33 +34,35 @@
   },
   "dependencies": {
     "@floating-ui/core": "^1.2.6",
-    "@floating-ui/dom": "^1.2.7",
+    "@floating-ui/dom": "^1.2.9",
     "@patternfly/patternfly": "^4.224.2",
     "@patternfly/react-styles": "^4.92.6",
     "@patternfly/react-tokens": "^4.94.6",
-    "@vue-patternfly/icons": "workspace:^0.2.0",
+    "@vue-patternfly/icons": "workspace:^",
     "@vueuse/core": "^10.1.2",
     "@vueuse/integrations": "^10.1.2",
     "@vueuse/shared": "^10.1.2"
   },
   "devDependencies": {
+    "@types/node": "^20.2.5",
     "@types/web-bluetooth": "^0.0.17",
     "@vitejs/plugin-vue": "^4.2.3",
-    "@vue/compiler-sfc": "^3.3.2",
-    "concurrently": "^8.0.1",
-    "focus-trap": "^7.4.1",
+    "@vue/compiler-sfc": "^3.3.4",
+    "concurrently": "^8.1.0",
+    "focus-trap": "^7.4.3",
     "fs-extra": "^11.1.1",
-    "rimraf": "^5.0.0",
-    "tslib": "^2.5.0",
+    "glob": "^10.2.7",
+    "rimraf": "^5.0.1",
+    "tslib": "^2.5.3",
     "typescript": "^5.0.4",
-    "vite": "^4.3.5",
-    "vue": "^3.3.2",
-    "vue-router": "^4.2.0",
+    "vite": "^4.3.9",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2",
     "vue-tsc": "^1.6.5"
   },
   "peerDependencies": {
     "focus-trap": "*",
     "vue": "^3"
   },
-  "packageManager": "pnpm@7.13.0"
+  "packageManager": "pnpm@8.6.1"
 }

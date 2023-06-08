@@ -17,14 +17,14 @@ function writeType(name) {
 }
 
 function extractComponentsFromDist(distDir) {
-  const index = fs.readFileSync(path.join(__dirname, '../dist/esm', distDir, 'index.d.ts'), { encoding: 'utf-8' });
+  const index = fs.readFileSync(path.join(__dirname, '../dist', distDir, 'index.d.ts'), { encoding: 'utf-8' });
 
   for (const name of findComponentExports(index)) {
     writeType(name);
   }
 
   for (const match of index.matchAll(/^export \* from '(.*)'/gm)) {
-    const groupIndex = fs.readFileSync(path.join(__dirname, '../dist/esm/', distDir, match[1], 'index.d.ts'), { encoding: 'utf-8' });
+    const groupIndex = fs.readFileSync(path.join(__dirname, '../dist/', distDir, match[1], 'index.d.ts'), { encoding: 'utf-8' });
     for (const name of findComponentExports(groupIndex)) {
       writeType(name);
     }

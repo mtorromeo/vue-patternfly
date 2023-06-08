@@ -27,5 +27,5 @@
     "shiki": "^0.14.2",
     "ts-dedent": "^2.2.0"
   },
-  "packageManager": "pnpm@7.13.0"
+  "packageManager": "pnpm@8.6.1"
 }

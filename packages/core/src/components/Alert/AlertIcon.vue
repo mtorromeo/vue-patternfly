@@ -13,13 +13,14 @@ import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triang
 import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
 import type { HTMLAttributes } from 'vue';
+import type { Component } from 'vue';
 
 export const AlertVariantIcons = {
-  success: CircleCheckIcon,
-  danger: CircleExclamationIcon,
-  warning: TriangleExclamationIcon,
-  info: CircleInfoIcon,
-  default: BellIcon,
+  success: CircleCheckIcon as Component,
+  danger: CircleExclamationIcon as Component,
+  warning: TriangleExclamationIcon as Component,
+  info: CircleInfoIcon as Component,
+  default: BellIcon as Component,
 };
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {

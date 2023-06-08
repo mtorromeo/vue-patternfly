@@ -1,36 +1,22 @@
-import path from 'path';
 import { defineConfig } from 'vite';
+import { globSync } from 'glob';
+import path from 'path';
 import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/main.ts'),
-      name: 'VuePatternFly',
-      fileName: format => `core.${format}.js`,
+      entry: globSync(path.resolve(__dirname, 'src/**/*.{ts,vue}')),
+      name: '',
     },
     rollupOptions: {
       external: ['vue'],
-      output: [{
-        format: 'es',
-        assetFileNames: 'core.[ext]',
-        esModule: true,
+      output: {
         exports: 'named',
-        globals: {
-          vue: 'Vue',
-        },
-      }, {
-        format: 'umd',
-        name: 'VuePatternFly',
-        assetFileNames: 'core.[ext]',
-        inlineDynamicImports: true,
-        interop: 'esModule',
-        exports: 'named',
-        globals: {
-          vue: 'Vue',
-        },
-      }],
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+      },
     },
   },
   plugins: [
