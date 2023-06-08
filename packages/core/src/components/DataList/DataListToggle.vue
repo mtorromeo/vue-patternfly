@@ -22,7 +22,7 @@
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
 import PfButton from '../Button.vue';
-import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import type { HTMLAttributes } from 'vue';
 
 defineOptions({

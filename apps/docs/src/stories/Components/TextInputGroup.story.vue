@@ -56,8 +56,8 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';
-import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
+import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 
 const inputValue = ref('');
 

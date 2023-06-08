@@ -41,7 +41,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
-import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
+import CheckIcon from '@vue-patternfly/icons/check-icon';
 import type { HTMLAttributes, InputHTMLAttributes } from 'vue';
 import { useManagedProp } from '../use';
 import { isDefined } from '@vueuse/shared';

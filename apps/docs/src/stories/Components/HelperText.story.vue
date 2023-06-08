@@ -74,8 +74,8 @@
 </template>
 
 <script lang="ts" setup>
-import InfoIcon from "@vue-patternfly/icons/dist/esm/icons/info-icon";
-import QuestionIcon from "@vue-patternfly/icons/dist/esm/icons/question-icon";
-import ExclamationIcon from "@vue-patternfly/icons/dist/esm/icons/exclamation-icon";
-import XmarkIcon from "@vue-patternfly/icons/dist/esm/icons/xmark-icon";
+import InfoIcon from "@vue-patternfly/icons/info-icon";
+import QuestionIcon from "@vue-patternfly/icons/question-icon";
+import ExclamationIcon from "@vue-patternfly/icons/exclamation-icon";
+import XmarkIcon from "@vue-patternfly/icons/xmark-icon";
 </script>

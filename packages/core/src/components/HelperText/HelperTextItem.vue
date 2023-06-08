@@ -27,10 +27,10 @@
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
 import { defineComponent, inject, markRaw, type PropType } from 'vue';
 
-import MinusIcon from '@vue-patternfly/icons/dist/esm/icons/minus-icon';
-import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
-import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
-import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon';
+import MinusIcon from '@vue-patternfly/icons/minus-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
+import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import { HelperTextComponentKey } from './HelperText.vue';
 
 export default defineComponent({

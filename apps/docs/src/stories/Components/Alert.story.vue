@@ -197,11 +197,11 @@
 <script lang="ts" setup>
 import { reactive, ref, type HTMLAttributes } from 'vue';
 import type { ComponentProps, PfAlert } from '@vue-patternfly/core';
-import UsersIcon from '@vue-patternfly/icons/dist/esm/icons/users-icon';
-import BoxIcon from '@vue-patternfly/icons/dist/esm/icons/box-icon';
-import DatabaseIcon from '@vue-patternfly/icons/dist/esm/icons/database-icon';
-import ServerIcon from '@vue-patternfly/icons/dist/esm/icons/server-icon';
-import LaptopIcon from '@vue-patternfly/icons/dist/esm/icons/laptop-icon';
+import UsersIcon from '@vue-patternfly/icons/users-icon';
+import BoxIcon from '@vue-patternfly/icons/box-icon';
+import DatabaseIcon from '@vue-patternfly/icons/database-icon';
+import ServerIcon from '@vue-patternfly/icons/server-icon';
+import LaptopIcon from '@vue-patternfly/icons/laptop-icon';
 
 type AlertData = {
   title: string;

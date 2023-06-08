@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
-import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { default as PfButton, type Props as ButtonProps } from '../Button.vue';
 import { type HTMLAttributes, inject } from 'vue';
 import { CardExpandableKey, CardExpandedKey } from './Card.vue';

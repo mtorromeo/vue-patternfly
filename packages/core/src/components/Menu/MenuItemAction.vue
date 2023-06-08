@@ -21,7 +21,7 @@ import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { inject, type ButtonHTMLAttributes } from 'vue';
 import { MenuInjectionKey } from './Menu.vue';
 import { MenuItemInjectionKey } from './MenuItem.vue';
-import StarIcon from '@vue-patternfly/icons/dist/esm/icons/star-icon';
+import StarIcon from '@vue-patternfly/icons/star-icon';
 import { isDefined } from '@vueuse/shared';
 
 defineOptions({

@@ -30,7 +30,7 @@
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import { type FieldsetHTMLAttributes, computed } from 'vue';
 import PfButton from '../Button.vue';
-import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
 import { getUniqueId } from '../../util';
 import { isDefined } from '@vueuse/shared';

@@ -423,11 +423,11 @@
 </template>
 
 <script lang="ts" setup>
-import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';
-import FilterIcon from '@vue-patternfly/icons/dist/esm/icons/filter-icon';
-import CloneIcon from '@vue-patternfly/icons/dist/esm/icons/clone-icon';
-import PenToSquareIcon from '@vue-patternfly/icons/dist/esm/icons/pen-to-square-icon';
-import RotateIcon from '@vue-patternfly/icons/dist/esm/icons/rotate-icon';
+import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
+import FilterIcon from '@vue-patternfly/icons/filter-icon';
+import CloneIcon from '@vue-patternfly/icons/clone-icon';
+import PenToSquareIcon from '@vue-patternfly/icons/pen-to-square-icon';
+import RotateIcon from '@vue-patternfly/icons/rotate-icon';
 
 import { reactive, ref } from "vue";
 

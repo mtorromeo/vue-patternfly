@@ -26,5 +26,5 @@
 </template>
 
 <script lang="ts" setup>
-import CubesIcon from "@vue-patternfly/icons/dist/esm/icons/cubes-icon";
+import CubesIcon from "@vue-patternfly/icons/cubes-icon";
 </script>

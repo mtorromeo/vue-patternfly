@@ -249,11 +249,11 @@
 </style>
 
 <script lang="ts" setup>
-import CirclePlusIcon from '@vue-patternfly/icons/dist/esm/icons/circle-plus-icon';
-import SquareArrowUpRightIcon from '@vue-patternfly/icons/dist/esm/icons/square-arrow-up-right-icon';
-import CopyIcon from '@vue-patternfly/icons/dist/esm/icons/copy-icon';
-import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
-import ArrowRightIcon from '@vue-patternfly/icons/dist/esm/icons/arrow-right-icon';
+import CirclePlusIcon from '@vue-patternfly/icons/circle-plus-icon';
+import SquareArrowUpRightIcon from '@vue-patternfly/icons/square-arrow-up-right-icon';
+import CopyIcon from '@vue-patternfly/icons/copy-icon';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
+import ArrowRightIcon from '@vue-patternfly/icons/arrow-right-icon';
 import { ref } from 'vue';
 
 const primaryLoading = ref(false);

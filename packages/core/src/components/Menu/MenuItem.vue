@@ -136,10 +136,10 @@ import { getUniqueId } from '../../util';
 import { MenuInjectionKey, type MenuItemId } from './Menu.vue';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
-import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import UpRightFromSquareIcon from '@vue-patternfly/icons/dist/esm/icons/up-right-from-square-icon';
-import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import UpRightFromSquareIcon from '@vue-patternfly/icons/up-right-from-square-icon';
+import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { isDefined } from '@vueuse/shared';
 
 defineOptions({

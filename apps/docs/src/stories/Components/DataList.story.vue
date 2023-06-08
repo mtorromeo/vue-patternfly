@@ -557,5 +557,5 @@
 <script lang="ts" setup>
 const log = console.log;
 
-import CodeBranchIcon from '@vue-patternfly/icons/dist/esm/icons/code-branch-icon';
+import CodeBranchIcon from '@vue-patternfly/icons/code-branch-icon';
 </script>

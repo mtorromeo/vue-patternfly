@@ -207,12 +207,12 @@
 </template>
 
 <script lang="ts" setup>
-import CodeBranchIcon from '@vue-patternfly/icons/dist/esm/icons/code-branch-icon';
-import LayerGroupIcon from '@vue-patternfly/icons/dist/esm/icons/layer-group-icon';
-import CubeIcon from '@vue-patternfly/icons/dist/esm/icons/cube-icon';
-import ClipboardIcon from '@vue-patternfly/icons/dist/esm/icons/clipboard-icon';
-import BarsIcon from '@vue-patternfly/icons/dist/esm/icons/bars-icon';
-import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
+import CodeBranchIcon from '@vue-patternfly/icons/code-branch-icon';
+import LayerGroupIcon from '@vue-patternfly/icons/layer-group-icon';
+import CubeIcon from '@vue-patternfly/icons/cube-icon';
+import ClipboardIcon from '@vue-patternfly/icons/clipboard-icon';
+import BarsIcon from '@vue-patternfly/icons/bars-icon';
+import BellIcon from '@vue-patternfly/icons/bell-icon';
 import { reactive } from 'vue';
 
 const selected: (string | number | symbol | null | undefined)[] = reactive(['item3', 'item4']);

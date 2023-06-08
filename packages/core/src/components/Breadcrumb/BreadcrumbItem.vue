@@ -24,7 +24,7 @@ import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrum
 import type { RouteLocationRaw } from 'vue-router';
 import { computed, type Component, type LiHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough';
-import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 
 defineOptions({
   name: 'PfBreadcrumbItem',

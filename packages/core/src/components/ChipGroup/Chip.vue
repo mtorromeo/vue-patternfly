@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Chip/chip';
 
-import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfButton from '../Button.vue';
 import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';

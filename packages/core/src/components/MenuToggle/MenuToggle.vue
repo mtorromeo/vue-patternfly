@@ -55,7 +55,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
-import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
+import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import { computed, useSlots, type ButtonHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough';
 import { useManagedProp } from '../../use';

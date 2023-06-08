@@ -70,9 +70,9 @@
 </template>
 
 <script lang="ts" setup>
-import AlignLeftIcon from '@vue-patternfly/icons/dist/esm/icons/align-left-icon';
-import AlignCenterIcon from "@vue-patternfly/icons/dist/esm/icons/align-center-icon";
-import AlignRightIcon from "@vue-patternfly/icons/dist/esm/icons/align-right-icon";
+import AlignLeftIcon from '@vue-patternfly/icons/align-left-icon';
+import AlignCenterIcon from "@vue-patternfly/icons/align-center-icon";
+import AlignRightIcon from "@vue-patternfly/icons/align-right-icon";
 import { ref } from "vue";
 
 const open = ref(false);

@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { computed, inject, type Component, type HTMLAttributes } from 'vue';
-import BarsIcon from '@vue-patternfly/icons/dist/esm/icons/bars-icon';
+import BarsIcon from '@vue-patternfly/icons/bars-icon';
 import PfButton from '../Button.vue';
 import { PageManagedSidebarKey, PageNavOpenKey } from './Page.vue';
 

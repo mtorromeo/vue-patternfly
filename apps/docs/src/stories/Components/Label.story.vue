@@ -351,6 +351,6 @@
 </style>
 
 <script lang="ts" setup>
-import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
+import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 const alert = () => window.alert('Clicked close button');
 </script>

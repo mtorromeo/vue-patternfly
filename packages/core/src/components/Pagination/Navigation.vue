@@ -71,10 +71,10 @@
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 
 import PfButton from '../Button.vue';
-import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import AnglesLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angles-left-icon';
-import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
-import AnglesRightIcon from '@vue-patternfly/icons/dist/esm/icons/angles-right-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
+import AnglesLeftIcon from '@vue-patternfly/icons/angles-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import AnglesRightIcon from '@vue-patternfly/icons/angles-right-icon';
 
 import { pluralize } from '../../util';
 import { defineComponent, markRaw, type Ref, ref } from 'vue';

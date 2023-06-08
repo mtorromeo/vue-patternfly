@@ -14,8 +14,8 @@
 import styles from '@patternfly/react-styles/css/components/NotificationBadge/notification-badge';
 import type { ComponentProps } from '../util';
 import PfButton from './Button.vue';
-import PfBellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
-import PfAttentionBellIcon from '@vue-patternfly/icons/dist/esm/icons/attention-bell-icon';
+import PfBellIcon from '@vue-patternfly/icons/bell-icon';
+import PfAttentionBellIcon from '@vue-patternfly/icons/attention-bell-icon';
 
 defineOptions({
   name: 'PfNotificationBadge',

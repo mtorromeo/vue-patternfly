@@ -119,8 +119,8 @@ import { isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
 import { nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
 
-import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useEventListener } from '@vueuse/core';
 import { watchEffect } from 'vue';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';

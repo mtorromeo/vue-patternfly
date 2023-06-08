@@ -7,11 +7,11 @@
 </template>
 
 <script lang="ts">
-import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
-import CircleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon';
-import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
-import CircleInfoIcon from '@vue-patternfly/icons/dist/esm/icons/circle-info-icon';
-import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
+import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
+import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
+import BellIcon from '@vue-patternfly/icons/bell-icon';
 import type { HTMLAttributes } from 'vue';
 import type { Component } from 'vue';
 

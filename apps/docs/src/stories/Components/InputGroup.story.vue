@@ -30,6 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import AtIcon from "@vue-patternfly/icons/dist/esm/icons/at-icon";
-import MagnifyingGlassIcon from "@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon";
+import AtIcon from "@vue-patternfly/icons/at-icon";
+import MagnifyingGlassIcon from "@vue-patternfly/icons/magnifying-glass-icon";
 </script>

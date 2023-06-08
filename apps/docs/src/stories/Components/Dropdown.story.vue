@@ -307,10 +307,10 @@
 </template>
 
 <script lang="ts" setup>
-import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
-import CubesIcon from '@vue-patternfly/icons/dist/esm/icons/cubes-icon';
-import TableCellsIcon from '@vue-patternfly/icons/dist/esm/icons/table-cells-icon';
-import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
+import BellIcon from '@vue-patternfly/icons/bell-icon';
+import CubesIcon from '@vue-patternfly/icons/cubes-icon';
+import TableCellsIcon from '@vue-patternfly/icons/table-cells-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 
 import { ref } from "vue";
 const open1 = ref(false);

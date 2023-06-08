@@ -43,7 +43,7 @@ import { watchEffect, inject, type Ref, ref, computed, onMounted, onBeforeUnmoun
 import type { RouteLocationRaw } from 'vue-router';
 import { isDefined, useElementHover } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
-import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { NavFlyoutRefKey, NavOnSelectKey } from './Nav.vue';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';

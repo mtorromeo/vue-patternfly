@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import { default as PfBadge, type Props as BadgeProps } from '../Badge.vue';
 import { default as PfToggle, type Props as ToggleProps } from './Toggle.vue';
-import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
+import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
 defineOptions({

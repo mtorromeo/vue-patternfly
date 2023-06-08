@@ -76,7 +76,7 @@ import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
-import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 
 import { ref, watch, type Ref, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component } from 'vue';
 import { useElementSize } from '@vueuse/core';

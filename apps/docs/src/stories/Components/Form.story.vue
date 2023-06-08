@@ -129,9 +129,9 @@
 </template>
 
 <script lang="ts" setup>
-import HelpIcon from "@vue-patternfly/icons/dist/esm/icons/help-icon";
-import TrashIcon from "@vue-patternfly/icons/dist/esm/icons/trash-icon";
-import CircleExclamationIcon from "@vue-patternfly/icons/dist/esm/icons/circle-exclamation-icon";
+import HelpIcon from "@vue-patternfly/icons/help-icon";
+import TrashIcon from "@vue-patternfly/icons/trash-icon";
+import CircleExclamationIcon from "@vue-patternfly/icons/circle-exclamation-icon";
 import { ref } from "vue";
 const age = ref('Five');
 const description = ref("Nice description\nmy email: mail@mail.com");

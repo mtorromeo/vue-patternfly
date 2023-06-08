@@ -1,9 +1,18 @@
 {
   "name": "@vue-patternfly/icons",
-  "version": "0.2.2",
-  "main": "dist/js/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "version": "0.3.0",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/js/index.js",
+      "types": "./dist/esm/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/esm/icons/*.js",
+      "require": "./dist/js/icons/*.js",
+      "types": "./dist/esm/icons/*.d.ts"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "rimraf dist src/icons src/index.js src/index.d.ts",

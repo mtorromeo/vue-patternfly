@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import type { ComponentProps } from '../util';
 import PfButton from './Button.vue';
-import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 
 defineOptions({
   name: 'PfCloseButton',

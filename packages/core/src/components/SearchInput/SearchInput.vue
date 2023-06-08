@@ -237,12 +237,12 @@ import PfButton from '../Button.vue';
 import PassThrough from '../../helpers/PassThrough';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 
-import MagnifyingGlassIcon from '@vue-patternfly/icons/dist/esm/icons/magnifying-glass-icon';
-import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
-import AngleUpIcon from '@vue-patternfly/icons/dist/esm/icons/angle-up-icon';
-import AngleDownIcon from '@vue-patternfly/icons/dist/esm/icons/angle-down-icon';
-import CaretDownIcon from '@vue-patternfly/icons/dist/esm/icons/caret-down-icon';
-import ArrowRightIcon from '@vue-patternfly/icons/dist/esm/icons/arrow-right-icon';
+import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
+import AngleUpIcon from '@vue-patternfly/icons/angle-up-icon';
+import AngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
+import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
+import ArrowRightIcon from '@vue-patternfly/icons/arrow-right-icon';
 
 defineOptions({
   name: 'PfSearchInput',

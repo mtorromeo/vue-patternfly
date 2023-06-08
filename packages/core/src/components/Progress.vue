@@ -56,9 +56,9 @@
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
 import PassThrough from '../helpers/PassThrough';
 import PfTooltip from './Tooltip/Tooltip.vue';
-import CircleXmarkIcon from '@vue-patternfly/icons/dist/esm/icons/circle-xmark-icon';
-import CircleCheckIcon from '@vue-patternfly/icons/dist/esm/icons/circle-check-icon';
-import TriangleExclamationIcon from '@vue-patternfly/icons/dist/esm/icons/triangle-exclamation-icon';
+import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 import { getUniqueId } from '../util';
 import { type Component, ref, computed, type HTMLAttributes } from 'vue';
 

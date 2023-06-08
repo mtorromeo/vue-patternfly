@@ -141,7 +141,7 @@
 </template>
 
 <script lang="ts" setup>
-import BellIcon from '@vue-patternfly/icons/dist/esm/icons/bell-icon';
+import BellIcon from '@vue-patternfly/icons/bell-icon';
 import { ref } from 'vue';
 
 const expanded = ref(false);

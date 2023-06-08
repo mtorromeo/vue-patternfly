@@ -10,7 +10,7 @@
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 
 import PfButton from '../Button.vue';
-import XmarkIcon from '@vue-patternfly/icons/dist/esm/icons/xmark-icon';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import type { HTMLAttributes } from 'vue';
 
 defineOptions({

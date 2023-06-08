@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import HelpIcon from "@vue-patternfly/icons/dist/esm/icons/help-icon";
+import HelpIcon from "@vue-patternfly/icons/help-icon";
 import { ref } from "vue";
 
 const open1 = ref(false);

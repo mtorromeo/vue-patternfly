@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts" setup>
-import AngleLeftIcon from '@vue-patternfly/icons/dist/esm/icons/angle-left-icon';
-import AngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
+import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
+import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import { inject, ref, type Ref, onMounted, onBeforeUnmount, type HTMLAttributes } from 'vue';

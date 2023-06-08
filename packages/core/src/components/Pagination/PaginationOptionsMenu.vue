@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import styles from '@patternfly/react-styles/css/components/OptionsMenu/options-menu';
-import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
+import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { PaginationMixin } from './common';
 import PfDropdown, {
   DropdownBaseClassKey,
