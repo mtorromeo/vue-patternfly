@@ -33,7 +33,7 @@
           <pf-text-input id="simple-form-name-01" required name="simple-form-name-01" aria-describedby="simple-form-name-01-helper" />
         </pf-form-group>
         <pf-action-group>
-          <pf-button variant="primary">Submit</pf-button>
+          <pf-button type="submit" variant="primary">Submit</pf-button>
           <pf-button variant="link">Cancel</pf-button>
         </pf-action-group>
       </pf-form>
