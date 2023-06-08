@@ -13,7 +13,7 @@ defineOptions({
 });
 
 export interface Props {
-  reference: string | HTMLElement | undefined;
+  reference: string | Element | undefined;
   disable?: boolean;
   placement?: Placement;
   flip?: boolean;
@@ -34,11 +34,11 @@ const slots = defineSlots<{
   default?: (props: ReturnType<typeof useFloatingUI>) => VNode[];
 }>();
 
-const referenceElement = computed<HTMLElement | undefined>(() => {
+const referenceElement = computed<Element | undefined>(() => {
   const reference = typeof props.reference === 'string'
     ? document.querySelector(props.reference)
     : props.reference;
-  return reference instanceof HTMLElement ? reference : undefined;
+  return reference instanceof Element ? reference : undefined;
 });
 
 const htmlElement: Ref<HTMLElement | undefined> = ref();

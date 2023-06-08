@@ -3,7 +3,7 @@ import { onBeforeUnmount, reactive, toValue, unref, watch, type MaybeRef } from 
 
 export type FloatingOptions = Parameters<typeof computePosition>[2];
 
-export function useFloatingUI(reference: MaybeRef<HTMLElement | null | undefined>, floating: MaybeRef<HTMLElement | null | undefined>, options: MaybeRef<FloatingOptions>) {
+export function useFloatingUI(reference: MaybeRef<Element | null | undefined>, floating: MaybeRef<HTMLElement | null | undefined>, options: MaybeRef<FloatingOptions>) {
   const defaultFloatingData: Awaited<ReturnType<typeof computePosition>> = {
     x: 0,
     y: 0,

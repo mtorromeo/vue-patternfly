@@ -10,17 +10,17 @@ export function findHtmlElementFromVNode(vnode: VNode | undefined) {
   if (!(el instanceof Node)) {
     return;
   }
-  if (!(el instanceof HTMLElement)) {
+  if (!(el instanceof Element)) {
     el = (el as Element).nextElementSibling;
   }
-  if (!(el instanceof HTMLElement)) {
+  if (!(el instanceof Element)) {
     return;
   }
   return el;
 }
 
 export function useHtmlElementFromVNodes() {
-  const element: Ref<HTMLElement | undefined> = ref();
+  const element: Ref<Element | undefined> = ref();
 
   return {
     element,
