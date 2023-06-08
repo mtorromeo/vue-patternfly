@@ -12,13 +12,13 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import type { Component, HTMLAttributes } from 'vue';
+import type { Component, FormHTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfForm',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ FormHTMLAttributes {
   component?: string | Component;
   horizontal?: boolean;
   widthLimited?: boolean;
