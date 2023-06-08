@@ -1,6 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.10] - 2023-06-08
+
+### Bug Fixes
+
+- *(Form)* Declaration of FormHTMLAttributes as fallthrough attributes of pf-form
+- *(FloatingUI)* Allow using any DOM Element as reference and not just HTMLElement. This, for example, allows using tooltips on SVGs.
+- *(docs)* Fixed submit button in form story
+
+### Features
+
+- *(Form)* Allowed pf-form-field-group and pf-form-group to use fieldset as the container tag
+- *(Switch)* Added off-value prop to assign a value to use when the switch is in the off state
+- *(Tabs)* Converted to vue-setup-sfc
+- *(Icons)* Changed package to have simpler imports of single icons
+
 ## [0.1.0-beta.9] - 2023-06-05
 
 ### Bug Fixes
