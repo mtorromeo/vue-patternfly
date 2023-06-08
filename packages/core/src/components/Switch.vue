@@ -7,10 +7,19 @@
   >
     <input
       v-bind="$attrs"
+      :name="name"
+      :disabled="disabled"
       :class="styles.switchInput"
       type="checkbox"
-      :checked="checked"
-      @change="$emit('update:checked', ($event.currentTarget as HTMLInputElement).checked)"
+      :checked="managedChecked"
+      @change="managedChecked = ($event.currentTarget as HTMLInputElement).checked"
+    >
+    <input
+      v-if="name && isDefined(offValue) && !managedChecked"
+      :name="name"
+      type="hidden"
+      :value="offValue"
+      :disabled="disabled"
     >
 
     <template v-if="label">
@@ -34,6 +43,8 @@
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
 import CheckIcon from '@vue-patternfly/icons/dist/esm/icons/check-icon';
 import type { HTMLAttributes, InputHTMLAttributes } from 'vue';
+import { useManagedProp } from '../use';
+import { isDefined } from '@vueuse/shared';
 
 defineOptions({
   name: 'PfSwitch',
@@ -41,23 +52,33 @@ defineOptions({
 });
 
 export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
-    checked?: boolean;
+  checked?: boolean;
 
-    /** Flag to reverse the layout of toggle and label (toggle on right). */
-    reversed?: boolean;
+  /** Flag to reverse the layout of toggle and label (toggle on right). */
+  reversed?: boolean;
 
-    /** Text value for the label when on */
-    label?: string;
+  /** Text value for the label when on */
+  label?: string;
 
-    /** Text value for the label when off */
-    labelOff?: string;
+  /** Text value for the label when off */
+  labelOff?: string;
 
-    labelAttrs?: HTMLAttributes;
+  labelAttrs?: HTMLAttributes;
+
+  offValue?: string;
+  name?: string;
+  disabled?: boolean;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  checked: undefined,
+});
 
 defineEmits<{
   (name: 'update:checked', value: boolean): void;
 }>();
+
+defineSlots<Record<string, never>>();
+
+const managedChecked = useManagedProp('checked', false);
 </script>
