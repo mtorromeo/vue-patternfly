@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.formGroup">
+  <component :is="fieldset ? 'fieldset' : 'div'" :class="styles.formGroup">
     <div
       v-if="label || $slots.label"
       :class="[styles.formGroupLabel, {
@@ -60,19 +60,21 @@
       </div>
       <slot v-if="helperTextBeforeField" />
     </div>
-  </div>
+  </component>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import type { HTMLAttributes } from 'vue';
+import type { FieldsetHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough';
 
 defineOptions({
   name: 'PfFormGroup',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ FieldsetHTMLAttributes {
+  fieldset?: boolean;
+
     /** Label text before the field. */
   label?: string;
 

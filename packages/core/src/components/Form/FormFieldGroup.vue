@@ -1,5 +1,6 @@
 <template>
-  <div
+  <component
+    :is="fieldset ? 'fieldset' : 'div'"
     :class="[styles.formFieldGroup, { [styles.modifiers.expanded]: managedExpandable && managedExpanded }]"
   >
     <div v-if="managedExpandable" :class="styles.formFieldGroupToggle">
@@ -22,12 +23,12 @@
     <div v-if="!managedExpandable || managedExpanded" :class="styles.formFieldGroupBody">
       <slot />
     </div>
-  </div>
+  </component>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { type HTMLAttributes, computed } from 'vue';
+import { type FieldsetHTMLAttributes, computed } from 'vue';
 import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/dist/esm/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
@@ -38,7 +39,9 @@ defineOptions({
   name: 'PfFormFieldGroup',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ FieldsetHTMLAttributes {
+  fieldset?: boolean;
+
   /** Flag indicating if the field group is expandable */
   expandable?: boolean;
 
