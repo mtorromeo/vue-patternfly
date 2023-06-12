@@ -42,7 +42,7 @@ import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
 import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type WritableComputedRef, type LiHTMLAttributes } from "vue";
 import { DataListKey } from './DataList.vue';
-import OverridableWrapper from '../../helpers/OverridableWrapper';
+import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
 import PfDataListItemRow from './DataListItemRow.vue';
 import PfDataListContent from './DataListContent.vue';
 import { useManagedProp } from '../../use';

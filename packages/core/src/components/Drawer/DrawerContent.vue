@@ -31,7 +31,7 @@ import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { type InjectionKey, provide, type Ref, ref } from 'vue';
 import { DrawerColorVariant } from './common';
 import type { ComponentProps } from '../../util';
-import OverridableWrapper from '../../helpers/OverridableWrapper';
+import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
 import PfDrawerMain from './DrawerMain.vue';
 import PfDrawerPanelContent from './DrawerPanelContent.vue';
 

@@ -45,7 +45,7 @@ import PfMenu from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import OverridableWrapper from '../../helpers/OverridableWrapper';
+import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
 import { ref, type HTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 

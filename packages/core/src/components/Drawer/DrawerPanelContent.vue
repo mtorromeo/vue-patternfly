@@ -52,7 +52,7 @@ import { computed, inject, type Ref, ref, unref, type HTMLAttributes } from 'vue
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';
-import OverridableWrapper from '../../helpers/OverridableWrapper';
+import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
 import PfDrawerHead from './DrawerHead.vue';
 import { resolveOverridableComponent } from '../../helpers';
 
