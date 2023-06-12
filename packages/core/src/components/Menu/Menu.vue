@@ -94,7 +94,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   /** A callback for when the input value changes. */
-  (name: 'searchInputChange', event: Event, value: string): void;
+  (name: 'search-input-change', event: Event, value: string): void;
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
   (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
   (name: 'update:selected', value: MenuItemId | MenuItemId[] | null): void;

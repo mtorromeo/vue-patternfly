@@ -23,7 +23,7 @@
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import heightToken from '@patternfly/react-tokens/dist/esm/c_form_control_textarea_Height';
 
-import { computed, ref, type InputHTMLAttributes, type Ref } from 'vue';
+import { computed, ref, type TextareaHTMLAttributes, type Ref } from 'vue';
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
 import { canUseDOM } from '../util';
@@ -34,7 +34,7 @@ defineOptions({
   name: 'PfTextarea',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'pattern'> {
+export interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {
   required?: boolean;
 
   /** Flag to modify height based on contents. */

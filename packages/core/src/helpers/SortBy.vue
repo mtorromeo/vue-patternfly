@@ -9,6 +9,10 @@
 
 import type { VNode } from 'vue';
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 export interface Props {
   weight: number;
 }

@@ -117,7 +117,7 @@ const managedSelected = (() => {
           } else {
             datalist.itemSelection.value = s ? value : null;
           }
-          datalist.$emit(`update:selected`, datalist.itemSelection.value);
+          datalist.emit(`update:selected`, datalist.itemSelection.value);
 
         } else {
           innerSelected.value = s;

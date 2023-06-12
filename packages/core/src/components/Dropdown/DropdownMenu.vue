@@ -6,7 +6,7 @@
       [styles.modifiers.alignRight]: position === 'right',
     }]"
     :hidden="!open"
-    @click="component === 'div' && $emit('select', $event)"
+    @click="component === 'div' && emit('select', $event)"
   >
     <slot />
   </component>
@@ -16,7 +16,7 @@
 export const DropdownMenuItemsKey = Symbol("DropdownMenuItemsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfDropdownItem> & Disableable & Focusable>;
 export const DropdownMenuOnKeydownKey = Symbol('DropdownMenuOnKeydownKey') as InjectionKey<(event: KeyboardEvent, itemEl?: HTMLElement) => void>;
 
-export interface Props {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: string | Component;
   position?: 'left' | 'right';
   open?: boolean;
@@ -28,7 +28,7 @@ export interface Props {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
 
-import { provide, computed, type Component, onMounted, inject, type InjectionKey } from 'vue';
+import { provide, computed, type Component, onMounted, inject, type InjectionKey, type HTMLAttributes } from 'vue';
 import type PfDropdownItem from './DropdownItem.vue';
 import { provideChildrenTracker, keyNavigation, type Disableable, type Focusable, type ChildrenTrackerInjectionKey } from '../../use';
 import { DropdownMenuClassKey } from './Dropdown.vue';
@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   autoFocus: true,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'select', e: Event): void;
 }>();
 

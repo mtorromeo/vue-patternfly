@@ -10,6 +10,7 @@ import type { VNode } from 'vue';
 
 defineOptions({
   name: 'PfFloatingUi',
+  inheritAttrs: false,
 });
 
 export interface Props {

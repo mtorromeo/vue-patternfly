@@ -6,7 +6,7 @@
     v-bind="$attrs"
     :class="[styles.chip, styles.modifiers.overflow]"
     :type="component === 'button' ? 'button' : undefined"
-    @click="$emit('click', $event)"
+    @click="emit('click', $event)"
   >
     <span :class="styles.chipText">
       <slot />
@@ -34,7 +34,7 @@
         variant="plain"
         :aria-label="closeBtnAriaLabel"
         :aria-labelledby="`remove_${effectiveId} ${effectiveId}`"
-        @click="$emit('click', $event)"
+        @click="emit('click', $event)"
       >
         <xmark-icon aria-hidden />
       </pf-button>
@@ -72,7 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
   closeBtnAriaLabel: 'close',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'click', e: MouseEvent | TouchEvent): void;
 }>();
 

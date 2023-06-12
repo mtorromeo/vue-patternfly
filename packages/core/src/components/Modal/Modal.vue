@@ -19,7 +19,7 @@
           }]"
           :style="{ [topSpacer.name]: positionOffset }"
         >
-          <pf-close-button v-if="!noClose" @click="$emit('update:open', false)" />
+          <pf-close-button v-if="!noClose" @click="emit('update:open', false)" />
 
           <pf-modal-header>
             <slot name="header">
@@ -155,7 +155,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'div',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'update:open', value: boolean): void;
 }>();
 

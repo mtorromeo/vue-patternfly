@@ -12,6 +12,10 @@
 import type { VNode } from 'vue';
 import { vnodeTypeIsComponent } from "../util";
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 export interface Props {
   reverse?: boolean;
 }

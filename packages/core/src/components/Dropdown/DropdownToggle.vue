@@ -8,7 +8,7 @@
       :disabled="disabled"
       :split-button="!!$slots.buttons"
       :aria-label="$slots.buttons ? ariaLabel : undefined"
-      @update:open="$emit('update:open', $event)"
+      @update:open="emit('update:open', $event)"
     >
       <span v-if="$slots.icon" :class="styles.dropdownToggleImage">
         <slot name="icon" />

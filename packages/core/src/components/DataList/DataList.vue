@@ -15,7 +15,7 @@
 
 <script lang="ts">
 export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
-  $emit: (event: 'update:selected', ...args: any[]) => void;
+  emit: (event: 'update:selected', ...args: any[]) => void;
   selectable: Ref<boolean>,
   expandable: ComputedRef<boolean | undefined>,
   inputName: ComputedRef<string | undefined>,
@@ -88,7 +88,7 @@ const managedSelected = useManagedProp('selected', null);
 const selectable = computed(() => !!props['onUpdate:selected'] || props.selected !== undefined || !!props.selectionInputName);
 
 provide(DataListKey, {
-  $emit: emit,
+  emit,
   selectable,
   expandable: computed(() => props.expandable),
   inputName: computed(() => props.selectionInputName),

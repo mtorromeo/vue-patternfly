@@ -9,7 +9,7 @@
       :class="{ [styles.modifiers.hidden]: collapseListedFilters }"
       :hidden="collapseListedFilters"
       :aria-hidden="collapseListedFilters"
-      @mounted="$emit('mounted', $event)"
+      @mounted="emit('mounted', $event)"
     />
 
     <pf-toolbar-group v-if="collapseListedFilters && numberOfFilters > 0 && !expanded">
@@ -20,7 +20,7 @@
       <pf-button
         variant="link"
         inline
-        @click="$emit('clear-all-filters')"
+        @click="emit('clear-all-filters')"
       >{{ clearFiltersButtonText }}</pf-button>
     </pf-toolbar-item>
   </div>
@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
   numberOfFilters: 0,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'clear-all-filters'): void;
   (name: 'mounted', el: HTMLDivElement): void;
 }>();

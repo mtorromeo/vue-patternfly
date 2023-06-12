@@ -77,13 +77,13 @@ import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import AnglesRightIcon from '@vue-patternfly/icons/angles-right-icon';
 
 import { pluralize } from '../../util';
-import { type Ref, ref, watch } from 'vue';
+import { type Ref, type HTMLAttributes, ref, watch } from 'vue';
 
 defineOptions({
   name: 'PfNavigation',
 });
 
-export interface Props {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   disabled?: boolean;
   compact?: boolean;
 

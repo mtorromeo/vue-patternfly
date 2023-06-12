@@ -6,7 +6,7 @@
       type="checkbox"
       :aria-label="ariaLabel"
       :checked="checked"
-      @change="$emit('change', ($event.currentTarget as HTMLInputElement).checked)"
+      @change="emit('change', ($event.currentTarget as HTMLInputElement).checked)"
     >
     <children />
   </label>
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
   ariaLabel: 'Actions',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'change', value: boolean): void;
 }>();
 

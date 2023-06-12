@@ -7,7 +7,7 @@
     :checked="managedSelected"
     :disabled="selectableDisabled"
     tabindex="-1"
-    @change="$emit('change', $event)"
+    @change="emit('change', $event)"
   >
   <component
     :is="component"

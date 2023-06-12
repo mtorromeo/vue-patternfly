@@ -11,6 +11,10 @@
 import { h, type VNode } from 'vue';
 import { findChildrenVNodes } from '../util';
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 export interface Props {
   disabled?: boolean;
 }

@@ -9,7 +9,7 @@
     <render-children />
 
     <li v-if="overflowMessage">
-      <button :class="styles.alertGroupOverflowButton" @click="emit('overflowClick', $event)">
+      <button :class="styles.alertGroupOverflowButton" @click="emit('overflow-click', $event)">
         {{ overflowMessage }}
       </button>
     </li>
@@ -35,7 +35,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 defineProps<Props>();
 
 const emit = defineEmits<{
-  (name: 'overflowClick', e: MouseEvent | TouchEvent): void;
+  (name: 'overflow-click', e: MouseEvent | TouchEvent): void;
 }>();
 
 const slots = defineSlots<{

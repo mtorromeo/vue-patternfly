@@ -1,5 +1,5 @@
 <template>
-  <pf-toolbar-item v-if="!hideToolbarItem">
+  <pf-toolbar-item v-if="!hideToolbarItem" v-bind="$attrs">
     <slot />
   </pf-toolbar-item>
   <teleport v-if="mounted && teleportTarget" :to="teleportTarget">
@@ -8,12 +8,12 @@
         :key="category"
         :category="category"
         closable
-        @click="$emit('delete-chip-group', category)"
+        @click="emit('delete-chip-group', category)"
       >
         <pf-chip
           v-for="chip of chips"
           :key="chipKey(chip)"
-          @click="$emit('delete-chip', category, chipKey(chip))"
+          @click="emit('delete-chip', category, chipKey(chip))"
         >{{ chipLabel(chip) }}</pf-chip>
       </pf-chip-group>
     </pf-toolbar-item>
@@ -23,10 +23,10 @@
 <script lang="ts" setup>
 import PfChipGroup from '../ChipGroup/ChipGroup.vue';
 import PfChip from '../ChipGroup/Chip.vue';
-import PfToolbarItem from './ToolbarItem.vue';
+import PfToolbarItem, { type Props as ToolbarItemProps } from './ToolbarItem.vue';
 import { ToolbarChipGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
 import { ToolbarContentChipContainerRefKey } from './ToolbarContent.vue';
-import { inject, ref, onMounted, onUpdated, computed, type HTMLAttributes } from 'vue';
+import { inject, ref, onMounted, onUpdated, computed } from 'vue';
 
 export type FilterChip = {
   key: string;
@@ -35,9 +35,10 @@ export type FilterChip = {
 
 defineOptions({
   name: 'PfToolbarFilter',
+  inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ ToolbarItemProps {
   chips?: FilterChip[];
   category?: string;
   hideToolbarItem?: boolean;
@@ -47,9 +48,9 @@ const props = withDefaults(defineProps<Props>(), {
   chips: (): FilterChip[] => [],
 });
 
-defineEmits<{
-  (name: 'delete-chip'): void;
-  (name: 'delete-chip-group'): void;
+const emit = defineEmits<{
+  (name: 'delete-chip', category: string | undefined, chipKey: string): void;
+  (name: 'delete-chip-group', category?: string): void;
 }>();
 
 defineSlots<{

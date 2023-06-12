@@ -27,7 +27,7 @@
       </ul>
 
       <div v-if="closable" :class="styles.chipGroupClose">
-        <pf-button variant="plain" :aria-label="closeBtnAriaLabel" @click="$emit('click', $event)">
+        <pf-button variant="plain" :aria-label="closeBtnAriaLabel" @click="emit('click', $event)">
           <circle-xmark-icon aria-hidden />
         </pf-button>
       </div>

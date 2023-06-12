@@ -23,8 +23,8 @@
         :ouia-id="ouiaId"
         :ouia-safe="ouiaSafe"
         @action-click="onActionClick"
-        @select="(event, itemId) => $emit('select', event)"
-        @search-input-change="(event, value) => $emit('searchInputChange', event, value)"
+        @select="(event, itemId) => emit('select', event)"
+        @search-input-change="(event, value) => emit('search-input-change', event, value)"
       >
         <pf-menu-content>
           <overridable-wrapper :component="PfSelectList" :include="PfSelectOption">
@@ -105,11 +105,11 @@ withDefaults(defineProps<Props>(), {
   // drilldownItemPath: () => [],
 });
 
-defineEmits<{
+const emit = defineEmits<{
   /** A callback for when the input value changes. */
-  (name: 'searchInputChange', event: Event, value: string): void;
+  (name: 'search-input-change', event: Event, value: string): void;
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
-  (name: 'select', event: MouseEvent, itemId?: MenuItemId | null | undefined): void;
+  (name: 'select', event: Event, itemId?: MenuItemId | null | undefined): void;
   (name: 'update:open', value: boolean): void;
   (name: 'update:selected', value: MenuItemId | MenuItemId[] | null): void;
 }>();

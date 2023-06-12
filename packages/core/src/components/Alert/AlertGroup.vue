@@ -5,7 +5,7 @@
       :toast="toast"
       :live-region="liveRegion"
       :overflow-message="overflowMessage"
-      @overflow-click="e => $emit('overflowClick', e)"
+      @overflow-click="e => emit('overflow-click', e)"
     >
       <slot />
     </pf-alert-group-inline>
@@ -36,8 +36,8 @@ withDefaults(defineProps<Props>(), {
   appendTo: 'body',
 });
 
-defineEmits<{
-  (name: 'overflowClick', e: MouseEvent | TouchEvent): void;
+const emit = defineEmits<{
+  (name: 'overflow-click', e: MouseEvent | TouchEvent): void;
 }>();
 
 defineSlots<{

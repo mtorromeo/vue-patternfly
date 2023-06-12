@@ -19,7 +19,7 @@
         <slot />
       </template>
     </pf-tooltip>
-    <pf-close-button v-if="close" @click="$emit('close', $event)" />
+    <pf-close-button v-if="close" @click="emit('close', $event)" />
   </span>
 </template>
 
@@ -64,7 +64,7 @@ withDefaults(defineProps<Props>(), {
   tooltipPosition: 'top',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'close', e: Event): void;
 }>();
 
