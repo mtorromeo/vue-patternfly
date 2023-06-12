@@ -41,7 +41,7 @@ import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import { computed, getCurrentInstance, inject, ref, watch, watchEffect } from 'vue';
 import { TabsKey, TabsProvideKey } from './Tabs.vue';
 import PfTabTitleText from './TabTitleText.vue';
-import { default as PfTabContent, type Props as TabContentProps } from './TabContent.vue';
+import PfTabContent, { type Props as TabContentProps } from './TabContent.vue';
 import { useChildrenTracker } from '../../use';
 
 defineOptions({

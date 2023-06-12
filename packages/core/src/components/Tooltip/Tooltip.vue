@@ -28,8 +28,8 @@
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
 import { type Ref, ref, watch, computed, type HTMLAttributes } from 'vue';
 
-import PfTooltipArrow from './TooltipArrow';
-import PfTooltipContent from './TooltipContent';
+import PfTooltipArrow from './TooltipArrow.vue';
+import PfTooltipContent from './TooltipContent.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useHtmlElementFromVNodes } from '../../use';

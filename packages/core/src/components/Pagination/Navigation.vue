@@ -67,7 +67,7 @@
   </nav>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 
 import PfButton from '../Button.vue';
@@ -77,157 +77,116 @@ import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import AnglesRightIcon from '@vue-patternfly/icons/angles-right-icon';
 
 import { pluralize } from '../../util';
-import { defineComponent, markRaw, type Ref, ref } from 'vue';
+import { type Ref, ref, watch } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfNavigation',
-
-  components: {
-    PfButton,
-    AngleLeftIcon,
-    AnglesLeftIcon,
-    AngleRightIcon,
-    AnglesRightIcon,
-  },
-
-  props: {
-    disabled: Boolean,
-    compact: Boolean,
-
-    page: {
-      type: Number,
-      default: 0,
-    },
-    lastPage: {
-      type: Number,
-      default: 0,
-    },
-    firstPage: {
-      type: Number,
-      default: 0,
-    },
-    /** Number of items per page. */
-    perPage: {
-      type: Number,
-      default: 10,
-    },
-
-    pagesTitle: {
-      type: String,
-      default: '',
-    },
-    toLastPage: {
-      type: String,
-      default: 'Go to last page',
-    },
-    toNextPage: {
-      type: String,
-      default: 'Go to next page',
-    },
-    toFirstPage: {
-      type: String,
-      default: 'Go to first page',
-    },
-    toPreviousPage: {
-      type: String,
-      default: 'Go to previous page',
-    },
-    currPage: {
-      type: String,
-      default: 'Current page',
-    },
-    paginationTitle: {
-      type: String,
-      default: 'Pagination',
-    },
-  },
-
-  emits: [
-    'firstClick',
-    'previousClick',
-    'nextClick',
-    'lastClick',
-    'keydown',
-    'change',
-    'set-page',
-  ],
-
-  setup(props) {
-    return {
-      styles: markRaw(styles) as typeof styles,
-      userInputPage: ref(props.page) as Ref<string | number>,
-    };
-  },
-
-  watch: {
-    page: {
-      handler(v: number) {
-        this.userInputPage = v;
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    pluralize,
-
-    handleNewPage(newPage: number) {
-      const startIdx = (newPage - 1) * this.perPage;
-      const endIdx = newPage * this.perPage;
-      this.$emit('set-page', newPage, this.perPage, startIdx, endIdx);
-    },
-
-    parseInteger(input: string | number, lastPage: number) {
-      let inputPage = typeof input === 'number' ? input : parseInt(input, 10);
-      if (!isNaN(inputPage)) {
-        inputPage = inputPage > lastPage ? lastPage : inputPage;
-        inputPage = inputPage < 1 ? 1 : inputPage;
-      }
-      return inputPage;
-    },
-
-    onKeydown(e: KeyboardEvent) {
-      if (e.keyCode === 13) {
-        // ENTER
-        const inputPage = this.parseInteger(this.userInputPage, this.lastPage);
-        this.handleNewPage(isNaN(inputPage) ? this.page : inputPage);
-      }
-    },
-
-    onChange(e: Event) {
-      if (!(e.currentTarget instanceof HTMLInputElement)) {
-        return;
-      }
-      const inputPage = this.parseInteger(e.currentTarget.value, this.lastPage);
-      this.userInputPage = isNaN(inputPage) ? e.currentTarget.value : inputPage;
-    },
-
-    goToFirstPage() {
-      this.$emit('firstClick', 1);
-      this.userInputPage = 1;
-      this.handleNewPage(1);
-    },
-
-    goToPreviousPage() {
-      const newPage = this.page - 1 >= 1 ? this.page - 1 : 1;
-      this.$emit('previousClick', newPage);
-      this.userInputPage = newPage;
-      this.handleNewPage(newPage);
-    },
-
-    goToNextPage() {
-      const newPage =
-        this.page + 1 <= this.lastPage ? this.page + 1 : this.lastPage;
-      this.$emit('nextClick', newPage);
-      this.userInputPage = newPage;
-      this.handleNewPage(newPage);
-    },
-
-    goToLastPage() {
-      this.$emit('lastClick', this.lastPage);
-      this.userInputPage = this.lastPage;
-      this.handleNewPage(this.lastPage);
-    },
-  },
 });
+
+export interface Props {
+  disabled?: boolean;
+  compact?: boolean;
+
+  page?: number;
+  lastPage?: number;
+  firstPage?: number;
+  /** Number of items per page. */
+  perPage?: number;
+
+  pagesTitle?: string;
+  toLastPage?: string;
+  toNextPage?: string;
+  toFirstPage?: string;
+  toPreviousPage?: string;
+  currPage?: string;
+  paginationTitle?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  page: 0,
+  lastPage: 0,
+  firstPage: 0,
+  perPage: 10,
+  toLastPage: 'Go to last page',
+  toNextPage: 'Go to next page',
+  toFirstPage: 'Go to first page',
+  toPreviousPage: 'Go to previous page',
+  currPage: 'Current page',
+  paginationTitle: 'Pagination',
+});
+
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
+
+const emit = defineEmits<{
+  (name: 'first-click', page: number): void;
+  (name: 'previous-click', page: number): void;
+  (name: 'next-click', page: number): void;
+  (name: 'last-click', page: number): void;
+  // (name: 'keydown', e: MouseEvent | TouchEvent): void;
+  // (name: 'change', e: MouseEvent | TouchEvent): void;
+  (name: 'set-page', newPage: number, perPage: number, startIdx: number, endIdx: number): void;
+}>();
+
+const userInputPage: Ref<string | number> = ref(props.page);
+
+watch(() => props.page, (v: number) => (userInputPage.value = v), { immediate: true });
+
+function handleNewPage(newPage: number) {
+  const startIdx = (newPage - 1) * props.perPage;
+  const endIdx = newPage * props.perPage;
+  emit('set-page', newPage, props.perPage, startIdx, endIdx);
+}
+
+function parseInteger(input: string | number, lastPage: number) {
+  let inputPage = typeof input === 'number' ? input : parseInt(input, 10);
+  if (!isNaN(inputPage)) {
+    inputPage = inputPage > lastPage ? lastPage : inputPage;
+    inputPage = inputPage < 1 ? 1 : inputPage;
+  }
+  return inputPage;
+}
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.keyCode === 13) {
+    // ENTER
+    const inputPage = parseInteger(userInputPage.value, props.lastPage);
+    handleNewPage(isNaN(inputPage) ? props.page : inputPage);
+  }
+}
+
+function onChange(e: Event) {
+  if (!(e.currentTarget instanceof HTMLInputElement)) {
+    return;
+  }
+  const inputPage = parseInteger(e.currentTarget.value, props.lastPage);
+  userInputPage.value = isNaN(inputPage) ? e.currentTarget.value : inputPage;
+}
+
+function goToFirstPage() {
+  emit('first-click', 1);
+  userInputPage.value = 1;
+  handleNewPage(1);
+}
+
+function goToPreviousPage() {
+  const newPage = props.page - 1 >= 1 ? props.page - 1 : 1;
+  emit('previous-click', newPage);
+  userInputPage.value = newPage;
+  handleNewPage(newPage);
+}
+
+function goToNextPage() {
+  const newPage = props.page + 1 <= props.lastPage ? props.page + 1 : props.lastPage;
+  emit('next-click', newPage);
+  userInputPage.value = newPage;
+  handleNewPage(newPage);
+}
+
+function goToLastPage() {
+  emit('last-click', props.lastPage);
+  userInputPage.value = props.lastPage;
+  handleNewPage(props.lastPage);
+}
 </script>

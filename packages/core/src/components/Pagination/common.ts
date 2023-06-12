@@ -1,11 +1,9 @@
-import { defineComponent, type PropType } from "vue";
-
 export interface PerPageOption {
   title: string,
   value: number,
 }
 
-const defaultPerPageOptions: PerPageOption[] = [
+export const defaultPerPageOptions: PerPageOption[] = [
   {
     title: '10',
     value: 10,
@@ -24,35 +22,23 @@ const defaultPerPageOptions: PerPageOption[] = [
   },
 ];
 
-export const PaginationMixin = defineComponent({
-  props: {
-    /** Indicate whether to show last full page of results when user selects perPage value greater than remaining rows */
-    defaultToFullPage: Boolean,
-    /** Flag indicating if pagination is disabled */
-    disabled: Boolean,
-    /** Flag indicating that the dropdown context menu should "drop" upwards. */
-    dropUp: Boolean,
+export interface CommonPaginationProps {
+  /** Indicate whether to show last full page of results when user selects perPage value greater than remaining rows */
+  defaultToFullPage?: boolean;
+  /** Flag indicating if pagination is disabled */
+  disabled?: boolean;
+  /** Flag indicating that the dropdown context menu should "drop" upwards. */
+  dropUp?: boolean;
 
-    /** Current page number. */
-    page: {
-      type: Number,
-      default: 0,
-    },
-    /** Number of items per page. */
-    perPage: {
-      type: Number,
-      default: defaultPerPageOptions[0].value,
-    },
-    /** Select from options to number of items per page. */
-    perPageOptions: {
-      type: Array as PropType<PerPageOption[]>,
-      default: defaultPerPageOptions,
-    },
+  /** Current page number. */
+  page?: number;
 
-    /** ID to ideintify widget on page. */
-    widgetId: {
-      type: String,
-      default: 'pagination-options-menu',
-    },
-  },
-});
+  /** Number of items per page. */
+  perPage?: number;
+
+  /** Select from options to number of items per page. */
+  perPageOptions?: PerPageOption[];
+
+  /** ID to ideintify widget on page. */
+  widgetId?: string;
+}

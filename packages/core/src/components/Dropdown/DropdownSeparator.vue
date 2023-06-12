@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { provide } from 'vue';
-import { default as PfDropdownItem, type Props as DropdownItemProps } from './DropdownItem.vue';
+import PfDropdownItem, { type Props as DropdownItemProps } from './DropdownItem.vue';
 import PfDivider from '../Divider.vue';
 import { DividerComponentKey } from './Dropdown.vue';
 

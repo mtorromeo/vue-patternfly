@@ -32,7 +32,7 @@
       :class="{ 'pf-m-selected': perPage === o.value }"
       :data-action="`per-page-${o.value}`"
       component="button"
-      @click="$emit('update:perPage', o.value)"
+      @click="emit('update:perPage', o.value)"
     >
       {{ o.title }}
       {{ ` ${perPageSuffix}` }}
@@ -43,11 +43,11 @@
   </pf-dropdown>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/OptionsMenu/options-menu';
 import CheckIcon from '@vue-patternfly/icons/check-icon';
-import { PaginationMixin } from './common';
 import PfDropdown, {
+  type Props as DropdownProps,
   DropdownBaseClassKey,
   DropdownDisabledClassKey,
   DropdownMenuClassKey,
@@ -58,67 +58,51 @@ import PfDropdown, {
 } from '../Dropdown/Dropdown.vue';
 import PfDropdownItem from '../Dropdown/DropdownItem.vue';
 import PfDropdownToggle from '../Dropdown/DropdownToggle.vue';
-import { defineComponent, markRaw, provide } from 'vue';
+import { provide, ref } from 'vue';
+import { defaultPerPageOptions, type CommonPaginationProps } from './common';
 
-export default defineComponent({
+defineOptions({
   name: 'PfPaginationOptionsMenu',
-
-  components: { CheckIcon, PfDropdown, PfDropdownItem, PfDropdownToggle },
-
-  mixins: [PaginationMixin],
-
-  props: {
-    count: {
-      type: Number,
-      default: 0,
-    },
-    firstIndex: {
-      type: Number,
-      default: 0,
-    },
-    lastIndex: {
-      type: Number,
-      default: 0,
-    },
-
-    itemsPerPageTitle: {
-      type: String,
-      default: 'Items per page',
-    },
-    perPageSuffix: {
-      type: String,
-      default: 'per page',
-    },
-    itemsTitle: {
-      type: String,
-      default: '',
-    },
-    optionsToggle: {
-      type: String,
-      default: 'Items per page',
-    },
-  },
-
-  emits: ['update:perPage'],
-
-  setup() {
-    provide(DropdownBaseClassKey, styles.optionsMenu);
-    provide(DropdownDisabledClassKey, styles.modifiers.disabled);
-    provide(DropdownMenuClassKey, styles.optionsMenuMenu);
-    provide(DropdownItemClassKey, styles.optionsMenuMenuItem);
-    provide(DropdownToggleIndicatorClassKey, styles.optionsMenuToggleButtonIcon);
-    provide(DropdownToggleTextClassKey, styles.optionsMenuToggleText);
-    provide(DropdownToggleClassKey, styles.optionsMenuToggleButton);
-
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
-
-  data() {
-    return {
-      open: false,
-    };
-  },
 });
+
+export interface Props extends CommonPaginationProps, /* @vue-ignore */ DropdownProps {
+  count?: number;
+  firstIndex?: number;
+  lastIndex?: number;
+  itemsPerPageTitle?: string;
+  perPageSuffix?: string;
+  itemsTitle?: string;
+  optionsToggle?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+  count: 0,
+  firstIndex: 0,
+  lastIndex: 0,
+  itemsPerPageTitle: 'Items per page',
+  perPageSuffix: 'per page',
+  optionsToggle: 'Items per page',
+  page: 0,
+  perPage: defaultPerPageOptions[0].value,
+  perPageOptions: () => [...defaultPerPageOptions],
+  widgetId: 'pagination-options-menu',
+});
+
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
+
+const emit = defineEmits<{
+  (name: 'update:perPage', value: number): void;
+}>();
+
+provide(DropdownBaseClassKey, styles.optionsMenu);
+provide(DropdownDisabledClassKey, styles.modifiers.disabled);
+provide(DropdownMenuClassKey, styles.optionsMenuMenu);
+provide(DropdownItemClassKey, styles.optionsMenuMenuItem);
+provide(DropdownToggleIndicatorClassKey, styles.optionsMenuToggleButtonIcon);
+provide(DropdownToggleTextClassKey, styles.optionsMenuToggleText);
+provide(DropdownToggleClassKey, styles.optionsMenuToggleButton);
+
+const open = ref(false);
 </script>
