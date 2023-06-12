@@ -80,9 +80,9 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  icon?: (props: Record<never, never>) => any;
-  additional?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
+  additional?: (props?: Record<never, never>) => any;
 }>();
 
 useChildrenTracker(DropdownMenuItemsKey);

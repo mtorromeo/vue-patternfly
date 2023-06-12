@@ -69,9 +69,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  logo?: (props: Record<never, never>) => any;
-  'top-nav'?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  logo?: (props?: Record<never, never>) => any;
+  'top-nav'?: (props?: Record<never, never>) => any;
 }>();
 
 const managedNavOpen = inject(PageNavOpenKey);

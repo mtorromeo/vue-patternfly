@@ -43,7 +43,7 @@ defineOptions({
 defineProps<Props>();
 
 const slots = defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const value = useManagedProp('modelValue', null);

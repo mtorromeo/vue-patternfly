@@ -13,7 +13,7 @@ defineOptions({
 });
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {

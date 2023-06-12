@@ -160,12 +160,12 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  header?: (props: Record<never, never>) => any;
-  footer?: (props: Record<never, never>) => any;
-  help?: (props: Record<never, never>) => any;
-  description?: (props: Record<never, never>) => any;
-  'title-icon'?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  header?: (props?: Record<never, never>) => any;
+  footer?: (props?: Record<never, never>) => any;
+  help?: (props?: Record<never, never>) => any;
+  description?: (props?: Record<never, never>) => any;
+  'title-icon'?: (props?: Record<never, never>) => any;
 }>();
 
 // inject: ['open'],

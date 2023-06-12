@@ -139,7 +139,7 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);

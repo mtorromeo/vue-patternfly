@@ -23,7 +23,7 @@ export interface Props extends VisibilityBreakpointProps, /* @vue-ignore */ HTML
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styles, { short: true });

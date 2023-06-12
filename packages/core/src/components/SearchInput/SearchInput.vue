@@ -274,8 +274,8 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  'words-attr-label'?: (props: Record<never, never>) => any;
-  'form-additional-items'?: (props: Record<never, never>) => any;
+  'words-attr-label'?: (props?: Record<never, never>) => any;
+  'form-additional-items'?: (props?: Record<never, never>) => any;
 }>();
 
 if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {

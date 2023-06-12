@@ -38,6 +38,6 @@ export interface Props extends StickyBreakpointProps, /* @vue-ignore */ HTMLAttr
 defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 </script>

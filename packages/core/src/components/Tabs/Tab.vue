@@ -73,7 +73,7 @@ export interface Props extends /* @vue-ignore */ TabContentProps {
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const instance = getCurrentInstance();

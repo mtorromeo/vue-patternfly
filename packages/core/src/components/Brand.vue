@@ -23,7 +23,7 @@ export interface Props extends WidthBreakpointProps, HeightBreakpointProps, /* @
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const pictureStyle = {

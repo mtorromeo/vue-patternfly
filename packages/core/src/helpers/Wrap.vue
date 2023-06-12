@@ -18,8 +18,8 @@ export interface Props {
 const props = defineProps<Props>();
 
 const slots = defineSlots<{
-  default: (props: Record<never, never>) => VNode[];
-  with?: (props: Record<never, never>) => VNode[];
+  default: (props?: Record<never, never>) => VNode[];
+  with?: (props?: Record<never, never>) => VNode[];
 }>();
 
 function render() {

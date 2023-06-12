@@ -44,7 +44,7 @@ export interface Props extends /* @vue-ignore */ AnchorHTMLAttributes {
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const ariaCurrent = computed(() => {

@@ -50,7 +50,7 @@ export interface Props extends StickyBreakpointProps, /* @vue-ignore */ HTMLAttr
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const isWidthLimited = computed(() => props.widthLimited || isDefined(props.maxWidth));

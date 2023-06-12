@@ -69,8 +69,8 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => VNode[];
-  icon?: (props: Record<never, never>) => VNode[];
+  default?: (props?: Record<never, never>) => VNode[];
+  icon?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const textRef: Ref<HTMLSpanElement | undefined> = ref();

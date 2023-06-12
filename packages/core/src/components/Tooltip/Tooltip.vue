@@ -66,8 +66,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  content?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  content?: (props?: Record<never, never>) => any;
 }>();
 
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();

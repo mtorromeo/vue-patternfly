@@ -57,6 +57,6 @@ withDefaults(defineProps<Props>(), {
 });
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 </script>

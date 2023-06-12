@@ -20,7 +20,7 @@ export interface Props extends /* @vue-ignore */ Omit<OptionHTMLAttributes, 'pla
 defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 useChildrenTracker(FormSelectOptionsKey);

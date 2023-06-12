@@ -40,7 +40,7 @@ defineOptions({
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const expandable: Ref<HTMLDivElement | undefined> = ref();

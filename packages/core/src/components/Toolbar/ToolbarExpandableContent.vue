@@ -34,8 +34,8 @@ withDefaults(defineProps<Props>(), {
 });
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  'chip-container'?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  'chip-container'?: (props?: Record<never, never>) => any;
 }>();
 
 const numberOfFilters = inject(ToolbarNumberOfFiltersKey);

@@ -83,9 +83,9 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  drawer?: (props: Record<never, never>) => any;
-  skeleton?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  drawer?: (props?: Record<never, never>) => any;
+  skeleton?: (props?: Record<never, never>) => any;
 }>();
 
 const mobileView = ref(false);

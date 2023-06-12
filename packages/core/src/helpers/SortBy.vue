@@ -16,6 +16,6 @@ export interface Props {
 defineProps<Props>();
 
 defineSlots<{
-  default: (props: Record<never, never>) => VNode[];
+  default: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

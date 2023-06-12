@@ -100,10 +100,10 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  [K: `attribute:${string}`]: (props: Record<never, never>) => any;
-  'words-attr-label'?: (props: Record<never, never>) => any;
-  'form-additional-items'?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  [K: `attribute:${string}`]: (props?: Record<never, never>) => any;
+  'words-attr-label'?: (props?: Record<never, never>) => any;
+  'form-additional-items'?: (props?: Record<never, never>) => any;
 }>();
 
 const value = useManagedProp('modelValue', '', to => emit('change', to));

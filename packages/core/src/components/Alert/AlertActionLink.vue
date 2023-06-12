@@ -18,6 +18,6 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfButton>
 defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 </script>

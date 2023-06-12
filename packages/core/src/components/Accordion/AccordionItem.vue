@@ -65,8 +65,8 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  toggle?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  toggle?: (props?: Record<never, never>) => any;
 }>();
 
 const accordion = inject(AccordionKey, undefined);

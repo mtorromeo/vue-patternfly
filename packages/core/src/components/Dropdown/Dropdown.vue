@@ -87,8 +87,8 @@ defineEmits<{
 }>();
 
 const slots = defineSlots<{
-  default?: (props: Record<never, never>) => VNode[];
-  toggle?: (props: Record<never, never>) => VNode[];
+  default?: (props?: Record<never, never>) => VNode[];
+  toggle?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const menuRef: Ref<typeof PfDropdownMenu | undefined> = ref();

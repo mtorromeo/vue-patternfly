@@ -53,7 +53,7 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const expanded = inject(ToolbarExpandedKey);

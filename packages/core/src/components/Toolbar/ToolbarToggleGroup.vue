@@ -42,8 +42,8 @@ export interface Props extends ToolbarGroupProps, BreakpointProps {
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  icon?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
 }>();
 
 const { width: windowWidth } = useWindowSize();

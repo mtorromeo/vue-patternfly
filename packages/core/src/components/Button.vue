@@ -133,9 +133,9 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  icon?: (props: Record<never, never>) => any;
-  badge?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
+  badge?: (props?: Record<never, never>) => any;
 }>();
 
 const el: Ref<HTMLElement | undefined> = ref();

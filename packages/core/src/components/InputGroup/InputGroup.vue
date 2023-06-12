@@ -25,7 +25,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 defineProps<Props>();
 
 const slots = defineSlots<{
-  default?: (props: Record<never, never>) => VNode[];
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 function render() {

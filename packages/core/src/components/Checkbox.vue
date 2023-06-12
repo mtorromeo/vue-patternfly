@@ -66,9 +66,9 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  label?: (props: Record<never, never>) => any;
-  description?: (props: Record<never, never>) => any;
-  body?: (props: Record<never, never>) => any;
+  label?: (props?: Record<never, never>) => any;
+  description?: (props?: Record<never, never>) => any;
+  body?: (props?: Record<never, never>) => any;
 }>();
 
 const input: Ref<HTMLInputElement | undefined> = ref();

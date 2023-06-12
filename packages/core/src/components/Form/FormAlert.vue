@@ -16,6 +16,6 @@ export interface Props extends /* @vue-ignore */ FormHTMLAttributes {}
 defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 </script>

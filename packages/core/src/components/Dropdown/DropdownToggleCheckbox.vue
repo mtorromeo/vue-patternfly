@@ -37,7 +37,7 @@ defineEmits<{
 }>();
 
 const slots = defineSlots<{
-  default?: (props: Record<never, never>) => VNode[];
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const checkbox: Ref<HTMLInputElement | undefined> = ref();

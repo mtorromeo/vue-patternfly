@@ -82,10 +82,10 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
-  label?: (props: Record<never, never>) => any;
-  description?: (props: Record<never, never>) => any;
-  body?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  label?: (props?: Record<never, never>) => any;
+  description?: (props?: Record<never, never>) => any;
+  body?: (props?: Record<never, never>) => any;
 }>();
 
 const emit = defineEmits<{

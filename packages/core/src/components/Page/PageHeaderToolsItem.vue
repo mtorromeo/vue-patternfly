@@ -28,6 +28,6 @@ export interface Props extends VisibilityBreakpointProps, /* @vue-ignore */ HTML
 defineProps<Props>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 </script>

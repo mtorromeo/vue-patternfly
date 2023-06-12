@@ -39,7 +39,7 @@ const emit = defineEmits<{
 }>();
 
 const slots = defineSlots<{
-  default?: (props: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 function renderChildren() {

@@ -74,10 +74,10 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props: Record<never, never>) => VNode[];
-  buttons?: (props: Record<never, never>) => VNode[];
-  icon?: (props: Record<never, never>) => VNode[];
-  indicator?: (props: Record<never, never>) => VNode[];
+  default?: (props?: Record<never, never>) => VNode[];
+  buttons?: (props?: Record<never, never>) => VNode[];
+  icon?: (props?: Record<never, never>) => VNode[];
+  indicator?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const toggleTextClass = inject(DropdownToggleTextClassKey, styles.dropdownToggleText);
