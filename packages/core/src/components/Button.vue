@@ -58,7 +58,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Button/button';
 import PfSpinner from './Spinner.vue';
-import PassThrough from '../helpers/PassThrough';
+import PassThrough from '../helpers/PassThrough.vue';
 import type { RouteLocationRaw, useLink } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import { type Component, type UnwrapRef, type Ref, ref, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from 'vue';

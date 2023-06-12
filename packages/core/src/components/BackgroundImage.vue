@@ -39,7 +39,7 @@ import cssVarNameSm from '@patternfly/react-tokens/dist/esm/c_background_image_B
 import cssVarNameSm2x from '@patternfly/react-tokens/dist/esm/c_background_image_BackgroundImage_sm_2x';
 import cssVarNameLg from '@patternfly/react-tokens/dist/esm/c_background_image_BackgroundImage_lg';
 import cssVarNameFilter from '@patternfly/react-tokens/dist/esm/c_background_image_Filter';
-import PassThrough from '../helpers/PassThrough';
+import PassThrough from '../helpers/PassThrough.vue';
 import { cloneVNode, type VNode } from 'vue';
 import { findChildrenVNodes } from '../util';
 import type { HTMLAttributes } from 'vue';

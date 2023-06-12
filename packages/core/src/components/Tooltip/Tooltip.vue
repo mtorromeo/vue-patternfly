@@ -31,7 +31,7 @@ import { type Ref, ref, watch, computed, type HTMLAttributes } from 'vue';
 import PfTooltipArrow from './TooltipArrow';
 import PfTooltipContent from './TooltipContent';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import PassThrough from '../../helpers/PassThrough';
+import PassThrough from '../../helpers/PassThrough.vue';
 import { useHtmlElementFromVNodes } from '../../use';
 import type { Placement } from '@floating-ui/core';
 

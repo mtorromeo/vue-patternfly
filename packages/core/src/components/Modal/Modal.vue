@@ -82,7 +82,7 @@ import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top
 import { capitalize, ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import type { Component, Ref, HTMLAttributes } from 'vue';
 import PfModalHeader from './ModalHeader.vue';
-import PassThrough from '../../helpers/PassThrough';
+import PassThrough from '../../helpers/PassThrough.vue';
 import PfBackdrop from '../Backdrop.vue';
 import PfFocusTrap from '../../helpers/FocusTrap.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';

@@ -66,7 +66,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import type { FieldsetHTMLAttributes } from 'vue';
-import PassThrough from '../../helpers/PassThrough';
+import PassThrough from '../../helpers/PassThrough.vue';
 
 defineOptions({
   name: 'PfFormGroup',

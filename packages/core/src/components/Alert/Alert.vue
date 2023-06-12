@@ -71,7 +71,7 @@ import styles from '@patternfly/react-styles/css/components/Alert/alert';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
-import PassThrough from '../../helpers/PassThrough';
+import PassThrough from '../../helpers/PassThrough.vue';
 import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton.vue';

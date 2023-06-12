@@ -23,7 +23,7 @@
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import type { RouteLocationRaw } from 'vue-router';
 import { computed, type Component, type LiHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
-import PassThrough from '../../helpers/PassThrough';
+import PassThrough from '../../helpers/PassThrough.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 
 defineOptions({

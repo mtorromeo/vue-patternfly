@@ -234,7 +234,7 @@ import PfTextInputGroupUtilities from '../TextInputGroup/TextInputGroupUtilities
 import PfAdvancedSearchMenu from './AdvancedSearchMenu.vue';
 import PfBadge from '../Badge.vue';
 import PfButton from '../Button.vue';
-import PassThrough from '../../helpers/PassThrough';
+import PassThrough from '../../helpers/PassThrough.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 
 import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';

@@ -54,7 +54,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
-import PassThrough from '../helpers/PassThrough';
+import PassThrough from '../helpers/PassThrough.vue';
 import PfTooltip from './Tooltip/Tooltip.vue';
 import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
