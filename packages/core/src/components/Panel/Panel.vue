@@ -14,6 +14,10 @@
 import styles from '@patternfly/react-styles/css/components/Panel/panel';
 import type { HTMLAttributes } from 'vue';
 
+defineOptions({
+  name: 'PfPanel',
+});
+
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Adds panel variant styles */
   variant?: 'raised' | 'bordered';

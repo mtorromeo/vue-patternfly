@@ -9,11 +9,10 @@ import styles from '@patternfly/react-styles/css/components/Login/login';
 import type { HTMLAttributes } from 'vue';
 
 defineOptions({
-  name: 'PfHeader',
+  name: 'PfLoginHeader',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
-}
+export interface Props extends /* @vue-ignore */ HTMLAttributes {}
 
 defineProps<Props>();
 </script>

@@ -37,6 +37,11 @@ import styles from '@patternfly/react-styles/css/components/Check/check';
 import { computed, ref, watch, type Component, type Ref, type HTMLAttributes } from 'vue';
 import { getUniqueId } from '../util';
 
+defineOptions({
+  name: 'PfCheckbox',
+  inheritAttrs: false,
+});
+
 export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onChange'> {
   component?: string | Component;
   /** Flag to show if the radio is checked. */

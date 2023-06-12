@@ -33,7 +33,6 @@
         </pf-menu-content>
       </pf-menu>
     </floating-ui>
-
   </div>
 </template>
 

@@ -27,6 +27,19 @@
 </template>
 
 <script lang="ts">
+export interface BackgroundImageSrcMap {
+  xs: string;
+  xs2x: string;
+  sm: string;
+  sm2x: string;
+  lg: string;
+}
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Override image styles using a string or BackgroundImageSrc */
+  src: string | BackgroundImageSrcMap;
+}
+
 let filterCounter = 0;
 </script>
 
@@ -44,18 +57,9 @@ import { cloneVNode, type VNode } from 'vue';
 import { findChildrenVNodes } from '../util';
 import type { HTMLAttributes } from 'vue';
 
-export interface BackgroundImageSrcMap {
-  xs: string;
-  xs2x: string;
-  sm: string;
-  sm2x: string;
-  lg: string;
-}
-
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
-  /** Override image styles using a string or BackgroundImageSrc */
-  src: string | BackgroundImageSrcMap;
-}
+defineOptions({
+  name: 'PfBackgroundImage',
+});
 
 const props = defineProps<Props>();
 

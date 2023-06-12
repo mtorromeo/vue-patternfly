@@ -45,6 +45,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
 import type { HTMLAttributes } from 'vue';
 
+defineOptions({
+  name: 'PfSpinner',
+});
+
 withDefaults(defineProps<Props>(), {
   size: 'xl',
   ariaValueText: 'Loading...',

@@ -11,7 +11,7 @@ const all = { ...layouts, ...components };
 
 export function install(app: App) {
   for (const [name, component] of Object.entries(all)) {
-    app.component(component.name || name, component);
+    app.component(name, component);
   }
 }
 
