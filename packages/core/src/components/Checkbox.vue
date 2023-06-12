@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, ref, watch, type Component, type Ref, type HTMLAttributes } from 'vue';
+import { computed, ref, watch, type Component, type Ref, type InputHTMLAttributes } from 'vue';
 import { getUniqueId } from '../util';
 
 defineOptions({
@@ -42,7 +42,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onChange'> {
+export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange'> {
   component?: string | Component;
   /** Flag to show if the radio is checked. */
   modelValue?: boolean | null;
