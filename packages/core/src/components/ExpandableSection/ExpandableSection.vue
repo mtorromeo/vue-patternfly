@@ -17,7 +17,7 @@
       @click="managedExpanded = !managedExpanded"
     >
       <span :class="styles.expandableSectionToggleIcon">
-        <pf-angle-right-icon aria-hidden />
+        <angle-right-icon aria-hidden />
       </span>
       <span :class="styles.expandableSectionToggleText">{{ computedToggleText }}</span>
     </button>
@@ -28,82 +28,66 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
-import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
-import { defineComponent, markRaw } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfExpandableSection',
+});
 
-  components: {
-    PfAngleRightIcon,
-  },
-
-  props: {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
     /** Flag to indicate if the content is expanded */
-    expanded: {
-      type: Boolean,
-      default: null,
-    },
+    expanded?: boolean;
 
     /** Text that appears in the attached toggle */
-    toggleText: {
-      type: String,
-      default: '',
-    },
+    toggleText?: string;
 
     /** Text that appears in the attached toggle when expanded (will override toggleText if both are specified; used for uncontrolled expandable with dynamic toggle text) */
-    toggleTextExpanded: {
-      type: String,
-      default: '',
-    },
+    toggleTextExpanded?: string;
 
     /** Text that appears in the attached toggle when collapsed (will override toggleText if both are specified; used for uncontrolled expandable with dynamic toggle text) */
-    toggleTextCollapsed: {
-      type: String,
-      default: '',
-    },
+    toggleTextCollapsed?: string;
 
     /** Forces active state */
-    active: Boolean,
+    active?: boolean;
 
     /** Indicates the expandable section has a detached toggle */
-    detached: Boolean,
+    detached?: boolean;
 
     /** ID of the content of the expandable section */
-    contentId: {
-      type: String,
-      default: '',
-    },
+    contentId?: string;
 
     /** Flag for disclosure styling. */
-    large: Boolean,
+    large?: boolean;
 
     /** Flag to indicate the width of the component is limited. Set to true for disclosure styling. */
-    widthLimited: Boolean,
-  },
+    widthLimited?: boolean;
+}
 
-  emits: ['update:expanded'],
+const props = withDefaults(defineProps<Props>(), {
+  expanded: undefined,
+});
 
-  setup() {
-    return {
-      managedExpanded: useManagedProp('expanded', false),
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+defineEmits<{
+  (name: 'update:expanded', value: boolean): void;
+}>();
 
-  computed: {
-    computedToggleText() {
-      if (this.managedExpanded && this.toggleTextExpanded) {
-        return this.toggleTextExpanded;
-      }
-      if (!this.managedExpanded && this.toggleTextCollapsed) {
-        return this.toggleTextCollapsed;
-      }
-      return this.toggleText;
-    },
-  },
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
+
+const managedExpanded = useManagedProp('expanded', false);
+
+const computedToggleText = computed(() => {
+  if (managedExpanded.value && props.toggleTextExpanded) {
+    return props.toggleTextExpanded;
+  }
+  if (!managedExpanded.value && props.toggleTextCollapsed) {
+    return props.toggleTextCollapsed;
+  }
+  return props.toggleText;
 });
 </script>

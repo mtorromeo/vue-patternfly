@@ -23,9 +23,9 @@
   </component>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
-import { defineComponent, inject, markRaw, type PropType } from 'vue';
+import { inject, computed, type LiHTMLAttributes } from 'vue';
 
 import MinusIcon from '@vue-patternfly/icons/minus-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
@@ -33,44 +33,35 @@ import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import { HelperTextComponentKey } from './HelperText.vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfHelperTextItem',
+});
 
-  components: {
-    MinusIcon,
-    TriangleExclamationIcon,
-    CircleCheckIcon,
-    CircleExclamationIcon,
-  },
+export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+  /** Variant styling of the helper text item. */
+  variant?: 'default' | 'warning' | 'success' | 'error' | 'indeterminate';
 
-  props: {
-    /** Variant styling of the helper text item. */
-    variant: {
-      type: String as PropType<'default' | 'warning' | 'success' | 'error' | 'indeterminate'>,
-      default: 'default',
-      validator: (v: any) => ['default', 'warning', 'success', 'error', 'indeterminate'].includes(v),
-    },
+  /** Flag indicating the helper text should have an icon. Dynamic helper texts include icons by default while static helper texts do not. */
+  icon?: boolean;
 
-    /** Flag indicating the helper text should have an icon. Dynamic helper texts include icons by default while static helper texts do not. */
-    icon: Boolean,
+  /** Flag indicating the helper text item is dynamic. */
+  dynamic?: boolean;
+}
 
-    /** Flag indicating the helper text item is dynamic. */
-    dynamic: Boolean,
-  },
+withDefaults(defineProps<Props>(), {
+  variant: 'default',
+});
 
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-      helperTextComponent: inject(HelperTextComponentKey, 'div'),
-    };
-  },
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
+}>();
 
-  computed: {
-    component() {
-      return this.helperTextComponent === 'ul'
-        ? 'li'
-        : 'div';
-    },
-  },
+const helperTextComponent = inject(HelperTextComponentKey, 'div');
+
+const component = computed(() => {
+  return helperTextComponent === 'ul'
+    ? 'li'
+    : 'div';
 });
 </script>

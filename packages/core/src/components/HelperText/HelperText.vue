@@ -5,27 +5,28 @@
 </template>
 
 <script lang="ts">
-import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
-import { defineComponent, type InjectionKey, markRaw, type PropType, provide } from 'vue';
-
 export const HelperTextComponentKey = Symbol('HelperTextComponentKey') as InjectionKey<'div' | 'ul'>;
 
-export default defineComponent({
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  component?: 'div' | 'ul';
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
+import { type InjectionKey, type HTMLAttributes, provide } from 'vue';
+
+defineOptions({
   name: 'PfHelperText',
-
-  props: {
-    component: {
-      type: String as PropType<'div' | 'ul'>,
-      default: 'div',
-      validator: (v: any) => ['div', 'ul'].includes(v),
-    },
-  },
-
-  setup(props) {
-    provide(HelperTextComponentKey, props.component);
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
 });
+
+const props = withDefaults(defineProps<Props>(), {
+  component: 'div',
+});
+
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
+
+provide(HelperTextComponentKey, props.component);
 </script>

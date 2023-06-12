@@ -25,47 +25,39 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
-import { defineComponent, markRaw } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfExpandableSectionToggle',
+});
 
-  components: {
-    PfAngleRightIcon,
-  },
-
-  props: {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
     /** Flag to indicate if the content is expanded */
-    expanded: {
-      type: Boolean,
-      default: null,
-    },
+    expanded?: boolean;
 
     /** ID of the content of the expandable section */
-    contentId: {
-      type: String,
-      default: '',
-    },
+    contentId?: string;
 
     /** Direction the toggle arrow should point when the expandable section is expanded. */
-    direction: {
-      type: String,
-      default: 'down',
-      validator: (v: any) => ['up', 'down'].includes(v),
-    },
-  },
+    direction?: 'up' | 'down';
+}
 
-  emits: ['update:expanded'],
-
-  setup() {
-    return {
-      managedExpanded: useManagedProp('expanded', false),
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
+withDefaults(defineProps<Props>(), {
+  direction: 'down',
+  expanded: undefined,
 });
+
+defineEmits<{
+  (name: 'update:expanded', value: boolean): void;
+}>();
+
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
+
+const managedExpanded = useManagedProp('expanded', false);
 </script>

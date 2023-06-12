@@ -14,29 +14,25 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
-import { defineComponent, markRaw } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
-export default defineComponent({
+defineOptions({
   name: 'PfEmptyState',
-
-  props: {
-    /** Cause component to consume the available height of its container */
-    fullHeight: Boolean,
-
-    /** Modifies EmptyState max-width */
-    variant: {
-      type: String,
-      default: '',
-      validator: (v: any) => ['', 'xs', 'small', 'large', 'xl', 'full'].includes(v),
-    },
-  },
-
-  setup() {
-    return {
-      styles: markRaw(styles) as typeof styles,
-    };
-  },
 });
+
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Cause component to consume the available height of its container */
+  fullHeight?: boolean;
+
+  /** Modifies EmptyState max-width */
+  variant?: 'xs' | 'small' | 'large' | 'xl' | 'full';
+}
+
+defineProps<Props>();
+
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
 </script>
