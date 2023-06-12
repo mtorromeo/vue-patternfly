@@ -25,7 +25,7 @@ export enum spinnerSize {
   xl = 'xl'
 }
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ SVGAttributes {
   /** Size variant of progress. */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Text describing that current loading status or progress */
@@ -43,7 +43,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
-import type { HTMLAttributes } from 'vue';
+import type { SVGAttributes } from 'vue';
 
 defineOptions({
   name: 'PfSpinner',
