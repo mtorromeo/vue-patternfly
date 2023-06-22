@@ -9,7 +9,7 @@ export function install(app: App) {
   app.component('StoryCanvas', StoryCanvas);
 }
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface GlobalComponents {
     DocPage: typeof DocPage;
     ComponentTitle: typeof ComponentTitle;

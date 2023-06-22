@@ -31,7 +31,7 @@ function extractComponentsFromDist(distDir) {
   }
 }
 
-fs.writeSync(out, "declare module '@vue/runtime-core' {\n\
+fs.writeSync(out, "declare module 'vue' {\n\
   export interface GlobalComponents {\n");
 
 extractComponentsFromDist('components');
