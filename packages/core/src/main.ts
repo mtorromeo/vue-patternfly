@@ -19,4 +19,6 @@ const plugin = {
   install,
 };
 
+declare module 'vue' {}
+
 export default plugin;

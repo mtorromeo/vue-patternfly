@@ -13,7 +13,6 @@
   },
   "include": [
     "./src/*",
-    "./src/**/*",
-    "node_modules/@vue-patternfly/core/global.d.ts"
+    "./src/**/*"
   ]
 }
