@@ -1,6 +1,30 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.11] - 2023-06-22
+
+### Bug Fixes
+
+- Pinned typescript versione to 5.0 due to incompatibility of vue-tsc with 5.1
+- Fixed small event issues across all components
+- Fixed componente with wrong name
+- *(Checkbox)* Fixed declaration of InputHTMLAttributes as fallthrough attributes
+- *(Spinner)* Fixed declaration of SVGAttributes as fallthrough attributes
+- *(PageHeader)* Restored default component for the page header brand link
+- Global components declaration
+- Declared global components in main.d.ts
+
+### Features
+
+- *(Hint, OverridableWrapper)* Converted to vue-setup-sfc
+- *(PassThrough)* Converted to vue-setup-sfc
+- *(PassThrough, TooltipArrow, TooltipContent, Pagination)* Converted to vue-setup-sfc
+- *(HelperText, OverflowMenu, ExpandableSection, EmptyState)* Converted to vue-setup-sfc
+
+### Refactor
+
+- Made props optional in empty slot declarations
+
 ## [0.1.0-beta.10] - 2023-06-08
 
 ### Bug Fixes
