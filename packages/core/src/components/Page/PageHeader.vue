@@ -66,6 +66,7 @@ const props = withDefaults(defineProps<Props>(), {
   ariaLabel: 'Global navigation',
   ariaControls: 'page-sidebar',
   navToggleId: 'nav-toggle',
+  logoComponent: 'a',
 });
 
 defineSlots<{
