@@ -13,7 +13,7 @@
         <slot>
           <filter>
             <feColorMatrix type="matrix" values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 1 0" />
-            <feComponentTransfer color-interpolation-filters="sRGB" result="duotone">
+            <feComponentTransfer v-bind="{'color-interpolation-filters': 'sRGB'}" result="duotone">
               <feFuncR type="table" table-values="0.086274509803922 0.43921568627451" />
               <feFuncG type="table" table-values="0.086274509803922 0.43921568627451" />
               <feFuncB type="table" table-values="0.086274509803922 0.43921568627451" />

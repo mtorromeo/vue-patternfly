@@ -11,12 +11,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "allowJs": true,
-    "noUnusedLocals": true,
-    "plugins": [
-      {
-        "transform": "transformer-cjs-imports"
-      }
-    ]
+    "noUnusedLocals": true
   },
   "exclude": [
     "**/**.test.tsx",

@@ -19,7 +19,7 @@
 
       <ul
         :class="styles.chipGroupList"
-        :aria-labelled-by="id"
+        :aria-labelledby="id"
         :aria-label="ariaLabel"
         role="list"
       >
