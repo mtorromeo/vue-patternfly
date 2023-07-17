@@ -10,7 +10,7 @@
       @click="mainClick"
       @touchstart="mainClick"
     >
-      <div v-if="$slots.drawer">
+      <div v-if="$slots.drawer" :class="styles.pageDrawer">
         <pf-drawer :expanded="drawerExpanded">
           <pf-drawer-content>
             <template #content>
