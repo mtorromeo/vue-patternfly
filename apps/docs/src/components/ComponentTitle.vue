@@ -1,8 +1,6 @@
 <template>
-  <pf-title :h="2" size="2xl">
-    {{ camelName }}
-    <code>{{ name }}</code>
-  </pf-title>
+  <pf-label>&lt;{{ camelName }}&gt; / &lt;{{ name }}&gt;</pf-label>
+  <br><br>
 </template>
 
 <script lang="ts" setup>

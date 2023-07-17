@@ -36,6 +36,7 @@ export * from './InputGroup';
 export * from './List';
 export * from './LoginPage';
 export * from './Menu';
+export * from './MenuToggle';
 export * from './Modal';
 export * from './Nav';
 export * from './OverflowMenu';

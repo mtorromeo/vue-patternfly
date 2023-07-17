@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="typeahead || isSplitButton ? 'div' : 'button'"
     :class="typeahead ? styles.modifiers.typeahead : [styles.menuToggle, {
       [styles.modifiers.splitButton]: isSplitButton,
@@ -39,6 +40,7 @@
         :is="typeahead || isSplitButton ? 'button' : PassThrough"
         type="button"
         :class="styles.menuToggleButton"
+        :disabled="disabled"
         :aria-expanded="managedExpanded"
         aria-label="Menu toggle"
         @click="managedExpanded = !managedExpanded"
@@ -56,15 +58,16 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import { computed, useSlots, type ButtonHTMLAttributes } from 'vue';
+import { computed, type ButtonHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useManagedProp } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfMenuToggle',
 });
 
-export interface Props extends /* @vue-ignore */ ButtonHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
   /** Flag indicating the toggle has expanded styling */
   expanded?: boolean;
   /** Flag indicating the toggle is disabled */
@@ -79,7 +82,7 @@ export interface Props extends /* @vue-ignore */ ButtonHTMLAttributes {
   variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
 }
 
-const $props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
 });
 
@@ -87,10 +90,16 @@ defineEmits<{
   (name: 'update:expanded', value: boolean): void;
 }>();
 
-const $slots = useSlots();
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
+  badge?: (props?: Record<never, never>) => any;
+}>();
 
-const typeahead = computed(() => $props.variant === 'typeahead');
-const isSplitButton = computed(() => !typeahead.value && !!$props.splitButton);
+const typeahead = computed(() => props.variant === 'typeahead');
+const isSplitButton = computed(() => !typeahead.value && !!props.splitButton);
 
 const managedExpanded = useManagedProp('expanded', false);
+
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>
