@@ -6,6 +6,7 @@ import Markdown from 'markdown-it';
 import markdownItClass from '@toycode/markdown-it-class';
 import { escapeHtml } from '@vue/shared';
 import { getHighlighter } from 'shiki';
+import fs from 'fs/promises';
 
 export const PLUGIN_NAME = 'vue-canvas-source';
 
@@ -27,12 +28,12 @@ export type VueCanvasPluginOptions = {
 
 const DEFAULT_INCLUDE_RE = /\.story\.vue($|\?)/;
 
-function traverse(arr: Node[], callback: (el: Node) => Node) {
+async function traverse(arr: Node[], callback: (el: Node) => Promise<Node>) {
   for (let i = 0; i < arr.length; i++) {
-    arr[i] = callback(arr[i]);
+    arr[i] = await callback(arr[i]);
 
     if (arr[i].childNodes) {
-      traverse(arr[i].childNodes, callback);
+      await traverse(arr[i].childNodes, callback);
     }
   }
 }
@@ -45,10 +46,21 @@ function fixSelfClosingTag(code: string) {
   return code.replace(/<([^\s]+)([^>]*?)\s*><\/\1>/g, '<$1$2 />');
 }
 
-function addSourceToStoryCanvas(el: HTMLElement) {
-  const source = el.childNodes
-    .filter(node => !(node instanceof HTMLElement) || node.rawTagName !== 'template')
-    .map(node => fixAttrsNewLine(fixSelfClosingTag(node.toString()))).join('');
+async function addSourceToStoryCanvas(el: HTMLElement) {
+  let source = null;
+
+  const matches = el.rawAttrs.match(/(?:^|\s)src="([^"]+)"/);
+  if (matches) {
+    source = matches[1];
+    source = await fs.readFile(`./src/${source}`, {encoding: 'utf-8'});
+  }
+
+  if (!source) {
+    source = el.childNodes
+      .filter(node => !(node instanceof HTMLElement) || node.rawTagName !== 'template')
+      .map(node => fixAttrsNewLine(fixSelfClosingTag(node.toString()))).join('');
+  }
+
   el.rawAttrs += ` source="${escapeHtml(dedent(source.trim()))}"`;
 }
 
@@ -93,10 +105,10 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
         const md = await mdPromise;
         const html = parse(code);
 
-        traverse(html.childNodes, (el) => {
+        await traverse(html.childNodes, async(el) => {
           if (el instanceof HTMLElement) {
             if (el.rawTagName === 'story-canvas') {
-              addSourceToStoryCanvas(el);
+              await addSourceToStoryCanvas(el);
             } else if (el.rawTagName === 'pre' && el.hasAttribute('v-md')) {
               replaceMarkdown(md, el);
             }

@@ -1,5 +1,5 @@
 <template>
-  <pf-page managed-sidebar>
+  <pf-page v-if="!$route.meta.iframe" managed-sidebar>
     <template #skeleton>
       <pf-page-header show-nav-toggle>
         <template #logo>
@@ -29,7 +29,8 @@
 
     <router-view />
   </pf-page>
-  <!-- -->
+
+  <router-view v-else />
 </template>
 
 <script lang="ts" setup>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router';
 
 const storyComponents = import.meta.glob('./stories/**/*.story.vue');
+const storyFrameComponents = import.meta.glob('./stories/**/*.iframe.vue');
 
 type StoryPage = {
   route: string;
@@ -40,6 +41,26 @@ for (const story in storyComponents) {
     name,
     path: name === defaultRoute ? '/' : `/stories/${pathToDashed(category)}/${name}`,
     component: storyComponents[story],
+  });
+}
+
+for (const frame in storyFrameComponents) {
+  const match = frame.match(/^\.\/stories\/(?:([^/]+)\/)?([^/]+)\.iframe\.vue$/);
+  if (!match) {
+    continue;
+  }
+
+  const category = match[1];
+  const name = `${pathToDashed(match[2])}.iframe`;
+
+  routes.push({
+    name,
+    path: name === defaultRoute ? '/' : `/stories/${pathToDashed(category)}/${name}.iframe`,
+    component: storyFrameComponents[frame],
+    meta: {
+      sourcePath: frame,
+      iframe: true,
+    },
   });
 }
 

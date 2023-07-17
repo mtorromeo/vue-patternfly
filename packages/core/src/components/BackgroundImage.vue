@@ -37,7 +37,7 @@ export interface BackgroundImageSrcMap {
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Override image styles using a string or BackgroundImageSrc */
-  src: string | BackgroundImageSrcMap;
+  src?: string | BackgroundImageSrcMap;
 }
 
 let filterCounter = 0;

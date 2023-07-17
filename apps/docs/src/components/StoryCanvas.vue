@@ -6,7 +6,9 @@
   <section class="story-canvas">
     <div class="canvas" :class="{ dark }">
       <div class="inner-canvas" v-bind="$attrs" :style="{ 'max-width': maxWidth }">
-        <slot />
+        <slot>
+          <iframe v-if="iframeRoute?.name" style="width: 800px; height: 450px" :src="$router.resolve({name: iframeRoute.name}).href" />
+        </slot>
       </div>
     </div>
 
@@ -50,6 +52,7 @@ import { computedAsync } from '@vueuse/core';
 import { getHighlighter, type Highlighter, setWasm } from 'shiki';
 import theme from 'shiki/themes/nord.json';
 import type { HTMLAttributes } from 'vue';
+import { useRouter } from 'vue-router';
 
 let highlighter: Highlighter;
 
@@ -58,6 +61,7 @@ defineOptions({
 });
 
 interface Props extends /* @vue-ignore */ HTMLAttributes {
+  src?: string;
   source?: string;
   title?: string;
   dark?: boolean;
@@ -65,6 +69,9 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
+
+const router = useRouter();
+const iframeRoute = router.getRoutes().find(r => r.meta.sourcePath === `./${props.src}`);
 
 const highlighted = computedAsync(async() => {
   if (!props.source) {
