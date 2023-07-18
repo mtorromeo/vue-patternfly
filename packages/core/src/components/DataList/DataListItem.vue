@@ -12,9 +12,9 @@
     @click="isSelectable && select()"
   >
     <input v-if="isSelectable" :name="name" :value="value" class="pf-screen-reader" :type="datalist?.multipleSelection ? 'checkbox' : 'radio'" tabindex="-1" :checked="managedSelected" @change="select">
-    <overridable-wrapper :component="PfDataListItemRow" :exclude="PfDataListContent">
+    <auto-wrap :component="PfDataListItemRow" :exclude="PfDataListContent">
       <slot />
-    </overridable-wrapper>
+    </auto-wrap>
   </li>
 </template>
 
@@ -42,7 +42,7 @@ import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 
 import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type WritableComputedRef, type LiHTMLAttributes } from "vue";
 import { DataListKey } from './DataList.vue';
-import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDataListItemRow from './DataListItemRow.vue';
 import PfDataListContent from './DataListContent.vue';
 import { useManagedProp } from '../../use';

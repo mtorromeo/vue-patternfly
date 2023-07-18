@@ -7,16 +7,16 @@
       [styles.modifiers.panelLeft]: position === 'left',
       [styles.modifiers.panelBottom]: position === 'bottom',
     }]">
-    <overridable-wrapper :component="PfDrawerContent" :exclude="PfDrawerSection">
+    <auto-wrap :component="PfDrawerContent" :exclude="PfDrawerSection">
       <slot />
-    </overridable-wrapper>
+    </auto-wrap>
   </div>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { computed, provide, type Ref, ref, type HTMLAttributes } from 'vue';
-import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
 import { DrawerKey } from './common';
 import PfDrawerContent from './DrawerContent.vue';
 import PfDrawerSection from './DrawerSection.vue';

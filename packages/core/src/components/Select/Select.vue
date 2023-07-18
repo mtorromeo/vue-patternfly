@@ -27,9 +27,9 @@
         @search-input-change="(event, value) => emit('search-input-change', event, value)"
       >
         <pf-menu-content>
-          <overridable-wrapper :component="PfSelectList" :include="PfSelectOption">
+          <auto-wrap :component="PfSelectList" :include="PfSelectOption">
             <slot />
-          </overridable-wrapper>
+          </auto-wrap>
         </pf-menu-content>
       </pf-menu>
     </floating-ui>
@@ -44,7 +44,7 @@ import PfMenu from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
 import { ref, type HTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 

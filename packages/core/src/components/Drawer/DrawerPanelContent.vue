@@ -34,15 +34,15 @@
         <div :class="styles.drawerSplitterHandle" aria-hidden />
       </div>
       <div :class="styles.drawerPanelMain">
-        <overridable-wrapper :component="PfDrawerHead">
+        <auto-wrap :component="PfDrawerHead">
           <slot />
-        </overridable-wrapper>
+        </auto-wrap>
       </div>
     </template>
 
-    <overridable-wrapper v-else :component="PfDrawerHead">
+    <auto-wrap v-else :component="PfDrawerHead">
       <slot />
-    </overridable-wrapper>
+    </auto-wrap>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ import { computed, inject, type Ref, ref, unref, type HTMLAttributes } from 'vue
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';
-import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDrawerHead from './DrawerHead.vue';
 import { resolveOverridableComponent } from '../../helpers';
 

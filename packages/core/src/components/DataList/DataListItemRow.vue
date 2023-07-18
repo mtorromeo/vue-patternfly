@@ -10,9 +10,9 @@
       <pf-data-list-toggle @click="toggle" />
     </slot>
 
-    <overridable-wrapper :component="PfDataListItemCells" :include="PfDataListCell">
+    <auto-wrap :component="PfDataListItemCells" :include="PfDataListCell">
       <slot />
-    </overridable-wrapper>
+    </auto-wrap>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ import type { DataListWrapModifier } from './DataList.vue';
 import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
 import PfDataListToggle from './DataListToggle.vue';
-import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
 import { DataListItemKey } from './DataListItem.vue';
 
 defineOptions({

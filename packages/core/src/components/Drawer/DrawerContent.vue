@@ -1,6 +1,6 @@
 <template>
   <pf-drawer-main>
-    <overridable-wrapper
+    <auto-wrap
       ref="el"
       force
       component="div"
@@ -10,14 +10,14 @@
       }]"
     >
       <slot />
-    </overridable-wrapper>
+    </auto-wrap>
 
     <slot name="content" />
   </pf-drawer-main>
 </template>
 
 <script lang="ts">
-export type DrawerContentRef = Ref<HTMLDivElement | InstanceType<typeof OverridableWrapper> | undefined>;
+export type DrawerContentRef = Ref<HTMLDivElement | InstanceType<typeof AutoWrap> | undefined>;
 export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey<DrawerContentRef>;
 
 export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
@@ -31,7 +31,7 @@ import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { type InjectionKey, provide, type Ref, ref } from 'vue';
 import { DrawerColorVariant } from './common';
 import type { ComponentProps } from '../../util';
-import OverridableWrapper from '../../helpers/OverridableWrapper.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDrawerMain from './DrawerMain.vue';
 import PfDrawerPanelContent from './DrawerPanelContent.vue';
 
