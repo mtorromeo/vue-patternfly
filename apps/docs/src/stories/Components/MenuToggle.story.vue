@@ -213,7 +213,9 @@
     </story-canvas>
 
     <story-canvas title="Full height">
-      <pf-menu-toggle full-height>Full height</pf-menu-toggle>
+      <div style="height:80px">
+        <pf-menu-toggle full-height>Full height</pf-menu-toggle>
+      </div>
     </story-canvas>
 
     <story-canvas title="Full width">
@@ -221,6 +223,12 @@
     </story-canvas>
   </doc-page>
 </template>
+
+<style scoped>
+:deep(.inner-canvas .pf-c-menu-toggle) {
+  vertical-align: bottom;
+}
+</style>
 
 <script lang="ts" setup>
 import GearIcon from '@vue-patternfly/icons/gear-icon';

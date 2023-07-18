@@ -26,7 +26,7 @@
         <slot name="icon" />
       </span>
 
-      <span v-if="typeahead" :class="styles.menuToggleText">
+      <span v-if="!isSplitButton && !typeahead" :class="styles.menuToggleText">
         <slot />
       </span>
 
