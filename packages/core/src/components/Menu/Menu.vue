@@ -10,7 +10,14 @@
     // [styles.modifiers.drilledIn]: effectiveMenuDrilledIn,
     }]"
   >
-    <slot />
+    <auto-wrap
+      :options="[
+        { component: PfMenuInput, include: PfTextInput },
+        { component: PfMenuContent, include: [PfMenuGroup, PfMenuList, PfMenuItem] },
+      ]"
+    >
+      <slot />
+    </auto-wrap>
   </div>
 </template>
 
@@ -83,6 +90,13 @@ import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { inject, provide, reactive, ref, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 import { isDefined } from '@vueuse/shared';
+import AutoWrap from '../../helpers/AutoWrap.vue';
+import PfMenuContent from './MenuContent.vue';
+import PfMenuGroup from './MenuGroup.vue';
+import PfMenuList from './MenuList.vue';
+import PfMenuItem from './MenuItem.vue';
+import PfMenuInput from './MenuInput.vue';
+import PfTextInput from '../TextInput.vue';
 
 defineOptions({
   name: 'PfMenu',

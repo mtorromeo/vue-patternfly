@@ -36,7 +36,7 @@
           <template #content>
             <pf-drawer-panel-content :resizable="resizable" default-size="350px" min-size="150px">
               <pf-drawer-head :no-padding="noPanelPadding">
-                <span :tabIndex="expanded ? 0 : -1">
+                <span :tabindex="expanded ? 0 : -1">
                   drawer-panel
                 </span>
 
@@ -64,7 +64,7 @@
         </pf-drawer-content-body>
 
         <pf-drawer-panel-content :resizable="resizable" default-size="350px" min-size="150px">
-          <span :tabIndex="expanded ? 0 : -1">
+          <span :tabindex="expanded ? 0 : -1">
             drawer-panel
           </span>
 

@@ -5,6 +5,11 @@
     <pre v-md>
       A **menu** is a list of options or actions that users can choose from. It can be used in a variety of contexts whenever the user needs to choose between multiple values, options, or actions. A menu can be opened in a [dropdown](#/stories/components/dropdown) or [select](#/stories/components/select) list, or it can be revealed by right clicking on a specific region within a page.
 
+      ## Differences from patternfly-react
+      - The `pf-menu-content`, `pf-menu-list` and `pf-menu-input` components are optional.
+
+      See [common differences from patternfly-react](#/).
+
       ## Examples
     </pre>
 
@@ -18,6 +23,15 @@
             <pf-menu-item disabled to="#default-link4">Disabled link</pf-menu-item>
           </pf-menu-list>
         </pf-menu-content>
+      </pf-menu>
+    </story-canvas>
+
+    <story-canvas title="Basic (simplified)">
+      <pf-menu>
+        <pf-menu-item>Action</pf-menu-item>
+        <pf-menu-item to="#default-link2" @click.prevent>Link</pf-menu-item>
+        <pf-menu-item disabled>Disabled action</pf-menu-item>
+        <pf-menu-item disabled to="#default-link4">Disabled link</pf-menu-item>
       </pf-menu>
     </story-canvas>
 
@@ -80,6 +94,16 @@
             <pf-menu-item>Action 3</pf-menu-item>
           </pf-menu-list>
         </pf-menu-content>
+      </pf-menu>
+    </story-canvas>
+
+    <story-canvas title="Filtering with text input (simplified)">
+      <pf-menu>
+        <pf-text-input :auto-validate="false" aria-label="Filter menu items" type="search" icon-variant="search" />
+        <pf-divider />
+        <pf-menu-item>Action 1</pf-menu-item>
+        <pf-menu-item>Action 2</pf-menu-item>
+        <pf-menu-item>Action 3</pf-menu-item>
       </pf-menu>
     </story-canvas>
 

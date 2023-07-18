@@ -3,13 +3,18 @@
     <component :is="labelHeadingLevel" v-if="label" :class="styles.menuGroupTitle">
       <slot name="label">{{ label }}</slot>
     </component>
-    <slot />
+    <auto-wrap :component="PfMenuList" :include="PfMenuItem">
+      <slot />
+    </auto-wrap>
   </section>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import type { HTMLAttributes } from 'vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
+import PfMenuList from './MenuList.vue';
+import PfMenuItem from './MenuItem.vue';
 
 defineOptions({
   name: 'PfMenuGroup',

@@ -7,7 +7,9 @@
       '--pf-c-menu__content--MaxHeight': maxMenuHeight,
     }"
   >
-    <slot />
+    <auto-wrap :component="PfMenuList" :include="PfMenuItem">
+      <slot />
+    </auto-wrap>
   </div>
 </template>
 
@@ -15,6 +17,9 @@
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { computed, inject, ref, watch, type Ref, type HTMLAttributes } from 'vue';
 import { MenuListInjectionKey, type MenuListProvide } from './MenuList.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
+import PfMenuList from './MenuList.vue';
+import PfMenuItem from './MenuItem.vue';
 
 defineOptions({
   name: 'PfMenuContent',
