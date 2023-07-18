@@ -14,7 +14,6 @@
         v-model:selected="managedSelected"
         :plain="plain"
         :style="{'--pf-c-menu--MinWidth': minWidth}"
-        :search-input="searchInput"
         :contains-flyout="containsFlyout"
         :nav-flyout="navFlyout"
         :active-item-id="activeItemId"
@@ -26,11 +25,7 @@
         @select="(event, itemId) => emit('select', event)"
         @search-input-change="(event, value) => emit('search-input-change', event, value)"
       >
-        <pf-menu-content>
-          <auto-wrap :component="PfSelectList" :include="PfSelectOption">
-            <slot />
-          </auto-wrap>
-        </pf-menu-content>
+        <slot />
       </pf-menu>
     </floating-ui>
   </div>
@@ -38,13 +33,9 @@
 
 <script lang="ts" setup>
 import type { MenuItemId } from '../Menu/Menu.vue';
-import PfSelectList from './SelectList';
-import PfSelectOption from './SelectOption';
 import PfMenu from '../Menu/Menu.vue';
-import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import AutoWrap from '../../helpers/AutoWrap.vue';
 import { ref, type HTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 
@@ -66,8 +57,6 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 
   // PfMenuItem props
 
-  /** Search input of menu */
-  searchInput?: boolean;
   /** @beta Indicates if menu contains a flyout menu */
   containsFlyout?: boolean;
   /** @beta Indicating that the menu should have nav flyout styling */

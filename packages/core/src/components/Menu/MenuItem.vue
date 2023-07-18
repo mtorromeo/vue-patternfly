@@ -1,5 +1,86 @@
 <template>
+  <teleport v-if="menu?.favoriteList.value?.$el && favorited" :to="menu?.favoriteList.value?.$el">
+    <li
+      v-bind="$attrs"
+      :class="[styles.menuListItem, {
+        [styles.modifiers.disabled]: disabled,
+        [styles.modifiers.currentPath]: effectiveOnPath,
+        [styles.modifiers.load]: loadButton,
+        [styles.modifiers.loading]: loading,
+        [styles.modifiers.focus]: focused,
+        [styles.modifiers.danger]: danger,
+      }]"
+      :role="check ? 'menuitem' : 'none'"
+      @mouseover="onMouseOver"
+    >
+      <component
+        :is="component"
+        tabindex="-1"
+        :class="[styles.menuItem, {[styles.modifiers.selected]: effectiveSelected && !check}]"
+        :aria-current="ariaCurrent"
+        :disabled="(disabled && !check && component !== 'a') || undefined"
+        :role="(!$slots.flyoutMenu && !check) ? 'menuitem' : undefined"
+        :href="component === 'a' ? to : undefined"
+        :aria-disabled="component === 'a' && disabled ? disabled : undefined"
+        :aria-expanded="onPath || flyoutVisible || undefined"
+        :type="component === 'button' ? 'button' : undefined"
+        @click="!check && onClick($event)"
+      >
+        <span :class="styles.menuItemMain">
+          <span v-if="direction === 'up'" :class="styles.menuItemToggleIcon">
+            <angle-left-icon aria-hidden />
+          </span>
+          <span v-if="$slots.icon" :class="styles.menuItemIcon">
+            <slot name="icon" />
+          </span>
+          <span v-if="check" class="pf-c-menu__item-check">
+            <pf-checkbox
+              component="span"
+              :model-value="effectiveSelected"
+              :disabled="disabled"
+              @change="onItemSelect($event)"
+            />
+          </span>
+          <span :class="styles.menuItemText">
+            <slot>
+              {{ value }}
+            </slot>
+          </span>
+          <span v-if="externalLink" :class="styles.menuItemExternalIcon">
+            <up-right-from-square-icon aria-hidden />
+          </span>
+          <span v-if="$slots.flyoutMenu && direction === 'down'" :class="styles.menuItemToggleIcon">
+            <angle-right-icon aria-hidden />
+          </span>
+          <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
+            <check-icon aria-hidden />
+          </span>
+        </span>
+        <span v-if="($slots.description || description) && direction !== 'up'" :class="styles.menuItemDescription">
+          <span>
+            <slot name="description">
+              {{ description }}
+            </slot>
+          </span>
+        </span>
+      </component>
+      <slot v-if="flyoutVisible" name="flyoutMenu" />
+      <!-- <slot name="drilldownMenu" /> -->
+      <slot name="actions" />
+      <pf-menu-item-action
+        v-if="isDefined(favorited)"
+        icon="favorites"
+        :favorited="favorited"
+        :aria-label="favorited ? 'starred' : 'not starred'"
+        tabindex="-1"
+        action-id="fav"
+        @click="$emit('update:favorited', !favorited)"
+      />
+    </li>
+  </teleport>
+
   <li
+    v-bind="$attrs"
     :class="[styles.menuListItem, {
       [styles.modifiers.disabled]: disabled,
       [styles.modifiers.currentPath]: effectiveOnPath,
@@ -77,7 +158,7 @@
       :aria-label="favorited ? 'starred' : 'not starred'"
       tabindex="-1"
       action-id="fav"
-      @click="menu?.onActionClick?.($event)"
+      @click="$emit('update:favorited', !favorited)"
     />
   </li>
 </template>
@@ -131,9 +212,9 @@ export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, getCurrentInstance, inject, provide, ref, useSlots, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes } from 'vue';
+import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes } from 'vue';
 import { getUniqueId } from '../../util';
-import { MenuInjectionKey, type MenuItemId } from './Menu.vue';
+import { MenuInjectionKey, MenuItemsKey, type MenuItemId } from './Menu.vue';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
@@ -141,9 +222,11 @@ import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import UpRightFromSquareIcon from '@vue-patternfly/icons/up-right-from-square-icon';
 import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { isDefined } from '@vueuse/shared';
+import { useChildrenTracker } from '../../use';
 
 defineOptions({
   name: 'PfMenuItem',
+  inheritAttrs: false,
 });
 
 const $props = withDefaults(defineProps<Props>(), {
@@ -157,13 +240,21 @@ const emit = defineEmits<{
   (name: 'click', event: Event): void;
   /** @beta Callback function when mouse leaves trigger */
   (name: 'show-flyout', event?: Event): void;
+  (name: 'update:favorited', value: boolean): void;
 }>();
 
-const $slots = useSlots();
+const $slots = defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
+  description?: (props?: Record<never, never>) => any;
+  flyoutMenu?: (props?: Record<never, never>) => any;
+  actions?: (props?: Record<never, never>) => any;
+}>();
 
 const instance = getCurrentInstance();
 
 const menu = inject(MenuInjectionKey);
+useChildrenTracker(MenuItemsKey);
 
 const itemId = computed(() => $props.value === undefined ? instance?.vnode.key : $props.value);
 

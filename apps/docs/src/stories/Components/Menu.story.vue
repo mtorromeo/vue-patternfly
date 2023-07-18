@@ -81,6 +81,21 @@
       </pf-menu>
     </story-canvas>
 
+    <story-canvas title="With favorites">
+      <pf-menu>
+        <pf-menu-group v-for="(groupOptions, group) of options" :key="group" :label="group">
+          <pf-menu-item
+            v-for="option of groupOptions"
+            :key="option.value"
+            v-model:favorited="option.favorite"
+            :value="option.value"
+            :description="option.description"
+            :disabled="option.disabled"
+          />
+        </pf-menu-group>
+      </pf-menu>
+    </story-canvas>
+
     <story-canvas title="Filtering with text input">
       <pf-menu>
         <pf-menu-input>
@@ -240,6 +255,36 @@ import BellIcon from '@vue-patternfly/icons/bell-icon';
 import { reactive } from 'vue';
 
 const selected: (string | number | symbol | null | undefined)[] = reactive(['item3', 'item4']);
+
+type Option = {
+  value: string;
+  favorite: boolean;
+  disabled?: boolean;
+  description?: string;
+}
+
+const options = reactive({
+  Status: [
+    {
+      value: "Running",
+      favorite: false,
+      description: "This is a description.",
+    },
+    { value: "Stopped", favorite: false },
+    { value: "Down", favorite: false, disabled: true },
+    { value: "Degraded", favorite: false },
+    { value: "Needs maintenance", favorite: false },
+  ] as Option[],
+  "Vendor names": [
+    { value: "Dell", favorite: false },
+    { value: "Samsung", favorite: true },
+    {
+      value: "Hewlett-Packard",
+      favorite: true,
+      description: "This is a description.",
+    },
+  ] as Option[],
+});
 
 function toggle(itemKey: string | number | symbol | null | undefined) {
   const i = selected.indexOf(itemKey);

@@ -106,15 +106,21 @@
     </story-canvas>
 
     <story-canvas title="Grouped single with filtering">
-      <pf-select placeholder="Filter by status" variant="checkbox" inline-filter>
-        <pf-select-option disabled>
-          Please Choose
-        </pf-select-option>
-        <pf-select-option check value="Mr" />
-        <pf-select-option check value="Miss" />
-        <pf-select-option check value="Mrs" />
-        <pf-select-option check value="Ms" />
-        <pf-select-option check value="Dr" disabled />
+      <pf-select placeholder="Filter by status" variant="checkbox">
+        <pf-text-input :auto-validate="false" aria-label="Filter menu items" type="search" icon-variant="search" />
+        <pf-divider />
+        <pf-select-group label="Status">
+          <pf-select-option value="Running" />
+          <pf-select-option value="Stopped" />
+          <pf-select-option value="Down" />
+          <pf-select-option value="Degraded" />
+          <pf-select-option value="Needs maintenance" />
+        </pf-select-group>
+        <pf-select-group label="Vendor names">
+          <pf-select-option value="Dell" />
+          <pf-select-option value="Samsung" disabled />
+          <pf-select-option value="Hewlett-Packard" />
+        </pf-select-group>
       </pf-select>
     </story-canvas>
 
@@ -124,7 +130,7 @@
           <pf-select-option
             v-for="option of groupOptions"
             :key="option.value"
-            v-model:favorite="option.favorite"
+            v-model:favorited="option.favorite"
             :value="option.value"
             :description="option.description"
             :disabled="option.disabled"

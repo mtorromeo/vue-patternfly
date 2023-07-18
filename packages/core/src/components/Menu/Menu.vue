@@ -10,6 +10,13 @@
     // [styles.modifiers.drilledIn]: effectiveMenuDrilledIn,
     }]"
   >
+    <template v-if="favoriteCount">
+      <pf-menu-group :label="favoritesLabel">
+        <pf-menu-list ref="favoriteList" />
+      </pf-menu-group>
+      <pf-divider />
+    </template>
+
     <auto-wrap
       :options="[
         { component: PfMenuInput, include: PfTextInput },
@@ -24,6 +31,7 @@
 <script lang="ts">
 export type MenuProvide = {
   parentMenu: MenuProvide | undefined;
+  favoriteList: Ref<InstanceType<typeof PfMenuList> | undefined>;
   selected?: WritableComputedRef<MenuItemId | MenuItemId[] | null>;
   // drilldownItemPath: MenuItemId[];
   activeItemId?: MenuItemId;
@@ -35,10 +43,10 @@ export type MenuProvide = {
   // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
 };
 
+export const MenuItemsKey = Symbol("MenuItemsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfMenuItem>>;
 export const MenuInjectionKey = Symbol('MenuInjectionKey') as InjectionKey<MenuProvide>;
 
 export interface MenuState {
-  searchInputValue: string | null;
   // ouiaStateId: string;
   transitionMoveTarget: HTMLElement | null;
   // flyoutRef: React.Ref<HTMLLIElement> | null;
@@ -50,8 +58,6 @@ export type MenuItemId = string | number | symbol;
 export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
   selected?: MenuItemId | MenuItemId[] | null;
-  /** Search input of menu */
-  searchInput?: boolean;
   /** @beta Indicates if menu contains a flyout menu */
   containsFlyout?: boolean;
   /** @beta Indicating that the menu should have nav flyout styling */
@@ -82,15 +88,18 @@ export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'
   // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
   // /** @beta Callback for drilling out of a submenu */
   // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
+
+  favoritesLabel?: string;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, ref, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
-import { useManagedProp } from '../../use';
+import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
+import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey } from '../../use';
 import { isDefined } from '@vueuse/shared';
 import AutoWrap from '../../helpers/AutoWrap.vue';
+import PfDivider from '../Divider.vue';
 import PfMenuContent from './MenuContent.vue';
 import PfMenuGroup from './MenuGroup.vue';
 import PfMenuList from './MenuList.vue';
@@ -104,6 +113,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   // drilldownItemPath: () => [],
+  favoritesLabel: 'Favorites',
 });
 
 const emit = defineEmits<{
@@ -119,9 +129,12 @@ const emit = defineEmits<{
 const el: Ref<HTMLDivElement | undefined> = ref();
 const managedSelected = useManagedProp<MenuItemId | MenuItemId[] | null>('selected', null);
 
+const favoriteList: Ref<InstanceType<typeof PfMenuList> | undefined> = ref();
+const items = provideChildrenTracker(MenuItemsKey);
+const favoriteCount = computed(() => items.reduce((c, i) => c + (i.favorited ? 1 : 0), 0));
+
 const state: MenuState = reactive({
   // ouiaStateId: getDefaultOUIAId(Menu.displayName),
-  searchInputValue: '',
   transitionMoveTarget: null,
   disableHover: false,
 });
@@ -134,6 +147,7 @@ const parentMenu = inject(MenuInjectionKey, undefined);
 
 provide(MenuInjectionKey, {
   parentMenu,
+  favoriteList,
   selected: managedSelected,
   // drilldownItemPath: $props.drilldownItemPath,
   activeItemId: props.activeItemId,
