@@ -1,5 +1,5 @@
 <template>
-  <teleport v-if="menu?.favoriteList.value?.$el && favorited" :to="menu?.favoriteList.value?.$el">
+  <teleport-copy v-slot="{ copy }" :disabled="!menu?.favoriteList.value?.$el || !favorited" :to="menu?.favoriteList.value?.$el">
     <li
       v-bind="$attrs"
       :class="[styles.menuListItem, {
@@ -13,6 +13,8 @@
       :role="check ? 'menuitem' : 'none'"
       @mouseover="onMouseOver"
     >
+      <input v-if="!copy && name" type="hidden" :name="name" :value="value">
+
       <component
         :is="component"
         tabindex="-1"
@@ -20,6 +22,7 @@
         :aria-current="ariaCurrent"
         :disabled="(disabled && !check && component !== 'a') || undefined"
         :role="(!$slots.flyoutMenu && !check) ? 'menuitem' : undefined"
+        :for="copy || check ? undefined : randomId"
         :href="component === 'a' ? to : undefined"
         :aria-disabled="component === 'a' && disabled ? disabled : undefined"
         :aria-expanded="onPath || flyoutVisible || undefined"
@@ -35,6 +38,8 @@
           </span>
           <span v-if="check" class="pf-c-menu__item-check">
             <pf-checkbox
+              :id="copy ? undefined : randomId"
+              :name="copy ? undefined : checkName"
               component="span"
               :model-value="effectiveSelected"
               :disabled="disabled"
@@ -77,90 +82,7 @@
         @click="$emit('update:favorited', !favorited)"
       />
     </li>
-  </teleport>
-
-  <li
-    v-bind="$attrs"
-    :class="[styles.menuListItem, {
-      [styles.modifiers.disabled]: disabled,
-      [styles.modifiers.currentPath]: effectiveOnPath,
-      [styles.modifiers.load]: loadButton,
-      [styles.modifiers.loading]: loading,
-      [styles.modifiers.focus]: focused,
-      [styles.modifiers.danger]: danger,
-    }]"
-    :role="check ? 'menuitem' : 'none'"
-    @mouseover="onMouseOver"
-  >
-    <input v-if="name" type="hidden" :name="name" :value="value">
-
-    <component
-      :is="component"
-      tabindex="-1"
-      :class="[styles.menuItem, {[styles.modifiers.selected]: effectiveSelected && !check}]"
-      :aria-current="ariaCurrent"
-      :disabled="(disabled && !check && component !== 'a') || undefined"
-      :role="(!$slots.flyoutMenu && !check) ? 'menuitem' : undefined"
-      :for="check ? undefined : randomId"
-      :href="component === 'a' ? to : undefined"
-      :aria-disabled="component === 'a' && disabled ? disabled : undefined"
-      :aria-expanded="onPath || flyoutVisible || undefined"
-      :type="component === 'button' ? 'button' : undefined"
-      @click="!check && onClick($event)"
-    >
-      <span :class="styles.menuItemMain">
-        <span v-if="direction === 'up'" :class="styles.menuItemToggleIcon">
-          <angle-left-icon aria-hidden />
-        </span>
-        <span v-if="$slots.icon" :class="styles.menuItemIcon">
-          <slot name="icon" />
-        </span>
-        <span v-if="check" class="pf-c-menu__item-check">
-          <pf-checkbox
-            :id="randomId"
-            :name="checkName"
-            component="span"
-            :model-value="effectiveSelected"
-            :disabled="disabled"
-            @change="onItemSelect($event)"
-          />
-        </span>
-        <span :class="styles.menuItemText">
-          <slot>
-            {{ value }}
-          </slot>
-        </span>
-        <span v-if="externalLink" :class="styles.menuItemExternalIcon">
-          <up-right-from-square-icon aria-hidden />
-        </span>
-        <span v-if="$slots.flyoutMenu && direction === 'down'" :class="styles.menuItemToggleIcon">
-          <angle-right-icon aria-hidden />
-        </span>
-        <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
-          <check-icon aria-hidden />
-        </span>
-      </span>
-      <span v-if="($slots.description || description) && direction !== 'up'" :class="styles.menuItemDescription">
-        <span>
-          <slot name="description">
-            {{ description }}
-          </slot>
-        </span>
-      </span>
-    </component>
-    <slot v-if="flyoutVisible" name="flyoutMenu" />
-    <!-- <slot name="drilldownMenu" /> -->
-    <slot name="actions" />
-    <pf-menu-item-action
-      v-if="isDefined(favorited)"
-      icon="favorites"
-      :favorited="favorited"
-      :aria-label="favorited ? 'starred' : 'not starred'"
-      tabindex="-1"
-      action-id="fav"
-      @click="$emit('update:favorited', !favorited)"
-    />
-  </li>
+  </teleport-copy>
 </template>
 
 <script lang="ts">
@@ -223,6 +145,7 @@ import UpRightFromSquareIcon from '@vue-patternfly/icons/up-right-from-square-ic
 import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { isDefined } from '@vueuse/shared';
 import { useChildrenTracker } from '../../use';
+import TeleportCopy from '../../helpers/TeleportCopy.vue';
 
 defineOptions({
   name: 'PfMenuItem',

@@ -4,6 +4,7 @@ export { default as AutoWrap } from './AutoWrap.vue';
 export { default as PassThrough } from './PassThrough.vue';
 export { default as Sort } from './Sort.vue';
 export { default as SortBy } from './SortBy.vue';
+export { default as TeleportCopy } from './TeleportCopy.vue';
 export { default as Wrap } from './Wrap.vue';
 
 import type { ComponentPublicInstance } from 'vue';

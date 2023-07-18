@@ -88,6 +88,7 @@
             v-for="option of groupOptions"
             :key="option.value"
             v-model:favorited="option.favorite"
+            :name="option.value"
             :value="option.value"
             :description="option.description"
             :disabled="option.disabled"
