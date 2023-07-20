@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.12] - 2023-07-20
+
+### Bug Fixes
+
+- *(Page)* Added missing class on page drawer container
+- *(BackgroundImage)* Src prop is optional
+- *(MenuToggle)* Apply correct container class to text
+
+### Features
+
+- *(MenuToggle)* Implemented pf-menu-toggle
+- *(Menu)* Allowed omission of some components
+- *(Menu)* Implemented favorites
+- *(TeleportCopy)* Implemented utility component teleport-copy
+
+### Refactor
+
+- Renamed overridable-wrapper to auto-wrap
+
 ## [0.1.0-beta.11] - 2023-06-22
 
 ### Bug Fixes

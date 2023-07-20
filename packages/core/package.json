@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "0.1.0-beta.11",
+  "version": "0.1.0-beta.12",
   "files": [
     "dist"
   ],
@@ -21,6 +21,7 @@
     "clean": "rimraf dist",
     "build": "concurrently 'npm:build:*'",
     "build:vite": "vite build",
+    "build:bundle": "vite build -c vite-bundle.config.ts",
     "build:declarations": "vue-tsc --declaration --emitDeclarationOnly && node scripts/build-global.mjs",
     "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
     "build:esm": "tsc --build --verbose tsconfig.json",
