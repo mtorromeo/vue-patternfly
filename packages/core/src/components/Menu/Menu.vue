@@ -20,7 +20,7 @@
     <auto-wrap
       :options="[
         { component: PfMenuInput, include: PfTextInput },
-        { component: PfMenuContent, include: [PfMenuGroup, PfMenuList, PfMenuItem] },
+        { component: PfMenuContent, include: [PfMenuGroup, PfMenuList, PfMenuItem, PfDivider] },
       ]"
     >
       <slot />
@@ -178,5 +178,9 @@ provide(MenuInjectionKey, {
   },
   // onDrillIn: $props.onDrillIn,
   // onDrillOut: $props.onDrillOut,
+});
+
+defineExpose({
+  el,
 });
 </script>

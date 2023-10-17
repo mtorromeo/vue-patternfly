@@ -96,9 +96,11 @@
             aria-label="Actions"
             plain-button
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -126,9 +128,11 @@
             plain-button
             visibility-lg="hidden"
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item component="button">Primary</pf-dropdown-item>
@@ -167,9 +171,11 @@
             plain-button
             visibility-xl="hidden"
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item component="button">Primary</pf-dropdown-item>
@@ -213,9 +219,11 @@
             aria-label="Actions"
             plain-button
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -240,9 +248,11 @@
             aria-label="Actions"
             plain-button
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -282,9 +292,11 @@
             aria-label="Actions"
             plain-button
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -329,9 +341,11 @@
               aria-label="Actions"
               plain-button
             >
-              <pf-dropdown plain position="right">
+              <pf-dropdown position="right">
                 <template #toggle>
-                  <pf-kebab-toggle />
+                  <pf-menu-toggle variant="plain">
+                    <ellipsis-vertical-icon />
+                  </pf-menu-toggle>
                 </template>
 
                 <pf-dropdown-item>Link</pf-dropdown-item>
@@ -374,9 +388,11 @@
             aria-label="Actions"
             plain-button
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -442,9 +458,11 @@
             aria-label="Actions"
             plain-button
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -487,9 +505,11 @@
             aria-label="Actions"
             plain-button
           >
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -558,4 +578,5 @@
 const log = console.log;
 
 import CodeBranchIcon from '@vue-patternfly/icons/code-branch-icon';
+import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 </script>

@@ -1,71 +1,60 @@
 <template>
-  <pf-dropdown :id="widgetId" v-model:open="open" :drop-up="dropUp" plain>
-    <template #toggle>
-      <div
-        :class="[
-          styles.optionsMenuToggle,
-          styles.modifiers.plain,
-          styles.modifiers.text,
-          { [styles.modifiers.disabled]: disabled },
-        ]"
-      >
-        <template v-if="perPageOptions && perPageOptions.length > 0">
-          <span :class="styles.optionsMenuToggleText">
-            <b>{{ firstIndex }} - {{ lastIndex }}</b> of
-            <b>{{ count }}</b>
-            {{ itemsTitle }}
-          </span>
-          <pf-dropdown-toggle
-            :id="widgetId"
-            ref="toggle"
-            :disabled="disabled"
-            :open="open"
-            @click="open = !open"
-          />
-        </template>
-      </div>
-    </template>
-
-    <pf-dropdown-item
-      v-for="o of perPageOptions"
-      :key="o.title"
-      :class="{ 'pf-m-selected': perPage === o.value }"
-      :data-action="`per-page-${o.value}`"
-      component="button"
-      @click="emit('update:perPage', o.value)"
+  <div ref="el">
+    <pf-menu-toggle
+      :id="widgetId ? `${widgetId}-toggle` : undefined"
+      ref="toggle"
+      :expanded="open"
+      :disabled="disabled || Boolean(count && count <= 0)"
+      variant="plainText"
+      aria-haspopup="listbox"
+      @click="open = !open"
     >
-      {{ o.title }}
-      {{ ` ${perPageSuffix}` }}
-      <div v-if="perPage === o.value" :class="styles.optionsMenuMenuItemIcon">
-        <check-icon />
-      </div>
-    </pf-dropdown-item>
-  </pf-dropdown>
+      <b>{{ firstIndex }} - {{ lastIndex }}</b> of
+      <b>{{ count }}</b>
+      {{ itemsTitle }}
+    </pf-menu-toggle>
+
+    <floating-ui :reference="el" flip>
+      <pf-menu
+        v-if="open"
+        v-bind="$attrs"
+        @select="onSelect"
+      >
+        <pf-menu-content>
+          <pf-menu-item
+            v-for="o of perPageOptions"
+            :key="o.title"
+            :data-action="`per-page-${o.value}`"
+            :selected="perPage === o.value"
+            component="button"
+            @click="emit('update:perPage', o.value)"
+          >
+            {{ o.title }}
+            {{ ` ${perPageSuffix}` }}
+          </pf-menu-item>
+        </pf-menu-content>
+      </pf-menu>
+    </floating-ui>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/OptionsMenu/options-menu';
-import CheckIcon from '@vue-patternfly/icons/check-icon';
-import PfDropdown, {
-  type Props as DropdownProps,
-  DropdownBaseClassKey,
-  DropdownDisabledClassKey,
-  DropdownMenuClassKey,
-  DropdownItemClassKey,
-  DropdownToggleIndicatorClassKey,
-  DropdownToggleTextClassKey,
-  DropdownToggleClassKey,
-} from '../Dropdown/Dropdown.vue';
-import PfDropdownItem from '../Dropdown/DropdownItem.vue';
-import PfDropdownToggle from '../Dropdown/DropdownToggle.vue';
-import { provide, ref } from 'vue';
+import PfMenu, {
+  type Props as MenuProps,
+} from '../Menu/Menu.vue';
+import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
+import PfMenuContent from '../Menu/MenuContent.vue';
+import PfMenuItem from '../Menu/MenuItem.vue';
+import FloatingUi from '../../helpers/FloatingUi.vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
+import { type Ref, ref } from 'vue';
 
 defineOptions({
   name: 'PfPaginationOptionsMenu',
+  inheritAttrs: false,
 });
 
-export interface Props extends CommonPaginationProps, /* @vue-ignore */ DropdownProps {
+export interface Props extends CommonPaginationProps, /* @vue-ignore */ MenuProps {
   count?: number;
   firstIndex?: number;
   lastIndex?: number;
@@ -96,13 +85,12 @@ const emit = defineEmits<{
   (name: 'update:perPage', value: number): void;
 }>();
 
-provide(DropdownBaseClassKey, styles.optionsMenu);
-provide(DropdownDisabledClassKey, styles.modifiers.disabled);
-provide(DropdownMenuClassKey, styles.optionsMenuMenu);
-provide(DropdownItemClassKey, styles.optionsMenuMenuItem);
-provide(DropdownToggleIndicatorClassKey, styles.optionsMenuToggleButtonIcon);
-provide(DropdownToggleTextClassKey, styles.optionsMenuToggleText);
-provide(DropdownToggleClassKey, styles.optionsMenuToggleButton);
-
 const open = ref(false);
+const el: Ref<HTMLDivElement | undefined> = ref();
+const toggle: Ref<InstanceType<typeof PfMenuToggle> | undefined> = ref();
+
+function onSelect() {
+  open.value = !open.value;
+  toggle.value?.focus();
+}
 </script>

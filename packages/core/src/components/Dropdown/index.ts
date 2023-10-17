@@ -1,10 +1,4 @@
-export { default as PfBadgeToggle } from './BadgeToggle.vue';
 export { default as PfDropdown } from './Dropdown.vue';
-export { default as PfDropdownGroup } from './DropdownGroup.vue';
-export { default as PfDropdownItem } from './DropdownItem.vue';
-export { default as PfDropdownMenu } from './DropdownMenu.vue';
-export { default as PfDropdownSeparator } from './DropdownSeparator.vue';
-export { default as PfDropdownToggle } from './DropdownToggle.vue';
-export { default as PfKebabToggle } from './KebabToggle.vue';
-export { default as PfDropdownToggleCheckbox } from './DropdownToggleCheckbox.vue';
-export { default as PfToggle } from './Toggle.vue';
+export { default as PfDropdownGroup } from './DropdownGroup';
+export { default as PfDropdownItem } from './DropdownItem';
+export { default as PfDropdownList } from './DropdownList';

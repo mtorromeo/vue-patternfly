@@ -303,16 +303,18 @@
           </pf-toolbar-group>
 
           <pf-toolbar-item>
-            <pf-dropdown v-model:open="dropdownOpen" plain>
+            <pf-dropdown v-model:open="dropdownOpen">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
 
               <pf-dropdown-item key="link">Link</pf-dropdown-item>
               <pf-dropdown-item key="action" component="button">Action</pf-dropdown-item>
               <pf-dropdown-item key="disabled link" disabled>Disabled Link</pf-dropdown-item>
               <pf-dropdown-item key="disabled action" disabled component="button">Disabled Action</pf-dropdown-item>
-              <pf-dropdown-separator key="separator" />
+              <pf-divider key="separator" component="li" />
               <pf-dropdown-item key="separated link">Separated Link</pf-dropdown-item>
               <pf-dropdown-item key="separated action" component="button">Separated Action</pf-dropdown-item>
             </pf-dropdown>
@@ -369,15 +371,17 @@
                 </pf-overflow-menu-group>
               </pf-overflow-menu-content>
               <pf-overflow-menu-control additional-options>
-                <pf-dropdown v-model:open="kebabIsOpen" plain>
+                <pf-dropdown v-model:open="kebabIsOpen">
                   <template #toggle>
-                    <pf-kebab-toggle />
+                    <pf-menu-toggle variant="plain">
+                      <ellipsis-vertical-icon />
+                    </pf-menu-toggle>
                   </template>
                   <pf-dropdown-item key="link">Link</pf-dropdown-item>
                   <pf-dropdown-item key="action" component="button">Action</pf-dropdown-item>
                   <pf-dropdown-item key="disabled link" disabled>Disabled Link</pf-dropdown-item>
                   <pf-dropdown-item key="disabled action" disabled component="button">Disabled Action</pf-dropdown-item>
-                  <pf-dropdown-separator key="separator" />
+                  <pf-divider key="separator" component="li" />
                   <pf-dropdown-item key="separated link">Separated Link</pf-dropdown-item>
                   <pf-dropdown-item key="separated action" component="button">Separated Action</pf-dropdown-item>
                 </pf-dropdown>
@@ -428,6 +432,7 @@ import FilterIcon from '@vue-patternfly/icons/filter-icon';
 import CloneIcon from '@vue-patternfly/icons/clone-icon';
 import PenToSquareIcon from '@vue-patternfly/icons/pen-to-square-icon';
 import RotateIcon from '@vue-patternfly/icons/rotate-icon';
+import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 
 import { reactive, ref } from "vue";
 

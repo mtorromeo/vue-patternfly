@@ -26,9 +26,11 @@
             <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" alt="PatternFly logo" style="height: 50px" />
           </pf-card-header-main>
           <pf-card-actions no-offset>
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -40,7 +42,7 @@
               <pf-dropdown-item disabled component="button">
                 Disabled Action
               </pf-dropdown-item>
-              <pf-dropdown-separator />
+              <pf-divider component="li" />
               <pf-dropdown-item>Separated Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
                 Separated Action
@@ -60,9 +62,11 @@
         <pf-card-header>
           <img src="https://raw.githubusercontent.com/patternfly/patternfly-react/main/packages/react-core/src/demos/Card/pf-logo-small.svg" alt="PatternFly logo" style="width: 27px">
           <pf-card-actions>
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -95,9 +99,11 @@
       <pf-card selectable-raised selectable-input>
         <pf-card-header>
           <pf-card-actions>
-            <pf-dropdown plain position="right">
+            <pf-dropdown position="right">
               <template #toggle>
-                <pf-kebab-toggle />
+                <pf-menu-toggle variant="plain">
+                  <ellipsis-vertical-icon />
+                </pf-menu-toggle>
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -128,3 +134,7 @@
     </story-canvas>
   </doc-page>
 </template>
+
+<script lang="ts" setup>
+import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
+</script>

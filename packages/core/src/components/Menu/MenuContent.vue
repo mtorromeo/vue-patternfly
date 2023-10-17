@@ -7,7 +7,7 @@
       '--pf-c-menu__content--MaxHeight': maxMenuHeight,
     }"
   >
-    <auto-wrap :component="PfMenuList" :include="PfMenuItem">
+    <auto-wrap :component="PfMenuList" :include="[PfMenuItem, PfDivider]">
       <slot />
     </auto-wrap>
   </div>
@@ -20,6 +20,7 @@ import { MenuListInjectionKey, type MenuListProvide } from './MenuList.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfMenuList from './MenuList.vue';
 import PfMenuItem from './MenuItem.vue';
+import PfDivider from '../Divider.vue';
 
 defineOptions({
   name: 'PfMenuContent',

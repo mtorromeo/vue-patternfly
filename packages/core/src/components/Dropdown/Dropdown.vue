@@ -1,89 +1,91 @@
 <template>
-  <component
-    :is="baseComponent"
-    :class="[
-      baseClass || styles.dropdown,
-      classesFromBreakpointProps($props, ['align'], styles),
-      {
-        [styles.modifiers.top]: dropUp,
-        [styles.modifiers.alignRight]: position === 'right',
-        [styles.modifiers.expanded]: open,
-      },
-    ]"
-    :open="managedOpen"
-    :position="position"
-    :aria-labelledby="effectiveId"
-  >
+  <pass-through @children="findReference">
     <render-toggles />
+  </pass-through>
 
-    <pf-dropdown-menu
-      v-if="menuAppendTo === 'inline' && managedOpen"
-      ref="menuRef"
-      :class="classesFromBreakpointProps($props, ['align'], styles)"
-      :position="position"
-      :grouped="grouped"
-      :auto-focus="autoFocus"
-    >
-      <slot />
-    </pf-dropdown-menu>
-  </component>
+  <teleport :to="appendTo === 'inline' ? undefined : appendTo" :disabled="appendTo === 'inline'">
+    <floating-ui flip :reference="toggleElementRef" :placement="`${placement}-start`" :z-index="zIndex">
+      <pf-menu
+        v-if="managedOpen"
+        ref="menuRef"
+        v-bind="$attrs"
+        @select="onSelect"
+        @keydown="onKeydown"
+      >
+        <pf-menu-content>
+          <slot />
+        </pf-menu-content>
+      </pf-menu>
+    </floating-ui>
+  </teleport>
 </template>
 
 <script lang="ts">
-export const DropdownToggleElementRefKey = Symbol('DropdownToggleElementRefKey') as InjectionKey<Ref<HTMLElement | undefined>>;
-export const DropdownBaseClassKey = Symbol('DropdownBaseClassKey') as InjectionKey<string>;
+export const DropdownToggleElementRefKey = Symbol('DropdownToggleElementRefKey') as InjectionKey<Ref<Element | undefined>>;
 export const DropdownDisabledClassKey = Symbol('DropdownDisabledClassKey') as InjectionKey<string>;
 export const DropdownMenuClassKey = Symbol('DropdownMenuClassKey') as InjectionKey<string>;
 export const DropdownItemClassKey = Symbol('DropdownItemClassKey') as InjectionKey<string>;
 export const DropdownToggleIndicatorClassKey = Symbol('DropdownToggleIndicatorClassKey') as InjectionKey<string>;
 export const DropdownToggleTextClassKey = Symbol('DropdownToggleTextClassKey') as InjectionKey<string>;
 export const DropdownToggleClassKey = Symbol('DropdownToggleClassKey') as InjectionKey<string>;
-export const DropdownMenuRefKey = Symbol('DropdownMenuRefKey') as InjectionKey<Ref<typeof PfDropdownMenu | undefined>>;
+export const DropdownMenuRefKey = Symbol('DropdownMenuRefKey') as InjectionKey<Ref<InstanceType<typeof PfMenu> | undefined>>;
 export const DividerComponentKey = Symbol('DividerComponentKey') as InjectionKey<string>;
 
-export interface Props extends AlignBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ MenuProps {
   id?: string,
-  baseComponent?: string,
   position?: 'left' | 'right',
-  menuAppendTo?: 'inline' | 'parent' | object,
+  appendTo?: 'inline' | 'parent' | object,
   text?: string,
-  dropUp?: boolean,
   disabled?: boolean,
+
+  /** Flag to indicate if menu is opened.*/
   open?: boolean,
-  plain?: boolean,
-  grouped?: boolean,
-  splitButton?: boolean,
-  active?: boolean,
-  primary?: boolean,
-  autoFocus?: boolean,
+  /** Flag indicating the toggle should be focused after a selection. */
+  autoFocus?: boolean;
+  /** Flag indicating that the dropdown should not automatically close on select. */
+  noCloseOnSelect?: boolean;
+
+  /** z-index of the dropdown menu */
+  zIndex?: number;
+  placement?: 'top' | 'bottom';
+
+  /** Variant of split button toggle */
+  splitButton?: boolean | 'default' | 'action' | 'checkbox';
+  /** Variant styles of the menu toggle */
+  variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
 }
 </script>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Dropdown/dropdown';
-import { h, inject, type InjectionKey, mergeProps, provide, ref, type Ref, watch, type VNode, computed, type HTMLAttributes } from 'vue';
-import PfDropdownToggle from './DropdownToggle.vue';
-import PfDropdownMenu from './DropdownMenu.vue';
-import { isComponentPublicInstance } from '../../util';
-import { type AlignBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
-import { useManagedProp } from '../../use';
+import { h, type InjectionKey, mergeProps, provide, ref, type Ref, type VNode, computed } from 'vue';
+import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
+import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.vue';
+import PfMenuContent from '../Menu/MenuContent.vue';
+import FloatingUi from '../../helpers/FloatingUi.vue';
+import PassThrough from '../../helpers/PassThrough.vue';
+import { useManagedProp, useHtmlElementFromVNodes } from '../../use';
+import { onMounted } from 'vue';
+import { onBeforeUnmount } from 'vue';
 
 let currentId = 0;
 
 defineOptions({
   name: 'PfDropdown',
+  inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  baseComponent: 'div',
   position: 'left',
-  menuAppendTo: 'inline',
+  appendTo: 'inline',
   open: undefined,
   autoFocus: true,
+  zIndex: 9999,
+  placement: 'bottom',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'update:open', value: boolean): void;
+  (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
 }>();
 
 const slots = defineSlots<{
@@ -91,41 +93,35 @@ const slots = defineSlots<{
   toggle?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const menuRef: Ref<typeof PfDropdownMenu | undefined> = ref();
+const menuRef: Ref<InstanceType<typeof PfMenu> | undefined> = ref();
 provide(DropdownMenuRefKey, menuRef);
 
-const toggleElementRef: Ref<HTMLElement | undefined> = ref();
+const { element: toggleElementRef, findReference } = useHtmlElementFromVNodes();
 provide(DropdownToggleElementRefKey, toggleElementRef);
 
 const managedOpen = useManagedProp('open', false);
-const baseClass = inject(DropdownBaseClassKey, undefined);
-const openedOnEnter = ref(false);
 const effectiveId = computed(() => props.id || `pf-dropdown-toggle-id-${currentId++}`);
 
-watch(managedOpen, () => {
-  if (!managedOpen.value) {
-    openedOnEnter.value = false;
+function onSelect(event: Event, itemId: MenuItemId | null | undefined) {
+  emit('select', event, itemId);
+  if (props.autoFocus && toggleElementRef.value instanceof HTMLElement) {
+    toggleElementRef.value.focus();
   }
-}, { immediate: true });
+  if (!props.noCloseOnSelect) {
+    managedOpen.value = false;
+  }
+}
 
 function renderToggles() {
   const children = [];
 
   const toggleProps = {
     id: effectiveId.value,
-    ref: (toggle: object | null) => {
-      if (toggle instanceof HTMLElement) {
-        toggleElementRef.value = toggle;
-      } else if (isComponentPublicInstance(toggle) && toggle.$el instanceof HTMLElement) {
-        toggleElementRef.value = toggle.$el;
-      }
-    },
     disabled: props.disabled,
-    open: managedOpen.value,
-    plain: props.plain,
+    expanded: managedOpen.value,
     'aria-haspopup': !!slots.default,
-    onEnter: () => (openedOnEnter.value = true),
-    'onUpdate:open': (v: boolean) => (managedOpen.value = v),
+    'onUpdate:expanded': (v: boolean) => (managedOpen.value = v),
+    onKeydown,
   };
 
   if (slots.toggle) {
@@ -135,10 +131,9 @@ function renderToggles() {
     }
     children.push(...toggles);
   } else {
-    const toggle = h(PfDropdownToggle, mergeProps({
+    const toggle = h(PfMenuToggle, mergeProps({
       splitButton: props.splitButton,
-      active: props.active,
-      primary: props.primary,
+      variant: props.variant,
     }, toggleProps), {
       default: () => props.text,
     });
@@ -147,4 +142,45 @@ function renderToggles() {
 
   return children;
 }
+
+function onKeydown(e: KeyboardEvent) {
+  if (!managedOpen.value || !['Escape', 'Tab'].includes(e.key)) {
+    return;
+  }
+
+  // Close the menu on tab or escape if onOpenChange is provided
+  managedOpen.value = false;
+  if (toggleElementRef.value instanceof HTMLElement) {
+    toggleElementRef.value?.focus();
+  }
+}
+
+const handleClick = (event: MouseEvent) => {
+  if (!managedOpen.value) {
+    return;
+  }
+
+  if (toggleElementRef.value?.contains(event.target as Node)) {
+    // toggle was clicked open via keyboard, focus on first menu item
+    if (event.detail === 0) {
+      setTimeout(() => {
+        const firstElement = menuRef.value?.el?.querySelector(
+          'li button:not(:disabled),li input:not(:disabled),li a:not([aria-disabled="true"])',
+        );
+        firstElement && (firstElement as HTMLElement).focus();
+      }, 0);
+    }
+  } else if (!menuRef.value?.el?.contains(event.target as Node)) {
+    // If the event is not on the toggle, close the menu
+    managedOpen.value = false;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('click', handleClick);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('click', handleClick);
+});
 </script>

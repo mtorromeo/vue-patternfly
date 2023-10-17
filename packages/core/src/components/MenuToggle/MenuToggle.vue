@@ -2,6 +2,7 @@
   <component
     v-bind="ouiaProps"
     :is="typeahead || isSplitButton ? 'div' : 'button'"
+    ref="el"
     :class="typeahead ? styles.modifiers.typeahead : [styles.menuToggle, {
       [styles.modifiers.splitButton]: isSplitButton,
       [styles.modifiers.action]: splitButton === 'action',
@@ -62,6 +63,8 @@ import { computed, type ButtonHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useManagedProp } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
 
 defineOptions({
   name: 'PfMenuToggle',
@@ -102,4 +105,14 @@ const isSplitButton = computed(() => !typeahead.value && !!props.splitButton);
 const managedExpanded = useManagedProp('expanded', false);
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const el: Ref<HTMLDivElement | HTMLButtonElement | undefined> = ref();
+
+function focus() {
+  el.value?.focus();
+}
+
+defineExpose({
+  el,
+  focus,
+});
 </script>

@@ -10,13 +10,15 @@
     <story-canvas title="Example">
       <pf-hint>
         <template #actions>
-          <pf-dropdown position="right" plain>
+          <pf-dropdown position="right">
             <template #toggle>
-              <pf-kebab-toggle />
+              <pf-menu-toggle variant="plain">
+                <ellipsis-vertical-icon />
+              </pf-menu-toggle>
             </template>
             <pf-dropdown-item>Action 1</pf-dropdown-item>
             <pf-dropdown-item>Action 2</pf-dropdown-item>
-            <pf-dropdown-separator />
+            <pf-divider component="li" />
             <pf-dropdown-item>Action 3</pf-dropdown-item>
           </pf-dropdown>
         </template>
@@ -29,3 +31,7 @@
     </story-canvas>
   </doc-page>
 </template>
+
+<script lang="ts" setup>
+import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
+</script>

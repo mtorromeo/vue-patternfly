@@ -8,7 +8,7 @@
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 import { OverflowMenuIsBelowBreakpointKey } from './OverflowMenu.vue';
 import { inject } from 'vue';
-import PfDropdownItem, { type Props as DropdownItemProps } from '../Dropdown/DropdownItem.vue';
+import PfDropdownItem, { type Props as DropdownItemProps } from '../Menu/MenuItem.vue';
 
 defineOptions({
   name: 'PfOverflowMenuDropdownItem',

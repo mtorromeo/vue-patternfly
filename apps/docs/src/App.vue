@@ -28,11 +28,54 @@
     </template>
 
     <router-view />
+
+    <pf-alert-group toast live-region :overflow-message="overflowMessage" @overflow-click="expandAlerts">
+      <pf-alert
+        v-for="a of alerts.notifications.slice(0, maxDisplayed > 0 ? maxDisplayed : alerts.notifications.length)"
+        :key="a.id"
+        :variant="a.variant"
+        :title="a.title"
+        live-region
+        @close="alerts.delete(a.id)"
+      >
+        <template v-if="a.text" #default>
+          <p>{{ a.text }}</p>
+        </template>
+      </pf-alert>
+    </pf-alert-group>
   </pf-page>
 
   <router-view v-else />
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { stories } from './router';
+import { useAlertsStore } from './store/alerts';
+import { ref } from 'vue';
+import { watch } from 'vue';
+
+const alerts = useAlertsStore();
+const maxDisplayed = ref(5);
+
+const overflowMessage = computed(() => {
+  if (maxDisplayed.value <= 0) {
+    return '';
+  }
+  const overflow = alerts.notifications.length - maxDisplayed.value;
+  if (overflow > 0) {
+    return `View ${overflow} more alerts`;
+  }
+  return '';
+});
+
+function expandAlerts() {
+  maxDisplayed.value = 0;
+}
+
+watch(() => alerts.notifications.length, (l) => {
+  if (l <= 5) {
+    maxDisplayed.value = 5;
+  }
+});
 </script>
