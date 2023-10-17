@@ -61,7 +61,7 @@ withDefaults(defineProps<Props>(), {
 });
 
 defineEmits<{
-  (name: 'expanded', value: boolean): void;
+  (name: 'update:expanded', value: boolean): void;
 }>();
 
 defineSlots<{
