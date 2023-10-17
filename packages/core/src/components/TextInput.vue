@@ -66,7 +66,8 @@ export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
     | 'search'
     | 'tel'
     | 'time'
-    | 'url';
+    | 'url'
+    | 'week';
   /** Value of the text input. */
   modelValue?: string | number;
   /** Aria-label. The text input requires an associated id or aria-label. */
