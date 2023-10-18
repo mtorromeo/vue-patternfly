@@ -1,6 +1,8 @@
 <template>
   <div class="pf-v5-c-empty-state__header">
-    <slot name="icon" />
+    <auto-wrap v-if="$slots.icon" :component="PfEmptyStateIcon">
+      <slot name="icon" />
+    </auto-wrap>
     <div class="pf-v5-c-empty-state__title">
       <component :is="headingLevel" v-if="title" :class="styles.emptyStateTitleText">
         {{ title }}
@@ -12,6 +14,8 @@
 
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue';
+import PfEmptyStateIcon from './EmptyStateIcon.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
 
 defineOptions({
