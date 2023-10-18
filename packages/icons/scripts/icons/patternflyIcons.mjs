@@ -1,4 +1,4 @@
-const pfIcons = require('@patternfly/patternfly/icons/pf-icons.json');
+import { pfIcons } from '@patternfly/patternfly/icons/pficons';
 
 const renaming = {
   save: 'save-alt',
