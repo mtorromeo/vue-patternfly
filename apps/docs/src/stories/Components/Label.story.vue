@@ -386,6 +386,30 @@
       </pf-label>
     </story-canvas>
 
+    <story-canvas title="Compact">
+      <pf-label compact>Compact</pf-label>
+      <pf-label compact>
+        <template #icon>
+          <circle-info-icon />
+        </template>Compact icon
+      </pf-label>
+      <pf-label compact @close="alert">Compact removeable</pf-label>
+      <pf-label compact @close="alert">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Compact icon removeable
+      </pf-label>
+      <pf-label compact href="#filled">Compact link</pf-label>
+      <pf-label compact href="#filled" @close="alert">Compact link removeable</pf-label>
+      <pf-label compact text-max-width="16ch" @close="alert">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Compact label with icon that overflows
+      </pf-label>
+    </story-canvas>
+
     <story-canvas title="Truncated">
       <pf-label text-max-width="16ch" tooltip-position="right">Label is too long to fit in the label</pf-label>
     </story-canvas>

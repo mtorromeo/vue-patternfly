@@ -3,6 +3,7 @@
     :is="overflow ? 'button' : 'span'"
     :class="[styles.label, colorStyles[color], {
       [styles.modifiers.outline]: outline || variant === 'outline',
+      [styles.modifiers.compact]: compact,
       [styles.modifiers.overflow]: overflow,
     }]">
     <pf-tooltip :position="tooltipPosition">
@@ -60,6 +61,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   to?: RouteLocationRaw;
   href?: string;
   outline?: boolean;
+  /** Flag indicating the label is compact. */
+  compact?: boolean;
   /** Flag indicating if the label is an overflow label. */
   overflow?: boolean;
   /** The max width of the label before it is truncated. Can be any valid CSS unit, such as '100%', '100px', or '16ch'. */
