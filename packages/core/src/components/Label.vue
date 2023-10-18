@@ -1,7 +1,9 @@
 <template>
-  <span
+  <component
+    :is="overflow ? 'button' : 'span'"
     :class="[styles.label, colorStyles[color], {
       [styles.modifiers.outline]: outline || variant === 'outline',
+      [styles.modifiers.overflow]: overflow,
     }]">
     <pf-tooltip :position="tooltipPosition">
       <component :is="href ? 'a' : to ? 'router-link' : 'span'" :to="to" :href="href" :class="styles.labelContent">
@@ -23,7 +25,7 @@
         <pf-close-button :aria-label="closeBtnAriaLabel" @click="onClose" />
       </slot>
     </span>
-  </span>
+  </component>
 </template>
 
 <script lang="ts" setup>
@@ -58,6 +60,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   to?: RouteLocationRaw;
   href?: string;
   outline?: boolean;
+  /** Flag indicating if the label is an overflow label. */
+  overflow?: boolean;
   /** The max width of the label before it is truncated. Can be any valid CSS unit, such as '100%', '100px', or '16ch'. */
   textMaxWidth?: string;
   /** Aria label for close button */
