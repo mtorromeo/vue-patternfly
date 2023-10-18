@@ -1,18 +1,18 @@
 <template>
   <div
-    :id="`${widgetId}-${top ? 'top' : 'bottom'}-pagination`"
+    :id="`${widgetId}-${variant}-pagination`"
     :class="[
       styles.pagination,
       breakpointClasses,
       {
-        [styles.modifiers.bottom]: !top,
+        [styles.modifiers.bottom]: variant === 'bottom',
         [styles.modifiers.compact]: compact,
         [styles.modifiers.static]: static,
         [styles.modifiers.sticky]: sticky,
       },
     ]"
   >
-    <div v-if="top" :class="styles.paginationTotalItems">
+    <div v-if="variant === 'top'" :class="styles.paginationTotalItems">
       <b>{{ firstIndex }} - {{ lastIndex }}</b> of
       <b>{{ count }}</b>
       {{ titleItems }}
@@ -30,7 +30,7 @@
       :last-full-page-shown="lastFullPageShown"
       :count="count"
       :drop-up="dropUp"
-      :widget-id="`${widgetId}-${top ? 'top' : 'bottom'}`"
+      :widget-id="`${widgetId}-${variant}`"
       :disabled="disabled"
       :page="constrainedPage"
       :per-page="perPage"
@@ -77,8 +77,8 @@ defineOptions({
 });
 
 export interface Props extends CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
-  /** Render pagination on top instead of bottom. */
-  top?: boolean;
+  /** Position where pagination is rendered. */
+  variant?: 'top' | 'bottom';
   /** Flag indicating if pagination should not be sticky on mobile */
   static?: boolean;
   /** Flag indicating if pagination is compact */
