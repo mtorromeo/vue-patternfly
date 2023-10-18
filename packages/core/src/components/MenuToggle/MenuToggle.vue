@@ -15,10 +15,10 @@
       [styles.modifiers.fullWidth]: fullWidth,
       [styles.modifiers.disabled]: disabled,
     }]"
-    :type="typeahead ? undefined : 'button'"
-    :aria-expanded="typeahead ? undefined : managedExpanded"
-    :disabled="typeahead ? undefined : disabled"
-    @click="typeahead ? undefined : (managedExpanded = !managedExpanded)"
+    :type="typeahead || isSplitButton ? undefined : 'button'"
+    :aria-expanded="typeahead || isSplitButton ? undefined : managedExpanded"
+    :disabled="typeahead || isSplitButton ? undefined : disabled"
+    @click="typeahead || isSplitButton ? undefined : (managedExpanded = !managedExpanded)"
   >
     <slot v-if="!isSplitButton && variant === 'plain'" />
 
