@@ -42,6 +42,7 @@ const colorStyles = {
   orange: styles.modifiers.orange,
   purple: styles.modifiers.purple,
   red: styles.modifiers.red,
+  gold: styles.modifiers.gold,
   grey: '',
 };
 

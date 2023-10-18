@@ -153,20 +153,44 @@
         </template>
         Cyan icon
       </pf-label>
-      <pf-label color="cyan" close @close="alert">Cyan removeable</pf-label>
-      <pf-label color="cyan" close @close="alert">
+      <pf-label color="cyan" @close="alert">Cyan removeable</pf-label>
+      <pf-label color="cyan" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Cyan icon removeable
       </pf-label>
       <pf-label color="cyan" href="#filled">Cyan link</pf-label>
-      <pf-label color="cyan" href="#filled" close @close="alert">Cyan link removeable</pf-label>
-      <pf-label color="cyan" close truncated @close="alert">
+      <pf-label color="cyan" href="#filled" @close="alert">Cyan link removeable</pf-label>
+      <pf-label color="cyan" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Cyan label with icon that overflows
+      </pf-label>
+      <br>
+      <br>
+      <pf-label color="gold">Gold</pf-label>
+      <pf-label color="gold">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Gold icon
+      </pf-label>
+      <pf-label color="gold" @close="alert">Gold removeable</pf-label>
+      <pf-label color="gold" @close="alert">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Gold icon removeable
+      </pf-label>
+      <pf-label color="gold" href="#filled">Gold link</pf-label>
+      <pf-label color="gold" href="#filled" @close="alert">Gold link removeable</pf-label>
+      <pf-label color="gold" text-max-width="16ch" @close="alert">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Gold label with icon that overflows
       </pf-label>
     </story-canvas>
 
@@ -335,6 +359,30 @@
           <circle-info-icon />
         </template>
         Cyan label with icon that overflows
+      </pf-label>
+      <br>
+      <br>
+      <pf-label outline color="gold">Gold</pf-label>
+      <pf-label outline color="gold">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Gold icon
+      </pf-label>
+      <pf-label outline color="gold" @close="alert">Gold removeable</pf-label>
+      <pf-label outline color="gold" @close="alert">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Gold icon removeable
+      </pf-label>
+      <pf-label outline color="gold" href="#filled">Gold link</pf-label>
+      <pf-label outline color="gold" href="#filled" @close="alert">Gold link removeable</pf-label>
+      <pf-label outline color="gold" text-max-width="16ch" @close="alert">
+        <template #icon>
+          <circle-info-icon />
+        </template>
+        Gold label with icon that overflows
       </pf-label>
     </story-canvas>
 
