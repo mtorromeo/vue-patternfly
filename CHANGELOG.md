@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.13] - 2023-10-18
+
+### Bug Fixes
+
+- *(Accordion)* Declare correct "update:expanded" event instead of "expanded" in `pf-accordion-item`
+- *(Pagination)* Replaced `top` prop with `variant` to allow the pagination to be neither top, nor bottom
+- *(MenuToggle)* Fixed opening of the menu when clicking on menutoggles with split-button
+
+### Features
+
+- *(Menu, Dropdown, OverflowMenu, Pagination)* Replaced pf-dropdown implementation with pf-menu composable
+- *(TextInput)* Added support for week input type
+- *(core)* Updated all components to PatternFly v5
+- *(Label)* Added gold color
+- *(Label)* Added overflow variant
+- *(Label)* Added compact variant
+- *(EmptyState)* Added color prop to `pf-empty-state-icon` and made it optional for the `icon` slot of `pf-empty-state-header`
+
 ## [0.1.0-beta.12] - 2023-07-20
 
 ### Bug Fixes
