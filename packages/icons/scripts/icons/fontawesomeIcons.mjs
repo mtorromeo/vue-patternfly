@@ -1,11 +1,12 @@
-const { fas } = require('@fortawesome/free-solid-svg-icons');
-const { far } = require('@fortawesome/free-regular-svg-icons');
-const { fab } = require('@fortawesome/free-brands-svg-icons');
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 /**
  * @param {object} icon FontAwesome icon to convert
  */
 function convertIcon(icon) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [width, height, ligatures, unicode, svgPathData] = icon.icon;
 
   return {
@@ -49,8 +50,10 @@ function convertIcons(icons) {
     }, {});
 }
 
-module.exports = {
+const icons = {
   ...convertIcons(fas),
   ...convertIcons(fab),
   ...convertIcons(far),
 };
+
+export default icons;

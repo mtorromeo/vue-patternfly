@@ -1,11 +1,11 @@
-const babel = require('@babel/core');
-const glob = require('glob');
-const fs = require('fs-extra');
-const path = require('path');
-const { generateIcons } = require('./generateIcons');
+import babel from '@babel/core';
+import { glob } from 'glob';
+import fs from 'fs-extra';
+import path from 'path';
+import generateIcons from './generateIcons.mjs';
 
-const srcDir = path.join(__dirname, '../src');
-const outDir = path.join(__dirname, '../dist');
+const srcDir = './src';
+const outDir = './dist';
 
 const removeSnake = s =>
   s

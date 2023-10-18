@@ -1,4 +1,4 @@
-import { pfIcons } from '@patternfly/patternfly/icons/pficons';
+import { pfIcons } from '@patternfly/patternfly/icons/pficons.mjs';
 
 const renaming = {
   save: 'save-alt',
@@ -29,4 +29,5 @@ function convertIcons(icons) {
   return icons;
 }
 
-module.exports = convertIcons(pfIcons);
+const icons = convertIcons(pfIcons);
+export default icons;
