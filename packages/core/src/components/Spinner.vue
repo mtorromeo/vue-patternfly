@@ -7,7 +7,7 @@
     role="progressbar"
     viewBox="0 0 100 100"
     :style="diameter ? {
-      '--pf-c-spinner-diameter': diameter,
+      '--pf-v5-c-spinner-diameter': diameter,
     } : undefined"
     :aria-valuetext="ariaValueText"
     :aria-label="!ariaLabel && !ariaLabelledby ? 'Contents' : ariaLabel"

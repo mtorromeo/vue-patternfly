@@ -1,10 +1,10 @@
 <template>
-  <nav :class="styles.paginationNav" :aria-label="paginationTitle">
+  <nav :class="styles.paginationNav" :aria-label="paginationAriaLabel">
     <div v-if="!compact" :class="[styles.paginationNavControl, styles.modifiers.first]">
       <pf-button
         variant="plain"
         :disabled="disabled || page === firstPage || page === 0"
-        :aria-label="toFirstPage"
+        :aria-label="toFirstPageAriaLabel"
         data-action="first"
         @click="goToFirstPage"
       >
@@ -16,7 +16,7 @@
       <pf-button
         variant="plain"
         :disabled="disabled || page === firstPage || page === 0"
-        :aria-label="toPreviousPage"
+        :aria-label="toPreviousPageAriaLabel"
         data-action="previous"
         @click="goToPreviousPage"
       >
@@ -25,27 +25,27 @@
     </div>
 
     <div v-if="!compact" :class="styles.paginationNavPageSelect">
-      <input
+      <pf-text-input
         v-model="userInputPage"
-        :class="styles.formControl"
-        :aria-label="currPage"
+        :aria-label="currPageAriaLabel"
         type="number"
         :disabled="
           disabled || (page === firstPage && page === lastPage) || page === 0
         "
+        :auto-validate="false"
         :min="lastPage <= 0 && firstPage <= 0 ? 0 : 1"
         :max="lastPage"
         @keydown="onKeydown"
         @change="onChange"
-      >
-      <span aria-hidden="true">of {{ pagesTitle ? pluralize(lastPage, pagesTitle) : lastPage }}</span>
+      />
+      <span aria-hidden="true">of {{ pagesTitle ? pluralize(lastPage, pagesTitle, pagesTitlePlural) : lastPage }}</span>
     </div>
 
     <div :class="styles.paginationNavControl">
       <pf-button
         variant="plain"
         :disabled="disabled || page === lastPage"
-        :aria-label="toNextPage"
+        :aria-label="toNextPageAriaLabel"
         data-action="next"
         @click="goToNextPage"
       >
@@ -57,7 +57,7 @@
       <pf-button
         variant="plain"
         :disabled="disabled || page === lastPage"
-        :aria-label="toLastPage"
+        :aria-label="toLastPageAriaLabel"
         data-action="last"
         @click="goToLastPage"
       >
@@ -71,6 +71,7 @@
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 
 import PfButton from '../Button.vue';
+import PfTextInput from '../TextInput.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AnglesLeftIcon from '@vue-patternfly/icons/angles-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
@@ -84,22 +85,29 @@ defineOptions({
 });
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
+  /** Flag indicating if the pagination is disabled. */
   disabled?: boolean;
+  /** Flag indicating if the pagination is compact. */
   compact?: boolean;
-
+  /** The number of the current page. */
   page?: number;
+  /** The number of the last page. */
   lastPage?: number;
+  /** The number of first page where pagination starts. */
   firstPage?: number;
   /** Number of items per page. */
   perPage?: number;
-
+  /** The title of a page displayed beside the page number. */
   pagesTitle?: string;
-  toLastPage?: string;
-  toNextPage?: string;
-  toFirstPage?: string;
-  toPreviousPage?: string;
-  currPage?: string;
-  paginationTitle?: string;
+  /** The title of a page displayed beside the page number (the plural form). */
+  pagesTitlePlural?: string;
+
+  toLastPageAriaLabel?: string;
+  toNextPageAriaLabel?: string;
+  toFirstPageAriaLabel?: string;
+  toPreviousPageAriaLabel?: string;
+  currPageAriaLabel?: string;
+  paginationAriaLabel?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -107,12 +115,12 @@ const props = withDefaults(defineProps<Props>(), {
   lastPage: 0,
   firstPage: 0,
   perPage: 10,
-  toLastPage: 'Go to last page',
-  toNextPage: 'Go to next page',
-  toFirstPage: 'Go to first page',
-  toPreviousPage: 'Go to previous page',
-  currPage: 'Current page',
-  paginationTitle: 'Pagination',
+  toLastPageAriaLabel: 'Go to last page',
+  toNextPageAriaLabel: 'Go to next page',
+  toFirstPageAriaLabel: 'Go to first page',
+  toPreviousPageAriaLabel: 'Go to previous page',
+  currPageAriaLabel: 'Current page',
+  paginationAriaLabel: 'Pagination',
 });
 
 defineSlots<{
@@ -149,10 +157,22 @@ function parseInteger(input: string | number, lastPage: number) {
 }
 
 function onKeydown(e: KeyboardEvent) {
-  if (e.keyCode === 13) {
-    // ENTER
+  const allowedKeys = [
+    'Tab',
+    'Backspace',
+    'Delete',
+    'ArrowLeft',
+    'ArrowRight',
+    'Home',
+    'End',
+    'ArrowUp',
+    'ArrowDown',
+  ];
+  if (e.key === 'Enter') {
     const inputPage = parseInteger(userInputPage.value, props.lastPage);
     handleNewPage(isNaN(inputPage) ? props.page : inputPage);
+  } else if (!/^\d*$/.test(e.key) && !allowedKeys.includes(e.key)) {
+    e.preventDefault();
   }
 }
 

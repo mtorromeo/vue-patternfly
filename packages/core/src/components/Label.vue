@@ -9,17 +9,20 @@
           <slot name="icon" />
         </span>
 
-        <span v-if="truncated" ref="textRef" :class="styles.labelText">
+        <span ref="textRef" :class="styles.labelText" :style="textMaxWidth ? {'--pf-v5-c-label__text--MaxWidth': textMaxWidth} : undefined">
           <slot />
         </span>
-        <slot v-else />
       </component>
 
       <template v-if="textOverflowing" #content>
         <slot />
       </template>
     </pf-tooltip>
-    <pf-close-button v-if="close" @click="emit('close', $event)" />
+    <span v-if="onClose || $slots.actions" :class="styles.labelActions">
+      <slot name="actions">
+        <pf-close-button :aria-label="closeBtnAriaLabel" @click="onClose" />
+      </slot>
+    </span>
   </span>
 </template>
 
@@ -54,23 +57,25 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   to?: RouteLocationRaw;
   href?: string;
   outline?: boolean;
-  close?: boolean;
-  truncated?: boolean;
+  /** The max width of the label before it is truncated. Can be any valid CSS unit, such as '100%', '100px', or '16ch'. */
+  textMaxWidth?: string;
+  /** Aria label for close button */
+  closeBtnAriaLabel?: string;
+  /** Callback for when the label is clicked. This should not be passed in if the href or editable props are also passed in. */
+  onClose?: (e: Event) => void;
 }
 
 withDefaults(defineProps<Props>(), {
   color: 'grey',
   variant: 'filled',
   tooltipPosition: 'top',
+  closeBtnAriaLabel: 'Close',
 });
-
-const emit = defineEmits<{
-  (name: 'close', e: Event): void;
-}>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => VNode[];
   icon?: (props?: Record<never, never>) => VNode[];
+  actions?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const textRef: Ref<HTMLSpanElement | undefined> = ref();

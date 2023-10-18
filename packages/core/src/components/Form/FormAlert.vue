@@ -1,5 +1,5 @@
 <template>
-  <form class="pf-c-form__alert">
+  <form class="pf-v5-c-form__alert">
     <slot />
   </form>
 </template>

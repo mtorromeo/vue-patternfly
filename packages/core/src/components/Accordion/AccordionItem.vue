@@ -24,14 +24,14 @@
     v-bind="$attrs"
     :is="contentComponent || (accordion?.dl ? 'dd' : 'div')"
     :class="[
-      styles.accordionExpandedContent, {
+      styles.accordionExpandableContent, {
         [styles.modifiers.fixed]: fixed,
         [styles.modifiers.expanded]: managedExpanded,
       },
     ]"
     :hidden="!managedExpanded"
   >
-    <div :class="styles.accordionExpandedContentBody">
+    <div :class="styles.accordionExpandableContentBody">
       <slot />
     </div>
   </component>

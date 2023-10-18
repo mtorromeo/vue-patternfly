@@ -9,6 +9,17 @@
         :count="333"
       />
     </story-canvas>
+
+    <story-canvas title="Inset">
+      <pf-pagination
+        v-model:page="page"
+        v-model:per-page="perPage"
+        :count="333"
+        inset="none"
+        inset-md="md"
+        inset-lg="2xl"
+      />
+    </story-canvas>
   </doc-page>
 </template>
 

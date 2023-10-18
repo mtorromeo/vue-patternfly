@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { h, ref, type Ref, type HTMLAttributes } from 'vue';
-import styles from '@patternfly/react-styles/css/components/ChipGroup/chip-group';
+import styles from '@patternfly/react-styles/css/components/Chip/chip-group';
 import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
 import PfChip from './Chip.vue';
 import PfButton from '../Button.vue';

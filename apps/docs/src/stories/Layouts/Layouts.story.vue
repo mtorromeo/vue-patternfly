@@ -90,36 +90,31 @@
 
 <style lang="scss">
 .page__layouts {
-  .pf-c-divider {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .pf-l-bullseye,
-  .pf-l-flex,
-  .pf-l-flex > div,
-  .pf-l-gallery,
-  .pf-l-gallery > div,
-  .pf-l-grid,
-  .pf-l-grid > div,
-  .pf-l-level,
-  .pf-l-level > div,
-  .pf-l-split,
-  .pf-l-split > div,
-  .pf-l-stack,
-  .pf-l-stack > div {
+  .pf-v5-l-bullseye,
+  .pf-v5-l-flex,
+  .pf-v5-l-flex > div,
+  .pf-v5-l-gallery,
+  .pf-v5-l-gallery > div,
+  .pf-v5-l-grid,
+  .pf-v5-l-grid > div,
+  .pf-v5-l-level,
+  .pf-v5-l-level > div,
+  .pf-v5-l-split,
+  .pf-v5-l-split > div,
+  .pf-v5-l-stack,
+  .pf-v5-l-stack > div {
     border-style: dashed !important;
     border-width: 2px !important;
     padding: 1rem !important;
   }
 
-  .pf-l-bullseye,
-  .pf-l-flex,
-  .pf-l-gallery,
-  .pf-l-grid,
-  .pf-l-level,
-  .pf-l-split,
-  .pf-l-stack {
+  .pf-v5-l-bullseye,
+  .pf-v5-l-flex,
+  .pf-v5-l-gallery,
+  .pf-v5-l-grid,
+  .pf-v5-l-level,
+  .pf-v5-l-split,
+  .pf-v5-l-stack {
     margin: 1rem 0 !important;
   }
 }

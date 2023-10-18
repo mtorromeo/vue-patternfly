@@ -61,7 +61,7 @@ export function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & Co
   return vtype !== Fragment && typeof vtype === 'object' && !(vtype as any).type;
 }
 
-export function findFirstChildVNode(vnodes: VNode[] | VNodeNormalizedChildren | undefined): VNode | undefined {
+export function findFirstChildVNode(vnodes: VNode[] | VNodeNormalizedChildren | undefined, matchFn?: ((vnode: VNode) => boolean) | undefined): VNode | undefined {
   if (!Array.isArray(vnodes)) {
     return;
   }
@@ -71,9 +71,11 @@ export function findFirstChildVNode(vnodes: VNode[] | VNodeNormalizedChildren | 
       continue;
     }
     if (vnode.type === Fragment) {
-      return findFirstChildVNode(vnode.children);
+      return findFirstChildVNode(vnode.children, matchFn);
     }
-    return vnode;
+    if (!matchFn || matchFn(vnode)) {
+      return vnode;
+    }
   }
 }
 

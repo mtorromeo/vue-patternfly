@@ -1,6 +1,6 @@
 <template>
   <section
-    :class="['pf-c-tab-content', {
+    :class="[styles.tabContent, {
       [styles.modifiers.light_300]: variant === 'light300',
     }]"
     role="tabpanel"

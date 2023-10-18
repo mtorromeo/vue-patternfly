@@ -21,7 +21,7 @@
       }
     ]"
     :style="{
-      '--pf-c-page--section--m-limit-width--MaxWidth': maxWidth,
+      '--pf-v5-c-page--section--m-limit-width--MaxWidth': maxWidth,
     }"
     :tabindex="overflowScroll ? 0 : undefined"
   >
@@ -68,7 +68,7 @@ export interface Props extends PaddingBreakpointProps, StickyBreakpointProps, /*
   filled?: boolean;
   /** Limits the width of the section */
   widthLimited?: boolean;
-  /** Limits the width of the section and sets the --pf-c-page--section--m-limit-width--MaxWidth variable to this value */
+  /** Limits the width of the section and sets the --pf-v5-c-page--section--m-limit-width--MaxWidth variable to this value */
   maxWidth?: string;
   /** Flag indicating if the section content is center aligned. Either widthLimited or maxWidth must be set for this to work  */
   centerAligned?: boolean;

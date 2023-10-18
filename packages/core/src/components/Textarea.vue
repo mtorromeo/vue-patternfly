@@ -1,22 +1,34 @@
 <template>
-  <textarea
-    ref="input"
-    :value="value"
-    v-bind="ouiaProps"
-    :class="[styles.formControl, {
-      [styles.modifiers.resizeVertical]: resizeOrientation === 'vertical',
-      [styles.modifiers.resizeHorizontal]: resizeOrientation === 'horizontal',
-      [styles.modifiers.success]: effectiveValidated === 'success',
-      [styles.modifiers.warning]: effectiveValidated === 'warning',
-    }]"
-    :required="required"
-    :aria-invalid="effectiveValidated === 'error'"
-    @change="handleChange"
-    @input="onInput"
-    @blur="onBlur"
-    @invalid="onInvalid"
-    @keyUp="onKeyUp"
-  />
+  <span
+    :class="[
+      styles.formControl, {
+        [styles.modifiers.readonly]: !!readOnlyVariant,
+        [styles.modifiers.disabled]: disabled,
+        [styles.modifiers.resizeVertical]: resizeOrientation === 'vertical',
+        [styles.modifiers.resizeHorizontal]: resizeOrientation === 'horizontal',
+        [styles.modifiers.success]: effectiveValidated === 'success',
+        [styles.modifiers.warning]: effectiveValidated === 'warning',
+        [styles.modifiers.error]: effectiveValidated === 'error',
+      },
+    ]"
+  >
+    <textarea
+      ref="input"
+      :value="value"
+      v-bind="{...ouiaProps, ...$attrs}"
+      :disabled="disabled || undefined"
+      :readonly="!!readOnlyVariant || readonly"
+      :aria-invalid="effectiveValidated === 'error'"
+      @change="handleChange"
+      @input="onInput"
+      @blur="onBlur"
+      @invalid="onInvalid"
+      @keyUp="onKeyUp"
+    />
+    <span v-if="hasStatusIcon" :class="styles.formControlUtilities">
+      <pf-form-control-icon :status="(effectiveValidated as 'success' | 'error' | 'warning')" />
+    </span>
+  </span>
 </template>
 
 <script lang="ts" setup>
@@ -29,13 +41,20 @@ import { useChildrenTracker } from '../use';
 import { canUseDOM } from '../util';
 import { FormGroupInputsKey } from './Form/common';
 import { useOUIAProps } from '../helpers/ouia';
+import PfFormControlIcon from './FormControlIcon.vue';
 
 defineOptions({
   name: 'PfTextarea',
+  inheritAttrs: false,
 });
 
 export interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {
-  required?: boolean;
+  /** Flag to show if the text area is disabled. */
+  disabled?: boolean;
+
+  readonly?: boolean;
+  /** Read only variant. */
+  readOnlyVariant?: 'default' | 'plain';
 
   /** Flag to modify height based on contents. */
   autoResize?: boolean;
@@ -49,12 +68,12 @@ export interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {
   /** Specifies a regular expression that the value should match */
   pattern?: string | RegExp;
 
-  /** Value of the text input. */
+  /** Value of the text area. */
   modelValue?: string | number;
 
-  /** Value to indicate if the text input is modified to show that validation state.
-   * If set to success, text input will be modified to indicate valid state.
-   * If set to error, text input will be modified to indicate error state.
+  /** Value to indicate if the text area is modified to show that validation state.
+   * If set to success, text area will be modified to indicate valid state.
+   * If set to error, text area will be modified to indicate error state.
    */
   validated?: 'success' | 'warning' | 'error' | 'default';
 
@@ -87,6 +106,7 @@ defineEmits<{
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const input: Ref<HTMLInputElement | undefined> = ref();
+const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const {
   value,

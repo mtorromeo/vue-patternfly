@@ -10,13 +10,15 @@
           :aria-labelledby="ariaLabelledby"
           :aria-describedby="ariaDescribedby || (noBodyWrapper ? null : descriptorId)"
           aria-modal="true"
-          :class="[styles.modalBox, {
-            [styles.modifiers.alignTop]: position === 'top',
-            [styles.modifiers.lg]: variant === 'large',
-            [styles.modifiers.sm]: variant === 'small',
-            [styles.modifiers.md]: variant === 'medium',
-            [styles.modifiers[titleIconVariant ?? 'default']]: titleIconVariant,
-          }]"
+          :class="[
+            styles.modalBox,
+            titleIconVariant && titleIconVariant !== 'default' && styles.modifiers[titleIconVariant],
+            {
+              [styles.modifiers.alignTop]: position === 'top',
+              [styles.modifiers.lg]: variant === 'large',
+              [styles.modifiers.sm]: variant === 'small',
+              [styles.modifiers.md]: variant === 'medium',
+            }]"
           :style="{ [topSpacer.name]: positionOffset }"
         >
           <pf-close-button v-if="!noClose" @click="emit('update:open', false)" />

@@ -5,11 +5,17 @@
     :id="effectiveId"
     v-bind="$attrs"
     :class="[styles.chip, styles.modifiers.overflow]"
+    :style="{
+      '--pf-v5-c-chip__text--MaxWidth': textMaxWidth,
+    }"
     :type="component === 'button' ? 'button' : undefined"
     @click="emit('click', $event)"
   >
-    <span :class="styles.chipText">
-      <slot />
+    <span :class="styles.chipContent">
+      <span :class="styles.chipText">
+        <slot />
+      </span>
+      <slot name="badge" />
     </span>
   </component>
 
@@ -22,22 +28,30 @@
       :is="component"
       v-bind="$attrs"
       :class="styles.chip"
+      :style="{
+        '--pf-v5-c-chip__text--MaxWidth': textMaxWidth,
+      }"
       :type="component === 'button' ? 'button' : undefined"
     >
-      <span :id="effectiveId" ref="textRef" :class="styles.chipText">
-        <slot />
+      <span :class="styles.chipContent">
+        <span :id="effectiveId" ref="textRef" :class="styles.chipText">
+          <slot />
+        </span>
+        <slot name="badge" />
       </span>
 
-      <pf-button
-        v-if="!readonly"
-        :id="`remove_${effectiveId}`"
-        variant="plain"
-        :aria-label="closeBtnAriaLabel"
-        :aria-labelledby="`remove_${effectiveId} ${effectiveId}`"
-        @click="emit('click', $event)"
-      >
-        <xmark-icon aria-hidden />
-      </pf-button>
+      <span v-if="!readonly" :class="styles.chipActions">
+        <pf-button
+          v-if="!readonly"
+          :id="`remove_${effectiveId}`"
+          variant="plain"
+          :aria-label="closeBtnAriaLabel"
+          :aria-labelledby="`remove_${effectiveId} ${effectiveId}`"
+          @click="emit('click', $event)"
+        >
+          <xmark-icon aria-hidden />
+        </pf-button>
+      </span>
     </component>
   </pf-tooltip>
 </template>
@@ -64,6 +78,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: string | Component;
   tooltipPosition?: TooltipPosition;
   closeBtnAriaLabel?: string;
+  /** Css property expressed in percentage or any css unit that overrides the default value of the max-width of the chip's text */
+  textMaxWidth?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -78,6 +94,7 @@ const emit = defineEmits<{
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
+  badge?: (props?: Record<never, never>) => any;
 }>();
 
 const textRef: Ref<HTMLSpanElement | undefined> = ref();

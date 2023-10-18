@@ -396,15 +396,9 @@
           <pf-toolbar-item variant="bulk-select">
             <pf-dropdown v-model:open="splitButtonDropdownIsOpen">
               <template #toggle>
-                <pf-dropdown-toggle id="stacked-example-toggle">
-                  <template #buttons>
-                    <pf-dropdown-toggle-checkbox
-                      id="example-checkbox-1"
-                      key="split-checkbox"
-                      aria-label="Select all"
-                    />
-                  </template>
-                </pf-dropdown-toggle>
+                <pf-menu-toggle split-button="checkbox">
+                  <pf-menu-toggle-checkbox aria-label="Select all" />
+                </pf-menu-toggle>
               </template>
               <pf-dropdown-item key="link">Link</pf-dropdown-item>
               <pf-dropdown-item key="action" component="button">Action</pf-dropdown-item>

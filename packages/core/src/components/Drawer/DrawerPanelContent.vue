@@ -8,9 +8,9 @@
       [styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200,
     }]"
     :style="{
-      '--pf-c-drawer__panel--md--FlexBasis': panelSize === null ? defaultSize : `${panelSize}px`,
-      '--pf-c-drawer__panel--md--FlexBasis--min': minSize,
-      '--pf-c-drawer__panel--md--FlexBasis--max': maxSize,
+      '--pf-v5-c-drawer__panel--md--FlexBasis': panelSize === null ? defaultSize : `${panelSize}px`,
+      '--pf-v5-c-drawer__panel--md--FlexBasis--min': minSize,
+      '--pf-v5-c-drawer__panel--md--FlexBasis--max': maxSize,
       overflowAnchor: position === 'bottom' ? 'none' : undefined,
     }"
     :hidden="hidden"

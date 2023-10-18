@@ -30,7 +30,7 @@ const slots = defineSlots<{
 
 function render() {
   const children = slots.default?.({}) ?? [];
-  const idItem = children.find(child => !vnodeIsFormCtrls(child) && child.props && child.props.id);
+  const idItem = children.find(child => !vnodeIsFormCtrls(child) && child.props?.id);
 
   if (!idItem) {
     return children;

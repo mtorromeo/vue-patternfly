@@ -3,8 +3,8 @@
     ref="el"
     :class="styles.menuContent"
     :style="{
-      '--pf-c-menu__content--Height': menuHeight,
-      '--pf-c-menu__content--MaxHeight': maxMenuHeight,
+      '--pf-v5-c-menu__content--Height': menuHeight,
+      '--pf-v5-c-menu__content--MaxHeight': maxMenuHeight,
     }"
   >
     <auto-wrap :component="PfMenuList" :include="[PfMenuItem, PfDivider]">

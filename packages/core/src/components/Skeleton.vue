@@ -7,7 +7,7 @@
     }]"
     :style="(sizes as any)"
   >
-    <span class="pf-u-screen-reader">{{ screenreaderText }}</span>
+    <span class="pf-v5-screen-reader">{{ screenreaderText }}</span>
   </div>
 </template>
 
@@ -45,8 +45,8 @@ const fontHeightClassName = computed(() => {
 
 const sizes = computed(() => {
   return {
-    '--pf-c-skeleton--Width': props.width,
-    '--pf-c-skeleton--Height': props.height,
+    '--pf-v5-c-skeleton--Width': props.width,
+    '--pf-v5-c-skeleton--Height': props.height,
   };
 });
 </script>

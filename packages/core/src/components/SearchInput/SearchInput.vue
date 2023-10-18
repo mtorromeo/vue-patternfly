@@ -20,7 +20,7 @@
           <pf-text-input-group-utilities v-if="value && (resultsCount || (!!onNextClick && !!onPreviousClick) || (!!onClear && !expandable))">
             <pf-badge v-if="resultsCount" read>{{ resultsCount }}</pf-badge>
 
-            <div v-if="!!onNextClick && !!onPreviousClick" class="pf-c-text-input-group__group">
+            <div v-if="!!onNextClick && !!onPreviousClick" class="pf-v5-c-text-input-group__group">
               <pf-button
                 :disabled="disabled || previousNavigationButtonDisabled"
                 :aria-label="previousNavigationButtonAriaLabel"

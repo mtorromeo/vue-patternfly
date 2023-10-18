@@ -36,7 +36,7 @@
           <span v-if="$slots.icon" :class="styles.menuItemIcon">
             <slot name="icon" />
           </span>
-          <span v-if="check" class="pf-c-menu__item-check">
+          <span v-if="check" :class="styles.menuItemCheck">
             <pf-checkbox
               :id="copy ? undefined : randomId"
               :name="copy ? undefined : checkName"

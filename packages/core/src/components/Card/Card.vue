@@ -1,7 +1,7 @@
 <template>
   <input
     v-if="selectableInput || name"
-    class="pf-screen-reader"
+    class="pf-v5-screen-reader"
     type="checkbox"
     :name="name"
     :checked="managedSelected"

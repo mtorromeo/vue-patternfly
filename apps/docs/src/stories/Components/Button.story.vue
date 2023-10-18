@@ -154,7 +154,7 @@
         Note that using a
         <b>span</b> as a button does not fire the
         <b>click</b> event for Enter or Space keys.
-        <pf-button variant="link" inline component="span" @keydown="handleKeydown">
+        <pf-button variant="link" inline component="span" @keydown.prevent="handleKeydown">
           An
           <b>keydown</b> event listener is needed for Enter and Space key presses to prevent their default behavior and trigger your code.
         </pf-button>
@@ -243,7 +243,7 @@
 </template>
 
 <style>
-.story-canvas .pf-c-button + .pf-c-button {
+.story-canvas .pf-v5-c-button + .pf-v5-c-button {
   margin-left: .2rem;
 }
 </style>
@@ -255,11 +255,16 @@ import CopyIcon from '@vue-patternfly/icons/copy-icon';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import ArrowRightIcon from '@vue-patternfly/icons/arrow-right-icon';
 import { ref } from 'vue';
+import { useAlertsStore } from '../../store/alerts';
 
+const alerts = useAlertsStore();
 const primaryLoading = ref(false);
 const secondaryLoading = ref(false);
 
 function handleKeydown() {
-  alert('clicked span pf-button');
+  alerts.add({
+    title: 'clicked span pf-button',
+    variant: 'info',
+  });
 }
 </script>

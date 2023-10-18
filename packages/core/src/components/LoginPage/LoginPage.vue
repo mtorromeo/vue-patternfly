@@ -52,7 +52,7 @@ import PfLoginHeader from './LoginHeader.vue';
 import PfLoginFooter from './LoginFooter.vue';
 import PfBrand from '../Brand.vue';
 import PfList, { type ListVariant } from '../List/List.vue';
-import PfBackgroundImage, { type BackgroundImageSrcMap } from '../BackgroundImage.vue';
+import PfBackgroundImage from '../BackgroundImage.vue';
 import type { ComponentProps } from '../../util';
 
 defineOptions({
@@ -66,7 +66,7 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfLogin> 
   /** Attribute that specifies the alt text of the brand image for the login page */
   brandImgAlt?: string;
   /** Attribute that specifies the URL of the background image for the login page */
-  backgroundImgSrc?: string | BackgroundImageSrcMap;
+  backgroundImgSrc?: string;
   /** Attribute that specifies the alt text of the background image for the login page */
   backgroundImgAlt?: string;
   /** Content rendered inside of the text component of the login page */

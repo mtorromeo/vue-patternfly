@@ -1,33 +1,39 @@
 <template>
-  <input
-    ref="input"
-    :value="value"
-    v-bind="ouiaProps"
+  <span
     :class="[
       styles.formControl, {
-        [styles.modifiers.iconSprite]: iconSprite,
+        [styles.modifiers.readonly]: !!readOnlyVariant,
         [styles.modifiers.plain]: readOnlyVariant === 'plain',
         [styles.modifiers.success]: effectiveValidated === 'success',
         [styles.modifiers.warning]: effectiveValidated === 'warning',
-        [styles.modifiers.icon]: (iconVariant && iconVariant !== 'search') || iconUrl,
-        [styles.modifiers[iconVariant ?? 'search']]: iconVariant,
+        [styles.modifiers.error]: effectiveValidated === 'error',
+        [styles.modifiers.icon]: !!$slots.icon,
+        [styles.modifiers.disabled]: disabled,
+        [styles.modifiers.expanded]: expanded,
       },
     ]"
-    :type="type"
-    :style="{
-      backgroundImage: iconUrl ? `url(${iconUrl})` : undefined,
-      backgroundSize: iconDimensions ? iconDimensions : undefined,
-    }"
-    :aria-invalid="effectiveValidated === 'error'"
-    :disabled="disabled || undefined"
-    :required="required || undefined"
-    :readonly="!!readOnlyVariant || readonly"
-    @change="onChange"
-    @input="onInput"
-    @blur="onBlur"
-    @invalid="onInvalid"
-    @keyup="onKeyUp"
   >
+    <input
+      v-bind="{...ouiaProps, ...$attrs}"
+      ref="input"
+      :value="value"
+      :type="type"
+      :aria-invalid="effectiveValidated === 'error'"
+      :disabled="disabled || undefined"
+      :readonly="!!readOnlyVariant || readonly"
+      @change="onChange"
+      @input="onInput"
+      @blur="onBlur"
+      @invalid="onInvalid"
+      @keyup="onKeyUp"
+    >
+    <span v-if="$slots.icon || hasStatusIcon" :class="styles.formControlUtilities">
+      <pf-form-control-icon v-if="$slots.icon">
+        <slot name="icon" />
+      </pf-form-control-icon>
+      <pf-form-control-icon v-if="hasStatusIcon" :status="(effectiveValidated as 'success' | 'error' | 'warning')" />
+    </span>
+  </span>
 </template>
 
 <script lang="ts" setup>
@@ -37,18 +43,22 @@ import styles from '@patternfly/react-styles/css/components/FormControl/form-con
 import { useInputValidation, type InputValidateState } from '../input';
 import { FormGroupInputsKey } from './Form/common';
 import { useOUIAProps } from '../helpers/ouia';
+import { computed } from 'vue';
+import PfFormControlIcon from './FormControlIcon.vue';
 
 defineOptions({
   name: 'PfTextInput',
+  inheritAttrs: false,
 });
 
 export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
+  /** Flag to apply expanded styling */
+  expanded?: boolean;
   readonly?: boolean;
   /** Read only variant. */
   readOnlyVariant?: 'plain' | 'default';
-  required?: boolean;
   /** Value to indicate if the text input is modified to show that validation state.
    * If set to success, text input will be modified to indicate valid state.
    * If set to error, text input will be modified to indicate error state.
@@ -72,16 +82,8 @@ export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
   modelValue?: string | number;
   /** Aria-label. The text input requires an associated id or aria-label. */
   ariaLabel?: string;
-  /** Trim text on left */
-  leftTruncated?: boolean;
-  /** icon variant */
-  iconVariant?: 'calendar' | 'clock' | 'search';
-  /** Use the external file instead of a data URI */
-  iconSprite?: boolean;
-  /** Custom icon url to set as the text input's background-image */
-  iconUrl?: string;
-  /** Dimensions for the custom icon set as the text input's background-size */
-  iconDimensions?: string;
+  /** Trim text at start */
+  startTruncated?: boolean;
   /** Value to overwrite the randomly generated data-ouia-component-id.*/
   ouiaId?: number | string;
   /** Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false. */
@@ -110,6 +112,7 @@ defineEmits<{
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const input: Ref<HTMLInputElement | undefined> = ref();
+const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const {
   value,

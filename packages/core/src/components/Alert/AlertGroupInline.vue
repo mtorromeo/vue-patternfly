@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/AlertGroup/alert-group';
+import styles from '@patternfly/react-styles/css/components/Alert/alert-group';
 
 import { h, type HTMLAttributes } from 'vue';
 import { findChildrenVNodes } from '../../util';

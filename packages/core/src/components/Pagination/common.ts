@@ -24,7 +24,7 @@ export const defaultPerPageOptions: PerPageOption[] = [
 
 export interface CommonPaginationProps {
   /** Indicate whether to show last full page of results when user selects perPage value greater than remaining rows */
-  defaultToFullPage?: boolean;
+  lastFullPageShown?: boolean;
   /** Flag indicating if pagination is disabled */
   disabled?: boolean;
   /** Flag indicating that the dropdown context menu should "drop" upwards. */

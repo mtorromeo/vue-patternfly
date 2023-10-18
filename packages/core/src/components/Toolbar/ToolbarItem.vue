@@ -53,7 +53,7 @@ const breakpointWidths = computed(() => {
     if (!props[prop as keyof Props]) {
       continue;
     }
-    widths[`--pf-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = props[prop as keyof Props];
+    widths[`--pf-v5-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = props[prop as keyof Props];
   }
   return widths;
 });

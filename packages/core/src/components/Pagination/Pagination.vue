@@ -1,11 +1,13 @@
 <template>
   <div
+    :id="`${widgetId}-${top ? 'top' : 'bottom'}-pagination`"
     :class="[
       styles.pagination,
+      breakpointClasses,
       {
         [styles.modifiers.bottom]: !top,
         [styles.modifiers.compact]: compact,
-        [styles.modifiers.static]: $props.static,
+        [styles.modifiers.static]: static,
         [styles.modifiers.sticky]: sticky,
       },
     ]"
@@ -17,17 +19,18 @@
     </div>
 
     <pf-pagination-options-menu
+      v-if="perPageOptions?.length > 0"
       :items-per-page-title="titleItemsPerPage"
       :per-page-suffix="titlePerPageSuffix"
       :items-title="compact ? '' : titleItems"
       :options-toggle="titleOptionsToggle"
       :per-page-options="perPageOptions"
-      :first-index="isDefined(itemsStart) ? count - itemsStart : firstIndex"
-      :last-index="isDefined(itemsEnd) ? count - itemsEnd : lastIndex"
-      :default-to-full-page="defaultToFullPage"
+      :first-index="effectiveItemsStart ?? firstIndex"
+      :last-index="effectiveItemsEnd ?? lastIndex"
+      :last-full-page-shown="lastFullPageShown"
       :count="count"
       :drop-up="dropUp"
-      :widget-id="widgetId"
+      :widget-id="`${widgetId}-${top ? 'top' : 'bottom'}`"
       :disabled="disabled"
       :page="constrainedPage"
       :per-page="perPage"
@@ -36,15 +39,16 @@
     />
     <pf-navigation
       :pages-title="titlePage"
-      :to-last-page="titleToLastPage"
-      :to-previous-page="titleToPreviousPage"
-      :to-next-page="titleToNextPage"
-      :to-first-page="titleToFirstPage"
-      :curr-page="titleCurrPage"
-      :pagination-title="titlePaginationTitle"
+      :pages-title-plural="titlePages"
+      :to-last-page-aria-label="toLastPageAriaLabel"
+      :to-previous-page-aria-label="toPreviousPageAriaLabel"
+      :to-next-page-aria-label="toNextPageAriaLabel"
+      :to-first-page-aria-label="toFirstPageAriaLabel"
+      :curr-page-aria-label="currPageAriaLabel"
+      :pagination-aria-label="paginationAriaLabel"
       :page="count <= 0 ? 0 : constrainedPage"
       :per-page="perPage"
-      :first-page="isDefined(itemsStart) ? count - itemsStart : 1"
+      :first-page="effectiveItemsStart ?? 1"
       :last-page="lastPage"
       :disabled="disabled"
       :compact="compact"
@@ -65,13 +69,14 @@ import PfPaginationOptionsMenu from './PaginationOptionsMenu.vue';
 import PfNavigation from './Navigation.vue';
 import { computed, type HTMLAttributes } from 'vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
+import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isDefined } from '@vueuse/shared';
 
 defineOptions({
   name: 'PfPagination',
 });
 
-export interface Props extends CommonPaginationProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Render pagination on top instead of bottom. */
   top?: boolean;
   /** Flag indicating if pagination should not be sticky on mobile */
@@ -93,36 +98,39 @@ export interface Props extends CommonPaginationProps, /* @vue-ignore */ HTMLAttr
   /** Last index of items on current page. */
   itemsEnd?: number;
 
+  /** The type or title of the items being paginated. */
   titleItems?: string;
+  /** The title of a page displayed beside the page number. */
   titlePage?: string;
+  /** The title of a page displayed beside the page number (plural form) */
+  titlePages?: string;
   titleItemsPerPage?: string;
   titlePerPageSuffix?: string;
-  titleToFirstPage?: string;
-  titleToPreviousPage?: string;
-  titleToLastPage?: string;
-  titleToNextPage?: string;
+  toFirstPageAriaLabel?: string;
+  toPreviousPageAriaLabel?: string;
+  toLastPageAriaLabel?: string;
+  toNextPageAriaLabel?: string;
   titleOptionsToggle?: string;
-  titleCurrPage?: string;
-  titlePaginationTitle?: string;
+  currPageAriaLabel?: string;
+  paginationAriaLabel?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   count: 0,
   firstPage: 1,
-  offset: 0,
   titleItemsPerPage: 'Items per page',
   titlePerPageSuffix: 'per page',
-  titleToFirstPage: 'Go to first page',
-  titleToPreviousPage: 'Go to previous page',
-  titleToLastPage: 'Go to last page',
-  titleToNextPage: 'Go to next page',
-  titleOptionsToggle: 'Items per page',
-  titleCurrPage: 'Current page',
-  titlePaginationTitle: 'Pagination',
-  page: 0,
+  toFirstPageAriaLabel: 'Go to first page',
+  toPreviousPageAriaLabel: 'Go to previous page',
+  toLastPageAriaLabel: 'Go to last page',
+  toNextPageAriaLabel: 'Go to next page',
+  titleOptionsToggle: '',
+  currPageAriaLabel: 'Current page',
+  paginationAriaLabel: 'Pagination',
+  page: 1,
   perPage: defaultPerPageOptions[0].value,
   perPageOptions: () => [...defaultPerPageOptions],
-  widgetId: 'pagination-options-menu',
+  widgetId: 'options-menu',
 });
 
 defineSlots<{
@@ -137,6 +145,8 @@ const emit = defineEmits<{
   (name: 'next-click', page: number): void;
   (name: 'last-click', page: number): void;
 }>();
+
+const breakpointClasses = classesFromBreakpointProps(props, ['inset'], styles);
 
 const firstIndex = computed(() => {
   return props.count <= 0
@@ -157,10 +167,22 @@ const lastPage = computed(() => {
   return Math.ceil(props.count / props.perPage) || 0;
 });
 
+const effectiveItemsStart = computed(() => {
+  return isDefined(props.offset)
+    ? props.offset + 1
+    : props.itemsStart;
+});
+
+const effectiveItemsEnd = computed(() => {
+  return isDefined(props.offset)
+    ? props.offset + props.perPage
+    : props.itemsEnd;
+});
+
 const constrainedPage = computed(() => {
   let page = props.page;
-  if (!page && props.offset) {
-    page = Math.ceil(props.offset / props.perPage);
+  if (isDefined(props.offset)) {
+    page = Math.max(Math.ceil((effectiveItemsStart.value ?? 1) / props.perPage), 1);
   }
 
   if (page < props.firstPage && props.count > 0) {

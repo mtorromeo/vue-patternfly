@@ -8,11 +8,11 @@
       ## Examples
     </pre>
 
-    <story-canvas title="Basic" style="background-color: var(--pf-global--BackgroundColor--dark-100)">
+    <story-canvas title="Basic" style="background-color: var(--pf-v5-global--BackgroundColor--dark-100)">
       <pf-notification-badge />
     </story-canvas>
 
-    <story-canvas title="With count" style="background-color: var(--pf-global--BackgroundColor--dark-100)">
+    <story-canvas title="With count" style="background-color: var(--pf-v5-global--BackgroundColor--dark-100)">
       <pf-notification-badge :count="30" />
     </story-canvas>
   </doc-page>

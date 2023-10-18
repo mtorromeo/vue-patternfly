@@ -19,17 +19,32 @@ export function findHtmlElementFromVNode(vnode: VNode | undefined) {
   return el;
 }
 
-export function useHtmlElementFromVNodes() {
+export function useHtmlElementFromVNodes(matchFn?: ((vnode: VNode) => boolean) | undefined) {
   const element: Ref<Element | undefined> = ref();
 
   return {
     element,
     async findReference(children: VNode[]) {
-      const vnode = findFirstChildVNode(children);
+      const vnode = findFirstChildVNode(children, matchFn);
       if (vnode?.component === null) {
         await nextTick();
       }
       element.value = findHtmlElementFromVNode(vnode);
+    },
+  };
+}
+
+export function useComponentVNode(matchFn?: ((vnode: VNode) => boolean) | undefined) {
+  const element: Ref<VNode | undefined> = ref();
+
+  return {
+    element,
+    async findComponentVNode(children: VNode[]) {
+      const vnode = findFirstChildVNode(children, matchFn);
+      if (vnode?.component === null) {
+        await nextTick();
+      }
+      element.value = vnode;
     },
   };
 }

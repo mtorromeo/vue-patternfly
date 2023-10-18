@@ -1,34 +1,34 @@
 body {
-  --pf-global--active-color--100: #018732;
-  --pf-global--active-color--200: #89ffca;
-  --pf-global--active-color--300: #42b983;
-  --pf-global--active-color--400: #5afdb1;
+  --pf-v5-global--active-color--100: #018732;
+  --pf-v5-global--active-color--200: #89ffca;
+  --pf-v5-global--active-color--300: #42b983;
+  --pf-v5-global--active-color--400: #5afdb1;
 
-  --pf-global--primary-color--100: var(--pf-global--active-color--100);
-  --pf-global--primary-color--200: #003513;
+  --pf-v5-global--primary-color--100: var(--pf-v5-global--active-color--100);
+  --pf-v5-global--primary-color--200: #003513;
 
-  --pf-global--primary-color--light-100: var(--pf-global--active-color--300);
-  --pf-global--primary-color--dark-100: var(--pf-global--primary-color--100);
+  --pf-v5-global--primary-color--light-100: var(--pf-v5-global--active-color--300);
+  --pf-v5-global--primary-color--dark-100: var(--pf-v5-global--primary-color--100);
 
-  --pf-global--link--Color: var(--pf-global--primary-color--100);
-  --pf-global--link--Color--hover: var(--pf-global--primary-color--200);
+  --pf-v5-global--link--Color: var(--pf-v5-global--primary-color--100);
+  --pf-v5-global--link--Color--hover: var(--pf-v5-global--primary-color--200);
 
-  --pf-global--link--Color--dark: var(--pf-global--primary-color--100);
-  --pf-global--link--Color--dark--hover: var(--pf-global--primary-color--200);
+  --pf-v5-global--link--Color--dark: var(--pf-v5-global--primary-color--100);
+  --pf-v5-global--link--Color--dark--hover: var(--pf-v5-global--primary-color--200);
 
-  --pf-global--link--Color--light: var(--pf-global--primary-color--light-100);
-  --pf-global--link--Color--light--hover: var(--pf-global--active-color--400);
+  --pf-v5-global--link--Color--light: var(--pf-v5-global--primary-color--light-100);
+  --pf-v5-global--link--Color--light--hover: var(--pf-v5-global--active-color--400);
 }
 
 #app {
   height: 100%;
 }
 
-.pf-c-page__main-section .example-heading {
+.pf-v5-c-page__main-section .example-heading {
   margin-top: 50px;
-  padding: var(--pf-global--spacer--md) 0;
-  margin-bottom: var(--pf-global--spacer--md);
-  border-bottom: var(--pf-global--BorderWidth--sm) solid #f8f8f8;
+  padding: var(--pf-v5-global--spacer--md) 0;
+  margin-bottom: var(--pf-v5-global--spacer--md);
+  border-bottom: var(--pf-v5-global--BorderWidth--sm) solid #f8f8f8;
 }
 
 .markdown pre.shiki {

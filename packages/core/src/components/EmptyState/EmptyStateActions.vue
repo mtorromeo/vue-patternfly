@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.emptyStateSecondary">
+  <div :class="styles.emptyStateActions">
     <slot />
   </div>
 </template>
@@ -9,7 +9,7 @@ import styles from '@patternfly/react-styles/css/components/EmptyState/empty-sta
 import type { HTMLAttributes } from 'vue';
 
 defineOptions({
-  name: 'PfEmptyStateSecondaryActions',
+  name: 'PfEmptyStateActions',
 });
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {}

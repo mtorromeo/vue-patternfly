@@ -19,7 +19,7 @@
 </template>
 
 <style scoped>
-.pf-c-badge + .pf-c-badge {
+.pf-v5-c-badge + .pf-v5-c-badge {
   margin-left: 0.2rem;
 }
 </style>

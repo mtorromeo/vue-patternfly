@@ -27,7 +27,7 @@ defineSlots<{
 }>();
 
 const pictureStyle = {
-  ...cssVarsFromBreakpointProps(props, 'width', '--pf-c-brand--Width'),
-  ...cssVarsFromBreakpointProps(props, 'height', '--pf-c-brand--Height'),
+  ...cssVarsFromBreakpointProps(props, 'width', '--pf-v5-c-brand--Width'),
+  ...cssVarsFromBreakpointProps(props, 'height', '--pf-v5-c-brand--Height'),
 };
 </script>

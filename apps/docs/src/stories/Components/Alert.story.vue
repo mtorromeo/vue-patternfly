@@ -189,7 +189,7 @@
 </template>
 
 <style scoped>
-.pf-c-alert + .pf-c-alert {
+.pf-v5-c-alert + .pf-v5-c-alert {
   margin-top: 20px;
 }
 </style>

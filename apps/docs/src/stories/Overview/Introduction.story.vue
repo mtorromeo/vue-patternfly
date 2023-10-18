@@ -6,12 +6,12 @@
       [![LICENSE](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)][link-LICENSE]
       [![NPM](https://img.shields.io/npm/v/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
       [![Download](https://img.shields.io/npm/dw/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
-      [![Issues](https://img.shields.io/github/issues/mtorromeo/vue-patternfly4.svg?style=flat-square)](https://github.com/mtorromeo/vue-patternfly4/issues)
-      [![GitHub](https://img.shields.io/github/stars/mtorromeo/vue-patternfly4?style=social)][link-github]
+      [![Issues](https://img.shields.io/github/issues/mtorromeo/vue-patternfly.svg?style=flat-square)](https://github.com/mtorromeo/vue-patternfly/issues)
+      [![GitHub](https://img.shields.io/github/stars/mtorromeo/vue-patternfly?style=social)][link-github]
 
-      PatternFly 4 components for Vue 3.
+      PatternFly 5 components for Vue 3.
 
-      The components are mostly a straight-forward port of the [PatternFly 4 components][link-patternfly4] to Vue 3 with some differences where it makes sense to improve ergonomics or add new features.
+      The components are mostly a straight-forward port of the [PatternFly 5 components][link-patternfly] to Vue 3 with some differences where it makes sense to improve ergonomics or add new features.
 
       ### Common differences from patternfly-react
 
@@ -65,11 +65,11 @@
 
       The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
-      [link-github]: https://github.com/mtorromeo/vue-patternfly4
-      [link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly4/master/packages/core/LICENSE
+      [link-github]: https://github.com/mtorromeo/vue-patternfly
+      [link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly/master/packages/core/LICENSE
       [link-author]: https://github.com/mtorromeo
-      [link-contributors]: https://github.com/mtorromeo/vue-patternfly4/graphs/contributors
-      [link-patternfly4]: https://www.patternfly.org/v4/
+      [link-contributors]: https://github.com/mtorromeo/vue-patternfly/graphs/contributors
+      [link-patternfly]: https://www.patternfly.org/
     </pre>
   </doc-page>
 </template>

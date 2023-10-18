@@ -65,7 +65,7 @@ async function addSourceToStoryCanvas(el: HTMLElement) {
 }
 
 function replaceMarkdown(md: Markdown, el: HTMLElement) {
-  const mdDiv = new HTMLElement('div', { class: 'markdown pf-c-content' }, '', null, [0,0]);
+  const mdDiv = new HTMLElement('div', { class: 'markdown pf-v5-c-content' }, '', null, [0,0]);
   mdDiv.innerHTML = md.render(dedent(el.innerText.replaceAll('&lt;', '<').replaceAll('&gt;', '>')));
   el.parentNode.exchangeChild(el, mdDiv);
 }
@@ -85,12 +85,12 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
     });
 
     md.use(markdownItClass, {
-      h1: ['pf-c-title'],
-      h2: ['pf-c-title'],
-      h3: ['pf-c-title'],
-      h4: ['pf-c-title'],
-      h5: ['pf-c-title'],
-      h6: ['pf-c-title'],
+      h1: ['pf-v5-c-title'],
+      h2: ['pf-v5-c-title'],
+      h3: ['pf-v5-c-title'],
+      h4: ['pf-v5-c-title'],
+      h5: ['pf-v5-c-title'],
+      h6: ['pf-v5-c-title'],
     });
 
     return md;

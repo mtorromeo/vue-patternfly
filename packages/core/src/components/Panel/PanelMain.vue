@@ -1,7 +1,7 @@
 <template>
   <div
     :class="styles.panelMain"
-    :style="{ '--pf-c-panel__main--MaxHeight': maxHeight }"
+    :style="{ '--pf-v5-c-panel__main--MaxHeight': maxHeight }"
   >
     <slot />
   </div>

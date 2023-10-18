@@ -116,7 +116,7 @@ watchEffect(() => {
   if (flyoutVisible.value) {
     const flyoutMenu = flyoutTarget.value.nextElementSibling;
     const flyoutItems = flyoutMenu ? Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
-      el => !(el.classList.contains('pf-m-disabled') || el.classList.contains('pf-c-divider')),
+      el => !(el.classList.contains('pf-m-disabled') || el.classList.contains(styles.divider)),
     ) : [];
     const child = flyoutItems.length ? flyoutItems[0].firstElementChild : null;
     if (child instanceof HTMLElement) {
@@ -161,9 +161,9 @@ function handleFlyout(e: KeyboardEvent) {
     if (flyoutVisible.value) {
       e.stopPropagation();
       e.preventDefault();
-      let closestFlyout = e.target.closest('.pf-c-nav__item.pf-m-flyout');
+      let closestFlyout = e.target.closest(`.${styles.navItem}.pf-m-flyout`);
       if (e.target.parentElement === closestFlyout) {
-        closestFlyout = closestFlyout?.parentElement?.closest('.pf-c-nav__item.pf-m-flyout') ?? null;
+        closestFlyout = closestFlyout?.parentElement?.closest(`.${styles.navItem}.pf-m-flyout`) ?? null;
       }
 
       if (closestFlyout) {
@@ -182,7 +182,7 @@ function flyoutClick(e: Event) {
   if (!(e.target instanceof HTMLElement)) {
     return;
   }
-  const closestItem = e.target.closest('.pf-c-nav__item');
+  const closestItem = e.target.closest('.pf-m-flyout');
   if (!closestItem) {
     flyoutVisible.value = !!slots.flyout;
   }

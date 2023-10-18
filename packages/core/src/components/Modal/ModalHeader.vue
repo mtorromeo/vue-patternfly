@@ -10,7 +10,7 @@
       <div :class="styles.modalBoxHeaderMain">
         <slot />
       </div>
-      <div class="pf-c-modal-box__header-help">
+      <div class="pf-v5-c-modal-box__header-help">
         <slot name="help" />
       </div>
     </template>

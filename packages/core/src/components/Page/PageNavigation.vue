@@ -13,7 +13,7 @@
       }
     ]"
     :style="{
-      '--pf-c-page--section--m-limit-width--MaxWidth': maxWidth,
+      '--pf-v5-c-page--section--m-limit-width--MaxWidth': maxWidth,
     }"
     :tabindex="overflowScroll ? 0 : undefined"
   >
@@ -37,7 +37,7 @@ defineOptions({
 export interface Props extends StickyBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Limits the width of the breadcrumb */
   widthLimited?: boolean;
-  /** Limits the width of the section and sets the --pf-c-page--section--m-limit-width--MaxWidth variable to this value */
+  /** Limits the width of the section and sets the --pf-v5-c-page--section--m-limit-width--MaxWidth variable to this value */
   maxWidth?: string;
   /** Flag indicating if PageBreadcrumb should have a shadow at the top */
   shadowTop?: boolean;

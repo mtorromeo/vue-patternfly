@@ -13,7 +13,7 @@
         v-if="managedOpen"
         v-model:selected="managedSelected"
         :plain="plain"
-        :style="{'--pf-c-menu--MinWidth': minWidth}"
+        :style="{'--pf-v5-c-menu--MinWidth': minWidth}"
         :contains-flyout="containsFlyout"
         :nav-flyout="navFlyout"
         :active-item-id="activeItemId"

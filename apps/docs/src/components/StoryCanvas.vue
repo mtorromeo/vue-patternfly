@@ -26,13 +26,13 @@
   padding: 30px 20px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  background-color: var(--pf-c-page__main-section--m-light-100--BackgroundColor);
+  background-color: var(--pf-v5-c-page__main-section--m-light-100--BackgroundColor);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: none;
 }
 
 .story-canvas .canvas.dark {
-  background-color: var(--pf-global--BackgroundColor--dark-300);
+  background-color: var(--pf-v5-global--BackgroundColor--dark-300);
 }
 
 .story-canvas .language-vue {

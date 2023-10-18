@@ -4,7 +4,9 @@
 
     <story-canvas title="Default">
       <pf-input-group>
-        <pf-text-input type="email" />
+        <pf-input-group-item fill>
+          <pf-text-input type="email" />
+        </pf-input-group-item>
         <pf-input-group-text>@example.com</pf-input-group-text>
       </pf-input-group>
     </story-canvas>
@@ -14,13 +16,17 @@
         <pf-input-group-text>
           <at-icon />
         </pf-input-group-text>
-        <pf-text-input type="email" />
+        <pf-input-group-item>
+          <pf-text-input type="email" />
+        </pf-input-group-item>
       </pf-input-group>
     </story-canvas>
 
     <story-canvas title="With post icon">
       <pf-input-group>
-        <pf-text-input type="search" />
+        <pf-input-group-item>
+          <pf-text-input type="search" />
+        </pf-input-group-item>
         <pf-input-group-text>
           <magnifying-glass-icon />
         </pf-input-group-text>

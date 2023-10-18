@@ -3,7 +3,7 @@
     :class="[
       styles.dataListItem, {
         [styles.modifiers.expanded]: managedExpanded,
-        [styles.modifiers.selectable]: isSelectable,
+        [styles.modifiers.clickable]: isSelectable,
         [styles.modifiers.selected]: managedSelected,
       },
     ]"
@@ -11,7 +11,7 @@
     :aria-selected="isSelectable && managedSelected ? 'true' : undefined"
     @click="isSelectable && select()"
   >
-    <input v-if="isSelectable" :name="name" :value="value" class="pf-screen-reader" :type="datalist?.multipleSelection ? 'checkbox' : 'radio'" tabindex="-1" :checked="managedSelected" @change="select">
+    <input v-if="isSelectable" :name="name" :value="value" class="pf-v5-screen-reader" :type="datalist?.multipleSelection ? 'checkbox' : 'radio'" tabindex="-1" :checked="managedSelected" @change="select">
     <auto-wrap :component="PfDataListItemRow" :exclude="PfDataListContent">
       <slot />
     </auto-wrap>

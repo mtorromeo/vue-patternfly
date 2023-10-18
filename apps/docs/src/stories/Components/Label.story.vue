@@ -9,16 +9,16 @@
           <circle-info-icon />
         </template>Grey icon
       </pf-label>
-      <pf-label close @close="alert">Grey removeable</pf-label>
-      <pf-label close @close="alert">
+      <pf-label @close="alert">Grey removeable</pf-label>
+      <pf-label @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Grey icon removeable
       </pf-label>
       <pf-label href="#filled">Grey link</pf-label>
-      <pf-label href="#filled" close @close="alert">Grey link removeable</pf-label>
-      <pf-label close truncated @close="alert">
+      <pf-label href="#filled" @close="alert">Grey link removeable</pf-label>
+      <pf-label text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -33,16 +33,16 @@
         </template>
         Blue icon
       </pf-label>
-      <pf-label color="blue" close @close="alert">Blue removeable</pf-label>
-      <pf-label color="blue" close @close="alert">
+      <pf-label color="blue" @close="alert">Blue removeable</pf-label>
+      <pf-label color="blue" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Blue icon removeable
       </pf-label>
       <pf-label color="blue" href="#filled">Blue link</pf-label>
-      <pf-label color="blue" href="#filled" close @close="alert">Blue link removeable</pf-label>
-      <pf-label color="blue" close truncated @close="alert">
+      <pf-label color="blue" href="#filled" @close="alert">Blue link removeable</pf-label>
+      <pf-label color="blue" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -57,16 +57,16 @@
         </template>
         Green icon
       </pf-label>
-      <pf-label color="green" close @close="alert">Green removeable</pf-label>
-      <pf-label color="green" close @close="alert">
+      <pf-label color="green" @close="alert">Green removeable</pf-label>
+      <pf-label color="green" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Green icon removeable
       </pf-label>
       <pf-label color="green" href="#filled">Green link</pf-label>
-      <pf-label color="green" href="#filled" close @close="alert">Green link removeable</pf-label>
-      <pf-label color="green" close truncated @close="alert">
+      <pf-label color="green" href="#filled" @close="alert">Green link removeable</pf-label>
+      <pf-label color="green" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -81,16 +81,16 @@
         </template>
         Orange icon
       </pf-label>
-      <pf-label color="orange" close @close="alert">Orange removeable</pf-label>
-      <pf-label color="orange" close @close="alert">
+      <pf-label color="orange" @close="alert">Orange removeable</pf-label>
+      <pf-label color="orange" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Orange icon removeable
       </pf-label>
       <pf-label color="orange" href="#filled">Orange link</pf-label>
-      <pf-label color="orange" href="#filled" close @close="alert">Orange link removeable</pf-label>
-      <pf-label color="orange" close truncated @close="alert">
+      <pf-label color="orange" href="#filled" @close="alert">Orange link removeable</pf-label>
+      <pf-label color="orange" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -105,16 +105,16 @@
         </template>
         Red icon
       </pf-label>
-      <pf-label color="red" close @close="alert">Red removeable</pf-label>
-      <pf-label color="red" close @close="alert">
+      <pf-label color="red" @close="alert">Red removeable</pf-label>
+      <pf-label color="red" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Red icon removeable
       </pf-label>
       <pf-label color="red" href="#filled">Red link</pf-label>
-      <pf-label color="red" href="#filled" close @close="alert">Red link removeable</pf-label>
-      <pf-label color="red" close truncated @close="alert">
+      <pf-label color="red" href="#filled" @close="alert">Red link removeable</pf-label>
+      <pf-label color="red" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -129,16 +129,16 @@
         </template>
         Purple icon
       </pf-label>
-      <pf-label color="purple" close @close="alert">Purple removeable</pf-label>
-      <pf-label color="purple" close @close="alert">
+      <pf-label color="purple" @close="alert">Purple removeable</pf-label>
+      <pf-label color="purple" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Purple icon removeable
       </pf-label>
       <pf-label color="purple" href="#filled">Purple link</pf-label>
-      <pf-label color="purple" href="#filled" close @close="alert">Purple link removeable</pf-label>
-      <pf-label color="purple" close truncated @close="alert">
+      <pf-label color="purple" href="#filled" @close="alert">Purple link removeable</pf-label>
+      <pf-label color="purple" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -177,16 +177,16 @@
           <circle-info-icon />
         </template>Grey icon
       </pf-label>
-      <pf-label outline close @close="alert">Grey removeable</pf-label>
-      <pf-label outline close @close="alert">
+      <pf-label outline @close="alert">Grey removeable</pf-label>
+      <pf-label outline @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Grey icon removeable
       </pf-label>
       <pf-label outline href="#filled">Grey link</pf-label>
-      <pf-label outline href="#filled" close @close="alert">Grey link removeable</pf-label>
-      <pf-label outline close truncated @close="alert">
+      <pf-label outline href="#filled" @close="alert">Grey link removeable</pf-label>
+      <pf-label outline text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -201,16 +201,16 @@
         </template>
         Blue icon
       </pf-label>
-      <pf-label outline color="blue" close @close="alert">Blue removeable</pf-label>
-      <pf-label outline color="blue" close @close="alert">
+      <pf-label outline color="blue" @close="alert">Blue removeable</pf-label>
+      <pf-label outline color="blue" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Blue icon removeable
       </pf-label>
       <pf-label outline color="blue" href="#filled">Blue link</pf-label>
-      <pf-label outline color="blue" href="#filled" close @close="alert">Blue link removeable</pf-label>
-      <pf-label outline color="blue" close truncated @close="alert">
+      <pf-label outline color="blue" href="#filled" @close="alert">Blue link removeable</pf-label>
+      <pf-label outline color="blue" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -225,16 +225,16 @@
         </template>
         Green icon
       </pf-label>
-      <pf-label outline color="green" close @close="alert">Green removeable</pf-label>
-      <pf-label outline color="green" close @close="alert">
+      <pf-label outline color="green" @close="alert">Green removeable</pf-label>
+      <pf-label outline color="green" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Green icon removeable
       </pf-label>
       <pf-label outline color="green" href="#filled">Green link</pf-label>
-      <pf-label outline color="green" href="#filled" close @close="alert">Green link removeable</pf-label>
-      <pf-label outline color="green" close truncated @close="alert">
+      <pf-label outline color="green" href="#filled" @close="alert">Green link removeable</pf-label>
+      <pf-label outline color="green" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -249,16 +249,16 @@
         </template>
         Orange icon
       </pf-label>
-      <pf-label outline color="orange" close @close="alert">Orange removeable</pf-label>
-      <pf-label outline color="orange" close @close="alert">
+      <pf-label outline color="orange" @close="alert">Orange removeable</pf-label>
+      <pf-label outline color="orange" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Orange icon removeable
       </pf-label>
       <pf-label outline color="orange" href="#filled">Orange link</pf-label>
-      <pf-label outline color="orange" href="#filled" close @close="alert">Orange link removeable</pf-label>
-      <pf-label outline color="orange" close truncated @close="alert">
+      <pf-label outline color="orange" href="#filled" @close="alert">Orange link removeable</pf-label>
+      <pf-label outline color="orange" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -273,16 +273,16 @@
         </template>
         Red icon
       </pf-label>
-      <pf-label outline color="red" close @close="alert">Red removeable</pf-label>
-      <pf-label outline color="red" close @close="alert">
+      <pf-label outline color="red" @close="alert">Red removeable</pf-label>
+      <pf-label outline color="red" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Red icon removeable
       </pf-label>
       <pf-label outline color="red" href="#filled">Red link</pf-label>
-      <pf-label outline color="red" href="#filled" close @close="alert">Red link removeable</pf-label>
-      <pf-label outline color="red" close truncated @close="alert">
+      <pf-label outline color="red" href="#filled" @close="alert">Red link removeable</pf-label>
+      <pf-label outline color="red" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -297,16 +297,16 @@
         </template>
         Purple icon
       </pf-label>
-      <pf-label outline color="purple" close @close="alert">Purple removeable</pf-label>
-      <pf-label outline color="purple" close @close="alert">
+      <pf-label outline color="purple" @close="alert">Purple removeable</pf-label>
+      <pf-label outline color="purple" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Purple icon removeable
       </pf-label>
       <pf-label outline color="purple" href="#filled">Purple link</pf-label>
-      <pf-label outline color="purple" href="#filled" close @close="alert">Purple link removeable</pf-label>
-      <pf-label outline color="purple" close truncated @close="alert">
+      <pf-label outline color="purple" href="#filled" @close="alert">Purple link removeable</pf-label>
+      <pf-label outline color="purple" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -321,16 +321,16 @@
         </template>
         Cyan icon
       </pf-label>
-      <pf-label outline color="cyan" close @close="alert">Cyan removeable</pf-label>
-      <pf-label outline color="cyan" close @close="alert">
+      <pf-label outline color="cyan" @close="alert">Cyan removeable</pf-label>
+      <pf-label outline color="cyan" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
         Cyan icon removeable
       </pf-label>
       <pf-label outline color="cyan" href="#filled">Cyan link</pf-label>
-      <pf-label outline color="cyan" href="#filled" close @close="alert">Cyan link removeable</pf-label>
-      <pf-label outline color="cyan" close truncated @close="alert">
+      <pf-label outline color="cyan" href="#filled" @close="alert">Cyan link removeable</pf-label>
+      <pf-label outline color="cyan" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
@@ -339,18 +339,30 @@
     </story-canvas>
 
     <story-canvas title="Truncated">
-      <pf-label truncated tooltip-position="right">Label is too long to fit in the label</pf-label>
+      <pf-label text-max-width="16ch" tooltip-position="right">Label is too long to fit in the label</pf-label>
     </story-canvas>
   </doc-page>
 </template>
 
 <style>
-.story-canvas .pf-c-label + .pf-c-label {
+.story-canvas .pf-v5-c-label + .pf-v5-c-label {
   margin-left: .2rem;
 }
 </style>
 
 <script lang="ts" setup>
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
-const alert = () => window.alert('Clicked close button');
+import { useAlertsStore } from '../../store/alerts';
+
+const alerts = useAlertsStore();
+
+function alert(e: Event) {
+  const label = (e.target as HTMLElement)?.closest('.pf-v5-c-label');
+  if (label instanceof HTMLElement) {
+    alerts.add({
+      title: `Clicked close button on "${label.innerText}"`,
+      variant: 'info',
+    });
+  }
+}
 </script>
