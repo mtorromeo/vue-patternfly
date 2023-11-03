@@ -8,6 +8,7 @@ export { default as PfCheckbox } from './Checkbox.vue';
 export { default as PfCloseButton } from './CloseButton.vue';
 export { default as PfDivider } from './Divider.vue';
 export { default as PfFormControlIcon } from './FormControlIcon.vue';
+export { default as PfIcon } from './Icon.vue';
 export { default as PfLabel } from './Label.vue';
 export { default as PfNotificationBadge } from './NotificationBadge.vue';
 export { default as PfPopover } from './Popover.vue';
