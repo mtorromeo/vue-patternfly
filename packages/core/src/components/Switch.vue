@@ -33,7 +33,7 @@
 
     <span v-else :class="styles.switchToggle">
       <div :class="styles.switchToggleIcon" aria-hidden="true">
-        <CheckIcon no-vertical-align />
+        <CheckIcon />
       </div>
     </span>
   </label>

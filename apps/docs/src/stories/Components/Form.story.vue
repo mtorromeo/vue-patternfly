@@ -27,7 +27,7 @@
                 Example:
                 /home/*/mail/,/home/*/tmp,*.php
               </template>
-              <help-icon no-vertical-align />
+              <help-icon />
             </pf-tooltip>
           </template>
           <pf-text-input id="simple-form-name-01" required name="simple-form-name-01" aria-describedby="simple-form-name-01-helper" />
