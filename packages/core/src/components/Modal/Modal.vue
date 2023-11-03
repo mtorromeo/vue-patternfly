@@ -1,7 +1,17 @@
 <template>
   <teleport :to="teleportTarget">
     <pf-backdrop v-if="open">
-      <pf-focus-trap :class="bullsEyeStyles.bullseye" :active="!disableFocusTrap">
+      <pf-focus-trap
+        :class="bullsEyeStyles.bullseye"
+        :active="!disableFocusTrap"
+        :focus-trap-options="{
+          clickOutsideDeactivates: true,
+          tabbableOptions: { displayCheck: 'none' },
+          // FocusTrap's initialFocus can accept false as a value to prevent initial focus.
+          // We want to prevent this in case false is ever passed in.
+          initialFocus: elementToFocus || undefined,
+        }"
+      >
         <component
           :is="component"
           v-bind="$attrs"
@@ -103,50 +113,39 @@ defineOptions({
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Flag to show the modal */
   open?: boolean,
-
   /** Flag to remove the close button in the header area of the modal */
   noClose?: boolean,
-
   /** Flag indicating if modal content should be placed in a modal box body wrapper */
   noBodyWrapper?: boolean,
-
   /** Flag to disable focus trap */
   disableFocusTrap?: boolean,
-
+  /** The element to focus when the modal opens. By default the first
+   * focusable element will receive focus.
+   */
+  elementToFocus?: HTMLElement | SVGElement | string;
   /** Simple text content of the Modal Header, also used for aria-label on the body */
   title?: string;
-
   /** Optional title label text for screen readers */
   titleLabel?: string;
-
   /** Optional alert icon (or other) to show before the title of the Modal Header
    * When the predefined alert types are used the default styling
    * will be automatically applied */
   titleIconVariant?: 'default' | 'success' | 'danger' | 'warning' | 'info';
-
   appendTo?: HTMLElement | string | (() => HTMLElement);
-
   /** Accessible descriptor of modal */
   ariaLabel?: string;
-
   /** Id of Modal Box description */
   ariaDescribedby?: string;
-
   /** Id of Modal Box label */
   ariaLabelledby?: string;
-
   /** Variant of the modal */
   variant?: 'default' | 'small' | 'medium' | 'large';
-
   /** Alternate position of the modal */
   position?: 'default' | 'top';
-
   /** Offset from alternate position. Can be any valid CSS length/percentage */
   positionOffset?: string;
-
   /** Id of the ModalBoxBody */
   descriptorId?: string;
-
   component?: string | Component;
 }
 
