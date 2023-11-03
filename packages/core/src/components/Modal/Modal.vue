@@ -29,7 +29,11 @@
               [styles.modifiers.sm]: variant === 'small',
               [styles.modifiers.md]: variant === 'medium',
             }]"
-          :style="{ [topSpacer.name]: positionOffset }"
+          :style="{
+            '--pf-v5-c-modal-box--Width': width ? (typeof width !== 'number' ? width : `${width}px`) : undefined,
+            '--pf-v5-c-modal-box--MaxWidth': maxWidth ? (typeof maxWidth !== 'number' ? maxWidth : `${maxWidth}px`) : undefined,
+            [topSpacer.name]: positionOffset,
+          }"
         >
           <div v-if="!noClose" :class="styles.modalBoxClose">
             <pf-close-button @click="emit('update:open', false)" />
@@ -142,6 +146,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   ariaLabelledby?: string;
   /** Variant of the modal */
   variant?: 'default' | 'small' | 'medium' | 'large';
+  /** Default width of the modal. */
+  width?: number | string;
+  /** Maximum width of the modal. */
+  maxWidth?: number | string;
   /** Alternate position of the modal */
   position?: 'default' | 'top';
   /** Offset from alternate position. Can be any valid CSS length/percentage */
