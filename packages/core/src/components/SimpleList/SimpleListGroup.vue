@@ -3,7 +3,7 @@
     <h2 :id="id" :class="[styles.simpleListTitle, titleClass]" aria-hidden>
       <slot name="title">{{ title }}</slot>
     </h2>
-    <ul :class="$attrs.class" :aria-labelledby="id">
+    <ul class="pf-v5-c-simple-list__list" :class="$attrs.class" role="list" :aria-labelledby="id">
       <slot />
     </ul>
   </section>

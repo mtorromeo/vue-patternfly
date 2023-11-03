@@ -1,5 +1,5 @@
 <template>
-  <li :class="styles.simpleListSection">
+  <li class="pf-v5-c-simple-list__item">
     <component
       :is="component"
       v-bind="componentAttrs"

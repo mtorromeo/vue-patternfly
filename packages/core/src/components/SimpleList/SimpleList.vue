@@ -1,11 +1,11 @@
 <template>
-  <div :class="styles.simpleList" :role="grouped ? 'list' : undefined">
+  <div :class="styles.simpleList">
     <input v-if="name" type="hidden" :name="name" :value="value" :required="required">
     <wrap>
       <default-slot />
 
       <template v-if="!grouped" #with>
-        <ul />
+        <ul class="pf-v5-c-simple-list__list" role="list" :aria-label="ariaLabel" />
       </template>
     </wrap>
   </div>
@@ -24,6 +24,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Form element name */
   name?: string,
   required?: boolean;
+  /** aria-label for the <ul> element that wraps the SimpleList items. */
+  ariaLabel?: string;
 }
 </script>
 
