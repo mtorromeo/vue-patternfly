@@ -46,7 +46,7 @@
         :style="truncateTitle ? `${maxLines.name}: ${truncateTitle}` : null"
         :tabindex="tooltipVisible ? '0' : null"
       >
-        <span :class="accessibleStyles.screenReader">{{ variantLabel }}</span>
+        <span class="pf-v5-screen-reader">{{ variantLabel }}</span>
         {{ title }}
       </component>
       <template v-if="tooltipVisible" #content>{{ title }}</template>
@@ -68,7 +68,6 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
-import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
 import PassThrough from '../../helpers/PassThrough.vue';

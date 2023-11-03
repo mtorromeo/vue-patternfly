@@ -40,7 +40,7 @@
                     <BellIcon v-else-if="titleIconVariant === 'default'" />
                     <slot v-else name="title-icon" />
                   </span>
-                  <span v-if="label" :class="accessibleStyles.screenReader">{{ label }}</span>
+                  <span v-if="label" class="pf-v5-screen-reader">{{ label }}</span>
                   <span :class="styles.modalBoxTitleText">{{ title }}</span>
                 </h1>
 
@@ -77,7 +77,6 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
 import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
-import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
 
