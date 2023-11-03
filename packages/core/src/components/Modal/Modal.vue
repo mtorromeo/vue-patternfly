@@ -31,7 +31,9 @@
             }]"
           :style="{ [topSpacer.name]: positionOffset }"
         >
-          <pf-close-button v-if="!noClose" @click="emit('update:open', false)" />
+          <div v-if="!noClose" :class="styles.modalBoxClose">
+            <pf-close-button @click="emit('update:open', false)" />
+          </div>
 
           <pf-modal-header>
             <slot name="header">
