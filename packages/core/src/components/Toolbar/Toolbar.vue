@@ -68,7 +68,7 @@ const toggleManaged = computed(() => !props.expanded && props.expanded !== false
 
 const effectiveExpanded = computed({
   get() {
-    return toggleManaged.value ? managedToggleExpanded.value : props.expanded;
+    return toggleManaged.value ? managedToggleExpanded.value : (props.expanded ?? false);
   },
   set(value: boolean) {
     if (toggleManaged.value) {

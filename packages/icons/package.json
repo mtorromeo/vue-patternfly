@@ -29,13 +29,13 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@patternfly/patternfly": "^5.1.0",
-    "concurrently": "^8.2.1",
+    "concurrently": "^8.2.2",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.10",
     "rimraf": "^5.0.5",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
-    "vue": "^3.3.4"
+    "vue": "^3.3.7"
   },
   "peerDependencies": {
     "vue": "^3.2.40"
