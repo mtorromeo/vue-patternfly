@@ -7,6 +7,8 @@
       See full [Design guidelines](https://www.patternfly.org/v4/components/page/design-guidelines) on the official patternfly documentation.
       ## Differences from patternfly-react
       - `pf-page-breadcrumb`, `pf-page-navigation` and `pf-page-section` can be limited in width by setting their `max-width` prop.
+
+      ## Examples
     </pre>
 
     <story-canvas title="Example">

@@ -15,6 +15,8 @@
       # PfFormSelectOption `pf-form-select-option`
       Wraps a native `&lt;option>` element and adds a `placeholder` identifier flag.
       You can either use the default slot or the `label` prop to render the content.
+
+      ## Examples
     </pre>
 
     <story-canvas title="Example">

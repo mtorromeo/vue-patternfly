@@ -4,6 +4,8 @@
 
     <pre v-md>
       See full [Design guidelines](https://www.patternfly.org/v4/components/helper-text/design-guidelines) on the official patternfly documentation.
+
+      ## Examples
     </pre>
 
     <story-canvas title="Static">

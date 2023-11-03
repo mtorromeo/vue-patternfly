@@ -10,6 +10,8 @@
       - `PfSimpleListItem` has a `value` prop that replaces `itemId` and in conjunction with `PfSimpleList`'s `modelValue` prop, can be used like the native `select` and `option` elements.
       - The `active` prop of `PfSimpleListItem` has been removed. Use `modelValue`/`value` instead to control the selected item.
       See [common differences from patternfly-react](#/).
+
+      ## Examples
     </pre>
 
     <story-canvas title="Simple">

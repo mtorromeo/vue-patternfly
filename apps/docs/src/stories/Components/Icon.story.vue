@@ -4,6 +4,8 @@
 
     <pre v-md>
       An **icon** component is a container that allows for icons of varying dimensions, as well as spinners, to seamlessly replace each other without shifting surrounding content.
+
+      ## Examples
     </pre>
 
     <story-canvas title="Basic">

@@ -4,6 +4,7 @@
 
     <pre v-md>
       A **brand** is used to place a product logotype on a screen.
+      ## Examples
     </pre>
 
     <story-canvas title="Basic">

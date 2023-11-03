@@ -4,6 +4,8 @@
 
     <pre v-md>
       The **panel** component is a container that supports flexible content layouts. It can be used to house other components such as fields, forms, videos, buttons, and more. The panel should not be confused with the drawer component, which allows you to surface information via a collapsable container.
+
+      ## Examples
     </pre>
 
     <story-canvas title="Basic">

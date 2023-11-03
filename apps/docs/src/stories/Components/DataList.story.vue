@@ -20,6 +20,8 @@
       - The `pf-data-list-item-row` and `pf-data-list-item-cells` components are optional and are only required if you need to change their attributes or when you have to control the order of sibling components.
 
       See [common differences from patternfly-react](#/).
+
+      ## Examples
     </pre>
 
     <story-canvas title="Basic">

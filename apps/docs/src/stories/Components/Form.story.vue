@@ -15,6 +15,8 @@
       - There is no FormHelperText component. You can instead use the `helper-text` prop or the `helperText` and `helperTextIcon` slots on `pf-form-group`.
 
       See [common differences from patternfly-react](#/).
+
+      ## Examples
     </pre>
 
     <story-canvas title="Basic">
