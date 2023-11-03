@@ -47,7 +47,7 @@
         @click="managedExpanded = !managedExpanded"
       >
         <span :class="styles.menuToggleControls">
-          <span :class="styles.menuToggleIcon">
+          <span :class="styles.menuToggleToggleIcon">
             <caret-down-icon />
           </span>
         </span>
