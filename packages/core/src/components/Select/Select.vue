@@ -102,7 +102,7 @@ const emit = defineEmits<{
   (name: 'update:selected', value: MenuItemId | MenuItemId[] | null): void;
 }>();
 
-const managedSelected = useManagedProp('selected', null);
+const managedSelected = useManagedProp<MenuItemId | MenuItemId[] | null>('selected', null);
 const managedOpen = useManagedProp('open', false);
 const $el = ref();
 </script>
