@@ -1,7 +1,7 @@
 <template>
   <component
-    :is="injectedComponent"
-    :role="injectedComponent == 'hr' ? undefined : 'separator'"
+    :is="component"
+    role="separator"
     :class="[
       styles.divider,
       classesFromBreakpointProps($props, ['inset'], styles),
@@ -14,8 +14,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
-import { inject, type HTMLAttributes, type LiHTMLAttributes } from 'vue';
-import { DividerComponentKey } from './Dropdown/Dropdown.vue';
+import { type HTMLAttributes, type LiHTMLAttributes } from 'vue';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../breakpoints';
 
 defineOptions({
@@ -27,9 +26,7 @@ export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttri
   vertical?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   component: 'hr',
 });
-
-const injectedComponent = inject(DividerComponentKey, props.component);
 </script>

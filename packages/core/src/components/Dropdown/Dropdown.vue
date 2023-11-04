@@ -21,16 +21,6 @@
 </template>
 
 <script lang="ts">
-export const DropdownToggleElementRefKey = Symbol('DropdownToggleElementRefKey') as InjectionKey<Ref<Element | undefined>>;
-export const DropdownDisabledClassKey = Symbol('DropdownDisabledClassKey') as InjectionKey<string>;
-export const DropdownMenuClassKey = Symbol('DropdownMenuClassKey') as InjectionKey<string>;
-export const DropdownItemClassKey = Symbol('DropdownItemClassKey') as InjectionKey<string>;
-export const DropdownToggleIndicatorClassKey = Symbol('DropdownToggleIndicatorClassKey') as InjectionKey<string>;
-export const DropdownToggleTextClassKey = Symbol('DropdownToggleTextClassKey') as InjectionKey<string>;
-export const DropdownToggleClassKey = Symbol('DropdownToggleClassKey') as InjectionKey<string>;
-export const DropdownMenuRefKey = Symbol('DropdownMenuRefKey') as InjectionKey<Ref<InstanceType<typeof PfMenu> | undefined>>;
-export const DividerComponentKey = Symbol('DividerComponentKey') as InjectionKey<string>;
-
 export interface Props extends /* @vue-ignore */ MenuProps {
   id?: string,
   position?: 'left' | 'right',
@@ -57,7 +47,7 @@ export interface Props extends /* @vue-ignore */ MenuProps {
 </script>
 
 <script lang="ts" setup>
-import { h, type InjectionKey, mergeProps, provide, ref, type Ref, type VNode, computed } from 'vue';
+import { h, mergeProps, ref, type Ref, type VNode, computed } from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
@@ -94,10 +84,8 @@ const slots = defineSlots<{
 }>();
 
 const menuRef: Ref<InstanceType<typeof PfMenu> | undefined> = ref();
-provide(DropdownMenuRefKey, menuRef);
 
 const { element: toggleElementRef, findReference } = useHtmlElementFromVNodes();
-provide(DropdownToggleElementRefKey, toggleElementRef);
 
 const managedOpen = useManagedProp('open', false);
 const effectiveId = computed(() => props.id || `pf-dropdown-toggle-id-${currentId++}`);
