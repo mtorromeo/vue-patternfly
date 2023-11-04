@@ -45,6 +45,10 @@
   border-bottom-right-radius: 6px;
   overflow-x: auto;
 }
+
+.inner-canvas > pre {
+  white-space: pre-line;
+}
 </style>
 
 <script lang="ts" setup>

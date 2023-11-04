@@ -51,5 +51,6 @@ export * from './SimpleList';
 export * from './Tabs';
 export * from './Text';
 export * from './TextInputGroup';
+export * from './ToggleGroup';
 export * from './Toolbar';
 export * from './Tooltip';
