@@ -250,7 +250,8 @@ export function useElementOverflow(element: Ref<HTMLElement | undefined>): Ref<b
       return;
     }
 
-    overflowing.value = element.value.scrollWidth > element.value.clientWidth;
+    overflowing.value = (element.value.scrollWidth > element.value.clientWidth) ||
+      (element.value?.scrollHeight > element.value?.clientHeight);
   };
 
   tryOnMounted(testElementOverflow);

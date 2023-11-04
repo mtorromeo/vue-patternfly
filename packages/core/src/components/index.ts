@@ -42,6 +42,7 @@ export * from './Menu';
 export * from './MenuToggle';
 export * from './Modal';
 export * from './Nav';
+export * from './NotificationDrawer';
 export * from './OverflowMenu';
 export * from './Page';
 export * from './Pagination';
