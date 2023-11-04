@@ -61,13 +61,13 @@
 </style>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
+import { ref } from 'vue';
 
 const disabledAll = ref(false);
-const selectionSet: Ref<string[]> = ref([]);
-const singleSelection: Ref<string | undefined> = ref();
+const selectionSet = ref([] as string[]);
+const singleSelection = ref(undefined as string | undefined);
 
-const selected1: Ref<boolean> = ref(false);
-const selected2: Ref<boolean> = ref(false);
-const selected3: Ref<boolean> = ref(false);
+const selected1 = ref(false);
+const selected2 = ref(false);
+const selected3 = ref(false);
 </script>
