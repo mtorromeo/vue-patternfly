@@ -1,7 +1,37 @@
 <template>
   <div :class="styles.page">
     <slot name="skeleton" />
-    <main
+
+    <div v-if="$slots.drawer" :class="styles.pageDrawer">
+      <pf-drawer :expanded="drawerExpanded">
+        <pf-drawer-content>
+          <template #content>
+            <pf-drawer-panel-content>
+              <slot name="drawer" />
+            </pf-drawer-panel-content>
+          </template>
+
+          <pf-drawer-content-body>
+            <component
+              :is="mainComponent"
+              :id="mainContainerId"
+              :role="role"
+              :class="styles.pageMain"
+              :tabindex="mainTabIndex"
+              :aria-label="mainAriaLabel"
+              @click="mainClick"
+              @touchstart="mainClick"
+            >
+              <slot />
+            </component>
+          </pf-drawer-content-body>
+        </pf-drawer-content>
+      </pf-drawer>
+    </div>
+
+    <component
+      :is="mainComponent"
+      v-else
       :id="mainContainerId"
       :role="role"
       :class="styles.pageMain"
@@ -10,30 +40,14 @@
       @click="mainClick"
       @touchstart="mainClick"
     >
-      <div v-if="$slots.drawer" :class="styles.pageDrawer">
-        <pf-drawer :expanded="drawerExpanded">
-          <pf-drawer-content>
-            <template #content>
-              <pf-drawer-panel-content>
-                <slot name="drawer" />
-              </pf-drawer-panel-content>
-            </template>
-
-            <pf-drawer-content-body>
-              <slot />
-            </pf-drawer-content-body>
-          </pf-drawer-content>
-        </pf-drawer>
-      </div>
-
-      <slot v-else />
-    </main>
+      <slot />
+    </component>
   </div>
 </template>
 
 <script lang="ts">
 export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
-export const PageNavOpenKey = Symbol('PageNavOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
+export const PageSidebarOpenKey = Symbol('PageSidebarOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Sets the value for role on the <main> element */
@@ -43,7 +57,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** tabIndex to use for the [role="main"] element, null to unset it */
   mainTabIndex?: number;
   /**
-   * If true, manages the sidebar open/close state and there is no need to pass the isNavOpen boolean into
+   * If true, manages the sidebar open/close state and there is no need to pass the isSidebarOpen boolean into
    * the sidebar component or add a callback onNavToggle function into the PageHeader component
    */
   managedSidebar?: boolean;
@@ -57,6 +71,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   mainAriaLabel?: string;
   /** Flag indicating Notification drawer in expanded */
   drawerExpanded?: boolean;
+  /** HTML component used as main component of the page. Defaults to 'main', only pass in 'div' if another 'main' element already exists. */
+  mainComponent?: 'main' | 'div';
 }
 </script>
 
@@ -76,6 +92,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   defaultManagedSidebarOpen: true,
+  mainComponent: 'main',
 });
 
 const emit = defineEmits<{
@@ -89,26 +106,26 @@ defineSlots<{
 }>();
 
 const mobileView = ref(false);
-const mobileNavOpen = ref(false);
-const desktopNavOpen = ref(!props.managedSidebar || props.defaultManagedSidebarOpen);
+const mobileSidebarOpen = ref(false);
+const desktopSidebarOpen = ref(!props.managedSidebar || props.defaultManagedSidebarOpen);
 
 const managedSidebar = ref(props.managedSidebar);
 provide(PageManagedSidebarKey, managedSidebar);
 
-const navOpen = computed({
+const sidebarOpen = computed({
   get() {
-    return mobileView.value ? mobileNavOpen.value : desktopNavOpen.value;
+    return mobileView.value ? mobileSidebarOpen.value : desktopSidebarOpen.value;
   },
 
   set(open: boolean) {
     if (mobileView.value) {
-      mobileNavOpen.value = open;
+      mobileSidebarOpen.value = open;
     } else {
-      desktopNavOpen.value = open;
+      desktopSidebarOpen.value = open;
     }
   },
 });
-provide(PageNavOpenKey, navOpen);
+provide(PageSidebarOpenKey, sidebarOpen);
 
 const { width: windowWidth } = useWindowSize();
 
@@ -118,12 +135,12 @@ watch(windowWidth, (width) => {
 });
 
 function navToggle() {
-  navOpen.value = !navOpen.value;
+  sidebarOpen.value = !sidebarOpen.value;
 }
 
 function mainClick() {
-  if (mobileView.value && navOpen.value) {
-    navOpen.value = false;
+  if (mobileView.value && sidebarOpen.value) {
+    sidebarOpen.value = false;
   }
 }
 

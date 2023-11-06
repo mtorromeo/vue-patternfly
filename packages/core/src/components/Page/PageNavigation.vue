@@ -1,5 +1,5 @@
 <template>
-  <section
+  <div
     :class="[
       styles.pageMainNav,
       ...classesFromBreakpointProps($props, [
@@ -16,12 +16,13 @@
       '--pf-v5-c-page--section--m-limit-width--MaxWidth': maxWidth,
     }"
     :tabindex="overflowScroll ? 0 : undefined"
+    :role="overflowScroll ? 'region' : undefined"
   >
     <div v-if="isWidthLimited" :class="styles.pageMainBody">
       <slot />
     </div>
     <slot v-else />
-  </section>
+  </div>
 </template>
 
 <script lang="ts" setup>

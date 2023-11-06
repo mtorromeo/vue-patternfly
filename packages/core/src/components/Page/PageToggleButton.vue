@@ -1,16 +1,13 @@
 <template>
-  <div
+  <pf-button
     :id="id"
-    :class="[styles.pageSidebar, {
-      [styles.modifiers.light]: theme === 'light',
-      [styles.modifiers.expanded]: sidebarOpen,
-      [styles.modifiers.collapsed]: !sidebarOpen,
-    }]"
+    variant="plain"
+    aria-label="Side navigation toggle"
+    :aria-expanded="sidebarOpen ? 'true' : 'false'"
+    @click="sidebarOpen = !sidebarOpen"
   >
-    <div :class="styles.pageSidebarBody">
-      <slot />
-    </div>
-  </div>
+    <slot />
+  </pf-button>
 </template>
 
 <script lang="ts">
@@ -21,24 +18,24 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   id?: string;
   /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
   sidebarOpen?: boolean;
-  /** Indicates the color scheme of the sidebar */
-  theme?: 'light' | 'dark';
 }
 </script>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Page/page';
-import { computed, type ComputedRef, inject, type InjectionKey, provide, type HTMLAttributes } from 'vue';
+import { computed, type ComputedRef, inject, type InjectionKey, type HTMLAttributes } from 'vue';
 import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
 
 defineOptions({
-  name: 'PfPageSidebar',
+  name: 'PfPageToggleButton',
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  id: 'page-sidebar',
-  theme: 'dark',
+  id: 'nav-toggle',
 });
+
+const emit = defineEmits<{
+  (name: 'update:sidebar-open', value: boolean): void;
+}>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -47,6 +44,14 @@ defineSlots<{
 const managedSidebarOpen = inject(PageSidebarOpenKey);
 const managedSidebar = inject(PageManagedSidebarKey);
 
-const sidebarOpen = computed(() => managedSidebar?.value ? !!managedSidebarOpen?.value : props.sidebarOpen);
-provide(SidebarOpenKey, sidebarOpen);
+const sidebarOpen = computed({
+  get: () => managedSidebar?.value ? !!managedSidebarOpen?.value : props.sidebarOpen,
+  set(value) {
+    if (managedSidebar?.value && managedSidebarOpen) {
+      managedSidebarOpen.value = value;
+    } else {
+      emit('update:sidebar-open', value);
+    }
+  },
+});
 </script>

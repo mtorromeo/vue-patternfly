@@ -1,5 +1,5 @@
 <template>
-  <section
+  <div
     :class="[
       styles.pageMainGroup,
       ...classesFromBreakpointProps($props, [
@@ -12,9 +12,10 @@
       }
     ]"
     :tabindex="overflowScroll ? 0 : undefined"
+    :role="overflowScroll ? 'region' : undefined"
   >
     <slot />
-  </section>
+  </div>
 </template>
 
 <script lang="ts" setup>

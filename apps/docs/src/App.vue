@@ -1,22 +1,30 @@
 <template>
   <pf-page v-if="!$route.meta.iframe" managed-sidebar>
     <template #skeleton>
-      <pf-page-header show-nav-toggle>
-        <template #logo>
-          <router-link :to="{ name: 'introduction' }">
-            <pf-brand
-              src="https://www.patternfly.org/assets/images/pf_logo.svg"
-              style="height:40px;filter:invert(1)"
-            />
+      <pf-masthead>
+        <pf-masthead-toggle>
+          <pf-page-toggle-button variant="plain">
+            <bars-icon />
+          </pf-page-toggle-button>
+        </pf-masthead-toggle>
+        <pf-masthead-main>
+          <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
+            <pf-masthead-brand :href="href">
+              <pf-brand
+                src="https://www.patternfly.org/assets/images/pf_logo.svg"
+                style="height:40px;filter:invert(1)"
+              />
+            </pf-masthead-brand>
           </router-link>
-        </template>
-
-        <pf-page-header-tools>
-          <pf-page-header-tools-group>
-            <pf-page-header-tools-item visibility-xs="hidden">header-tools</pf-page-header-tools-item>
-          </pf-page-header-tools-group>
-        </pf-page-header-tools>
-      </pf-page-header>
+        </pf-masthead-main>
+        <pf-masthead-content>
+          <pf-toolbar>
+            <pf-toolbar-content>
+              <pf-toolbar-item>header-tools</pf-toolbar-item>
+            </pf-toolbar-content>
+          </pf-toolbar>
+        </pf-masthead-content>
+      </pf-masthead>
 
       <pf-page-sidebar nav="PfNavigation" nav-open>
         <pf-nav>
@@ -54,6 +62,7 @@ import { stories } from './router';
 import { useAlertsStore } from './store/alerts';
 import { ref } from 'vue';
 import { watch } from 'vue';
+import BarsIcon from '@vue-patternfly/icons/bars-icon';
 
 const alerts = useAlertsStore();
 const maxDisplayed = ref(5);
