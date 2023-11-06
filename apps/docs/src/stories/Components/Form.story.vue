@@ -7,7 +7,7 @@
 
       Use forms to accomplish tasks reliant on user-inputted information like logging in, registering for accounts or services, configuring settings, or completing surveys.
 
-      See full [Design guidelines](https://www.patternfly.org/v4/components/form/design-guidelines) on the official patternfly documentation.
+      See full [design guidelines](https://www.patternfly.org/components/form/design-guidelines) on the official patternfly documentation.
 
       ## Differences from patternfly-react
       - The `novalidate` attribute is not implicitly applied to the form but you can still add it yourself. This makes `pf-form` usable with the native form validation technique.

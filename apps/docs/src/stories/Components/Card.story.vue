@@ -4,7 +4,7 @@
 
     <pre v-md>
       A **card** is a square or rectangular container that can contain any kind of content. Cards symbolize units of information, and each one acts as an entry point for users to access more details. For example, in dashboards and catalog views, cards function as a preview of a detailed page. Cards may also be used in data displays like card views, or for positioning content on a page.
-      See full [Design guidelines](https://www.patternfly.org/v4/components/card/design-guidelines) on the official patternfly documentation.
+      See full [design guidelines](https://www.patternfly.org/components/card/design-guidelines) on the official patternfly documentation.
       ## Differences from patternfly-react
       - The expanded state is controlled by `v-model:expanded` or managed internally with the prop `expandable`.
       See [common differences from patternfly-react](#/).

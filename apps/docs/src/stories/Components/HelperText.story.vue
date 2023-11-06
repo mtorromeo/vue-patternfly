@@ -3,7 +3,7 @@
     <component-title name="pf-helper-text" />
 
     <pre v-md>
-      See full [Design guidelines](https://www.patternfly.org/v4/components/helper-text/design-guidelines) on the official patternfly documentation.
+      See full [design guidelines](https://www.patternfly.org/components/helper-text/design-guidelines) on the official patternfly documentation.
 
       ## Examples
     </pre>

@@ -3,7 +3,7 @@
     <component-title name="pf-search-input" />
 
     <pre v-md>
-      A **search input** is a type of input field that can be user to search, find, or filter. See [filter guidelines](https://www.patternfly.org/v4/guidelines/filters) for more information on using search input as a filter.
+      A **search input** is a type of input field that can be user to search, find, or filter. See [filter guidelines](https://www.patternfly.org/guidelines/filters) for more information on using search input as a filter.
       ## Examples
     </pre>
 

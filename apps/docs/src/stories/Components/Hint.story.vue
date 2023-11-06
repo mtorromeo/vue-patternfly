@@ -4,7 +4,7 @@
 
     <pre v-md>
       A **hint** is in-app messaging that provides a one-step reminder, explanation, or call to action for a page or modal.
-      See full [Design guidelines](https://www.patternfly.org/v4/components/hint/design-guidelines) on the official patternfly documentation.
+      See full [design guidelines](https://www.patternfly.org/components/hint/design-guidelines) on the official patternfly documentation.
 
       ## Examples
     </pre>

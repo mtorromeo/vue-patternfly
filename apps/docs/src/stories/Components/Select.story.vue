@@ -4,7 +4,7 @@
 
     <pre v-md>
       A **select list** enables users to select one or more items from a list. Use a select list when options are dynamic or variable.
-      [View PatternFly design guidelines](https://www.patternfly.org/v4/components/select/design-guidelines)
+      [View PatternFly design guidelines](https://www.patternfly.org/components/select/design-guidelines)
       ## Differences from patternfly-react
       - There is no `grouped` prop since the presence of groups is auto-detected.
       See [common differences from patternfly-react](#/).

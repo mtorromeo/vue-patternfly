@@ -4,7 +4,7 @@
 
     <pre v-md>
       A **notification badge** is intended to be used with a notification drawer as a visible indicator to alert the user about incoming notifications.
-      See full [Design guidelines](https://www.patternfly.org/v4/components/notification-badge/design-guidelines) on the official patternfly documentation.
+      See full [design guidelines](https://www.patternfly.org/components/notification-badge/design-guidelines) on the official patternfly documentation.
       ## Examples
     </pre>
 
