@@ -14,7 +14,7 @@ export type VueCanvasPluginOptions = {
   /**
    * Filter out which files to be included as vue markdown pages.
    *
-   * @default /\.story.vue($|\?)/
+   * @default /\.story.vue$/
    */
   include?: FilterPattern;
 
@@ -26,7 +26,7 @@ export type VueCanvasPluginOptions = {
   exclude?: FilterPattern;
 }
 
-const DEFAULT_INCLUDE_RE = /\.story\.vue($|\?)/;
+const DEFAULT_INCLUDE_RE = /\.story\.vue$/;
 
 async function traverse(arr: Node[], callback: (el: Node) => Promise<Node>) {
   for (let i = 0; i < arr.length; i++) {
