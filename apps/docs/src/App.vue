@@ -21,6 +21,9 @@
           <pf-toolbar>
             <pf-toolbar-content>
               <pf-toolbar-item>header-tools</pf-toolbar-item>
+              <pf-toolbar-item align="right">
+                <pf-switch v-model:checked="darkTheme" label="Dark theme" />
+              </pf-toolbar-item>
             </pf-toolbar-content>
           </pf-toolbar>
         </pf-masthead-content>
@@ -76,6 +79,17 @@ const overflowMessage = computed(() => {
     return `View ${overflow} more alerts`;
   }
   return '';
+});
+
+const darkTheme = computed({
+  get: ()=> document.documentElement.classList.contains('pf-v5-theme-dark'),
+  set(value) {
+    if (value) {
+      document.documentElement.classList.add('pf-v5-theme-dark');
+    } else {
+      document.documentElement.classList.remove('pf-v5-theme-dark');
+    }
+  },
 });
 
 function expandAlerts() {
