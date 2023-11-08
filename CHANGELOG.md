@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.15] - 2023-11-08
+
+### Features
+
+- *(Masthead)* Allow masthead to be user as a router-link (added `to` and `replace` props)
+
+### Refactor
+
+- Moved @vueuse/integrations and focus-trap to external dependencies in rollup
+
 ## [0.1.0-beta.14] - 2023-11-08
 
 ### Bug Fixes
