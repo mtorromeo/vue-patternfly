@@ -4,7 +4,7 @@
   </pass-through>
 
   <teleport :to="appendTo === 'inline' ? undefined : appendTo" :disabled="appendTo === 'inline'">
-    <floating-ui flip :reference="toggleElementRef" :placement="`${placement}-start`" :z-index="zIndex">
+    <floating-ui flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex">
       <pf-menu
         v-if="managedOpen"
         ref="menuRef"
@@ -22,14 +22,14 @@
 
 <script lang="ts">
 export interface Props extends /* @vue-ignore */ MenuProps {
-  id?: string,
-  position?: 'left' | 'right',
-  appendTo?: 'inline' | 'parent' | object,
-  text?: string,
-  disabled?: boolean,
+  id?: string;
+  position?: 'left' | 'right';
+  appendTo?: 'inline' | 'parent' | object;
+  text?: string;
+  disabled?: boolean;
 
   /** Flag to indicate if menu is opened.*/
-  open?: boolean,
+  open?: boolean;
   /** Flag indicating the toggle should be focused after a selection. */
   autoFocus?: boolean;
   /** Flag indicating that the dropdown should not automatically close on select. */
@@ -37,7 +37,7 @@ export interface Props extends /* @vue-ignore */ MenuProps {
 
   /** z-index of the dropdown menu */
   zIndex?: number;
-  placement?: 'top' | 'bottom';
+  placement?: 'top' | 'bottom' | Placement;
 
   /** Variant of split button toggle */
   splitButton?: boolean | 'default' | 'action' | 'checkbox';
@@ -56,6 +56,7 @@ import PassThrough from '../../helpers/PassThrough.vue';
 import { useManagedProp, useHtmlElementFromVNodes } from '../../use';
 import { onMounted } from 'vue';
 import { onBeforeUnmount } from 'vue';
+import type { Placement } from '@floating-ui/core';
 
 let currentId = 0;
 
@@ -89,6 +90,13 @@ const { element: toggleElementRef, findReference } = useHtmlElementFromVNodes();
 
 const managedOpen = useManagedProp('open', false);
 const effectiveId = computed(() => props.id || `pf-dropdown-toggle-id-${currentId++}`);
+
+const placement = computed((): Placement => {
+  if (props.placement !== 'top' && props.placement !== 'bottom') {
+    return props.placement;
+  }
+  return `${props.placement}-${props.position === 'right' ? 'end' : 'start'}`;
+});
 
 function onSelect(event: Event, itemId: MenuItemId | null | undefined) {
   emit('select', event, itemId);
