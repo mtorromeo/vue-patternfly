@@ -45,7 +45,7 @@
               </router-link>
             </pf-masthead-main>
             <pf-masthead-content>
-              <pf-toolbar>
+              <pf-toolbar full-height>
                 <pf-toolbar-content>
                   <pf-toolbar-item>header-tools</pf-toolbar-item>
                 </pf-toolbar-content>
@@ -107,7 +107,7 @@
               </router-link>
             </pf-masthead-main>
             <pf-masthead-content>
-              <pf-toolbar>
+              <pf-toolbar full-height>
                 <pf-toolbar-content>
                   <pf-toolbar-item>header-tools</pf-toolbar-item>
                 </pf-toolbar-content>
@@ -161,7 +161,7 @@
               </router-link>
             </pf-masthead-main>
             <pf-masthead-content>
-              <pf-toolbar>
+              <pf-toolbar full-height>
                 <pf-toolbar-content>
                   <pf-toolbar-group space-items="none" align="right">
                     <pf-toolbar-item visibility="visible" :selected="expanded">

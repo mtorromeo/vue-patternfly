@@ -18,7 +18,7 @@
           </router-link>
         </pf-masthead-main>
         <pf-masthead-content>
-          <pf-toolbar>
+          <pf-toolbar full-height>
             <pf-toolbar-content>
               <pf-toolbar-item>header-tools</pf-toolbar-item>
               <pf-toolbar-item align="right">
@@ -82,7 +82,7 @@ const overflowMessage = computed(() => {
 });
 
 const darkTheme = computed({
-  get: ()=> document.documentElement.classList.contains('pf-v5-theme-dark'),
+  get: () => document.documentElement.classList.contains('pf-v5-theme-dark'),
   set(value) {
     if (value) {
       document.documentElement.classList.add('pf-v5-theme-dark');

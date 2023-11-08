@@ -1,7 +1,10 @@
 <template>
   <div
     :class="[styles.toolbar, breakpointClasses, {
+      [styles.modifiers.fullHeight]: fullHeight,
+      [styles.modifiers.static]: static,
       [styles.modifiers.pageInsets]: pageInsets,
+      [styles.modifiers.sticky]: sticky,
     }]"
   >
     <slot />
@@ -28,10 +31,20 @@ export const ToolbarChipGroupContentRefKey = Symbol('ToolbarChipGroupContentRefK
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
 
 export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+  /** Text to display in the clear all filters button */
   clearFiltersButtonText?: string;
+  /** The breakpoint at which the listed filters in chip groups are collapsed down to a summary */
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints;
+  /** Flag indicating if a data toolbar toggle group's expandable content is expanded */
   expanded?: boolean;
+  /** Flag indicating the toolbar should use the Page insets */
   pageInsets?: boolean;
+  /** Flag indicating the toolbar height should expand to the full height of the container */
+  fullHeight?: boolean;
+  /** Flag indicating the toolbar is static */
+  static?: boolean;
+  /** Flag indicating the toolbar should stick to the top of its container */
+  sticky?: boolean;
 }
 </script>
 
