@@ -8,7 +8,7 @@
       </pf-menu-toggle>
     </slot>
 
-    <floating-ui :reference="$el" :z-index="zIndex" flip same-width>
+    <floating-ui :reference="$el" :z-index="zIndex" flip>
       <pf-menu
         v-if="managedOpen"
         v-model:selected="managedSelected"

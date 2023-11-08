@@ -89,7 +89,7 @@
     </component>
 
     <teleport :to="appendTo" :disabled="!appendTo || appendTo === 'inline'">
-      <floating-ui :reference="$el" :z-index="zIndex" flip same-width>
+      <floating-ui :reference="$el" :z-index="zIndex" flip>
         <component
           :is="appendTo === 'inline' ? PassThrough : 'div'"
           v-if="attributes.length > 0"

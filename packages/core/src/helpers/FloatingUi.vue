@@ -18,14 +18,22 @@ export interface Props {
   disable?: boolean;
   placement?: Placement;
   flip?: boolean;
-  sameWidth?: boolean;
   zIndex?: number;
   middleware?: Middleware[];
   strategy?: Strategy,
   offset?: OffsetOptions;
+  /** Custom width of the floating ui. If the value is "trigger", it will set the width to the trigger element's width */
+  width?: string | 'trigger' | 'auto';
+  /** Minimum width of the floating ui. If the value is "trigger", it will set the min width to the trigger element's width */
+  minWidth?: string | 'trigger' | 'auto';
+  /** Maximum width of the floating ui. If the value is "trigger", it will set the max width to the trigger element's width */
+  maxWidth?: string | 'trigger' | 'auto';
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  width: 'auto',
+  minWidth: 'trigger',
+  maxWidth: 'auto',
   placement: 'bottom',
   zIndex: 9999,
   middleware: (): Middleware[] => [],
@@ -51,13 +59,19 @@ const floatingOptions = computed<FloatingOptions>(() => {
     middleware.push(uiFlip());
   }
 
-  if (props.sameWidth) {
+  if (props.width !== 'auto' || props.minWidth !== 'auto' || props.maxWidth !== 'auto') {
     middleware.push(size({
       apply({rects}) {
         if (htmlElement.value) {
-          Object.assign(htmlElement.value.style, {
-            width: `${rects.reference.width}px`,
-          });
+          if (props.width !== 'auto') {
+            htmlElement.value.style.width = props.width === 'trigger' ? `${rects.reference.width}px` : props.width;
+          }
+          if (props.minWidth !== 'auto') {
+            htmlElement.value.style.minWidth = props.minWidth === 'trigger' ? `${rects.reference.width}px` : props.minWidth;
+          }
+          if (props.maxWidth !== 'auto') {
+            htmlElement.value.style.maxWidth = props.maxWidth === 'trigger' ? `${rects.reference.width}px` : props.maxWidth;
+          }
         }
       },
     }));
