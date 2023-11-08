@@ -1,6 +1,43 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.14] - 2023-11-08
+
+### Bug Fixes
+
+- *(Icons)* Removed inline styles from icons to make it work with strict CSP
+- *(Alert, Modal)* Updated screen-reader class
+- *(MenuToggle)* Wrong padding in menu toggle icon
+- *(Modal)* Fixed position of close button
+- *(Spinner)* Fixed diameter prop
+- *(SimpleList)* Fixed styling
+- *(Dropdown)* Fixed applying the position prop to the floating ui of dropdown
+- *(types)* Fixed definition of the `appendTo` prop of `pf-dropdown`
+
+### Documentation
+
+- Added spinner examples
+- Fixed links to patternfly design guidelines
+
+### Features
+
+- *(Icons)* Updated fortowesome icons
+- *(Modal)* Added element-to-focus prop
+- *(Modal)* Added width and max-width props
+- *(Icon)* Added pf-icon component
+- *(ToggleGroup)* Implemented Toggle group components
+- *(Masthead)* Implemented masthead components
+- *(NotificationDrawer)* Implemented notification drawer components
+- *(Page)* Added `pf-page-sidebar-body` and `pf-page-toogle-button`
+- *(docs)* Added global switch for dark theme
+- *(Toolbar)* Added static, full-height and sticky modifiers
+- *(FloatingUi)* Added `width`, `min-width` and `max-width` props. `min-width` defaults to same width of the "trigger" element.
+
+### Refactor
+
+- Removed unused Dropdown injections
+- Small ts fix in pf-select
+
 ## [0.1.0-beta.13] - 2023-10-18
 
 ### Bug Fixes
