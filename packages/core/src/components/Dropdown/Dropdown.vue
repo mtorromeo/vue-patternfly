@@ -24,7 +24,7 @@
 export interface Props extends /* @vue-ignore */ MenuProps {
   id?: string;
   position?: 'left' | 'right';
-  appendTo?: 'inline' | 'parent' | object;
+  appendTo?: 'inline' | string | RendererElement | null | undefined;
   text?: string;
   disabled?: boolean;
 
@@ -57,6 +57,7 @@ import { useManagedProp, useHtmlElementFromVNodes } from '../../use';
 import { onMounted } from 'vue';
 import { onBeforeUnmount } from 'vue';
 import type { Placement } from '@floating-ui/core';
+import type { RendererElement } from 'vue';
 
 let currentId = 0;
 
