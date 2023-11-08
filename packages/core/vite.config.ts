@@ -11,7 +11,7 @@ export default defineConfig({
       name: '',
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', '@vueuse/core', '@vueuse/integrations', 'focus-trap'],
       output: {
         exports: 'named',
         preserveModules: true,

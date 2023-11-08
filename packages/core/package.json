@@ -37,10 +37,7 @@
     "@patternfly/patternfly": "^5.1.0",
     "@patternfly/react-styles": "^5.1.1",
     "@patternfly/react-tokens": "^5.1.1",
-    "@vue-patternfly/icons": "workspace:^",
-    "@vueuse/core": "^10.5.0",
-    "@vueuse/integrations": "^10.5.0",
-    "@vueuse/shared": "^10.5.0"
+    "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "^20.8.10",
@@ -57,11 +54,13 @@
     "vite": "^4.5.0",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5",
-    "vue-tsc": "^1.8.22"
+    "vue-tsc": "^1.8.22",
+    "@vueuse/core": "^10.5.0",
+    "@vueuse/integrations": "^10.5.0"
   },
   "peerDependencies": {
-    "focus-trap": "*",
-    "vue": "^3"
+    "@vueuse/integrations": "^10",
+    "focus-trap": "*"
   },
   "packageManager": "pnpm@8.6.1"
 }
