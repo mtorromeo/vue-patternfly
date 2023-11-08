@@ -1,0 +1,4 @@
+import{_ as i,a as o,o as s,c as f,w as e,b as t,g as n}from"./index-7e86e6f9.js";const d={};function h(r,u){const a=o("component-title"),c=o("pf-chip"),p=o("story-canvas"),_=o("pf-badge"),l=o("doc-page");return s(),f(l,{title:"Chip"},{default:e(()=>[t(a,{name:"pf-chip"}),t(p,{title:"Simple",source:"<pf-chip>Chip</pf-chip>"},{default:e(()=>[t(c,null,{default:e(()=>[n("Chip")]),_:1})]),_:1}),t(p,{title:"Long",source:"<pf-chip>Really long chip that goes on and on</pf-chip>"},{default:e(()=>[t(c,null,{default:e(()=>[n("Really long chip that goes on and on")]),_:1})]),_:1}),t(p,{title:"With badge",source:`<pf-chip>
+  Chip
+  <pf-badge read>00</pf-badge>
+</pf-chip>`},{default:e(()=>[t(c,null,{default:e(()=>[n(" Chip "),t(_,{read:""},{default:e(()=>[n("00")]),_:1})]),_:1})]),_:1})]),_:1})}const m=i(d,[["render",h]]);export{m as default};
