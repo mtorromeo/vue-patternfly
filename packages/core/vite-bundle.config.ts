@@ -8,6 +8,7 @@ const globals = {
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
+    emptyOutDir: false,
     lib: {
       entry: 'src/main.ts',
       fileName: format => format === 'iife' ? 'core.global.js' : 'core.[format].js',

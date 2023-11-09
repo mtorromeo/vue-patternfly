@@ -26,10 +26,11 @@
     "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
     "build:esm": "tsc --build --verbose tsconfig.json",
     "lint": "vue-tsc --noEmit",
-    "watch": "concurrently 'npm:watch-*'",
-    "watch-vite": "vite build --watch",
-    "watch-tsc": "vue-tsc --declaration --emitDeclarationOnly --watch",
-    "prepack": "pnpm build"
+    "watch": "concurrently 'npm:watch:*'",
+    "watch:vite": "vite build --watch",
+    "watch:tsc": "vue-tsc --declaration --emitDeclarationOnly --watch",
+    "watch:main.d.ts": "nodemon --watch dist/main.d.ts --watch 'dist/**/index.d.ts' --watch scripts/build-global.mjs -x \"node scripts/build-global.mjs\"",
+    "prepack": "pnpm clean && pnpm build"
   },
   "dependencies": {
     "@floating-ui/core": "^1.5.0",
@@ -51,6 +52,7 @@
     "focus-trap": "^7.5.4",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.10",
+    "nodemon": "^3.0.1",
     "rimraf": "^5.0.5",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
