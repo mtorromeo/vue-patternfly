@@ -39,7 +39,7 @@ defineOptions({
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer group count */
-  count: number;
+  count: number | string;
   /**  Adds styling to the group to indicate expanded state */
   expanded?: boolean;
   /**  Adds styling to the group to indicate whether it has been read */

@@ -95,7 +95,7 @@
           <pf-toolbar-group variant="filter-group">
             <pf-toolbar-item>
               <pf-select v-model:open="selectExpanded1" @clear="void 0">
-                <pf-select-option value="Filter 1" placeholder />
+                <pf-select-option value="Filter 1" />
                 <pf-select-option value="A" />
                 <pf-select-option value="B" />
                 <pf-select-option value="C" />
@@ -103,7 +103,7 @@
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-select v-model:open="selectExpanded2" @clear="void 0">
-                <pf-select-option value="Filter 2" placeholder />
+                <pf-select-option value="Filter 2" />
                 <pf-select-option value="1" />
                 <pf-select-option value="2" />
                 <pf-select-option value="3" />
@@ -111,7 +111,7 @@
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-select v-model:open="selectExpanded3" @clear="void 0">
-                <pf-select-option value="Filter 3" placeholder />
+                <pf-select-option value="Filter 3" />
                 <pf-select-option value="I" />
                 <pf-select-option value="II" />
                 <pf-select-option value="III" />
@@ -170,7 +170,7 @@
             <pf-toolbar-group variant="filter-group">
               <pf-toolbar-item>
                 <pf-select>
-                  <pf-select-option value="Filter 1" placeholder />
+                  <pf-select-option value="Filter 1" />
                   <pf-select-option value="A" />
                   <pf-select-option value="B" />
                   <pf-select-option value="C" />
@@ -179,7 +179,7 @@
 
               <pf-toolbar-item>
                 <pf-select>
-                  <pf-select-option value="Filter 2" placeholder />
+                  <pf-select-option value="Filter 2" />
                   <pf-select-option value="1" />
                   <pf-select-option value="2" />
                   <pf-select-option value="3" />
@@ -211,7 +211,7 @@
             <pf-toolbar-group variant="filter-group">
               <pf-toolbar-item>
                 <pf-select>
-                  <pf-select-option value="Filter 1" placeholder />
+                  <pf-select-option value="Filter 1" />
                   <pf-select-option value="A" />
                   <pf-select-option value="B" />
                   <pf-select-option value="C" />
@@ -220,7 +220,7 @@
 
               <pf-toolbar-item>
                 <pf-select>
-                  <pf-select-option value="Filter 2" placeholder />
+                  <pf-select-option value="Filter 2" />
                   <pf-select-option value="1" />
                   <pf-select-option value="2" />
                   <pf-select-option value="3" />
@@ -237,7 +237,7 @@
         v-model:expanded="expanded2"
         class="pf-m-toggle-group-container"
         collapse-listed-filters-breakpoint="xl"
-        @clear-all-filters="onDelete"
+        @clear-all-filters="onDelete()"
       >
         <pf-toolbar-content>
           <pf-toolbar-toggle-group xl>
@@ -263,7 +263,7 @@
               >
                 <pf-toolbar-item>
                   <pf-select>
-                    <pf-select-option value="Filter 1" placeholder />
+                    <pf-select-option value="Filter 1" />
                     <pf-select-option value="A" />
                     <pf-select-option value="B" />
                     <pf-select-option value="C" />
@@ -274,7 +274,7 @@
               <pf-toolbar-filter category="Risk" :chips="filters.risk" @delete-chip="onDelete">
                 <pf-toolbar-item>
                   <pf-select>
-                    <pf-select-option value="Filter 2" placeholder />
+                    <pf-select-option value="Filter 2" />
                     <pf-select-option value="1" />
                     <pf-select-option value="2" />
                     <pf-select-option value="3" />
@@ -333,7 +333,7 @@
             <pf-toolbar-item id="stacked-example-resource-select" variant="label">Resource</pf-toolbar-item>
             <pf-toolbar-item>
               <pf-select>
-                <pf-select-option value="Filter 1" placeholder />
+                <pf-select-option value="Filter 1" />
                 <pf-select-option value="A" />
                 <pf-select-option value="B" />
                 <pf-select-option value="C" />
@@ -342,7 +342,7 @@
             <pf-toolbar-item id="stacked-example-status-select" variant="label">Status</pf-toolbar-item>
             <pf-toolbar-item>
               <pf-select>
-                <pf-select-option value="Filter 2" placeholder />
+                <pf-select-option value="Filter 2" />
                 <pf-select-option value="1" />
                 <pf-select-option value="2" />
                 <pf-select-option value="3" />
@@ -351,7 +351,7 @@
             <pf-toolbar-item id="stacked-example-type-select" variant="label">Type</pf-toolbar-item>
             <pf-toolbar-item>
               <pf-select>
-                <pf-select-option value="Filter 3" placeholder />
+                <pf-select-option value="Filter 3" />
                 <pf-select-option value="I" />
                 <pf-select-option value="II" />
                 <pf-select-option value="III" />
@@ -447,7 +447,7 @@ const page = ref(1);
 const perPage = ref(20);
 
 
-const onDelete = (type: string, id: string) => {
+const onDelete = (type?: string, id?: string) => {
   if (!type) {
     filters.risk = [];
     filters.status = [];
@@ -457,7 +457,7 @@ const onDelete = (type: string, id: string) => {
   filters[ktype] = filters[ktype].filter((s: string) => s !== id);
 };
 
-const onDeleteGroup = (type: string) => {
-  filters[type.toLowerCase() as keyof typeof filters] = [];
+const onDeleteGroup = (type: string | undefined) => {
+  filters[type?.toLowerCase() as keyof typeof filters] = [];
 };
 </script>

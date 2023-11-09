@@ -13,7 +13,7 @@
 
     <story-canvas title="Single">
       <pf-select>
-        <pf-select-option placeholder disabled>
+        <pf-select-option disabled>
           Please Choose
         </pf-select-option>
         <pf-select-option value="Mr" />
@@ -55,7 +55,7 @@
 
     <story-canvas title="Checkbox input">
       <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-select-option placeholder disabled>
+        <pf-select-option disabled>
           Please Choose
         </pf-select-option>
         <pf-select-option check value="Mr" />

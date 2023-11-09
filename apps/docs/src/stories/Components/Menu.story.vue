@@ -97,7 +97,7 @@
       </pf-menu>
     </story-canvas>
 
-    <story-canvas title="Filtering with text input">
+    <story-canvas title="Filtering with search input">
       <pf-menu>
         <pf-menu-input>
           <pf-text-input :auto-validate="false" aria-label="Filter menu items" type="search" icon-variant="search" />

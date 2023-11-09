@@ -109,6 +109,10 @@ defineEmits<{
   (name: 'update:validated'): void;
 }>();
 
+defineSlots<{
+  icon?: (props?: Record<never, never>) => any;
+}>();
+
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const input: Ref<HTMLInputElement | undefined> = ref();

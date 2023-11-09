@@ -33,7 +33,7 @@
         <template #skeleton>
           <pf-masthead>
             <pf-masthead-toggle>
-              <pf-page-toggle-button variant="plain">
+              <pf-page-toggle-button>
                 <bars-icon />
               </pf-page-toggle-button>
             </pf-masthead-toggle>
@@ -95,7 +95,7 @@
         <template #skeleton>
           <pf-masthead>
             <pf-masthead-toggle>
-              <pf-page-toggle-button variant="plain">
+              <pf-page-toggle-button>
                 <bars-icon />
               </pf-page-toggle-button>
             </pf-masthead-toggle>
@@ -149,7 +149,7 @@
         <template #skeleton>
           <pf-masthead>
             <pf-masthead-toggle>
-              <pf-page-toggle-button variant="plain">
+              <pf-page-toggle-button>
                 <bars-icon />
               </pf-page-toggle-button>
             </pf-masthead-toggle>
@@ -164,7 +164,7 @@
               <pf-toolbar full-height>
                 <pf-toolbar-content>
                   <pf-toolbar-group space-items="none" align="right">
-                    <pf-toolbar-item visibility="visible" :selected="expanded">
+                    <pf-toolbar-item visibility="visible">
                       <pf-notification-badge variant="unread" :expanded="expanded" @click="expanded = !expanded">
                         <bell-icon />
                       </pf-notification-badge>
