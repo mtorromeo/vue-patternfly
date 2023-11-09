@@ -32,10 +32,10 @@ export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
   /**
    * Identifier fot the item. If the SimpleList has a name it will be used as the form field value.
    */
-  value: string;
+  value?: string;
 
   /** Component type of the SimpleList item */
-  component: 'button' | 'a';
+  component?: 'button' | 'a';
 
   /** Additional classes added to the SimpleList <a> or <button> */
   componentClass?: string | string[] | Record<string, string>;
