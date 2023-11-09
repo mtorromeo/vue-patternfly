@@ -31,8 +31,7 @@ export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttri
   displayMd?: 'inline' | 'stack';
   displayLg?: 'inline' | 'stack';
   displayXl?: 'inline' | 'stack';
-  // eslint-disable-next-line vue/prop-name-casing
-  display_2xl?: 'inline' | 'stack';
+  displayXl2?: 'inline' | 'stack';
 }
 
 withDefaults(defineProps<Props>(), {

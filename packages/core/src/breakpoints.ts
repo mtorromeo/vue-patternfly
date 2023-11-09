@@ -1,18 +1,18 @@
-import { computed, type Prop } from "vue";
+import { computed } from "vue";
 import { toCamelCase, ucfirst } from "./util";
 
 export const breakpoints = ['', 'Sm', 'Md', 'Lg', 'Xl', '2xl'] as const;
 
 // This would be nice but is not supported by vue's defineProps macro https://github.com/vuejs/core/issues/8286
 
-export enum Breakpoints {
-  xs = '',
-  sm = 'Sm',
-  md = 'Md',
-  lg = 'Lg',
-  xl = 'Xl',
-  '2xl' = '2xl',
-}
+// export enum Breakpoints {
+//   xs = '',
+//   sm = 'Sm',
+//   md = 'Md',
+//   lg = 'Lg',
+//   xl = 'Xl',
+//   '2xl' = '2xl',
+// }
 
 // export type Breakpoint = keyof typeof Breakpoints;
 
@@ -31,7 +31,7 @@ export type VisibilityBreakpointProps = {
   visibilityMd?: 'hidden' | 'visible';
   visibilityLg?: 'hidden' | 'visible';
   visibilityXl?: 'hidden' | 'visible';
-  visibility_2xl?: 'hidden' | 'visible';
+  visibilityXl2?: 'hidden' | 'visible';
 }
 
 export type WidthBreakpointProps = {
@@ -40,7 +40,7 @@ export type WidthBreakpointProps = {
   widthMd?: string;
   widthLg?: string;
   widthXl?: string;
-  width_2xl?: string;
+  widthXl2?: string;
 }
 
 export type HeightBreakpointProps = {
@@ -49,7 +49,7 @@ export type HeightBreakpointProps = {
   heightMd?: string;
   heightLg?: string;
   heightXl?: string;
-  height_2xl?: string;
+  heightXl2?: string;
 }
 
 export type SpacerBreakpointProps = {
@@ -58,7 +58,7 @@ export type SpacerBreakpointProps = {
   spacerMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spacerLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spacerXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  spacer_2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  spacerXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type SpaceItemsBreakpointProps = {
@@ -67,7 +67,7 @@ export type SpaceItemsBreakpointProps = {
   spaceItemsMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spaceItemsLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spaceItemsXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  spaceItems_2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  spaceItemsXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type GrowBreakpointProps = {
@@ -76,7 +76,7 @@ export type GrowBreakpointProps = {
   growMd?: boolean;
   growLg?: boolean;
   growXl?: boolean;
-  grow_2xl?: boolean;
+  growXl2?: boolean;
 }
 
 export type ShrinkBreakpointProps = {
@@ -85,7 +85,7 @@ export type ShrinkBreakpointProps = {
   shrinkMd?: boolean;
   shrinkLg?: boolean;
   shrinkXl?: boolean;
-  shrink_2xl?: boolean;
+  shrinkXl2?: boolean;
 }
 
 export type FlexBreakpointProps = {
@@ -94,7 +94,7 @@ export type FlexBreakpointProps = {
   flexMd?: 'default' | 'none' | '1' | '2' | '3' | '4';
   flexLg?: 'default' | 'none' | '1' | '2' | '3' | '4';
   flexXl?: 'default' | 'none' | '1' | '2' | '3' | '4';
-  flex_2xl?: 'default' | 'none' | '1' | '2' | '3' | '4';
+  flexXl2?: 'default' | 'none' | '1' | '2' | '3' | '4';
 }
 
 export type DirectionBreakpointProps = {
@@ -103,7 +103,7 @@ export type DirectionBreakpointProps = {
   directionMd?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   directionLg?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   directionXl?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
-  direction_2xl?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
+  directionXl2?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
 }
 
 export type AlignItemsBreakpointProps = {
@@ -112,7 +112,7 @@ export type AlignItemsBreakpointProps = {
   alignItemsMd?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignItemsLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignItemsXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-  alignItems_2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  alignItemsXl2?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
 }
 
 export type AlignContentBreakpointProps = {
@@ -121,7 +121,7 @@ export type AlignContentBreakpointProps = {
   alignContentMd?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
   alignContentLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
   alignContentXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
-  alignContent_2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
+  alignContentXl2?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
 }
 
 export type AlignSelfBreakpointProps = {
@@ -130,7 +130,7 @@ export type AlignSelfBreakpointProps = {
   alignSelfMd?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignSelfLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignSelfXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-  alignSelf_2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  alignSelfXl2?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
 }
 
 export type AlignBreakpointProps = {
@@ -139,7 +139,7 @@ export type AlignBreakpointProps = {
   alignMd?: 'left' | 'right';
   alignLg?: 'left' | 'right';
   alignXl?: 'left' | 'right';
-  align_2xl?: 'left' | 'right';
+  alignXl2?: 'left' | 'right';
 }
 
 export type JustifyContentBreakpointProps = {
@@ -148,7 +148,7 @@ export type JustifyContentBreakpointProps = {
   justifyContentMd?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   justifyContentLg?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   justifyContentXl?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
-  justifyContent_2xl?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+  justifyContentXl2?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
 }
 
 export type DisplayBreakpointProps = {
@@ -157,7 +157,7 @@ export type DisplayBreakpointProps = {
   displayMd?: 'flex' | 'inline-flex';
   displayLg?: 'flex' | 'inline-flex';
   displayXl?: 'flex' | 'inline-flex';
-  display_2xl?: 'flex' | 'inline-flex';
+  displayXl2?: 'flex' | 'inline-flex';
 }
 
 export type FullWidthBreakpointProps = {
@@ -166,7 +166,7 @@ export type FullWidthBreakpointProps = {
   fullWidthMd?: boolean;
   fullWidthLg?: boolean;
   fullWidthXl?: boolean;
-  fullWidth_2xl?: boolean;
+  fullWidthXl2?: boolean;
 }
 
 export type FlexWrapBreakpointProps = {
@@ -175,7 +175,7 @@ export type FlexWrapBreakpointProps = {
   flexWrapMd?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrapLg?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrapXl?: 'wrap' | 'wrap-reverse' | 'nowrap';
-  flexWrap_2xl?: 'wrap' | 'wrap-reverse' | 'nowrap';
+  flexWrapXl2?: 'wrap' | 'wrap-reverse' | 'nowrap';
 }
 
 export type InsetBreakpointProps = {
@@ -184,7 +184,7 @@ export type InsetBreakpointProps = {
   insetMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   insetLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   insetXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
-  inset_2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+  insetXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 }
 
 export type PaddingBreakpointProps = {
@@ -193,7 +193,7 @@ export type PaddingBreakpointProps = {
   paddingMd?: 'padding' | 'no-padding';
   paddingLg?: 'padding' | 'no-padding';
   paddingXl?: 'padding' | 'no-padding';
-  padding_2xl?: 'padding' | 'no-padding';
+  paddingXl2?: 'padding' | 'no-padding';
 }
 
 export type StickyBreakpointProps = {
@@ -202,7 +202,7 @@ export type StickyBreakpointProps = {
   stickyMd?: 'top' | 'bottom';
   stickyLg?: 'top' | 'bottom';
   stickyXl?: 'top' | 'bottom';
-  sticky_2xl?: 'top' | 'bottom';
+  stickyXl2?: 'top' | 'bottom';
 }
 
 export type BreakpointProps = {
@@ -219,7 +219,9 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
   for (const baseName of baseNames) {
     for (const breakpoint of breakpoints) {
       let breakpointSuffix: string = breakpoint;
-      const prop = baseName ? `${baseName}${breakpointSuffix}` : breakpointSuffix.toLowerCase();
+      const wordSuffixIndex = breakpoint.search(/[a-z]/i);
+      const propSuffix = wordSuffixIndex > 0 ? `${breakpoint.substring(wordSuffixIndex, wordSuffixIndex + 1).toUpperCase()}${breakpoint.substring(wordSuffixIndex + 1)}${breakpoint.substring(0, wordSuffixIndex)}` : breakpoint;
+      const prop = baseName ? `${baseName}${propSuffix}` : propSuffix.toLowerCase();
       if (!prop) {
         continue;
       }
@@ -272,36 +274,4 @@ export function cssVarsFromBreakpointProps(props: any, baseName: string, cssVar:
 
 export function useBreakpointProp(props: any, baseNames: string[], styles: any, options: any) {
   return computed(() => classesFromBreakpointProps(props, baseNames, styles, options));
-}
-
-type TBreakpointProps<Name extends string, T> = {
-  [K in keyof Breakpoints as `${Name}${Capitalize<string & K>}`]: Prop<T>;
-}
-
-/** @deprecated */
-export function breakpointProp<
-  Name extends string,
-  T extends BooleanConstructor | StringConstructor | ArrayConstructor | ObjectConstructor | DateConstructor
->(baseName: Name, type: T, values?: string[]): TBreakpointProps<Name, T> {
-  return Object.fromEntries(breakpoints.map(b => {
-    let _default = null;
-    if (Array.isArray(values) && values.length) {
-      _default = values[0];
-    } else if (type === Boolean) {
-      _default = false;
-    }
-    const definition: {
-      type?: T;
-      required?: boolean;
-      default?: any;
-      validator?(value: any): boolean;
-    } = {
-      type,
-      default: _default,
-    };
-    if (Array.isArray(values) && values.length) {
-      definition.validator = v => values.includes(v);
-    }
-    return [`${baseName}${b}`, definition];
-  })) as any;
 }
