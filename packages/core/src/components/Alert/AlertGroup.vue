@@ -15,6 +15,7 @@
 <script lang="ts" setup>
 import PfAlertGroupInline from './AlertGroupInline.vue';
 import type { ComponentProps } from '../../util';
+import type { RendererElement } from 'vue';
 
 defineOptions({
   name: 'PfAlertGroup',
@@ -27,7 +28,7 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfAlertGr
   /** Turns the container into a live region so that changes to content within the AlertGroup, such as appending an Alert, are reliably announced to assistive technology. */
   liveRegion?: boolean;
   /** Determine where the alert is appended to */
-  appendTo?: string;
+  appendTo?: string | RendererElement | null | undefined;
   /** Custom text to show for the overflow message */
   overflowMessage?: string;
 }

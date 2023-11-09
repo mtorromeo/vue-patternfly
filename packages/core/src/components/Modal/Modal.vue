@@ -187,7 +187,7 @@ const teleportTarget = computed(() => {
     return props.appendTo();
   }
   if (typeof props.appendTo === 'string') {
-    return document.getElementById(props.appendTo) ?? document.body;
+    return document.querySelector(props.appendTo) ?? document.body;
   }
   return props.appendTo ?? document.body;
 });

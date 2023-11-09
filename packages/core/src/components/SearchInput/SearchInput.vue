@@ -205,7 +205,7 @@ export interface Props {
    * append-to="body"
    * append-to="#element-id"
    */
-  appendTo?: HTMLElement | string;
+  appendTo?: 'inline' | string | RendererElement | null | undefined;
 
   /** A callback for when the user clicks the clear button. */
   onClear?: (event: Event) => void;
@@ -225,7 +225,7 @@ export interface Props {
 </script>
 
 <script lang="ts" setup>
-import { type InjectionKey, nextTick, provide, type Ref, ref } from 'vue';
+import { type InjectionKey, nextTick, provide, type Ref, ref, type RendererElement } from 'vue';
 import { useManagedProp } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
