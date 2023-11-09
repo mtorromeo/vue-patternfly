@@ -5,7 +5,7 @@
     ref="el"
     :class="[
       styles.alert,
-      variant === 'default' ? undefined : styles.modifiers[variant], {
+      styles.modifiers[variant], {
         [styles.modifiers.inline]: inline,
         [styles.modifiers.plain]: plain,
         [styles.modifiers.expandable]: expandable,
@@ -129,7 +129,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
-  variant: 'default',
+  variant: 'custom',
   truncateTitle: 0,
   timeoutAnimation: 3000,
   tooltipPosition: 'auto',

@@ -20,7 +20,7 @@ export const AlertVariantIcons = {
   danger: CircleExclamationIcon as Component,
   warning: TriangleExclamationIcon as Component,
   info: CircleInfoIcon as Component,
-  default: BellIcon as Component,
+  custom: BellIcon as Component,
 };
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
@@ -36,7 +36,7 @@ defineOptions({
 });
 
 withDefaults(defineProps<Props>(), {
-  variant: 'default',
+  variant: 'custom',
 });
 
 defineSlots<{

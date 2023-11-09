@@ -3,7 +3,7 @@
     <component-title name="pf-alert" />
 
     <story-canvas title="Types">
-      <pf-alert title="Default alert title" />
+      <pf-alert title="Custom alert title" />
       <pf-alert variant="info" title="Info alert title" />
       <pf-alert variant="success" title="Success alert title" />
       <pf-alert variant="warning" title="Warning alert title" />
@@ -21,7 +21,7 @@
     </story-canvas>
 
     <story-canvas title="Inline types">
-      <pf-alert variant="default" inline title="Default alert title" />
+      <pf-alert variant="custom" inline title="Custom alert title" />
       <pf-alert variant="info" inline title="Info alert title" />
       <pf-alert variant="success" inline title="Success alert title" />
       <pf-alert variant="warning" inline title="Warning alert title" />
@@ -159,7 +159,7 @@
     </story-canvas>
 
     <story-canvas title="Custom icons">
-      <pf-alert title="Default alert title">
+      <pf-alert title="Custom alert title">
         <template #custom-icon>
           <users-icon />
         </template>
