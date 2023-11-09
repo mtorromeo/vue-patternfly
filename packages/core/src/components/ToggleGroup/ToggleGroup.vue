@@ -8,7 +8,8 @@
 export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as InjectionKey<ComputedRef<boolean | undefined>>;
 export const ToggleGroupSelectionKey = Symbol('ToggleGroupSelectionKey') as InjectionKey<WritableComputedRef<unknown>>;
 
-export interface Props<T> extends /* @vue-ignore */ HTMLAttributes {
+// TODO: readd `extends /* @vue-ignore */ HTMLAttributes` once https://github.com/vuejs/language-tools/issues/3723 is fixed
+export interface Props<T> {
   /** Modifies the toggle group to include compact styling. */
   compact?: boolean;
   /** Disable all toggle group items under this component. */
@@ -30,7 +31,7 @@ export function useMultiToggleGroup<T>() {
 
 <script lang="ts" setup generic="T = string | number | (string | number)[]">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
-import { type InjectionKey, provide, type HTMLAttributes, computed, type ComputedRef, type WritableComputedRef } from 'vue';
+import { type InjectionKey, provide, computed, type ComputedRef, type WritableComputedRef } from 'vue';
 import { useManagedProp } from '../../use';
 
 defineOptions({
