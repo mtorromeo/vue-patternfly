@@ -25,6 +25,10 @@
       </template>
     </pf-login-main-header>
 
+    <pf-login-main-body>
+      <slot />
+    </pf-login-main-body>
+
     <pf-login-main-footer v-if="$slots.social || $slots.forgotCredentials || $slots.signup">
       <template v-if="$slots.social" #social>
         <slot name="social" />
@@ -36,10 +40,6 @@
         <slot name="signup" />
       </template>
     </pf-login-main-footer>
-
-    <pf-login-main-body>
-      <slot />
-    </pf-login-main-body>
   </pf-login>
 </template>
 
