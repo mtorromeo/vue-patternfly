@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.16] - 2023-11-16
+
+### Bug Fixes
+
+- *(core)* Renamed all `...-2xl` props to `...-xl2` due to limitations in vue to recognize `...-2xl` as a prop
+- *(SimpleList)* Removed requirement for the `value` and `component` props of `pf-simple-list-item`s
+- *(ToggleGroup)* Removed HTMLAttributes declaration due to upstream issue in vue-tsc
+
+### Documentation
+
+- Added actual background image to the pf-background-image story
+- Fixed some wrong props usage in documentation of components
+
+### Features
+
+- *(LoginPage)* Added `pf-login-main-footer-band-item` and `pf-login-main-footer-links-item` components
+- *(Alert)* Use custom CSS for default
+
+### Refactor
+
+- *(core)* Uniformed append-to props accross components
+
 ## [0.1.0-beta.15] - 2023-11-08
 
 ### Features
