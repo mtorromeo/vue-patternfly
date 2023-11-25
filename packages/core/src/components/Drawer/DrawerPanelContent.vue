@@ -8,7 +8,7 @@
       [styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200,
     }]"
     :style="{
-      '--pf-v5-c-drawer__panel--md--FlexBasis': panelSize === null ? defaultSize : `${panelSize}px`,
+      '--pf-v5-c-drawer__panel--md--FlexBasis': isDefined(panelSize) ? `${panelSize}px` : defaultSize,
       '--pf-v5-c-drawer__panel--md--FlexBasis--min': minSize,
       '--pf-v5-c-drawer__panel--md--FlexBasis--max': maxSize,
       overflowAnchor: position === 'bottom' ? 'none' : undefined,
@@ -55,6 +55,7 @@ import { DrawerColorVariant, DrawerKey } from './common';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDrawerHead from './DrawerHead.vue';
 import { resolveOverridableComponent } from '../../helpers';
+import { isDefined } from '@vueuse/shared';
 
 defineOptions({
   name: 'PfDrawerPanelContent',
