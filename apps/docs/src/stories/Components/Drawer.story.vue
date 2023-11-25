@@ -64,13 +64,15 @@
         </pf-drawer-content-body>
 
         <pf-drawer-panel-content :resizable="resizable" default-size="350px" min-size="150px">
-          <span :tabindex="expanded ? 0 : -1">
-            drawer-panel
-          </span>
+          <pf-drawer-head :no-padding="noPanelPadding">
+            <span :tabindex="expanded ? 0 : -1">
+              drawer-panel
+            </span>
 
-          <pf-drawer-actions>
-            <pf-drawer-close-button @click="expanded = false" />
-          </pf-drawer-actions>
+            <pf-drawer-actions>
+              <pf-drawer-close-button @click="expanded = false" />
+            </pf-drawer-actions>
+          </pf-drawer-head>
         </pf-drawer-panel-content>
       </pf-drawer>
     </story-canvas>
