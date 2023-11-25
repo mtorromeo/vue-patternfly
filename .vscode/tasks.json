@@ -63,6 +63,32 @@
       }
     },
     {
+      "label": "Watch table",
+      "type": "shell",
+      "command": "pnpm watch",
+      "options": {
+        "cwd": "packages/table"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "group": {
+        "kind": "build",
+        // this is the profile name you can use to color/iconise the terminal
+        "profile": "npm-server"
+      },
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen",
+        "instanceLimit": 1
+      }
+    },
+    {
       "label": "Start dev servers",
       "dependsOrder": "parallel",
       "dependsOn": [

@@ -12,6 +12,7 @@
   "dependencies": {
     "@patternfly/patternfly": "^5.1.0",
     "@vue-patternfly/core": "workspace:^",
+    "@vue-patternfly/table": "workspace:^",
     "@vue-patternfly/icons": "workspace:^",
     "pinia": "^2.1.7",
     "shiki": "^0.14.5",
