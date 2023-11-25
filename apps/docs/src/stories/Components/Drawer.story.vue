@@ -1,10 +1,21 @@
 <template>
   <doc-page title="Drawer">
-    <component-title name="pf-drawer" />
+    <template #description>A <b>drawer</b> is a sliding panel that enters from the right edge of the viewport. It can be configured to either overlay content on a page or create a sidebar by pushing that content to the left.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Drawer/Drawer.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerActions.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerCloseButton.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerContent.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerContentBody.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerHead.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerMain.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerPanelBody.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerPanelContent.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerSection.vue" />
+    </template>
 
     <pre v-md>
-      A **drawer** is a sliding panel that enters from the right edge of the viewport. It can be configured to either overlay content on a page or create a sidebar by pushing that content to the left.
-
       ## Demo
     </pre>
 

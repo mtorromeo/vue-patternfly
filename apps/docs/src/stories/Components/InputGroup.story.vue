@@ -1,6 +1,12 @@
 <template>
   <doc-page title="Input Group">
-    <component-title name="pf-input-group" />
+    <template #description>An <b>input group</b> groups multiple related controls or inputs together so they appear as one control.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/InputGroup/InputGroup.vue" />
+      <component-info src="packages/core/src/components/InputGroup/InputGroupItem.vue" />
+      <component-info src="packages/core/src/components/InputGroup/InputGroupText.vue" />
+    </template>
 
     <story-canvas title="Default">
       <pf-input-group>

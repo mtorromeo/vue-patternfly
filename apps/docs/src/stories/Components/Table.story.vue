@@ -1,6 +1,15 @@
 <template>
   <doc-page title="Table">
-    <component-title name="pf-table" />
+    <template #description>A <b>table</b> is used to display large data sets that can be easily laid out in a simple grid with column headers.</template>
+
+    <template #apidocs>
+      <component-info src="packages/table/src/Table.vue" />
+      <component-info src="packages/table/src/Thead.vue" />
+      <component-info src="packages/table/src/Tbody.vue" />
+      <component-info src="packages/table/src/Tr.vue" />
+      <component-info src="packages/table/src/Th.vue" />
+      <component-info src="packages/table/src/Td.vue" />
+    </template>
 
     <pre v-md>
       Note: `Table` lives in its own package at [@vue-patternfly/table](https://www.npmjs.com/package/@vue-patternfly/table)!
@@ -64,7 +73,7 @@ interface Repository {
 const repositories: Repository[] = [
   { name: 'one', branches: 'two', prs: 'three', workspaces: 'four', lastCommit: 'five' },
   { name: 'one - 2', branches: null, prs: null, workspaces: 'four - 2', lastCommit: 'five - 2' },
-  { name: 'one - 3', branches: 'two - 3', prs: 'three - 3', workspaces: 'four - 3', lastCommit: 'five - 3' }
+  { name: 'one - 3', branches: 'two - 3', prs: 'three - 3', workspaces: 'four - 3', lastCommit: 'five - 3' },
 ];
 
 const columnNames = {
@@ -72,7 +81,7 @@ const columnNames = {
   branches: 'Branches',
   prs: 'Pull requests',
   workspaces: 'Workspaces',
-  lastCommit: 'Last commit'
+  lastCommit: 'Last commit',
 };
 
 const tableVariant: Ref<'default' | 'compact' | 'compactBorderless'> = ref('default');

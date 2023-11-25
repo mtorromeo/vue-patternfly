@@ -1,9 +1,17 @@
 <template>
   <doc-page title="Search input">
-    <component-title name="pf-search-input" />
+    <template #description>
+      <pre v-md>
+        A **search input** is a type of input field that can be user to search, find, or filter. See [filter guidelines](https://www.patternfly.org/guidelines/filters) for more information on using search input as a filter.
+      </pre>
+    </template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/SearchInput/AdvancedSearchMenu.vue" />
+      <component-info src="packages/core/src/components/SearchInput/SearchInput.vue" />
+    </template>
 
     <pre v-md>
-      A **search input** is a type of input field that can be user to search, find, or filter. See [filter guidelines](https://www.patternfly.org/guidelines/filters) for more information on using search input as a filter.
       ## Examples
     </pre>
 

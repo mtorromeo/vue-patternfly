@@ -1,10 +1,13 @@
 <template>
   <doc-page title="Icon">
     <component-title name="pf-icon" />
+    <template #description>An <b>icon</b> component is a container that allows for icons of varying dimensions, as well as spinners, to seamlessly replace each other without shifting surrounding content.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Icon.vue" />
+    </template>
 
     <pre v-md>
-      An **icon** component is a container that allows for icons of varying dimensions, as well as spinners, to seamlessly replace each other without shifting surrounding content.
-
       ## Examples
     </pre>
 

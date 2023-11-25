@@ -1,13 +1,17 @@
 <template>
   <doc-page title="Form Select">
-    <component-title name="pf-form-select" />
+    <template #description>A <b>form select</b> embeds browser native select lists into a form.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/FormSelect/FormSelect.vue" />
+      <component-info src="packages/core/src/components/FormSelect/FormSelectOption.vue" />
+    </template>
 
     <pre v-md>
-      A form **select** embeds browser native select lists into a form.
       ## Usage
       If your use case only calls for simple selects, you may opt to use a form select as an field inside a form. However, if your use case requires more customization and capability, use a custom select list.
       **Note**: Use only custom selects or only form selects in the same context. Mixing them together compromises visual consistency in your UI.
-      [View PatternFly design guidelines](https://www.patternfly.org/components/form-select/design-guidelines)
+
       ## Differences from patternfly-react
       - The `FormSelectOptionGroup` component is not implemented as it does not provide any value over native `&lt;optgroup>`.
       - The `value` prop is replaced by `modelValue` so that the component can be used with `v-model`.

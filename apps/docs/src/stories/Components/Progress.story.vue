@@ -1,10 +1,12 @@
 <template>
   <doc-page title="Progress">
-    <component-title name="pf-progress" />
+    <template #description>A <b>progress</b> bar informs users about the completion status of an ongoing process or task.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Progress.vue" />
+    </template>
 
     <pre v-md>
-      A **progress** bar informs users about the completion status of an ongoing process or task.
-      See full [design guidelines](https://www.patternfly.org/components/progress/design-guidelines) on the official patternfly documentation.
       ## Examples
     </pre>
 

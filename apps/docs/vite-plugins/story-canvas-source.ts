@@ -4,6 +4,7 @@ import { dedent } from "ts-dedent";
 import { parse, HTMLElement, Node } from 'node-html-parser';
 import Markdown from 'markdown-it';
 import markdownItClass from '@toycode/markdown-it-class';
+// eslint-disable-next-line vue/prefer-import-from-vue
 import { escapeHtml } from '@vue/shared';
 import { getHighlighter } from 'shiki';
 import fs from 'fs/promises';
@@ -47,7 +48,7 @@ function fixSelfClosingTag(code: string) {
 }
 
 async function addSourceToStoryCanvas(el: HTMLElement) {
-  let source = null;
+  let source: string | null = null;
 
   const matches = el.rawAttrs.match(/(?:^|\s)src="([^"]+)"/);
   if (matches) {
@@ -66,7 +67,7 @@ async function addSourceToStoryCanvas(el: HTMLElement) {
 
 function replaceMarkdown(md: Markdown, el: HTMLElement) {
   const mdDiv = new HTMLElement('div', { class: 'markdown pf-v5-c-content' }, '', undefined, [0,0]);
-  mdDiv.innerHTML = md.render(dedent(el.innerText.replaceAll('&lt;', '<').replaceAll('&gt;', '>')));
+  mdDiv.innerHTML = md.render(dedent(el.innerText.replace(/&lt;/g, '<').replace(/&gt;/g, '>')));
   el.parentNode.exchangeChild(el, mdDiv);
 }
 

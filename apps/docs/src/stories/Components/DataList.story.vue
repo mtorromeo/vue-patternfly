@@ -1,10 +1,20 @@
 <template>
   <doc-page title="Data list">
-    <component-title name="pf-data-list" />
+    <template #description>A <b>data list</b> is used to display large data sets when you need a flexible layout or need to include interactive content like charts.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/DataList/DataList.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListAction.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListCell.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListCheck.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListContent.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListItem.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListItemCells.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListItemRow.vue" />
+      <component-info src="packages/core/src/components/DataList/DataListToggle.vue" />
+    </template>
 
     <pre v-md>
-      A **data list** is used to display large data sets when you need a flexible layout or need to include interactive content like charts.
-
       <!-- PatternFly offers 2 components for displaying large data sets: data lists and tables. While they satisfy similar use cases, choosing the correct component to use in your design will be dependent on the type of data you need to display. -->
 
       Use data lists when:

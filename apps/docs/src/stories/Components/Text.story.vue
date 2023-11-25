@@ -1,6 +1,13 @@
 <template>
   <doc-page title="Text">
-    <component-title name="pf-text" />
+    <template #description><b>PfText</b> and <b>PfTextList</b> components are always wrapped in <b>PfTextContent</b> and provide correct formatting to a number of standard HTML tags.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Text/Text.vue" />
+      <component-info src="packages/core/src/components/Text/TextContent.vue" />
+      <component-info src="packages/core/src/components/Text/TextList.vue" />
+      <component-info src="packages/core/src/components/Text/TextListItem.vue" />
+    </template>
 
     <pre v-md>
       ## Examples

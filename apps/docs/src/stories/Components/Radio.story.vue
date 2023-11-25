@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Radio">
-    <component-title name="pf-radio" />
+    <template #description>A <b>radio</b> button is used to present the user with mutually exclusive choices. Always present radio buttons in groups of 2 or more.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Radio.vue" />
+    </template>
 
     <pre v-md>
       ## Examples

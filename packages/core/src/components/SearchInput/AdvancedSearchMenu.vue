@@ -84,7 +84,7 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfPanel> 
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  attributes: () => [] as (string | SearchAttribute)[],
+  attributes: (): (string | SearchAttribute)[] => [],
   resetButtonLabel: 'Reset',
   submitSearchButtonLabel: 'Search',
 });

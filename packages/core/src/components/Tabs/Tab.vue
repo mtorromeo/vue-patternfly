@@ -38,10 +38,10 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
-import { computed, getCurrentInstance, inject, ref, watch, watchEffect } from 'vue';
+import { computed, getCurrentInstance, inject, ref, watch, watchEffect, type HTMLAttributes } from 'vue';
 import { TabsKey, TabsProvideKey } from './Tabs.vue';
 import PfTabTitleText from './TabTitleText.vue';
-import PfTabContent, { type Props as TabContentProps } from './TabContent.vue';
+import PfTabContent from './TabContent.vue';
 import { useChildrenTracker } from '../../use';
 
 defineOptions({
@@ -49,7 +49,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ TabContentProps {
+export interface Props extends /* @vue-ignore */ HTMLAttributes {
   /** Content rendered in the tab title. */
   title?: string;
 
@@ -101,7 +101,6 @@ watchEffect(() => {
     tabContent.hidden = key.value !== activeKey?.value;
   }
 });
-
 
 defineExpose({
   key,

@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Label">
-    <component-title name="pf-label" />
+    <template #description>The <b>label</b> component allows users to add specific element captions for user clarity and convenience.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Label.vue" />
+    </template>
 
     <story-canvas title="Filled">
       <pf-label>Grey</pf-label>

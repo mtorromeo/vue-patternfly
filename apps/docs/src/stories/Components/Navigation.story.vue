@@ -1,6 +1,15 @@
 <template>
-  <doc-page title="Nav">
-    <component-title name="pf-nav" />
+  <doc-page title="Navigation">
+    <template #description>A <b>navigation</b> organizes an application's structure and content, making it easy to find information and accomplish tasks. Navigation communicates relationships, context, and actions a user can take within an application.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Nav/Nav.vue" />
+      <component-info src="packages/core/src/components/Nav/NavExpandable.vue" />
+      <component-info src="packages/core/src/components/Nav/NavGroup.vue" />
+      <component-info src="packages/core/src/components/Nav/NavItem.vue" />
+      <component-info src="packages/core/src/components/Nav/NavItemSeparator.vue" />
+      <component-info src="packages/core/src/components/Nav/NavList.vue" />
+    </template>
 
     <story-canvas title="Default" :dark="theme !== 'light' && variant !== 'tertiary'" max-width="300px">
       <pf-nav>

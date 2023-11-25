@@ -1,6 +1,11 @@
 <template>
   <doc-page title="Expandable Section">
-    <component-title name="pf-expandable-section" />
+    <template #description>An <b>expandable section</b> component is used to support progressive disclosure in a form or page by hiding additional content when you don't want it to be shown by default. An expandable section can contain any type of content such as plain text, form inputs, and charts.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/ExpandableSection/ExpandableSection.vue" />
+      <component-info src="packages/core/src/components/ExpandableSection/ExpandableSectionToggle.vue" />
+    </template>
 
     <story-canvas title="Basic">
       <pf-expandable-section v-model:expanded="expanded1" toggle-text-expanded="Show less" toggle-text-collapsed="Show more">

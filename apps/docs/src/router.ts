@@ -39,7 +39,7 @@ for (const story in storyComponents) {
   });
   routes.push({
     name,
-    path: name === defaultRoute ? '/' : `/stories/${pathToDashed(category)}/${name}`,
+    path: name === defaultRoute ? '/' : `/stories/${pathToDashed(category)}/${name}/:mainTab(story|apidocs)?`,
     component: storyComponents[story],
   });
 }

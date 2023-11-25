@@ -1,13 +1,20 @@
 <template>
   <doc-page title="Form">
-    <component-title name="pf-form" />
+    <template #description>A <b>form</b> is a group of elements used to collect information from a user in a variety of contexts including in a modal, in a wizard, or on a page. Use cases for forms include tasks reliant on user-inputted information for completion like logging in, registering, configuring settings, or completing surveys.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Form/ActionGroup.vue" />
+      <component-info src="packages/core/src/components/Form/Form.vue" />
+      <component-info src="packages/core/src/components/Form/FormAlert.vue" />
+      <component-info src="packages/core/src/components/Form/FormFieldGroup.vue" />
+      <component-info src="packages/core/src/components/Form/FormFieldGroupHeader.vue" />
+      <component-info src="packages/core/src/components/Form/FormGroup.vue" />
+      <component-info src="packages/core/src/components/Form/FormHelperText.vue" />
+      <component-info src="packages/core/src/components/Form/FormSection.vue" />
+    </template>
 
     <pre v-md>
-      A **form** is a group of elements used to collect information from a user in a variety of contexts including in a modal, in a wizard, or on a page. Use cases for forms include tasks reliant on user-inputted information for completion like logging in, registering, configuring settings, or completing surveys.
-
       Use forms to accomplish tasks reliant on user-inputted information like logging in, registering for accounts or services, configuring settings, or completing surveys.
-
-      See full [design guidelines](https://www.patternfly.org/components/form/design-guidelines) on the official patternfly documentation.
 
       ## Differences from patternfly-react
       - The `novalidate` attribute is not implicitly applied to the form but you can still add it yourself. This makes `pf-form` usable with the native form validation technique.

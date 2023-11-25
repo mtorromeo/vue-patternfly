@@ -1,11 +1,15 @@
 <template>
   <doc-page title="Hint">
-    <component-title name="pf-hint" />
+    <template #description>A <b>hint</b> is in-app messaging that provides a one-step reminder, explanation, or call to action for a page or modal.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Hint/Hint.vue" />
+      <component-info src="packages/core/src/components/Hint/HintBody.vue" />
+      <component-info src="packages/core/src/components/Hint/HintFooter.vue" />
+      <component-info src="packages/core/src/components/Hint/HintTitle.vue" />
+    </template>
 
     <pre v-md>
-      A **hint** is in-app messaging that provides a one-step reminder, explanation, or call to action for a page or modal.
-      See full [design guidelines](https://www.patternfly.org/components/hint/design-guidelines) on the official patternfly documentation.
-
       ## Examples
     </pre>
 

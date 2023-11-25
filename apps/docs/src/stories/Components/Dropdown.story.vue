@@ -1,6 +1,13 @@
 <template>
   <doc-page title="Dropdown">
-    <component-title name="pf-dropdown" />
+    <template #description>A <b>dropdown</b> presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location. See select component guidelines for more information about making one or more selections from a list of items in a value list.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Dropdown/Dropdown.vue" />
+      <component-info src="packages/core/src/components/Dropdown/DropdownGroup.ts" />
+      <component-info src="packages/core/src/components/Dropdown/DropdownItem.ts" />
+      <component-info src="packages/core/src/components/Dropdown/DropdownList.ts" />
+    </template>
 
     <story-canvas title="Basic">
       <pf-dropdown v-model:open="open1" text="Dropdown">

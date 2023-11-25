@@ -1,6 +1,11 @@
 <template>
   <doc-page title="Modal">
-    <component-title name="pf-modal" />
+    <template #description>A <b>modal</b> displays important information to a user without requiring them to navigate to a new page.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Modal/Modal.vue" />
+      <component-info src="packages/core/src/components/Modal/ModalHeader.vue" />
+    </template>
 
     <story-canvas title="Default">
       <pf-button @click="open1 = !open1">Toggle Modal</pf-button>

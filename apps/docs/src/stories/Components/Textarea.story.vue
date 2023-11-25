@@ -1,6 +1,10 @@
 <template>
-  <doc-page title="TextArea">
-    <component-title name="pf-textarea" />
+  <doc-page title="Textarea">
+    <template #description>A <b>text area</b> component is used for entering a paragraph of text that is longer than one line.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Textarea.vue" />
+    </template>
 
     <pre v-md>
       ## Differences from patternfly-react

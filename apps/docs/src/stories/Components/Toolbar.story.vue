@@ -1,6 +1,17 @@
 <template>
   <doc-page title="Toolbar">
-    <component-title name="pf-toolbar" />
+    <template #description>A <b>toolbar</b> allows a user to manage and manipulate a data set. Data can be presented in any valid presentation, a table, a list, or a data visualization (chart), for example. The toolbar responsively accommodates controls and displays applied filters in chip groups.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Toolbar/Toolbar.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarChipGroupContent.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarContent.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarExpandableContent.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarFilter.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarGroup.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarItem.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarToggleGroup.vue" />
+    </template>
 
     <story-canvas title="Default">
       <pf-toolbar>

@@ -1,10 +1,13 @@
 <template>
   <doc-page title="Toggle group">
-    <component-title name="pf-toggle-group" />
+    <template #description>A <b>toggle group</b> is a group of controls that can be used to quickly switch between actions or states.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/ToggleGroup/ToggleGroup.vue" />
+      <component-info src="packages/core/src/components/ToggleGroup/ToggleGroupItem.vue" />
+    </template>
 
     <pre v-md>
-      A **toggle group** is a group of controls that can be used to quickly switch between actions or states.
-
       ## Examples
     </pre>
 

@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Popover">
-    <component-title name="pf-popover" />
+    <template #description>A <b>popover</b> is in-app messaging that provides more information on specific product areas. Popovers display content in a new window that overlays the current page. Unlike modals, popovers don't block the current page.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Popover.vue" />
+    </template>
 
     <story-canvas title="Example">
       <pf-popover>

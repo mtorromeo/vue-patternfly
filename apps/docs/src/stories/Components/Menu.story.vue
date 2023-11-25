@@ -1,10 +1,25 @@
 <template>
   <doc-page title="Menu">
-    <component-title name="pf-menu" />
+    <template #description>
+      <pre v-md>
+        A **menu** is a list of options or actions that users can choose from. It can be used in a variety of contexts whenever the user needs to choose between multiple values, options, or actions. A menu can be opened in a [dropdown](#/stories/components/dropdown) or [select](#/stories/components/select) list, or it can be revealed by right clicking on a specific region within a page.
+      </pre>
+    </template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Menu/DrilldownMenu.vue" />
+      <component-info src="packages/core/src/components/Menu/Menu.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuBreadcrumb.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuContent.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuFooter.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuInput.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuItem.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuItemAction.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuList.vue" />
+    </template>
 
     <pre v-md>
-      A **menu** is a list of options or actions that users can choose from. It can be used in a variety of contexts whenever the user needs to choose between multiple values, options, or actions. A menu can be opened in a [dropdown](#/stories/components/dropdown) or [select](#/stories/components/select) list, or it can be revealed by right clicking on a specific region within a page.
-
       ## Differences from patternfly-react
       - The `pf-menu-content`, `pf-menu-list` and `pf-menu-input` components are optional.
 

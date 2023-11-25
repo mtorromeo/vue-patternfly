@@ -1,10 +1,13 @@
 <template>
   <doc-page title="Helper Text">
-    <component-title name="pf-helper-text" />
+    <template #description><b>Helper text</b> is an on-screen field guideline that helps provide context regarding field inputs.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/HelperText/HelperText.vue" />
+      <component-info src="packages/core/src/components/HelperText/HelperTextItem.vue" />
+    </template>
 
     <pre v-md>
-      See full [design guidelines](https://www.patternfly.org/components/helper-text/design-guidelines) on the official patternfly documentation.
-
       ## Examples
     </pre>
 

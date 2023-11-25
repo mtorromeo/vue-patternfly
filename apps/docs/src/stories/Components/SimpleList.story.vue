@@ -1,9 +1,14 @@
 <template>
   <doc-page title="Simple List">
-    <component-title name="pf-simple-list" />
+    <template #description>A <b>simple list</b> provides a list of selectable items that can be shown within a page. Each item is described by a text label. The list may be divided into logical sections by introducing group headers.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/SimpleList/SimpleList.vue" />
+      <component-info src="packages/core/src/components/SimpleList/SimpleListGroup.vue" />
+      <component-info src="packages/core/src/components/SimpleList/SimpleListItem.vue" />
+    </template>
 
     <pre v-md>
-      A **simple list provides** a list of selectable items that can be shown within a page. Each item is described by a text label. The list may be divided into logical sections by introducing group headers.
       ## Differences from patternfly-react
       - The list can be used as a form element by specifying a `name`.
       - A `modelValue` prop has been added so that the component can be used with `v-model`.

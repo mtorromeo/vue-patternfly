@@ -1,6 +1,5 @@
 <template>
-  <pf-label>&lt;{{ camelName }}&gt; / &lt;{{ name }}&gt;</pf-label>
-  <br><br>
+  <pf-label>&lt;{{ name }}&gt; / &lt;{{ kebabName }}&gt;</pf-label>
 </template>
 
 <script lang="ts" setup>
@@ -9,15 +8,13 @@ import type { ComponentProps, PfTitle } from '@vue-patternfly/core';
 
 interface Props extends /* @vue-ignore */ ComponentProps<typeof PfTitle> {
   name: string;
+  test?: object;
 }
 
 const props = defineProps<Props>();
 
-const camelize = (s: string) =>
-  s.toUpperCase().replace("-", "").replace("_", "");
-
-const camelName = computed(() =>
-  props.name.charAt(0).toUpperCase() +
-  props.name.substring(1).replace(/([-_][a-z])/gi, camelize),
+const kebabName = computed(() =>
+  props.name.charAt(0).toLowerCase() +
+  props.name.substring(1).replace(/([A-Z])/g, (s: string) => `-${s.toLowerCase()}`),
 );
 </script>

@@ -1,10 +1,12 @@
 <template>
   <doc-page title="Notification Badge">
-    <component-title name="pf-notification-badge" />
+    <template #description>A <b>notification badge</b> is intended to be used with a notification drawer as a visible indicator to alert the user about incoming notifications.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/NotificationBadge.vue" />
+    </template>
 
     <pre v-md>
-      A **notification badge** is intended to be used with a notification drawer as a visible indicator to alert the user about incoming notifications.
-      See full [design guidelines](https://www.patternfly.org/components/notification-badge/design-guidelines) on the official patternfly documentation.
       ## Examples
     </pre>
 

@@ -1,6 +1,11 @@
 <template>
   <doc-page title="Breadcrumb">
-    <component-title name="pf-breadcrumb" />
+    <template #description>A <b>breadcrumb</b> provides page context to help users navigate more efficiently and understand where they are in the application hierarchy.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Breadcrumb/Breadcrumb.vue" />
+      <component-info src="packages/core/src/components/Breadcrumb/BreadcrumbItem.vue" />
+    </template>
 
     <story-canvas title="Example">
       <pf-breadcrumb>

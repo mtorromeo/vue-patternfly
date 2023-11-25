@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Button">
-    <component-title name="pf-button" />
+    <template #description>A <b>button</b> is a box area or text that communicates and triggers user actions when clicked or selected. Buttons can be used to communicate and immediately trigger actions a user can take in an application, like submitting a form, canceling a process, or creating a new object. Buttons can also be used to take a user to a new location, like another page inside of a web application, or an external site such as help or documentation.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Button.vue" />
+    </template>
 
     <story-canvas title="Variations">
       <pf-button variant="primary">Primary</pf-button>

@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Badge">
-    <component-title name="pf-badge" />
+    <template #description>A <b>badge</b> is used to annotate other information like a label or an object name.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Badge.vue" />
+    </template>
 
     <story-canvas title="Read">
       <pf-badge read>7</pf-badge>

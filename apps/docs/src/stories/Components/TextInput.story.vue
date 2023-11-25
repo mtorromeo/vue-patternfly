@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Text Input">
-    <component-title name="pf-text-input" />
+    <template #description>A <b>text input</b> is used to gather free-form text from a user.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/TextInput.vue" />
+    </template>
 
     <story-canvas title="Basic">
       <pf-text-input v-model="text1" aria-label="text input example" />

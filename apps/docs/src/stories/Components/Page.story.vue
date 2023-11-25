@@ -1,11 +1,19 @@
 <template>
   <doc-page title="Page">
-    <component-title name="pf-page" />
+    <template #description>The <b>page</b> component is used to define the basic layout of a page with either vertical or horizontal navigation.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Page/Page.vue" />
+      <component-info src="packages/core/src/components/Page/PageBreadcrumb.vue" />
+      <component-info src="packages/core/src/components/Page/PageGroup.vue" />
+      <component-info src="packages/core/src/components/Page/PageNavigation.vue" />
+      <component-info src="packages/core/src/components/Page/PageSection.vue" />
+      <component-info src="packages/core/src/components/Page/PageSidebar.vue" />
+      <component-info src="packages/core/src/components/Page/PageSidebarBody.vue" />
+      <component-info src="packages/core/src/components/Page/PageToggleButton.vue" />
+    </template>
 
     <pre v-md>
-      The **page** component is used to define the basic layout of a page with either vertical or horizontal navigation.
-
-      See full [design guidelines](https://www.patternfly.org/components/page/design-guidelines) on the official patternfly documentation.
       ## Differences from patternfly-react
       - `pf-page-breadcrumb`, `pf-page-navigation` and `pf-page-section` can be limited in width by setting their `max-width` prop.
 

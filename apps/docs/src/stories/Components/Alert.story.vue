@@ -1,6 +1,14 @@
 <template>
   <doc-page title="Alert">
-    <component-title name="pf-alert" />
+    <template #description>An <b>alert</b> is a notification that provides brief information to the user without blocking their workflow.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Alert/Alert.vue" />
+      <component-info src="packages/core/src/components/Alert/AlertActionLink.vue" />
+      <component-info src="packages/core/src/components/Alert/AlertGroup.vue" />
+      <component-info src="packages/core/src/components/Alert/AlertGroupInline.vue" />
+      <component-info src="packages/core/src/components/Alert/AlertIcon.vue" />
+    </template>
 
     <story-canvas title="Types">
       <pf-alert title="Custom alert title" />
@@ -185,6 +193,105 @@
         </template>
       </pf-alert>
     </story-canvas>
+
+    <story-canvas title="Static Alert Group">
+      <pf-alert-group>
+        <pf-alert title="Success Alert" variant="success" inline />
+        <pf-alert title="Info Alert" variant="info" inline />
+      </pf-alert-group>
+    </story-canvas>
+
+    <story-canvas title="Toast">
+      <pf-input-group>
+        <pf-button
+          variant="secondary"
+          @click="alerts3.push({
+            title: 'Toast Success Alert',
+            variant: 'success',
+            key: getUniqueId(),
+          })"
+        >
+          Add Toast Success Alert
+        </pf-button>
+        <pf-button
+          variant="secondary"
+          @click="alerts3.push({
+            title: 'Toast Info Alert',
+            variant: 'info',
+            key: getUniqueId(),
+          })"
+        >
+          Add Toast Info Alert
+        </pf-button>
+        <pf-button
+          variant="secondary"
+          @click="alerts3.push({
+            title: 'Toast Danger Alert',
+            variant: 'danger',
+            key: getUniqueId(),
+          })"
+        >
+          Add Toast Danger Alert
+        </pf-button>
+      </pf-input-group>
+
+      <pf-alert-group toast>
+        <pf-alert
+          v-for="(a, index) of alerts3"
+          :key="a.key"
+          :variant="a.variant"
+          :title="a.title"
+          live-region
+          @close="alerts3.splice(index, 1)"
+        />
+      </pf-alert-group>
+    </story-canvas>
+
+    <story-canvas title="Toast with overflow capture">
+      <pf-input-group>
+        <pf-button
+          variant="secondary"
+          @click="alerts2.push({
+            title: 'Toast Success Alert',
+            variant: 'success',
+            key: getUniqueId(),
+          })"
+        >
+          Add Toast Success Alert
+        </pf-button>
+        <pf-button
+          variant="secondary"
+          @click="alerts2.push({
+            title: 'Toast Info Alert',
+            variant: 'info',
+            key: getUniqueId(),
+          })"
+        >
+          Add Toast Info Alert
+        </pf-button>
+        <pf-button
+          variant="secondary"
+          @click="alerts2.push({
+            title: 'Toast Danger Alert',
+            variant: 'danger',
+            key: getUniqueId(),
+          })"
+        >
+          Add Toast Danger Alert
+        </pf-button>
+      </pf-input-group>
+
+      <pf-alert-group toast live-region :overflow-message="overflowMessage" @overflow-click="onOverflowClick">
+        <pf-alert
+          v-for="(a, index) of alerts2.slice(0, maxDisplayed)"
+          :key="a.key"
+          :variant="a.variant"
+          :title="a.title"
+          live-region
+          @close="alerts2.splice(index, 1)"
+        />
+      </pf-alert-group>
+    </story-canvas>
   </doc-page>
 </template>
 
@@ -195,7 +302,7 @@
 </style>
 
 <script lang="ts" setup>
-import { reactive, ref, type HTMLAttributes } from 'vue';
+import { computed, reactive, ref, type HTMLAttributes } from 'vue';
 import type { ComponentProps, PfAlert } from '@vue-patternfly/core';
 import UsersIcon from '@vue-patternfly/icons/users-icon';
 import BoxIcon from '@vue-patternfly/icons/box-icon';
@@ -216,6 +323,8 @@ type AlertData = {
 const sample_text = ref("Alert text");
 
 const alerts: AlertData[] = reactive([]);
+const alerts2: AlertData[] = reactive([]);
+const alerts3: AlertData[] = reactive([]);
 const alert = (msg: string) => window.alert(msg);
 
 const getUniqueId = () => new Date().getTime();
@@ -239,4 +348,14 @@ const startAsyncAlert = () => {
 };
 
 const showTimeoutAlerts = ref(false);
+
+const onOverflowClick = () => console.log('Overflow message clicked');
+const maxDisplayed = 4;
+const overflowMessage = computed(() => {
+  const overflow = alerts2.length - maxDisplayed;
+  if (overflow > 0) {
+    return `View ${overflow} more alerts`;
+  }
+  return '';
+});
 </script>

@@ -1,13 +1,19 @@
 <template>
   <doc-page title="Select">
-    <component-title name="pf-select" />
+    <template #description>A <b>select list</b> enables users to select one or more items from a list. Use a select list when options are dynamic or variable.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Select/Select.vue" />
+      <component-info src="packages/core/src/components/Select/SelectGroup.ts" />
+      <component-info src="packages/core/src/components/Select/SelectList.ts" />
+      <component-info src="packages/core/src/components/Select/SelectOption.ts" />
+    </template>
 
     <pre v-md>
-      A **select list** enables users to select one or more items from a list. Use a select list when options are dynamic or variable.
-      [View PatternFly design guidelines](https://www.patternfly.org/components/select/design-guidelines)
       ## Differences from patternfly-react
       - There is no `grouped` prop since the presence of groups is auto-detected.
       See [common differences from patternfly-react](#/).
+
       ## Examples
     </pre>
 

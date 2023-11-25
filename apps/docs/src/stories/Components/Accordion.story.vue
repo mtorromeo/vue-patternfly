@@ -1,7 +1,12 @@
 
 <template>
   <doc-page title="Accordion">
-    <component-title name="pf-accordion" />
+    <template #description>An <b>accordion</b> is an interactive container that expands and collapses to hide or reveal nested content. It takes advantage of progressive disclosure to help reduce page scrolling, by allowing users to choose whether they want to show or hide more detailed information as needed.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Accordion/Accordion.vue" />
+      <component-info src="packages/core/src/components/Accordion/AccordionItem.vue" />
+    </template>
 
     <story-canvas title="Default">
       <pf-accordion>

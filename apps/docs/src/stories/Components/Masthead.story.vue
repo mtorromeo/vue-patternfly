@@ -1,10 +1,16 @@
 <template>
   <doc-page title="Masthead">
-    <component-title name="pf-masthead" />
+    <template #description>A <b>masthead</b> contains global properties such as logotype, navigation and settings in an organized fashion and it is accessible from all parts of the application. All pages should share a common masthead.</template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/components/Masthead/Masthead.vue" />
+      <component-info src="packages/core/src/components/Masthead/MastheadBrand.vue" />
+      <component-info src="packages/core/src/components/Masthead/MastheadContent.vue" />
+      <component-info src="packages/core/src/components/Masthead/MastheadMain.vue" />
+      <component-info src="packages/core/src/components/Masthead/MastheadToggle.vue" />
+    </template>
 
     <pre v-md>
-      A **masthead** contains global properties such as logotype, navigation and settings in an organized fashion and it is accessible from all parts of the application. All pages should share a common masthead.
-
       ## Examples
     </pre>
 
