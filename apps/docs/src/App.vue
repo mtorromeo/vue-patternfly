@@ -3,7 +3,7 @@
     <template #skeleton>
       <pf-masthead>
         <pf-masthead-toggle>
-          <pf-page-toggle-button variant="plain">
+          <pf-page-toggle-button>
             <bars-icon />
           </pf-page-toggle-button>
         </pf-masthead-toggle>
@@ -29,7 +29,7 @@
         </pf-masthead-content>
       </pf-masthead>
 
-      <pf-page-sidebar nav="PfNavigation" nav-open>
+      <pf-page-sidebar sidebar-open>
         <pf-nav>
           <pf-nav-group v-for="(categoryStories, category) of stories" :key="category" :title="category">
             <pf-nav-item v-for="story of categoryStories" :key="story.route" :to="{ name: story.route }">{{ story.title }}</pf-nav-item>
