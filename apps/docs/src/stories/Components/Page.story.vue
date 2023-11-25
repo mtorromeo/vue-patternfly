@@ -189,7 +189,238 @@
         </template>
 
         <template #drawer>
-          Drawer content
+
+          <pf-notification-drawer>
+            <pf-notification-drawer-header count="4">
+              <pf-dropdown position="right">
+                <template #toggle>
+                  <pf-menu-toggle variant="plain">
+                    <ellipsis-vertical-icon aria-hidden="true" />
+                  </pf-menu-toggle>
+                </template>
+
+                <pf-dropdown-item>Action</pf-dropdown-item>
+              </pf-dropdown>
+            </pf-notification-drawer-header>
+
+            <pf-notification-drawer-body>
+              <pf-notification-drawer-group-list>
+                <pf-notification-drawer-group
+                  title="First notification group"
+                  count="2"
+                >
+                  <pf-notification-drawer-list aria-label="Notifications in the basic example">
+                    <pf-notification-drawer-list-item variant="info">
+                      <pf-notification-drawer-list-item-header
+                        variant="info"
+                        title="Unread info notification title"
+                        sr-title="Info notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="5 minutes ago">
+                        This is an info notification description.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+
+                    <pf-notification-drawer-list-item variant="danger">
+                      <pf-notification-drawer-list-item-header
+                        variant="danger"
+                        title="Unread danger notification title. This is a long title to show how the title will wrap if it is long and wraps to multiple lines."
+                        sr-title="Danger notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="10 minutes ago">
+                        This is a danger notification description. This is a long description to show how the title will wrap if
+                        it is long and wraps to multiple lines.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+
+                    <pf-notification-drawer-list-item variant="warning" read>
+                      <pf-notification-drawer-list-item-header
+                        variant="warning"
+                        title="Read warning notification title"
+                        sr-title="Warning notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="10 minutes ago">
+                        This is a danger notification description. This is a long description to show how the title will wrap if
+                        it is long and wraps to multiple lines.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+
+                    <pf-notification-drawer-list-item variant="success" read>
+                      <pf-notification-drawer-list-item-header
+                        variant="success"
+                        title="Read success notification title"
+                        sr-title="Success notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="30 minutes ago">
+                        This is a success notification description.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+                  </pf-notification-drawer-list>
+                </pf-notification-drawer-group>
+
+
+                <pf-notification-drawer-group
+                  title="Second notification group"
+                  count="2"
+                >
+                  <pf-notification-drawer-list aria-label="Notifications in the second group">
+                    <pf-notification-drawer-list-item variant="info">
+                      <pf-notification-drawer-list-item-header
+                        variant="info"
+                        title="Unread info notification title"
+                        sr-title="Info notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="5 minutes ago">
+                        This is an info notification description.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+
+                    <pf-notification-drawer-list-item variant="danger">
+                      <pf-notification-drawer-list-item-header
+                        variant="danger"
+                        title="Unread danger notification title. This is a long title to show how the title will wrap if it is long and wraps to multiple lines."
+                        sr-title="Danger notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="10 minutes ago">
+                        This is a danger notification description. This is a long description to show how the title will wrap
+                        if it is long and wraps to multiple lines.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+
+                    <pf-notification-drawer-list-item variant="warning" read>
+                      <pf-notification-drawer-list-item-header
+                        variant="warning"
+                        title="Read warning notification title"
+                        sr-title="Warning notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="20 minutes ago">
+                        This is a warning notification description.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+
+                    <pf-notification-drawer-list-item variant="success" read>
+                      <pf-notification-drawer-list-item-header
+                        variant="success"
+                        title="Read success notification title"
+                        sr-title="Success notification:"
+                      >
+                        <pf-dropdown position="right">
+                          <template #toggle>
+                            <pf-menu-toggle variant="plain">
+                              <ellipsis-vertical-icon aria-hidden="true" />
+                            </pf-menu-toggle>
+                          </template>
+
+                          <pf-dropdown-item>Action</pf-dropdown-item>
+                        </pf-dropdown>
+                      </pf-notification-drawer-list-item-header>
+                      <pf-notification-drawer-list-item-body timestamp="30 minutes ago">
+                        This is a success notification description.
+                      </pf-notification-drawer-list-item-body>
+                    </pf-notification-drawer-list-item>
+                  </pf-notification-drawer-list>
+                </pf-notification-drawer-group>
+
+                <pf-notification-drawer-group
+                  title="Third notification group. This is a long title to show how the title will be truncated if it is long and will be shown in a single line."
+                  count="0"
+                  :truncate-title="1"
+                  read
+                >
+                  <pf-notification-drawer-list aria-label="Notifications in the third group">
+                    <pf-empty-state variant="full">
+                      <pf-empty-state-header heading-level="h2" title="No alerts found">
+                        <template #icon>
+                          <magnifying-glass-icon />
+                        </template>
+                      </pf-empty-state-header>
+                      <pf-empty-state-body>
+                        There are currently no critical alerts firing. There may be firing alerts of other severities or
+                        silenced critical alerts however.
+                      </pf-empty-state-body>
+                      <pf-empty-state-footer>
+                        <pf-empty-state-actions>
+                          <pf-button variant="link">Action</pf-button>
+                        </pf-empty-state-actions>
+                      </pf-empty-state-footer>
+                    </pf-empty-state>
+                  </pf-notification-drawer-list>
+                </pf-notification-drawer-group>
+
+              </pf-notification-drawer-group-list>
+            </pf-notification-drawer-body>
+          </pf-notification-drawer>
+
         </template>
 
         <pf-page-section>
