@@ -22,7 +22,7 @@
       :disabled="disabled || undefined"
       :readonly="!!readOnlyVariant || readonly"
       @change="onChange"
-      @input="onInput"
+      @input="onInput($event as InputEvent)"
       @blur="onBlur"
       @invalid="onInvalid"
       @keyup="onKeyUp"

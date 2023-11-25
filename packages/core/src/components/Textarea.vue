@@ -20,7 +20,7 @@
       :readonly="!!readOnlyVariant || readonly"
       :aria-invalid="effectiveValidated === 'error'"
       @change="handleChange"
-      @input="onInput"
+      @input="onInput($event as InputEvent)"
       @blur="onBlur"
       @invalid="onInvalid"
       @keyUp="onKeyUp"
