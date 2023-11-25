@@ -1,11 +1,16 @@
 <template>
   <section :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: managedExpanded }]">
     <component :is="headingLevel">
-      <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="managedExpanded" @click="managedExpanded = !managedExpanded">
+      <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="managedExpanded" @click="managedExpanded = !managedExpanded" @keydown="onKeydown">
         <pf-tooltip :position="tooltipPosition">
           <template v-if="textOverflowing" #content>{{ title }}</template>
 
-          <div ref="textRef" :class="styles.notificationDrawerGroupToggleTitle" tabindex="0">
+          <div
+            ref="textRef"
+            :class="styles.notificationDrawerGroupToggleTitle"
+            tabindex="0"
+            :style="truncateTitle ? { [maxLines.name]: truncateTitle.toString() } : undefined"
+          >
             <slot name="title">{{ title }}</slot>
           </div>
         </pf-tooltip>
@@ -26,6 +31,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
+import maxLines from '@patternfly/react-tokens/dist/esm/c_notification_drawer__group_toggle_title_max_lines';
 import type { HTMLAttributes } from 'vue';
 import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import PfBadge from '../Badge.vue';
@@ -75,4 +81,11 @@ const managedExpanded = useManagedProp('expanded', false);
 
 const textRef: Ref<HTMLElement | undefined> = ref();
 const textOverflowing = useElementOverflow(textRef);
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    managedExpanded.value = !managedExpanded.value;
+  }
+}
 </script>
