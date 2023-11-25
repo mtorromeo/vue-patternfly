@@ -2,7 +2,8 @@ import type { ComputedRef, InjectionKey, Ref } from "vue";
 
 export enum DrawerColorVariant {
   default = 'default',
-  light200 = 'light-200'
+  light200 = 'light-200',
+  noBackground = 'no-background',
 }
 
 export type DrawerProvide = {

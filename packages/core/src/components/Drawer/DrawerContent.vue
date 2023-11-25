@@ -7,6 +7,7 @@
       :exclude="PfDrawerPanelContent"
       :class="[styles.drawerContent, {
         [styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200,
+        [styles.modifiers.noBackground]: colorVariant === DrawerColorVariant.noBackground,
       }]"
     >
       <slot />
@@ -22,7 +23,7 @@ export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey
 
 export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
   /** Color variant of the background of the drawer panel */
-  colorVariant?: DrawerColorVariant | 'light-200' | 'default';
+  colorVariant?: DrawerColorVariant | 'light-200' | 'no-background' | 'default';
 }
 </script>
 
