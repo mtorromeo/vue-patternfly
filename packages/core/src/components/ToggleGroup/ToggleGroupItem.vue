@@ -12,7 +12,7 @@
       <span v-if="$slots.icon" :class="styles.toggleGroupIcon">
         <slot name="icon" />
       </span>
-      <span v-if="$slots.text || text" :class="styles.toggleGroupText">
+      <span v-if="$slots.default || text" :class="styles.toggleGroupText">
         <slot>{{ text }}</slot>
       </span>
     </button>
