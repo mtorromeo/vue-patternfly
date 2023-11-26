@@ -10,6 +10,7 @@
       [styles.modifiers.box]: box,
       [styles.modifiers.scrollable]: !vertical && showScrollButtons,
       [styles.modifiers.pageInsets]: pageInsets,
+      [styles.modifiers.noBorderBottom]: noBorderBottom,
       [styles.modifiers.colorSchemeLight_300]: variant === 'light300',
     }]"
   >
@@ -66,46 +67,34 @@ export type TabKey = number | string | symbol;
 
 export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
-
   /** Tabs background color variant */
   variant?: 'default' | 'light300';
-
   /** The index of the active tab */
   activeKey?: TabKey;
-
   /** The index of the default active tab. Set this for uncontrolled Tabs */
   defaultActiveKey?: TabKey;
-
   /** Enables the filled tab list layout */
   filled?: boolean;
-
   /** Enables secondary tab styling */
   secondary?: boolean;
-
   /** Enables box styling to the tab component */
   box?: boolean;
-
   /** Enables vertical tab styling */
   vertical?: boolean;
-
+  /** Disables border bottom tab styling on tabs. Defaults to false. To remove the bottom border, set this prop to true. */
+  noBorderBottom?: boolean;
   /** Aria-label for the left scroll button */
   leftScrollAriaLabel?: string;
-
   /** Aria-label for the right scroll button */
   rightScrollAriaLabel?: string;
-
   /** Determines what tag is used around the tabs. Use "nav" to define the tabs inside a navigation region */
   component?: 'div' | 'nav';
-
   /** Provides an accessible label for the tabs. Labels should be unique for each set of tabs that are present on a page. When component is set to nav, this prop should be defined to differentiate the tabs from other navigation regions on the page. */
   ariaLabel?: string;
-
   /** Waits until the first "enter" transition to mount tab children (add them to the DOM) */
   mountOnEnter?: boolean;
-
   /** Unmounts tab children (removes them from the DOM) when they are no longer visible */
   unmountOnExit?: boolean;
-
   /** Flag indicates that the tabs should use page insets. */
   pageInsets?: boolean;
 }
