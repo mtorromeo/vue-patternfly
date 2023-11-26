@@ -26,7 +26,6 @@
     <pf-flex>
       <pf-jump-links class="toc" :offset="120" vertical expandable="expandable" expandable-xl2="nonExpandable" scrollable-element="main.pf-v5-c-page__main" auto-link-from-elements="h3.pf-v5-c-title">
         <template #label>Table of contents</template>
-        <pf-jump-links-item node="h3.pf-v5-c-title">Test</pf-jump-links-item>
       </pf-jump-links>
 
       <pf-flex-item grow>
