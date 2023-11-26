@@ -35,6 +35,7 @@ export * from './FormSelect';
 export * from './HelperText';
 export * from './Hint';
 export * from './InputGroup';
+export * from './JumpLinks';
 export * from './List';
 export * from './LoginPage';
 export * from './Masthead';

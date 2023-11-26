@@ -23,9 +23,18 @@
   </pf-page-section>
 
   <pf-page-section v-if="!$route.params.mainTab || $route.params.mainTab === 'story'" width-limited>
-    <div class="story-content">
-      <slot />
-    </div>
+    <pf-flex>
+      <pf-jump-links class="toc" :offset="120" vertical expandable="expandable" expandable-xl2="nonExpandable" scrollable-element="main.pf-v5-c-page__main" auto-link-from-elements="h3.pf-v5-c-title">
+        <template #label>Table of contents</template>
+        <pf-jump-links-item node="h3.pf-v5-c-title">Test</pf-jump-links-item>
+      </pf-jump-links>
+
+      <pf-flex-item grow>
+        <div class="story-content">
+          <slot />
+        </div>
+      </pf-flex-item>
+    </pf-flex>
   </pf-page-section>
 
   <pf-page-section v-if="$slots.apidocs && $route.params.mainTab === 'apidocs'" width-limited>
@@ -36,6 +45,19 @@
 <style scoped>
 .story-content {
   max-width: 832px;
+}
+
+.toc {
+  position: sticky;
+  top: 50px;
+  width: 280px;
+  flex-grow: 1;
+  max-height: calc(100vh - 86px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  order: 1;
+  padding: 0 var(--pf-v5-global--spacer--lg) var(--pf-v5-global--spacer--lg) var(--pf-v5-global--spacer--2xl);
+  margin: 0;
 }
 </style>
 

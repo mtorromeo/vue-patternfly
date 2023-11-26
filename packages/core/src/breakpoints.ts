@@ -205,6 +205,21 @@ export type StickyBreakpointProps = {
   stickyXl2?: 'top' | 'bottom';
 }
 
+export type ExpandableBreakpointProps = {
+  /** Toggle collapse/expand state */
+  expandable?: 'expandable' | 'nonExpandable';
+  /** Toggle collapse/expand state at Sm breakpoint */
+  expandableSm?: 'expandable' | 'nonExpandable';
+  /** Toggle collapse/expand state at Md breakpoint */
+  expandableMd?: 'expandable' | 'nonExpandable';
+  /** Toggle collapse/expand state at Lg breakpoint */
+  expandableLg?: 'expandable' | 'nonExpandable';
+  /** Toggle collapse/expand state at Xl breakpoint */
+  expandableXl?: 'expandable' | 'nonExpandable';
+  /** Toggle collapse/expand state at Xl2 breakpoint */
+  expandableXl2?: 'expandable' | 'nonExpandable';
+}
+
 export type BreakpointProps = {
   sm?: boolean;
   md?: boolean;

@@ -442,6 +442,8 @@
 <script lang="ts" setup>
 import BarsIcon from '@vue-patternfly/icons/bars-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
+import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
+import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
 import { ref } from 'vue';
 
 const expanded = ref(false);
