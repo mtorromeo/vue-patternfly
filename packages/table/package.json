@@ -14,7 +14,8 @@
       "import": "./dist/*.mjs",
       "require": "./dist/*.js",
       "types": "./dist/*.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "dev": "vite",
