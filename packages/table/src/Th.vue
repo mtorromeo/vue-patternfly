@@ -18,9 +18,9 @@
       }
     ]"
     :style="sticky ? {
-      '--pf-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
-      '--pf-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
-      '--pf-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
+      '--pf-v5-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
+      '--pf-v5-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
+      '--pf-v5-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
     } : undefined"
     :data-label="dataLabel"
     :aria-sort="sortable ? (sorted ? `${direction}ending` : 'none') : undefined"
