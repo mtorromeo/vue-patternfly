@@ -31,7 +31,7 @@ const plugin = {
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Pftable: typeof PfTable;
+    PfTable: typeof PfTable;
     PfTbody: typeof PfTbody;
     PfTd: typeof PfTd;
     PfTh: typeof PfTh;
