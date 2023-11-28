@@ -35,15 +35,14 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import heightToken from '@patternfly/react-tokens/dist/esm/c_form_control_textarea_Height';
 
 import { computed, ref, type TextareaHTMLAttributes, type Ref } from 'vue';
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
-import { canUseDOM } from '../util';
 import { FormGroupInputsKey } from './Form/common';
 import { useOUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
+import { onMounted } from 'vue';
 
 defineOptions({
   name: 'PfTextarea',
@@ -162,22 +161,39 @@ function checkValidity() {
 }
 
 function handleChange(event: Event) {
-  // // https://gomakethings.com/automatically-expand-a-textarea-as-the-user-types-using-vanilla-javascript/
-  const field = event.currentTarget;
-  if (props.autoResize && canUseDOM && field instanceof HTMLElement) {
-    field.style.setProperty(heightToken.name, 'inherit');
-    const computed = window.getComputedStyle(field);
-    // Calculate the height
-    const height =
-      parseInt(computed.getPropertyValue('border-top-width')) +
-      parseInt(computed.getPropertyValue('padding-top')) +
-      field.scrollHeight +
-      parseInt(computed.getPropertyValue('padding-bottom')) +
-      parseInt(computed.getPropertyValue('border-bottom-width'));
-    field.style.setProperty(heightToken.name, `${height}px`);
+  if (props.autoResize) {
+    setAutoHeight();
   }
   onChange(event);
 }
+
+function setAutoHeight() {
+  if (!input.value) {
+    return false;
+  }
+
+  const parent = input.value.parentElement;
+  if (!parent) {
+    return;
+  }
+
+  parent.style.setProperty('height', 'inherit');
+  const computed = window.getComputedStyle(input.value);
+  // Calculate the height
+  const height =
+    parseInt(computed.getPropertyValue('border-top-width')) +
+    parseInt(computed.getPropertyValue('padding-top')) +
+    input.value.scrollHeight +
+    parseInt(computed.getPropertyValue('padding-bottom')) +
+    parseInt(computed.getPropertyValue('border-bottom-width'));
+  parent.style.setProperty('height', `${height}px`);
+}
+
+onMounted(() => {
+  if (props.autoResize) {
+    setAutoHeight();
+  }
+});
 
 function focus() {
   input.value?.focus();

@@ -37,6 +37,10 @@
       </div>
       <pf-textarea aria-label="read only text area example" model-value="read only text area example" :readonly-variant="plain ? 'plain' : 'default'" />
     </story-canvas>
+
+    <story-canvas title="Auto resizing">
+      <pf-textarea aria-label="auto resizing text area example" auto-resize />
+    </story-canvas>
   </doc-page>
 </template>
 
