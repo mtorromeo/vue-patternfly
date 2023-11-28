@@ -1,0 +1,7 @@
+import{_ as r,a as n,o as f,c as l,w as e,b as o,d as a,p as _,l as g,e as u}from"./index-9IxByHgl.js";const b={},i=t=>(_("data-v-574e66e9"),t=t(),g(),t),m=i(()=>u("b",null,"badge",-1));function B(t,v){const s=n("component-info"),d=n("pf-badge"),c=n("story-canvas"),p=n("doc-page");return f(),l(p,{title:"Badge"},{description:e(()=>[o("A "),m,o(" is used to annotate other information like a label or an object name.")]),apidocs:e(()=>[a(s,{src:"packages/core/src/components/Badge.vue",doc:{name:"PfBadge",exportName:"default",displayName:"Badge",description:"",tags:{},props:[{name:"read",required:!1,type:{name:"boolean"}}],slots:[{name:"default"}],sourceFiles:["../../packages/core/src/components/Badge.vue"]}},null,8,["doc"])]),default:e(()=>[a(c,{title:"Read",source:`<pf-badge read>7</pf-badge>
+<pf-badge read>24</pf-badge>
+<pf-badge read>240</pf-badge>
+<pf-badge read>999+</pf-badge>`},{default:e(()=>[a(d,{read:""},{default:e(()=>[o("7")]),_:1}),a(d,{read:""},{default:e(()=>[o("24")]),_:1}),a(d,{read:""},{default:e(()=>[o("240")]),_:1}),a(d,{read:""},{default:e(()=>[o("999+")]),_:1})]),_:1}),a(c,{title:"Unread",source:`<pf-badge>7</pf-badge>
+<pf-badge>24</pf-badge>
+<pf-badge>240</pf-badge>
+<pf-badge>999+</pf-badge>`},{default:e(()=>[a(d,null,{default:e(()=>[o("7")]),_:1}),a(d,null,{default:e(()=>[o("24")]),_:1}),a(d,null,{default:e(()=>[o("240")]),_:1}),a(d,null,{default:e(()=>[o("999+")]),_:1})]),_:1})]),_:1})}const x=r(b,[["render",B],["__scopeId","data-v-574e66e9"]]);export{x as default};
