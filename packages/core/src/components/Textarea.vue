@@ -2,10 +2,12 @@
   <span
     :class="[
       styles.formControl, {
-        [styles.modifiers.readonly]: !!readOnlyVariant,
+        [styles.modifiers.readonly]: !!readonlyVariant,
+        [styles.modifiers.plain]: readonlyVariant === 'plain',
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.resizeVertical]: resizeOrientation === 'vertical',
         [styles.modifiers.resizeHorizontal]: resizeOrientation === 'horizontal',
+        [styles.modifiers.resizeBoth]: resizeOrientation === 'both',
         [styles.modifiers.success]: effectiveValidated === 'success',
         [styles.modifiers.warning]: effectiveValidated === 'warning',
         [styles.modifiers.error]: effectiveValidated === 'error',
@@ -17,7 +19,7 @@
       :value="value"
       v-bind="{...ouiaProps, ...$attrs}"
       :disabled="disabled || undefined"
-      :readonly="!!readOnlyVariant || readonly"
+      :readonly="!!readonlyVariant || readonly"
       :aria-invalid="effectiveValidated === 'error'"
       @change="handleChange"
       @input="onInput($event as InputEvent)"
@@ -54,7 +56,7 @@ export interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {
 
   readonly?: boolean;
   /** Read only variant. */
-  readOnlyVariant?: 'default' | 'plain';
+  readonlyVariant?: 'default' | 'plain';
 
   /** Flag to modify height based on contents. */
   autoResize?: boolean;

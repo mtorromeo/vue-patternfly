@@ -15,8 +15,33 @@
       ## Examples
     </pre>
 
-    <story-canvas title="Example">
+    <story-canvas title="With regex pattern validation">
       <pf-textarea pattern="[0-9\s]+" placeholder="Numbers and spaces only" />
+    </story-canvas>
+
+    <story-canvas title="Vertically resizable">
+      <pf-textarea resize-orientation="vertical" aria-label="text area vertical resize example" />
+    </story-canvas>
+
+    <story-canvas title="Horizontally resizable">
+      <pf-textarea resize-orientation="horizontal" aria-label="text area horizontal resize example" />
+    </story-canvas>
+
+    <story-canvas title="Disabled">
+      <pf-textarea aria-label="Disabled text area example" disabled />
+    </story-canvas>
+
+    <story-canvas title="Read only">
+      <div style="margin-bottom: 12px">
+        <pf-checkbox v-model="plain" label="Plain read only variant" />
+      </div>
+      <pf-textarea aria-label="read only text area example" model-value="read only text area example" :readonly-variant="plain ? 'plain' : 'default'" />
     </story-canvas>
   </doc-page>
 </template>
+
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const plain = ref(false);
+</script>
