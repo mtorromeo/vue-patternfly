@@ -56,13 +56,40 @@
         </pf-tbody>
       </pf-table>
     </story-canvas>
+
+    <story-canvas title="Selectable with checkbox">
+      <pf-table aria-label="Selectable table with checkbox">
+        <!-- <Caption>Simple table using composable components</Caption> -->
+        <pf-thead>
+          <pf-tr>
+            <pf-th v-model:selected="allRowsSelected" />
+            <pf-th>{{ columnNames.name }}</pf-th>
+            <pf-th>{{ columnNames.branches }}</pf-th>
+            <pf-th>{{ columnNames.prs }}</pf-th>
+            <pf-th>{{ columnNames.workspaces }}</pf-th>
+            <pf-th>{{ columnNames.lastCommit }}</pf-th>
+          </pf-tr>
+        </pf-thead>
+        <pf-tbody>
+          <pf-tr v-for="repo in repositories" :key="repo.name">
+            <pf-td v-model:selected="repo.selected" />
+            <pf-td :data-label="columnNames.name">{{ repo.name }}</pf-td>
+            <pf-td :data-label="columnNames.branches">{{ repo.branches }}</pf-td>
+            <pf-td :data-label="columnNames.prs">{{ repo.prs }}</pf-td>
+            <pf-td :data-label="columnNames.workspaces">{{ repo.workspaces }}</pf-td>
+            <pf-td :data-label="columnNames.lastCommit">{{ repo.lastCommit }}</pf-td>
+          </pf-tr>
+        </pf-tbody>
+      </pf-table>
+    </story-canvas>
   </doc-page>
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue';
+import { reactive, computed, ref, type Ref } from 'vue';
 
 interface Repository {
+  selected: boolean;
   name: string;
   branches: string | null;
   prs: string | null;
@@ -70,11 +97,11 @@ interface Repository {
   lastCommit: string;
 }
 
-const repositories: Repository[] = [
-  { name: 'one', branches: 'two', prs: 'three', workspaces: 'four', lastCommit: 'five' },
-  { name: 'one - 2', branches: null, prs: null, workspaces: 'four - 2', lastCommit: 'five - 2' },
-  { name: 'one - 3', branches: 'two - 3', prs: 'three - 3', workspaces: 'four - 3', lastCommit: 'five - 3' },
-];
+const repositories: Repository[] = reactive([
+  { selected: false, name: 'one', branches: 'two', prs: 'three', workspaces: 'four', lastCommit: 'five' },
+  { selected: false, name: 'one - 2', branches: null, prs: null, workspaces: 'four - 2', lastCommit: 'five - 2' },
+  { selected: false, name: 'one - 3', branches: 'two - 3', prs: 'three - 3', workspaces: 'four - 3', lastCommit: 'five - 3' },
+]);
 
 const columnNames = {
   name: 'Repositories',
@@ -85,4 +112,13 @@ const columnNames = {
 };
 
 const tableVariant: Ref<'default' | 'compact' | 'compactBorderless'> = ref('default');
+
+const allRowsSelected = computed({
+  get: () => repositories.every(row => row.selected),
+  set(selected: boolean) {
+    for (const row of repositories) {
+      row.selected = selected;
+    }
+  },
+});
 </script>

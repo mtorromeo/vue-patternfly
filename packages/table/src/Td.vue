@@ -12,6 +12,7 @@
         [styles.tableDraggable]: draggable,
         [styles.modifiers.center]: textCenter,
         [styles.modifiers.noPadding]: noPadding,
+        [styles.tableCheck]: isDefined(selected),
         [scrollStyles.tableStickyCell]: sticky,
         [scrollStyles.modifiers.borderRight]: rightBorder,
         [scrollStyles.modifiers.borderLeft]: leftBorder,
@@ -22,8 +23,11 @@
       '--pf-v5-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
       '--pf-v5-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
     } : undefined"
-    :data-class="($attrs.class as string)?.includes('pf-v5-c-table__tree-view-title-cell') || dataLabel"
+    :data-label="($attrs.class as string)?.includes('pf-v5-c-table__tree-view-title-cell') || dataLabel"
   >
+    <label v-if="isDefined(selected)">
+      <input :checked="selected" type="checkbox" @change="handleSelect($event as InputEvent)">
+    </label>
     <slot />
   </component>
 </template>
@@ -35,7 +39,19 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'td',
+  selected: undefined,
 });
+
+const emit = defineEmits<{
+  /**
+   * Event triggered on selection
+   * @param {InputEvent} event
+   * @param {boolean} value
+   */
+  (name: 'select', event: InputEvent, value: boolean): void;
+  /** @param {boolean} value */
+  (name: 'update:selected', value: boolean): void;
+}>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -43,6 +59,11 @@ defineSlots<{
 
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styles, { short: true });
+
+function handleSelect(event: InputEvent) {
+  emit('select', event, (event.target as HTMLInputElement).checked);
+  emit('update:selected', (event.target as HTMLInputElement).checked);
+}
 </script>
 
 <script lang="ts">
@@ -51,8 +72,9 @@ import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia'
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import scrollStyles from '@patternfly/react-styles/css/components/Table/table-scrollable';
 import { classesFromBreakpointProps } from "@vue-patternfly/core/breakpoints";
+import { isDefined } from "@vueuse/core";
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TdHTMLAttributes, 'draggable'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TdHTMLAttributes, 'draggable' | 'onSelect'> {
   /** Element to render */
   component?: string | Component;
   /** Modifies cell to center its contents. */
@@ -67,8 +89,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TdHTMLAttribute
    * This attribute replaces table header in mobile viewport. It is rendered by ::before pseudo element.
    */
   dataLabel?: string;
-  /** Renders a checkbox or radio select */
-  // select?: TdSelectType;
+  /** Flag to indicate a selected cell/row. Renders a checkbox if true/false. */
+  selected?: boolean;
   /** Turns the cell into an actions cell. Recommended to use an ActionsColumn component as a child of the Td rather than this prop. */
   // actions?: TdActionsType;
   /** Turns the cell into an expansion toggle and determines if the corresponding expansion row is open */

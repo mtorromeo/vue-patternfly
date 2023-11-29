@@ -20,6 +20,7 @@
         <pf-tr v-for="prop in doc.props" :key="prop.name">
           <pf-td>{{ prop.name }} <span v-if="prop.required" :style="{color: 'var(--pf-v5-global--danger-color--100)'}">*</span></pf-td>
           <pf-td v-if="prop.type?.name === 'union'">{{ (prop.type as any).elements.map((e: any) => e.name).join(' | ') }}</pf-td>
+          <pf-td v-else-if="prop.type?.name === 'Array'">{{ (prop.type as any).elements.map((e: any) => e.name).join(' | ') }}[]</pf-td>
           <pf-td v-else>{{ prop.type?.name }}</pf-td>
           <pf-td v-if="prop.type?.name === 'boolean' && !prop.defaultValue">false</pf-td>
           <pf-td v-else>{{ prop.defaultValue?.value }}</pf-td>
@@ -43,7 +44,7 @@
       </pf-thead>
       <pf-tbody>
         <pf-tr v-for="event in doc.events" :key="event.name">
-          <pf-td>{{ event.name }}</pf-td>
+          <pf-td>{{ event.name }}(<template v-for="(p, i) of event.properties">{{ p.name }}: {{ p.type.names.join(' | ') }}<template v-if="i !== (event.properties?.length ?? 0) - 1">, </template></template>)</pf-td>
           <pf-td>{{ event.description }}</pf-td>
         </pf-tr>
       </pf-tbody>

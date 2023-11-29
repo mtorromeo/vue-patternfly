@@ -41,6 +41,7 @@
     "@types/node": "^20.9.0",
     "@vitejs/plugin-vue": "^4.4.1",
     "@vue/compiler-sfc": "^3.3.8",
+    "@vueuse/core": "^10.6.1",
     "glob": "^10.3.10",
     "rimraf": "^5.0.5",
     "tslib": "^2.6.2",
@@ -50,6 +51,7 @@
     "vue-tsc": "^1.8.22"
   },
   "peerDependencies": {
-    "@vue-patternfly/core": "workspace:^"
+    "@vue-patternfly/core": "workspace:^",
+    "@vueuse/core": "^10"
   }
 }

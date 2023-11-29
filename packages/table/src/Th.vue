@@ -1,4 +1,10 @@
 <template>
+  <define-select-checkbox>
+    <label v-if="isDefined(selected)">
+      <input :checked="selected" type="checkbox" @change="handleSelect($event as InputEvent)">
+    </label>
+  </define-select-checkbox>
+
   <component
     v-bind="ouiaProps"
     :is="component"
@@ -12,6 +18,7 @@
         [styles.modifiers.selected]: sortable && sorted,
         [styles.tableSubhead]: subheader,
         [styles.modifiers.center]: textCenter,
+        [styles.tableCheck]: isDefined(selected),
         [scrollStyles.tableStickyCell]: sticky,
         [scrollStyles.modifiers.borderRight]: rightBorder,
         [scrollStyles.modifiers.borderLeft]: leftBorder,
@@ -28,6 +35,7 @@
     <button v-if="sortable" :class="styles.tableButton" @click="setSort">
       <div :class="styles.tableButtonContent">
         <span :class="styles.tableText">
+          <select-checkbox />
           <slot />
         </span>
         <span :class="styles.tableSortIndicator">
@@ -37,7 +45,11 @@
         </span>
       </div>
     </button>
-    <slot v-else />
+
+    <template v-else>
+      <select-checkbox />
+      <slot />
+    </template>
   </component>
 </template>
 
@@ -45,6 +57,7 @@
 import ArrowUpLongIcon from '@vue-patternfly/icons/arrow-up-long-icon';
 import ArrowDownLongIcon from '@vue-patternfly/icons/arrow-down-long-icon';
 import ArrowsUpDownIcon from '@vue-patternfly/icons/arrows-up-down-icon';
+import { createReusableTemplate, isDefined } from '@vueuse/core';
 
 defineOptions({
   name: 'PfTh',
@@ -53,17 +66,29 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   component: 'th',
   scope: 'col',
+  selected: undefined,
   stickyMinWidth: '120px',
 });
 
 const emit = defineEmits<{
-  (e: 'sort'): void;
-  (e: 'update:direction', direction: 'asc' | 'desc'): void;
+  (name: 'sort'): void;
+  /**
+   * Event triggered on selection
+   * @param {InputEvent} event
+   * @param {boolean} value
+   */
+  (name: 'select', event: InputEvent, value: boolean): void;
+  /** @param {boolean} value */
+  (name: 'update:selected', value: boolean): void;
+  /** @param {'asc' | 'desc'} value */
+  (name: 'update:direction', value: 'asc' | 'desc'): void;
 }>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
+
+const [DefineSelectCheckbox, SelectCheckbox] = createReusableTemplate();
 
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styles, { short: true });
@@ -71,6 +96,11 @@ const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styl
 function setSort() {
   emit('sort');
   emit('update:direction', props.direction === 'desc' ? 'asc' : 'desc');
+}
+
+function handleSelect(event: InputEvent) {
+  emit('select', event, (event.target as HTMLInputElement).checked);
+  emit('update:selected', (event.target as HTMLInputElement).checked);
 }
 </script>
 
@@ -81,7 +111,7 @@ import { classesFromBreakpointProps } from "@vue-patternfly/core/breakpoints";
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import scrollStyles from '@patternfly/react-styles/css/components/Table/table-scrollable';
 
-export interface Props extends OUIAProps, /* @vue-ignore */ ThHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ThHTMLAttributes, 'onSelect'> {
   /** Element to render */
   component?: string | Component;
   /** Modifies cell to center its contents. */
@@ -96,7 +126,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ ThHTMLAttributes {
    * This attribute replaces table header in mobile viewport. It is rendered by ::before pseudo element.
    */
   dataLabel?: string;
-  /** Renders a checkbox select so that all row checkboxes can be selected/deselected */
+  /** Flag to indicate a selected cell/row. Renders a checkbox if true/false. */
+  selected?: boolean;
   // select?: ThSelectType;
   /** Renders a chevron so that all row chevrons can be expanded/collapsed */
   // expand?: ThExpandType;
