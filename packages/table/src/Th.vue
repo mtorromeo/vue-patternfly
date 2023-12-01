@@ -6,7 +6,7 @@
   </define-select-checkbox>
 
   <component
-    v-bind="ouiaProps"
+    v-bind="{...$attrs, ...ouiaProps}"
     :is="component"
     role="columnheader"
     :class="[
@@ -61,6 +61,7 @@ import { createReusableTemplate, isDefined } from '@vueuse/core';
 
 defineOptions({
   name: 'PfTh',
+  inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<Props>(), {
