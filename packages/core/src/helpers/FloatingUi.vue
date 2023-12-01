@@ -7,6 +7,7 @@ import { flip as uiFlip, size, type Middleware, type Placement, type Strategy, o
 import { cloneVNode, computed, ref, withDirectives, type Ref } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
 import type { VNode } from 'vue';
+import type { ReferenceElement } from '@floating-ui/dom';
 
 defineOptions({
   name: 'PfFloatingUi',
@@ -14,7 +15,7 @@ defineOptions({
 });
 
 export interface Props {
-  reference: string | Element | undefined;
+  reference: string | ReferenceElement | undefined;
   disable?: boolean;
   placement?: Placement;
   flip?: boolean;
@@ -43,11 +44,11 @@ const slots = defineSlots<{
   default?: (props: ReturnType<typeof useFloatingUI>) => VNode[];
 }>();
 
-const referenceElement = computed<Element | undefined>(() => {
+const referenceElement = computed<ReferenceElement | undefined>(() => {
   const reference = typeof props.reference === 'string'
     ? document.querySelector(props.reference)
     : props.reference;
-  return reference instanceof Element ? reference : undefined;
+  return typeof reference?.getBoundingClientRect !== 'undefined' ? reference : undefined;
 });
 
 const htmlElement: Ref<HTMLElement | undefined> = ref();
