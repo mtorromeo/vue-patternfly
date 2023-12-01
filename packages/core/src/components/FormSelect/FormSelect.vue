@@ -50,6 +50,7 @@ export interface Props extends /* @vue-ignore */ SelectHTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey } from '../../use';
 import type PfFormSelectOption from './FormSelectOption.vue';
+import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import type { SelectHTMLAttributes } from 'vue';
 import { computed } from 'vue';

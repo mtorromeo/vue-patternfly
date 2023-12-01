@@ -81,6 +81,7 @@ import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKe
 import { computedWithControl, type ComputedRefWithControl, type MaybeComputedElementRef } from '@vueuse/core';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import PfJumpLinksItem from './JumpLinksItem.vue';
+import PfButton from '../Button.vue';
 
 defineOptions({
   name: 'PfJumpLinks',

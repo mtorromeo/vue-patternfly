@@ -24,6 +24,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import { computed, type ComputedRef, inject, type InjectionKey, type HTMLAttributes } from 'vue';
 import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
+import PfButton from '../Button.vue';
 
 defineOptions({
   name: 'PfPageToggleButton',
