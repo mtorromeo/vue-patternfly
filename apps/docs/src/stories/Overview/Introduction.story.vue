@@ -21,7 +21,7 @@
 
       #### Boolean props "is/has" prefixes removed
 
-      This makes it easier to use the components and matches the naming convention of native elements. E.g. `<pf-text-input disabled />` just like `<input disabled>` instead of `<pf-text-input is-disabled />`.
+      This makes it easier to use the components and matches the naming convention of native elements. E.g. `&lt;pf-text-input disabled /&gt;` just like `&lt;input disabled&gt;` instead of `&lt;pf-text-input is-disabled /&gt;`.
 
       By doing this we can also omit to declare some props that are automatically inherited by the underlying native element.
 
@@ -42,10 +42,12 @@
       ```js
       import '@patternfly/patternfly/patternfly.css';
       import '@patternfly/patternfly/patternfly-addons.css';
+      import '@vue-patternfly/table/style.css'; // only for pf-table
       // alternatively include them in your html as a &lt;style&gt; tag
 
       import { createApp } from 'vue';
       import VuePatternFly from '@vue-patternfly/core';
+      import VuePatternflyTable from '@vue-patternfly/table'; // only for pf-table
 
       const app = createApp({
         setup() {
@@ -53,6 +55,7 @@
         },
       });
       app.use(VuePatternFly);
+      app.use(VuePatternflyTable); // only for pf-table
       app.mount('#app');
       ```
 
