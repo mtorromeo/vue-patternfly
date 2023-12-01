@@ -11,6 +11,7 @@
     ]"
   >
     <select
+      ref="input"
       v-bind="$attrs"
       :disabled="disabled || undefined"
       :value="value"
@@ -52,8 +53,7 @@ import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKe
 import type PfFormSelectOption from './FormSelectOption.vue';
 import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import type { SelectHTMLAttributes } from 'vue';
-import { computed } from 'vue';
+import { computed, ref, type Ref, type SelectHTMLAttributes } from 'vue';
 
 
 defineOptions({
@@ -72,6 +72,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
+const input: Ref<HTMLSelectElement | undefined> = ref();
 const options = provideChildrenTracker(FormSelectOptionsKey);
 const value = useManagedProp('modelValue', '');
 const hasStatusIcon = computed(() => props.validated && ['success', 'error', 'warning'].includes(props.validated));
@@ -86,4 +87,8 @@ function handleChange(e: InputEvent) {
   value.value = (e.currentTarget as HTMLSelectElement).value;
   emit('change', e);
 }
+
+defineExpose({
+  input,
+});
 </script>

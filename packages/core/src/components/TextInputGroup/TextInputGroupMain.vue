@@ -65,6 +65,7 @@ const disabled = inject(TextInputGroupDisabledKey, false);
 const input: Ref<HTMLInputElement | undefined> = ref();
 
 defineExpose({
+  input,
   focus(options?: FocusOptions) {
     input.value?.focus(options);
   },
