@@ -14,7 +14,7 @@
       v-bind="$attrs"
       :disabled="disabled || undefined"
       :value="value"
-      @change="value = ($event.currentTarget as HTMLSelectElement).value"
+      @change="handleChange($event as InputEvent)"
     >
       <slot />
     </select>
@@ -63,8 +63,9 @@ defineOptions({
 
 const props = defineProps<Props>();
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'update:modelValue', value: string): void;
+  (name: 'change', event: InputEvent): void;
 }>();
 
 defineSlots<{
@@ -80,4 +81,9 @@ const selectedOption = computed(() => {
 });
 
 const selectedPlaceholder = computed(() => selectedOption.value?.placeholder);
+
+function handleChange(e: InputEvent) {
+  value.value = (e.currentTarget as HTMLSelectElement).value;
+  emit('change', e);
+}
 </script>
