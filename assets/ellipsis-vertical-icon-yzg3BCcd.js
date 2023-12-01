@@ -1,0 +1,1 @@
+import{m as i}from"./index-MNvwmWFN.js";const s={name:"EllipsisVerticalIcon",height:512,width:128,svgPath:"M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z",yOffset:0,xOffset:0},t=i(s),a=t;export{a as E};
