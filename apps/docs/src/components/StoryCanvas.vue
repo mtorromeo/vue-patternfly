@@ -5,9 +5,9 @@
 
   <section class="story-canvas">
     <div class="canvas" :class="{ dark }">
-      <div class="inner-canvas" v-bind="$attrs" :style="{ 'max-width': maxWidth }">
+      <div class="inner-canvas" v-bind="$attrs" :style="{ 'max-width': maxWidth, 'height': iframeRoute?.name && !$slots.default ? height ?? '450px' : height }">
         <slot>
-          <iframe v-if="iframeRoute?.name" style="width: 800px; height: 450px" :src="$router.resolve({name: iframeRoute.name}).href" />
+          <iframe v-if="iframeRoute?.name" :style="{ width: '800px', height: '100%' }" :src="$router.resolve({name: iframeRoute.name}).href" />
         </slot>
       </div>
     </div>
@@ -87,6 +87,7 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
   title?: string;
   dark?: boolean;
   maxWidth?: string;
+  height?: string;
 }
 
 const props = defineProps<Props>();
