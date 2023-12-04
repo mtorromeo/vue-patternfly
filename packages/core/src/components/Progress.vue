@@ -25,7 +25,7 @@
 
     <div :class="styles.progressStatus" aria-hidden="true">
       <span v-if="measureLocation && ['top', 'outside'].includes(measureLocation)" :class="styles.progressMeasure">
-        <slot name="label">{{ label || `${value}%` }}</slot>
+        <slot>{{ label || `${value}%` }}</slot>
       </span>
 
       <span v-if="variantIcon !== null" :class="styles.progressStatusIcon">
@@ -121,6 +121,10 @@ const props = withDefaults(defineProps<Props>(), {
   min: 0,
   max: 100,
 });
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
 
 const tooltip = ref('');
 
