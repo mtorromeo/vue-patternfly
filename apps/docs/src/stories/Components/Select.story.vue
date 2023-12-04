@@ -4,9 +4,9 @@
 
     <template #apidocs>
       <component-info src="packages/core/src/components/Select/Select.vue" />
-      <component-info src="packages/core/src/components/Select/SelectGroup.ts" />
-      <component-info src="packages/core/src/components/Select/SelectList.ts" />
-      <component-info src="packages/core/src/components/Select/SelectOption.ts" />
+      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuList.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuItem.vue" />
     </template>
 
     <pre v-md>
@@ -62,7 +62,8 @@
     </story-canvas>
 
     <story-canvas title="Checkbox input">
-      <pf-select placeholder="Filter by status" variant="primary">
+      <pf-select v-model:selected="selectedSingle" placeholder="Filter by status" variant="primary">
+        <template #label>{{ selectedSingle ?? 'Select a value' }}</template>
         <pf-select-option disabled>
           Please Choose
         </pf-select-option>
@@ -75,20 +76,16 @@
     </story-canvas>
 
     <story-canvas title="Checkbox input with counts">
-      <pf-select v-model:selected="selected" placeholder="Filter by status" variant="secondary">
+      <pf-select v-model:selected="selectedMulti" placeholder="Filter by status" variant="secondary">
         <template #label>
-          Select a value
-          <pf-badge>{{ selected.length }}</pf-badge>
+          Filter by status
+          <pf-badge>{{ selectedMulti.length }}</pf-badge>
         </template>
 
-        <pf-select-option disabled>
-          Please Choose
-        </pf-select-option>
-        <pf-select-option check value="Mr" />
-        <pf-select-option check value="Miss" />
-        <pf-select-option check value="Mrs" />
-        <pf-select-option check value="Ms" />
-        <pf-select-option check value="Dr" disabled />
+        <pf-select-option check value="Debug" />
+        <pf-select-option check value="Info" />
+        <pf-select-option check value="Warn" />
+        <pf-select-option check value="Error" disabled />
       </pf-select>
     </story-canvas>
 
@@ -97,11 +94,10 @@
         <pf-select-option disabled>
           Please Choose
         </pf-select-option>
-        <pf-select-option check value="Mr" />
-        <pf-select-option check value="Miss" />
-        <pf-select-option check value="Mrs" />
-        <pf-select-option check value="Ms" />
-        <pf-select-option check value="Dr" disabled />
+        <pf-select-option check value="Debug" />
+        <pf-select-option check value="Info" />
+        <pf-select-option check value="Warn" />
+        <pf-select-option check value="Error" disabled />
       </pf-select>
     </story-canvas>
 
@@ -148,7 +144,8 @@ import { reactive, ref } from 'vue';
 
 const divider = ref(false);
 const disabled = ref(false);
-const selected = ref([]);
+const selectedSingle = ref();
+const selectedMulti = ref([]);
 const filter = ref('');
 
 type Option = {

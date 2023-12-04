@@ -115,7 +115,7 @@
     <story-canvas title="Filtering with search input">
       <pf-menu>
         <pf-menu-input>
-          <pf-text-input :auto-validate="false" aria-label="Filter menu items" type="search" icon-variant="search" />
+          <pf-search-input aria-label="Filter menu items" type="search" />
         </pf-menu-input>
         <pf-divider />
         <pf-menu-content>
@@ -130,7 +130,7 @@
 
     <story-canvas title="Filtering with text input (simplified)">
       <pf-menu>
-        <pf-text-input :auto-validate="false" aria-label="Filter menu items" type="search" icon-variant="search" />
+        <pf-search-input aria-label="Filter menu items" type="search" />
         <pf-divider />
         <pf-menu-item>Action 1</pf-menu-item>
         <pf-menu-item>Action 2</pf-menu-item>
