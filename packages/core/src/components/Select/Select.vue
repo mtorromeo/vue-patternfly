@@ -1,7 +1,7 @@
 <template>
   <div ref="$el">
     <slot name="toggle">
-      <pf-menu-toggle v-model:expanded="managedOpen">
+      <pf-menu-toggle v-model:expanded="managedOpen" :disabled="disabled" :variant="variant" :full-height="fullHeight" :full-width="fullWidth">
         <slot name="label">
           Select a value
         </slot>
@@ -85,6 +85,16 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
   // /** @beta Callback for drilling out of a submenu */
   // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
+
+  // MENU TOGGLE PROPS
+  /** Flag indicating the toggle is disabled */
+  disabled?: boolean;
+  /** Flag indicating the toggle is full height */
+  fullHeight?: boolean;
+  /** Flag indicating the toggle takes up the full width of its parent */
+  fullWidth?: boolean;
+  /** Variant styles of the menu toggle */
+  variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
 }
 
 withDefaults(defineProps<Props>(), {

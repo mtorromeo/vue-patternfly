@@ -18,7 +18,9 @@
     </pre>
 
     <story-canvas title="Single">
-      <pf-select>
+      <pf-checkbox v-model="disabled" label="Disabled" />
+
+      <pf-select :disabled="disabled">
         <pf-select-option disabled>
           Please Choose
         </pf-select-option>
@@ -60,7 +62,7 @@
     </story-canvas>
 
     <story-canvas title="Checkbox input">
-      <pf-select placeholder="Filter by status" variant="checkbox">
+      <pf-select placeholder="Filter by status" variant="primary">
         <pf-select-option disabled>
           Please Choose
         </pf-select-option>
@@ -73,20 +75,12 @@
     </story-canvas>
 
     <story-canvas title="Checkbox input with counts">
-      <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-select-option disabled>
-          Please Choose
-        </pf-select-option>
-        <pf-select-option check value="Mr" />
-        <pf-select-option check value="Miss" />
-        <pf-select-option check value="Mrs" />
-        <pf-select-option check value="Ms" />
-        <pf-select-option check value="Dr" disabled />
-      </pf-select>
-    </story-canvas>
+      <pf-select v-model:selected="selected" placeholder="Filter by status" variant="secondary">
+        <template #label>
+          Select a value
+          <pf-badge>{{ selected.length }}</pf-badge>
+        </template>
 
-    <story-canvas title="Checkbox input no badge">
-      <pf-select placeholder="Filter by status" variant="checkbox" selection-badge-hidden>
         <pf-select-option disabled>
           Please Choose
         </pf-select-option>
@@ -99,7 +93,7 @@
     </story-canvas>
 
     <story-canvas title="Grouped checkbox input">
-      <pf-select placeholder="Filter by status" variant="checkbox">
+      <pf-select placeholder="Filter by status">
         <pf-select-option disabled>
           Please Choose
         </pf-select-option>
@@ -149,7 +143,10 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
+
 const divider = ref(false);
+const disabled = ref(false);
+const selected = ref([]);
 
 type Option = {
   value: string;
