@@ -18,8 +18,8 @@ function makeFilterFunction(filter: NodeFilter | undefined, fallback = true): (v
   }
 
   let typeList: VNodeTypes[] = [];
-  if (filter && !Array.isArray(filter)) {
-    typeList = [filter];
+  if (filter) {
+    typeList = Array.isArray(filter) ? filter : [filter];
   }
 
   if (!typeList.length) {
@@ -64,7 +64,7 @@ export interface Props {
     exclude?: NodeFilter;
     each?: boolean;
     force?: boolean;
-  }[]
+  }[];
 }
 
 const props = defineProps<Props>();
