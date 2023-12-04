@@ -38,6 +38,7 @@ class ParseError extends Error {
 export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): VitePlugin {
   const filter = createFilter(options.include ?? /\.story\.vue$/, options.exclude);
   const componentInfoRegex = /<component-info src="([^"]+)"([^>]*?)>/g;
+  const pageNameRegex = /<doc-page\b/g;
 
   return {
     name: 'vue-component-docs',
@@ -45,7 +46,7 @@ export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): Vit
 
     async transform(code, id) {
       if (filter(id)) {
-        return await replaceAsync(code, componentInfoRegex, async(matched, src: string, args: string) => {
+        code = await replaceAsync(code, componentInfoRegex, async(matched, src: string, args: string) => {
           let componentInfo: ComponentDoc;
           try {
             componentInfo = await parse(`../../${src}`);
@@ -55,9 +56,12 @@ export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): Vit
           }
           return `<component-info src="${src}" :doc="${JSON.stringify(componentInfo).replace(/"/g, '&quot;')}"${args}>`;
         });
+
+        const relId = id.replace(/.*\/apps\/docs\/src\/stories\//, '');
+        code = code.replace(pageNameRegex, `<doc-page :name="${JSON.stringify(relId).replace(/"/g, '&quot;')}"`);
       }
 
-      return null;
+      return code;
     },
   };
 }

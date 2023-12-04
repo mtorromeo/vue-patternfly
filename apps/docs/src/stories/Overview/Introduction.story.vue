@@ -1,8 +1,6 @@
 <template>
-  <doc-page>
+  <doc-page title="Vue PatternFly" no-github-link no-design-guidelines>
     <pre v-md>
-      # Vue PatternFly
-
       [![LICENSE](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)][link-LICENSE]
       [![NPM](https://img.shields.io/npm/v/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
       [![Download](https://img.shields.io/npm/dw/@vue-patternfly/core.svg?style=flat-square)](https://npmjs.org/package/@vue-patternfly/core)
@@ -29,12 +27,13 @@
 
       Install the library with the package management tool of your choice:
 
-      ```
-      npm install --save @vue-patternfly/core
-      ```
-      or
-      ```
-      yarn add @vue-patternfly/core
+      ```sh
+      # @vue-patternfly/icons and @vue-patternfly/table are optional
+      npm install --save @vue-patternfly/core @vue-patternfly/icons @vue-patternfly/table
+      # or
+      yarn add @vue-patternfly/core @vue-patternfly/icons @vue-patternfly/table
+      # or
+      pnpm add @vue-patternfly/core @vue-patternfly/icons @vue-patternfly/table
       ```
 
       Then you can import the components you need or use the whole library of components like this:

@@ -13,7 +13,14 @@
     </div>
 
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="language-vue" v-html="highlighted" />
+    <div style="position: relative">
+      <div v-if="src" class="source-link">
+        <pf-button :href="`https://github.com/mtorromeo/vue-patternfly/tree/master/apps/docs/src/${src}`" variant="link" title="Full source code" target="_blank">
+          <github-icon />
+        </pf-button>
+      </div>
+      <div class="language-vue" v-html="highlighted" />
+    </div>
   </section>
 </template>
 
@@ -46,6 +53,15 @@
   overflow-x: auto;
 }
 
+.story-canvas .source-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--pf-v5-c-page__main-section--m-light-100--BackgroundColor);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 6px;
+}
+
 .inner-canvas > pre {
   white-space: pre-line;
 }
@@ -57,6 +73,7 @@ import { getHighlighter, type Highlighter, setWasm } from 'shiki';
 import theme from 'shiki/themes/nord.json';
 import type { HTMLAttributes } from 'vue';
 import { useRouter } from 'vue-router';
+import GithubIcon from '@vue-patternfly/icons/github-icon';
 
 let highlighter: Highlighter;
 

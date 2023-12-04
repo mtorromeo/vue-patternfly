@@ -1,12 +1,12 @@
 <template>
-  <pf-page-section variant="light" translate="no" width-limited>
+  <pf-page-section v-if="title || $slots.description" variant="light" translate="no" width-limited>
     <pf-title v-if="title" size="4xl">{{ title }}</pf-title>
     <p v-if="$slots.description">
       <slot name="description" />
     </p>
   </pf-page-section>
 
-  <pf-page-section v-if="$slots.apidocs || pfDocUrl" type="tabs" sticky="top">
+  <pf-page-section v-if="$slots.apidocs || pfDocUrl || (name && !noGithubLink)" type="tabs" sticky="top">
     <pf-tabs :active-key="(Array.isArray($route.params.mainTab) ? $route.params.mainTab[0] : $route.params.mainTab) ?? 'story'" page-insets no-border-bottom>
       <router-link v-slot="{ href, navigate }" custom :to="{ params: { mainTab: 'story' } }">
         <pf-tab key="story" title="Story" :href="href" @click="navigate" />
@@ -17,6 +17,11 @@
       <pf-tab v-if="pfDocUrl" title="PatternFly Design Guidelines" :href="`${pfDocUrl}/design-guidelines`" target="_blank">
         <template #icon>
           <up-right-from-square-icon />
+        </template>
+      </pf-tab>
+      <pf-tab v-if="name && !noGithubLink" title="Page source code" :href="`https://github.com/mtorromeo/vue-patternfly/tree/master/apps/docs/src/stories/${name}`" target="_blank">
+        <template #icon>
+          <github-icon />
         </template>
       </pf-tab>
     </pf-tabs>
@@ -64,10 +69,13 @@
 import { onMounted } from 'vue';
 import type { ComponentProps, PfPageSection } from '@vue-patternfly/core';
 import UpRightFromSquareIcon from '@vue-patternfly/icons/up-right-from-square-icon';
+import GithubIcon from '@vue-patternfly/icons/github-icon';
 
 export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfPageSection> {
   title?: string;
+  name?: string;
   noDesignGuidelines?: boolean;
+  noGithubLink?: boolean;
 }
 
 const props = defineProps<Props>();
