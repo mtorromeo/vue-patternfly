@@ -19,7 +19,7 @@
 
     <auto-wrap
       :options="[
-        { component: PfMenuInput, include: PfTextInput },
+        { component: PfMenuInput, include: [PfTextInput, PfTextInputGroup, PfSearchInput] },
         { component: PfMenuContent, include: [PfMenuGroup, PfMenuList, PfMenuItem, PfDivider] },
       ]"
     >
@@ -106,6 +106,8 @@ import PfMenuList from './MenuList.vue';
 import PfMenuItem from './MenuItem.vue';
 import PfMenuInput from './MenuInput.vue';
 import PfTextInput from '../TextInput.vue';
+import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
+import PfSearchInput from '../SearchInput/SearchInput.vue';
 
 defineOptions({
   name: 'PfMenu',

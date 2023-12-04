@@ -106,20 +106,22 @@
     </story-canvas>
 
     <story-canvas title="Grouped single with filtering">
-      <pf-select placeholder="Filter by status" variant="checkbox">
-        <pf-text-input :auto-validate="false" aria-label="Filter menu items" type="search" icon-variant="search" />
+      <pf-select placeholder="Filter by status">
+        <pf-menu-input>
+          <pf-search-input v-model="filter" />
+        </pf-menu-input>
+
         <pf-divider />
-        <pf-select-group label="Status">
-          <pf-select-option value="Running" />
-          <pf-select-option value="Stopped" />
-          <pf-select-option value="Down" />
-          <pf-select-option value="Degraded" />
-          <pf-select-option value="Needs maintenance" />
-        </pf-select-group>
-        <pf-select-group label="Vendor names">
-          <pf-select-option value="Dell" />
-          <pf-select-option value="Samsung" disabled />
-          <pf-select-option value="Hewlett-Packard" />
+
+        <pf-select-group v-for="(groupOptions, group) of options" :key="group" :label="group">
+          <pf-select-option
+            v-for="option of groupOptions.filter(o => o.value.toLowerCase().includes(filter.toLowerCase()))"
+            :key="option.value"
+            v-model:favorited="option.favorite"
+            :value="option.value"
+            :description="option.description"
+            :disabled="option.disabled"
+          />
         </pf-select-group>
       </pf-select>
     </story-canvas>
@@ -147,6 +149,7 @@ import { reactive, ref } from 'vue';
 const divider = ref(false);
 const disabled = ref(false);
 const selected = ref([]);
+const filter = ref('');
 
 type Option = {
   value: string;
