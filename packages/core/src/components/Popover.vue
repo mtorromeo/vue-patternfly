@@ -142,6 +142,13 @@ const props = withDefaults(defineProps<Props>(), {
   open: undefined,
 });
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+  header?: (props?: Record<never, never>) => any;
+  body?: (props?: Record<never, never>) => any;
+  footer?: (props?: Record<never, never>) => any;
+}>();
+
 const emit = defineEmits<{
   (name: 'update:open', value: boolean): void;
   (name: 'show'): void;

@@ -29,4 +29,8 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfMenu> {
 }
 
 defineProps<Props>();
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
 </script>

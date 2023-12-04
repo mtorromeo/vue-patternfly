@@ -80,4 +80,13 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfLogin> 
 }
 
 defineProps<Props>();
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+  utilities: (props?: Record<never, never>) => any;
+  footerListItems: (props?: Record<never, never>) => any;
+  social: (props?: Record<never, never>) => any;
+  forgotCredentials: (props?: Record<never, never>) => any;
+  signup: (props?: Record<never, never>) => any;
+}>();
 </script>

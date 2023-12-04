@@ -32,4 +32,9 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 withDefaults(defineProps<Props>(), {
   labelHeadingLevel: 'h1',
 });
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+  label: (props?: Record<never, never>) => any;
+}>();
 </script>

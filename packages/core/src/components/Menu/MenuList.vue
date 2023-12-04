@@ -26,6 +26,10 @@ defineOptions({
 
 defineProps<Props>();
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
+
 const el: Ref<HTMLUListElement | undefined> = ref();
 const parentMenu = inject(MenuListInjectionKey, undefined);
 

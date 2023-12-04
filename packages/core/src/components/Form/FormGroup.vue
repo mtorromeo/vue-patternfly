@@ -114,6 +114,17 @@ export interface Props extends /* @vue-ignore */ FieldsetHTMLAttributes {
 
 const props = defineProps<Props>();
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+  label?: (props?: Record<never, never>) => any;
+  'label-icon'?: (props?: Record<never, never>) => any;
+  'label-info'?: (props?: Record<never, never>) => any;
+  'helper-text-invalid-icon'?: (props?: Record<never, never>) => any;
+  'helper-text-invalid'?: (props?: Record<never, never>) => any;
+  'helper-text-icon'?: (props?: Record<never, never>) => any;
+  'helper-text'?: (props?: Record<never, never>) => any;
+}>();
+
 import { computed } from 'vue';
 import type { InputValidateState } from '../../input';
 import { provideChildrenTracker } from '../../use';

@@ -20,7 +20,7 @@
     <auto-wrap
       :options="[
         { component: PfMenuInput, include: [PfTextInput, PfTextInputGroup, PfSearchInput] },
-        { component: PfMenuContent, include: [PfMenuGroup, PfMenuList, PfMenuItem, PfDivider] },
+        { component: PfMenuContent, include: [PfMenuGroup, PfMenuList, PfMenuItem] },
       ]"
     >
       <slot />
@@ -117,6 +117,10 @@ const props = withDefaults(defineProps<Props>(), {
   // drilldownItemPath: () => [],
   favoritesLabel: 'Favorites',
 });
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
 
 const emit = defineEmits<{
   /** A callback for when the input value changes. */

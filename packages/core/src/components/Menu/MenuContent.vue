@@ -37,6 +37,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 const props = defineProps<Props>();
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
+
 const el: Ref<HTMLDivElement | undefined> = ref();
 const menuList = inject(MenuListInjectionKey, undefined);
 

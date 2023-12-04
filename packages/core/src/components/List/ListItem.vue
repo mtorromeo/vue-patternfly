@@ -19,4 +19,9 @@ export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
 }
 
 defineProps<Props>();
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+  icon: (props?: Record<never, never>) => any;
+}>();
 </script>

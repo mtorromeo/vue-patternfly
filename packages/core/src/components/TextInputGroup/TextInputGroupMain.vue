@@ -60,6 +60,11 @@ const emit = defineEmits<{
   (name: 'blur', event: FocusEvent): void;
 }>();
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+  icon: (props?: Record<never, never>) => any;
+}>();
+
 const value = useManagedProp('modelValue', '');
 const disabled = inject(TextInputGroupDisabledKey, false);
 const input: Ref<HTMLInputElement | undefined> = ref();

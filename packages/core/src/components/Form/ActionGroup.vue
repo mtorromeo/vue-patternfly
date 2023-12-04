@@ -20,4 +20,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 }
 
 defineProps<Props>();
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
 </script>

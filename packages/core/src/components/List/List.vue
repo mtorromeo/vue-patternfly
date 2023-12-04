@@ -58,4 +58,8 @@ withDefaults(defineProps<Props>(), {
   type: OrderType.number,
   component: ListComponent.ul,
 });
+
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
 </script>

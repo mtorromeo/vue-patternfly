@@ -31,5 +31,9 @@ defineOptions({
 
 const props = defineProps<Props>();
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
+
 provide(TextInputGroupDisabledKey, props.disabled);
 </script>

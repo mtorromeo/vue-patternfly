@@ -45,6 +45,10 @@ const props = withDefaults(defineProps<Props>(), {
   favorited: undefined,
 });
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+}>();
+
 const emit = defineEmits<{
   /** Callback on action click, can also specify onActionClick on the Menu instead */
   (name: 'click', event: Event): void;

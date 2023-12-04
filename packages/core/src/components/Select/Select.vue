@@ -103,6 +103,12 @@ withDefaults(defineProps<Props>(), {
   // drilldownItemPath: () => [],
 });
 
+defineSlots<{
+  default: (props?: Record<never, never>) => any;
+  toggle: (props?: Record<never, never>) => any;
+  label: (props?: Record<never, never>) => any;
+}>();
+
 const emit = defineEmits<{
   /** A callback for when the input value changes. */
   (name: 'search-input-change', event: Event, value: string): void;
