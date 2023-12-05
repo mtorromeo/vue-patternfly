@@ -12,6 +12,8 @@
     <pre v-md>
       ## Differences from patternfly-react
       - There is no `grouped` prop since the presence of groups is auto-detected.
+      - A default menu toggle is already included but can be overridden with the "toggle" slot.
+
       See [common differences from patternfly-react](#/).
 
       ## Examples

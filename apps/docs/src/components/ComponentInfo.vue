@@ -1,7 +1,16 @@
 <template>
   <!-- <pre>{{ JSON.stringify(doc, undefined, 2) }}</pre> -->
+  <pf-title h="2">
+    {{ componentName }} <component-title :name="componentName" />
+  </pf-title>
+  <pf-text>
+    <pf-button variant="link" inline target="_blank" :href="`https://github.com/mtorromeo/vue-patternfly/blob/master/${src}`">
+      <github-icon /> Source code
+    </pf-button>
+  </pf-text>
+
   <template v-if="doc">
-    <pf-title h="2">{{ componentName }} <component-title :name="componentName" /></pf-title>
+    <br>
 
     <pf-title h="3">Props</pf-title>
     <pf-empty-state v-if="!doc.props?.length">
@@ -71,12 +80,21 @@
       </pf-tbody>
     </pf-table>
 
-    <br>
   </template>
+
+  <pf-empty-state v-else>
+    <pf-empty-state-header title="Documentation not available" />
+    <pf-empty-state-body>
+      Definitions for this component could not be extracted due to a limitation of vue-docgen-api. Please consult the linked component's source code instead.
+    </pf-empty-state-body>
+  </pf-empty-state>
+
+  <br>
 </template>
 
 <script lang="ts" setup>
 import type { ComponentDoc } from 'vue-docgen-api';
+import GithubIcon from '@vue-patternfly/icons/github-icon';
 
 interface Props {
   src: string;

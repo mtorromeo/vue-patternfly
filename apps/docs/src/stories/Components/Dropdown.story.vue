@@ -4,9 +4,9 @@
 
     <template #apidocs>
       <component-info src="packages/core/src/components/Dropdown/Dropdown.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuGroup.ts" />
-      <component-info src="packages/core/src/components/Menu/MenuItem.ts" />
-      <component-info src="packages/core/src/components/Menu/MenuList.ts" />
+      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuItem.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuList.vue" />
     </template>
 
     <story-canvas title="Basic">
