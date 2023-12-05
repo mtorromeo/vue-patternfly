@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { vueCanvasPlugin } from './vite-plugins/story-canvas-source';
-import { vueDocgenInject } from './vite-plugins/docgen-inject';
+import { vueCanvasPlugin } from './vite-plugins/story-canvas-source.mts';
+import { vueDocgenInject } from './vite-plugins/docgen-inject.mts';
 
 
 

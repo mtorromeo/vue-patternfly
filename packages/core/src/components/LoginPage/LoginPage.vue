@@ -4,9 +4,7 @@
   <pf-login v-bind="$attrs">
     <template #header>
       <pf-login-header>
-        <slot name="brand">
-          <pf-brand v-if="brandImgSrc" :src="brandImgSrc" :alt="brandImgAlt" />
-        </slot>
+        <pf-brand v-if="brandImgSrc" :src="brandImgSrc" :alt="brandImgAlt" />
       </pf-login-header>
     </template>
 
