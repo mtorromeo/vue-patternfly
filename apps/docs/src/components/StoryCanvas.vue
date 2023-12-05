@@ -8,6 +8,7 @@
       <div class="inner-canvas" v-bind="$attrs" :style="{ 'max-width': maxWidth, 'height': iframeRoute?.name && !$slots.default ? height ?? '450px' : height }">
         <slot>
           <iframe v-if="iframeRoute?.name" :style="{ width: '800px', height: '100%' }" :src="$router.resolve({name: iframeRoute.name}).href" />
+          <component :is="ExampleComponent" v-else-if="ExampleComponent" />
         </slot>
       </div>
     </div>
@@ -15,7 +16,7 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div style="position: relative">
       <div v-if="src" class="source-link">
-        <pf-button :href="`https://github.com/mtorromeo/vue-patternfly/tree/master/apps/docs/src/${src}`" variant="link" title="Full source code" target="_blank">
+        <pf-button :href="`https://github.com/mtorromeo/vue-patternfly/tree/master/apps/docs/src/${storySrc}`" variant="link" title="Full source code" target="_blank">
           <github-icon />
         </pf-button>
       </div>
@@ -67,15 +68,16 @@
 }
 </style>
 
+<script lang="ts">
+let highlighter: Highlighter;
+</script>
+
 <script lang="ts" setup>
 import { computedAsync } from '@vueuse/core';
-import { getHighlighter, type Highlighter, setWasm } from 'shiki';
-import theme from 'shiki/themes/nord.json';
-import type { HTMLAttributes } from 'vue';
+import { getHighlighter, type Highlighter } from 'shikiji';
+import { type HTMLAttributes } from 'vue';
 import { useRouter } from 'vue-router';
 import GithubIcon from '@vue-patternfly/icons/github-icon';
-
-let highlighter: Highlighter;
 
 defineOptions({
   inheritAttrs: false,
@@ -92,8 +94,20 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 const props = defineProps<Props>();
 
+let ExampleComponent: any = undefined;
+let storySrc = props.src;
+if (storySrc) {
+  const matches = /\.\/([^/]+)\.vue/.exec(storySrc);
+  if (matches) {
+    storySrc = `stories/Components/${matches[1]}.vue`;
+    (async() => {
+      ExampleComponent = (await import(`../stories/Components/${matches[1]}.vue`))['default'];
+    })();
+  }
+}
+
 const router = useRouter();
-const iframeRoute = router.getRoutes().find(r => r.meta.sourcePath === `./${props.src}`);
+const iframeRoute = storySrc?.endsWith('.iframe.vue') ? router.getRoutes().find(r => r.meta.sourcePath === `./${storySrc}`) : undefined;
 
 const highlighted = computedAsync(async() => {
   if (!props.source) {
@@ -101,16 +115,12 @@ const highlighted = computedAsync(async() => {
   }
 
   if (!highlighter) {
-    setWasm(await fetch('./shiki/onig.wasm'));
     highlighter = await getHighlighter({
-      themes: [theme as any],
-      langs: ['vue-html'],
-      paths: {
-        languages: './shiki/',
-      },
+      themes: ['nord'],
+      langs: ['vue', 'vue-html'],
     });
   }
 
-  return highlighter.codeToHtml(props.source.replaceAll('\\n', '\n').trim(), { lang: 'vue-html' });
+  return highlighter.codeToHtml(props.source.replaceAll('\\n', '\n').trim(), { lang: props.src ? 'vue' : 'vue-html', theme: 'nord' });
 });
 </script>

@@ -6,6 +6,6 @@
       <component-info src="packages/core/src/components/BackgroundImage.vue" />
     </template>
 
-    <story-canvas title="Basic" src="stories/Components/BackgroundImage.iframe.vue" />
+    <story-canvas title="Basic" src="./BackgroundImage.iframe.vue" />
   </doc-page>
 </template>

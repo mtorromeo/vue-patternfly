@@ -98,10 +98,11 @@ import GithubIcon from '@vue-patternfly/icons/github-icon';
 
 interface Props {
   src: string;
+  alias?: string;
   doc?: ComponentDoc;
 }
 
 const props = defineProps<Props>();
 
-const componentName = `Pf${props.src.replace(/^.*\/|\..*$/g, '')}`;
+const componentName = `Pf${(props.alias ?? props.src.replace(/^.*\/|\..*$/g, ''))}`;
 </script>

@@ -8,6 +8,7 @@ import markdownItClass from '@toycode/markdown-it-class';
 import { escapeHtml } from '@vue/shared';
 import { getHighlighter } from 'shiki';
 import fs from 'fs/promises';
+import path from 'path';
 
 export const PLUGIN_NAME = 'vue-canvas-source';
 
@@ -47,13 +48,14 @@ function fixSelfClosingTag(code: string) {
   return code.replace(/<([^\s]+)([^>]*?)\s*><\/\1>/g, '<$1$2 />');
 }
 
-async function addSourceToStoryCanvas(el: HTMLElement) {
+async function addSourceToStoryCanvas(el: HTMLElement, id: string) {
+  let sourcePath: string | null = null;
   let source: string | null = null;
 
   const matches = el.rawAttrs.match(/(?:^|\s)src="([^"]+)"/);
   if (matches) {
-    source = matches[1];
-    source = await fs.readFile(`./src/${source}`, {encoding: 'utf-8'});
+    sourcePath = path.resolve(path.dirname(id), matches[1]);
+    source = await fs.readFile(sourcePath, {encoding: 'utf-8'});
   }
 
   if (!source) {
@@ -63,6 +65,7 @@ async function addSourceToStoryCanvas(el: HTMLElement) {
   }
 
   el.rawAttrs += ` source="${escapeHtml(dedent(source.trim()))}"`;
+  return sourcePath;
 }
 
 function replaceMarkdown(md: Markdown, el: HTMLElement) {
@@ -102,6 +105,8 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
     enforce: 'pre',
 
     async transform(code, id) {
+      const dependencies: string[] = [];
+
       if (filter(id)) {
         const md = await mdPromise;
         const html = parse(code);
@@ -109,7 +114,10 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
         await traverse(html.childNodes, async(el) => {
           if (el instanceof HTMLElement) {
             if (el.rawTagName === 'story-canvas') {
-              await addSourceToStoryCanvas(el);
+              const dep = await addSourceToStoryCanvas(el, id);
+              if (dep) {
+                dependencies.push(id);
+              }
             } else if (el.rawTagName === 'pre' && el.hasAttribute('v-md')) {
               replaceMarkdown(md, el);
             }
@@ -117,7 +125,10 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
           return el;
         });
 
-        return html.toString();
+        return {
+          code: html.toString(),
+          dependencies,
+        };
       }
 
       return null;
