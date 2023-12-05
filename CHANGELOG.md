@@ -1,6 +1,64 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.17] - 2023-12-05
+
+### Bug Fixes
+
+- *(Drawer)* Applied correct default panel size
+- *(Drawer)* Removed auto-wrapping of content with pf-drawer-header that interfered with layout of pf-notification-drawer
+- *(docs)* Fixed incorrect usage of props
+- *(types)* Workaround for wrongly defined onInput event (See https://github.com/vuejs/core/pull/9675)
+- *(ToggleGroupItem)* Fixed usage of default slot
+- *(docs)* Removed test link from TOC
+- *(Table)* Fiex GlobalComponents definition for PfTable
+- *(Table)* Fixed pf5 css classes for sticky cells
+- *(Table)* Fixed package export of style.css
+- *(Textarea)* Fixed resize-orientation=both and readonly-variant=plain
+- *(Textarea)* Properly resize on change and mounted with auto-resize
+- *(Drawer)* Removed duplicated slot in resizable drawers
+- *(FormSelect, JumpLinks, Page)* Added missing component imports
+- *(Table)* Restored native th attribute inheriting of pf-th
+- *(helpers)* Fixed usage of include/exclude filters passed as Array of components
+- *(Select)* Simplified pf-select component by making it bind all extra arguments to its pf-menu and removed extra div container which resulted in the wrong menu width
+- *(Menu)* Fixed typeahead variant styles
+- *(LoginPage)* Corrected pf-login-header slot name
+
+### Documentation
+
+- Added instructions for pf-table plugin
+- Add links to github with the source code of the story pages
+- Added height prop of story-canvas
+- More complete pf-select examples
+- Added links to every component's source code in the API Docs tabs
+- Allowed story blocks to be sourced as separate components
+- Full pf-select with typeahead example
+
+### Features
+
+- *(Drawer)* Implemented the no-background color variant
+- *(NotificationDrawer)* Implemented keyboard handler on toggle button
+- *(docs)* Actual notification drawer example in page story
+- *(Table)* Implemented Table component
+- *(docs)* Implemented props/events/slots documentation tables with vue-docgen-api
+- *(JumpLink)* Implemented `pf-jump-links` components
+- *(Tabs)* Implemented click event and icon slot on `pf-tab` and allowed to set href and target on the tab link
+- *(docs)* Added List story
+- *(docs)* Added Tooltip story
+- *(Table)* Implemented row selection
+- *(icons)* Updated @fortawesome/free-* icons
+- *(FormSelect)* Added native select change event
+- *(FormSelect, TextInputGroup)* Exposed native inputs
+- *(FloatingUi)* Allow use of virtual elements as references for floating-ui
+- *(Select)* Added props for select toggle element
+- *(Menu)* Implemented automatic of PfTextInputGroup, PfSearchInput in PfMenuInput container when inside PfMenu
+- *(Select)* Auto close menu on outside click and escape and tab key presses
+
+### Refactor
+
+- Removed single component reexport files
+- *(Progress)* Renamed label slot to default
+
 ## [0.1.0-beta.16] - 2023-11-16
 
 ### Bug Fixes
