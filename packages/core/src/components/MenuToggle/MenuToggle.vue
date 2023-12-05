@@ -3,7 +3,8 @@
     v-bind="ouiaProps"
     :is="typeahead || isSplitButton ? 'div' : 'button'"
     ref="el"
-    :class="typeahead ? styles.modifiers.typeahead : [styles.menuToggle, {
+    :class="[styles.menuToggle, {
+      [styles.modifiers.typeahead]: typeahead,
       [styles.modifiers.splitButton]: isSplitButton,
       [styles.modifiers.action]: splitButton === 'action',
       [styles.modifiers.expanded]: managedExpanded,

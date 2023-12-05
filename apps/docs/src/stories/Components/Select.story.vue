@@ -4,9 +4,9 @@
 
     <template #apidocs>
       <component-info src="packages/core/src/components/Select/Select.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuList.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuItem.vue" />
+      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" alias="SelectGroup" />
+      <component-info src="packages/core/src/components/Menu/MenuList.vue" alias="SelectList" />
+      <component-info src="packages/core/src/components/Menu/MenuItem.vue" alias="SelectItem" />
     </template>
 
     <pre v-md>
@@ -66,9 +66,6 @@
     <story-canvas title="Checkbox input">
       <pf-select v-model:selected="selectedSingle" placeholder="Filter by status" variant="primary">
         <template #label>{{ selectedSingle ?? 'Select a value' }}</template>
-        <pf-select-option disabled>
-          Please Choose
-        </pf-select-option>
         <pf-select-option check value="Mr" />
         <pf-select-option check value="Miss" />
         <pf-select-option check value="Mrs" />
@@ -84,18 +81,6 @@
           <pf-badge>{{ selectedMulti.length }}</pf-badge>
         </template>
 
-        <pf-select-option check value="Debug" />
-        <pf-select-option check value="Info" />
-        <pf-select-option check value="Warn" />
-        <pf-select-option check value="Error" disabled />
-      </pf-select>
-    </story-canvas>
-
-    <story-canvas title="Grouped checkbox input">
-      <pf-select placeholder="Filter by status">
-        <pf-select-option disabled>
-          Please Choose
-        </pf-select-option>
         <pf-select-option check value="Debug" />
         <pf-select-option check value="Info" />
         <pf-select-option check value="Warn" />
@@ -138,6 +123,8 @@
         </pf-select-group>
       </pf-select>
     </story-canvas>
+
+    <story-canvas title="Typeahead test" src="./Select-Typeahead.vue" />
   </doc-page>
 </template>
 
