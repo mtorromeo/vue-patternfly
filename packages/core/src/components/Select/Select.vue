@@ -11,6 +11,7 @@
     <floating-ui :reference="$el" :z-index="zIndex" flip>
       <pf-menu
         v-if="managedOpen"
+        ref="menuRef"
         v-model:selected="managedSelected"
         :plain="plain"
         :style="{'--pf-v5-c-menu--MinWidth': minWidth}"
@@ -32,12 +33,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { MenuItemId } from '../Menu/Menu.vue';
-import PfMenu from '../Menu/Menu.vue';
+import PfMenu, { type MenuItemId } from '../Menu/Menu.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import { ref, type HTMLAttributes } from 'vue';
+import { nextTick, ref, type Ref, type HTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
+import { useEventListener } from '@vueuse/core';
 
 defineOptions({
   name: 'PfSelect',
@@ -95,12 +96,16 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   fullWidth?: boolean;
   /** Variant styles of the menu toggle */
   variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
+
+  /** @beta Keys that trigger menu close, defaults to tab and escape. It is highly recommended to include Escape in the array, while Tab may be omitted if the menu contains non-menu items that are focusable. */
+  closeOnKeys?: string[];
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   open: undefined,
   selected: undefined,
   // drilldownItemPath: () => [],
+  closeOnKeys: () => ['Escape', 'Tab'],
 });
 
 defineSlots<{
@@ -120,5 +125,39 @@ const emit = defineEmits<{
 
 const managedSelected = useManagedProp<MenuItemId | MenuItemId[] | null>('selected', null);
 const managedOpen = useManagedProp('open', false);
-const $el = ref();
+const $el: Ref<HTMLElement | undefined> = ref();
+const menuRef: Ref<InstanceType<typeof PfMenu> | undefined> = ref();
+
+
+const handleMenuKeys = (event: KeyboardEvent) => {
+  // Close the menu on tab or escape
+  if (
+    managedOpen.value &&
+    (menuRef.value?.el?.contains(event.target as Node) || $el.value?.contains(event.target as Node))
+  ) {
+    if (props.closeOnKeys.includes(event.key)) {
+      event.preventDefault();
+      managedOpen.value = false;
+      $el.value?.focus();
+    }
+  }
+};
+
+const handleClick = (event: MouseEvent) => {
+  // toggle was clicked open via keyboard, focus on first menu item
+  if (managedOpen.value && $el.value?.contains(event.target as Node) && event.detail === 0) {
+    nextTick(() => {
+      const firstElement = menuRef.value?.el?.querySelector('li button:not(:disabled),li input:not(:disabled)');
+      firstElement && (firstElement as HTMLElement).focus();
+    });
+  }
+
+  // If the event is not on the toggle, close the menu
+  if (managedOpen.value && !$el.value?.contains(event.target as Node) && !menuRef.value?.el?.contains(event.target as Node)) {
+    managedOpen.value = false;
+  }
+};
+
+useEventListener(window, 'keydown', handleMenuKeys);
+useEventListener(window, 'click', handleClick);
 </script>
