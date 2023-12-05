@@ -59,12 +59,10 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import { computed, type ButtonHTMLAttributes } from 'vue';
+import { computed, ref, type Ref, type ButtonHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useManagedProp } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import type { Ref } from 'vue';
-import { ref } from 'vue';
 
 defineOptions({
   name: 'PfMenuToggle',
