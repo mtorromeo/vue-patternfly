@@ -75,7 +75,7 @@ let highlighter: Highlighter;
 <script lang="ts" setup>
 import { computedAsync } from '@vueuse/core';
 import { getHighlighter, type Highlighter } from 'shikiji';
-import { type HTMLAttributes } from 'vue';
+import { shallowRef, type HTMLAttributes } from 'vue';
 import { useRouter } from 'vue-router';
 import GithubIcon from '@vue-patternfly/icons/github-icon';
 
@@ -94,14 +94,14 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 const props = defineProps<Props>();
 
-let ExampleComponent: any = undefined;
+const ExampleComponent = shallowRef(undefined);
 let storySrc = props.src;
 if (storySrc) {
   const matches = /\.\/([^/]+)\.vue/.exec(storySrc);
   if (matches) {
     storySrc = `stories/Components/${matches[1]}.vue`;
     (async() => {
-      ExampleComponent = (await import(`../stories/Components/${matches[1]}.vue`))['default'];
+      ExampleComponent.value = (await import(`../stories/Components/${matches[1]}.vue`))['default'];
     })();
   }
 }
