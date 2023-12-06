@@ -14,7 +14,7 @@
           'pf-m-nested': nested,
         }]"
       >
-        <caption v-if="false">
+        <caption v-if="hasSelectableRows">
           {{ selectableRowCaptionText }}
           <div class="pf-v5-screen-reader">
             This table has selectable rows. It can be navigated by row using tab, and each row can be selected using
@@ -58,17 +58,22 @@ const treeGrid =
       | 'treeViewGridXl'
       | 'treeViewGrid_2xl'
   ];
+
+const rows = provideChildrenTracker(TableTrKey);
+const hasSelectableRows = computed(() => rows.some(row => row.selectable));
 </script>
 
 <script lang="ts">
 import PassThrough from '@vue-patternfly/core/helpers/PassThrough.vue';
-import type { TableHTMLAttributes } from "vue";
+import { computed, type TableHTMLAttributes } from "vue";
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import stylesGrid from '@patternfly/react-styles/css/components/Table/table-grid';
 import stylesTreeView from '@patternfly/react-styles/css/components/Table/table-tree-view';
 import scrollStyles from '@patternfly/react-styles/css/components/Table/table-scrollable';
 import { toCamelCase } from '@vue-patternfly/core/util';
+import { provideChildrenTracker } from '@vue-patternfly/core';
+import { TableTrKey } from './common';
 
 export interface Props extends OUIAProps, /* @vue-ignore */ TableHTMLAttributes {
   /** Reduces spacing and makes the table more compact */

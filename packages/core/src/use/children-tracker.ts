@@ -10,7 +10,7 @@ export type ChildrenTrackerInjectionKey<T> = InjectionKey<ChildrenTracker<T>>;
 
 const ChildrenTrackerSymbol = Symbol('Children tracker provide/inject symbol') as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
 
-export function provideChildrenTracker<T = ComponentPublicInstance>(symbol: symbol | ChildrenTrackerInjectionKey<T>) {
+export function provideChildrenTracker<T = ComponentPublicInstance>(symbol: symbol | ChildrenTrackerInjectionKey<T>): T[] {
   const items: T[] = reactive([]);
 
   provide(symbol || ChildrenTrackerSymbol, {

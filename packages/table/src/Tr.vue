@@ -44,7 +44,9 @@ const ariaLabel = computed(() => {
     return undefined;
   }
   return props.selected ? 'Row selected' : '';
-})
+});
+
+useChildrenTracker(TableTrKey);
 
 function onKeyDown(e: KeyboardEvent) {
   if (props.onClick && (e.key === 'Enter' || e.key === ' ')) {
@@ -59,6 +61,8 @@ import { computed, type HTMLAttributes } from "vue";
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import inlineStyles from '@patternfly/react-styles/css/components/InlineEdit/inline-edit';
+import { useChildrenTracker } from "@vue-patternfly/core";
+import { TableTrKey } from "./common";
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag indicating the Tr is hidden */
