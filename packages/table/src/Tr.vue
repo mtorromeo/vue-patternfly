@@ -69,8 +69,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   expanded?: boolean;
   /** Only applicable to Tr within the Tbody: Whether the row is editable */
   editable?: boolean;
-  /** Flag which adds hover styles for the table row */
-  hoverable?: boolean;
   /** Flag which adds hover styles for the clickable table row */
   clickable?: boolean;
   /** Flag indicating the row is selected - adds selected styling */
