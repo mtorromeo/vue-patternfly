@@ -1,6 +1,7 @@
 {
   "name": "@vue-patternfly/table",
-  "version": "0.2.0",
+  "version": "0.2.1",
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -24,7 +25,6 @@
     "build:vite": "vite build",
     "build:bundle": "vite build -c vite-bundle.config.ts",
     "build:declarations": "vue-tsc --declaration --emitDeclarationOnly",
-    "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
     "build:esm": "tsc --build --verbose tsconfig.json",
     "lint": "vue-tsc --noEmit",
     "watch": "concurrently 'npm:watch:*'",
