@@ -2,7 +2,7 @@
   <component :is="stickyHeader ? 'div' : PassThrough" :class="scrollStyles.scrollOuterWrapper">
     <component :is="horizontalScroll ? 'div' : PassThrough" :class="scrollStyles.scrollInnerWrapper">
       <table
-        v-bind="{...$attrs, ouiaProps}"
+        v-bind="{...ouiaProps, ...$attrs}"
         :role="treeTable ? 'treegrid' : role"
         :class="[styles.table, treeTable ? treeGrid : grid, {
           [styles.modifiers.compact]: compact,

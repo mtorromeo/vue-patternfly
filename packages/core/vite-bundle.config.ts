@@ -16,12 +16,12 @@ export default defineConfig({
     rollupOptions: {
       external: Object.keys(globals),
       output: [{
-        name: 'VuePatternflyCore',
+        name: 'VuePatternFlyCore',
         format: 'umd',
         exports: 'named',
         globals,
       }, {
-        name: 'VuePatternflyCore',
+        name: 'VuePatternFlyCore',
         format: 'iife',
         exports: 'named',
         globals,

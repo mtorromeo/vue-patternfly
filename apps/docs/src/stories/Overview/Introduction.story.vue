@@ -46,7 +46,7 @@
 
       import { createApp } from 'vue';
       import VuePatternFly from '@vue-patternfly/core';
-      import VuePatternflyTable from '@vue-patternfly/table'; // only for pf-table
+      import VuePatternFlyTable from '@vue-patternfly/table'; // only for pf-table
 
       const app = createApp({
         setup() {
@@ -54,7 +54,7 @@
         },
       });
       app.use(VuePatternFly);
-      app.use(VuePatternflyTable); // only for pf-table
+      app.use(VuePatternFlyTable); // only for pf-table
       app.mount('#app');
       ```
 

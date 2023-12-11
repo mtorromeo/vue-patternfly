@@ -6,7 +6,7 @@
   </define-select-checkbox>
 
   <component
-    v-bind="{...$attrs, ...ouiaProps}"
+    v-bind="{...ouiaProps, ...$attrs}"
     :is="component"
     role="columnheader"
     :class="[
