@@ -51,7 +51,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
   checked?: boolean;
 
   /** Flag to reverse the layout of toggle and label (toggle on right). */

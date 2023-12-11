@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfCloseButton',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick'> {
+export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick' | 'variant' | 'aria-label'> {
 }
 
 defineProps<Props>();

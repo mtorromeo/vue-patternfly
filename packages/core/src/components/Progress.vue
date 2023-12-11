@@ -12,7 +12,7 @@
       },
     ]"
   >
-    <component :is="tooltip ? PfTooltip : (PassThrough as Component)" :position="tooltipPosition">
+    <component :is="tooltip ? PfTooltip : PassThrough" :position="tooltipPosition">
       <div
         :id="`${validId}-description`"
         :class="[styles.progressDescription, {
@@ -60,12 +60,12 @@ import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 import { getUniqueId } from '../util';
-import { type Component, ref, computed, type HTMLAttributes } from 'vue';
+import { ref, computed, type HTMLAttributes } from 'vue';
 
 const variantToIcon = {
-  danger: CircleXmarkIcon as Component,
-  success: CircleCheckIcon as Component,
-  warning: TriangleExclamationIcon as Component,
+  danger: CircleXmarkIcon,
+  success: CircleCheckIcon,
+  warning: TriangleExclamationIcon,
 };
 
 defineOptions({

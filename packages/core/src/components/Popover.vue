@@ -65,11 +65,11 @@
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
 import { useHtmlElementFromVNodes, useManagedProp } from '../use';
-import { computed, type Ref, ref, watch, type HTMLAttributes, onMounted, onBeforeUnmount } from 'vue';
+import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 
-import PfFocusTrap from '../helpers/FocusTrap.vue';
+import PfFocusTrap, { type Props as PfFocusTrapProps } from '../helpers/FocusTrap.vue';
 import PfCloseButton from './CloseButton.vue';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
@@ -81,7 +81,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<PfFocusTrapProps, 'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby'> {
   /** Whether to trap focus in the popover */
   focusTrap?: boolean;
 

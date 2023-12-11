@@ -1,8 +1,5 @@
 <template>
-  <pf-menu
-    :menu-drilled-in="menuDrilledIn"
-    :root-menu="false"
-  >
+  <pf-menu :root-menu="false">
     <pf-menu-content @height="onHeight">
       <pf-menu-list>
         <slot />
@@ -21,9 +18,7 @@ defineOptions({
   name: 'PfDrilldownMenu',
 });
 
-export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfMenu> {
-  /** Flag indicating whether the menu is drilled in */
-  menuDrilledIn?: boolean;
+export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'rootMenu'> {
   /** Optional callback to get the height of the sub menu */
   onHeight?: (height: string) => void;
 }

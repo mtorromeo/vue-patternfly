@@ -14,7 +14,7 @@ defineOptions({
   name: 'PfOverflowMenuDropdownItem',
 });
 
-export interface Props extends /* @vue-ignore */ DropdownItemProps {
+export interface Props extends /* @vue-ignore */ Omit<DropdownItemProps, 'component'> {
   shared?: boolean;
 }
 

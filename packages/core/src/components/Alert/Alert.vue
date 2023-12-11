@@ -36,7 +36,7 @@
       </template>
     </pf-alert-icon>
 
-    <component :is="tooltipVisible ? PfTooltip : (PassThrough as Component)" :position="tooltipPosition">
+    <component :is="tooltipVisible ? PfTooltip : PassThrough" :position="tooltipPosition">
       <component
         :is="component"
         ref="titleRef"
@@ -86,7 +86,7 @@ defineOptions({
   name: 'PfAlert',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
   /** Adds accessible text to the alert. */
   ariaLabel?: string;
   /** Uniquely identifies the alert. */

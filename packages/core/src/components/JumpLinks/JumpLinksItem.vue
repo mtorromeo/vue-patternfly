@@ -27,7 +27,7 @@ defineOptions({
   name: 'PfJumpLinksItem',
 });
 
-export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'aria-current'> {
   /** Whether this item is active. Parent JumpLinks component sets this when passed a `scrollableSelector`. */
   active?: boolean;
   /** Href for this link */

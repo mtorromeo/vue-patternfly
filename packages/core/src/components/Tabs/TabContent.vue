@@ -21,7 +21,7 @@ defineOptions({
   name: 'PfTabContent',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {}
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
 
 defineProps<Props>();
 

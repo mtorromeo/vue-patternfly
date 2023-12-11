@@ -53,7 +53,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect'> {
+export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
   component?: string;
   linkComponent?: string;
   groupId?: string;

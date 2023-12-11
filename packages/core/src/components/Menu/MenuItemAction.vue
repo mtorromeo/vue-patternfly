@@ -4,7 +4,6 @@
       [styles.modifiers.favorite]: isDefined(favorited),
       [styles.modifiers.favorited]: favorited,
     }]"
-    :aria-label="ariaLabel"
     :disabled="disabled || item?.disabled || undefined"
     tabindex="-1"
     @click="onClick"
@@ -28,11 +27,9 @@ defineOptions({
   name: 'PfMenuItemAction',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick'> {
+export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'tabindex'> {
   /** The action icon to use */
   icon?: 'favorites';
-  /** Accessibility label */
-  ariaLabel?: string;
   /** Flag indicating if the item is favorited */
   favorited?: boolean;
   /** Disables action, can also be specified on the MenuItem instead */

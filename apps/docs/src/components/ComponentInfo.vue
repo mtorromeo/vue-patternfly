@@ -30,6 +30,7 @@
           <pf-td>{{ prop.name }} <span v-if="prop.required" :style="{color: 'var(--pf-v5-global--danger-color--100)'}">*</span></pf-td>
           <pf-td v-if="prop.type?.name === 'union'">{{ (prop.type as any).elements.map((e: any) => e.name).join(' | ') }}</pf-td>
           <pf-td v-else-if="prop.type?.name === 'Array'">{{ (prop.type as any).elements.map((e: any) => e.name).join(' | ') }}[]</pf-td>
+          <pf-td v-else-if="prop.type?.name === 'TSFunctionType'">function</pf-td>
           <pf-td v-else>{{ prop.type?.name }}</pf-td>
           <pf-td v-if="prop.type?.name === 'boolean' && !prop.defaultValue">false</pf-td>
           <pf-td v-else>{{ prop.defaultValue?.value }}</pf-td>

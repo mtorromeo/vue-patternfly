@@ -69,7 +69,7 @@ defineOptions({
   name: 'PfMenuToggle',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded' | 'onClick'> {
   /** Flag indicating the toggle has expanded styling */
   expanded?: boolean;
   /** Flag indicating the toggle is disabled */

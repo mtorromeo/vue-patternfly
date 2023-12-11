@@ -47,7 +47,7 @@ defineOptions({
   name: 'PfNavExpandable',
 });
 
-export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'onClick'> {
   title?: string;
   srText?: string;
   groupId?: string | number;

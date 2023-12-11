@@ -44,12 +44,12 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
-import { computed, getCurrentInstance, inject, ref, watch, watchEffect, type HTMLAttributes } from 'vue';
+import { computed, getCurrentInstance, inject, ref, watch, watchEffect } from 'vue';
 import { TabsKey, TabsProvideKey } from './Tabs.vue';
 import PfTabTitleIcon from './TabTitleIcon.vue';
 import PfTabTitleText from './TabTitleText.vue';
 import PfTabButton from './TabButton.vue';
-import PfTabContent from './TabContent.vue';
+import PfTabContent, { type Props as PfTabContentProps } from './TabContent.vue';
 import { useChildrenTracker } from '../../use';
 
 defineOptions({
@@ -57,7 +57,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ PfTabContentProps {
   /** Content rendered in the tab title. */
   title?: string;
   /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */

@@ -9,7 +9,7 @@
         },
       ]"
       :aria-expanded="managedExpanded"
-      @click="managedExpanded = !managedExpanded"
+      @click="handleClick($event as PointerEvent)"
     >
       <span :class="styles.accordionToggleText">
         <slot name="toggle">{{ title }}</slot>
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, type HTMLAttributes } from 'vue';
+import { inject, type ButtonHTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
@@ -46,9 +46,10 @@ import { AccordionKey } from './Accordion.vue';
 
 defineOptions({
   name: 'PfAccordionItem',
+  inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded'> {
   title?: string;
   toggleComponent?: string;
   contentComponent?: string;
@@ -60,8 +61,9 @@ withDefaults(defineProps<Props>(), {
   expanded: undefined,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (name: 'update:expanded', value: boolean): void;
+  (name: 'click', event: PointerEvent): void;
 }>();
 
 defineSlots<{
@@ -71,4 +73,9 @@ defineSlots<{
 
 const accordion = inject(AccordionKey, undefined);
 const managedExpanded = useManagedProp('expanded', false);
+
+function handleClick(event: PointerEvent) {
+  managedExpanded.value = !managedExpanded.value;
+  emit('click', event);
+}
 </script>

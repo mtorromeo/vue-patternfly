@@ -14,11 +14,11 @@ defineOptions({
 });
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
-    /** Title for the section */
-    title?: string;
+  /** Title for the section */
+  title?: string;
 
-    /** Header description */
-    titleElement?: string;
+  /** Header description */
+  titleElement?: string;
 }
 
 withDefaults(defineProps<Props>(), {

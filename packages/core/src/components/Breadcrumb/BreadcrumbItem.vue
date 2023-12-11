@@ -31,7 +31,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ AnchorHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'aria-current' | 'type'> {
   href?: string;
   to?: RouteLocationRaw;
   active?: boolean;

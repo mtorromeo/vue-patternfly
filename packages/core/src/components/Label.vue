@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Label/label';
 
-import { ref, type Ref, type HTMLAttributes, type VNode } from 'vue';
+import { ref, type Ref, type ButtonHTMLAttributes, type VNode } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton.vue';
 import PfTooltip, { type TooltipPosition } from './Tooltip/Tooltip.vue';
@@ -53,9 +53,9 @@ defineOptions({
   name: 'PfLabel',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ ButtonHTMLAttributes {
   /** The color of the label outline/fill */
-  color?: keyof typeof colorStyles,
+  color?: 'blue' | 'cyan' | 'green' | 'orange' | 'purple' | 'red' | 'gold' | 'grey',
   variant?: 'outline' | 'filled';
   tooltipPosition?: TooltipPosition;
   to?: RouteLocationRaw;

@@ -1,5 +1,5 @@
 <template>
-  <pf-input-group-item box :plain="plain" :disabled="disabled">
+  <pf-input-group-item box>
     <component :is="component" :class="styles.inputGroupText">
       <slot />
     </component>
@@ -8,21 +8,16 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
-import PfInputGroupItem from './InputGroupItem.vue';
-
-import { type Component, type HTMLAttributes } from 'vue';
+import PfInputGroupItem, { type Props as PfInputGroupItemProps } from './InputGroupItem.vue';
+import type { Component } from 'vue';
 
 defineOptions({
   name: 'PfInputGroupText',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<PfInputGroupItemProps, 'box'> {
     /** Component that wraps the input group text. */
   component?: string | Component;
-  /** Flag to to indicate if the input group item is plain. */
-  plain?: boolean;
-  /** Flag to indicate if the input group text is disabled. */
-  disabled?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {

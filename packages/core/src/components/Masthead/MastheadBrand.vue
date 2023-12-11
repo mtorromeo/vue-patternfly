@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? 'router-link' : (PassThrough as Component)"
+    :is="to ? 'router-link' : PassThrough"
     v-slot="routerCtx"
     :to="to"
     :replace="replace"
@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Masthead/masthead';
 import PassThrough from '../../helpers/PassThrough.vue';
-import type { AnchorHTMLAttributes, Component, UnwrapRef } from 'vue';
+import type { AnchorHTMLAttributes, UnwrapRef } from 'vue';
 import type { useLink, RouteLocationRaw } from 'vue-router';
 
 type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;

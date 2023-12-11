@@ -32,7 +32,7 @@
 export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean>>;
 export const CardExpandableKey = Symbol('CardExpandableKey') as InjectionKey<ComputedRef<boolean>>;
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Content rendered inside the Card */
   component?: string | Component;
 

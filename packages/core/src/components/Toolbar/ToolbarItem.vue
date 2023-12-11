@@ -24,7 +24,7 @@ defineOptions({
   name: 'PfToolbarItem',
 });
 
-export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, WidthBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, WidthBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
   variant?: 'separator' | 'bulk-select' | 'overflow-menu' | 'pagination' | 'search-filter' | 'label' | 'chip-group' | 'expand-all';
   allExpanded?: boolean;
 }

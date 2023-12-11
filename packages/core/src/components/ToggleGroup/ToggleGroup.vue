@@ -8,7 +8,7 @@
 export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as InjectionKey<ComputedRef<boolean | undefined>>;
 export const ToggleGroupSelectionKey = Symbol('ToggleGroupSelectionKey') as InjectionKey<WritableComputedRef<unknown>>;
 
-// TODO: readd `extends /* @vue-ignore */ HTMLAttributes` once https://github.com/vuejs/language-tools/issues/3723 is fixed
+// TODO: readd `extends /* @vue-ignore */ Omit<HTMLAttributes, 'role'>` once https://github.com/vuejs/language-tools/issues/3723 is fixed
 export interface Props<T> {
   /** Modifies the toggle group to include compact styling. */
   compact?: boolean;

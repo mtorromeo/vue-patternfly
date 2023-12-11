@@ -10,7 +10,7 @@ defineOptions({
   name: 'PfNavItemSeparator',
 });
 
-export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDivider> {
+export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfDivider>, 'component'> {
 }
 
 defineProps<Props>();

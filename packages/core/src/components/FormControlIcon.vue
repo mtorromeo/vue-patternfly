@@ -2,7 +2,8 @@
   <span
     :class="[styles.formControlIcon, {
       [styles.modifiers.status]: status,
-    }]">
+    }]"
+  >
     <slot>
       <circle-check-icon v-if="status === 'success'" />
       <circle-exclamation-icon v-else-if="status === 'warning'" />

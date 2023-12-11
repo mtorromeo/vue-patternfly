@@ -14,14 +14,14 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
-import { type HTMLAttributes, type LiHTMLAttributes } from 'vue';
+import { type LiHTMLAttributes } from 'vue';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../breakpoints';
 
 defineOptions({
   name: 'PfDivider',
 });
 
-export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes, /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends InsetBreakpointProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role'> {
   component?: 'hr' | 'li' | 'div';
   vertical?: boolean;
 }

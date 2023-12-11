@@ -71,7 +71,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'type'> {
   id?: string;
   readonly?: boolean;
   overflow?: boolean;

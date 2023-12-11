@@ -93,7 +93,7 @@ export type MenuItemProvide = {
 
 export const MenuItemInjectionKey = Symbol('MenuItemInjectionKey') as InjectionKey<MenuItemProvide>;
 
-export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'onMouseover'> {
   name?: string;
   value?: string;
 

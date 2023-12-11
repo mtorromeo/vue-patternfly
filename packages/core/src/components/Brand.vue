@@ -1,9 +1,9 @@
 <template>
-  <picture v-if="$slots.default" :class="[styles.brand, styles.modifiers.picture]" :style="pictureStyle">
+  <picture v-if="$slots.default" v-bind="$attrs" :class="[styles.brand, styles.modifiers.picture]" :style="pictureStyle">
     <slot />
     <img :src="src" :alt="alt">
   </picture>
-  <img v-else :class="styles.brand" :src="src" :alt="alt">
+  <img v-else v-bind="$attrs" :class="styles.brand" :src="src" :alt="alt">
 </template>
 
 <script lang="ts" setup>
@@ -13,9 +13,10 @@ import type { ImgHTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfBrand',
+  inheritAttrs: false,
 });
 
-export interface Props extends WidthBreakpointProps, HeightBreakpointProps, /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height'> {
+export interface Props extends WidthBreakpointProps, HeightBreakpointProps, /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height' | 'src' | 'alt'> {
   src: string;
   alt?: string;
 }

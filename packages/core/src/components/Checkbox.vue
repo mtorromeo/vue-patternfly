@@ -42,7 +42,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange'> {
+export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked'> {
   component?: string | Component;
   /** Flag to show if the radio is checked. */
   modelValue?: boolean | null;

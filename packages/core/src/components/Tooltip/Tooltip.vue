@@ -42,7 +42,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'onTransitionend'> {
   position?: TooltipPosition;
   trigger?: string;
   leftAligned?: boolean,

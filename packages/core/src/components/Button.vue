@@ -1,13 +1,13 @@
 <template>
   <component
-    :is="to ? 'router-link' : (PassThrough as Component)"
+    :is="to ? 'router-link' : PassThrough"
     v-slot="routerCtx"
     :to="to"
     :replace="replace"
     custom
   >
     <component
-      v-bind="{...$attrs, ...ouiaProps}"
+      v-bind="{...ouiaProps, ...$attrs}"
       :is="buttonComponent"
       ref="el"
       :type="buttonComponent === 'button' ? type : null"
@@ -25,7 +25,7 @@
         [styles.modifiers.progress]: isDefined(loading),
         [styles.modifiers.inProgress]: loading,
       }]"
-      :aria-current="(routerCtx as RouterLinkContext|undefined)?.isExactActive ? ariaCurrentValue : null"
+      :aria-current="(routerCtx as RouterLinkContext|undefined)?.isExactActive ? ariaCurrent : null"
       :aria-pressed="active || (routerCtx as RouterLinkContext|undefined)?.isActive || null"
       :tabindex="tabIdx"
       :role="buttonComponent !== 'button' ? 'button' : null"
@@ -71,7 +71,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
   /** Sets the base component to render. defaults to button */
   component?: string | Component;
   /** Adds active styling to button. */
@@ -117,7 +117,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttri
   /** Calls `router.replace` instead of `router.push`. */
   replace?: boolean;
   href?: string;
-  ariaCurrentValue?: string;
+  ariaCurrent?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {

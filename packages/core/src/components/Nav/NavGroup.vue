@@ -17,7 +17,7 @@ defineOptions({
   name: 'PfNavGroup',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'aria-labelledby'> {
   title: string;
   id?: string;
 }

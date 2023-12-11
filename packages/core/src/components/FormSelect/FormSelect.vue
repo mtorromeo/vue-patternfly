@@ -31,7 +31,7 @@
 <script lang="ts">
 export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfFormSelectOption>>;
 
-export interface Props extends /* @vue-ignore */ SelectHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
   /** @model */
   modelValue?: string;
 

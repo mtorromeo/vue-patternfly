@@ -62,7 +62,7 @@ defineOptions({
   name: 'PfAdvancedSearchMenu',
 });
 
-export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfPanel> {
+export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfPanel>, 'variant'> {
   /** Value of the search input. */
   modelValue?: string;
   /** Flag for toggling the open/close state of the advanced search menu. */

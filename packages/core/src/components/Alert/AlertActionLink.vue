@@ -12,7 +12,7 @@ defineOptions({
   name: 'PfAlertActionLink',
 });
 
-export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfButton> {
+export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'inline'> {
 }
 
 defineProps<Props>();

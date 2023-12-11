@@ -1,5 +1,6 @@
 <template>
   <span
+    v-bind="(ouiaProps as any)"
     :class="[
       styles.formControl, {
         [styles.modifiers.readonly]: !!readOnlyVariant,
@@ -14,7 +15,7 @@
     ]"
   >
     <input
-      v-bind="{...ouiaProps, ...$attrs}"
+      v-bind="$attrs"
       ref="input"
       :value="value"
       :type="type"
@@ -37,13 +38,12 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, type InputHTMLAttributes } from 'vue';
+import { type Ref, ref, computed, type InputHTMLAttributes } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation, type InputValidateState } from '../input';
 import { FormGroupInputsKey } from './Form/common';
 import { useOUIAProps } from '../helpers/ouia';
-import { computed } from 'vue';
 import PfFormControlIcon from './FormControlIcon.vue';
 
 defineOptions({
@@ -51,7 +51,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */

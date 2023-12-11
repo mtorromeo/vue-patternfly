@@ -16,8 +16,6 @@
           :is="component"
           v-bind="$attrs"
           role="dialog"
-          :aria-label="ariaLabel"
-          :aria-labelledby="ariaLabelledby"
           :aria-describedby="ariaDescribedby || (noBodyWrapper ? null : descriptorId)"
           aria-modal="true"
           :class="[
@@ -41,7 +39,7 @@
 
           <pf-modal-header>
             <slot name="header">
-              <component :is="titleOverflowing ? PfTooltip : (PassThrough as Component)" v-if="title">
+              <component :is="titleOverflowing ? PfTooltip : PassThrough" v-if="title">
                 <h1
                   ref="titleRef"
                   :class="[styles.modalBoxTitle, {
@@ -116,7 +114,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
   /** Flag to show the modal */
   open?: boolean,
   /** Flag to remove the close button in the header area of the modal */
@@ -138,12 +136,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
    * will be automatically applied */
   titleIconVariant?: 'default' | 'success' | 'danger' | 'warning' | 'info';
   appendTo?: HTMLElement | string | (() => HTMLElement);
-  /** Accessible descriptor of modal */
-  ariaLabel?: string;
   /** Id of Modal Box description */
   ariaDescribedby?: string;
-  /** Id of Modal Box label */
-  ariaLabelledby?: string;
   /** Variant of the modal */
   variant?: 'default' | 'small' | 'medium' | 'large';
   /** Default width of the modal. */

@@ -39,7 +39,7 @@ defineOptions({
   name: 'PfToolbarChipGroupContent',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
   clearFiltersButtonText?: string;
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
   numberOfFilters?: number;

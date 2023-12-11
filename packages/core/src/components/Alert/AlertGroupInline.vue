@@ -26,7 +26,7 @@ defineOptions({
   name: 'PfAlertGroupInline',
 });// expands object types one level deep
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
   toast?: boolean;
   liveRegion?: boolean;
   overflowMessage?: string;

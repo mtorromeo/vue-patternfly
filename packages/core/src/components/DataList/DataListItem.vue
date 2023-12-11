@@ -9,7 +9,7 @@
     ]"
     :tabindex="isSelectable ? 0 : undefined"
     :aria-selected="isSelectable && managedSelected ? 'true' : undefined"
-    @click="isSelectable && select()"
+    @click="handleClick($event as PointerEvent)"
   >
     <input v-if="isSelectable" :name="name" :value="value" class="pf-v5-screen-reader" :type="datalist?.multipleSelection ? 'checkbox' : 'radio'" tabindex="-1" :checked="managedSelected" @change="select">
     <auto-wrap :component="PfDataListItemRow" :exclude="PfDataListContent">
@@ -24,7 +24,7 @@ export const DataListItemKey = Symbol('DataListItemKey') as InjectionKey<{
   expandable: ComputedRef<boolean>,
 }>;
 
-export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'tabindex' | 'aria-selected' | 'onClick'> {
   selected?: boolean;
   /** Name of the item inputs (radio or checkbox) when item selection is enabled */
   selectionInputName?: string;
@@ -58,6 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
+  (name: 'click', e: PointerEvent): void;
   (name: 'update:selected', s: boolean): void;
   (name: 'update:expanded', s: boolean): void;
 }>();
@@ -140,7 +141,14 @@ provide(DataListItemKey, {
   expandable: isExpandable,
 });
 
-function select() {
-  managedSelected.value = !managedSelected.value;
+function select()  {
+  if (isSelectable.value) {
+    managedSelected.value = !managedSelected.value;
+  }
+}
+
+function handleClick(event: PointerEvent)  {
+  select();
+  emit('click', event);
 }
 </script>

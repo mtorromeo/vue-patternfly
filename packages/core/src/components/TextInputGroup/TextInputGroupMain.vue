@@ -2,7 +2,8 @@
   <div
     :class="[styles.textInputGroupMain, {
       [styles.modifiers.icon]: !!$slots.icon,
-    }]">
+    }]"
+  >
     <slot />
     <span :class="styles.textInputGroupText">
       <input

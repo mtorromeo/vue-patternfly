@@ -54,7 +54,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends CommonPaginationProps, /* @vue-ignore */ MenuProps {
+export interface Props extends CommonPaginationProps, /* @vue-ignore */ Omit<MenuProps, 'onSelect'> {
   count?: number;
   firstIndex?: number;
   lastIndex?: number;

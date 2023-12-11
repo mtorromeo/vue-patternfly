@@ -12,7 +12,7 @@ defineOptions({
   name: 'PfJumpLinksList',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {}
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {}
 
 defineProps<Props>();
 

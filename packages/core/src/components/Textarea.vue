@@ -1,5 +1,6 @@
 <template>
   <span
+    v-bind="(ouiaProps as any)"
     :class="[
       styles.formControl, {
         [styles.modifiers.readonly]: !!readonlyVariant,
@@ -17,7 +18,7 @@
     <textarea
       ref="input"
       :value="value"
-      v-bind="{...ouiaProps, ...$attrs}"
+      v-bind="$attrs"
       :disabled="disabled || undefined"
       :readonly="!!readonlyVariant || readonly"
       :aria-invalid="effectiveValidated === 'error'"
@@ -36,20 +37,19 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 
-import { computed, ref, type TextareaHTMLAttributes, type Ref } from 'vue';
+import { computed, ref, onMounted, type TextareaHTMLAttributes, type Ref } from 'vue';
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
 import { FormGroupInputsKey } from './Form/common';
 import { useOUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
-import { onMounted } from 'vue';
 
 defineOptions({
   name: 'PfTextarea',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {
+export interface Props extends /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
   /** Flag to show if the text area is disabled. */
   disabled?: boolean;
 

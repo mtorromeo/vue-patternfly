@@ -1,5 +1,5 @@
 <template>
-  <pf-drawer-panel-body :no-padding="noPadding">
+  <pf-drawer-panel-body>
     <div :class="styles.drawerHead">
       <slot />
     </div>
@@ -16,8 +16,6 @@ defineOptions({
 });
 
 export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerPanelBody> {
-  /** Indicates if there should be no padding around the drawer panel body of the head*/
-  noPadding?: boolean;
 }
 
 defineProps<Props>();
