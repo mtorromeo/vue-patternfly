@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     ref="el"
     :class="styles.menuContent"
     :style="{
@@ -21,12 +22,13 @@ import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfMenuList from './MenuList.vue';
 import PfMenuItem from './MenuItem.vue';
 import PfDivider from '../Divider.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfMenuContent',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Height of the menu content */
   menuHeight?: string;
   /** Maximum height of menu content */
@@ -36,6 +38,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

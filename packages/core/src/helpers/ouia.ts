@@ -35,7 +35,7 @@ export const useOUIAProps = ({
   }
 
   return reactive({
-    'data-ouia-component-type': `V-PF4/${name}`,
+    'data-ouia-component-type': `PF/${name}`,
     'data-ouia-safe': safe,
     'data-ouia-component-id': useOUIAId(name, id, variant),
   });

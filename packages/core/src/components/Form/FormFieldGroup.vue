@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="fieldset ? 'fieldset' : 'div'"
     :class="[styles.formFieldGroup, { [styles.modifiers.expanded]: managedExpandable && managedExpanded }]"
   >
@@ -34,12 +35,13 @@ import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
 import { getUniqueId } from '../../util';
 import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfFormFieldGroup',
 });
 
-export interface Props extends /* @vue-ignore */ FieldsetHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
   fieldset?: boolean;
 
   /** Flag indicating if the field group is expandable */
@@ -55,6 +57,7 @@ export interface Props extends /* @vue-ignore */ FieldsetHTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:expanded', value: boolean): void;

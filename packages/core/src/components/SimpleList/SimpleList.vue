@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.simpleList">
+  <div v-bind="(ouiaProps as any)" :class="styles.simpleList">
     <input v-if="name" type="hidden" :name="name" :value="value" :required="required">
     <wrap>
       <default-slot />
@@ -14,7 +14,7 @@
 <script lang="ts">
 export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<WritableComputedRef<string | number | boolean | object | symbol | null>>;
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**
    * value of the selected item
    * @model
@@ -36,13 +36,15 @@ import { type Component, type InjectionKey, provide, type WritableComputedRef, t
 import { findChildrenVNodes } from '../../util';
 import { useManagedProp } from '../../use';
 import Wrap from '../../helpers/Wrap.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 
 defineOptions({
   name: 'PfSimpleList',
 });
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;

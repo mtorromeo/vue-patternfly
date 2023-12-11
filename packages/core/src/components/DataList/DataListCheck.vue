@@ -1,5 +1,5 @@
 <template>
-  <component :is="otherControls ? 'pass-through' : 'div'" :class="styles.dataListItemControl">
+  <component v-bind="ouiaProps" :is="otherControls ? 'pass-through' : 'div'" :class="styles.dataListItemControl">
     <div :class="styles.dataListCheck">
       <input
         v-bind="$attrs"
@@ -16,22 +16,24 @@
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { useManagedProp } from '../../use';
 import type { InputHTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDataListCheck',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ InputHTMLAttributes {
   otherControls?: boolean;
   disabled?: boolean;
   invalid?: boolean;
   checked?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   checked: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:checked', checked: boolean): void;

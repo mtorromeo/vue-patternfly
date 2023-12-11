@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends /* @vue-ignore */ MenuProps {
+export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   id?: string;
   position?: 'left' | 'right';
   appendTo?: 'inline' | string | RendererElement | null | undefined;
@@ -58,6 +58,7 @@ import { onMounted } from 'vue';
 import { onBeforeUnmount } from 'vue';
 import type { Placement } from '@floating-ui/core';
 import type { RendererElement } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 let currentId = 0;
 
@@ -74,6 +75,7 @@ const props = withDefaults(defineProps<Props>(), {
   zIndex: 9999,
   placement: 'bottom',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:open', value: boolean): void;
@@ -119,6 +121,7 @@ function renderToggles() {
     'aria-haspopup': !!slots.default,
     'onUpdate:expanded': (v: boolean) => (managedOpen.value = v),
     onKeydown,
+    ...ouiaProps,
   };
 
   if (slots.toggle) {

@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     :id="panelId"
     ref="panel"
     :class="[styles.drawerPanel, {
@@ -50,12 +51,13 @@ import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';
 import { resolveOverridableComponent } from '../../helpers';
 import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDrawerPanelContent',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
   /** ID of the drawer panel */
   id?: string;
   /** Flag indicating that the drawer panel should not have a border. */
@@ -87,6 +89,7 @@ const props = withDefaults(defineProps<Props>(), {
   increment: 5,
   resizeAriaLabel: 'Resize',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   /** Callback for resize end. */

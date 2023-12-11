@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.dataListItemControl">
+  <div v-bind="(ouiaProps as any)" :class="styles.dataListItemControl">
     <div :class="styles.dataListToggle">
       <pf-button
         :id="id"
@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import type { HTMLAttributes } from 'vue';
@@ -29,7 +29,7 @@ defineOptions({
   name: 'PfDataListToggle',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   expanded?: boolean;
   noPadding?: boolean;
@@ -38,9 +38,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   ariaControls?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   ariaLabel: 'Details',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', e: Event): void;

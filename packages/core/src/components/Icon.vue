@@ -1,5 +1,6 @@
 <template>
   <span
+    v-bind="(ouiaProps as any)"
     :class="[styles.icon, size && styles.modifiers[size], {
       [styles.modifiers.inline]: inline,
       [styles.modifiers.inProgress]: inProgress,
@@ -24,12 +25,13 @@
 import styles from '@patternfly/react-styles/css/components/Icon/icon';
 import type { HTMLAttributes } from 'vue';
 import PfSpinner from './Spinner.vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfNotificationBadge',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Size of the icon component container and icon. */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Size of icon. Overrides the icon size set by the size property. */
@@ -50,9 +52,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   shouldMirrorRTL?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   defaultProgressArialabel: 'Loading...',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="to ? 'router-link' : PassThrough"
     v-slot="routerCtx"
     :to="to"
@@ -23,6 +24,7 @@ import styles from '@patternfly/react-styles/css/components/Masthead/masthead';
 import PassThrough from '../../helpers/PassThrough.vue';
 import type { AnchorHTMLAttributes, UnwrapRef } from 'vue';
 import type { useLink, RouteLocationRaw } from 'vue-router';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
@@ -30,7 +32,7 @@ defineOptions({
   name: 'PfMastheadBrand',
 });
 
-export interface Props extends /* @vue-ignore */ AnchorHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
   component?: string;
   href?: string;
   to?: RouteLocationRaw;
@@ -38,6 +40,7 @@ export interface Props extends /* @vue-ignore */ AnchorHTMLAttributes {
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

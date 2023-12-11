@@ -1,6 +1,6 @@
 <template>
   <label
-    v-bind="labelAttrs"
+    v-bind="{...ouiaProps, ...labelAttrs}"
     :class="[styles.switch, $attrs.class, {
       [styles.modifiers.reverse]: reversed,
     }]"
@@ -45,13 +45,14 @@ import CheckIcon from '@vue-patternfly/icons/check-icon';
 import type { HTMLAttributes, InputHTMLAttributes } from 'vue';
 import { useManagedProp } from '../use';
 import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfSwitch',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
   checked?: boolean;
 
   /** Flag to reverse the layout of toggle and label (toggle on right). */
@@ -70,9 +71,10 @@ export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'type
   disabled?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   checked: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:checked', value: boolean): void;

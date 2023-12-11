@@ -1,5 +1,5 @@
 <template>
-  <nav :class="styles.paginationNav" :aria-label="paginationAriaLabel">
+  <nav v-bind="ouiaProps" :class="styles.paginationNav" :aria-label="paginationAriaLabel">
     <div v-if="!compact" :class="[styles.paginationNavControl, styles.modifiers.first]">
       <pf-button
         variant="plain"
@@ -76,7 +76,7 @@ import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AnglesLeftIcon from '@vue-patternfly/icons/angles-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import AnglesRightIcon from '@vue-patternfly/icons/angles-right-icon';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { pluralize } from '../../util';
 import { type Ref, type HTMLAttributes, ref, watch } from 'vue';
 
@@ -84,7 +84,7 @@ defineOptions({
   name: 'PfNavigation',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'aria-label'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-label'> {
   /** Flag indicating if the pagination is disabled. */
   disabled?: boolean;
   /** Flag indicating if the pagination is compact. */
@@ -122,6 +122,7 @@ const props = withDefaults(defineProps<Props>(), {
   currPageAriaLabel: 'Current page',
   paginationAriaLabel: 'Pagination',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.drawerClose">
+  <div v-bind="(ouiaProps as any)" :class="styles.drawerClose">
     <pf-button variant="plain" :aria-label="ariaLabel" @click="emit('close')">
       <xmark-icon />
     </pf-button>
@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfButton from '../Button.vue';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import type { HTMLAttributes } from 'vue';
@@ -17,12 +17,13 @@ defineOptions({
   name: 'PfDrawerCloseButton',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Accessible label for the drawer close button */
   ariaLabel?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   /** A callback for when the close button is clicked  */

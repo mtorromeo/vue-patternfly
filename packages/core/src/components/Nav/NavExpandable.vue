@@ -1,5 +1,6 @@
 <template>
   <li
+    v-bind="ouiaProps"
     :class="[styles.navItem, styles.modifiers.expandable, {
       [styles.modifiers.expanded]: realExpanded,
       [styles.modifiers.current]: active,
@@ -38,7 +39,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { getUniqueId } from '../../util';
 import { type Ref, ref, computed, type LiHTMLAttributes } from 'vue';
@@ -47,7 +48,7 @@ defineOptions({
   name: 'PfNavExpandable',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'onClick'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onClick'> {
   title?: string;
   srText?: string;
   groupId?: string | number;
@@ -58,6 +59,7 @@ export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'onClick
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:expanded', value: boolean, groupId: string | number | undefined): void;

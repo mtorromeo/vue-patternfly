@@ -1,5 +1,5 @@
 <template>
-  <component :is="component" :class="[styles.cardBody, { [styles.modifiers.noFill]: !filled }]">
+  <component v-bind="ouiaProps" :is="component" :class="[styles.cardBody, { [styles.modifiers.noFill]: !filled }]">
     <slot />
   </component>
 </template>
@@ -7,12 +7,13 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
 import type { Component, HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfCardBody',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the base component to render. */
   component?: string | Component;
 
@@ -20,9 +21,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   filled?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   component: 'div',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

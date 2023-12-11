@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     ref="el"
     :class="[styles.menu, {
       [styles.modifiers.plain]: plain,
@@ -55,7 +56,7 @@ export interface MenuState {
 
 export type MenuItemId = string | number | symbol;
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
   selected?: MenuItemId | MenuItemId[] | null;
   /** @beta Indicates if menu contains a flyout menu */
@@ -78,10 +79,6 @@ export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'
   plain?: boolean;
   /** Indicates if the menu should be srollable */
   scrollable?: boolean;
-  /** Value to overwrite the randomly generated data-ouia-component-id.*/
-  ouiaId?: number | string;
-  /** Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false. */
-  ouiaSafe?: boolean;
   /** Callback called when an MenuItems's action button is clicked. You can also specify it within a MenuItemAction. */
   onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: any) => void;
   // /** @beta Callback for drilling into a submenu */
@@ -108,6 +105,7 @@ import PfMenuInput from './MenuInput.vue';
 import PfTextInput from '../TextInput.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
 import PfSearchInput from '../SearchInput/SearchInput.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfMenu',
@@ -129,6 +127,8 @@ const emit = defineEmits<{
   (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
   (name: 'update:selected', value: MenuItemId | MenuItemId[] | null): void;
 }>();
+
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 // const instance = getCurrentInstance();
 

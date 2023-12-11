@@ -1,6 +1,7 @@
 <template>
   <teleport :disabled="!tabListRef" :to="tabListRef">
     <li
+      v-bind="(ouiaProps as any)"
       :class="[styles.tabsItem, {
         [styles.modifiers.current]: key === activeKey,
       }]">
@@ -51,13 +52,14 @@ import PfTabTitleText from './TabTitleText.vue';
 import PfTabButton from './TabButton.vue';
 import PfTabContent, { type Props as PfTabContentProps } from './TabContent.vue';
 import { useChildrenTracker } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfTab',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ PfTabContentProps {
+export interface Props extends OUIAProps, /* @vue-ignore */ PfTabContentProps {
   /** Content rendered in the tab title. */
   title?: string;
   /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */
@@ -76,6 +78,7 @@ export interface Props extends /* @vue-ignore */ PfTabContentProps {
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', event: PointerEvent): void;

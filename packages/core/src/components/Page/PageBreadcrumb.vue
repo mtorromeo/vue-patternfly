@@ -1,5 +1,6 @@
 <template>
   <section
+    v-bind="ouiaProps"
     :class="[
       styles.pageMainBreadcrumb,
       ...classesFromBreakpointProps($props, [
@@ -29,12 +30,13 @@ import styles from '@patternfly/react-styles/css/components/Page/page';
 import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
 import { computed, type HTMLAttributes } from 'vue';
 import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfPageBreadcrumb',
 });
 
-export interface Props extends StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
+export interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Limits the width of the breadcrumb */
   widthLimited?: boolean;
   /** Limits the width of the section and sets the --pf-v5-c-page--section--m-limit-width--MaxWidth variable to this value */
@@ -48,6 +50,7 @@ export interface Props extends StickyBreakpointProps, /* @vue-ignore */ Omit<HTM
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

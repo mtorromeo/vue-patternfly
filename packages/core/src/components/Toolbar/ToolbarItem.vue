@@ -7,7 +7,7 @@
     }]"
     :style="breakpointWidths"
     :aria-hidden="variant == 'label'"
-    v-bind="$attrs"
+    v-bind="{...ouiaProps, ...$attrs}"
   >
     <slot />
   </div>
@@ -19,17 +19,19 @@ import { breakpoints, classesFromBreakpointProps, type AlignBreakpointProps, typ
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { computed, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbarItem',
 });
 
-export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, WidthBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
+export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, WidthBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
   variant?: 'separator' | 'bulk-select' | 'overflow-menu' | 'pagination' | 'search-filter' | 'label' | 'chip-group' | 'expand-all';
   allExpanded?: boolean;
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'clear-all-filters'): void;

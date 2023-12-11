@@ -1,5 +1,6 @@
 <template>
   <svg
+    v-bind="ouiaProps"
     :class="[
       styles.spinner,
       inline ? [styles.modifiers.inline] : styles.modifiers[size],
@@ -25,7 +26,7 @@ export enum spinnerSize {
   xl = 'xl'
 }
 
-export interface Props extends /* @vue-ignore */ Omit<SVGAttributes, 'role' | 'viewBox'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'role' | 'viewBox'> {
   /** Size variant of progress. */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Text describing that current loading status or progress */
@@ -44,13 +45,15 @@ export interface Props extends /* @vue-ignore */ Omit<SVGAttributes, 'role' | 'v
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
 import type { SVGAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfSpinner',
 });
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   size: 'xl',
   ariaValueText: 'Loading...',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>

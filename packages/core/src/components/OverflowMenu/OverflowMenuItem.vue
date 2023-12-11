@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isBelowBreakpoint || persistent" :class="styles.overflowMenuItem">
+  <div v-if="!isBelowBreakpoint || persistent" v-bind="(ouiaProps as any)" :class="styles.overflowMenuItem">
     <slot />
   </div>
 </template>
@@ -8,16 +8,18 @@
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 import { OverflowMenuIsBelowBreakpointKey } from './OverflowMenu.vue';
 import { inject, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfOverflowMenuItem',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   persistent?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

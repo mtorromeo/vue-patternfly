@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.emptyStateIcon" :style="{ '--pf-v5-c-empty-state__icon--Color': hasSpinner ? undefined : color }">
+  <div v-bind="(ouiaProps as any)" :class="styles.emptyStateIcon" :style="{ '--pf-v5-c-empty-state__icon--Color': hasSpinner ? undefined : color }">
     <render />
   </div>
 </template>
@@ -8,18 +8,20 @@
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
 import { findChildrenVNodes, vnodeTypeIsComponent } from '../../util';
 import { mergeProps, ref, type SVGAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfEmptyStateIcon',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<SVGAttributes, 'size'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'size'> {
   /** Changes the color of the icon.  */
   color?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;

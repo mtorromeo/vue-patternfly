@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$attrs" :class="styles.notificationDrawerListItemDescription">
+  <div v-bind="{...ouiaProps as any, ...$attrs}" :class="styles.notificationDrawerListItemDescription">
     <slot />
   </div>
   <div v-if="timestamp || $slots.timestamp" :class="styles.notificationDrawerListItemTimestamp">
@@ -10,17 +10,19 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNotificationDrawerListItemBody',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   timestamp?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

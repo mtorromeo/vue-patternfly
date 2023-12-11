@@ -1,5 +1,5 @@
 <template>
-  <header :class="styles.loginMainHeader">
+  <header v-bind="(ouiaProps as any)" :class="styles.loginMainHeader">
     <pf-title v-if="title" :h="2" size="3xl">
       {{ title }}
     </pf-title>
@@ -17,19 +17,21 @@
 import type { HTMLAttributes } from 'vue';
 import PfTitle from '../Title.vue';
 import styles from '@patternfly/react-styles/css/components/Login/login';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfLoginMainHeader',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Title for the login main header */
   title?: string;
   /** Subtitle that contains the text, URL, and URL text for the login main header */
   subtitle?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

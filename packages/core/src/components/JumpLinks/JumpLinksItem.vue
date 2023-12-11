@@ -2,6 +2,7 @@
 import type JumpLinksListVue from './JumpLinksList.vue';
 <template>
   <li
+    v-bind="ouiaProps"
     :class="[styles.jumpLinksItem, { [styles.modifiers.current]: managedActive }]"
     role="list"
     :aria-current="managedActive ? 'location' : undefined"
@@ -22,12 +23,13 @@ import { type MaybeComputedElementRef } from '@vueuse/core';
 import { inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';
 import { JumpLinkInjectionKey, JumpLinksKey } from './JumpLinks.vue';
 import { useChildrenTracker } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfJumpLinksItem',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'aria-current'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'aria-current'> {
   /** Whether this item is active. Parent JumpLinks component sets this when passed a `scrollableSelector`. */
   active?: boolean;
   /** Href for this link */
@@ -39,6 +41,7 @@ export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' |
 const props = withDefaults(defineProps<Props>(), {
   active: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', event: PointerEvent): void;

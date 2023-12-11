@@ -41,7 +41,7 @@ import { computed, ref, onMounted, type TextareaHTMLAttributes, type Ref } from 
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
 import { FormGroupInputsKey } from './Form/common';
-import { useOUIAProps } from '../helpers/ouia';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
 
 defineOptions({
@@ -49,7 +49,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
   /** Flag to show if the text area is disabled. */
   disabled?: boolean;
 
@@ -79,11 +79,6 @@ export interface Props extends /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'v
   validated?: 'success' | 'warning' | 'error' | 'default';
 
   autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
-
-  /** Value to overwrite the randomly generated data-ouia-component-id.*/
-  ouiaId?: number | string;
-  /** Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false. */
-  ouiaSafe?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {

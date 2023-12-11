@@ -1,5 +1,5 @@
 <template>
-  <div :class="[styles.drawerSection, {[styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200}]">
+  <div v-bind="(ouiaProps as any)" :class="[styles.drawerSection, {[styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200}]">
     <slot />
   </div>
 </template>
@@ -8,19 +8,21 @@
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { DrawerColorVariant } from './common';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDrawerSection',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Color variant of the background of the drawer Section */
   colorVariant?: DrawerColorVariant | 'light-200' | 'default';
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   colorVariant: DrawerColorVariant.default,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

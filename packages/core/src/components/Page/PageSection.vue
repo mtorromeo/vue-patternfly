@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="component"
     :class="[
       ...classesFromBreakpointProps($props, [
@@ -34,7 +35,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { type PaddingBreakpointProps, type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
 import { computed, type Component, type HTMLAttributes } from 'vue';
 import { isDefined } from '@vueuse/shared';
@@ -59,7 +60,7 @@ defineOptions({
   name: 'PfPageSection',
 });
 
-export interface Props extends PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
+export interface Props extends OUIAProps, PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Section background color variant */
   variant?: keyof typeof variantStyles;
   /** Section type variant */
@@ -88,6 +89,7 @@ const props = withDefaults(defineProps<Props>(), {
   filled: undefined,
   component: 'section' as any,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

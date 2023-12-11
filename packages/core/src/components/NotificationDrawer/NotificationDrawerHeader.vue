@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.notificationDrawerHeader">
+  <div v-bind="(ouiaProps as any)" :class="styles.notificationDrawerHeader">
     <pf-text component="h1" :class="styles.notificationDrawerHeaderTitle">
       {{ title }}
     </pf-text>
@@ -22,12 +22,13 @@ import styles from '@patternfly/react-styles/css/components/NotificationDrawer/n
 import type { HTMLAttributes } from 'vue';
 import PfText from '../Text/Text.vue';
 import PfCloseButton from '../CloseButton.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNotificationDrawerHeader',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer heading count */
   count?: number | string;
   /**  Notification drawer heading custom text which can be used instead of providing count/unreadText */
@@ -40,10 +41,11 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   unreadText?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   title: 'Notifications',
   unreadText: 'unread',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

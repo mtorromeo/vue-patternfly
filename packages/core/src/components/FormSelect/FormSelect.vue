@@ -1,5 +1,6 @@
 <template>
   <span
+    v-bind="(ouiaProps as any)"
     :class="[
       styles.formControl, {
         [styles.modifiers.disabled]: disabled,
@@ -31,7 +32,7 @@
 <script lang="ts">
 export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfFormSelectOption>>;
 
-export interface Props extends /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
   /** @model */
   modelValue?: string;
 
@@ -54,7 +55,7 @@ import type PfFormSelectOption from './FormSelectOption.vue';
 import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import { computed, ref, type Ref, type SelectHTMLAttributes } from 'vue';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfFormSelect',
@@ -62,6 +63,7 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:modelValue', value: string): void;

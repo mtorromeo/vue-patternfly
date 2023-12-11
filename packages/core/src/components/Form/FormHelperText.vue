@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="component"
     :class="[styles.formHelperText, {
       [styles.modifiers.error]: error,
@@ -16,12 +17,13 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfFormHelperText',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds error styling to the Helper Text  * */
   error?: boolean;
   /** Hides the helper text * */
@@ -30,9 +32,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: 'p' | 'div';
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   component: 'p',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

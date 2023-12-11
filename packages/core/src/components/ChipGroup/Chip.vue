@@ -3,7 +3,7 @@
     :is="component"
     v-if="overflow"
     :id="effectiveId"
-    v-bind="$attrs"
+    v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.chip, styles.modifiers.overflow]"
     :style="{
       '--pf-v5-c-chip__text--MaxWidth': textMaxWidth,
@@ -58,7 +58,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Chip/chip';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfButton from '../Button.vue';
 import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
@@ -71,7 +71,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'type'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'type'> {
   id?: string;
   readonly?: boolean;
   overflow?: boolean;
@@ -87,6 +87,7 @@ const props = withDefaults(defineProps<Props>(), {
   tooltipPosition: 'top',
   closeBtnAriaLabel: 'close',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', e: MouseEvent | TouchEvent): void;

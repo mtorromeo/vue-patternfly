@@ -1,5 +1,5 @@
 <template>
-  <div :class="[variantClass, styles.toolbarGroup, styles.modifiers.toggleGroup, breakpointClasses]">
+  <div v-bind="(ouiaProps as any)" :class="[variantClass, styles.toolbarGroup, styles.modifiers.toggleGroup, breakpointClasses]">
     <div :class="styles.toolbarToggle">
       <pf-button
         variant="plain"
@@ -31,15 +31,17 @@ import { computed, inject } from 'vue';
 import { ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
 import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
 import type { Props as ToolbarGroupProps } from './ToolbarGroup.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbarToggleGroup',
 });
 
-export interface Props extends ToolbarGroupProps, BreakpointProps {
+export interface Props extends OUIAProps, ToolbarGroupProps, BreakpointProps {
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

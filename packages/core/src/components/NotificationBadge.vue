@@ -1,5 +1,5 @@
 <template>
-  <pf-button variant="plain">
+  <pf-button v-bind="ouiaProps" variant="plain">
     <span :class="[styles.notificationBadge, styles.modifiers[variant], {[styles.modifiers.expanded]: expanded}]">
       <slot>
         <pf-attention-bell-icon v-if="variant === 'attention'" />
@@ -16,6 +16,7 @@ import type { ComponentProps } from '../util';
 import PfButton from './Button.vue';
 import PfBellIcon from '@vue-patternfly/icons/bell-icon';
 import PfAttentionBellIcon from '@vue-patternfly/icons/attention-bell-icon';
+import { useOUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfNotificationBadge',
@@ -34,10 +35,11 @@ export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfBu
   expanded?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   variant: 'unread',
   count: 0,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

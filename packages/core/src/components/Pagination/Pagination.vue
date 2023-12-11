@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     :id="`${widgetId}-${variant}-pagination`"
     :class="[
       styles.pagination,
@@ -71,12 +72,13 @@ import { computed, type HTMLAttributes } from 'vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfPagination',
 });
 
-export interface Props extends CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Position where pagination is rendered. */
   variant?: 'top' | 'bottom';
   /** Flag indicating if pagination should not be sticky on mobile */
@@ -132,6 +134,7 @@ const props = withDefaults(defineProps<Props>(), {
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'options-menu',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

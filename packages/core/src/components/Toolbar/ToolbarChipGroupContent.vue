@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     :class="[styles.toolbarContent, {
       [styles.modifiers.hidden]: numberOfFilters === 0 || expanded,
     }]"
@@ -34,12 +35,13 @@ import PfToolbarItem from './ToolbarItem.vue';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
 import { computed, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbarChipGroupContent',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
   clearFiltersButtonText?: string;
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
   numberOfFilters?: number;
@@ -52,6 +54,7 @@ const props = withDefaults(defineProps<Props>(), {
   collapseListedFiltersBreakpoint: 'lg',
   numberOfFilters: 0,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'clear-all-filters'): void;

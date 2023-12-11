@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="variant === 'subnav' ? 'section' : 'nav'"
     :class="{
       [styles.nav]: variant !== 'subnav',
@@ -21,8 +22,9 @@ export const NavScrollablelKey = Symbol('NavScrollablelKey') as InjectionKey<Ref
 export const NavHorizontalKey = Symbol('NavHorizontalKey') as InjectionKey<boolean>;
 export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<(event: Event, groupId: string | undefined, itemId: string | undefined) => void>;
 export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | undefined>>;
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   theme?: 'dark' | 'light';
   variant?: 'default' | 'horizontal' | 'tertiary' | 'horizontal-subnav' | 'subnav';
   ariaLabel?: string;
@@ -41,6 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
   theme: 'dark',
   variant: 'default',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'select', e: Event, groupId: string | undefined, itemId: string | undefined): void;

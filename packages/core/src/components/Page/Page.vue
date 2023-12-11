@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.page">
+  <div v-bind="(ouiaProps as any)" :class="styles.page">
     <slot name="skeleton" />
 
     <div v-if="$slots.drawer" :class="styles.pageDrawer">
@@ -49,7 +49,7 @@
 export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
 export const PageSidebarOpenKey = Symbol('PageSidebarOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the value for role on the <main> element */
   role?: string;
   /** an id to use for the [role="main"] element */
@@ -85,6 +85,7 @@ import PfDrawer from '../Drawer/Drawer.vue';
 import PfDrawerContent from '../Drawer/DrawerContent.vue';
 import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
 import PfDrawerContentBody from '../Drawer/DrawerContentBody.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfPage',
@@ -94,6 +95,7 @@ const props = withDefaults(defineProps<Props>(), {
   defaultManagedSidebarOpen: true,
   mainComponent: 'main',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'page-resize', v: { mobileView: boolean, windowSize: number }): void;

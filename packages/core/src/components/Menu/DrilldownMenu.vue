@@ -1,5 +1,5 @@
 <template>
-  <pf-menu :root-menu="false">
+  <pf-menu v-bind="ouiaProps" :root-menu="false">
     <pf-menu-content @height="onHeight">
       <pf-menu-list>
         <slot />
@@ -13,6 +13,7 @@ import PfMenu from './Menu.vue';
 import PfMenuContent from './MenuContent.vue';
 import PfMenuList from './MenuList.vue';
 import type { ComponentProps } from '../../util';
+import { useOUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDrilldownMenu',
@@ -23,7 +24,8 @@ export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfMe
   onHeight?: (height: string) => void;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

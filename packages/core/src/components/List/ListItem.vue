@@ -1,5 +1,5 @@
 <template>
-  <li :class="styles.listItem">
+  <li v-bind="(ouiaProps as any)" :class="styles.listItem">
     <span v-if="$slots.icon" :class="styles.listItemIcon">
       <slot name="icon" />
     </span>
@@ -10,15 +10,17 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/List/list';
 import type { LiHTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfListItem',
 });
 
-export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

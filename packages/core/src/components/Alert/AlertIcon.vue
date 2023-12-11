@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$slots.default || AlertVariantIcons[variant]" :class="styles.alertIcon">
+  <div v-if="$slots.default || AlertVariantIcons[variant]" v-bind="(ouiaProps as any)" :class="styles.alertIcon">
     <slot>
       <component :is="AlertVariantIcons[variant]" />
     </slot>
@@ -13,6 +13,7 @@ import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 export const AlertVariantIcons = {
   success: CircleCheckIcon,
@@ -22,7 +23,7 @@ export const AlertVariantIcons = {
   custom: BellIcon,
 };
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   variant?: keyof typeof AlertVariantIcons;
 }
 </script>
@@ -34,9 +35,10 @@ defineOptions({
   name: 'PfAlertIcon',
 });
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   variant: 'custom',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

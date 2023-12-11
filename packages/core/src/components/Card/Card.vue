@@ -11,7 +11,7 @@
   >
   <component
     :is="component"
-    v-bind="$attrs"
+    v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.card, ...selectableModifiers, {
       [styles.modifiers.compact]: compact,
       [styles.modifiers.expanded]: managedExpanded,
@@ -32,7 +32,7 @@
 export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean>>;
 export const CardExpandableKey = Symbol('CardExpandableKey') as InjectionKey<ComputedRef<boolean>>;
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Content rendered inside the Card */
   component?: string | Component;
 
@@ -85,6 +85,7 @@ import styles from '@patternfly/react-styles/css/components/Card/card';
 import { provide, computed, type Component, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfCard',
@@ -96,6 +97,7 @@ const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
   selected: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', e: MouseEvent | TouchEvent): void;

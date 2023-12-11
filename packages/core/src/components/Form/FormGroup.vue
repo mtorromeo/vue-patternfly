@@ -1,5 +1,5 @@
 <template>
-  <component :is="fieldset ? 'fieldset' : 'div'" :class="styles.formGroup">
+  <component v-bind="ouiaProps" :is="fieldset ? 'fieldset' : 'div'" :class="styles.formGroup">
     <div
       v-if="label || $slots.label"
       :class="[styles.formGroupLabel, {
@@ -67,12 +67,13 @@
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import type { FieldsetHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfFormGroup',
 });
 
-export interface Props extends /* @vue-ignore */ FieldsetHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
   fieldset?: boolean;
 
     /** Label text before the field. */
@@ -113,6 +114,7 @@ export interface Props extends /* @vue-ignore */ FieldsetHTMLAttributes {
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

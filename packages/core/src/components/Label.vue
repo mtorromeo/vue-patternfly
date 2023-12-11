@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="overflow ? 'button' : 'span'"
     :class="[styles.label, colorStyles[color], {
       [styles.modifiers.outline]: outline || variant === 'outline',
@@ -37,6 +38,7 @@ import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton.vue';
 import PfTooltip, { type TooltipPosition } from './Tooltip/Tooltip.vue';
 import type { RouteLocationRaw } from 'vue-router';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 const colorStyles = {
   blue: styles.modifiers.blue,
@@ -53,7 +55,7 @@ defineOptions({
   name: 'PfLabel',
 });
 
-export interface Props extends /* @vue-ignore */ ButtonHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
   /** The color of the label outline/fill */
   color?: 'blue' | 'cyan' | 'green' | 'orange' | 'purple' | 'red' | 'gold' | 'grey',
   variant?: 'outline' | 'filled';
@@ -73,12 +75,13 @@ export interface Props extends /* @vue-ignore */ ButtonHTMLAttributes {
   onClose?: (e: Event) => void;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   color: 'grey',
   variant: 'filled',
   tooltipPosition: 'top',
   closeBtnAriaLabel: 'Close',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => VNode[];

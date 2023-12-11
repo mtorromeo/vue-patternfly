@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="component"
     :class="[
       styles.helperTextItem,
@@ -26,7 +27,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
 import { inject, computed, type LiHTMLAttributes } from 'vue';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import MinusIcon from '@vue-patternfly/icons/minus-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
@@ -37,7 +38,7 @@ defineOptions({
   name: 'PfHelperTextItem',
 });
 
-export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /** Variant styling of the helper text item. */
   variant?: 'default' | 'warning' | 'success' | 'error' | 'indeterminate';
 
@@ -48,9 +49,10 @@ export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
   dynamic?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

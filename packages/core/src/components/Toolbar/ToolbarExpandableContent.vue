@@ -1,5 +1,5 @@
 <template>
-  <div :class="[styles.toolbarExpandableContent, { [styles.modifiers.expanded]: expanded }]">
+  <div v-bind="(ouiaProps as any)" :class="[styles.toolbarExpandableContent, { [styles.modifiers.expanded]: expanded }]">
     <slot />
 
     <pf-toolbar-group v-if="numberOfFilters" :class="styles.modifiers.chipContainer">
@@ -18,20 +18,22 @@ import PfButton from '../Button.vue';
 import { ToolbarClearAllFiltersKey, ToolbarNumberOfFiltersKey } from './Toolbar.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbarExpandableContent',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   expanded?: boolean;
   showClearFiltersButton?: boolean;
   clearFiltersButtonText?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   clearFiltersButtonText: 'Clear all filters',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="(ouiaProps as any)"
     :class="[styles.skeleton, {
       [fontHeightClassName ?? styles.modifiers.circle]: fontSize,
       [styles.modifiers.circle]: shape === 'circle',
@@ -14,12 +15,13 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Skeleton/skeleton';
 import { computed, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfSkeleton',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** The width of the Skeleton. Must specify pixels or percentage. */
   width?: string;
   /** The height of the Skeleton. Must specify pixels or percentage. */
@@ -36,6 +38,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const fontHeightClassName = computed(() => {
   return props.fontSize

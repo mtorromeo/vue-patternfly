@@ -1,5 +1,5 @@
 <template>
-  <div ref="el">
+  <div v-bind="ouiaProps" ref="el">
     <pf-menu-toggle
       :id="widgetId ? `${widgetId}-toggle` : undefined"
       ref="toggle"
@@ -48,13 +48,14 @@ import PfMenuItem from '../Menu/MenuItem.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
 import { type Ref, ref } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfPaginationOptionsMenu',
   inheritAttrs: false,
 });
 
-export interface Props extends CommonPaginationProps, /* @vue-ignore */ Omit<MenuProps, 'onSelect'> {
+export interface Props extends OUIAProps, CommonPaginationProps, /* @vue-ignore */ Omit<MenuProps, 'onSelect'> {
   count?: number;
   firstIndex?: number;
   lastIndex?: number;
@@ -64,7 +65,7 @@ export interface Props extends CommonPaginationProps, /* @vue-ignore */ Omit<Men
   optionsToggle?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   count: 0,
   firstIndex: 0,
   lastIndex: 0,
@@ -76,6 +77,7 @@ withDefaults(defineProps<Props>(), {
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'pagination-options-menu',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

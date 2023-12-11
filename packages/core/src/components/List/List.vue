@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="component"
     :type="component === 'ol' ? type : undefined"
     :class="[styles.list, variant && styles.modifiers[variant], {
@@ -30,7 +31,7 @@ export enum ListComponent {
   ul = 'ul'
 }
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds list variant styles */
   variant?: ListVariant.inline;
   /** Modifies the list to add borders between items */
@@ -48,16 +49,18 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/List/list';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfList',
 });
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   iconSize: 'default',
   type: OrderType.number,
   component: ListComponent.ul,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

@@ -1,10 +1,11 @@
 <template>
-  <pf-divider component="li" />
+  <pf-divider v-bind="ouiaProps" component="li" />
 </template>
 
 <script lang="ts" setup>
 import PfDivider from '../Divider.vue';
 import type { ComponentProps } from '../../util';
+import { useOUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNavItemSeparator',
@@ -13,5 +14,6 @@ defineOptions({
 export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfDivider>, 'component'> {
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>

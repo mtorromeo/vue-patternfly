@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.toggleGroupItem">
+  <div v-bind="(ouiaProps as any)" :class="styles.toggleGroupItem">
     <button
       :id="buttonId"
       type="button"
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-export interface Props<T> extends /* @vue-ignore */ HTMLAttributes {
+export interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Text rendered inside the toggle group item */
   text?: string;
   value?: T;
@@ -37,7 +37,7 @@ export interface Props<T> extends /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup generic="T = string | number">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { inject, computed, ref, type HTMLAttributes } from 'vue';
 import { ToggleGroupDisabledKey, ToggleGroupSelectionKey } from './ToggleGroup.vue';
 import { isDefined } from '@vueuse/shared';
@@ -50,6 +50,7 @@ const props = withDefaults(defineProps<Props<T>>(), {
   selected: undefined,
   disabled: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', e: MouseEvent | TouchEvent): void;

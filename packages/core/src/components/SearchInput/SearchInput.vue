@@ -1,5 +1,5 @@
 <template>
-  <component :is="attributes.length > 0 ? 'div' : PassThrough" ref="$el">
+  <component v-bind="ouiaProps" :is="attributes.length > 0 ? 'div' : PassThrough" ref="$el">
     <component :is="(!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable) ? PfInputGroup : PassThrough">
       <template v-if="!expandable || managedExpanded">
         <pf-text-input-group :disabled="disabled">
@@ -140,7 +140,7 @@ export type SearchInputProvide = {
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
 
-export interface Props {
+export interface Props extends OUIAProps {
   /** Value of the search input. */
   modelValue?: string;
   /** Flag indicating if search input is disabled. */
@@ -236,7 +236,7 @@ import PfBadge from '../Badge.vue';
 import PfButton from '../Button.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import AngleUpIcon from '@vue-patternfly/icons/angle-up-icon';
@@ -264,6 +264,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   type: 'text',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:modelValue', v: string): void;

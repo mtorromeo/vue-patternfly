@@ -1,6 +1,7 @@
 <template>
   <div
     v-if="$slots.default"
+    v-bind="ouiaProps"
     :id="id"
     :class="[styles.chipGroup, {
       [styles.modifiers.category]: category,
@@ -44,12 +45,13 @@ import PfButton from '../Button.vue';
 import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
 import { findChildrenVNodes, fillTemplate } from '../../util';
 import { useElementOverflow } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfChipGroup',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   defaultOpen?: boolean;
   closable?: boolean;
@@ -70,6 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
   expandedText: 'Show Less',
   collapsedText: '${remaining} more',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', e: MouseEvent | TouchEvent): void;

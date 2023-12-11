@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="(ouiaProps as any)"
     :class="[styles.expandableSection, {
       [styles.modifiers.expanded]: managedExpanded,
       [styles.modifiers.active]: active,
@@ -33,12 +34,13 @@ import styles from '@patternfly/react-styles/css/components/ExpandableSection/ex
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
 import { computed, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfExpandableSection',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
     /** Flag to indicate if the content is expanded */
     expanded?: boolean;
 
@@ -70,6 +72,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:expanded', value: boolean): void;

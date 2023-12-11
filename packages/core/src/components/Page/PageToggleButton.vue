@@ -1,5 +1,6 @@
 <template>
   <pf-button
+    v-bind="ouiaProps"
     :id="id"
     variant="plain"
     aria-label="Side navigation toggle"
@@ -13,7 +14,7 @@
 <script lang="ts">
 export const SidebarOpenKey = Symbol('SidebarOpenKey') as InjectionKey<ComputedRef<boolean> | boolean>;
 
-export interface Props extends /* @vue-ignore */ Omit<PfButtonProps, 'variant' | 'aria-label' | 'aria-expanded' | 'onClick'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfButtonProps, 'variant' | 'aria-label' | 'aria-expanded' | 'onClick'> {
   /** Sidebar id */
   id?: string;
   /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
@@ -25,6 +26,7 @@ export interface Props extends /* @vue-ignore */ Omit<PfButtonProps, 'variant' |
 import { computed, type ComputedRef, inject, type InjectionKey } from 'vue';
 import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
 import PfButton, { type Props as PfButtonProps } from '../Button.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfPageToggleButton',
@@ -33,6 +35,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   id: 'nav-toggle',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:sidebar-open', value: boolean): void;

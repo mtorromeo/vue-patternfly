@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="component"
     role="separator"
     :class="[
@@ -16,17 +17,19 @@
 import styles from '@patternfly/react-styles/css/components/Divider/divider';
 import { type LiHTMLAttributes } from 'vue';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../breakpoints';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfDivider',
 });
 
-export interface Props extends InsetBreakpointProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role'> {
+export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role'> {
   component?: 'hr' | 'li' | 'div';
   vertical?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   component: 'hr',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>

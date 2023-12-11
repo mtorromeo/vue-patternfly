@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.notificationDrawerListItemHeader">
+  <div v-bind="(ouiaProps as any)" :class="styles.notificationDrawerListItemHeader">
     <span :class="styles.notificationDrawerListItemHeaderIcon">
       <slot name="icon">
         <component :is="variantIcons[variant]" />
@@ -30,12 +30,13 @@ import BellIcon from '@vue-patternfly/icons/bell-icon';
 import { useElementOverflow } from '../../use';
 import { ref } from 'vue';
 import type { HTMLAttributes, Ref } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNotificationDrawerListItem',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer list item header screen reader title */
   srTitle?: string;
   /**  Notification drawer list item title */
@@ -50,11 +51,12 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   variant: 'custom',
   truncateTitle: 0,
   headingLevel: 'h2',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

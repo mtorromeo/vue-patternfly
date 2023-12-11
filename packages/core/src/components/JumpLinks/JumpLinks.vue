@@ -1,5 +1,6 @@
 <template>
   <nav
+    v-bind="(ouiaProps as any)"
     :class="[
       styles.jumpLinks,
       breakpointClasses, {
@@ -53,7 +54,7 @@ export const JumpLinkInjectionKey = Symbol('JumpLinkInjectionKey') as InjectionK
   scrollableHTMLElement: ComputedRefWithControl<HTMLElement | undefined>;
 }>;
 
-export interface Props extends ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Whether to center children. */
   centered?: boolean;
   /** Whether the layout of children is vertical or horizontal. */
@@ -82,6 +83,7 @@ import { computedWithControl, type ComputedRefWithControl, type MaybeComputedEle
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import PfJumpLinksItem from './JumpLinksItem.vue';
 import PfButton from '../Button.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfJumpLinks',
@@ -93,6 +95,7 @@ const props = withDefaults(defineProps<Props>(), {
   alwaysShowLabel: true,
   toggleAriaLabel: 'Toggle jump links',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:activeIndex', value: number): void;

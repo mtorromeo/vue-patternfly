@@ -1,5 +1,5 @@
 <template>
-  <li v-bind="liAttrs" :class="styles.breadcrumbItem">
+  <li v-bind="{...ouiaProps, ...liAttrs}" :class="styles.breadcrumbItem">
     <span v-if="showDivider" :class="styles.breadcrumbItemDivider">
       <pf-angle-right-icon />
     </span>
@@ -25,13 +25,14 @@ import type { RouteLocationRaw } from 'vue-router';
 import { computed, type Component, type LiHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfBreadcrumbItem',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'aria-current' | 'type'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'aria-current' | 'type'> {
   href?: string;
   to?: RouteLocationRaw;
   active?: boolean;
@@ -42,6 +43,7 @@ export interface Props extends /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'ari
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

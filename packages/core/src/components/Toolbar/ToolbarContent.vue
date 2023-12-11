@@ -1,5 +1,5 @@
 <template>
-  <div :class="[styles.toolbarContent, breakpointClasses]">
+  <div v-bind="(ouiaProps as any)" :class="[styles.toolbarContent, breakpointClasses]">
     <div :class="styles.toolbarContentSection">
       <slot />
     </div>
@@ -22,7 +22,7 @@
 export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
 export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
 
-export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, /* @vue-ignore */ HTMLAttributes {}
+export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, /* @vue-ignore */ HTMLAttributes {}
 </script>
 
 <script lang="ts" setup>
@@ -32,12 +32,14 @@ import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import { ToolbarClearFilterButtonTextKey, ToolbarExpandedKey, ToolbarShowClearFiltersButtonKey } from './Toolbar.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbarContent',
 });
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

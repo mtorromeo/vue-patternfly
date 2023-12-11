@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="dl ? 'dl' : 'div'" :class="[styles.accordion, {
       [styles.modifiers.bordered]: bordered,
       [styles.modifiers.displayLg]: large,
@@ -9,7 +10,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Heading level to use */
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | number;
   /** Flag to indicate whether use definition list or div */
@@ -29,6 +30,7 @@ export const AccordionKey = Symbol('AccordionKey') as InjectionKey<{
 <script lang="ts" setup>
 import { type InjectionKey, provide, type HTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfAccordion',
@@ -41,6 +43,7 @@ defineSlots<{
 const props = withDefaults(defineProps<Props>(), {
   level: 3,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 provide(AccordionKey, {
   dl: props.dl,

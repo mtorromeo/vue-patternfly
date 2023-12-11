@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="component"
     :class="[styles.check, {
       [styles.modifiers.standalone]: !label && !$slots.label,
@@ -36,13 +37,14 @@
 import styles from '@patternfly/react-styles/css/components/Check/check';
 import { computed, ref, watch, type Component, type Ref, type InputHTMLAttributes } from 'vue';
 import { getUniqueId } from '../util';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfCheckbox',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked'> {
   component?: string | Component;
   /** Flag to show if the radio is checked. */
   modelValue?: boolean | null;
@@ -64,6 +66,7 @@ export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onCh
 const props = withDefaults(defineProps<Props>(), {
   component: 'div',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'change', e: Event): void;

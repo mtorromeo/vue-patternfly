@@ -1,5 +1,5 @@
 <template>
-  <pf-dropdown-item v-if="isBelowBreakpoint || !shared" :class="styles.overflowMenuControl" component="button">
+  <pf-dropdown-item v-if="isBelowBreakpoint || !shared" v-bind="ouiaProps" :class="styles.overflowMenuControl" component="button">
     <slot />
   </pf-dropdown-item>
 </template>
@@ -9,16 +9,18 @@ import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflo
 import { OverflowMenuIsBelowBreakpointKey } from './OverflowMenu.vue';
 import { inject } from 'vue';
 import PfDropdownItem, { type Props as DropdownItemProps } from '../Menu/MenuItem.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfOverflowMenuDropdownItem',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<DropdownItemProps, 'component'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<DropdownItemProps, 'component'> {
   shared?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

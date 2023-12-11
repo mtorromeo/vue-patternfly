@@ -1,5 +1,6 @@
 <template>
   <button
+    v-bind="ouiaProps"
     :class="[styles.menuItemAction, {
       [styles.modifiers.favorite]: isDefined(favorited),
       [styles.modifiers.favorited]: favorited,
@@ -22,12 +23,13 @@ import { MenuInjectionKey } from './Menu.vue';
 import { MenuItemInjectionKey } from './MenuItem.vue';
 import StarIcon from '@vue-patternfly/icons/star-icon';
 import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfMenuItemAction',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'tabindex'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'tabindex'> {
   /** The action icon to use */
   icon?: 'favorites';
   /** Flag indicating if the item is favorited */
@@ -41,6 +43,7 @@ export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onC
 const props = withDefaults(defineProps<Props>(), {
   favorited: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

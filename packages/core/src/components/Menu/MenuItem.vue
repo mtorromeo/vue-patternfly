@@ -1,7 +1,7 @@
 <template>
   <teleport-copy v-slot="{ copy }" :disabled="!menu?.favoriteList.value?.$el || !favorited" :to="menu?.favoriteList.value?.$el">
     <li
-      v-bind="$attrs"
+      v-bind="{...ouiaProps, ...$attrs}"
       :class="[styles.menuListItem, {
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.currentPath]: effectiveOnPath,
@@ -93,7 +93,7 @@ export type MenuItemProvide = {
 
 export const MenuItemInjectionKey = Symbol('MenuItemInjectionKey') as InjectionKey<MenuItemProvide>;
 
-export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'onMouseover'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'onMouseover'> {
   name?: string;
   value?: string;
 
@@ -146,17 +146,19 @@ import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { isDefined } from '@vueuse/shared';
 import { useChildrenTracker } from '../../use';
 import TeleportCopy from '../../helpers/TeleportCopy.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfMenuItem',
   inheritAttrs: false,
 });
 
-const $props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   component: 'button',
   selected: undefined,
   favorited: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   /** Callback for item click */
@@ -179,10 +181,10 @@ const instance = getCurrentInstance();
 const menu = inject(MenuInjectionKey);
 useChildrenTracker(MenuItemsKey);
 
-const itemId = computed(() => $props.value === undefined ? instance?.vnode.key : $props.value);
+const itemId = computed(() => props.value === undefined ? instance?.vnode.key : props.value);
 
 provide(MenuItemInjectionKey, {
-  disabled: $props.disabled,
+  disabled: props.disabled,
   itemId,
 });
 
@@ -191,27 +193,27 @@ provide(MenuItemInjectionKey, {
 // }
 
 const component = computed(() => {
-  if ($props.to) {
+  if (props.to) {
     return 'a';
   }
-  if ($props.check) {
+  if (props.check) {
     return 'label';
   }
-  return $props.component;
+  return props.component;
 });
 
-const effectiveOnPath = computed(() => $props.onPath/*  || (itemId.value && menu?.drilldownItemPath?.includes(itemId.value)) */);
+const effectiveOnPath = computed(() => props.onPath/*  || (itemId.value && menu?.drilldownItemPath?.includes(itemId.value)) */);
 
 const effectiveSelected = computed(() => {
-  if (isDefined($props.selected)) {
-    return $props.selected;
+  if (isDefined(props.selected)) {
+    return props.selected;
   }
-  return menu?.selected?.value && Array.isArray(menu.selected.value) ? menu.selected.value.includes($props.value as any) : menu?.selected?.value === $props.value;
+  return menu?.selected?.value && Array.isArray(menu.selected.value) ? menu.selected.value.includes(props.value as any) : menu?.selected?.value === props.value;
 });
 
 const ariaCurrent = computed(() => {
-  if (isDefined($props.active)) {
-    if ($props.active) {
+  if (isDefined(props.active)) {
+    if (props.active) {
       return 'page';
     } else {
       return null;

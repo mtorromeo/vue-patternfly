@@ -1,5 +1,5 @@
 <template>
-  <div ref="target">
+  <div v-bind="ouiaProps" ref="target">
     <slot />
   </div>
 </template>
@@ -7,6 +7,7 @@
 <script lang="ts" setup>
 import { useFocusTrap, type UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
 import { watch, ref, type Ref, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from './ouia';
 
 defineOptions({
   name: 'PfFocusTrap',
@@ -16,13 +17,14 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   active?: boolean;
   paused?: boolean;
   focusTrapOptions?: UseFocusTrapOptions;
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const target: Ref<HTMLDivElement | undefined> = ref();
 const { activate, deactivate, pause, unpause } = useFocusTrap(target, {

@@ -1,5 +1,5 @@
 <template>
-  <pf-drawer-main>
+  <pf-drawer-main v-bind="ouiaProps">
     <auto-wrap
       ref="el"
       force
@@ -35,14 +35,16 @@ import type { ComponentProps } from '../../util';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDrawerMain from './DrawerMain.vue';
 import PfDrawerPanelContent from './DrawerPanelContent.vue';
+import { useOUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDrawerContent',
 });
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   colorVariant: DrawerColorVariant.default,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

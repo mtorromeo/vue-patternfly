@@ -1,5 +1,5 @@
 <template>
-  <div :class="[styles.toggleGroup, { [styles.modifiers.compact]: compact }]" role="group">
+  <div v-bind="ouiaProps" :class="[styles.toggleGroup, { [styles.modifiers.compact]: compact }]" role="group">
     <slot />
   </div>
 </template>
@@ -9,7 +9,7 @@ export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as Inject
 export const ToggleGroupSelectionKey = Symbol('ToggleGroupSelectionKey') as InjectionKey<WritableComputedRef<unknown>>;
 
 // TODO: readd `extends /* @vue-ignore */ Omit<HTMLAttributes, 'role'>` once https://github.com/vuejs/language-tools/issues/3723 is fixed
-export interface Props<T> {
+export interface Props<T> extends OUIAProps {
   /** Modifies the toggle group to include compact styling. */
   compact?: boolean;
   /** Disable all toggle group items under this component. */
@@ -33,12 +33,14 @@ export function useMultiToggleGroup<T>() {
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
 import { type InjectionKey, provide, computed, type ComputedRef, type WritableComputedRef } from 'vue';
 import { useManagedProp } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToggleGroup',
 });
 
 const props = defineProps<Props<T>>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:modelValue', value: T): void;

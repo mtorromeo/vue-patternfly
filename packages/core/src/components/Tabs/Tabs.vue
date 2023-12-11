@@ -1,5 +1,6 @@
 <template>
   <component
+    v-bind="ouiaProps"
     :is="component"
     :id="id"
     :aria-label="ariaLabel"
@@ -65,7 +66,7 @@ export const TabsProvideKey = Symbol('TabsProvide') as InjectionKey<TabsProvide>
 
 export type TabKey = number | string | symbol;
 
-export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   /** Tabs background color variant */
   variant?: 'default' | 'light300';
@@ -106,12 +107,11 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
-
+import { watchEffect, nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useEventListener } from '@vueuse/core';
-import { watchEffect } from 'vue';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 
 defineOptions({
@@ -122,6 +122,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   component: 'div',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:activeKey', value: TabKey): void;

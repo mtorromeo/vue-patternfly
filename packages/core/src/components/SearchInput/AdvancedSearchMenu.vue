@@ -1,5 +1,5 @@
 <template>
-  <pf-panel v-if="searchMenuOpen" variant="raised">
+  <pf-panel v-if="searchMenuOpen" v-bind="ouiaProps" variant="raised">
     <pf-panel-main>
       <pf-panel-main-body>
         <pf-form>
@@ -46,7 +46,7 @@
 import { computed, inject, type Ref, ref } from 'vue';
 import { useManagedProp } from '../../use';
 import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
-
+import { useOUIAProps } from '../../helpers/ouia';
 import PfTextInput from '../TextInput.vue';
 import PfButton from '../Button.vue';
 import PfPanel from '../Panel/Panel.vue';
@@ -88,6 +88,7 @@ const props = withDefaults(defineProps<Props>(), {
   resetButtonLabel: 'Reset',
   submitSearchButtonLabel: 'Search',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:modelValue', v: string): void;

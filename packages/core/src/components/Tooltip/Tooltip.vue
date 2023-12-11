@@ -6,7 +6,7 @@
   <floating-ui v-if="$slots.content" :reference="referenceElement" :placement="placement" :offset="distance" flip>
     <div
       ref="tooltipElement"
-      v-bind="$attrs"
+      v-bind="{...ouiaProps, ...$attrs}"
       :class="[styles.tooltip, positionModifiers[placement]]"
       :style="{
         maxWidth,
@@ -34,6 +34,7 @@ import FloatingUi from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useHtmlElementFromVNodes } from '../../use';
 import type { Placement } from '@floating-ui/core';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 export type TooltipPosition = Placement | 'auto';
 
@@ -42,7 +43,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'onTransitionend'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'onTransitionend'> {
   position?: TooltipPosition;
   trigger?: string;
   leftAligned?: boolean,
@@ -64,6 +65,7 @@ const props = withDefaults(defineProps<Props>(), {
   aria: 'describedby',
   animationDuration: 300,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

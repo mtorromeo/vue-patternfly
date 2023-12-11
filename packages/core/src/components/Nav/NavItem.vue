@@ -5,7 +5,7 @@
     :class="[styles.navItem, itemClass, {
       [(styles.modifiers.flyout || 'pf-m-flyout')]: $slots.flyout,
     }]"
-    v-bind="itemAttrs"
+    v-bind="{...ouiaProps, ...itemAttrs}"
     @keydown="handleFlyout"
     @mouseover="flyoutVisible = !!$slots.flyout"
   >
@@ -47,13 +47,14 @@ import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { NavFlyoutRefKey, NavOnSelectKey } from './Nav.vue';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNavItem',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
   component?: string;
   linkComponent?: string;
   groupId?: string;
@@ -69,6 +70,7 @@ export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'typ
 const props = withDefaults(defineProps<Props>(), {
   component: 'li',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'showflyout'): void;

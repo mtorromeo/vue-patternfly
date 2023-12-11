@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="(ouiaProps as any)"
     :class="[styles.toolbar, breakpointClasses, {
       [styles.modifiers.fullHeight]: fullHeight,
       [styles.modifiers.static]: static,
@@ -30,7 +31,7 @@ export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<R
 export const ToolbarChipGroupContentRefKey = Symbol('ToolbarChipGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
 
-export interface Props extends InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Text to display in the clear all filters button */
   clearFiltersButtonText?: string;
   /** The breakpoint at which the listed filters in chip groups are collapsed down to a summary */
@@ -55,6 +56,7 @@ import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
 import { globalBreakpoints } from './common';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbar',
@@ -65,6 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
   collapseListedFiltersBreakpoint: 'lg',
   expanded: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:expanded', value: boolean): void;

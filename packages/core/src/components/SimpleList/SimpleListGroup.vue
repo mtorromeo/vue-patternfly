@@ -1,5 +1,5 @@
 <template>
-  <section :class="styles.simpleListSection">
+  <section v-bind="(ouiaProps as any)" :class="styles.simpleListSection">
     <h2 :id="id" :class="[styles.simpleListTitle, titleClass]" aria-hidden>
       <slot name="title">{{ title }}</slot>
     </h2>
@@ -12,13 +12,14 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfSimpleListGroup',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** ID of SimpleList group */
   id?: string;
 
@@ -29,7 +30,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   titleClass?: string | string[] | Record<string, string>;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

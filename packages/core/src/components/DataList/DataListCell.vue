@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="(ouiaProps as any)"
     :class="[
       styles.dataListCell, {
         [styles.modifiers.noFill]: noFill,
@@ -18,12 +19,13 @@
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import type { DataListWrapModifier } from './DataList.vue';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDataListCell',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   noFill?: boolean;
   width?: 1 | 2 | 3 | 4 | 5;
   alignRight?: boolean;
@@ -31,7 +33,8 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   wrapModifier?: DataListWrapModifier;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -43,7 +43,7 @@ import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation, type InputValidateState } from '../input';
 import { FormGroupInputsKey } from './Form/common';
-import { useOUIAProps } from '../helpers/ouia';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
 
 defineOptions({
@@ -51,7 +51,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
@@ -84,10 +84,6 @@ export interface Props extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'valu
   ariaLabel?: string;
   /** Trim text at start */
   startTruncated?: boolean;
-  /** Value to overwrite the randomly generated data-ouia-component-id.*/
-  ouiaId?: number | string;
-  /** Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false. */
-  ouiaSafe?: boolean;
   autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
 }
 

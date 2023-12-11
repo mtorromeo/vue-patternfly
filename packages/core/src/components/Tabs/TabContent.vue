@@ -1,5 +1,6 @@
 <template>
   <section
+    v-bind="ouiaProps"
     :class="[styles.tabContent, {
       [styles.modifiers.light_300]: variant === 'light300',
     }]"
@@ -16,14 +17,16 @@ import { inject, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/TabContent/tab-content';
 import { TabsProvideKey } from './Tabs.vue';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfTabContent',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

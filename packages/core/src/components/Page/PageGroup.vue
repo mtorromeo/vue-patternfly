@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     :class="[
       styles.pageMainGroup,
       ...classesFromBreakpointProps($props, [
@@ -22,12 +23,13 @@
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfPageGroup',
 });
 
-export interface Props extends StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex' | 'role'> {
+export interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex' | 'role'> {
   /** Flag indicating if PageBreadcrumb should have a shadow at the top */
   shadowTop?: boolean;
   /** Flag indicating if PageBreadcrumb should have a shadow at the bottom */
@@ -36,7 +38,8 @@ export interface Props extends StickyBreakpointProps, /* @vue-ignore */ Omit<HTM
   overflowScroll?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

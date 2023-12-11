@@ -1,5 +1,5 @@
 <template>
-  <div :class="[styles.drawerBody, {[styles.modifiers.padding]: padding}]">
+  <div v-bind="(ouiaProps as any)" :class="[styles.drawerBody, {[styles.modifiers.padding]: padding}]">
     <slot />
   </div>
 </template>
@@ -7,17 +7,19 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDrawerContentBody',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Indicates if there should be padding around the drawer content body */
   padding?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

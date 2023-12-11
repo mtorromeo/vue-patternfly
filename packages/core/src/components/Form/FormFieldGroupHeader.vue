@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.formFieldGroupHeader">
+  <div v-bind="(ouiaProps as any)" :class="styles.formFieldGroupHeader">
     <div :class="styles.formFieldGroupHeaderMain">
       <div v-if="title" :class="styles.formFieldGroupHeaderTitle">
         <div :class="styles.formFieldGroupHeaderTitleText">{{ title }}</div>
@@ -15,12 +15,13 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import type { HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfFormFieldGroupHeader',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Header title */
   title?: string;
 
@@ -28,5 +29,6 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   description?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>

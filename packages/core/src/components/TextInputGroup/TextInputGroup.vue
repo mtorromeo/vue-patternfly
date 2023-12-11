@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="(ouiaProps as any)"
     :class="[styles.textInputGroup, {
       [styles.modifiers.disabled]: disabled,
       [styles.modifiers.plain]: plain,
@@ -12,7 +13,7 @@
 <script lang="ts">
 export const TextInputGroupDisabledKey = Symbol('TextInputGroupDisabledKey') as InjectionKey<boolean | undefined>;
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds disabled styling and a disabled context value which text input group main hooks into for the input itself */
   disabled?: boolean;
   /** Flag to indicate the toggle has no border or background */
@@ -24,12 +25,14 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
 import type { HTMLAttributes } from 'vue';
 import { type InjectionKey, provide } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfTextInputGroup',
 });
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

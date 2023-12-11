@@ -1,5 +1,6 @@
 <template>
   <ul
+    v-bind="(ouiaProps as any)"
     :class="[
       styles.dataList,
       gridBreackpointClass, {
@@ -26,7 +27,7 @@ export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
 
 export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
     /** Array for multiple selection, single value for single selection, undefined to disable selection */
   selected?: string | number | symbol | (string | number | symbol)[];
   /** Name of the item input (radio or checkbox) when item selection is enabled */
@@ -51,7 +52,7 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from "vue";
 import { useManagedProp } from '../../use';
 
@@ -74,6 +75,7 @@ const props = withDefaults(defineProps<Props>(), {
   selected: undefined,
   expandable: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:selected', s: any): void;

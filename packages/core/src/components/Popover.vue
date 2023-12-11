@@ -12,7 +12,7 @@
     <pf-focus-trap
       v-if="visible"
       ref="dialog"
-      v-bind="$attrs"
+      v-bind="{...ouiaProps, ...$attrs}"
       :active="focusTrap && visible"
       :class="[styles.popover, (styles.modifiers as any)[placement], {
         [styles.modifiers.noPadding]: noPadding,
@@ -68,20 +68,20 @@ import { useHtmlElementFromVNodes, useManagedProp } from '../use';
 import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
-
 import PfFocusTrap, { type Props as PfFocusTrapProps } from '../helpers/FocusTrap.vue';
 import PfCloseButton from './CloseButton.vue';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
 import PassThrough from '../helpers/PassThrough.vue';
 import { offset, autoPlacement, type Placement, hide, flip as uiFlip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfPopover',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<PfFocusTrapProps, 'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfFocusTrapProps, 'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby'> {
   /** Whether to trap focus in the popover */
   focusTrap?: boolean;
 
@@ -141,6 +141,7 @@ const props = withDefaults(defineProps<Props>(), {
   distance: 25,
   open: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

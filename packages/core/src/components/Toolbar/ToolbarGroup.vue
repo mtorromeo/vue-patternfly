@@ -1,5 +1,5 @@
 <template>
-  <div ref="el" :class="[styles.toolbarGroup, breakpointClasses, variantClass]">
+  <div v-bind="ouiaProps" ref="el" :class="[styles.toolbarGroup, breakpointClasses, variantClass]">
     <slot />
   </div>
 </template>
@@ -9,16 +9,18 @@ import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityB
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { computed, onMounted, type HTMLAttributes, ref, type Ref } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbarGroup',
 });
 
-export interface Props extends VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, SpaceItemsBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, SpaceItemsBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   variant?: 'filter-group' | 'icon-button-group' | 'button-group';
 }
 
 const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'clear-all-filters'): void;

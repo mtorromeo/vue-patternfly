@@ -14,7 +14,7 @@
       >
         <component
           :is="component"
-          v-bind="$attrs"
+          v-bind="{...ouiaProps, ...$attrs}"
           role="dialog"
           :aria-describedby="ariaDescribedby || (noBodyWrapper ? null : descriptorId)"
           aria-modal="true"
@@ -108,13 +108,14 @@ import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
 import { useElementOverflow } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfModal',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
   /** Flag to show the modal */
   open?: boolean,
   /** Flag to remove the close button in the header area of the modal */
@@ -158,6 +159,7 @@ const props = withDefaults(defineProps<Props>(), {
   position: 'default',
   component: 'div',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:open', value: boolean): void;

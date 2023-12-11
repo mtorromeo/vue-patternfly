@@ -1,5 +1,6 @@
 <template>
   <ul
+    v-bind="ouiaProps"
     :class="[styles.alertGroup, {
       [styles.modifiers.toast]: toast,
     }]"
@@ -18,7 +19,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Alert/alert-group';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { h, type HTMLAttributes } from 'vue';
 import { findChildrenVNodes } from '../../util';
 
@@ -26,13 +27,14 @@ defineOptions({
   name: 'PfAlertGroupInline',
 });// expands object types one level deep
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
   toast?: boolean;
   liveRegion?: boolean;
   overflowMessage?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'overflow-click', e: MouseEvent | TouchEvent): void;

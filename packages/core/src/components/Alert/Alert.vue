@@ -76,11 +76,10 @@ import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { ref, watch, type Ref, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfAlert',
@@ -135,6 +134,7 @@ const props = withDefaults(defineProps<Props>(), {
   tooltipPosition: 'auto',
   component: 'h4',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant});
 
 const emit = defineEmits<{
   (name: 'mouseenter', e: Event): void;
@@ -163,7 +163,6 @@ const managedExpanded = useManagedProp('expanded', false);
 const variantLabel = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)} alert:`);
 const dismissed = computed(() => timedOut.value && timedOutAnimation.value && !isMouseOver.value && !containsFocus.value);
 
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant});
 
 watch(() => [width.value, height.value], () => {
   if (!titleRef.value || !props.truncateTitle) {

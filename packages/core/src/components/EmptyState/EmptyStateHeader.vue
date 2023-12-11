@@ -1,5 +1,5 @@
 <template>
-  <div class="pf-v5-c-empty-state__header">
+  <div v-bind="(ouiaProps as any)" class="pf-v5-c-empty-state__header">
     <auto-wrap v-if="$slots.icon" :component="PfEmptyStateIcon">
       <slot name="icon" />
     </auto-wrap>
@@ -17,21 +17,23 @@ import type { HTMLAttributes } from 'vue';
 import PfEmptyStateIcon from './EmptyStateIcon.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfEmptyStateBody',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Text of the title inside empty state header, will be wrapped in headingLevel */
   title?: string;
   /** The heading level to use, default is h1 */
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   headingLevel: 'h1',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

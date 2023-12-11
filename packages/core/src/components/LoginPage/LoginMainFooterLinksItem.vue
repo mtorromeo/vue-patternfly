@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles.loginMainFooterLinksItem">
+  <div v-bind="(ouiaProps as any)" :class="styles.loginMainFooterLinksItem">
     <component :is="linkComponent" v-bind="linkProps" :class="styles.loginMainFooterLinksItemLink" :href="href" :target="target">
       <slot />
     </component>
@@ -9,12 +9,13 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Login/login';
 import type { Component, AnchorHTMLAttributes, HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfLoginMainFooterLinksItem',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** HREF for footer link item */
   href?: string;
   /** Target for footer link item */
@@ -25,9 +26,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   linkProps?: Omit<AnchorHTMLAttributes, 'href' | 'target'>;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   linkComponent: 'a',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

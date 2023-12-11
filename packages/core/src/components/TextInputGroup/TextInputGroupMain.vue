@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="(ouiaProps as any)"
     :class="[styles.textInputGroupMain, {
       [styles.modifiers.icon]: !!$slots.icon,
     }]"
@@ -36,20 +37,22 @@ import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-
 import { inject, type Ref, ref, type InputHTMLAttributes } from 'vue';
 import { useManagedProp } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfTextInputGroupMain',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ InputHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ InputHTMLAttributes {
   /** Suggestion that will show up like a placeholder even with text in the input */
   hint?: string;
   /** Value for the input */
   modelValue?: string | number;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:modelValue', v: string): void;

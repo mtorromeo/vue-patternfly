@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     :id="validId"
     :class="[
       styles.progress,
@@ -61,6 +62,7 @@ import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 import { getUniqueId } from '../util';
 import { ref, computed, type HTMLAttributes } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 const variantToIcon = {
   danger: CircleXmarkIcon,
@@ -72,7 +74,7 @@ defineOptions({
   name: 'PfProgress',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Id of the progress component. */
   id?: string;
 
@@ -121,6 +123,7 @@ const props = withDefaults(defineProps<Props>(), {
   min: 0,
   max: 100,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="(ouiaProps as any)"
     :class="[styles.cardHeader, {
       [styles.modifiers.toggleRight]: toggleRightAligned,
     }]"
@@ -23,12 +24,13 @@ import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import PfButton, { type Props as ButtonProps } from '../Button.vue';
 import { type HTMLAttributes, inject } from 'vue';
 import { CardExpandableKey, CardExpandedKey } from './Card.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfCardHeader',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Whether to right-align expandable toggle button */
   toggleRightAligned?: boolean;
 
@@ -36,9 +38,10 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   toggleButtonAttrs?: ButtonProps,
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   toggleButtonAttrs: () => ({}),
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

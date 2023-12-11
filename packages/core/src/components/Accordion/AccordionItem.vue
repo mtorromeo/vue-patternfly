@@ -1,5 +1,5 @@
 <template>
-  <component :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))">
+  <component v-bind="ouiaProps" :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))">
     <button
       v-bind="$attrs"
       type="button"
@@ -43,13 +43,14 @@ import styles from '@patternfly/react-styles/css/components/Accordion/accordion'
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
 import { AccordionKey } from './Accordion.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfAccordionItem',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded'> {
   title?: string;
   toggleComponent?: string;
   contentComponent?: string;
@@ -57,9 +58,10 @@ export interface Props extends /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'typ
   expanded?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:expanded', value: boolean): void;

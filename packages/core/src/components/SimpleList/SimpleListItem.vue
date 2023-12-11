@@ -1,5 +1,5 @@
 <template>
-  <li class="pf-v5-c-simple-list__item">
+  <li v-bind="(ouiaProps as any)" class="pf-v5-c-simple-list__item">
     <component
       :is="component"
       v-bind="componentAttrs"
@@ -23,12 +23,13 @@ import styles from '@patternfly/react-styles/css/components/SimpleList/simple-li
 import { computed, inject } from 'vue';
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, LiHTMLAttributes } from 'vue';
 import { SimpleListValueKey } from './SimpleList.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfSimpleListItem',
 });
 
-export interface Props extends /* @vue-ignore */ LiHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /**
    * Identifier fot the item. If the SimpleList has a name it will be used as the form field value.
    */
@@ -54,6 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'button',
   type: 'button',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', e: MouseEvent | TouchEvent): void;

@@ -1,5 +1,5 @@
 <template>
-  <section :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: managedExpanded }]">
+  <section v-bind="(ouiaProps as any)" :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: managedExpanded }]">
     <component :is="headingLevel">
       <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="managedExpanded" @click="managedExpanded = !managedExpanded" @keydown="onKeydown">
         <pf-tooltip :position="tooltipPosition">
@@ -38,12 +38,13 @@ import PfBadge from '../Badge.vue';
 import { ref, type Ref } from 'vue';
 import { useElementOverflow, useManagedProp } from '../../use';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNotificationDrawerGroup',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer group count */
   count: number | string;
   /**  Adds styling to the group to indicate expanded state */
@@ -62,11 +63,12 @@ export interface Props extends /* @vue-ignore */ HTMLAttributes {
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
   truncateTitle: 0,
   headingLevel: 'h1',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:expanded', value: boolean): void;

@@ -1,6 +1,7 @@
 <template>
   <button
     v-if="horizontal"
+    v-bind="ouiaProps"
     :class="styles.navScrollButton"
     :aria-label="ariaLeftScroll"
     :disabled="scrollViewAtStart"
@@ -29,21 +30,23 @@ import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import { inject, ref, type Ref, onMounted, onBeforeUnmount, type HTMLAttributes } from 'vue';
 import { NavHorizontalKey, NavScrollablelKey } from './Nav.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNavList',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
   ariaLeftScroll?: string;
   ariaRightScroll?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   ariaLeftScroll: 'Scroll left',
   ariaRightScroll: 'Scroll right',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

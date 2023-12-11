@@ -1,12 +1,12 @@
 <template>
-  <div :class="styles.inputGroup">
+  <div v-bind="(ouiaProps as any)" :class="styles.inputGroup">
     <render />
   </div>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { cloneVNode, type Component, type VNode, type HTMLAttributes } from 'vue';
 
 const formCtrls = ['PfFormSelect', 'PfTextArea', 'PfTextInput'];
@@ -19,10 +19,11 @@ defineOptions({
   name: 'PfInputGroup',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => VNode[];

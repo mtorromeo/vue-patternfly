@@ -1,7 +1,7 @@
 <template>
   <pass-through @children="findReference">
     <slot name="toggle">
-      <pf-menu-toggle v-model:expanded="managedOpen" :disabled="disabled" :variant="variant" :full-height="fullHeight" :full-width="fullWidth">
+      <pf-menu-toggle v-bind="ouiaProps" v-model:expanded="managedOpen" :disabled="disabled" :variant="variant" :full-height="fullHeight" :full-width="fullWidth">
         <slot name="label">
           Select a value
         </slot>
@@ -30,13 +30,14 @@ import FloatingUi from '../../helpers/FloatingUi.vue';
 import { nextTick, ref, type Ref } from 'vue';
 import { useHtmlElementFromVNodes, useManagedProp } from '../../use';
 import { useEventListener } from '@vueuse/core';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfSelect',
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ MenuProps {
+export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   /** Flag to indicate if select is open */
   open?: boolean;
   /** Minimum width of the select menu */
@@ -65,6 +66,7 @@ const props = withDefaults(defineProps<Props>(), {
   selected: undefined,
   closeOnKeys: () => ['Escape', 'Tab'],
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

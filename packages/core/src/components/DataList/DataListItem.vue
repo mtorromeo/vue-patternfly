@@ -1,5 +1,6 @@
 <template>
   <li
+    v-bind="ouiaProps"
     :class="[
       styles.dataListItem, {
         [styles.modifiers.expanded]: managedExpanded,
@@ -24,7 +25,7 @@ export const DataListItemKey = Symbol('DataListItemKey') as InjectionKey<{
   expandable: ComputedRef<boolean>,
 }>;
 
-export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'tabindex' | 'aria-selected' | 'onClick'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'tabindex' | 'aria-selected' | 'onClick'> {
   selected?: boolean;
   /** Name of the item inputs (radio or checkbox) when item selection is enabled */
   selectionInputName?: string;
@@ -39,7 +40,7 @@ export interface Props extends /* @vue-ignore */ Omit<LiHTMLAttributes, 'tabinde
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type WritableComputedRef, type LiHTMLAttributes } from "vue";
 import { DataListKey } from './DataList.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
@@ -56,6 +57,7 @@ const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
   expandable: undefined,
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', e: PointerEvent): void;

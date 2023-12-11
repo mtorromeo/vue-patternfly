@@ -3,7 +3,7 @@
     <slot />
   </pf-toolbar-item>
   <teleport v-if="mounted && teleportTarget" :to="teleportTarget">
-    <pf-toolbar-item v-if="chips.length" variant="chip-group">
+    <pf-toolbar-item v-if="chips.length" v-bind="ouiaProps" variant="chip-group">
       <pf-chip-group
         :key="category"
         :category="category"
@@ -27,6 +27,7 @@ import PfToolbarItem, { type Props as ToolbarItemProps } from './ToolbarItem.vue
 import { ToolbarChipGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
 import { ToolbarContentChipContainerRefKey } from './ToolbarContent.vue';
 import { inject, ref, onMounted, onUpdated, computed } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 export type FilterChip = {
   key: string;
@@ -38,7 +39,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ ToolbarItemProps {
+export interface Props extends OUIAProps, /* @vue-ignore */ ToolbarItemProps {
   chips?: FilterChip[];
   category?: string;
   hideToolbarItem?: boolean;
@@ -47,6 +48,7 @@ export interface Props extends /* @vue-ignore */ ToolbarItemProps {
 const props = withDefaults(defineProps<Props>(), {
   chips: (): FilterChip[] => [],
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'delete-chip', category: string | undefined, chipKey: string): void;
