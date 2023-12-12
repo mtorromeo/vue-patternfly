@@ -35,7 +35,7 @@
         <slot />
         <pf-jump-links-item
           v-for="(el, i) in autoLinkElements"
-          :key="i"
+          :key="`${i}:${el.textContent}`"
           :node="el"
         >
           {{ el.textContent }}
