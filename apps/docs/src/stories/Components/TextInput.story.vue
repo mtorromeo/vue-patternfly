@@ -13,7 +13,7 @@
     <story-canvas title="Disabled">
       <pf-text-input
         disabled
-        value="disabled text input example"
+        model-value="disabled text input example"
         aria-label="disabled text input example"
       />
     </story-canvas>
@@ -21,7 +21,7 @@
     <story-canvas title="Read only">
       <pf-text-input
         readonly
-        value="read only text input example"
+        model-value="read only text input example"
         aria-label="read only text input example"
       />
     </story-canvas>
@@ -75,7 +75,7 @@
 
     <story-canvas title="Select all">
       <pf-text-input
-        value="select all on click"
+        model-value="select all on click"
         aria-label="select-all"
         @focus="($event.currentTarget as HTMLInputElement).select()"
       />
