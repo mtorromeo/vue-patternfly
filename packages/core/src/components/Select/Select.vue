@@ -9,7 +9,7 @@
     </slot>
   </pass-through>
 
-  <floating-ui :teleport-to="appendTo" :reference="toggleRef" :z-index="zIndex" flip>
+  <floating-ui :teleport-to="appendTo" :reference="toggleRef" :placement="placement" :z-index="zIndex" flip>
     <pf-menu
       v-if="managedOpen"
       ref="menuRef"
@@ -27,10 +27,11 @@ import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.v
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import { nextTick, ref, type Ref, type RendererElement } from 'vue';
+import { nextTick, computed, ref, type Ref, type RendererElement } from 'vue';
 import { useHtmlElementFromVNodes, useManagedProp } from '../../use';
 import { useEventListener } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { Placement } from '@floating-ui/core';
 
 defineOptions({
   name: 'PfSelect',
@@ -44,6 +45,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   minWidth?: string;
   /** z-index of the select menu */
   zIndex?: number;
+  placement?: 'top' | 'bottom' | Placement;
   /** Element or selector where to render the floating menu */
   appendTo?: 'inline' | string | RendererElement | null | undefined;
 
@@ -66,6 +68,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
 const props = withDefaults(defineProps<Props>(), {
   open: undefined,
   selected: undefined,
+  placement: 'bottom',
   closeOnKeys: () => ['Escape', 'Tab'],
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
@@ -81,6 +84,13 @@ const emit = defineEmits<{
   (name: 'select', event: Event, itemId?: MenuItemId | null | undefined): void;
   (name: 'update:open', value: boolean): void;
 }>();
+
+const placement = computed((): Placement => {
+  if (props.placement !== 'top' && props.placement !== 'bottom') {
+    return props.placement;
+  }
+  return `${props.placement}-start`;
+});
 
 const managedOpen = useManagedProp('open', false);
 const menuRef: Ref<InstanceType<typeof PfMenu> | undefined> = ref();
