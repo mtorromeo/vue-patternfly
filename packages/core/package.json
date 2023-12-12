@@ -33,18 +33,18 @@
     "prepack": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@floating-ui/core": "^1.5.1",
+    "@floating-ui/core": "^1.5.2",
     "@floating-ui/dom": "^1.5.3",
     "@patternfly/patternfly": "^5.1.0",
-    "@patternfly/react-styles": "^5.1.1",
-    "@patternfly/react-tokens": "^5.1.1",
+    "@patternfly/react-styles": "^5.1.2",
+    "@patternfly/react-tokens": "^5.1.2",
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^20.10.3",
+    "@types/node": "^20.10.4",
     "@types/web-bluetooth": "^0.0.20",
-    "@vitejs/plugin-vue": "^4.5.1",
-    "@vue/compiler-sfc": "^3.3.10",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "@vue/compiler-sfc": "^3.3.11",
     "@vueuse/core": "^10.7.0",
     "@vueuse/integrations": "^10.7.0",
     "@vueuse/shared": "^10.7.0",
@@ -55,11 +55,11 @@
     "nodemon": "^3.0.2",
     "rimraf": "^5.0.5",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.2",
-    "vite": "^5.0.5",
-    "vue": "^3.3.10",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.7",
+    "vue": "^3.3.11",
     "vue-router": "^4.2.5",
-    "vue-tsc": "^1.8.24"
+    "vue-tsc": "^1.8.25"
   },
   "peerDependencies": {
     "@vueuse/core": "^10",
