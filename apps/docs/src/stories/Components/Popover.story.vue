@@ -7,7 +7,7 @@
     </template>
 
     <story-canvas title="Example">
-      <pf-popover>
+      <pf-popover append-to="body">
         <pf-button>Toggle popover</pf-button>
 
         <template #header>

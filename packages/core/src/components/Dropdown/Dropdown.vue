@@ -3,27 +3,26 @@
     <render-toggles />
   </pass-through>
 
-  <teleport :to="appendTo === 'inline' ? undefined : appendTo" :disabled="appendTo === 'inline'">
-    <floating-ui flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex">
-      <pf-menu
-        v-if="managedOpen"
-        ref="menuRef"
-        v-bind="$attrs"
-        @select="onSelect"
-        @keydown="onKeydown"
-      >
-        <pf-menu-content>
-          <slot />
-        </pf-menu-content>
-      </pf-menu>
-    </floating-ui>
-  </teleport>
+  <floating-ui :teleport-to="appendTo" flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex">
+    <pf-menu
+      v-if="managedOpen"
+      ref="menuRef"
+      v-bind="$attrs"
+      @select="onSelect"
+      @keydown="onKeydown"
+    >
+      <pf-menu-content>
+        <slot />
+      </pf-menu-content>
+    </pf-menu>
+  </floating-ui>
 </template>
 
 <script lang="ts">
 export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   id?: string;
   position?: 'left' | 'right';
+  /** Element or selector where to render the floating menu */
   appendTo?: 'inline' | string | RendererElement | null | undefined;
   text?: string;
   disabled?: boolean;
@@ -47,17 +46,14 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
 </script>
 
 <script lang="ts" setup>
-import { h, mergeProps, ref, type Ref, type VNode, computed } from 'vue';
+import { h, mergeProps, ref, type Ref, type VNode, computed, onMounted, onBeforeUnmount, type RendererElement } from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useManagedProp, useHtmlElementFromVNodes } from '../../use';
-import { onMounted } from 'vue';
-import { onBeforeUnmount } from 'vue';
 import type { Placement } from '@floating-ui/core';
-import type { RendererElement } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 let currentId = 0;

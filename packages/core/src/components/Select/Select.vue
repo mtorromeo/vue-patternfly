@@ -9,7 +9,7 @@
     </slot>
   </pass-through>
 
-  <floating-ui :reference="toggleRef" :z-index="zIndex" flip>
+  <floating-ui :teleport-to="appendTo" :reference="toggleRef" :z-index="zIndex" flip>
     <pf-menu
       v-if="managedOpen"
       ref="menuRef"
@@ -27,7 +27,7 @@ import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.v
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import { nextTick, ref, type Ref } from 'vue';
+import { nextTick, ref, type Ref, type RendererElement } from 'vue';
 import { useHtmlElementFromVNodes, useManagedProp } from '../../use';
 import { useEventListener } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -44,6 +44,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   minWidth?: string;
   /** z-index of the select menu */
   zIndex?: number;
+  /** Element or selector where to render the floating menu */
+  appendTo?: 'inline' | string | RendererElement | null | undefined;
 
   /** Flag indicating the toggle should be focused after a selection. If this use case is too restrictive, the optional toggleRef property with a node toggle may be used to control focus. */
   focusToggleOnSelect?: boolean;

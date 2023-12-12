@@ -14,12 +14,8 @@
       {{ itemsTitle }}
     </pf-menu-toggle>
 
-    <floating-ui :reference="el" flip>
-      <pf-menu
-        v-if="open"
-        v-bind="$attrs"
-        @select="onSelect"
-      >
+    <floating-ui :teleport-to="appendTo" :reference="el" flip>
+      <pf-menu v-if="open" v-bind="$attrs" @select="onSelect">
         <pf-menu-content>
           <pf-menu-item
             v-for="o of perPageOptions"
@@ -47,7 +43,7 @@ import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuItem from '../Menu/MenuItem.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
-import { type Ref, ref } from 'vue';
+import { type Ref, ref, type RendererElement } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -63,6 +59,8 @@ export interface Props extends OUIAProps, CommonPaginationProps, /* @vue-ignore 
   perPageSuffix?: string;
   itemsTitle?: string;
   optionsToggle?: string;
+  /** Element or selector where to render the floating menu */
+  appendTo?: 'inline' | string | RendererElement | null | undefined;
 }
 
 const props = withDefaults(defineProps<Props>(), {

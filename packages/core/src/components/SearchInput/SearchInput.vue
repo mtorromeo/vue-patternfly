@@ -88,33 +88,31 @@
       </pf-button>
     </component>
 
-    <teleport :to="appendTo" :disabled="!appendTo || appendTo === 'inline'">
-      <floating-ui :reference="$el" :z-index="zIndex" flip>
-        <component
-          :is="appendTo === 'inline' ? PassThrough : 'div'"
-          v-if="attributes.length > 0"
-          ref="floatingElement"
+    <floating-ui :teleport-to="appendTo" :reference="$el" :z-index="zIndex" flip>
+      <component
+        :is="appendTo === 'inline' ? PassThrough : 'div'"
+        v-if="attributes.length > 0"
+        ref="floatingElement"
+      >
+        <pf-advanced-search-menu
+          v-model="value"
+          :reset-button-label="resetButtonLabel"
+          :submit-search-button-label="submitSearchButtonLabel"
+          :attributes="attributes"
+          :advanced-search-delimiter="advancedSearchDelimiter"
+          :get-attr-value-map="getAttrValueMap"
+          :search-menu-open="searchMenuOpen"
+          @search="onSearch"
+          @clear="onClear"
+          @toggle-advanced-menu="onToggle"
         >
-          <pf-advanced-search-menu
-            v-model="value"
-            :reset-button-label="resetButtonLabel"
-            :submit-search-button-label="submitSearchButtonLabel"
-            :attributes="attributes"
-            :advanced-search-delimiter="advancedSearchDelimiter"
-            :get-attr-value-map="getAttrValueMap"
-            :search-menu-open="searchMenuOpen"
-            @search="onSearch"
-            @clear="onClear"
-            @toggle-advanced-menu="onToggle"
-          >
-            <template #words-attr-label>
-              <slot name="words-attr-label" />
-            </template>
-            <slot name="form-additional-items" />
-          </pf-advanced-search-menu>
-        </component>
-      </floating-ui>
-    </teleport>
+          <template #words-attr-label>
+            <slot name="words-attr-label" />
+          </template>
+          <slot name="form-additional-items" />
+        </pf-advanced-search-menu>
+      </component>
+    </floating-ui>
   </component>
 </template>
 

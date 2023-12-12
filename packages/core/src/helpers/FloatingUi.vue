@@ -1,12 +1,13 @@
 <template>
-  <floating-element />
+  <teleport :to="teleportTo === 'inline' ? undefined : teleportTo" :disabled="!teleportTo || teleportTo === 'inline'">
+    <floating-element />
+  </teleport>
 </template>
 
 <script lang="ts" setup>
 import { flip as uiFlip, size, type Middleware, type Placement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
-import { cloneVNode, computed, ref, withDirectives, type Ref } from 'vue';
+import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
-import type { VNode } from 'vue';
 import type { ReferenceElement } from '@floating-ui/dom';
 
 defineOptions({
@@ -29,6 +30,8 @@ export interface Props {
   minWidth?: string | 'trigger' | 'auto';
   /** Maximum width of the floating ui. If the value is "trigger", it will set the max width to the trigger element's width */
   maxWidth?: string | 'trigger' | 'auto';
+  /** Element or selector where to render the floating element */
+  teleportTo?: 'inline' | string | RendererElement | null | undefined;
 }
 
 const props = withDefaults(defineProps<Props>(), {

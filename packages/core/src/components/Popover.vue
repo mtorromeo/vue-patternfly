@@ -5,6 +5,7 @@
 
   <floating-ui
     v-slot="{ placement, middlewareData }"
+    :teleport-to="appendTo"
     :reference="referenceElement"
     :placement="position"
     :middleware="floatingMiddleware"
@@ -65,7 +66,7 @@
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
 import { useHtmlElementFromVNodes, useManagedProp } from '../use';
-import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount, type RendererElement } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 import PfFocusTrap, { type Props as PfFocusTrapProps } from '../helpers/FocusTrap.vue';
@@ -84,51 +85,38 @@ defineOptions({
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfFocusTrapProps, 'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby'> {
   /** Whether to trap focus in the popover */
   focusTrap?: boolean;
-
+  /** Element or selector where to render the floating menu */
+  appendTo?: 'inline' | string | RendererElement | null | undefined;
   /** Removes fixed-width and allows width to be defined by contents */
   autoWidth?: boolean;
-
   /** Allows content to touch edges of popover container */
   noPadding?: boolean;
-
   /** Whether to show the close button */
   showClose?: boolean;
-
   /**
    * If true, tries to keep the popover in view by flipping it if necessary.
    * Otherwise it uses an auto-placement strategy.
    */
   flip?: boolean;
-
   flipOptions?: FlipOptions;
-
   placementOptions?: AutoPlacementOptions;
-
   /** Hides the popover when a click occurs outside (only works if isVisible is not controlled by the user) */
   noHideOnOutsideClick?: boolean,
-
   /**
    * Popover position.
    * Notice: it will change the position if there is not enough space for the starting position.
    * The behavior of where it flips to can be controlled through the flip, flipOptions or placementOptions props.
    */
   position?: Placement;
-
   /** Minimum width of the popover (default 6.25rem) */
   minWidth?: string;
-
   /** Maximum width of the popover (default 18.75rem) */
   maxWidth?: string;
-
   /** CSS fade transition animation duration */
   animationDuration?: number;
-
   open?: boolean;
-
   closeBtnAriaLabel?: string;
-
   distance?: number;
-
   ariaLabel?: string;
 }
 
