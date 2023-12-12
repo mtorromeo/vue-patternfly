@@ -122,6 +122,8 @@ const props = withDefaults(defineProps<Props>(), {
   value: 0,
   min: 0,
   max: 100,
+  measureLocation: 'top',
+  tooltipPosition: 'top',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
