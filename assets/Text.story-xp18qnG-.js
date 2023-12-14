@@ -1,0 +1,27 @@
+import{f as d,r as m,a as s,o as u,c as f,w as t,b as a,d as e,t as x,e as o}from"./index-c2KwREIM.js";const h=o("b",null,"PfText",-1),_=o("b",null,"PfTextList",-1),v=o("b",null,"PfTextContent",-1),T=o("div",{class:"markdown pf-v5-c-content"},[o("h2",{class:"pf-v5-c-title"},"Examples")],-1),y=o("br",null,null,-1),w=d({__name:"Text.story",setup(g){const p=m("Title text");return(k,b)=>{const i=s("component-info"),n=s("pf-text"),c=s("story-canvas"),l=s("pf-text-content"),r=s("doc-page");return u(),f(r,{name:"Components/Text.story.vue",title:"Text"},{description:t(()=>[h,a(" and "),_,a(" components are always wrapped in "),v,a(" and provide correct formatting to a number of standard HTML tags.")]),apidocs:t(()=>[e(i,{src:"packages/core/src/components/Text/Text.vue",doc:{name:"PfText",exportName:"default",displayName:"Text",description:"",tags:{},props:[{name:"ouiaSafe",description:"Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.",required:!1,type:{name:"boolean"}},{name:"ouiaId",description:"Value to overwrite the randomly generated data-ouia-component-id.",required:!1,type:{name:"OuiaId"}},{name:"component",required:!1,type:{name:"TextVariants"},defaultValue:{func:!1,value:"'p'"}},{name:"visited",description:"Flag to indicate the link has visited styles applied if the browser determines the link has been visited",required:!1,type:{name:"boolean"}}],slots:[{name:"default"}],sourceFiles:["../../packages/core/src/components/Text/Text.vue"]}},null,8,["doc"]),e(i,{src:"packages/core/src/components/Text/TextContent.vue",doc:{name:"PfTextContent",exportName:"default",displayName:"TextContent",description:"",tags:{},props:[{name:"ouiaSafe",description:"Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.",required:!1,type:{name:"boolean"}},{name:"ouiaId",description:"Value to overwrite the randomly generated data-ouia-component-id.",required:!1,type:{name:"OuiaId"}},{name:"visited",description:"Flag to indicate the all links in a the content block have visited styles applied if the browser determines the link has been visited",required:!1,type:{name:"boolean"}}],slots:[{name:"default"}],sourceFiles:["../../packages/core/src/components/Text/TextContent.vue"]}},null,8,["doc"]),e(i,{src:"packages/core/src/components/Text/TextList.vue",doc:{name:"PfTextList",exportName:"default",displayName:"TextList",description:"",tags:{},props:[{name:"ouiaSafe",description:"Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.",required:!1,type:{name:"boolean"}},{name:"ouiaId",description:"Value to overwrite the randomly generated data-ouia-component-id.",required:!1,type:{name:"OuiaId"}},{name:"component",required:!1,type:{name:"TextListVariants"},defaultValue:{func:!1,value:"'ul'"}}],slots:[{name:"default"}],sourceFiles:["../../packages/core/src/components/Text/TextList.vue"]}},null,8,["doc"]),e(i,{src:"packages/core/src/components/Text/TextListItem.vue",doc:{name:"PfTextListItem",exportName:"default",displayName:"TextListItem",description:"",tags:{},props:[{name:"ouiaSafe",description:"Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.",required:!1,type:{name:"boolean"}},{name:"ouiaId",description:"Value to overwrite the randomly generated data-ouia-component-id.",required:!1,type:{name:"OuiaId"}},{name:"component",required:!1,type:{name:"TextListItemVariants"},defaultValue:{func:!1,value:"'li'"}}],slots:[{name:"default"}],sourceFiles:["../../packages/core/src/components/Text/TextListItem.vue"]}},null,8,["doc"])]),default:t(()=>[T,e(c,{title:"Text",source:"<pf-text>{{ sample_title }}</pf-text>"},{default:t(()=>[e(n,null,{default:t(()=>[a(x(p.value),1)]),_:1})]),_:1}),e(c,{title:"Text visited",source:`<pf-text-content>
+  <pf-text component="h3">Visited link example</pf-text>
+  <pf-text component="p">
+    <pf-text component="a" href="#">
+      Visited link
+    </pf-text>
+  </pf-text>
+</pf-text-content>
+<br>
+<pf-text-content visited>
+  <pf-text component="h3">Visited content example</pf-text>
+  <pf-text component="p">
+    <pf-text component="a" href="#">
+      content link 1
+    </pf-text>
+  </pf-text>
+  <pf-text component="p">
+    <pf-text component="a" href="#">
+      content link 2
+    </pf-text>
+  </pf-text>
+  <pf-text component="p">
+    <pf-text component="a" href="#">
+      content link 3
+    </pf-text>
+  </pf-text>
+</pf-text-content>`},{default:t(()=>[e(l,null,{default:t(()=>[e(n,{component:"h3"},{default:t(()=>[a("Visited link example")]),_:1}),e(n,{component:"p"},{default:t(()=>[e(n,{component:"a",href:"#"},{default:t(()=>[a(" Visited link ")]),_:1})]),_:1})]),_:1}),y,e(l,{visited:""},{default:t(()=>[e(n,{component:"h3"},{default:t(()=>[a("Visited content example")]),_:1}),e(n,{component:"p"},{default:t(()=>[e(n,{component:"a",href:"#"},{default:t(()=>[a(" content link 1 ")]),_:1})]),_:1}),e(n,{component:"p"},{default:t(()=>[e(n,{component:"a",href:"#"},{default:t(()=>[a(" content link 2 ")]),_:1})]),_:1}),e(n,{component:"p"},{default:t(()=>[e(n,{component:"a",href:"#"},{default:t(()=>[a(" content link 3 ")]),_:1})]),_:1})]),_:1})]),_:1})]),_:1},8,["name"])}}});export{w as default};
