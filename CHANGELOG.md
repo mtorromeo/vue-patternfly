@@ -1,6 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.18] - 2023-12-14
+
+### Bug Fixes
+
+- *(Table)* Removed unused prop hoverable from `pf-tr`
+- *(core)* Removed unassignable attributes from component definitions
+- Corrected capitalization of PatternFly
+- *(docs)* Fixed usage of non-existing value prop in pf-text-input story
+- *(JumpLinks)* Fixed refresh of link's text
+- *(Progress)* Changed default measure-location and tooltip-position to 'top'
+- *(Select)* Fixed default menu placement and added `placement` prop
+
+### Features
+
+- *(Table)* Added caption when table has selectable rows
+- Added ouia attributes for all components and changed the data-ouia-component-type prefix from V-PF4/ to PF/
+- *(Select, Pagination, Popover)* Added append-to prop to render the floating element in a custom document position
+- *(Tooltip)* Implemented focus, click and manual triggers
+
 ## [0.1.0-beta.17] - 2023-12-05
 
 ### Bug Fixes
