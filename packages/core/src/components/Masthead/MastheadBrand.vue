@@ -1,6 +1,5 @@
 <template>
   <component
-    v-bind="ouiaProps"
     :is="to ? 'router-link' : PassThrough"
     v-slot="routerCtx"
     :to="to"
@@ -8,6 +7,7 @@
     custom
   >
     <component
+      v-bind="{...ouiaProps, ...$attrs}"
       :is="component"
       :class="styles.mastheadBrand"
       :tabindex="component === 'a' ? 0 : undefined"
@@ -30,6 +30,7 @@ type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
 defineOptions({
   name: 'PfMastheadBrand',
+  inheritAttrs: false,
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
