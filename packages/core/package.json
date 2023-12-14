@@ -1,18 +1,19 @@
 {
   "name": "@vue-patternfly/core",
   "version": "0.1.0-beta.18",
+  "type": "module",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.js",
+      "import": "./dist/main.js",
+      "require": "./dist/main.cjs",
       "types": "./dist/main.d.ts"
     },
     "./*": {
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.js",
+      "import": "./dist/*.js",
+      "require": "./dist/*.cjs",
       "types": "./dist/*.d.ts"
     }
   },
@@ -23,7 +24,6 @@
     "build:vite": "vite build",
     "build:bundle": "vite build -c vite-bundle.config.ts",
     "build:declarations": "vue-tsc --declaration --emitDeclarationOnly && node scripts/build-global.mjs",
-    "build:cjs": "tsc --build --verbose tsconfig.cjs.json",
     "build:esm": "tsc --build --verbose tsconfig.json",
     "lint": "vue-tsc --noEmit",
     "watch": "concurrently 'npm:watch:*'",
