@@ -111,7 +111,7 @@ import { watchEffect, nextTick, onMounted, provide, computed, type InjectionKey,
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-import { useEventListener } from '@vueuse/core';
+import { isDefined, useEventListener } from '@vueuse/core';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 
 defineOptions({
@@ -155,7 +155,7 @@ if (!props.vertical) {
 }
 
 watchEffect(() => {
-  if ((!localActiveKey.value || !tabKeys.find(k => k.value === localActiveKey.value)) && tabKeys.length) {
+  if ((!isDefined(localActiveKey.value) || !tabKeys.find(k => k.value === localActiveKey.value)) && tabKeys.length) {
     localActiveKey.value = tabKeys[0].value;
   }
 });

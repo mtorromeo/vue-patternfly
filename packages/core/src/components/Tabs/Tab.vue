@@ -90,7 +90,8 @@ defineSlots<{
 }>();
 
 const instance = getCurrentInstance();
-const key = computed(() => instance?.vnode.key ?? Symbol());
+const fallbackKey = Symbol();
+const key = computed(() => instance?.vnode.key ?? fallbackKey);
 const tabs = inject(TabsProvideKey);
 
 useChildrenTracker(TabsKey, key);
