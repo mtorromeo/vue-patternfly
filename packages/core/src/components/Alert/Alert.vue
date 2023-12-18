@@ -71,7 +71,7 @@ import styles from '@patternfly/react-styles/css/components/Alert/alert';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 
 import PassThrough from '../../helpers/PassThrough.vue';
-import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
@@ -80,6 +80,7 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { ref, watch, type Ref, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
+import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
   name: 'PfAlert',
@@ -117,7 +118,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   /** Adds accessible text to the alert toggle. */
   toggleAriaLabel?: string;
   /** Position of the tooltip which is displayed if text is truncated. */
-  tooltipPosition?: TooltipPosition;
+  tooltipPosition?: Placement;
   /** Truncate title to number of lines. */
   truncateTitle?: number;
   /** Adds alert variant styles.  */

@@ -36,7 +36,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
 
   /** z-index of the dropdown menu */
   zIndex?: number;
-  placement?: 'top' | 'bottom' | Placement;
+  placement?: Placement;
 
   /** Variant of split button toggle */
   splitButton?: boolean | 'default' | 'action' | 'checkbox';
@@ -50,10 +50,9 @@ import { h, mergeProps, ref, type Ref, type VNode, computed, onMounted, onBefore
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
-import FloatingUi from '../../helpers/FloatingUi.vue';
+import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useManagedProp, useHtmlElementFromVNodes } from '../../use';
-import type { Placement } from '@floating-ui/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 let currentId = 0;

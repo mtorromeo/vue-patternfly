@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
-import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
@@ -31,6 +31,7 @@ import { useElementOverflow } from '../../use';
 import { ref } from 'vue';
 import type { HTMLAttributes, Ref } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
   name: 'PfNotificationDrawerListItem',
@@ -46,7 +47,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Truncate title to number of lines */
   truncateTitle?: number;
   /** Position of the tooltip which is displayed if text is truncated */
-  tooltipPosition?: TooltipPosition;
+  tooltipPosition?: Placement;
   /** Sets the heading level to use for the list item header title. Default is h2. */
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }

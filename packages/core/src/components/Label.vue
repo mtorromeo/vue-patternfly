@@ -36,9 +36,10 @@ import styles from '@patternfly/react-styles/css/components/Label/label';
 import { ref, type Ref, type ButtonHTMLAttributes, type VNode } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton.vue';
-import PfTooltip, { type TooltipPosition } from './Tooltip/Tooltip.vue';
+import PfTooltip from './Tooltip/Tooltip.vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import type { Placement } from '../helpers/FloatingUi.vue';
 
 const colorStyles = {
   blue: styles.modifiers.blue,
@@ -59,7 +60,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes
   /** The color of the label outline/fill */
   color?: 'blue' | 'cyan' | 'green' | 'orange' | 'purple' | 'red' | 'gold' | 'grey',
   variant?: 'outline' | 'filled';
-  tooltipPosition?: TooltipPosition;
+  tooltipPosition?: Placement;
   to?: RouteLocationRaw;
   href?: string;
   outline?: boolean;

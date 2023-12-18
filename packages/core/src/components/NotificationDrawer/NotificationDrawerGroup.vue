@@ -33,12 +33,13 @@
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_notification_drawer__group_toggle_title_max_lines';
 import type { HTMLAttributes } from 'vue';
-import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfBadge from '../Badge.vue';
 import { ref, type Ref } from 'vue';
 import { useElementOverflow, useManagedProp } from '../../use';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
   name: 'PfNotificationDrawerGroup',
@@ -58,7 +59,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Truncate title to number of lines */
   truncateTitle?: number;
   /** Position of the tooltip which is displayed if text is truncated */
-  tooltipPosition?: TooltipPosition;
+  tooltipPosition?: Placement;
   /** Sets the heading level to use for the group title. Default is h1. */
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }

@@ -42,10 +42,11 @@ import styles from '@patternfly/react-styles/css/components/Chip/chip-group';
 import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
 import PfChip from './Chip.vue';
 import PfButton from '../Button.vue';
-import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
 import { findChildrenVNodes, fillTemplate } from '../../util';
 import { useElementOverflow } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
   name: 'PfChipGroup',
@@ -57,7 +58,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   closable?: boolean;
   category?: string;
   numChips?: number;
-  tooltipPosition?: TooltipPosition;
+  tooltipPosition?: Placement;
   closeBtnAriaLabel?: string;
   ariaLabel?: string;
   expandedText?: string;

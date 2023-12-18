@@ -61,10 +61,11 @@ import styles from '@patternfly/react-styles/css/components/Chip/chip';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfButton from '../Button.vue';
-import PfTooltip, { type TooltipPosition } from '../Tooltip/Tooltip.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';
 import { useElementOverflow } from '../../use';
 import { type Component, computed, ref, type Ref, type HTMLAttributes } from 'vue';
+import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
   name: 'PfChip',
@@ -76,7 +77,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   readonly?: boolean;
   overflow?: boolean;
   component?: string | Component;
-  tooltipPosition?: TooltipPosition;
+  tooltipPosition?: Placement;
   closeBtnAriaLabel?: string;
   /** Css property expressed in percentage or any css unit that overrides the default value of the max-width of the chip's text */
   textMaxWidth?: string;

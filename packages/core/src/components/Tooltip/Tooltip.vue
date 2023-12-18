@@ -5,24 +5,26 @@
 
   <floating-ui
     v-if="$slots.content"
-    v-slot="{ placement: floatingPlacement }"
+    v-slot="{ placement }"
+    :teleport-to="appendTo"
     :reference="referenceElement"
-    :placement="placement"
-    :offset="distance"
+    :placement="position"
+    :offset="Number(distance)"
     :flip="flip"
+    :min-width="minWidth"
   >
     <div
+      v-if="tooltipDisplay"
       ref="tooltipElement"
       v-bind="{...ouiaProps, ...$attrs}"
-      :class="[styles.tooltip, positionModifiers[floatingPlacement]]"
+      :class="[styles.tooltip, positionModifiers[placement]]"
       :style="{
         maxWidth,
-        opacity: managedVisible ? 1 : 0,
-        transition: 'opacity 300ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s',
-        display: tooltipDisplay ? 'initial' : 'none',
+        opacity: opacity ? 1 : 0,
+        transition: `opacity ${animationDuration}ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s`,
       }"
       role="tooltip"
-      @transitionend="hide"
+      @transitionend="handleTransitionEnd"
     >
       <pf-tooltip-arrow />
       <pf-tooltip-content :left-aligned="leftAligned">
@@ -34,17 +36,15 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { type Ref, ref, watch, computed, onMounted, onUnmounted, type HTMLAttributes } from 'vue';
+import { type Ref, ref, watch, computed, onMounted, onUnmounted, type HTMLAttributes, type RendererElement } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow.vue';
 import PfTooltipContent from './TooltipContent.vue';
-import FloatingUi from '../../helpers/FloatingUi.vue';
+import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useHtmlElementFromVNodes, useManagedProp } from '../../use';
-import type { Placement } from '@floating-ui/core';
+import type { Placement as UIPlacement } from '@floating-ui/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-
-export type TooltipPosition = Placement | 'auto';
 
 defineOptions({
   name: 'PfTooltip',
@@ -52,7 +52,10 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'onTransitionend'> {
-  position?: TooltipPosition;
+  /** Element or selector where to render the floating menu */
+  appendTo?: 'inline' | string | RendererElement | null | undefined;
+  /** Tooltip position */
+  position?: Placement;
   /** A combination of the strings 'mouseenter', 'focus' and 'click' */
   trigger?: string;
   /** Flag to indicate that the text content is left aligned */
@@ -65,7 +68,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
    */
   exitDelay?: number;
   /** Distance of the tooltip to its target */
-  distance?: number;
+  distance?: number | string;
   /**
    * aria-labelledby or aria-describedby for tooltip.
    * The trigger will be cloned to add the aria attribute, and the corresponding id in the form of 'pf-tooltip-#' is added to the content container.
@@ -75,7 +78,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   /** CSS fade transition animation duration */
   animationDuration?: number;
   /** Minimum width of the tooltip. If set to "trigger", the minimum width will be set to the reference element width. */
-  minWidth?: string | 'trigger';
+  minWidth?: string | 'trigger' | 'auto';
   /** Maximum width of the tooltip */
   maxWidth?: number;
   /** Tooltip content */
@@ -92,15 +95,17 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 const props = withDefaults(defineProps<Props>(), {
   position: 'top',
   trigger: 'mouseenter focus',
-  entryDelay: 300,
+  entryDelay: 1000,
   exitDelay: 0,
   distance: 15,
   aria: 'describedby',
   animationDuration: 300,
   flip: true,
   visible: undefined,
+  ouiaSafe: true,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const safe = ref(!props.animationDuration);
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: computed(() => safe.value && props.ouiaSafe)});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -115,12 +120,15 @@ const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 const tooltipElement: Ref<HTMLElement | undefined> = ref();
 const tooltipDisplay = ref(false);
 const managedVisible = useManagedProp('visible', false);
+const opacity = ref(managedVisible.value);
+const showTimer = ref(0);
+const hideTimer = ref(0);
 
 const triggerMouseEnter = computed(() => props.trigger.split(' ').includes('mouseenter'));
 const triggerFocus = computed(() => props.trigger.split(' ').includes('focus'));
 const triggerClick = computed(() => props.trigger.split(' ').includes('click'));
 
-const positionModifiers: Record<Placement, string> = {
+const positionModifiers: Record<UIPlacement, string> = {
   top: styles.modifiers.top,
   bottom: styles.modifiers.bottom,
   left: styles.modifiers.left,
@@ -135,14 +143,17 @@ const positionModifiers: Record<Placement, string> = {
   'right-end': styles.modifiers.rightBottom,
 };
 
-// TODO: actual auto detect
-const placement = computed<Placement>(() => props.position === 'auto' ? 'top' : props.position);
-
-watch([tooltipElement, triggerClick, triggerFocus, triggerMouseEnter], hide);
+watch([tooltipElement, triggerClick, triggerFocus, triggerMouseEnter], transitionOutEnd);
 
 watch(managedVisible, () => {
+  safe.value = !props.animationDuration;
+  opacity.value = safe.value;
+
   if (managedVisible.value) {
     tooltipDisplay.value = true;
+    if (!opacity.value) {
+      setTimeout(() => (opacity.value = true), 0);
+    }
   }
 });
 
@@ -163,6 +174,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  clearTimeout(showTimer.value);
+  clearTimeout(hideTimer.value);
   document.removeEventListener('click', handleClick);
   referenceElement.value?.addEventListener('mouseenter', handleMouseEnter);
   referenceElement.value?.addEventListener('mouseleave', handleMouseLeave);
@@ -172,41 +185,70 @@ onUnmounted(() => {
 
 function handleClick(e: MouseEvent) {
   if (triggerClick.value) {
-    managedVisible.value = e.target === referenceElement.value;
+    if (e.target === referenceElement.value) {
+      show(false);
+    } else {
+      hide(false);
+    }
   }
 }
 
 function handleFocus() {
   if (triggerFocus.value) {
-    managedVisible.value = true;
+    show();
   }
 }
 
 function handleBlur() {
   if (triggerFocus.value) {
-    managedVisible.value = false;
+    hide();
   }
 }
 
 function handleMouseEnter() {
   if (triggerMouseEnter.value) {
-    managedVisible.value = true;
+    show();
   }
 }
 
 function handleMouseLeave() {
   if (triggerMouseEnter.value) {
+    hide();
+  }
+}
+
+function show(delay?: boolean) {
+  clearTimeout(hideTimer.value);
+  if (delay === undefined || delay) {
+    showTimer.value = setTimeout(() => (managedVisible.value = true), props.entryDelay);
+  } else {
+    managedVisible.value = true;
+  }
+}
+
+function hide(delay?: boolean) {
+  clearTimeout(showTimer.value);
+  if (delay === undefined || delay) {
+    hideTimer.value = setTimeout(() => (managedVisible.value = false), props.exitDelay);
+  } else {
     managedVisible.value = false;
   }
 }
 
-function hide() {
+function transitionOutEnd() {
   if (!managedVisible.value) {
     tooltipDisplay.value = false;
   }
 }
 
+function handleTransitionEnd() {
+  safe.value = true;
+  transitionOutEnd();
+}
+
 defineExpose({
   el: tooltipElement,
+  show,
+  hide,
 });
 </script>

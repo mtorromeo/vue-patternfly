@@ -1,5 +1,5 @@
 import { autoUpdate, computePosition, type ReferenceElement } from "@floating-ui/dom";
-import { onBeforeUnmount, reactive, toValue, unref, watch, type MaybeRef } from "vue";
+import { onBeforeUnmount, reactive, toValue, watch, type MaybeRef } from "vue";
 
 export type FloatingOptions = Parameters<typeof computePosition>[2];
 
@@ -22,7 +22,7 @@ export function useFloatingUI(reference: MaybeRef<ReferenceElement | null | unde
     Object.assign(floatingData, defaultFloatingData);
     if (referenceElement && floatingElement) {
       cleanup = autoUpdate(referenceElement, floatingElement, async() => {
-        const data = await computePosition(referenceElement, floatingElement, unref(options) as FloatingOptions);
+        const data = await computePosition(referenceElement, floatingElement, toValue(options));
         Object.assign(floatingData, data);
       });
     }

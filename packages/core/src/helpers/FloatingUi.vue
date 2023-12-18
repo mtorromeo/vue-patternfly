@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { flip as uiFlip, size, type Middleware, type Placement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
+import { flip as uiFlip, autoPlacement, size, type Middleware, type Placement as UIPlacement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
 import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
 import type { ReferenceElement } from '@floating-ui/dom';
@@ -14,6 +14,8 @@ defineOptions({
   name: 'PfFloatingUi',
   inheritAttrs: false,
 });
+
+export type Placement = UIPlacement |'auto';
 
 export interface Props {
   reference: string | ReferenceElement | undefined;
@@ -59,7 +61,11 @@ const htmlElement: Ref<HTMLElement | undefined> = ref();
 const floatingOptions = computed<FloatingOptions>(() => {
   const middleware: Middleware[] = [...props.middleware];
 
-  if (props.flip) {
+  const placement = props.placement === 'auto' ? undefined : props.placement;
+
+  if (props.placement === 'auto') {
+    middleware.push(autoPlacement());
+  } else if (props.flip) {
     middleware.push(uiFlip());
   }
 
@@ -87,14 +93,14 @@ const floatingOptions = computed<FloatingOptions>(() => {
 
   return {
     strategy: props.strategy,
-    placement: props.placement,
+    placement,
     middleware,
   };
 });
 
 const ui = useFloatingUI(referenceElement, htmlElement, floatingOptions);
 
-const floatingElement = () => {
+function floatingElement() {
   if (props.disable) {
     return () => slots.default?.(ui);
   }
@@ -124,5 +130,5 @@ const floatingElement = () => {
   }), [
     [{mounted: onElementMounted}],
   ]);
-};
+}
 </script>
