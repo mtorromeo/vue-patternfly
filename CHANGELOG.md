@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.19] - 2023-12-18
+
+### Bug Fixes
+
+- *(Masthead)* Applied ouia attributes to the correct node
+
+### Features
+
+- *(Tooltip)* Implemented position=auto, append-to, min-width, exit-delay, entry-delay, animation-duration props
+
 ## [0.1.0-beta.18] - 2023-12-14
 
 ### Bug Fixes
