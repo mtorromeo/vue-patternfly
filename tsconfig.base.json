@@ -2,6 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "assumeChangesOnlyAffectDirectDependencies": true,
+    "noEmit": false,
     "lib": [
       "ES2021",
       "DOM",

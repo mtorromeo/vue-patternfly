@@ -27,7 +27,7 @@
 
       Install the library with the package management tool of your choice:
 
-      ```sh
+      ```
       # @vue-patternfly/icons and @vue-patternfly/table are optional
       npm install --save @vue-patternfly/core @vue-patternfly/icons @vue-patternfly/table
       # or
