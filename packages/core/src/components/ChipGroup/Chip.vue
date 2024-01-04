@@ -91,7 +91,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'click', e: PointerEvent): void;
 }>();
 
 defineSlots<{

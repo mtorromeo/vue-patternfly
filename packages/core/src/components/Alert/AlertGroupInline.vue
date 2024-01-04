@@ -10,7 +10,7 @@
     <render-children />
 
     <li v-if="overflowMessage">
-      <button :class="styles.alertGroupOverflowButton" @click="emit('overflow-click', $event)">
+      <button :class="styles.alertGroupOverflowButton" @click="emit('overflow-click', $event as PointerEvent)">
         {{ overflowMessage }}
       </button>
     </li>
@@ -37,7 +37,7 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'overflow-click', e: MouseEvent | TouchEvent): void;
+  (name: 'overflow-click', e: PointerEvent): void;
 }>();
 
 const slots = defineSlots<{

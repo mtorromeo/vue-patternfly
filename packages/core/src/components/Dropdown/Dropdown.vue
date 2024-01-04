@@ -150,7 +150,7 @@ function onKeydown(e: KeyboardEvent) {
   }
 }
 
-const handleClick = (event: MouseEvent) => {
+const handleClick = (event: PointerEvent) => {
   if (!managedOpen.value) {
     return;
   }
@@ -172,10 +172,10 @@ const handleClick = (event: MouseEvent) => {
 };
 
 onMounted(() => {
-  window.addEventListener('click', handleClick);
+  window.addEventListener('click', handleClick as (e: MouseEvent) => void);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('click', handleClick);
+  window.removeEventListener('click', handleClick as (e: MouseEvent) => void);
 });
 </script>

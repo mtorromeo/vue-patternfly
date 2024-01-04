@@ -213,16 +213,16 @@ watch(visible, (open) => {
 });
 
 onMounted(() => {
-  document.addEventListener('click', onDocumentClick);
+  document.addEventListener('click', onDocumentClick as (e: MouseEvent) => void);
   document.addEventListener('keydown', onEscPress, { capture: true });
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener('click', onDocumentClick);
+  document.removeEventListener('click', onDocumentClick as (e: MouseEvent) => void);
   document.removeEventListener('keydown', onEscPress, { capture: true });
 });
 
-function onDocumentClick(event: MouseEvent | TouchEvent) {
+function onDocumentClick(event: PointerEvent) {
   if (props.noHideOnOutsideClick || !visible.value) {
     return;
   }

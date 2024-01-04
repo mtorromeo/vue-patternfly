@@ -28,7 +28,7 @@
         aria-valuemin="0"
         aria-valuemax="100"
         :aria-controls="panelId"
-        @mousedown="handleMouseDown"
+        @mousedown="handleMouseDown($event as PointerEvent)"
         @keydown="handleKeys"
         @touchstart="handleTouchStart"
       >
@@ -161,18 +161,19 @@ function handleTouchStart(e: TouchEvent) {
   isResizing = true;
 }
 
-function handleMouseDown(e: MouseEvent) {
+function handleMouseDown(e: PointerEvent) {
   e.stopPropagation();
   e.preventDefault();
-  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mousemove', handleMouseMove as (e: MouseEvent) => void);
   document.addEventListener('mouseup', handleMouseUp);
   drawerRef.value?.classList.add(styles.modifiers.resizing);
   isResizing = true;
   setInitialVals = true;
 }
 
-function handleMouseMove(e: MouseEvent) {
-  const mousePos = position.value === 'bottom' ? e.clientY : e.clientX;
+function handleMouseMove(e: PointerEvent | TouchEvent) {
+  const touch = e instanceof PointerEvent ? e : e.touches[0];
+  const mousePos = position.value === 'bottom' ? touch.clientY : touch.clientX;
   handleControlMove(e, mousePos);
 }
 
@@ -183,7 +184,7 @@ function handleTouchMove(e: TouchEvent) {
   handleControlMove(e, touchPos);
 }
 
-function handleControlMove(e: MouseEvent | TouchEvent, mousePos: number) {
+function handleControlMove(e: PointerEvent | TouchEvent, mousePos: number) {
   e.stopPropagation();
   if (!isResizing || !panel.value) {
     return;
@@ -214,7 +215,7 @@ function handleMouseUp() {
   isResizing = false;
   emit('resize', panelSize.value ?? 0, props.id);
   setInitialVals = true;
-  document.removeEventListener('mousemove', handleMouseMove);
+  document.removeEventListener('mousemove', handleMouseMove as (e: MouseEvent) => void);
   document.removeEventListener('mouseup', handleMouseUp);
 }
 

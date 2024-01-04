@@ -170,20 +170,20 @@ watch(referenceElement, (el, oldEl) => {
 });
 
 onMounted(() => {
-  document.addEventListener('click', handleClick);
+  document.addEventListener('click', handleClick as (e: MouseEvent) => void);
 });
 
 onUnmounted(() => {
   clearTimeout(showTimer.value);
   clearTimeout(hideTimer.value);
-  document.removeEventListener('click', handleClick);
+  document.removeEventListener('click', handleClick as (e: MouseEvent) => void);
   referenceElement.value?.addEventListener('mouseenter', handleMouseEnter);
   referenceElement.value?.addEventListener('mouseleave', handleMouseLeave);
   referenceElement.value?.removeEventListener('focus', handleFocus);
   referenceElement.value?.removeEventListener('blur', handleBlur);
 });
 
-function handleClick(e: MouseEvent) {
+function handleClick(e: PointerEvent) {
   if (triggerClick.value) {
     if (e.target === referenceElement.value) {
       show(false);

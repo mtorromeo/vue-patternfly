@@ -58,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'click', e: PointerEvent): void;
 }>();
 
 defineSlots<{
@@ -69,7 +69,7 @@ const instanceId = Symbol();
 const listValue = inject(SimpleListValueKey, undefined);
 const current = computed(() => listValue?.value === (props.value ?? instanceId));
 
-function onClick(e: MouseEvent | TouchEvent) {
+function onClick(e: PointerEvent) {
   emit('click', e);
   if (listValue) {
     listValue.value = props.value ?? instanceId;

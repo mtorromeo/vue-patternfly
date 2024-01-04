@@ -129,7 +129,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'click', e: PointerEvent): void;
 }>();
 
 defineSlots<{
@@ -165,7 +165,7 @@ const tabIdx = computed(() => {
   return null;
 });
 
-function onClick(e: MouseEvent | TouchEvent, navigate: RouterLinkContext['navigate'] | undefined) {
+function onClick(e: PointerEvent, navigate: RouterLinkContext['navigate'] | undefined) {
   if (effectiveDisabled.value) {
     e.preventDefault();
     return;

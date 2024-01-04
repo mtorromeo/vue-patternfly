@@ -133,8 +133,6 @@ const emit = defineEmits<{
   (name: 'previous-click', page: number): void;
   (name: 'next-click', page: number): void;
   (name: 'last-click', page: number): void;
-  // (name: 'keydown', e: MouseEvent | TouchEvent): void;
-  // (name: 'change', e: MouseEvent | TouchEvent): void;
   (name: 'set-page', newPage: number, perPage: number, startIdx: number, endIdx: number): void;
 }>();
 

@@ -19,7 +19,7 @@
         :class="[styles.progressDescription, {
           [styles.modifiers.truncate]: titleTruncated,
         }]"
-        @mouseenter="checkTooltip"
+        @mouseenter="checkTooltip($event as PointerEvent)"
       >{{ title }}</div>
       <template v-if="tooltip" #content>{{ tooltip }}</template>
     </component>
@@ -152,7 +152,7 @@ const variantIcon = computed(() => {
   return null;
 });
 
-function checkTooltip(e: MouseEvent) {
+function checkTooltip(e: PointerEvent) {
   if (!(e.currentTarget instanceof HTMLElement)) {
     return;
   }

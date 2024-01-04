@@ -7,7 +7,7 @@
       :aria-pressed="effectiveSelected"
       :aria-label="ariaLabel"
       :disabled="disabled ?? injectedDisabled"
-      @click="onClick"
+      @click="onClick?.($event as PointerEvent)"
     >
       <span v-if="$slots.icon" :class="styles.toggleGroupIcon">
         <slot name="icon" />
@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<Props<T>>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'click', e: PointerEvent): void;
   (name: 'update:selected', value: boolean): void;
 }>();
 
@@ -124,7 +124,7 @@ const effectiveSelected = computed({
   },
 });
 
-function onClick(e: MouseEvent | TouchEvent) {
+function onClick(e: PointerEvent) {
   emit('click', e);
   effectiveSelected.value = !effectiveSelected.value;
 }

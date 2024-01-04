@@ -252,7 +252,7 @@ function showFlyout(show: boolean) {
 
 const randomId = getUniqueId();
 
-function onClick(event: MouseEvent) {
+function onClick(event: PointerEvent) {
   onItemSelect(event);
 
   // if (itemId.value) {
@@ -279,7 +279,7 @@ function onItemSelect(event: Event) {
   emit('click', event);
 }
 
-function handleFlyout(event: KeyboardEvent | MouseEvent) {
+function handleFlyout(event: PointerEvent | KeyboardEvent) {
   const key = (event as KeyboardEvent).key;
   const target = event.target;
   const type = event.type;

@@ -113,7 +113,7 @@ const handleMenuKeys = (event: KeyboardEvent) => {
   }
 };
 
-const handleClick = (event: MouseEvent) => {
+const handleClick = (event: PointerEvent) => {
   // toggle was clicked open via keyboard, focus on first menu item
   if (managedOpen.value && toggleRef.value?.contains(event.target as Node) && event.detail === 0) {
     nextTick(() => {

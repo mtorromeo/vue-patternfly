@@ -76,8 +76,8 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'click', e: MouseEvent | TouchEvent): void;
-  (name: 'overflow-chip-click', e: MouseEvent | TouchEvent): void;
+  (name: 'click', e: PointerEvent): void;
+  (name: 'overflow-chip-click', e: PointerEvent): void;
 }>();
 
 const slots = defineSlots<{
@@ -88,7 +88,7 @@ const labelRef: Ref<HTMLSpanElement | undefined> = ref();
 const labelOverflowing = useElementOverflow(labelRef);
 const open = ref(props.defaultOpen);
 
-function overflowChipClick(e: MouseEvent | TouchEvent) {
+function overflowChipClick(e: PointerEvent) {
   toggleCollapse();
   emit('overflow-chip-click', e);
 }
@@ -112,7 +112,7 @@ function render() {
       h(PfChip, {
         component: 'button',
         overflow: true,
-        onClick: overflowChipClick,
+        onClick: overflowChipClick as (e: MouseEvent) => void,
       },
         () => open.value ? props.expandedText : collapsedTextResult,
       ),

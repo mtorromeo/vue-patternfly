@@ -14,7 +14,7 @@
     :hidden="isHidden"
     :tabindex="clickable ? 0 : ($attrs.tabindex as any)"
     :aria-label="ariaLabel"
-    @click="onClick"
+    @click="onClick?.($event as PointerEvent)"
     @keydown="onKeyDown"
   >
     <slot />
@@ -64,7 +64,7 @@ import inlineStyles from '@patternfly/react-styles/css/components/InlineEdit/inl
 import { useChildrenTracker } from "@vue-patternfly/core";
 import { TableTrKey } from "./common";
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
   /** Flag indicating the Tr is hidden */
   hidden?: boolean;
   /** Only applicable to Tr within the Tbody: Makes the row expandable and determines if it's expanded or not.
@@ -87,6 +87,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   resetOffset?: boolean;
   ariaLabel?: string;
   /** An event handler for the row */
-  onClick?: (event?: KeyboardEvent | MouseEvent) => void;
+  onClick?: (event?: PointerEvent | KeyboardEvent) => void;
 }
 </script>

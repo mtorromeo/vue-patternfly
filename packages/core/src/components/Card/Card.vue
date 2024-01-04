@@ -100,7 +100,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'click', e: MouseEvent | TouchEvent): void;
+  (name: 'click', e: PointerEvent): void;
   (name: 'change', e: Event): void;
   (name: 'update:expanded', value: boolean): void;
   (name: 'update:selected', value: boolean): void;
@@ -130,7 +130,7 @@ const selectableModifiers = computed(() => {
   return [];
 });
 
-function onClick(e: MouseEvent | TouchEvent)  {
+function onClick(e: PointerEvent)  {
   managedSelected.value = !managedSelected.value;
   emit('click', e);
 }

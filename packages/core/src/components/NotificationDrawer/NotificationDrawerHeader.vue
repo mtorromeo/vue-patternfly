@@ -11,7 +11,7 @@
     <div v-if="$slots.default || onClose" :class="styles.notificationDrawerHeaderAction">
       <slot />
       <div v-if="onClose">
-        <pf-close-button @close="onClose" />
+        <pf-close-button @click="onClose" />
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer heading custom text which can be used instead of providing count/unreadText */
   customText?: string;
   /**  Callback for when close button is clicked */
-  onClose?: (event: KeyboardEvent | MouseEvent | TouchEvent) => void;
+  onClose?: (event: PointerEvent) => void;
   /**  Notification drawer heading title */
   title?: string;
   /**  Notification drawer heading unread text used in combination with a count */

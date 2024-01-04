@@ -1,5 +1,5 @@
 <template>
-  <pf-button v-bind="ouiaProps" variant="plain" aria-label="Close" @click="emit('click', $event)">
+  <pf-button v-bind="ouiaProps" variant="plain" aria-label="Close">
     <xmark-icon />
   </pf-button>
 </template>
@@ -14,13 +14,9 @@ defineOptions({
   name: 'PfCloseButton',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick' | 'variant' | 'aria-label'> {
+export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'aria-label'> {
 }
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
-
-const emit = defineEmits<{
-  (name: 'click', e: Event): void;
-}>();
 </script>
