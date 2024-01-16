@@ -14,6 +14,10 @@
         [styles.modifiers.error]: effectiveValidated === 'error',
       },
     ]"
+    :style="{
+      maxHeight,
+      maxWidth,
+    }"
   >
     <textarea
       ref="input"
@@ -79,6 +83,12 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAtt
   validated?: 'success' | 'warning' | 'error' | 'default';
 
   autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
+
+  /** Maximum height */
+  maxHeight?: string;
+
+  /** Maximum width */
+  maxWidth?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
