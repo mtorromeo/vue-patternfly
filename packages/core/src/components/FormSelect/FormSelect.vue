@@ -34,7 +34,7 @@ export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTr
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
   /** @model */
-  modelValue?: string;
+  modelValue?: string | null;
 
   disabled?: boolean;
 

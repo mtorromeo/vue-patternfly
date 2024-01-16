@@ -140,7 +140,7 @@ export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInp
 
 export interface Props extends OUIAProps {
   /** Value of the search input. */
-  modelValue?: string;
+  modelValue?: string | null;
   /** Flag indicating if search input is disabled. */
   disabled?: boolean;
   /** An accessible label for the search input. */
@@ -203,7 +203,7 @@ export interface Props extends OUIAProps {
    * append-to="body"
    * append-to="#element-id"
    */
-  appendTo?: 'inline' | string | RendererElement | null | undefined;
+  appendTo?: 'inline' | string | RendererElement | null;
 
   /** A callback for when the user clicks the clear button. */
   onClear?: (event: Event) => void;

@@ -1,33 +1,7 @@
-import { computed, getCurrentInstance, type PropType, ref, unref, watch, type MaybeRef, type Ref } from "vue";
+import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref } from "vue";
 import { useManagedProp } from "./use";
 
 export type InputValidateState = 'success' | 'warning' | 'error' | 'default';
-
-export const inputProps = {
-  /** @model */
-  modelValue: {
-    type: [String, Number],
-  },
-
-  /**
-   * @values blur, input, change, enter
-   */
-  autoValidate: {
-    type: [String, Boolean] as PropType<'' | 'blur' | 'input' | 'change' | 'enter' | boolean>,
-    default: 'change',
-    validator: (v: any) => typeof v === 'boolean' || ['', 'blur', 'input', 'change', 'enter'].includes(v),
-  },
-
-  /** Value to indicate if the textarea is modified to show that validation state.
-   * If set to success, textarea will be modified to indicate valid state.
-   * If set to error, textarea will be modified to indicate error state.
-   * @values default, success, warning, error
-   */
-  validated: {
-    type: String as PropType<InputValidateState | null>,
-    validator: (v: any) => [null, 'default', 'success', 'warning', 'error'].includes(v),
-  },
-};
 
 export function useInputValidation({
   autoValidate,

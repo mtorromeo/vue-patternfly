@@ -79,7 +79,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
     | 'url'
     | 'week';
   /** Value of the text input. */
-  modelValue?: string | number;
+  modelValue?: string | number | null;
   /** Aria-label. The text input requires an associated id or aria-label. */
   ariaLabel?: string;
   /** Trim text at start */
@@ -101,8 +101,8 @@ defineEmits<{
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
-  (name: 'update:modelValue'): void;
-  (name: 'update:validated'): void;
+  (name: 'update:modelValue', value: string): void;
+  (name: 'update:validated', value: InputValidateState): void;
 }>();
 
 defineSlots<{

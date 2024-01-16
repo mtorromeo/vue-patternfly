@@ -70,7 +70,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAtt
   pattern?: string | RegExp;
 
   /** Value of the text area. */
-  modelValue?: string | number;
+  modelValue?: string | number | null;
 
   /** Value to indicate if the text area is modified to show that validation state.
    * If set to success, text area will be modified to indicate valid state.

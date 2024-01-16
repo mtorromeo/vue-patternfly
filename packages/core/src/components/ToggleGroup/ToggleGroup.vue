@@ -15,13 +15,13 @@ export interface Props<T> extends OUIAProps {
   /** Disable all toggle group items under this component. */
   disabled?: boolean;
 
-  modelValue?: T;
+  modelValue?: T | null;
 }
 
 import { PfToggleGroup, PfToggleGroupItem } from '.';
 
 export function useSingleToggleGroup<T>() {
-  return [PfToggleGroup<T | undefined>, PfToggleGroupItem<T>];
+  return [PfToggleGroup<T | undefined | null>, PfToggleGroupItem<T>];
 }
 
 export function useMultiToggleGroup<T>() {
@@ -52,6 +52,6 @@ defineSlots<{
 
 provide(ToggleGroupDisabledKey, computed(() => props.disabled));
 
-const value = useManagedProp<T | undefined>('modelValue', undefined);
+const value = useManagedProp<T | null>('modelValue', null);
 provide(ToggleGroupSelectionKey, value);
 </script>

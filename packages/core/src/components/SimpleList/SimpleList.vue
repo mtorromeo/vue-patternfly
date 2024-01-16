@@ -12,14 +12,14 @@
 </template>
 
 <script lang="ts">
-export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<WritableComputedRef<string | number | boolean | object | symbol | null>>;
+export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<WritableComputedRef<string | number | boolean | object | symbol | undefined | null>>;
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**
    * value of the selected item
    * @model
    */
-  modelValue?: string | number | boolean | object,
+  modelValue?: string | number | boolean | object | null,
 
   /** Form element name */
   name?: string,
@@ -50,7 +50,11 @@ const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const value = useManagedProp('modelValue', null);
+defineEmits<{
+  (name: 'update:modelValue', value: string | number | boolean | object): void;
+}>();
+
+const value = useManagedProp<string | number | boolean | object | null>('modelValue', null);
 const grouped = ref(false);
 provide(SimpleListValueKey, value);
 

@@ -64,7 +64,7 @@ defineOptions({
 
 export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfPanel>, 'variant'> {
   /** Value of the search input. */
-  modelValue?: string;
+  modelValue?: string | null;
   /** Flag for toggling the open/close state of the advanced search menu. */
   searchMenuOpen?: boolean;
   /** Label for the button which resets the advanced search form and clears the search input. */

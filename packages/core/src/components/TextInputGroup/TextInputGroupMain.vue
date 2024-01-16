@@ -48,7 +48,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ InputHTMLAttributes 
   /** Suggestion that will show up like a placeholder even with text in the input */
   hint?: string;
   /** Value for the input */
-  modelValue?: string | number;
+  modelValue?: string | number | null;
 }
 
 const props = defineProps<Props>();
