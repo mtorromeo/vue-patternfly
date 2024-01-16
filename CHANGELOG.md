@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.20] - 2024-01-16
+
+### Bug Fixes
+
+- *(Tabs)* Fixed activation of tabs with keys that are defined but falsy
+- *(NotificationDrawer)* Fixed @close event handler
+- Allowed null modelValues for all form inputs
+
+### Features
+
+- *(Textarea)* Added maxHeight and maxWidth props
+
 ## [0.1.0-beta.19] - 2023-12-18
 
 ### Bug Fixes
