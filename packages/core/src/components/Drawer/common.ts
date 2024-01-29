@@ -9,8 +9,8 @@ export enum DrawerColorVariant {
 export type DrawerProvide = {
   el: Ref<HTMLDivElement | undefined>;
   expanded: ComputedRef<boolean>;
+  display: Ref<boolean>;
   inline: ComputedRef<boolean>;
-  static: ComputedRef<boolean>;
   position: ComputedRef<'left' | 'right' | 'bottom'>;
 }
 

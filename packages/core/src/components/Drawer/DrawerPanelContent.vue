@@ -9,12 +9,13 @@
       [styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200,
     }]"
     :style="{
+      display: display ? 'inherit' : 'none',
       '--pf-v5-c-drawer__panel--md--FlexBasis': isDefined(panelSize) ? `${panelSize}px` : defaultSize,
       '--pf-v5-c-drawer__panel--md--FlexBasis--min': minSize,
       '--pf-v5-c-drawer__panel--md--FlexBasis--max': maxSize,
       overflowAnchor: position === 'bottom' ? 'none' : undefined,
     }"
-    :hidden="hidden"
+    :hidden="!expanded"
   >
     <template v-if="resizable">
       <div
@@ -45,7 +46,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, inject, type Ref, ref, unref, type HTMLAttributes } from 'vue';
+import { computed, inject, type Ref, ref, type HTMLAttributes } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';
@@ -109,9 +110,8 @@ if (!drawerProvide) {
   throw new Error('DrawerPanelContent can only be used inside Drawer components');
 }
 
-const { el: drawerRef, position, expanded, inline, static: isStatic } = drawerProvide;
+const { el: drawerRef, position, expanded, display, inline } = drawerProvide;
 const drawerContentRef = inject(DrawerContentRefKey);
-const hidden = computed(() => unref(isStatic) || !unref(expanded));
 const splitterRef: Ref<HTMLDivElement | undefined> = ref();
 
 let isResizing: boolean | null = null;

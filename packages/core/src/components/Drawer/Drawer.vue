@@ -3,12 +3,13 @@
     v-bind="ouiaProps"
     ref="el"
     :class="[styles.drawer, {
-      [styles.modifiers.expanded]: expanded,
+      [styles.modifiers.expanded]: expandedClass,
       [styles.modifiers.inline]: inline,
       [styles.modifiers.static]: static,
       [styles.modifiers.panelLeft]: position === 'left',
       [styles.modifiers.panelBottom]: position === 'bottom',
     }]"
+    @animationend="display = isOpen"
   >
     <auto-wrap :component="PfDrawerContent" :exclude="PfDrawerSection">
       <slot />
@@ -18,7 +19,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, provide, type Ref, ref, type HTMLAttributes } from 'vue';
+import { computed, provide, type Ref, ref, type HTMLAttributes, watch } from 'vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import { DrawerKey } from './common';
 import PfDrawerContent from './DrawerContent.vue';
@@ -50,12 +51,24 @@ defineSlots<{
 }>();
 
 const el: Ref<HTMLDivElement | undefined> = ref();
+const display = ref(props.static || props.expanded);
+const expandedClass = ref(props.expanded);
+const isOpen = computed(() => props.static || props.expanded);
 
 provide(DrawerKey, {
   el,
-  expanded: computed(() => props.expanded),
+  expanded: isOpen,
+  display,
   inline: computed(() => props.inline),
-  static: computed(() => props.static),
   position: computed(() => props.position),
+});
+
+watch(isOpen, expanded => {
+  if (expanded) {
+    display.value = true;
+    setTimeout(() => (expandedClass.value = true), 50);
+  } else {
+    expandedClass.value = false;
+  }
 });
 </script>
