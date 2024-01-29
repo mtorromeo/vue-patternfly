@@ -14,9 +14,8 @@
     <select
       ref="input"
       v-bind="$attrs"
+      v-model="value"
       :disabled="disabled || undefined"
-      :value="value"
-      @change="handleChange($event as InputEvent)"
     >
       <slot />
     </select>
@@ -65,9 +64,8 @@ defineOptions({
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const emit = defineEmits<{
+defineEmits<{
   (name: 'update:modelValue', value: string): void;
-  (name: 'change', event: InputEvent): void;
 }>();
 
 defineSlots<{
@@ -84,11 +82,6 @@ const selectedOption = computed(() => {
 });
 
 const selectedPlaceholder = computed(() => selectedOption.value?.placeholder);
-
-function handleChange(e: InputEvent) {
-  value.value = (e.currentTarget as HTMLSelectElement).value;
-  emit('change', e);
-}
 
 defineExpose({
   input,
