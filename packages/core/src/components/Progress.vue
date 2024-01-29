@@ -26,7 +26,7 @@
 
     <div :class="styles.progressStatus" aria-hidden="true">
       <span v-if="measureLocation && ['top', 'outside'].includes(measureLocation)" :class="styles.progressMeasure">
-        <slot>{{ label || `${value}%` }}</slot>
+        <slot>{{ label || `${scaledValue}%` }}</slot>
       </span>
 
       <span v-if="variantIcon !== null" :class="styles.progressStatusIcon">
