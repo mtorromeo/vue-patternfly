@@ -13,10 +13,12 @@
       },
     ]"
   >
-    <div v-if="variant === 'top'" :class="styles.paginationTotalItems">
-      <b>{{ firstIndex }} - {{ lastIndex }}</b> of
-      <b>{{ count }}</b>
-      {{ titleItems }}
+    <div v-if="variant === 'top' || $slots.total" :class="styles.paginationTotalItems">
+      <slot name="total" :first-index="firstIndex" :last-index="lastIndex" :count="count" :title-items="titleItems">
+        <b>{{ firstIndex }} - {{ lastIndex }}</b> of
+        <b>{{ count }}</b>
+        {{ titleItems }}
+      </slot>
     </div>
 
     <pf-pagination-options-menu
@@ -138,6 +140,7 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
+  total?: (props?: Record<never, never>) => any;
 }>();
 
 const emit = defineEmits<{
