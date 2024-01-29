@@ -140,7 +140,12 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
-  total?: (props?: Record<never, never>) => any;
+  total?: (props?: {
+    firstIndex: number;
+    lastIndex: number;
+    count: number;
+    titleItems?: string;
+  }) => any;
 }>();
 
 const emit = defineEmits<{
