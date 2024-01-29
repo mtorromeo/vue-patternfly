@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.21] - 2024-01-29
+
+### Bug Fixes
+
+- *(Progress)* Use scaledValue for fallback percentage label
+- *(Drawer)* Applied display none after close animation to avoid rare layout issues
+- *(Drawer)* Fixed TouchEvent undefined error
+- *(FormSelect)* Inherit v-model behavior from native select
+
+### Features
+
+- *(Pagination)* Added "total" slot for displaying custom pagination total items informations
+
 ## [0.1.0-beta.20] - 2024-01-16
 
 ### Bug Fixes
