@@ -171,9 +171,8 @@ function handleMouseDown(e: PointerEvent) {
   setInitialVals = true;
 }
 
-function handleMouseMove(e: PointerEvent | TouchEvent) {
-  const touch = e instanceof TouchEvent ? e.touches[0] : e;
-  const mousePos = position.value === 'bottom' ? touch.clientY : touch.clientX;
+function handleMouseMove(e: PointerEvent) {
+  const mousePos = position.value === 'bottom' ? e.clientY : e.clientX;
   handleControlMove(e, mousePos);
 }
 
