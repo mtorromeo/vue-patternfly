@@ -156,7 +156,7 @@ let timer: number | undefined = undefined;
 let animationTimer: number | undefined = undefined;
 const isMouseOver = ref(false);
 const timedOut = ref(false);
-const timedOutAnimation = ref(false);
+const timedOutAnimation = ref(true);
 const containsFocus = ref(false);
 const el: Ref<HTMLDivElement | null> = ref(null);
 
@@ -186,8 +186,11 @@ onMounted(() => {
   document.addEventListener('focus', onDocumentFocus, true);
 
   watch(() => [containsFocus.value, isMouseOver.value], () => {
-    if (!containsFocus.value || !isMouseOver.value) {
+    if (!containsFocus.value && !isMouseOver.value) {
       animationTimer = setTimeout(() => (timedOutAnimation.value = true), props.timeoutAnimation);
+    } else {
+      clearTimeout(animationTimer);
+      timedOutAnimation.value = false;
     }
   });
 });
