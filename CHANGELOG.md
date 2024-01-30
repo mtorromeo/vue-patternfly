@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.22] - 2024-01-30
+
+### Bug Fixes
+
+- *(Pagination)* Fixed definition of the new total slot
+- *(Alert)* Fixed automatic dismissal with timeout not requiring mouseover or element focus to trigger
+
 ## [0.1.0-beta.21] - 2024-01-29
 
 ### Bug Fixes
