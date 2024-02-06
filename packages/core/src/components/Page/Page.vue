@@ -134,7 +134,7 @@ const { width: windowWidth } = useWindowSize();
 watch(windowWidth, (width) => {
   mobileView.value = width < Number.parseInt(globalBreakpointXl.value, 10);
   emit('page-resize', { mobileView: mobileView.value, windowSize: width });
-});
+}, { immediate: true });
 
 function navToggle() {
   sidebarOpen.value = !sidebarOpen.value;
