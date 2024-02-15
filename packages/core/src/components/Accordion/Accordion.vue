@@ -4,6 +4,7 @@
     :is="dl ? 'dl' : 'div'" :class="[styles.accordion, {
       [styles.modifiers.bordered]: bordered,
       [styles.modifiers.displayLg]: large,
+      [styles.modifiers.toggleStart]: togglePosition === 'start',
     }]">
     <slot />
   </component>
@@ -19,11 +20,14 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   bordered?: boolean;
   /** Large display size variant. */
   large?: boolean;
+  /** Sets the toggle icon position for all accordion toggles. */
+  togglePosition?: 'start' | 'end';
 }
 
 export const AccordionKey = Symbol('AccordionKey') as InjectionKey<{
   dl: Props['dl'];
   level: Props['level'];
+  togglePosition: Props['togglePosition'];
 }>;
 </script>
 
@@ -42,11 +46,13 @@ defineSlots<{
 
 const props = withDefaults(defineProps<Props>(), {
   level: 3,
+  togglePosition: 'end',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 provide(AccordionKey, {
   dl: props.dl,
   level: props.level,
+  togglePosition: props.togglePosition,
 });
 </script>

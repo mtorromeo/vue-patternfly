@@ -11,10 +11,13 @@
       :aria-expanded="managedExpanded"
       @click="handleClick($event as PointerEvent)"
     >
+      <span v-if="accordion?.togglePosition === 'start'" :class="styles.accordionToggleIcon">
+        <angle-right-icon />
+      </span>
       <span :class="styles.accordionToggleText">
         <slot name="toggle">{{ title }}</slot>
       </span>
-      <span :class="styles.accordionToggleIcon">
+      <span v-if="accordion?.togglePosition === 'end'" :class="styles.accordionToggleIcon">
         <angle-right-icon />
       </span>
     </button>
