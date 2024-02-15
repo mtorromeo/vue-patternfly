@@ -27,6 +27,7 @@
         :aria-disabled="component === 'a' && disabled ? disabled : undefined"
         :aria-expanded="onPath || flyoutVisible || undefined"
         :type="component === 'button' ? 'button' : undefined"
+        :download="component === 'a' ? download : undefined"
         @click="!check && onClick($event)"
       >
         <span :class="styles.menuItemMain">
@@ -129,6 +130,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
   direction?: 'down' | 'up';
   /** @beta True if item is on current selection path */
   onPath?: boolean;
+  /** Navigation link download. Only set when the to property is present. */
+  download?: string;
 }
 </script>
 
