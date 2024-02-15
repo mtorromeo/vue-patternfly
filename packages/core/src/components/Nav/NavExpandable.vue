@@ -16,7 +16,9 @@
       @click.prevent
       @mousedown.prevent
     >
-      <slot name="title">{{ title }}</slot>
+      <span :class="`${styles.nav}__link-text`">
+        <slot name="title">{{ title }}</slot>
+      </span>
       <span :class="styles.navToggle">
         <span :class="styles.navToggleIcon">
           <AngleRightIcon aria-hidden="true" />

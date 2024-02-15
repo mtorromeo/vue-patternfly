@@ -22,7 +22,9 @@
       v-bind="$attrs"
       @click="select"
     >
-      <slot />
+      <span :class="`${styles.nav}__link-text`">
+        <slot />
+      </span>
       <span v-if="$slots.flyout" :class="styles.navToggle">
         <span :class="styles.navToggleIcon">
           <pf-angle-right-icon aria-hidden />
