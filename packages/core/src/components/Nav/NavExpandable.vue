@@ -16,7 +16,7 @@
       @click.prevent
       @mousedown.prevent
     >
-      {{ title }}
+      <slot name="title">{{ title }}</slot>
       <span :class="styles.navToggle">
         <span :class="styles.navToggleIcon">
           <AngleRightIcon aria-hidden="true" />
@@ -67,6 +67,7 @@ const emit = defineEmits<{
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
+  title?: (props?: Record<never, never>) => any;
 }>();
 
 const expandable: Ref<HTMLButtonElement | undefined> = ref();
