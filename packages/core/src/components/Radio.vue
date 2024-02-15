@@ -1,7 +1,7 @@
 <template>
   <component
     v-bind="ouiaProps"
-    :is="labelWrapped ? 'label' : 'div'"
+    :is="component ?? (wrapWithLabel ? 'label' : 'div')"
     :class="[styles.radio, {
       [styles.modifiers.standalone]: !labelWrapped && !(label || $slots.label),
     }]"
@@ -10,11 +10,12 @@
     <sort>
       <sort-by :weight="labelBeforeButton ? -1 : 1">
         <component
-          :is="labelWrapped ? 'span' : 'label'"
+          :is="wrapWithLabel ? 'span' : 'label'"
+          v-if="label || $slots.label"
           :class="[styles.radioLabel, {
             [styles.modifiers.disabled]: disabled,
           }]"
-          :for="labelWrapped ? undefined : id"
+          :for="wrapWithLabel ? undefined : id"
         >
           <slot name="label">{{ label }}</slot>
         </component>
@@ -22,6 +23,7 @@
 
       <input
         :id="id"
+        ref="input"
         v-bind="$attrs"
         type="radio"
         :class="styles.radioInput"
@@ -48,7 +50,7 @@ import styles from '@patternfly/react-styles/css/components/Radio/radio';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
-import type { InputHTMLAttributes } from 'vue';
+import { computed, type InputHTMLAttributes, type Component, ref, type Ref } from 'vue';
 
 defineOptions({
   name: 'PfRadio',
@@ -56,6 +58,7 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'aria-invalid'> {
+  component?: string | Component;
   /** Id of the radio. */
   id?: string;
   /** Flag to show if the radio label is wrapped on small screen. */
@@ -94,4 +97,10 @@ const emit = defineEmits<{
 }>();
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
+const input: Ref<HTMLInputElement | undefined> = ref();
+
+defineExpose({
+  input,
+});
 </script>
