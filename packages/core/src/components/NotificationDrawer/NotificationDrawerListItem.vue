@@ -7,6 +7,7 @@
     }]"
     :tabindex="tabindex"
   >
+    <span class="pf-v5-screen-reader">{{ readStateScreenReaderText }}</span>
     <slot />
   </li>
 </template>
@@ -29,6 +30,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   tabindex?: string | number;
   /**  Variant indicates the severity level */
   variant?: 'custom' | 'success' | 'danger' | 'warning' | 'info';
+  /**  Visually hidden text that conveys the current read state of the notification list item */
+  readStateScreenReaderText?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {

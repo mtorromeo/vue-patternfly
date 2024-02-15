@@ -4,7 +4,7 @@
       {{ title }}
     </pf-text>
 
-    <span v-if="customText || count !== undefined" :class="styles.notificationDrawerHeaderStatus">
+    <span v-if="customText || count !== undefined" :class="styles.notificationDrawerHeaderStatus" aria-live="polite">
       {{ customText || `${count} ${unreadText}` }}
     </span>
 
