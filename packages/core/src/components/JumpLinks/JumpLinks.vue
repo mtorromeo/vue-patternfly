@@ -11,7 +11,7 @@
     ]"
   >
     <div :class="styles.jumpLinksMain">
-      <div class="pf-v5-c-jump-links__header">
+      <div :class="`${styles.jumpLinks}__header`">
         <div v-if="expandable" :class="styles.jumpLinksToggle">
           <pf-button
             variant="plain"

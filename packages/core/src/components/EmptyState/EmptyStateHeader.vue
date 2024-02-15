@@ -1,9 +1,9 @@
 <template>
-  <div v-bind="(ouiaProps as any)" class="pf-v5-c-empty-state__header">
+  <div v-bind="(ouiaProps as any)" :class="`${styles.emptyState}__header`">
     <auto-wrap v-if="$slots.icon" :component="PfEmptyStateIcon">
       <slot name="icon" />
     </auto-wrap>
-    <div class="pf-v5-c-empty-state__title">
+    <div :class="`${styles.emptyState}__title`">
       <component :is="headingLevel" v-if="title" :class="styles.emptyStateTitleText">
         {{ title }}
       </component>

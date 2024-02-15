@@ -9,6 +9,8 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Brand/brand';
 import { cssVarsFromBreakpointProps, type WidthBreakpointProps, type HeightBreakpointProps } from '../breakpoints';
+import cssBrandHeight from '@patternfly/react-tokens/dist/esm/c_brand_Height';
+import cssBrandWidth from '@patternfly/react-tokens/dist/esm/c_brand_Width';
 import type { ImgHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
@@ -30,7 +32,7 @@ defineSlots<{
 }>();
 
 const pictureStyle = {
-  ...cssVarsFromBreakpointProps(props, 'width', '--pf-v5-c-brand--Width'),
-  ...cssVarsFromBreakpointProps(props, 'height', '--pf-v5-c-brand--Height'),
+  ...cssVarsFromBreakpointProps(props, 'width', cssBrandWidth.name),
+  ...cssVarsFromBreakpointProps(props, 'height', cssBrandHeight.name),
 };
 </script>

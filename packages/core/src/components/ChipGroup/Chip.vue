@@ -29,7 +29,7 @@
       v-bind="$attrs"
       :class="styles.chip"
       :style="{
-        '--pf-v5-c-chip__text--MaxWidth': textMaxWidth,
+        [cssChipTextMaxWidth.name]: textMaxWidth,
       }"
       :type="component === 'button' ? 'button' : undefined"
     >
@@ -58,6 +58,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Chip/chip';
+import cssChipTextMaxWidth from '@patternfly/react-tokens/dist/esm/c_chip__text_MaxWidth';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfButton from '../Button.vue';

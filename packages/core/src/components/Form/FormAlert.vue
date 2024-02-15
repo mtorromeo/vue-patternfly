@@ -1,10 +1,11 @@
 <template>
-  <form v-bind="(ouiaProps as any)" class="pf-v5-c-form__alert">
+  <form v-bind="(ouiaProps as any)" :class="`${styles.form}__alert`">
     <slot />
   </form>
 </template>
 
 <script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Form/form';
 import type { FormHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 

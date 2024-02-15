@@ -19,7 +19,7 @@
           <pf-badge :read="read">{{ count }}</pf-badge>
         </div>
 
-        <span class="pf-v5-c-notification-drawer__group-toggle-icon">
+        <span :class="styles.notificationDrawerGroupToggleIcon">
           <angle-right-icon />
         </span>
       </button>

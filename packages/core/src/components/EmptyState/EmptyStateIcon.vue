@@ -1,11 +1,12 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.emptyStateIcon" :style="{ '--pf-v5-c-empty-state__icon--Color': hasSpinner ? undefined : color }">
+  <div v-bind="(ouiaProps as any)" :class="styles.emptyStateIcon" :style="{ [cssIconColor.name]: hasSpinner ? undefined : color }">
     <render />
   </div>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
+import cssIconColor from '@patternfly/react-tokens/dist/esm/c_empty_state__icon_Color';
 import { findChildrenVNodes, vnodeTypeIsComponent } from '../../util';
 import { mergeProps, ref, type SVGAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';

@@ -2,7 +2,7 @@
   <div
     v-bind="(ouiaProps as any)"
     :class="styles.panelMain"
-    :style="{ '--pf-v5-c-panel__main--MaxHeight': maxHeight }"
+    :style="{ [cssMaxHeight.name]: maxHeight }"
   >
     <slot />
   </div>
@@ -10,6 +10,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Panel/panel';
+import cssMaxHeight from '@patternfly/react-tokens/dist/esm/c_panel__main_MaxHeight';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 

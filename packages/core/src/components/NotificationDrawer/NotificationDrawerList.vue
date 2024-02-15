@@ -1,10 +1,11 @@
 <template>
-  <ul v-bind="ouiaProps" class="pf-v5-c-notification-drawer__list" role="list">
+  <ul v-bind="ouiaProps" :class="`${styles.notificationDrawer}__list`" role="list">
     <slot />
   </ul>
 </template>
 
 <script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 

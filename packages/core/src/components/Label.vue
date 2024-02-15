@@ -13,7 +13,7 @@
           <slot name="icon" />
         </span>
 
-        <span ref="textRef" :class="styles.labelText" :style="textMaxWidth ? {'--pf-v5-c-label__text--MaxWidth': textMaxWidth} : undefined">
+        <span ref="textRef" :class="styles.labelText" :style="textMaxWidth ? {[cssTextMaxWidth.name]: textMaxWidth} : undefined">
           <slot />
         </span>
       </component>
@@ -32,7 +32,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Label/label';
-
+import cssTextMaxWidth from '@patternfly/react-tokens/dist/esm/c_label__text_MaxWidth';
 import { ref, type Ref, type ButtonHTMLAttributes, type VNode } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton.vue';

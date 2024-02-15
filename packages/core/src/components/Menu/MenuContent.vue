@@ -4,8 +4,8 @@
     ref="el"
     :class="styles.menuContent"
     :style="{
-      '--pf-v5-c-menu__content--Height': menuHeight,
-      '--pf-v5-c-menu__content--MaxHeight': maxMenuHeight,
+      [cssHeight.name]: menuHeight,
+      [cssMaxHeight.name]: maxMenuHeight,
     }"
   >
     <auto-wrap :component="PfMenuList" :include="[PfMenuItem, PfDivider]">
@@ -16,6 +16,8 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
+import cssHeight from '@patternfly/react-tokens/dist/esm/c_menu__content_Height';
+import cssMaxHeight from '@patternfly/react-tokens/dist/esm/c_menu__content_MaxHeight';
 import { computed, inject, ref, watch, type Ref, type HTMLAttributes } from 'vue';
 import { MenuListInjectionKey, type MenuListProvide } from './MenuList.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';

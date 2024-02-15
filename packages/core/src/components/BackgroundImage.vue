@@ -2,7 +2,7 @@
   <div
     v-bind="(ouiaProps as any)"
     :class="styles.backgroundImage" :style="{
-      '--pf-v5-c-background-image--BackgroundImage': `url(${src})`
+      [cssBackgroundImage.name]: `url(${src})`
     }"
   />
 </template>
@@ -16,6 +16,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/BackgroundImage/background-image';
+import cssBackgroundImage from '@patternfly/react-tokens/dist/esm/c_background_image_BackgroundImage';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 

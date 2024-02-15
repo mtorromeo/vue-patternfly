@@ -20,7 +20,7 @@
           <pf-text-input-group-utilities v-if="value && (resultsCount || (!!onNextClick && !!onPreviousClick) || (!!onClear && !expandable))">
             <pf-badge v-if="resultsCount" read>{{ resultsCount }}</pf-badge>
 
-            <div v-if="!!onNextClick && !!onPreviousClick" class="pf-v5-c-text-input-group__group">
+            <div v-if="!!onNextClick && !!onPreviousClick" :class="textInputGroupStyles.textInputGroupGroup">
               <pf-button
                 :disabled="disabled || previousNavigationButtonDisabled"
                 :aria-label="previousNavigationButtonAriaLabel"
@@ -223,6 +223,7 @@ export interface Props extends OUIAProps {
 </script>
 
 <script lang="ts" setup>
+import textInputGroupStyles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
 import { type InjectionKey, nextTick, provide, type Ref, ref, type RendererElement } from 'vue';
 import { useManagedProp } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';

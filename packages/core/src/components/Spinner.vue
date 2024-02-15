@@ -8,7 +8,7 @@
     role="progressbar"
     viewBox="0 0 100 100"
     :style="diameter ? {
-      '--pf-v5-c-spinner--diameter': diameter,
+      [cssDiameter.name]: diameter,
     } : undefined"
     :aria-valuetext="ariaValueText"
     :aria-label="!ariaLabel && !ariaLabelledby ? 'Contents' : ariaLabel"
@@ -44,6 +44,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Spinner/spinner';
+import cssDiameter from '@patternfly/react-tokens/dist/esm/c_spinner_diameter';
 import type { SVGAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 

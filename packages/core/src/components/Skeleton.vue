@@ -14,6 +14,8 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Skeleton/skeleton';
+import cssHeight from '@patternfly/react-tokens/dist/esm/c_skeleton_Height';
+import cssWidth from '@patternfly/react-tokens/dist/esm/c_skeleton_Width';
 import { computed, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
@@ -48,8 +50,8 @@ const fontHeightClassName = computed(() => {
 
 const sizes = computed(() => {
   return {
-    '--pf-v5-c-skeleton--Width': props.width,
-    '--pf-v5-c-skeleton--Height': props.height,
+    [cssWidth.name]: props.width,
+    [cssHeight.name]: props.height,
   };
 });
 </script>

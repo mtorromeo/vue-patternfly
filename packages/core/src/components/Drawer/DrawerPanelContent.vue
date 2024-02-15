@@ -10,9 +10,9 @@
     }]"
     :style="{
       display: display ? 'inherit' : 'none',
-      '--pf-v5-c-drawer__panel--md--FlexBasis': isDefined(panelSize) ? `${panelSize}px` : defaultSize,
-      '--pf-v5-c-drawer__panel--md--FlexBasis--min': minSize,
-      '--pf-v5-c-drawer__panel--md--FlexBasis--max': maxSize,
+      [cssPanelMdFlexBasis.name]: isDefined(panelSize) ? `${panelSize}px` : defaultSize,
+      [cssPanelMdFlexBasisMin.name]: minSize,
+      [cssPanelMdFlexBasisMax.name]: maxSize,
       overflowAnchor: position === 'bottom' ? 'none' : undefined,
     }"
     :hidden="!expanded"
@@ -46,6 +46,9 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
+import cssPanelMdFlexBasis from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis';
+import cssPanelMdFlexBasisMin from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_min';
+import cssPanelMdFlexBasisMax from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_max';
 import { computed, inject, type Ref, ref, type HTMLAttributes } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
