@@ -9,22 +9,22 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@patternfly/patternfly": "^5.1.0",
+    "@patternfly/patternfly": "^5.2.0",
     "@vue-patternfly/core": "workspace:^",
     "@vue-patternfly/icons": "workspace:^",
     "@vue-patternfly/table": "workspace:^",
     "pinia": "^2.1.7",
-    "vue": "^3.4.15",
+    "vue": "^3.4.19",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@rollup/pluginutils": "^5.1.0",
     "@toycode/markdown-it-class": "^1.2.4",
     "@types/markdown-it": "^13.0.7",
-    "@vitejs/plugin-vue": "^5.0.2",
-    "@vue/compiler-sfc": "^3.4.15",
-    "@vue/runtime-core": "^3.4.15",
-    "@vue/shared": "^3.4.15",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/compiler-sfc": "^3.4.19",
+    "@vue/runtime-core": "^3.4.19",
+    "@vue/shared": "^3.4.19",
     "@vueuse/core": "^10.7.2",
     "markdown-it": "^14.0.0",
     "node-html-parser": "^6.1.12",
@@ -33,7 +33,7 @@
     "ts-dedent": "^2.2.0",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
-    "vite": "^5.0.12",
+    "vite": "^5.1.2",
     "vue-docgen-api": "^4.75.1",
     "vue-tsc": "^1.8.27"
   },
