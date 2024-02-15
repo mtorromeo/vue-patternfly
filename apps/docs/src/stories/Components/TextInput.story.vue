@@ -67,6 +67,15 @@
         aria-label="validates on input"
         auto-validate="input"
       />
+      <br>
+      <pf-text-input
+        required
+        pattern="[0-9a-f]*"
+        placeholder="hexadecimal value (no status icon)"
+        aria-label="no status icon"
+        auto-validate="input"
+        no-status-icon
+      />
     </story-canvas>
 
     <story-canvas title="Truncated on left">

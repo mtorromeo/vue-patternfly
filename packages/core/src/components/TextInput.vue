@@ -85,6 +85,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   /** Trim text at start */
   startTruncated?: boolean;
   autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
+  /** Disables validation status icon */
+  noStatusIcon?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -112,7 +114,7 @@ defineSlots<{
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const input: Ref<HTMLInputElement | undefined> = ref();
-const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
+const hasStatusIcon = computed(() => !props.noStatusIcon && ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const {
   value,
