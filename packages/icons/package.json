@@ -23,19 +23,19 @@
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@patternfly/patternfly": "^5.2.0",
+    "@patternfly/patternfly": "^5.2.1",
     "concurrently": "^8.2.2",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
     "rimraf": "^5.0.5",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
-    "vue": "^3.4.19"
+    "vue": "^3.4.21"
   },
   "peerDependencies": {
     "vue": "^3.2.40"
