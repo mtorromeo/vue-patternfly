@@ -1,4 +1,4 @@
-import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type Ref, type WritableComputedRef, type VNode, nextTick } from 'vue';
+import { unref, computed, ref, onUpdated, getCurrentInstance, type Component, type Ref, type WritableComputedRef, type VNode, nextTick, type UnwrapRef, watch, onBeforeUnmount } from 'vue';
 import { isDefined, tryOnMounted } from '@vueuse/shared';
 import { findFirstChildVNode } from '../util';
 
@@ -227,6 +227,13 @@ export function useManagedProp<T>(name: string, value: T, onSet?: (to: T) => voi
   }
 
   const inner = ref(value);
+
+  const watchStop = watch(() => instance.props[name] as T, (newvalue) => {
+    inner.value = (isDefined(newvalue) ? newvalue : value) as UnwrapRef<T>;
+  });
+
+  onBeforeUnmount(watchStop);
+
   return computed({
     get(): T {
       return isDefined(instance.props[name]) ? (instance.props[name] as any) : inner.value;

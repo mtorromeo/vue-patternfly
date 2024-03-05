@@ -125,7 +125,11 @@ const {
   onInvalid,
   onKeyUp,
   ...inputValidationData
-} = useInputValidation({inputElement: input, ...props});
+} = useInputValidation({
+  inputElement: input,
+  autoValidate: props.autoValidate,
+  validated: props.validated,
+});
 
 useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 

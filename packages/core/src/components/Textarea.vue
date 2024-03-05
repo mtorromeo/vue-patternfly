@@ -125,7 +125,8 @@ const {
   ...inputValidationData
 } = useInputValidation({
   inputElement: input,
-  ...props,
+  autoValidate: props.autoValidate,
+  validated: props.validated,
   customCheckValidity: checkValidity,
 });
 
