@@ -1,6 +1,35 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.24] - 2024-03-05
+
+### Bug Fixes
+
+- *(TextInput, Textarea)* Fixed update of input values when the modelValue prop changes
+
+## [0.1.0-beta.23] - 2024-02-15
+
+### Bug Fixes
+
+- *(Page)* Fixed auto-hide of nav sidebar on mobile when clicking anywhere on the page
+- *(InputGroup)* Don't add aria-describedby automatically
+- *(Notification Drawer)* Added screen reader text for notification drawer item read state
+- *(MenuItem)* Add download to MenuItem
+- *(Icons)* Rename custom icons
+
+### Features
+
+- *(TextInput)* Added prop to disable the validation status icon
+- *(Form)* Added maxWidth prop
+- *(Nav)* Added title slot to pf-nav-expandable
+- *(Nav)* Updated to add wrapper for nav link text
+- *(Accordion)* Added toggle alignment functionality
+- *(Radio, Checkbox)* Add support for labelWrapped and component
+
+### Refactor
+
+- *(misc)* CSS harcoded variables and classes replaced with react-tokens and react-styles
+
 ## [0.1.0-beta.22] - 2024-01-30
 
 ### Bug Fixes
