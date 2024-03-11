@@ -1,5 +1,5 @@
 <template>
-  <li v-bind="(ouiaProps as any)" :class="styles.listItem">
+  <li v-bind="(ouiaProps as any)" :class="{[styles.listItem]: $slots.icon}">
     <span v-if="$slots.icon" :class="styles.listItemIcon">
       <slot name="icon" />
     </span>

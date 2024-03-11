@@ -49,7 +49,7 @@ import PfLoginMainFooter from './LoginMainFooter.vue';
 import PfLoginHeader from './LoginHeader.vue';
 import PfLoginFooter from './LoginFooter.vue';
 import PfBrand from '../Brand.vue';
-import PfList, { type ListVariant } from '../List/List.vue';
+import PfList, { type Props as PfListProps } from '../List/List.vue';
 import PfBackgroundImage from '../BackgroundImage.vue';
 import type { ComponentProps } from '../../util';
 import { useOUIAProps } from '../../helpers/ouia';
@@ -71,7 +71,7 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfLogin> 
   /** Content rendered inside of the text component of the login page */
   textContent?: string;
   /** Adds list variant styles for the footer list component of the login page. The only current value is'inline' */
-  footerListVariants?: ListVariant.inline;
+  footerListVariants?: PfListProps['variant'];
   /** Title for the login main body header of the login page */
   title: string;
   /** Subtitle for the login main body header of the login page */

@@ -14,26 +14,9 @@
 </template>
 
 <script lang="ts">
-export enum OrderType {
-  number = '1',
-  lowercaseLetter = 'a',
-  uppercaseLetter = 'A',
-  lowercaseRomanNumber = 'i',
-  uppercaseRomanNumber = 'I'
-}
-
-export enum ListVariant {
-  inline = 'inline'
-}
-
-export enum ListComponent {
-  ol = 'ol',
-  ul = 'ul'
-}
-
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds list variant styles */
-  variant?: ListVariant.inline;
+  variant?: 'inline';
   /** Modifies the list to add borders between items */
   bordered?: boolean;
   /** Modifies the list to include plain styling */
@@ -41,7 +24,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Modifies the size of the icons in the list */
   iconSize?: 'default' | 'large';
   /** Sets the way items are numbered if variant is set to ordered */
-  type?: OrderType;
+  type?: '1' | 'a' | 'A' | 'i' | 'I';
   component?: 'ol' | 'ul';
 }
 </script>
@@ -57,8 +40,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   iconSize: 'default',
-  type: OrderType.number,
-  component: ListComponent.ul,
+  type: '1',
+  component: 'ul',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
