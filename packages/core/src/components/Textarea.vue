@@ -111,7 +111,7 @@ defineEmits<{
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const input: Ref<HTMLInputElement | undefined> = ref();
+const input: Ref<HTMLTextAreaElement | undefined> = ref();
 const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const {
@@ -159,7 +159,7 @@ function checkValidity() {
     }
   }
 
-  if (!input.value.checkValidity()) {
+  if (!HTMLTextAreaElement.prototype.checkValidity.call(input.value)) {
     return false;
   }
 

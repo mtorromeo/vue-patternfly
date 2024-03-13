@@ -1,7 +1,9 @@
-import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref } from "vue";
+import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref, onBeforeUnmount } from "vue";
 import { useManagedProp } from "./use";
+import { onMounted } from "vue";
 
 export type InputValidateState = 'success' | 'warning' | 'error' | 'default';
+type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
 export function useInputValidation({
   autoValidate,
@@ -11,7 +13,7 @@ export function useInputValidation({
 }: {
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
   validated?: InputValidateState | null;
-  inputElement?: MaybeRef<HTMLInputElement | HTMLTextAreaElement | undefined>;
+  inputElement?: MaybeRef<InputElement | undefined>;
   customCheckValidity?: () => boolean;
 }) {
   const instance = getCurrentInstance()?.proxy;
@@ -22,15 +24,35 @@ export function useInputValidation({
 
   const value = useManagedProp('modelValue', '');
 
+  function getInput() {
+    return unref(inputElement) ?? (instance?.$el as InputElement | undefined);
+  }
+
+  function setCustomValidity(error: string) {
+    const input = getInput();
+    if (input) {
+      const proto = input.constructor.prototype as InputElement;
+      proto.setCustomValidity.call(input, error);
+    }
+    if (!error) {
+      innerValidated.value = 'default';
+    }
+  }
+
   function checkValidity() {
     if (customCheckValidity) {
       return customCheckValidity();
     }
 
-    if ((unref(inputElement) ?? instance?.$el)?.checkValidity()) {
-      innerValidated.value = 'success';
-      return true;
+    const input = getInput();
+    if (input) {
+      const proto = input.constructor.prototype as InputElement;
+      if (proto.checkValidity.call(input)) {
+        innerValidated.value = 'success';
+        return true;
+      }
     }
+
     return false;
   }
 
@@ -38,10 +60,33 @@ export function useInputValidation({
     const validatedWas = innerValidated.value;
     const valid = checkValidity();
     if (!once || (valid && validatedWas !== 'success') || (!valid && validatedWas !== 'error')) {
-      (unref(inputElement) ?? instance?.$el)?.reportValidity();
+      const input = getInput();
+      if (input) {
+        const proto = input.constructor.prototype as InputElement;
+        proto.reportValidity.call(input);
+      }
     }
     return valid;
   }
+
+  onMounted(() => {
+    const input = getInput();
+    if (input) {
+      input.setCustomValidity = setCustomValidity;
+      input.checkValidity = checkValidity;
+      input.reportValidity = reportValidity;
+    }
+  });
+
+  onBeforeUnmount(() => {
+    const input = getInput();
+    if (input) {
+      const proto = input.constructor.prototype as InputElement;
+      input.setCustomValidity = proto.setCustomValidity;
+      input.checkValidity = proto.checkValidity;
+      input.reportValidity = proto.reportValidity;
+    }
+  });
 
   return {
     value,
@@ -50,10 +95,11 @@ export function useInputValidation({
 
     checkValidity,
     reportValidity,
+    setCustomValidity,
 
     onInput(event: InputEvent) {
       instance?.$emit('input', event);
-      value.value = (event.target as HTMLInputElement).value;
+      value.value = (event.target as InputElement).value;
       if (autoValidate === 'input') {
         reportValidity();
       } else {
@@ -86,13 +132,6 @@ export function useInputValidation({
       instance?.$emit('keyup', event);
       if (event.key === 'Enter' && (autoValidate === true || autoValidate === '')) {
         reportValidity();
-      }
-    },
-
-    setCustomValidity(error: string) {
-      (unref(inputElement) ?? instance?.$el)?.setCustomValidity(error);
-      if (!error) {
-        innerValidated.value = 'default';
       }
     },
   };
