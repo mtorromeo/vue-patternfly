@@ -64,7 +64,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   position: 'left',
-  appendTo: 'inline',
   open: undefined,
   autoFocus: true,
   zIndex: 9999,

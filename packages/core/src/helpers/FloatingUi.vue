@@ -1,21 +1,13 @@
 <template>
-  <teleport :to="teleportTo === 'inline' ? undefined : teleportTo" :disabled="!teleportTo || teleportTo === 'inline'">
+  <teleport :to="parent === 'inline' ? undefined : parent" :disabled="!parent || parent === 'inline'">
     <floating-element />
   </teleport>
 </template>
 
-<script lang="ts" setup>
-import { flip as uiFlip, autoPlacement, size, type Middleware, type Placement as UIPlacement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
-import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement } from 'vue';
-import { useFloatingUI, type FloatingOptions } from '../use';
-import type { ReferenceElement } from '@floating-ui/dom';
-
-defineOptions({
-  name: 'PfFloatingUi',
-  inheritAttrs: false,
-});
-
+<script lang="ts">
 export type Placement = UIPlacement |'auto';
+
+export const FloatingElementTeleportKey = Symbol('AccordionKey') as InjectionKey<MaybeRef<string | RendererElement | null | undefined>>;
 
 export interface Props {
   reference: string | ReferenceElement | undefined;
@@ -35,6 +27,18 @@ export interface Props {
   /** Element or selector where to render the floating element */
   teleportTo?: 'inline' | string | RendererElement | null | undefined;
 }
+</script>
+
+<script lang="ts" setup>
+import { flip as uiFlip, autoPlacement, size, type Middleware, type Placement as UIPlacement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
+import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement, type InjectionKey, inject, type MaybeRef, toValue } from 'vue';
+import { useFloatingUI, type FloatingOptions } from '../use';
+import type { ReferenceElement } from '@floating-ui/dom';
+
+defineOptions({
+  name: 'PfFloatingUi',
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<Props>(), {
   width: 'auto',
@@ -48,6 +52,9 @@ const props = withDefaults(defineProps<Props>(), {
 const slots = defineSlots<{
   default?: (props: ReturnType<typeof useFloatingUI>) => VNode[];
 }>();
+
+const injectedParent = inject(FloatingElementTeleportKey);
+const parent = computed(() => props.teleportTo ?? toValue(injectedParent));
 
 const referenceElement = computed<ReferenceElement | undefined>(() => {
   const reference = typeof props.reference === 'string'
