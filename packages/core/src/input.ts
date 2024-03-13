@@ -91,6 +91,9 @@ export function useInputValidation({
 
     setCustomValidity(error: string) {
       (unref(inputElement) ?? instance?.$el)?.setCustomValidity(error);
+      if (!error) {
+        innerValidated.value = 'default';
+      }
     },
   };
 }
