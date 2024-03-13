@@ -50,7 +50,9 @@ import styles from '@patternfly/react-styles/css/components/Radio/radio';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
-import { computed, type InputHTMLAttributes, type Component, ref, type Ref } from 'vue';
+import { computed, type InputHTMLAttributes, type Component, ref, type Ref, getCurrentInstance } from 'vue';
+import { useChildrenTracker } from '../use';
+import { FormInputsKey } from './Form/common';
 
 defineOptions({
   name: 'PfRadio',
@@ -96,6 +98,7 @@ const emit = defineEmits<{
   (name: 'change', e: Event): void;
 }>();
 
+useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
 const input: Ref<HTMLInputElement | undefined> = ref();

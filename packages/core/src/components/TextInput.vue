@@ -38,11 +38,11 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, computed, type InputHTMLAttributes } from 'vue';
+import { type Ref, ref, computed, type InputHTMLAttributes, getCurrentInstance } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation, type InputValidateState } from '../input';
-import { FormGroupInputsKey } from './Form/common';
+import { FormGroupInputsKey, FormInputsKey } from './Form/common';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
 
@@ -131,6 +131,7 @@ const {
   validated: props.validated,
 });
 
+useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 function focus() {

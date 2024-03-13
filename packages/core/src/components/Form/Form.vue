@@ -17,6 +17,8 @@ import styles from '@patternfly/react-styles/css/components/Form/form';
 import cssMaxWidth from '@patternfly/react-tokens/dist/esm/c_form_m_limit_width_MaxWidth';
 import type { Component, FormHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { provideChildrenTracker } from '../../use';
+import { FormInputsKey } from './common';
 
 defineOptions({
   name: 'PfForm',
@@ -37,7 +39,13 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+const elements = provideChildrenTracker(FormInputsKey);
+
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
+
+defineExpose({
+  elements,
+})
 </script>

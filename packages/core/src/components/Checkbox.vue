@@ -46,11 +46,13 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, ref, watch, type Component, type Ref, type InputHTMLAttributes } from 'vue';
+import { computed, ref, watch, type Component, type Ref, type InputHTMLAttributes, getCurrentInstance } from 'vue';
 import { getUniqueId } from '../util';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
+import { useChildrenTracker } from '../use';
+import { FormInputsKey } from './Form/common';
 
 defineOptions({
   name: 'PfCheckbox',
@@ -96,6 +98,7 @@ defineSlots<{
   body?: (props?: Record<never, never>) => any;
 }>();
 
+useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const input: Ref<HTMLInputElement | undefined> = ref();
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
 const validId = computed(() => props.id || getUniqueId());

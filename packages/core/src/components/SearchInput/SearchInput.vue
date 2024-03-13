@@ -224,8 +224,8 @@ export interface Props extends OUIAProps {
 
 <script lang="ts" setup>
 import textInputGroupStyles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { type InjectionKey, nextTick, provide, type Ref, ref, type RendererElement } from 'vue';
-import { useManagedProp } from '../../use';
+import { type InjectionKey, nextTick, provide, type Ref, ref, type RendererElement, getCurrentInstance } from 'vue';
+import { useChildrenTracker, useManagedProp } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
 import PfTextInputGroupMain from '../TextInputGroup/TextInputGroupMain.vue';
@@ -242,6 +242,7 @@ import AngleUpIcon from '@vue-patternfly/icons/angle-up-icon';
 import AngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import ArrowRightIcon from '@vue-patternfly/icons/arrow-right-icon';
+import { FormInputsKey } from '../Form/common';
 
 defineOptions({
   name: 'PfSearchInput',
@@ -285,6 +286,7 @@ if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
   );
 }
 
+useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const value = useManagedProp('modelValue', '', to => emit('change', to));
 const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
 const managedExpanded = useManagedProp('expanded', false);

@@ -49,12 +49,13 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttri
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey } from '../../use';
+import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey, useChildrenTracker } from '../../use';
 import type PfFormSelectOption from './FormSelectOption.vue';
 import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import { computed, ref, type Ref, type SelectHTMLAttributes } from 'vue';
+import { computed, ref, type Ref, type SelectHTMLAttributes, getCurrentInstance } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { FormInputsKey } from '../Form/common';
 
 defineOptions({
   name: 'PfFormSelect',
@@ -72,6 +73,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
+useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const input: Ref<HTMLSelectElement | undefined> = ref();
 const options = provideChildrenTracker(FormSelectOptionsKey);
 const value = useManagedProp('modelValue', '');
