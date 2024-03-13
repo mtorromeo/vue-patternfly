@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.25] - 2024-03-13
+
+### Bug Fixes
+
+- *(List)* Fixed list item types of pf-lists without icons
+- *(Input)* Fixed validity functions when called directly from the dom elements
+
+### Features
+
+- *(Form)* Exposed elements array that tracks all the child components that wrap form inputs
+- *(Inputs)* Added ability to programmatically reset internal validation state with setCustomValidity('')
+- *(FloatingUi)* Allowed to provide a default teleport destination for all child floating components via FloatingElementTeleportKey
+
 ## [0.1.0-beta.24] - 2024-03-05
 
 ### Bug Fixes
