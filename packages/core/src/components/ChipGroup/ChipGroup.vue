@@ -52,7 +52,7 @@ defineOptions({
   name: 'PfChipGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
   id?: string;
   defaultOpen?: boolean;
   closable?: boolean;

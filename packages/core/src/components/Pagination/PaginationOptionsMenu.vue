@@ -3,11 +3,10 @@
     <pf-menu-toggle
       :id="widgetId ? `${widgetId}-toggle` : undefined"
       ref="toggle"
-      :expanded="open"
+      v-model:expanded="open"
       :disabled="disabled || Boolean(count && count <= 0)"
       variant="plainText"
       aria-haspopup="listbox"
-      @click="open = !open"
     >
       <b>{{ firstIndex }} - {{ lastIndex }}</b> of
       <b>{{ count }}</b>

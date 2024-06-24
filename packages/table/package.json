@@ -33,22 +33,22 @@
     "prepack": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@patternfly/react-styles": "^5.2.1",
+    "@patternfly/react-styles": "^5.3.1",
     "@vue-patternfly/core": "workspace:^",
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^20.11.24",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "@vue/compiler-sfc": "^3.4.21",
-    "@vueuse/core": "^10.9.0",
-    "glob": "^10.3.10",
-    "rimraf": "^5.0.5",
-    "tslib": "^2.6.2",
-    "typescript": "^5.4.2",
-    "vite": "^5.1.5",
-    "vue": "^3.4.21",
-    "vue-tsc": "^2.0.4"
+    "@types/node": "^20.14.8",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/compiler-sfc": "^3.4.30",
+    "@vueuse/core": "^10.11.0",
+    "glob": "^10.4.2",
+    "rimraf": "^5.0.7",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.2",
+    "vite": "^5.3.1",
+    "vue": "^3.4.30",
+    "vue-tsc": "^2.0.22"
   },
   "peerDependencies": {
     "@vue-patternfly/core": "workspace:^",

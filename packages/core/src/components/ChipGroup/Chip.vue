@@ -73,7 +73,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'type'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'type' | 'onClick'> {
   id?: string;
   readonly?: boolean;
   overflow?: boolean;

@@ -105,7 +105,7 @@
         <pf-toolbar-content>
           <pf-toolbar-group variant="filter-group">
             <pf-toolbar-item>
-              <pf-select v-model:open="selectExpanded1" @clear="void 0">
+              <pf-select v-model:open="selectExpanded1">
                 <pf-select-option value="Filter 1" />
                 <pf-select-option value="A" />
                 <pf-select-option value="B" />
@@ -113,7 +113,7 @@
               </pf-select>
             </pf-toolbar-item>
             <pf-toolbar-item>
-              <pf-select v-model:open="selectExpanded2" @clear="void 0">
+              <pf-select v-model:open="selectExpanded2">
                 <pf-select-option value="Filter 2" />
                 <pf-select-option value="1" />
                 <pf-select-option value="2" />
@@ -121,7 +121,7 @@
               </pf-select>
             </pf-toolbar-item>
             <pf-toolbar-item>
-              <pf-select v-model:open="selectExpanded3" @clear="void 0">
+              <pf-select v-model:open="selectExpanded3">
                 <pf-select-option value="Filter 3" />
                 <pf-select-option value="I" />
                 <pf-select-option value="II" />

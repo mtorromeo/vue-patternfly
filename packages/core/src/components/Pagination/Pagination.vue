@@ -37,7 +37,6 @@
       :disabled="disabled"
       :page="constrainedPage"
       :per-page="perPage"
-      @update:page="emit('update:page', $event)"
       @update:per-page="emit('update:perPage', $event)"
     />
     <pf-navigation

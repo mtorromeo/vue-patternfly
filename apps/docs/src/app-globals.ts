@@ -15,7 +15,7 @@ type AriaAttribues = {
   [K in keyof HTMLAttributes as K extends `aria-${string}` ? K : never]: HTMLAttributes[K];
 };
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface GlobalComponents {
     DocPage: typeof DocPage;
     ComponentInfo: typeof ComponentInfo;

@@ -25,8 +25,8 @@
       :aria-labelledby="$slots.header ? `popover-${uniqueId}-header` : undefined"
       :aria-describedby="`popover-${uniqueId}-body`"
       :style="{
-        minWidth: hasCustomMinWidth ? minWidth : null,
-        maxWidth: hasCustomMaxWidth ? maxWidth : null,
+        minWidth: hasCustomMinWidth ? minWidth : undefined,
+        maxWidth: hasCustomMaxWidth ? maxWidth : undefined,
         opacity,
         transition: `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
       }"
