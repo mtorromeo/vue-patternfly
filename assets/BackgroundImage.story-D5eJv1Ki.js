@@ -1,0 +1,7 @@
+import{_ as c,o as i,c as m,w as e,a as o,b as t,d as p,e as a}from"./index-DSAMJE0Y.js";const d={},g=p("b",null,"background image",-1);function u(l,f){const n=a("component-info"),r=a("story-canvas"),s=a("doc-page");return i(),m(s,{name:"Components/BackgroundImage.story.vue",title:"Background image"},{description:e(()=>[o("A "),g,o(" allows you to place an image in the background of your page or area of a page.")]),apidocs:e(()=>[t(n,{src:"packages/core/src/components/BackgroundImage.vue",doc:{name:"PfBackgroundImage",exportName:"default",displayName:"BackgroundImage",description:"",tags:{},props:[{name:"ouiaSafe",description:"Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.",required:!1,type:{name:"boolean"}},{name:"ouiaId",description:"Value to overwrite the randomly generated data-ouia-component-id.",required:!1,type:{name:"OuiaId"}},{name:"src",description:"Override image styles using a string or BackgroundImageSrc",required:!0,type:{name:"string"}}],sourceFiles:["../../packages/core/src/components/BackgroundImage.vue"]}})]),default:e(()=>[t(r,{title:"Basic",src:"./BackgroundImage.iframe.vue",source:`<template>
+  <pf-background-image :src="PfBgIcon" />
+</template>
+
+<script setup lang="ts">
+import PfBgIcon from '@patternfly/patternfly/assets/images/pfbg-icon.svg';
+<\/script>`})]),_:1})}const k=c(d,[["render",u]]);export{k as default};
