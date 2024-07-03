@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.26] - 2024-07-03
+
+### Bug Fixes
+
+- *(Dropdown, Select)* Focus first menu item when opened by click
+
+### Features
+
+- *(MenuToggleCheckbox)* Added indeterminate state by setting checked=null
+- *(Dropdown)* Added support for setting height for dropdown
+
 ## [0.1.0-beta.25] - 2024-03-13
 
 ### Bug Fixes
