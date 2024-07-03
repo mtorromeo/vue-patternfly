@@ -77,7 +77,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   rootMenu?: boolean;
   /** Indicates if the menu should be without the outer box-shadow */
   plain?: boolean;
-  /** Indicates if the menu should be srollable */
+  /** Indicates if the menu should be scrollable */
   scrollable?: boolean;
   /** Callback called when an MenuItems's action button is clicked. You can also specify it within a MenuItemAction. */
   onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: any) => void;

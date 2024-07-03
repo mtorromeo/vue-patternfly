@@ -8,10 +8,11 @@
       v-if="managedOpen"
       ref="menuRef"
       v-bind="$attrs"
+      :scrollable="maxMenuHeight !== undefined || menuHeight !== undefined || scrollable"
       @select="onSelect"
       @keydown="onKeydown"
     >
-      <pf-menu-content>
+      <pf-menu-content :menu-height="menuHeight" :max-menu-height="maxMenuHeight">
         <slot />
       </pf-menu-content>
     </pf-menu>
@@ -42,6 +43,13 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   splitButton?: boolean | 'default' | 'action' | 'checkbox';
   /** Variant styles of the menu toggle */
   variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
+
+  /** Indicates if the dropdown menu should be scrollable */
+  scrollable?: boolean;
+  /** Height of the dropdown menu */
+  menuHeight?: string;
+  /** Maximum height of dropdown menu */
+  maxMenuHeight?: string;
 }
 </script>
 
