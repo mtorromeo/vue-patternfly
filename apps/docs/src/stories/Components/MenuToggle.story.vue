@@ -93,17 +93,17 @@
       </pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (checkbox with toggle text)">
+    <story-canvas title="Split button (checkbox indeterminate with toggle text)">
       <pf-menu-toggle split-button>
-        <pf-menu-toggle-checkbox /> 10 selected
+        <pf-menu-toggle-checkbox :checked="null" /> 10 selected
       </pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle split-button expanded>
-        <pf-menu-toggle-checkbox /> 10 selected
+        <pf-menu-toggle-checkbox :checked="null" /> 10 selected
       </pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle split-button disabled>
-        <pf-menu-toggle-checkbox disabled /> 10 selected
+        <pf-menu-toggle-checkbox :checked="null" disabled /> 10 selected
       </pf-menu-toggle>
     </story-canvas>
 

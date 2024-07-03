@@ -2,9 +2,11 @@
   <label v-bind="(ouiaProps as any)" :class="styles.check">
     <input
       v-bind="$attrs"
+      :ref="(el) => (el as HTMLInputElement).indeterminate = checked === null"
       :class="styles.checkInput"
       type="checkbox"
       :aria-invalid="!valid"
+      :checked="Boolean(checked)"
     >
   </label>
 </template>
@@ -19,13 +21,12 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ InputHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'checked'> {
   /** Flag to show if the checkbox selection is valid or invalid */
   valid?: boolean;
-  /** Flag to set the default checked value of the checkbox when it is uncontrolled by React state.
-   * To make the checkbox controlled instead use the isChecked prop, but do not use both.
-   */
-  defaultChecked?: boolean | null;
+
+  /** Flag to show if the checkbox is checked. Use null to set the checkbox indeterminate state */
+  checked?: boolean | null;
 }
 
 const props = defineProps<Props>();
