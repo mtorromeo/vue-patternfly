@@ -47,5 +47,5 @@ defineSlots<{
 
 defineExpose({
   elements,
-})
+});
 </script>

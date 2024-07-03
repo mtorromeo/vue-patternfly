@@ -114,8 +114,8 @@ const handleMenuKeys = (event: KeyboardEvent) => {
 };
 
 const handleClick = (event: PointerEvent) => {
-  // toggle was clicked open via keyboard, focus on first menu item
-  if (managedOpen.value && toggleRef.value?.contains(event.target as Node) && event.detail === 0) {
+  // focus on first menu item
+  if (managedOpen.value && toggleRef.value?.contains(event.target as Node)) {
     nextTick(() => {
       const firstElement = menuRef.value?.el?.querySelector('li button:not(:disabled),li input:not(:disabled)');
       firstElement && (firstElement as HTMLElement).focus();

@@ -155,15 +155,13 @@ const handleClick = (event: PointerEvent) => {
   }
 
   if (toggleElementRef.value?.contains(event.target as Node)) {
-    // toggle was clicked open via keyboard, focus on first menu item
-    if (event.detail === 0) {
-      setTimeout(() => {
-        const firstElement = menuRef.value?.el?.querySelector(
-          'li button:not(:disabled),li input:not(:disabled),li a:not([aria-disabled="true"])',
-        );
-        firstElement && (firstElement as HTMLElement).focus();
-      }, 0);
-    }
+    // focus on first menu item
+    setTimeout(() => {
+      const firstElement = menuRef.value?.el?.querySelector(
+        'li button:not(:disabled),li input:not(:disabled),li a:not([aria-disabled="true"])',
+      );
+      firstElement && (firstElement as HTMLElement).focus();
+    }, 0);
   } else if (!menuRef.value?.el?.contains(event.target as Node)) {
     // If the event is not on the toggle, close the menu
     managedOpen.value = false;
