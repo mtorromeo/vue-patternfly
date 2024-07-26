@@ -7,7 +7,7 @@
 <script lang="ts">
 export type Placement = UIPlacement |'auto';
 
-export const FloatingElementTeleportKey = Symbol('AccordionKey') as InjectionKey<MaybeRef<string | RendererElement | null | undefined>>;
+export const FloatingElementTeleportKey = Symbol('FloatingElementTeleportKey') as InjectionKey<MaybeRef<string | RendererElement | null | undefined>>;
 
 export interface Props {
   reference: string | ReferenceElement | undefined;
@@ -53,7 +53,7 @@ const slots = defineSlots<{
   default?: (props: ReturnType<typeof useFloatingUI>) => VNode[];
 }>();
 
-const injectedParent = inject(FloatingElementTeleportKey);
+const injectedParent = inject(FloatingElementTeleportKey, undefined);
 const parent = computed(() => props.teleportTo ?? toValue(injectedParent));
 
 const referenceElement = computed<ReferenceElement | undefined>(() => {
