@@ -1,5 +1,5 @@
 <template>
-  <pf-select v-model:open="open" v-model:selected="selected" variant="typeahead" full-width>
+  <pf-select v-model:open="open" v-model:selected="selected" variant="typeahead" no-focus-first-item-on-open full-width>
     <template #label>
       <pf-text-input-group plain>
         <pf-text-input-group-main

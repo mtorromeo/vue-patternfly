@@ -51,6 +51,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
 
   /** Flag indicating the toggle should be focused after a selection. If this use case is too restrictive, the optional toggleRef property with a node toggle may be used to control focus. */
   focusToggleOnSelect?: boolean;
+  /** @beta Flag indicating the first menu item should not be focused after opening the menu. */
+  noFocusFirstItemOnOpen?: boolean;
   /** @beta Keys that trigger menu close, defaults to tab and escape. It is highly recommended to include Escape in the array, while Tab may be omitted if the menu contains non-menu items that are focusable. */
   closeOnKeys?: string[];
 
@@ -115,7 +117,7 @@ const handleMenuKeys = (event: KeyboardEvent) => {
 
 const handleClick = (event: PointerEvent) => {
   // focus on first menu item
-  if (managedOpen.value && toggleRef.value?.contains(event.target as Node)) {
+  if (managedOpen.value && !props.noFocusFirstItemOnOpen && toggleRef.value?.contains(event.target as Node)) {
     nextTick(() => {
       const firstElement = menuRef.value?.el?.querySelector('li button:not(:disabled),li input:not(:disabled)');
       firstElement && (firstElement as HTMLElement).focus();
