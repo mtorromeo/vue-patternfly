@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.27] - 2024-07-26
+
+### Bug Fixes
+
+- *(FloatingUi)* Prevented warning when no FloatingElementTeleportKey injection is provided
+
+### Features
+
+- *(Select)* Added no-focus-first-item-on-open prop
+- *(ProgressStepper)* Implemented components
+
 ## [0.1.0-beta.26] - 2024-07-03
 
 ### Bug Fixes

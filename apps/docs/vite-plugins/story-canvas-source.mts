@@ -6,7 +6,7 @@ import Markdown from 'markdown-it';
 import markdownItClass from '@toycode/markdown-it-class';
 // eslint-disable-next-line vue/prefer-import-from-vue
 import { escapeHtml } from '@vue/shared';
-import { getHighlighter } from 'shikiji';
+import { createHighlighter } from 'shiki';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -78,7 +78,7 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
   const filter = createFilter(options.include ?? DEFAULT_INCLUDE_RE, options.exclude);
 
   const mdPromise = (async() => {
-    const highlighter = await getHighlighter({
+    const highlighter = await createHighlighter({
       themes: ['nord'],
       langs: ['vue', 'vue-html'],
     });

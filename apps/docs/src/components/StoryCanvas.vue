@@ -74,7 +74,7 @@ let highlighter: Highlighter;
 
 <script lang="ts" setup>
 import { computedAsync } from '@vueuse/core';
-import { getHighlighter, type Highlighter } from 'shikiji';
+import { createHighlighter, type Highlighter } from 'shiki';
 import { shallowRef, type HTMLAttributes } from 'vue';
 import { useRouter } from 'vue-router';
 import GithubIcon from '@vue-patternfly/icons/github-icon';
@@ -115,7 +115,7 @@ const highlighted = computedAsync(async() => {
   }
 
   if (!highlighter) {
-    highlighter = await getHighlighter({
+    highlighter = await createHighlighter({
       themes: ['nord'],
       langs: ['vue', 'vue-html'],
     });
