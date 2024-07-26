@@ -47,6 +47,7 @@ export * from './NotificationDrawer';
 export * from './OverflowMenu';
 export * from './Page';
 export * from './Pagination';
+export * from './ProgressStepper';
 export * from './Panel';
 export * from './SearchInput';
 export * from './Select';
