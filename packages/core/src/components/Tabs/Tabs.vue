@@ -107,7 +107,7 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { watchEffect, nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
+import { watch, watchEffect, nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
@@ -159,6 +159,8 @@ watchEffect(() => {
     localActiveKey.value = tabKeys[0].value;
   }
 });
+
+watch(tabKeys, handleScrollButtons, { immediate: true });
 
 onMounted(() => {
   nextTick(handleScrollButtons);
