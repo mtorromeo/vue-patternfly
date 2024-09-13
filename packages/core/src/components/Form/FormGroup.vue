@@ -18,11 +18,11 @@
           <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">{{ ' *' }}</span>
         </label>
         {{ ' ' }}
-        <slot name="label-icon" />
+        <slot name="labelIcon" />
       </component>
 
       <div v-if="labelInfo || $slots.labelInfo" :class="styles.formGroupLabelInfo">
-        <slot name="label-info">{{ labelInfo }}</slot>
+        <slot name="labelInfo">{{ labelInfo }}</slot>
       </div>
     </div>
 
@@ -46,16 +46,16 @@
       >
         <template v-if="internalValidated === 'error'">
           <span v-if="$slots.helperTextInvalidIcon" :class="styles.formHelperTextIcon">
-            <slot name="helper-text-invalid-icon" />
+            <slot name="helperTextInvalidIcon" />
           </span>
-          <slot name="helper-text-invalid">{{ helperTextInvalid }}</slot>
+          <slot name="helperTextInvalid">{{ helperTextInvalid }}</slot>
         </template>
 
         <template v-else-if="helperText || $slots.helperText">
           <span v-if="$slots.helperTextIcon" :class="styles.formHelperTextIcon">
-            <slot name="helper-text-icon" />
+            <slot name="helperTextIcon" />
           </span>
-          <slot name="helper-text">{{ helperText }}</slot>
+          <slot name="helperText">{{ helperText }}</slot>
         </template>
       </div>
       <slot v-if="helperTextBeforeField" />
@@ -119,12 +119,12 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 defineSlots<{
   default: (props?: Record<never, never>) => any;
   label?: (props?: Record<never, never>) => any;
-  'label-icon'?: (props?: Record<never, never>) => any;
-  'label-info'?: (props?: Record<never, never>) => any;
-  'helper-text-invalid-icon'?: (props?: Record<never, never>) => any;
-  'helper-text-invalid'?: (props?: Record<never, never>) => any;
-  'helper-text-icon'?: (props?: Record<never, never>) => any;
-  'helper-text'?: (props?: Record<never, never>) => any;
+  'labelIcon'?: (props?: Record<never, never>) => any;
+  'labelInfo'?: (props?: Record<never, never>) => any;
+  'helperTextInvalidIcon'?: (props?: Record<never, never>) => any;
+  'helperTextInvalid'?: (props?: Record<never, never>) => any;
+  'helperTextIcon'?: (props?: Record<never, never>) => any;
+  'helperText'?: (props?: Record<never, never>) => any;
 }>();
 
 import { computed } from 'vue';
