@@ -12,14 +12,14 @@ export function useInputValidation({
   customCheckValidity,
 }: {
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
-  validated?: InputValidateState | null;
+  validated?: Ref<InputValidateState | undefined>;
   inputElement?: MaybeRef<InputElement | undefined>;
   customCheckValidity?: () => boolean;
 }) {
   const instance = getCurrentInstance()?.proxy;
 
   const innerValidated: Ref<InputValidateState> = ref('default');
-  const effectiveValidated = computed(() => validated ?? innerValidated.value);
+  const effectiveValidated = computed(() => validated?.value ?? innerValidated.value);
   watch(effectiveValidated, () => instance?.$emit('update:validated', effectiveValidated.value));
 
   const value = useManagedProp('modelValue', '');
