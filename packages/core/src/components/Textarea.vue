@@ -41,7 +41,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 
-import { computed, ref, onMounted, type TextareaHTMLAttributes, type Ref, getCurrentInstance } from 'vue';
+import { computed, ref, onMounted, toRefs, type TextareaHTMLAttributes, type Ref, getCurrentInstance } from 'vue';
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
 import { FormGroupInputsKey, FormInputsKey } from './Form/common';
@@ -114,6 +114,7 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const input: Ref<HTMLTextAreaElement | undefined> = ref();
 const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
+const { validated } = toRefs(props);
 const {
   value,
   effectiveValidated,
@@ -126,7 +127,7 @@ const {
 } = useInputValidation({
   inputElement: input,
   autoValidate: props.autoValidate,
-  validated: props.validated,
+  validated: validated,
   customCheckValidity: checkValidity,
 });
 
