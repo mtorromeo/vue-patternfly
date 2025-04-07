@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.1.0-beta.28] - 2025-04-07
+
+### Bug Fixes
+
+- *(FormGroup)* Allow slot usage
+- *(Tabs)* Support dynamic tabs
+- *(Inputs)* Reactive validated prop
+- *(core)* [**breaking**] Uniformed slot names to lower case with dashes
+
+### Features
+
+- *(DescriptionList)* Implemented components
+- *(Switch)* Implemented check-icon prop
+
+### Refactor
+
+- *(Radio)* [**breaking**] Removed label-wrapped prop (use component="label" instead)
+
 ## [0.1.0-beta.27] - 2024-07-26
 
 ### Bug Fixes
