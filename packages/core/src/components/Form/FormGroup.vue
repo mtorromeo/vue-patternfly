@@ -7,7 +7,6 @@
         [styles.modifiers.noPaddingTop]: noPaddingTop,
       }]"
     >
-      {{ Object.keys($slots) }}
       <component
         :is="(labelInfo || $slots['label-info']) ? 'div' : PassThrough"
         :class="styles.formGroupLabelMain"

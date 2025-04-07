@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Bug Fixes
+
+- *(FormGroup)* Removed debugging statement
+
 ## [0.1.0-beta.28] - 2025-04-07
 
 ### Bug Fixes
