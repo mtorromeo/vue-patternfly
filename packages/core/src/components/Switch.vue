@@ -23,7 +23,11 @@
     >
 
     <template v-if="label">
-      <span :class="styles.switchToggle" />
+      <span :class="styles.switchToggle">
+        <div v-if="checkIcon" :class="styles.switchToggleIcon" aria-hidden="true">
+          <check-icon />
+        </div>
+      </span>
       <span :class="[styles.switchLabel, styles.modifiers.on]" aria-hidden="true">{{ label }}</span>
       <span
         :class="[styles.switchLabel, styles.modifiers.off]"
@@ -33,7 +37,7 @@
 
     <span v-else :class="styles.switchToggle">
       <div :class="styles.switchToggleIcon" aria-hidden="true">
-        <CheckIcon />
+        <check-icon />
       </div>
     </span>
   </label>
@@ -54,6 +58,9 @@ defineOptions({
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
   checked?: boolean;
+
+  /** Flag to show if the switch has a check icon. */
+  checkIcon?: boolean;
 
   /** Flag to reverse the layout of toggle and label (toggle on right). */
   reversed?: boolean;

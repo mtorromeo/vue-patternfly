@@ -10,8 +10,20 @@
       <pf-switch v-model:checked="checked" label="Message when ON" label-off="Message when OFF" />
     </story-canvas>
 
+    <story-canvas title="Reversed layout">
+      <pf-switch reversed label="Message when ON" label-off="Message when OFF" />
+    </story-canvas>
+
     <story-canvas title="Without label">
       <pf-switch />
+    </story-canvas>
+
+    <story-canvas title="Checked with label">
+      <pf-switch
+        check-icon
+        label="Message when on"
+        label-off="Message when off"
+        aria-label="Message when on" />
     </story-canvas>
 
     <story-canvas title="Disabled">
