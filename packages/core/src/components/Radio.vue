@@ -1,11 +1,11 @@
 <template>
   <component
     v-bind="ouiaProps"
-    :is="component ?? (wrapWithLabel ? 'label' : 'div')"
+    :is="component"
     :class="[styles.radio, {
-      [styles.modifiers.standalone]: !labelWrapped && !(label || $slots.label),
+      [styles.modifiers.standalone]: !wrapWithLabel && !(label || $slots.label),
     }]"
-    :for="labelWrapped ? id : undefined"
+    :for="wrapWithLabel ? id : undefined"
   >
     <sort>
       <sort-by :weight="labelBeforeButton ? -1 : 1">
@@ -63,8 +63,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   component?: string | Component;
   /** Id of the radio. */
   id?: string;
-  /** Flag to show if the radio label is wrapped on small screen. */
-  labelWrapped?: boolean;
   /** Flag to show if the radio label is shown before the radio button. */
   labelBeforeButton?: boolean;
   /** Flag to show if the radio is checked. */
@@ -85,7 +83,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   body?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  component: 'div',
+});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -100,7 +100,7 @@ const emit = defineEmits<{
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
-const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
+const wrapWithLabel = computed(() => props.component === 'label');
 const input: Ref<HTMLInputElement | undefined> = ref();
 
 defineExpose({

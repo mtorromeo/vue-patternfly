@@ -11,11 +11,12 @@
     </pre>
 
     <story-canvas title="Basic">
-      <pf-radio name="radio" label="Radio" />
+      <pf-radio id="radio1" name="radio" label="Radio" />
     </story-canvas>
 
     <story-canvas title="With description">
       <pf-radio
+        component="label"
         name="radio-with-description"
         label="Radio with description"
         description="Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP."
@@ -24,6 +25,7 @@
 
     <story-canvas title="With description and body">
       <pf-radio
+        id="radio3"
         name="radio-with-description-and-body"
         label="Radio with description and body"
         description="Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP."
