@@ -12,7 +12,7 @@
       <pf-login-footer>
         <p>{{ textContent }}</p>
         <pf-list :variant="footerListVariants">
-          <slot name="footerListItems" />
+          <slot name="footer-list-items" />
         </pf-list>
       </pf-login-footer>
     </template>
@@ -27,12 +27,12 @@
       <slot />
     </pf-login-main-body>
 
-    <pf-login-main-footer v-if="$slots.social || $slots.forgotCredentials || $slots.signup">
+    <pf-login-main-footer v-if="$slots.social || $slots['forgot-credentials'] || $slots.signup">
       <template v-if="$slots.social" #social>
         <slot name="social" />
       </template>
-      <template v-if="$slots.forgotCredentials" #forgotCredentials>
-        <slot name="forgotCredentials" />
+      <template v-if="$slots['forgot-credentials']" #forgot-credentials>
+        <slot name="forgot-credentials" />
       </template>
       <template v-if="$slots.signup" #signup>
         <slot name="signup" />
@@ -84,9 +84,9 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 defineSlots<{
   default: (props?: Record<never, never>) => any;
   utilities: (props?: Record<never, never>) => any;
-  footerListItems: (props?: Record<never, never>) => any;
+  'footer-list-items': (props?: Record<never, never>) => any;
   social: (props?: Record<never, never>) => any;
-  forgotCredentials: (props?: Record<never, never>) => any;
+  'forgot-credentials': (props?: Record<never, never>) => any;
   signup: (props?: Record<never, never>) => any;
 }>();
 </script>

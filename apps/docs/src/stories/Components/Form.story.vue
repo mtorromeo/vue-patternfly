@@ -51,7 +51,7 @@
     <story-canvas title="Invalid with form alert">
       <pf-form>
         <pf-form-group label="Age" label-info="Additional label info" field-id="age" helper-text-invalid="Age has to be a number">
-          <template v-if="age === ''" #helperText>
+          <template v-if="age === ''" #helper-text>
             Please enter your age
           </template>
           <template #helper-text-icon>

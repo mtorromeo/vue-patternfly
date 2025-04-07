@@ -175,7 +175,7 @@
       <pf-icon :in-progress="inProgress2">
         <CircleCheckIcon />
 
-        <template #progressIcon>
+        <template #progress-icon>
           <pf-spinner diameter="2em" aria-label="Loading..." />
         </template>
       </pf-icon>

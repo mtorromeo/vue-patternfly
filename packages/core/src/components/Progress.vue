@@ -128,7 +128,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
-  default: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const tooltip = ref('');

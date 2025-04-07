@@ -14,7 +14,7 @@
       <slot />
     </span>
     <span v-if="inProgress" :class="[styles.iconProgress, progressIconSize && styles.modifiers[progressIconSize]]">
-      <slot name="progressIcon">
+      <slot name="progress-icon">
         <pf-spinner diameter="1em" :aria-label="defaultProgressArialabel" />
       </slot>
     </span>
@@ -59,6 +59,6 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
-  progressIcon?: (props?: Record<never, never>) => any;
+  'progress-icon'?: (props?: Record<never, never>) => any;
 }>();
 </script>

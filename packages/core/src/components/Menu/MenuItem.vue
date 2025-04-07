@@ -21,7 +21,7 @@
         :class="[styles.menuItem, {[styles.modifiers.selected]: effectiveSelected && !check}]"
         :aria-current="ariaCurrent"
         :disabled="(disabled && !check && component !== 'a') || undefined"
-        :role="(!$slots.flyoutMenu && !check) ? 'menuitem' : undefined"
+        :role="(!$slots['flyout-menu'] && !check) ? 'menuitem' : undefined"
         :for="copy || check ? undefined : randomId"
         :href="component === 'a' ? to : undefined"
         :aria-disabled="component === 'a' && disabled ? disabled : undefined"
@@ -55,7 +55,7 @@
           <span v-if="externalLink" :class="styles.menuItemExternalIcon">
             <up-right-from-square-icon aria-hidden />
           </span>
-          <span v-if="$slots.flyoutMenu && direction === 'down'" :class="styles.menuItemToggleIcon">
+          <span v-if="$slots['flyout-menu'] && direction === 'down'" :class="styles.menuItemToggleIcon">
             <angle-right-icon aria-hidden />
           </span>
           <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
@@ -70,8 +70,8 @@
           </span>
         </span>
       </component>
-      <slot v-if="flyoutVisible" name="flyoutMenu" />
-      <!-- <slot name="drilldownMenu" /> -->
+      <slot v-if="flyoutVisible" name="flyout-menu" />
+      <!-- <slot name="drilldown-menu" /> -->
       <slot name="actions" />
       <pf-menu-item-action
         v-if="isDefined(favorited)"
@@ -175,7 +175,7 @@ const $slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
   icon?: (props?: Record<never, never>) => any;
   description?: (props?: Record<never, never>) => any;
-  flyoutMenu?: (props?: Record<never, never>) => any;
+  'flyout-menu'?: (props?: Record<never, never>) => any;
   actions?: (props?: Record<never, never>) => any;
 }>();
 
@@ -234,7 +234,7 @@ function onMouseOver() {
   if (!menu || menu.state.disableHover) {
     return;
   }
-  if ($slots.flyoutMenu) {
+  if ($slots['flyout-menu']) {
     showFlyout(true);
   } else {
     menu.flyout.value = null;
@@ -272,7 +272,7 @@ function onClick(event: PointerEvent) {
   //   }
   // }
 
-  if ($slots.flyoutMenu) {
+  if ($slots['flyout-menu']) {
     handleFlyout(event);
   }
 }

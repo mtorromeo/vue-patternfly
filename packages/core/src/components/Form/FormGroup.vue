@@ -3,12 +3,13 @@
     <div
       v-if="label || $slots.label"
       :class="[styles.formGroupLabel, {
-        [styles.modifiers.info]: labelInfo || $slots.labelInfo,
+        [styles.modifiers.info]: labelInfo || $slots['label-info'],
         [styles.modifiers.noPaddingTop]: noPaddingTop,
       }]"
     >
+      {{ Object.keys($slots) }}
       <component
-        :is="(labelInfo || $slots.labelInfo) ? 'div' : PassThrough"
+        :is="(labelInfo || $slots['label-info']) ? 'div' : PassThrough"
         :class="styles.formGroupLabelMain"
       >
         <label :class="styles.formLabel" :for="fieldId">
@@ -18,11 +19,11 @@
           <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">{{ ' *' }}</span>
         </label>
         {{ ' ' }}
-        <slot name="labelIcon" />
+        <slot name="label-icon" />
       </component>
 
-      <div v-if="labelInfo || $slots.labelInfo" :class="styles.formGroupLabelInfo">
-        <slot name="labelInfo">{{ labelInfo }}</slot>
+      <div v-if="labelInfo || $slots['label-info']" :class="styles.formGroupLabelInfo">
+        <slot name="label-info">{{ labelInfo }}</slot>
       </div>
     </div>
 
@@ -35,7 +36,7 @@
       <slot v-if="!helperTextBeforeField" />
 
       <div
-        v-if="internalValidated === 'error' ? (helperTextInvalid || $slots.helperTextInvalid) : (helperText || $slots.helperText)"
+        v-if="internalValidated === 'error' ? (helperTextInvalid || $slots['helper-text-invalid']) : (helperText || $slots['helper-text'])"
         :id="`${fieldId}-helper`"
         :class="[styles.formHelperText, {
           [styles.modifiers.success]: internalValidated === 'success',
@@ -45,17 +46,17 @@
         aria-live="polite"
       >
         <template v-if="internalValidated === 'error'">
-          <span v-if="$slots.helperTextInvalidIcon" :class="styles.formHelperTextIcon">
-            <slot name="helperTextInvalidIcon" />
+          <span v-if="$slots['helper-text-invalid-icon']" :class="styles.formHelperTextIcon">
+            <slot name="helper-text-invalid-icon" />
           </span>
-          <slot name="helperTextInvalid">{{ helperTextInvalid }}</slot>
+          <slot name="helper-text-invalid">{{ helperTextInvalid }}</slot>
         </template>
 
-        <template v-else-if="helperText || $slots.helperText">
-          <span v-if="$slots.helperTextIcon" :class="styles.formHelperTextIcon">
-            <slot name="helperTextIcon" />
+        <template v-else-if="helperText || $slots['helper-text']">
+          <span v-if="$slots['helper-text-icon']" :class="styles.formHelperTextIcon">
+            <slot name="helper-text-icon" />
           </span>
-          <slot name="helperText">{{ helperText }}</slot>
+          <slot name="helper-text">{{ helperText }}</slot>
         </template>
       </div>
       <slot v-if="helperTextBeforeField" />
@@ -119,12 +120,12 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 defineSlots<{
   default: (props?: Record<never, never>) => any;
   label?: (props?: Record<never, never>) => any;
-  'labelIcon'?: (props?: Record<never, never>) => any;
-  'labelInfo'?: (props?: Record<never, never>) => any;
-  'helperTextInvalidIcon'?: (props?: Record<never, never>) => any;
-  'helperTextInvalid'?: (props?: Record<never, never>) => any;
-  'helperTextIcon'?: (props?: Record<never, never>) => any;
-  'helperText'?: (props?: Record<never, never>) => any;
+  'label-icon'?: (props?: Record<never, never>) => any;
+  'label-info'?: (props?: Record<never, never>) => any;
+  'helper-text-invalid-icon'?: (props?: Record<never, never>) => any;
+  'helper-text-invalid'?: (props?: Record<never, never>) => any;
+  'helper-text-icon'?: (props?: Record<never, never>) => any;
+  'helper-text'?: (props?: Record<never, never>) => any;
 }>();
 
 import { computed } from 'vue';

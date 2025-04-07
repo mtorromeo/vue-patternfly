@@ -4,9 +4,9 @@
     <ul v-if="$slots.social" :class="styles.loginMainFooterLinks">
       <slot name="social" />
     </ul>
-    <div v-if="$slots.signup || $slots.forgotCredentials" :class="styles.loginMainFooterBand">
+    <div v-if="$slots.signup || $slots['forgot-credentials']" :class="styles.loginMainFooterBand">
       <slot name="signup" />
-      <slot name="forgotCredentials" />
+      <slot name="forgot-credentials" />
     </div>
   </div>
 </template>
@@ -28,8 +28,8 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
-  social: (props?: Record<never, never>) => any;
-  signup: (props?: Record<never, never>) => any;
-  forgotCredentials: (props?: Record<never, never>) => any;
+  social?: (props?: Record<never, never>) => any;
+  signup?: (props?: Record<never, never>) => any;
+  'forgot-credentials'?: (props?: Record<never, never>) => any;
 }>();
 </script>
