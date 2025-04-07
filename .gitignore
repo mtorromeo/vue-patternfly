@@ -6,6 +6,7 @@
 !.vscode
 *.log
 *.gz
+*.tsbuildinfo
 dist
 
 # js

@@ -48,7 +48,7 @@
 
 <style scoped>
 .story-content {
-  max-width: 832px;
+  max-width: 840px;
 }
 
 .toc {

@@ -220,6 +220,66 @@ export type ExpandableBreakpointProps = {
   expandableXl2?: 'expandable' | 'nonExpandable';
 }
 
+export type ColumnsBreakpointProps = {
+  /** Sets the number of columns on the description list */
+  columns?: '1Col' | '2Col' | '3Col';
+  /** Sets the number of columns on the description list at Sm breakpoint */
+  columnsSm?: '1Col' | '2Col' | '3Col';
+  /** Sets the number of columns on the description list at Md breakpoint */
+  columnsMd?: '1Col' | '2Col' | '3Col';
+  /** Sets the number of columns on the description list at Lg breakpoint */
+  columnsLg?: '1Col' | '2Col' | '3Col';
+  /** Sets the number of columns on the description list at Xl breakpoint */
+  columnsXl?: '1Col' | '2Col' | '3Col';
+  /** Sets the number of columns on the description list at Xl2 breakpoint */
+  columnsXl2?: '1Col' | '2Col' | '3Col';
+}
+
+export type OrientationBreakpointProps = {
+  /** Indicates how the menu will align */
+  orientation?: 'vertical' | 'horizontal';
+  /** Indicates how the menu will align at Sm breakpoint */
+  orientationSm?: 'vertical' | 'horizontal';
+  /** Indicates how the menu will align at Md breakpoint */
+  orientationMd?: 'vertical' | 'horizontal';
+  /** Indicates how the menu will align at Lg breakpoint */
+  orientationLg?: 'vertical' | 'horizontal';
+  /** Indicates how the menu will align at Xl breakpoint */
+  orientationXl?: 'vertical' | 'horizontal';
+  /** Indicates how the menu will align at Xl2 breakpoint */
+  orientationXl2?: 'vertical' | 'horizontal';
+}
+
+export type AutoFitMinBreakpointProps = {
+  /** Sets the minimum column size for the auto-fit layout */
+  autoFitMin?: string;
+  /** Sets the minimum column size for the auto-fit layout at Sm breakpoint */
+  autoFitMinSm?: string;
+  /** Sets the minimum column size for the auto-fit layout at Md breakpoint */
+  autoFitMinMd?: string;
+  /** Sets the minimum column size for the auto-fit layout at Lg breakpoint */
+  autoFitMinLg?: string;
+  /** Sets the minimum column size for the auto-fit layout at Xl breakpoint */
+  autoFitMinXl?: string;
+  /** Sets the minimum column size for the auto-fit layout at Xl2 breakpoint */
+  autoFitMinXl2?: string;
+}
+
+export type HorizontalTermWidthBreakpointProps = {
+  /** Sets the horizontal description list's term column width */
+  horizontalTermWidth?: string;
+  /** Sets the horizontal description list's term column width at Sm breakpoint */
+  horizontalTermWidthSm?: string;
+  /** Sets the horizontal description list's term column width at Md breakpoint */
+  horizontalTermWidthMd?: string;
+  /** Sets the horizontal description list's term column width at Lg breakpoint */
+  horizontalTermWidthLg?: string;
+  /** Sets the horizontal description list's term column width at Xl breakpoint */
+  horizontalTermWidthXl?: string;
+  /** Sets the horizontal description list's term column width at Xl2 breakpoint */
+  horizontalTermWidthXl2?: string;
+}
+
 export type BreakpointProps = {
   sm?: boolean;
   md?: boolean;
@@ -251,7 +311,7 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
           continue;
         } else {
           value = toCamelCase(value);
-          if (value.match(/^[0-9]/)) {
+          if (!short && value.match(/^[0-9]/)) {
             value = `_${value}`;
           }
         }
