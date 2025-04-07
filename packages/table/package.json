@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/table",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "files": [
     "dist"
@@ -52,6 +52,6 @@
   },
   "peerDependencies": {
     "@vue-patternfly/core": "workspace:^",
-    "@vueuse/core": "^10"
+    "@vueuse/core": "^13"
   }
 }

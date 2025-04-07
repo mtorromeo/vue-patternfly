@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "0.1.0-beta.27",
+  "version": "0.1.0-beta.28",
   "type": "module",
   "files": [
     "dist"
@@ -62,9 +62,9 @@
     "vue-tsc": "^2.2.8"
   },
   "peerDependencies": {
-    "@vueuse/core": "^10",
-    "@vueuse/integrations": "^10",
-    "@vueuse/shared": "^10",
+    "@vueuse/core": "^13",
+    "@vueuse/integrations": "^13",
+    "@vueuse/shared": "^13",
     "focus-trap": "*"
   },
   "packageManager": "pnpm@8.6.1"
