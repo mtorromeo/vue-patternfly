@@ -7,7 +7,7 @@
     }]"
     :tabindex="tabindex"
   >
-    <span class="pf-v5-screen-reader">{{ readStateScreenReaderText }}</span>
+    <span class="pf-v6-screen-reader">{{ readStateScreenReaderText }}</span>
     <slot />
   </li>
 </template>

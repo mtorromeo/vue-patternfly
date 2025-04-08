@@ -23,7 +23,7 @@
 </template>
 
 <style scoped>
-.pf-v5-c-badge + .pf-v5-c-badge {
+.pf-v6-c-badge + .pf-v6-c-badge {
   margin-left: 0.2rem;
 }
 </style>

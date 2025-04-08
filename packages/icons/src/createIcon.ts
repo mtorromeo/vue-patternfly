@@ -41,7 +41,7 @@ export function createIcon({
       children.push(h('path', {d: svgPath}));
 
       return h('svg', {
-        class: 'pf-v5-svg',
+        class: 'pf-v6-svg',
         fill: 'currentColor',
         viewBox,
         'aria-labelled-by': this.title ? id : undefined,

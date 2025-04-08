@@ -1,10 +1,10 @@
 <template>
   <doc-page title="Toolbar">
-    <template #description>A <b>toolbar</b> allows a user to manage and manipulate a data set. Data can be presented in any valid presentation, a table, a list, or a data visualization (chart), for example. The toolbar responsively accommodates controls and displays applied filters in chip groups.</template>
+    <template #description>A <b>toolbar</b> allows a user to manage and manipulate a data set. Data can be presented in any valid presentation, a table, a list, or a data visualization (chart), for example. The toolbar responsively accommodates controls and displays applied filters in label groups.</template>
 
     <template #apidocs>
       <component-info src="packages/core/src/components/Toolbar/Toolbar.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarChipGroupContent.vue" />
+      <component-info src="packages/core/src/components/Toolbar/ToolbarLabelGroupContent.vue" />
       <component-info src="packages/core/src/components/Toolbar/ToolbarContent.vue" />
       <component-info src="packages/core/src/components/Toolbar/ToolbarExpandableContent.vue" />
       <component-info src="packages/core/src/components/Toolbar/ToolbarFilter.vue" />
@@ -65,30 +65,34 @@
       </pf-toolbar>
     </story-canvas>
 
-    <story-canvas title="Adjusting item spacers">
+    <story-canvas title="Toolbar item spacers">
       <pf-toolbar inset="none" inset-md="sm" inset-xl="2xl" inset-xl2="lg">
         <pf-toolbar-content>
-          <pf-toolbar-item spacer="none">
-            <pf-button variant="secondary">Action</pf-button>
-          </pf-toolbar-item>
-          <pf-toolbar-item spacer="sm">
-            <pf-button variant="secondary">Action</pf-button>
-          </pf-toolbar-item>
-          <pf-toolbar-item spacer="md">
-            <pf-button variant="secondary">Action</pf-button>
-          </pf-toolbar-item>
-          <pf-toolbar-item spacer="lg">
-            <pf-button variant="secondary">Action</pf-button>
-          </pf-toolbar-item>
+          <pf-toolbar-group variant="action-group">
+            <pf-toolbar-item>
+              <pf-button variant="secondary">Action</pf-button>
+            </pf-toolbar-item>
+            <pf-toolbar-item>
+              <pf-button variant="secondary">Action</pf-button>
+            </pf-toolbar-item>
+            <pf-toolbar-item>
+              <pf-button variant="secondary">Action</pf-button>
+            </pf-toolbar-item>
+            <pf-toolbar-item>
+              <pf-button variant="secondary">Action</pf-button>
+            </pf-toolbar-item>
+          </pf-toolbar-group>
           <pf-toolbar-item variant="separator" />
-          <pf-toolbar-item spacer="none" spacer-md="sm" spacer-lg="md" spacer-xl="lg">
-            <pf-button variant="secondary">Action</pf-button>
-          </pf-toolbar-item>
-          <pf-toolbar-item>
-            <pf-button variant="primary">Action</pf-button>
-          </pf-toolbar-item>
+          <pf-toolbar-group variant="action-group" gap-lg="sm">
+            <pf-toolbar-item>
+              <pf-button variant="secondary">Action</pf-button>
+            </pf-toolbar-item>
+            <pf-toolbar-item>
+              <pf-button variant="primary">Action</pf-button>
+            </pf-toolbar-item>
+          </pf-toolbar-group>
           <pf-toolbar-item variant="separator" />
-          <pf-toolbar-group space-items="lg">
+          <pf-toolbar-group variant="action-group" gap-lg="lg">
             <pf-toolbar-item>
               <pf-button variant="secondary">Action</pf-button>
             </pf-toolbar-item>
@@ -268,9 +272,9 @@
             <pf-toolbar-group variant="filter-group">
               <pf-toolbar-filter
                 category="Status"
-                :chips="filters.status"
-                @delete-chip="onDelete"
-                @delete-chip-group="onDeleteGroup"
+                :labels="filters.status"
+                @delete-label="onDelete"
+                @delete-label-group="onDeleteGroup"
               >
                 <pf-toolbar-item>
                   <pf-select>
@@ -282,7 +286,7 @@
                 </pf-toolbar-item>
               </pf-toolbar-filter>
 
-              <pf-toolbar-filter category="Risk" :chips="filters.risk" @delete-chip="onDelete">
+              <pf-toolbar-filter category="Risk" :labels="filters.risk" @delete-label="onDelete">
                 <pf-toolbar-item>
                   <pf-select>
                     <pf-select-option value="Filter 2" />

@@ -21,7 +21,7 @@
       </span>
       <span :class="styles.navToggle">
         <span :class="styles.navToggleIcon">
-          <AngleRightIcon aria-hidden="true" />
+          <angle-right-icon />
         </span>
       </span>
     </button>

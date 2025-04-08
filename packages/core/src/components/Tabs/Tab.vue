@@ -1,57 +1,64 @@
 <template>
-  <teleport :disabled="!tabListRef" :to="tabListRef">
-    <li
-      v-bind="ouiaProps as any"
-      :class="[styles.tabsItem, {
-        [styles.modifiers.current]: key === activeKey,
-      }]">
-      <pf-tab-button
-        :id="`pf-tab-${typeof key === 'symbol' ? (key.description ?? '') : key}-${String(idSuffix)}`"
-        :class="[styles.tabsLink, {
-          [styles.modifiers.disabled]: disabled && href,
-          [styles.modifiers.ariaDisabled]: ariaDisabled,
-        }]"
-        :href="href"
-        :target="target"
-        :disabled="disabled && !href"
-        :tabindex="disabled || ariaDisabled ? (href ? -1 : undefined) : undefined"
-        :aria-disabled="disabled || ariaDisabled"
-        :aria-controls="`pf-tab-section-${String(key)}-${String(idSuffix)}`"
-        :aria-selected="activeKey === key"
-        role="tab"
-        @click="handleClick($event as PointerEvent)"
-      >
-        <pf-tab-title-icon v-if="$slots.icon">
-          <slot name="icon" />
-        </pf-tab-title-icon>
-        <slot name="title">
-          <pf-tab-title-text v-if="title">
-            {{ title }}
-          </pf-tab-title-text>
-        </slot>
-      </pf-tab-button>
-    </li>
+  <li
+    v-if="!overflowing"
+    ref="el"
+    v-bind="ouiaProps as any"
+    :class="[styles.tabsItem, {
+      [styles.modifiers.current]: key === activeKey,
+    }]">
+    <pf-tab-button
+      :id="`pf-tab-${typeof key === 'symbol' ? (key.description ?? '') : key}-${String(idSuffix)}`"
+      :class="[styles.tabsLink, {
+        [styles.modifiers.disabled]: disabled && href,
+        [styles.modifiers.ariaDisabled]: ariaDisabled,
+      }]"
+      :href="href"
+      :target="target"
+      :disabled="disabled && !href"
+      :tabindex="disabled || ariaDisabled ? (href ? -1 : undefined) : undefined"
+      :aria-disabled="disabled || ariaDisabled"
+      :aria-controls="`pf-tab-section-${String(key)}-${String(idSuffix)}`"
+      :aria-selected="activeKey === key"
+      role="tab"
+      @click="handleClick($event as PointerEvent)"
+    >
+      <pf-tab-title-icon v-if="$slots.icon">
+        <slot name="icon" />
+      </pf-tab-title-icon>
+      <slot name="title">
+        <pf-tab-title-text v-if="title">
+          {{ title }}
+        </pf-tab-title-text>
+      </slot>
+    </pf-tab-button>
+  </li>
+
+  <teleport v-else-if="tabOverflowRef?.$.exposed?.el" :to="tabOverflowRef?.$.exposed?.el">
+    <pf-menu-item>{{ title }}</pf-menu-item>
   </teleport>
 
-  <pf-tab-content
-    v-if="!contentRef && (!mountOnEnter || keepAlive)"
-    v-show="key === activeKey"
-    :id="`pf-tab-section-${String(key)}-${String(idSuffix)}`"
-    :key="key"
-    v-bind="$attrs"
-  >
-    <slot />
-  </pf-tab-content>
+  <teleport v-if="contentTargetRef && !contentRef" :to="contentTargetRef">
+    <pf-tab-content
+      v-if="!mountOnEnter || keepAlive"
+      v-show="key === activeKey"
+      :id="`pf-tab-section-${String(key)}-${String(idSuffix)}`"
+      :key="key"
+      v-bind="$attrs"
+    >
+      <slot />
+    </pf-tab-content>
+  </teleport>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
-import { computed, getCurrentInstance, inject, ref, watch, watchEffect } from 'vue';
-import { TabsKey, TabsProvideKey } from './Tabs.vue';
+import { computed, getCurrentInstance, inject, ref, watch, watchEffect, type Ref } from 'vue';
+import { TabsKey, TabsProvideKey } from './common';
 import PfTabTitleIcon from './TabTitleIcon.vue';
 import PfTabTitleText from './TabTitleText.vue';
 import PfTabButton from './TabButton.vue';
 import PfTabContent, { type Props as PfTabContentProps } from './TabContent.vue';
+import PfMenuItem from '../Menu/MenuItem.vue';
 import { useChildrenTracker } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -94,14 +101,21 @@ defineSlots<{
 }>();
 
 const instance = getCurrentInstance();
+const el: Ref<HTMLLIElement | undefined> = ref();
 const fallbackKey = Symbol();
 const key = computed(() => instance?.vnode.key ?? fallbackKey);
 const tabs = inject(TabsProvideKey);
+const overflowing = ref(false);
 
-useChildrenTracker(TabsKey, key);
+useChildrenTracker(TabsKey, {
+  key,
+  el,
+  overflowing,
+});
 
 const activeKey = tabs?.activeKey;
-const tabListRef = tabs?.tabListRef;
+const tabOverflowRef = tabs?.tabOverflowRef;
+const contentTargetRef = tabs?.contentTargetRef;
 const idSuffix = tabs?.idSuffix;
 const keepAlive = ref(false);
 

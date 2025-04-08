@@ -2,7 +2,7 @@
   <label v-bind="(ouiaProps as any)" :class="styles.check">
     <input
       v-bind="$attrs"
-      :ref="(el) => (el as HTMLInputElement).indeterminate = checked === null"
+      :ref="(el) => el ? (el as HTMLInputElement).indeterminate = checked === null : undefined"
       :class="styles.checkInput"
       type="checkbox"
       :checked="Boolean(checked)"

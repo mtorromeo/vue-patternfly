@@ -1,5 +1,6 @@
 import { isDefined } from '@vueuse/shared';
 import { Fragment, Comment, type VNode, type VNodeTypes, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren, type Component, type ComponentOptionsMixin, type VNodeProps, type AllowedComponentProps } from 'vue';
+import { globalHeightBreakpoints, globalWidthBreakpoints } from './constants';
 
 const camelize = (s: string) =>
   s
@@ -249,3 +250,50 @@ export function isRawSlots(children: VNodeNormalizedChildren | undefined): child
 export type ComponentProps<C extends Component> = C extends new (...args: any) => any
   ? Omit<InstanceType<C>['$props'], keyof VNodeProps | keyof AllowedComponentProps>
   : never;
+
+/**
+ * Return the breakpoint for the given width
+ */
+export const getBreakpoint = (width: number): 'default' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' => {
+  if (width >= globalWidthBreakpoints['2xl']) {
+    return '2xl';
+  }
+  if (width >= globalWidthBreakpoints.xl) {
+    return 'xl';
+  }
+  if (width >= globalWidthBreakpoints.lg) {
+    return 'lg';
+  }
+  if (width >= globalWidthBreakpoints.md) {
+    return 'md';
+  }
+  if (width >= globalWidthBreakpoints.sm) {
+    return 'sm';
+  }
+  return 'default';
+};
+
+/**
+ * Return the breakpoint for the given height
+ *
+ * @param {number | null} height The height to check
+ * @returns {'default' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'} The breakpoint
+ */
+export const getVerticalBreakpoint = (height: number): 'default' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' => {
+  if (height >= globalHeightBreakpoints['2xl']) {
+    return '2xl';
+  }
+  if (height >= globalHeightBreakpoints.xl) {
+    return 'xl';
+  }
+  if (height >= globalHeightBreakpoints.lg) {
+    return 'lg';
+  }
+  if (height >= globalHeightBreakpoints.md) {
+    return 'md';
+  }
+  if (height >= globalHeightBreakpoints.sm) {
+    return 'sm';
+  }
+  return 'default';
+};

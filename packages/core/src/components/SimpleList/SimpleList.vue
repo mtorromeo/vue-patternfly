@@ -5,7 +5,7 @@
       <default-slot />
 
       <template v-if="!grouped" #with>
-        <ul class="pf-v5-c-simple-list__list" role="list" :aria-label="ariaLabel" />
+        <ul class="pf-v6-c-simple-list__list" role="list" :aria-label="ariaLabel" />
       </template>
     </wrap>
   </div>

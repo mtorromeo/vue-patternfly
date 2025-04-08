@@ -3,7 +3,6 @@
     v-bind="ouiaProps"
     :id="id"
     :class="[styles.pageSidebar, {
-      [styles.modifiers.light]: theme === 'light',
       [styles.modifiers.expanded]: sidebarOpen,
       [styles.modifiers.collapsed]: !sidebarOpen,
     }]"

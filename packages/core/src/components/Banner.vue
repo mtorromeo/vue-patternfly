@@ -3,10 +3,10 @@
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.banner, {
       [styles.modifiers.sticky]: sticky,
-      [styles.modifiers[variant as 'blue' | 'red' | 'green' | 'gold']]: variant !== 'default',
+      [styles.modifiers[variant as NonNullable<typeof variant>]]: variant,
     }]"
   >
-    <span v-if="screenReaderText || $slots['screen-reader-text']" class="pf-v5-screen-reader">
+    <span v-if="screenReaderText || $slots['screen-reader-text']" class="pf-v6-screen-reader">
       <slot name="screen-reader-text">
         {{ screenReaderText }}
       </slot>
@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Banner/banner';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import type { HTMLAttributes } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfBanner',
@@ -31,14 +31,16 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
    * be passed in when the banner conveys status/severity.
    */
   screenReaderText?: string;
-  /** Variant styles for the banner. */
-  variant?: 'default' | 'blue' | 'red' | 'green' | 'gold';
+  /** Color options for the banner, will be overwritten by any applied using the status prop. */
+  color?: 'red' | 'orangered' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'purple';
+  /** Status style options for the banner, will overwrite any color applied using the color prop. */
+  status?: 'success' | 'warning' | 'danger' | 'info' | 'custom';
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  variant: 'default',
-});
+const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+
+const variant = computed(() => props.status || props.color);
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

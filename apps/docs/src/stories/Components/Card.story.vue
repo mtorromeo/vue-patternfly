@@ -31,9 +31,7 @@
     <story-canvas title="With image and actions">
       <pf-card>
         <pf-card-header>
-          <pf-card-header-main>
-            <pf-brand src="https://v5-archive.patternfly.org/assets/images/pf_logo.svg" alt="PatternFly logo" style="height: 50px" />
-          </pf-card-header-main>
+          <pf-brand :src="PfLogo" alt="PatternFly logo" style="height: 50px" />
           <pf-card-actions no-offset>
             <pf-dropdown position="right">
               <template #toggle>
@@ -69,7 +67,7 @@
     <story-canvas title="Expandable with icon">
       <pf-card expandable>
         <pf-card-header>
-          <img src="https://raw.githubusercontent.com/patternfly/patternfly-react/main/packages/react-core/src/demos/Card/pf-logo-small.svg" alt="PatternFly logo" style="width: 27px">
+          <img :src="PfIconLogo" alt="PatternFly logo" style="width: 27px">
           <pf-card-actions>
             <pf-dropdown position="right">
               <template #toggle>
@@ -105,7 +103,7 @@
         </pre>
       </template>
 
-      <pf-card selectable-raised selectable-input>
+      <pf-card selectable selectable-input="visible">
         <pf-card-header>
           <pf-card-actions>
             <pf-dropdown position="right">
@@ -131,13 +129,17 @@
         <pf-card-body>This is a selectable card. Click me to select me. Click again to deselect me.</pf-card-body>
       </pf-card>
       <br>
-      <pf-card selectable-raised selectable-input>
-        <pf-card-title>Second card</pf-card-title>
+      <pf-card selectable selectable-input>
+        <pf-card-header>
+          <pf-card-title>Second card</pf-card-title>
+        </pf-card-header>
         <pf-card-body>This is a selectable card. Click me to select me. Click again to deselect me.</pf-card-body>
       </pf-card>
       <br>
-      <pf-card selectable-raised selectable-input selectable-disabled>
-        <pf-card-title>Third card</pf-card-title>
+      <pf-card selectable selectable-input disabled>
+        <pf-card-header>
+          <pf-card-title>Third card</pf-card-title>
+        </pf-card-header>
         <pf-card-body>This is a raised but disabled card.</pf-card-body>
       </pf-card>
     </story-canvas>
@@ -146,4 +148,6 @@
 
 <script lang="ts" setup>
 import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
+import PfLogo from '@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg';
+import PfIconLogo from '@patternfly/patternfly/assets/images/PF-IconLogo.svg';
 </script>

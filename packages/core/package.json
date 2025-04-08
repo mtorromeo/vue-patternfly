@@ -35,9 +35,9 @@
   "dependencies": {
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",
-    "@patternfly/patternfly": "^5.4.2",
-    "@patternfly/react-styles": "^5.4.1",
-    "@patternfly/react-tokens": "^5.4.1",
+    "@patternfly/patternfly": "^6.2.0",
+    "@patternfly/react-styles": "^6.2.0",
+    "@patternfly/react-tokens": "^6.2.0",
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
@@ -45,9 +45,9 @@
     "@types/web-bluetooth": "^0.0.21",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/compiler-sfc": "^3.5.13",
-    "@vueuse/core": "^13.0.0",
-    "@vueuse/integrations": "^13.0.0",
-    "@vueuse/shared": "^13.0.0",
+    "@vueuse/core": "^13.1.0",
+    "@vueuse/integrations": "^13.1.0",
+    "@vueuse/shared": "^13.1.0",
     "concurrently": "^9.1.2",
     "focus-trap": "^7.6.4",
     "fs-extra": "^11.3.0",
@@ -67,5 +67,5 @@
     "@vueuse/shared": "^13",
     "focus-trap": "*"
   },
-  "packageManager": "pnpm@8.6.1"
+  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }

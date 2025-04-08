@@ -11,6 +11,7 @@
       :disabled="disabled"
       :class="styles.switchInput"
       type="checkbox"
+      role="switch"
       :checked="managedChecked"
       @change="managedChecked = ($event.currentTarget as HTMLInputElement).checked"
     >
@@ -28,11 +29,7 @@
           <check-icon />
         </div>
       </span>
-      <span :class="[styles.switchLabel, styles.modifiers.on]" aria-hidden="true">{{ label }}</span>
-      <span
-        :class="[styles.switchLabel, styles.modifiers.off]"
-        aria-hidden="true"
-      >{{ labelOff ? labelOff : label }}</span>
+      <span :class="styles.switchLabel" aria-hidden="true">{{ label }}</span>
     </template>
 
     <span v-else :class="styles.switchToggle">

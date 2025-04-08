@@ -2,28 +2,33 @@
   <pf-page v-if="!$route.meta.iframe" managed-sidebar>
     <template #skeleton>
       <pf-masthead>
-        <pf-masthead-toggle>
-          <pf-page-toggle-button>
-            <bars-icon />
-          </pf-page-toggle-button>
-        </pf-masthead-toggle>
         <pf-masthead-main>
+          <pf-masthead-toggle>
+            <pf-page-toggle-button>
+              <bars-icon />
+            </pf-page-toggle-button>
+          </pf-masthead-toggle>
           <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
             <pf-masthead-brand :href="href">
-              <pf-brand
-                src="https://v5-archive.patternfly.org/assets/images/pf_logo.svg"
-                style="height:40px;filter:invert(1)"
-              />
+              <pf-brand :src="PfLogo" style="height:38px" />
             </pf-masthead-brand>
           </router-link>
         </pf-masthead-main>
         <pf-masthead-content>
           <pf-toolbar full-height>
             <pf-toolbar-content>
-              <pf-toolbar-item>header-tools</pf-toolbar-item>
-              <pf-toolbar-item align="right">
-                <pf-switch v-model:checked="darkTheme" label="Dark theme" />
-              </pf-toolbar-item>
+              <pf-toolbar-group align="end">
+                <pf-toolbar-item>
+                  <pf-toggle-group v-model="darkTheme">
+                    <pf-toggle-group-item :value="false">
+                      <sun-icon />
+                    </pf-toggle-group-item>
+                    <pf-toggle-group-item :value="true">
+                      <moon-icon />
+                    </pf-toggle-group-item>
+                  </pf-toggle-group>
+                </pf-toolbar-item>
+              </pf-toolbar-group>
             </pf-toolbar-content>
           </pf-toolbar>
         </pf-masthead-content>
@@ -61,44 +66,45 @@
 
 <style lang="scss">
 .page__layouts {
-  .pf-v5-l-bullseye,
-  .pf-v5-l-bullseye > div,
-  .pf-v5-l-flex,
-  .pf-v5-l-flex > div,
-  .pf-v5-l-gallery,
-  .pf-v5-l-gallery > div,
-  .pf-v5-l-grid,
-  .pf-v5-l-grid > div,
-  .pf-v5-l-level,
-  .pf-v5-l-level > div,
-  .pf-v5-l-split,
-  .pf-v5-l-split > div,
-  .pf-v5-l-stack,
-  .pf-v5-l-stack > div {
+  .pf-v6-l-bullseye,
+  .pf-v6-l-bullseye > div,
+  .pf-v6-l-flex,
+  .pf-v6-l-flex > div,
+  .pf-v6-l-gallery,
+  .pf-v6-l-gallery > div,
+  .pf-v6-l-grid,
+  .pf-v6-l-grid > div,
+  .pf-v6-l-level,
+  .pf-v6-l-level > div,
+  .pf-v6-l-split,
+  .pf-v6-l-split > div,
+  .pf-v6-l-stack,
+  .pf-v6-l-stack > div {
     border-style: dashed !important;
     border-width: 2px !important;
     padding: 1rem !important;
   }
 
-  .pf-v5-l-bullseye,
-  .pf-v5-l-flex,
-  .pf-v5-l-gallery,
-  .pf-v5-l-grid,
-  .pf-v5-l-level,
-  .pf-v5-l-split,
-  .pf-v5-l-stack {
+  .pf-v6-l-bullseye,
+  .pf-v6-l-flex,
+  .pf-v6-l-gallery,
+  .pf-v6-l-grid,
+  .pf-v6-l-level,
+  .pf-v6-l-split,
+  .pf-v6-l-stack {
     margin: 1rem 0 !important;
   }
 }
 </style>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { stories } from './router';
 import { useAlertsStore } from './store/alerts';
-import { ref } from 'vue';
-import { watch } from 'vue';
+import PfLogo from '@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg';
 import BarsIcon from '@vue-patternfly/icons/bars-icon';
+import SunIcon from '@vue-patternfly/icons/sun-icon';
+import MoonIcon from '@vue-patternfly/icons/moon-icon';
 
 const alerts = useAlertsStore();
 const maxDisplayed = ref(5);
@@ -114,15 +120,14 @@ const overflowMessage = computed(() => {
   return '';
 });
 
-const darkTheme = computed({
-  get: () => document.documentElement.classList.contains('pf-v5-theme-dark'),
-  set(value) {
-    if (value) {
-      document.documentElement.classList.add('pf-v5-theme-dark');
-    } else {
-      document.documentElement.classList.remove('pf-v5-theme-dark');
-    }
-  },
+const darkTheme = ref(document.documentElement.classList.contains('pf-v6-theme-dark'));
+
+watch(darkTheme, value => {
+  if (value) {
+    document.documentElement.classList.add('pf-v6-theme-dark');
+  } else {
+    document.documentElement.classList.remove('pf-v6-theme-dark');
+  }
 });
 
 function expandAlerts() {

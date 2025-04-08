@@ -2,7 +2,7 @@
   <section
     v-bind="ouiaProps"
     :class="[styles.tabContent, {
-      [styles.modifiers.light_300]: variant === 'light300',
+      [styles.modifiers.secondary]: secondary,
     }]"
     role="tabpanel"
     :hidden="hidden || undefined"
@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { inject, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/TabContent/tab-content';
-import { TabsProvideKey } from './Tabs.vue';
+import { TabsProvideKey } from './common';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -33,7 +33,7 @@ defineSlots<{
 }>();
 
 const hidden = ref(false);
-const variant = inject(TabsProvideKey, undefined)?.variant;
+const secondary = inject(TabsProvideKey, undefined)?.secondary;
 
 defineExpose({
   hidden,

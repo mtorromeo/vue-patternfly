@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": null,
     "rootDir": "src",
     "outDir": "dist/esm",
     "composite": true,

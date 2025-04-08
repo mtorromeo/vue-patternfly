@@ -42,7 +42,7 @@ import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemp
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation, type InputValidateState } from '../input';
-import { FormGroupInputsKey, FormInputsKey } from './Form/common';
+import { FormInputsKey } from './Form/common';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
 
@@ -133,7 +133,6 @@ const {
 });
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 function focus() {
   input.value?.focus();

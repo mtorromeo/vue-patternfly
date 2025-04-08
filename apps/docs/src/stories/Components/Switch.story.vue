@@ -7,11 +7,11 @@
     </template>
 
     <story-canvas title="Basic">
-      <pf-switch v-model:checked="checked" label="Message when ON" label-off="Message when OFF" />
+      <pf-switch v-model:checked="checked" label="Toggable option" />
     </story-canvas>
 
     <story-canvas title="Reversed layout">
-      <pf-switch reversed label="Message when ON" label-off="Message when OFF" />
+      <pf-switch reversed label="Toggable option" />
     </story-canvas>
 
     <story-canvas title="Without label">
@@ -21,13 +21,12 @@
     <story-canvas title="Checked with label">
       <pf-switch
         check-icon
-        label="Message when on"
-        label-off="Message when off"
+        label="Toggable option"
         aria-label="Message when on" />
     </story-canvas>
 
     <story-canvas title="Disabled">
-      <pf-switch disabled label="Message when ON" label-off="Message when OFF" />
+      <pf-switch disabled label="Toggable option" />
       <br>
       <pf-switch disabled />
     </story-canvas>

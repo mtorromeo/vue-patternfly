@@ -44,7 +44,7 @@ import styles from '@patternfly/react-styles/css/components/FormControl/form-con
 import { computed, onMounted, toRefs, type TextareaHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
-import { FormGroupInputsKey, FormInputsKey } from './Form/common';
+import { FormInputsKey } from './Form/common';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
 
@@ -132,7 +132,6 @@ const {
 });
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 const regexPattern = computed(() => {
   if (props.pattern instanceof RegExp) {

@@ -24,7 +24,7 @@
           <pf-dropdown position="right">
             <template #toggle>
               <pf-menu-toggle variant="plain">
-                <ellipsis-vertical-icon aria-hidden="true" />
+                <ellipsis-vertical-icon />
               </pf-menu-toggle>
             </template>
 
@@ -43,7 +43,7 @@
                 <pf-dropdown position="right">
                   <template #toggle>
                     <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon aria-hidden="true" />
+                      <ellipsis-vertical-icon />
                     </pf-menu-toggle>
                   </template>
 
@@ -64,7 +64,7 @@
                 <pf-dropdown position="right">
                   <template #toggle>
                     <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon aria-hidden="true" />
+                      <ellipsis-vertical-icon />
                     </pf-menu-toggle>
                   </template>
 
@@ -87,7 +87,7 @@
                 <pf-dropdown position="right">
                   <template #toggle>
                     <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon aria-hidden="true" />
+                      <ellipsis-vertical-icon />
                     </pf-menu-toggle>
                   </template>
 
@@ -109,7 +109,7 @@
                 <pf-dropdown position="right">
                   <template #toggle>
                     <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon aria-hidden="true" />
+                      <ellipsis-vertical-icon />
                     </pf-menu-toggle>
                   </template>
 
@@ -130,7 +130,7 @@
                 <pf-dropdown position="right">
                   <template #toggle>
                     <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon aria-hidden="true" />
+                      <ellipsis-vertical-icon />
                     </pf-menu-toggle>
                   </template>
 
@@ -147,7 +147,7 @@
                 <pf-dropdown position="right">
                   <template #toggle>
                     <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon aria-hidden="true" />
+                      <ellipsis-vertical-icon />
                     </pf-menu-toggle>
                   </template>
 
@@ -169,7 +169,7 @@
           <pf-dropdown position="right">
             <template #toggle>
               <pf-menu-toggle variant="plain">
-                <ellipsis-vertical-icon aria-hidden="true" />
+                <ellipsis-vertical-icon />
               </pf-menu-toggle>
             </template>
 
@@ -193,7 +193,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 
@@ -214,7 +214,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 
@@ -236,7 +236,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 
@@ -258,7 +258,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 
@@ -287,7 +287,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 
@@ -308,7 +308,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 
@@ -330,7 +330,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 
@@ -351,7 +351,7 @@
                     <pf-dropdown position="right">
                       <template #toggle>
                         <pf-menu-toggle variant="plain">
-                          <ellipsis-vertical-icon aria-hidden="true" />
+                          <ellipsis-vertical-icon />
                         </pf-menu-toggle>
                       </template>
 

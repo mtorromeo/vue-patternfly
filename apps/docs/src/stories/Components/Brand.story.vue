@@ -11,7 +11,7 @@
     </pre>
 
     <story-canvas title="Basic">
-      <pf-brand src="https://v5-archive.patternfly.org/assets/images/pf_logo.svg" alt="Patternfly Logo" />
+      <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" alt="Patternfly Logo" />
     </story-canvas>
 
     <story-canvas title="Responsive">
@@ -22,17 +22,17 @@
       </template>
 
       <pf-brand
-        src="https://v5-archive.patternfly.org/assets/images/pf-c-brand__logo-base.jpg"
+        src="https://www.patternfly.org/assets/images/pf-c-brand__logo-base.jpg"
         alt="Fallback patternfly default logo"
         width="40px"
         width-sm="60px"
         width-md="220px"
       >
-        <source media="(min-width: 1200px)" srcset="https://v5-archive.patternfly.org/assets/images/pf-c-brand__logo-on-xl.svg">
-        <source media="(min-width: 992px)" srcset="https://v5-archive.patternfly.org/assets/images/pf-c-brand__logo-on-lg.svg">
-        <source media="(min-width: 768px)" srcset="https://v5-archive.patternfly.org/assets/images/pf-c-brand__logo-on-md.svg">
-        <source media="(min-width: 576px)" srcset="https://v5-archive.patternfly.org/assets/images/pf-c-brand__logo-on-sm.svg">
-        <source srcset="https://v5-archive.patternfly.org/assets/images/pf-c-brand__logo.svg">
+        <source media="(min-width: 1200px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-xl.svg">
+        <source media="(min-width: 992px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-lg.svg">
+        <source media="(min-width: 768px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-md.svg">
+        <source media="(min-width: 576px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-sm.svg">
+        <source srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo.svg">
       </pf-brand>
     </story-canvas>
   </doc-page>
