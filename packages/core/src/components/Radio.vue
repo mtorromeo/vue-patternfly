@@ -15,14 +15,14 @@
           :class="[styles.radioLabel, {
             [styles.modifiers.disabled]: disabled,
           }]"
-          :for="wrapWithLabel ? undefined : id"
+          :for="wrapWithLabel ? undefined : validId"
         >
           <slot name="label">{{ label }}</slot>
         </component>
       </sort-by>
 
       <input
-        :id="id"
+        :id="wrapWithLabel ? id : validId"
         ref="input"
         v-bind="$attrs"
         type="radio"
@@ -53,6 +53,7 @@ import SortBy from '../helpers/SortBy.vue';
 import { computed, type InputHTMLAttributes, type Component, ref, type Ref, getCurrentInstance } from 'vue';
 import { useChildrenTracker } from '../use';
 import { FormInputsKey } from './Form/common';
+import { getUniqueId } from '../util';
 
 defineOptions({
   name: 'PfRadio',
@@ -100,6 +101,8 @@ useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const wrapWithLabel = computed(() => props.component === 'label');
 const input: Ref<HTMLInputElement | undefined> = ref();
+
+const validId = computed(() => props.id || getUniqueId());
 
 defineExpose({
   input,

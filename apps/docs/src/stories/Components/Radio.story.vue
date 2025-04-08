@@ -42,7 +42,6 @@
 
     <story-canvas title="With description and body">
       <pf-radio
-        id="radio3"
         name="radio-with-description-and-body"
         label="Radio with description and body"
         description="Single-tenant cloud service hosted and managed by Red Hat that offers high-availability enterprise-grade clusters in a virtual private cloud on AWS or GCP."
