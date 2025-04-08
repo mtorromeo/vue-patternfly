@@ -14,7 +14,7 @@
       v-if="managedOpen"
       ref="menuRef"
       v-bind="$attrs"
-      :style="{'--pf-v5-c-menu--MinWidth': minWidth}"
+      :style="{'--pf-v6-c-menu--MinWidth': minWidth}"
       @select="handleSelect"
     >
       <slot />

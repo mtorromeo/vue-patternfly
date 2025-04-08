@@ -2,8 +2,8 @@
   <img
     v-bind="(ouiaProps as any)"
     :class="[styles.avatar, {
-      [styles.modifiers.light]: border === 'light',
-      [styles.modifiers.dark]: border === 'dark',
+      [styles.modifiers.bordered]: bordered,
+      [styles.modifiers[size as NonNullable<typeof size>]]: size,
     }]"
   >
 </template>
@@ -18,8 +18,11 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ ImgHTMLAttributes {
-  /** Border to add */
-  border?: 'light' | 'dark' | null;
+  /** Flag to indicate the avatar should have a border. */
+  bordered?: boolean;
+
+  /** Size variant of avatar. */
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const props = defineProps<Props>();

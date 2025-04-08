@@ -8,7 +8,7 @@
     }]"
     :style="(sizes as any)"
   >
-    <span class="pf-v5-screen-reader">{{ screenreaderText }}</span>
+    <span class="pf-v6-screen-reader">{{ screenreaderText }}</span>
   </div>
 </template>
 

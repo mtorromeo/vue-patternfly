@@ -93,7 +93,7 @@
     <story-canvas title="Centered" style="height:500px">
       <template #intro>
         <pre v-md>
-          By default, a page section spans the width of the page. To reduce the width of a section, use the `width-limited` property. To center align width-limited page sections, use the `center-aligned` property. When the main content area of a page is wider than the value of a centered, width-limited page section's `--pf-v5-c-page--section--m-limit-width--MaxWidth` custom property, the section will automatically be centered.
+          By default, a page section spans the width of the page. To reduce the width of a section, use the `width-limited` property. To center align width-limited page sections, use the `center-aligned` property. When the main content area of a page is wider than the value of a centered, width-limited page section's `--pf-v6-c-page--section--m-limit-width--MaxWidth` custom property, the section will automatically be centered.
 
           The content in this example is placed in a card to better illustrate how the section behaves when it is centered, but a card is not required to center a page section.
         </pre>
@@ -140,7 +140,7 @@
           <pf-card>
             <pf-card-body>
               When a width limited page section is wider than the value of
-              <code>--pf-v5-c-page--section--m-limit-width--MaxWidth</code>, the section will be centered in the main
+              <code>--pf-v6-c-page--section--m-limit-width--MaxWidth</code>, the section will be centered in the main
               section.
               <br>
               <br>

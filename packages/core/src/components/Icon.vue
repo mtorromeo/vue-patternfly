@@ -8,7 +8,7 @@
   >
     <span
       :class="[styles.iconContent, iconSize && styles.modifiers[iconSize], status && styles.modifiers[status], {
-        'pf-v5-m-mirror-inline-rtl': shouldMirrorRTL,
+        'pf-v6-m-mirror-inline-rtl': shouldMirrorRTL,
       }]"
     >
       <slot />

@@ -17,16 +17,14 @@
         [styles.modifiers.block]: block,
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.ariaDisabled]: ariaDisabled,
-        [styles.modifiers.active]: active || (routerCtx as RouterLinkContext|undefined)?.isActive,
         [styles.modifiers.inline]: inline && variant === 'link',
         [styles.modifiers.danger]: danger && (variant === 'link' || variant === 'secondary'),
+        [styles.modifiers.noPadding]: noPadding && variant === 'plain',
         [styles.modifiers.small]: small,
         [styles.modifiers.displayLg]: large,
         [styles.modifiers.progress]: isDefined(loading),
         [styles.modifiers.inProgress]: loading,
       }]"
-      :aria-current="(routerCtx as RouterLinkContext|undefined)?.isExactActive ? ariaCurrent : null"
-      :aria-pressed="active || (routerCtx as RouterLinkContext|undefined)?.isActive || null"
       :tabindex="tabIdx"
       :role="buttonComponent !== 'button' ? 'button' : null"
       :href="href || (buttonComponent === 'a' ? (routerCtx as RouterLinkContext|undefined)?.href : null)"
@@ -36,14 +34,14 @@
         <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
       </span>
       <span
-        v-if="variant !== 'plain' && $slots.icon && iconPosition === 'left'"
+        v-if="$slots.icon && iconPosition === 'left'"
         :class="[styles.buttonIcon, styles.modifiers.start]"
       >
         <slot name="icon" />
       </span>
       <slot />
       <span
-        v-if="variant !== 'plain' && $slots.icon && iconPosition === 'right'"
+        v-if="$slots.icon && iconPosition === 'right'"
         :class="[styles.buttonIcon, styles.modifiers.end]"
       >
         <slot name="icon" />
@@ -74,8 +72,6 @@ defineOptions({
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
   /** Sets the base component to render. defaults to button */
   component?: string | Component;
-  /** Adds active styling to button. */
-  active?: boolean;
   /** Adds block styling to button */
   block?: boolean;
   /** Adds disabled styling and disables the button using the disabled html attribute */
@@ -98,6 +94,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttri
   type?: 'button' | 'submit' | 'reset';
   /** Adds button variant styles */
   variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'warning' | 'link' | 'plain' | 'control';
+  /** Applies no padding on a plain button variant. Use when plain button is placed inline with text */
+  noPadding?: boolean;
   /** Sets position of the link icon */
   iconPosition?: 'left' | 'right';
   /** Sets the button tabindex. */

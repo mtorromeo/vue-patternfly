@@ -296,7 +296,7 @@
 </template>
 
 <style scoped>
-.pf-v5-c-alert + .pf-v5-c-alert {
+.pf-v6-c-alert + .pf-v6-c-alert {
   margin-top: 20px;
 }
 </style>

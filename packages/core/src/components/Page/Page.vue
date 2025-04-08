@@ -1,5 +1,22 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.page">
+  <define-main-container>
+    <div :class="[styles.pageMainContainer, {[styles.modifiers.fill]: contentFilled}]">
+      <component
+        :is="mainComponent"
+        :id="mainContainerId"
+        :role="role"
+        :class="styles.pageMain"
+        :tabindex="mainTabIndex"
+        :aria-label="mainAriaLabel"
+        @click="mainClick"
+        @touchstart="mainClick"
+      >
+        <slot />
+      </component>
+    </div>
+  </define-main-container>
+
+  <div v-bind="{...ouiaProps, ...$attrs}" :class="styles.page">
     <slot name="skeleton" />
 
     <div v-if="$slots.drawer" :class="styles.pageDrawer">
@@ -12,36 +29,13 @@
           </template>
 
           <pf-drawer-content-body>
-            <component
-              :is="mainComponent"
-              :id="mainContainerId"
-              :role="role"
-              :class="styles.pageMain"
-              :tabindex="mainTabIndex"
-              :aria-label="mainAriaLabel"
-              @click="mainClick"
-              @touchstart="mainClick"
-            >
-              <slot />
-            </component>
+            <main-container />
           </pf-drawer-content-body>
         </pf-drawer-content>
       </pf-drawer>
     </div>
 
-    <component
-      :is="mainComponent"
-      v-else
-      :id="mainContainerId"
-      :role="role"
-      :class="styles.pageMain"
-      :tabindex="mainTabIndex"
-      :aria-label="mainAriaLabel"
-      @click="mainClick"
-      @touchstart="mainClick"
-    >
-      <slot />
-    </component>
+    <main-container />
   </div>
 </template>
 
@@ -73,13 +67,15 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   drawerExpanded?: boolean;
   /** HTML component used as main component of the page. Defaults to 'main', only pass in 'div' if another 'main' element already exists. */
   mainComponent?: 'main' | 'div';
+  /** Enables children to fill the available vertical space. Child page sections or groups that should fill should be passed the isFilled property. */
+  contentFilled?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/global_breakpoint_xl';
-import { useWindowSize } from '@vueuse/core';
+import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/t_global_breakpoint_xl';
+import { createReusableTemplate, useWindowSize } from '@vueuse/core';
 import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes } from 'vue';
 import PfDrawer from '../Drawer/Drawer.vue';
 import PfDrawerContent from '../Drawer/DrawerContent.vue';
@@ -89,6 +85,7 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfPage',
+  inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<Props>(), {
@@ -106,6 +103,8 @@ defineSlots<{
   drawer?: (props?: Record<never, never>) => any;
   skeleton?: (props?: Record<never, never>) => any;
 }>();
+
+const [DefineMainContainer, MainContainer] = createReusableTemplate();
 
 const mobileView = ref(false);
 const mobileSidebarOpen = ref(false);

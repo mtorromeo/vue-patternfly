@@ -229,7 +229,7 @@
 </template>
 
 <style scoped>
-:deep(.inner-canvas .pf-v5-c-menu-toggle) {
+:deep(.inner-canvas .pf-v6-c-menu-toggle) {
   vertical-align: bottom;
 }
 </style>

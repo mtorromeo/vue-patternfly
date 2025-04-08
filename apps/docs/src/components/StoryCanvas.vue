@@ -34,13 +34,13 @@
   padding: 30px 20px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  background-color: var(--pf-v5-c-page__main-section--m-light-100--BackgroundColor);
+  background-color: var(--pf-v6-c-page__main-section--m-light-100--BackgroundColor);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: none;
 }
 
 .story-canvas .canvas.dark {
-  background-color: var(--pf-v5-global--BackgroundColor--dark-300);
+  background-color: var(--pf-v6-global--BackgroundColor--dark-300);
 }
 
 .story-canvas .language-vue {
@@ -58,7 +58,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  background-color: var(--pf-v5-c-page__main-section--m-light-100--BackgroundColor);
+  background-color: var(--pf-v6-c-page__main-section--m-light-100--BackgroundColor);
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 6px;
 }

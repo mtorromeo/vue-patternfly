@@ -134,12 +134,12 @@ export type AlignSelfBreakpointProps = {
 }
 
 export type AlignBreakpointProps = {
-  align?: 'left' | 'right';
-  alignSm?: 'left' | 'right';
-  alignMd?: 'left' | 'right';
-  alignLg?: 'left' | 'right';
-  alignXl?: 'left' | 'right';
-  alignXl2?: 'left' | 'right';
+  align?: 'start' | 'center' | 'end';
+  alignSm?: 'start' | 'center' | 'end';
+  alignMd?: 'start' | 'center' | 'end';
+  alignLg?: 'start' | 'center' | 'end';
+  alignXl?: 'start' | 'center' | 'end';
+  alignXl2?: 'start' | 'center' | 'end';
 }
 
 export type JustifyContentBreakpointProps = {
@@ -178,6 +178,15 @@ export type FlexWrapBreakpointProps = {
   flexWrapXl2?: 'wrap' | 'wrap-reverse' | 'nowrap';
 }
 
+export type RowWrapBreakpointProps = {
+  rowWrap?: 'wrap' | 'nowrap';
+  rowWrapSm?: 'wrap' | 'nowrap';
+  rowWrapMd?: 'wrap' | 'nowrap';
+  rowWrapLg?: 'wrap' | 'nowrap';
+  rowWrapXl?: 'wrap' | 'nowrap';
+  rowWrapXl2?: 'wrap' | 'nowrap';
+}
+
 export type InsetBreakpointProps = {
   inset?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   insetSm?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
@@ -203,6 +212,51 @@ export type StickyBreakpointProps = {
   stickyLg?: 'top' | 'bottom';
   stickyXl?: 'top' | 'bottom';
   stickyXl2?: 'top' | 'bottom';
+}
+
+export type GapBreakpointProps = {
+  /** Sets both the column and row gap */
+  gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets both the column and row gap at Sm breakpoint */
+  gapSm?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets both the column and row gap at Md breakpoint */
+  gapMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets both the column and row gap at Lg breakpoint */
+  gapLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets both the column and row gap at Xl breakpoint */
+  gapXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets both the column and row gap at Xl2 breakpoint */
+  gapXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+}
+
+export type ColumnGapBreakpointProps = {
+  /** Sets only the column gap */
+  columnGap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the column gap at Sm breakpoint */
+  columnGapSm?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the column gap at Md breakpoint */
+  columnGapMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the column gap at Lg breakpoint */
+  columnGapLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the column gap at Xl breakpoint */
+  columnGapXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the column gap at Xl2 breakpoint */
+  columnGapXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+}
+
+export type RowGapBreakpointProps = {
+  /** Sets only the row gap */
+  rowGap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the row gap at Sm breakpoint */
+  rowGapSm?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the row gap at Md breakpoint */
+  rowGapMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the row gap at Lg breakpoint */
+  rowGapLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the row gap at Xl breakpoint */
+  rowGapXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  /** Sets only the row gap at Xl2 breakpoint */
+  rowGapXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type ExpandableBreakpointProps = {

@@ -3,33 +3,41 @@
     <slot />
   </pf-toolbar-item>
   <teleport v-if="mounted && teleportTarget" :to="teleportTarget">
-    <pf-toolbar-item v-if="chips.length" v-bind="ouiaProps" variant="chip-group">
-      <pf-chip-group
+    <pf-toolbar-item v-if="slotLabels.length || labels.length" v-bind="ouiaProps" variant="label-group">
+      <pf-label-group
         :key="category"
         :category="category"
         closable
-        @click="emit('delete-chip-group', category)"
+        :collapsed-text="labelGroupCollapsedText"
+        :expanded-text="labelGroupExpandedText"
+        @click="emit('delete-label-group', category)"
       >
-        <pf-chip
-          v-for="chip of chips"
-          :key="chipKey(chip)"
-          @click="emit('delete-chip', category, chipKey(chip))"
-        >{{ chipLabel(chip) }}</pf-chip>
-      </pf-chip-group>
+        <slot name="labels">
+          <pf-label
+            v-for="label of labels"
+            :key="labelKey(label)"
+            variant="outline"
+            @click="emit('delete-label', category, labelKey(label))"
+          >{{ labelLabel(label) }}</pf-label>
+        </slot>
+      </pf-label-group>
     </pf-toolbar-item>
+    <slot v-else name="labels" />
   </teleport>
 </template>
 
 <script lang="ts" setup>
-import PfChipGroup from '../ChipGroup/ChipGroup.vue';
-import PfChip from '../ChipGroup/Chip.vue';
+import PfLabelGroup from '../Label/LabelGroup.vue';
+import PfLabel from '../Label/Label.vue';
 import PfToolbarItem, { type Props as ToolbarItemProps } from './ToolbarItem.vue';
-import { ToolbarChipGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
-import { ToolbarContentChipContainerRefKey } from './ToolbarContent.vue';
+import { ToolbarLabelGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
+import { ToolbarContentLabelContainerRefKey } from './ToolbarContent.vue';
 import { inject, ref, onMounted, onUpdated, computed } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { provideChildrenTracker } from '../../use';
+import { LabelKey } from '../Label/common';
 
-export type FilterChip = {
+export type FilterLabel = {
   key: string;
   label: string;
 } | string;
@@ -40,51 +48,58 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ ToolbarItemProps {
-  chips?: FilterChip[];
+  labels?: FilterLabel[];
   category?: string;
   hideToolbarItem?: boolean;
+  /** Customizable "Show Less" text string for the label group */
+  labelGroupExpandedText?: string;
+  /** Customizable template string for the label group. Use variable "${remaining}" for the overflow label count. */
+  labelGroupCollapsedText?: string;
+  /** Content to be rendered inside the data toolbar item associated with the label group */
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  chips: (): FilterChip[] => [],
+  labels: (): FilterLabel[] => [],
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'delete-chip', category: string | undefined, chipKey: string): void;
-  (name: 'delete-chip-group', category?: string): void;
+  (name: 'delete-label', category: string | undefined, labelKey: string): void;
+  (name: 'delete-label-group', category?: string): void;
 }>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
+  labels?: (props?: Record<never, never>) => any;
 }>();
 
 const expanded = inject(ToolbarExpandedKey);
 const updateNumberFilters = inject(ToolbarUpdateNumberFiltersKey);
-const chipContainerRef = inject(ToolbarContentChipContainerRefKey);
-const chipGroupContentRef = inject(ToolbarChipGroupContentRefKey);
+const labelContainerRef = inject(ToolbarContentLabelContainerRefKey);
+const labelGroupContentRef = inject(ToolbarLabelGroupContentRefKey);
 const mounted = ref(false);
 
-const teleportTarget = computed(() => expanded?.value ? chipContainerRef?.value : chipGroupContentRef?.value);
+const slotLabels = provideChildrenTracker(LabelKey);
+const teleportTarget = computed(() => expanded?.value ? labelContainerRef?.value : labelGroupContentRef?.value);
 
 onMounted(() => {
   if (props.category) {
-    updateNumberFilters?.(props.category, props.chips.length);
+    updateNumberFilters?.(props.category, slotLabels.length || props.labels.length);
   }
   mounted.value = true;
 });
 
 onUpdated(() => {
   if (props.category) {
-    updateNumberFilters?.(props.category, props.chips.length);
+    updateNumberFilters?.(props.category, slotLabels.length || props.labels.length);
   }
 });
 
-function chipKey(chip: FilterChip) {
-  return typeof chip === 'string' ? chip : chip.key;
+function labelKey(label: FilterLabel) {
+  return typeof label === 'string' ? label : label.key;
 }
 
-function chipLabel(chip: FilterChip) {
-  return typeof chip === 'string' ? chip : chip.label;
+function labelLabel(label: FilterLabel) {
+  return typeof label === 'string' ? label : label.label;
 }
 </script>

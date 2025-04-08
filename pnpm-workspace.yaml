@@ -2,3 +2,7 @@ packages:
   - apps/*
   - build-plugins/*
   - packages/*
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild

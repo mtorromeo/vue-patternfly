@@ -39,4 +39,8 @@ provide(MenuListInjectionKey, {
   parentMenu,
   el,
 });
+
+defineExpose({
+  el,
+});
 </script>
