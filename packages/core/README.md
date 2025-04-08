@@ -75,5 +75,5 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 [link-CONDUCT]: https://github.com/mtorromeo/vue-patternfly/blob/master/packages/core/CONDUCT.md
 [link-author]: https://github.com/mtorromeo
 [link-contributors]: ../../contributors
-[link-patternfly]: https://www.patternfly.org/
+[link-patternfly]: https://v5-archive.patternfly.org/
 [link-storybook]: https://mtorromeo.github.io/vue-patternfly/

@@ -32,7 +32,7 @@
       <pf-card>
         <pf-card-header>
           <pf-card-header-main>
-            <pf-brand src="https://www.patternfly.org/assets/images/pf_logo.svg" alt="PatternFly logo" style="height: 50px" />
+            <pf-brand src="https://v5-archive.patternfly.org/assets/images/pf_logo.svg" alt="PatternFly logo" style="height: 50px" />
           </pf-card-header-main>
           <pf-card-actions no-offset>
             <pf-dropdown position="right">

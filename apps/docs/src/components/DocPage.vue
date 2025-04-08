@@ -33,7 +33,7 @@
         <template #label>Table of contents</template>
       </pf-jump-links>
 
-      <pf-flex-item grow>
+      <pf-flex-item v-bind="$attrs" grow>
         <div class="story-content">
           <slot />
         </div>
@@ -74,15 +74,22 @@ import GithubIcon from '@vue-patternfly/icons/github-icon';
 export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfPageSection> {
   title?: string;
   name?: string;
+  docSection?: string;
   noDesignGuidelines?: boolean;
   noGithubLink?: boolean;
 }
 
-const props = defineProps<Props>();
+defineOptions({
+  inheritAttrs: false,
+});
+
+const props = withDefaults(defineProps<Props>(), {
+  docSection: 'components',
+});
 
 let pfDocUrl = '';
 if (props.title && !props.noDesignGuidelines) {
-  pfDocUrl = `https://www.patternfly.org/components/${props.title.replace(/ /g, '-').toLowerCase()}`;
+  pfDocUrl = `https://v5-archive.patternfly.org/${props.docSection}/${props.title.replace(/ /g, '-').toLowerCase()}`;
 }
 
 defineSlots<{

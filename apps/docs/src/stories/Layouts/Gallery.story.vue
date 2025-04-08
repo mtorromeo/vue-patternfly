@@ -1,0 +1,25 @@
+<template>
+  <doc-page class="page__layouts" title="Gallery" doc-section="layouts">
+    <template #description>
+      <pre v-md>
+        The **gallery** layout is used to arrange content in a responsive grid. Content will wrap responsively to create uniform rows and columns.
+      </pre>
+    </template>
+
+    <template #apidocs>
+      <component-info src="packages/core/src/layouts/Gallery/Gallery.vue" />
+      <component-info src="packages/core/src/layouts/Gallery/GalleryItem.vue" />
+    </template>
+
+    <story-canvas title="Gallery">
+      <pf-gallery gutter>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+      </pf-gallery>
+    </story-canvas>
+  </doc-page>
+</template>

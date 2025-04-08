@@ -95,7 +95,7 @@
         <pf-button
           component="a"
           aria-disabled
-          href="https://pf4.patternfly.org/"
+          href="https://v5-archive.patternfly.org/"
           target="_blank"
           variant="tertiary"
         >
@@ -107,7 +107,7 @@
     <story-canvas title="Links as buttons">
       <pf-button
         component="a"
-        href="https://pf4.patternfly.org/"
+        href="https://v5-archive.patternfly.org/"
         target="_blank"
         variant="primary"
       >
@@ -115,7 +115,7 @@
       </pf-button>
       <pf-button
         component="a"
-        href="https://pf4.patternfly.org/"
+        href="https://v5-archive.patternfly.org/"
         target="_blank"
         variant="secondary"
       >
@@ -124,7 +124,7 @@
       <pf-button
         disabled
         component="a"
-        href="https://pf4.patternfly.org/"
+        href="https://v5-archive.patternfly.org/"
         target="_blank"
         variant="tertiary"
       >
@@ -132,7 +132,7 @@
       </pf-button>
       <pf-button
         component="a"
-        href="https://pf4.patternfly.org/contribution/#modifiers"
+        href="https://v5-archive.patternfly.org/contribution/#modifiers"
         variant="link"
       >
         Jump to modifiers in contribution guidelines
