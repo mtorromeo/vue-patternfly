@@ -2,209 +2,203 @@
   <story-canvas title="Interactive Flex Demo">
     <template #intro>
       <pre v-md>An interactive demo of the Flex and FlexItem components. Use the controls below to explore how different properties affect the layout.</pre>
-      <pf-panel>
-        <pf-panel-main>
-          <pf-panel-main-body>
-            <pf-tabs>
-              <pf-tab title="Container properties">
-                <pf-form component="div" horizontal class="pf-v5-u-mt-lg">
-                  <pf-form-group label="Direction">
-                    <pf-form-select v-model="direction">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="row">row</pf-form-select-option>
-                      <pf-form-select-option value="row-reverse">row-reverse</pf-form-select-option>
-                      <pf-form-select-option value="column">column</pf-form-select-option>
-                      <pf-form-select-option value="column-reverse">column-reverse</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+      <pf-tabs>
+        <pf-tab title="Container properties">
+          <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
+            <pf-form-group label="Direction">
+              <pf-form-select v-model="direction">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="row">row</pf-form-select-option>
+                <pf-form-select-option value="row-reverse">row-reverse</pf-form-select-option>
+                <pf-form-select-option value="column">column</pf-form-select-option>
+                <pf-form-select-option value="column-reverse">column-reverse</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Display">
-                    <pf-form-select v-model="display">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="flex">flex</pf-form-select-option>
-                      <pf-form-select-option value="inline-flex">inline-flex</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Display">
+              <pf-form-select v-model="display">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="flex">flex</pf-form-select-option>
+                <pf-form-select-option value="inline-flex">inline-flex</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Justify Content">
-                    <pf-form-select v-model="justifyContent">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
-                      <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
-                      <pf-form-select-option value="center">center</pf-form-select-option>
-                      <pf-form-select-option value="space-between">space-between</pf-form-select-option>
-                      <pf-form-select-option value="space-around">space-around</pf-form-select-option>
-                      <pf-form-select-option value="space-evenly">space-evenly</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Justify Content">
+              <pf-form-select v-model="justifyContent">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
+                <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
+                <pf-form-select-option value="center">center</pf-form-select-option>
+                <pf-form-select-option value="space-between">space-between</pf-form-select-option>
+                <pf-form-select-option value="space-around">space-around</pf-form-select-option>
+                <pf-form-select-option value="space-evenly">space-evenly</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Align Items">
-                    <pf-form-select v-model="alignItems">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
-                      <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
-                      <pf-form-select-option value="center">center</pf-form-select-option>
-                      <pf-form-select-option value="baseline">baseline</pf-form-select-option>
-                      <pf-form-select-option value="stretch">stretch</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Align Items">
+              <pf-form-select v-model="alignItems">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
+                <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
+                <pf-form-select-option value="center">center</pf-form-select-option>
+                <pf-form-select-option value="baseline">baseline</pf-form-select-option>
+                <pf-form-select-option value="stretch">stretch</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Align Content">
-                    <pf-form-select v-model="alignContent">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
-                      <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
-                      <pf-form-select-option value="center">center</pf-form-select-option>
-                      <pf-form-select-option value="space-between">space-between</pf-form-select-option>
-                      <pf-form-select-option value="space-around">space-around</pf-form-select-option>
-                      <pf-form-select-option value="stretch">stretch</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Align Content">
+              <pf-form-select v-model="alignContent">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
+                <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
+                <pf-form-select-option value="center">center</pf-form-select-option>
+                <pf-form-select-option value="space-between">space-between</pf-form-select-option>
+                <pf-form-select-option value="space-around">space-around</pf-form-select-option>
+                <pf-form-select-option value="stretch">stretch</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Flex Wrap">
-                    <pf-form-select v-model="flexWrap">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="nowrap">nowrap</pf-form-select-option>
-                      <pf-form-select-option value="wrap">wrap</pf-form-select-option>
-                      <pf-form-select-option value="wrap-reverse">wrap-reverse</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Flex Wrap">
+              <pf-form-select v-model="flexWrap">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="nowrap">nowrap</pf-form-select-option>
+                <pf-form-select-option value="wrap">wrap</pf-form-select-option>
+                <pf-form-select-option value="wrap-reverse">wrap-reverse</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Space Items">
-                    <pf-form-select v-model="spaceItems">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="none">none</pf-form-select-option>
-                      <pf-form-select-option value="xs">xs</pf-form-select-option>
-                      <pf-form-select-option value="sm">sm</pf-form-select-option>
-                      <pf-form-select-option value="md">md</pf-form-select-option>
-                      <pf-form-select-option value="lg">lg</pf-form-select-option>
-                      <pf-form-select-option value="xl">xl</pf-form-select-option>
-                      <pf-form-select-option value="2xl">2xl</pf-form-select-option>
-                      <pf-form-select-option value="3xl">3xl</pf-form-select-option>
-                      <pf-form-select-option value="4xl">4xl</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Space Items">
+              <pf-form-select v-model="spaceItems">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="none">none</pf-form-select-option>
+                <pf-form-select-option value="xs">xs</pf-form-select-option>
+                <pf-form-select-option value="sm">sm</pf-form-select-option>
+                <pf-form-select-option value="md">md</pf-form-select-option>
+                <pf-form-select-option value="lg">lg</pf-form-select-option>
+                <pf-form-select-option value="xl">xl</pf-form-select-option>
+                <pf-form-select-option value="2xl">2xl</pf-form-select-option>
+                <pf-form-select-option value="3xl">3xl</pf-form-select-option>
+                <pf-form-select-option value="4xl">4xl</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Gap">
-                    <pf-form-select v-model="gap">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="none">none</pf-form-select-option>
-                      <pf-form-select-option value="xs">xs</pf-form-select-option>
-                      <pf-form-select-option value="sm">sm</pf-form-select-option>
-                      <pf-form-select-option value="md">md</pf-form-select-option>
-                      <pf-form-select-option value="lg">lg</pf-form-select-option>
-                      <pf-form-select-option value="xl">xl</pf-form-select-option>
-                      <pf-form-select-option value="2xl">2xl</pf-form-select-option>
-                      <pf-form-select-option value="3xl">3xl</pf-form-select-option>
-                      <pf-form-select-option value="4xl">4xl</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Gap">
+              <pf-form-select v-model="gap">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="none">none</pf-form-select-option>
+                <pf-form-select-option value="xs">xs</pf-form-select-option>
+                <pf-form-select-option value="sm">sm</pf-form-select-option>
+                <pf-form-select-option value="md">md</pf-form-select-option>
+                <pf-form-select-option value="lg">lg</pf-form-select-option>
+                <pf-form-select-option value="xl">xl</pf-form-select-option>
+                <pf-form-select-option value="2xl">2xl</pf-form-select-option>
+                <pf-form-select-option value="3xl">3xl</pf-form-select-option>
+                <pf-form-select-option value="4xl">4xl</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Row Gap">
-                    <pf-form-select v-model="rowGap">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="none">none</pf-form-select-option>
-                      <pf-form-select-option value="xs">xs</pf-form-select-option>
-                      <pf-form-select-option value="sm">sm</pf-form-select-option>
-                      <pf-form-select-option value="md">md</pf-form-select-option>
-                      <pf-form-select-option value="lg">lg</pf-form-select-option>
-                      <pf-form-select-option value="xl">xl</pf-form-select-option>
-                      <pf-form-select-option value="2xl">2xl</pf-form-select-option>
-                      <pf-form-select-option value="3xl">3xl</pf-form-select-option>
-                      <pf-form-select-option value="4xl">4xl</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
+            <pf-form-group label="Row Gap">
+              <pf-form-select v-model="rowGap">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="none">none</pf-form-select-option>
+                <pf-form-select-option value="xs">xs</pf-form-select-option>
+                <pf-form-select-option value="sm">sm</pf-form-select-option>
+                <pf-form-select-option value="md">md</pf-form-select-option>
+                <pf-form-select-option value="lg">lg</pf-form-select-option>
+                <pf-form-select-option value="xl">xl</pf-form-select-option>
+                <pf-form-select-option value="2xl">2xl</pf-form-select-option>
+                <pf-form-select-option value="3xl">3xl</pf-form-select-option>
+                <pf-form-select-option value="4xl">4xl</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
 
-                  <pf-form-group label="Column Gap">
-                    <pf-form-select v-model="columnGap">
-                      <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                      <pf-form-select-option value="none">none</pf-form-select-option>
-                      <pf-form-select-option value="xs">xs</pf-form-select-option>
-                      <pf-form-select-option value="sm">sm</pf-form-select-option>
-                      <pf-form-select-option value="md">md</pf-form-select-option>
-                      <pf-form-select-option value="lg">lg</pf-form-select-option>
-                      <pf-form-select-option value="xl">xl</pf-form-select-option>
-                      <pf-form-select-option value="2xl">2xl</pf-form-select-option>
-                      <pf-form-select-option value="3xl">3xl</pf-form-select-option>
-                      <pf-form-select-option value="4xl">4xl</pf-form-select-option>
-                    </pf-form-select>
-                  </pf-form-group>
-                </pf-form>
-              </pf-tab>
+            <pf-form-group label="Column Gap">
+              <pf-form-select v-model="columnGap">
+                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option value="none">none</pf-form-select-option>
+                <pf-form-select-option value="xs">xs</pf-form-select-option>
+                <pf-form-select-option value="sm">sm</pf-form-select-option>
+                <pf-form-select-option value="md">md</pf-form-select-option>
+                <pf-form-select-option value="lg">lg</pf-form-select-option>
+                <pf-form-select-option value="xl">xl</pf-form-select-option>
+                <pf-form-select-option value="2xl">2xl</pf-form-select-option>
+                <pf-form-select-option value="3xl">3xl</pf-form-select-option>
+                <pf-form-select-option value="4xl">4xl</pf-form-select-option>
+              </pf-form-select>
+            </pf-form-group>
+          </pf-form>
+        </pf-tab>
 
-              <pf-tab title="Item properties">
-                <pf-form component="div" horizontal class="pf-v5-u-mt-lg">
-                  <pf-form-group label="Number of items">
-                    <pf-text-input type="number" min="1" max="10" v-model="itemCount" />
-                  </pf-form-group>
-                </pf-form>
+        <pf-tab title="Item properties">
+          <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
+            <pf-form-group label="Number of items">
+              <pf-text-input type="number" min="1" max="10" v-model="itemCount" />
+            </pf-form-group>
+          </pf-form>
 
-                <pf-tabs>
-                  <pf-tab v-for="(item, i) in flexItems" :key="i" :title="`Item ${i + 1}`">
-                    <pf-form component="div" horizontal class="pf-v5-u-mt-lg">
-                      <pf-form-group label="Align">
-                        <pf-form-select v-model="item.align">
-                          <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                          <pf-form-select-option value="left">left</pf-form-select-option>
-                          <pf-form-select-option value="right">right</pf-form-select-option>
-                        </pf-form-select>
-                      </pf-form-group>
+          <pf-tabs>
+            <pf-tab v-for="(item, i) in flexItems" :key="i" :title="`Item ${i + 1}`">
+              <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
+                <pf-form-group label="Align">
+                  <pf-form-select v-model="item.align">
+                    <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                    <pf-form-select-option value="left">left</pf-form-select-option>
+                    <pf-form-select-option value="right">right</pf-form-select-option>
+                  </pf-form-select>
+                </pf-form-group>
 
-                      <pf-form-group label="Align Self">
-                        <pf-form-select v-model="item.alignSelf">
-                          <pf-form-select-option value="">default</pf-form-select-option>
-                          <pf-form-select-option value="auto">auto</pf-form-select-option>
-                          <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
-                          <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
-                          <pf-form-select-option value="center">center</pf-form-select-option>
-                          <pf-form-select-option value="baseline">baseline</pf-form-select-option>
-                          <pf-form-select-option value="stretch">stretch</pf-form-select-option>
-                        </pf-form-select>
-                      </pf-form-group>
+                <pf-form-group label="Align Self">
+                  <pf-form-select v-model="item.alignSelf">
+                    <pf-form-select-option value="">default</pf-form-select-option>
+                    <pf-form-select-option value="auto">auto</pf-form-select-option>
+                    <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
+                    <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
+                    <pf-form-select-option value="center">center</pf-form-select-option>
+                    <pf-form-select-option value="baseline">baseline</pf-form-select-option>
+                    <pf-form-select-option value="stretch">stretch</pf-form-select-option>
+                  </pf-form-select>
+                </pf-form-group>
 
-                      <pf-form-group label="Flex">
-                        <pf-form-select v-model="item.flex">
-                          <pf-form-select-option value="default">default</pf-form-select-option>
-                          <pf-form-select-option value="none">none</pf-form-select-option>
-                          <pf-form-select-option value="1">1</pf-form-select-option>
-                          <pf-form-select-option value="2">2</pf-form-select-option>
-                          <pf-form-select-option value="3">3</pf-form-select-option>
-                          <pf-form-select-option value="4">4</pf-form-select-option>
-                        </pf-form-select>
-                      </pf-form-group>
+                <pf-form-group label="Flex">
+                  <pf-form-select v-model="item.flex">
+                    <pf-form-select-option value="default">default</pf-form-select-option>
+                    <pf-form-select-option value="none">none</pf-form-select-option>
+                    <pf-form-select-option value="1">1</pf-form-select-option>
+                    <pf-form-select-option value="2">2</pf-form-select-option>
+                    <pf-form-select-option value="3">3</pf-form-select-option>
+                    <pf-form-select-option value="4">4</pf-form-select-option>
+                  </pf-form-select>
+                </pf-form-group>
 
-                      <pf-form-group label="Spacer">
-                        <pf-form-select v-model="item.spacer">
-                          <pf-form-select-option value="">[undefined]</pf-form-select-option>
-                          <pf-form-select-option value="none">none</pf-form-select-option>
-                          <pf-form-select-option value="xs">xs</pf-form-select-option>
-                          <pf-form-select-option value="sm">sm</pf-form-select-option>
-                          <pf-form-select-option value="md">md</pf-form-select-option>
-                          <pf-form-select-option value="lg">lg</pf-form-select-option>
-                          <pf-form-select-option value="xl">xl</pf-form-select-option>
-                          <pf-form-select-option value="2xl">2xl</pf-form-select-option>
-                          <pf-form-select-option value="3xl">3xl</pf-form-select-option>
-                          <pf-form-select-option value="4xl">4xl</pf-form-select-option>
-                        </pf-form-select>
-                      </pf-form-group>
+                <pf-form-group label="Spacer">
+                  <pf-form-select v-model="item.spacer">
+                    <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                    <pf-form-select-option value="none">none</pf-form-select-option>
+                    <pf-form-select-option value="xs">xs</pf-form-select-option>
+                    <pf-form-select-option value="sm">sm</pf-form-select-option>
+                    <pf-form-select-option value="md">md</pf-form-select-option>
+                    <pf-form-select-option value="lg">lg</pf-form-select-option>
+                    <pf-form-select-option value="xl">xl</pf-form-select-option>
+                    <pf-form-select-option value="2xl">2xl</pf-form-select-option>
+                    <pf-form-select-option value="3xl">3xl</pf-form-select-option>
+                    <pf-form-select-option value="4xl">4xl</pf-form-select-option>
+                  </pf-form-select>
+                </pf-form-group>
 
-                      <pf-form-group label="Order">
-                        <pf-text-input type="number" v-model="item.order" />
-                      </pf-form-group>
+                <pf-form-group label="Order">
+                  <pf-text-input type="number" v-model="item.order" />
+                </pf-form-group>
 
-                      <pf-form-group>
-                        <pf-checkbox v-model="item.grow" label="Grow" />
-                        <pf-checkbox v-model="item.shrink" label="Shrink" />
-                        <pf-checkbox v-model="item.fullWidth" label="Full Width" />
-                      </pf-form-group>
-                    </pf-form>
-                  </pf-tab>
-                </pf-tabs>
-              </pf-tab>
-            </pf-tabs>
-          </pf-panel-main-body>
-        </pf-panel-main>
-      </pf-panel>
+                <pf-form-group>
+                  <pf-checkbox v-model="item.grow" label="Grow" />
+                  <pf-checkbox v-model="item.shrink" label="Shrink" />
+                  <pf-checkbox v-model="item.fullWidth" label="Full Width" />
+                </pf-form-group>
+              </pf-form>
+            </pf-tab>
+          </pf-tabs>
+        </pf-tab>
+      </pf-tabs>
     </template>
 
     <pf-flex

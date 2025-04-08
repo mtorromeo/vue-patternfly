@@ -1,5 +1,5 @@
 <template>
-  <form v-bind="(ouiaProps as any)" :class="`${styles.form}__alert`">
+  <form v-bind="ouiaProps" :class="`${styles.form}__alert`">
     <slot />
   </form>
 </template>

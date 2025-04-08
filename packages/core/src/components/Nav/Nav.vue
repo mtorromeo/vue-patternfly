@@ -1,24 +1,19 @@
 <template>
-  <component
+  <nav
     v-bind="ouiaProps"
-    :is="variant === 'subnav' ? 'section' : 'nav'"
-    :class="{
-      [styles.nav]: variant !== 'subnav',
-      [styles.navSubnav]: variant === 'subnav',
-      [styles.modifiers.light]: theme === 'light',
+    :class="[styles.nav, {
       [styles.modifiers.horizontal]: horizontal,
-      [styles.modifiers.tertiary]: variant === 'tertiary',
-      [styles.modifiers.horizontalSubnav]: variant === 'horizontal-subnav',
+      [styles.modifiers.subnav]: variant === 'horizontal-subnav',
       [styles.modifiers.scrollable]: scrollable,
-    }"
-    :aria-label="ariaLabel || variant === 'tertiary' ? 'Local' : 'Global'"
+    }]"
+    :aria-label="ariaLabel || variant === 'horizontal-subnav' ? 'Local' : 'Global'"
   >
     <slot />
-  </component>
+  </nav>
 </template>
 
 <script lang="ts">
-export const NavScrollablelKey = Symbol('NavScrollablelKey') as InjectionKey<Ref<boolean>>;
+export const NavScrollableKey = Symbol('NavScrollableKey') as InjectionKey<Ref<boolean>>;
 export const NavHorizontalKey = Symbol('NavHorizontalKey') as InjectionKey<boolean>;
 export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<(event: Event, groupId: string | undefined, itemId: string | undefined) => void>;
 export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | null>>;
@@ -26,7 +21,7 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   theme?: 'dark' | 'light';
-  variant?: 'default' | 'horizontal' | 'tertiary' | 'horizontal-subnav' | 'subnav';
+  variant?: 'default' | 'horizontal' | 'horizontal-subnav';
   ariaLabel?: string;
 }
 </script>
@@ -54,9 +49,9 @@ defineSlots<{
 }>();
 
 const scrollable = ref(false);
-provide(NavScrollablelKey, scrollable);
+provide(NavScrollableKey, scrollable);
 
-const horizontal = ['horizontal', 'tertiary', 'horizontal-subnav'].includes(props.variant);
+const horizontal = ['horizontal', 'horizontal-subnav'].includes(props.variant);
 provide(NavHorizontalKey, horizontal);
 
 provide(NavOnSelectKey, (e, groupId, itemId) => emit('select', e, groupId, itemId));

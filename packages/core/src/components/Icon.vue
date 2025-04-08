@@ -1,6 +1,6 @@
 <template>
   <span
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.icon, size && styles.modifiers[size], {
       [styles.modifiers.inline]: inline,
       [styles.modifiers.inProgress]: inProgress,
@@ -8,7 +8,7 @@
   >
     <span
       :class="[styles.iconContent, iconSize && styles.modifiers[iconSize], status && styles.modifiers[status], {
-        'pf-v5-m-mirror-inline-rtl': shouldMirrorRTL,
+        'pf-v6-m-mirror-inline-rtl': shouldMirrorRTL,
       }]"
     >
       <slot />

@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.login">
+  <div v-bind="ouiaProps" :class="styles.login">
     <div :class="styles.loginContainer">
       <slot name="header" />
       <main :class="styles.loginMain">

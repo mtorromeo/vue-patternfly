@@ -3,8 +3,8 @@
     <template #description>A <b>pagination</b> component gives users more navigational capability on pages with content views.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Pagination/Navigation.vue" />
       <component-info src="packages/core/src/components/Pagination/Pagination.vue" />
+      <component-info src="packages/core/src/components/Pagination/PaginationNavigation.vue" />
       <component-info src="packages/core/src/components/Pagination/PaginationOptionsMenu.vue" />
     </template>
 

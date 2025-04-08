@@ -1,11 +1,11 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.simpleList">
+  <div v-bind="ouiaProps" :class="styles.simpleList">
     <input v-if="name" type="hidden" :name="name" :value="value" :required="required">
     <wrap>
       <default-slot />
 
       <template v-if="!grouped" #with>
-        <ul class="pf-v5-c-simple-list__list" role="list" :aria-label="ariaLabel" />
+        <ul class="pf-v6-c-simple-list__list" role="list" :aria-label="ariaLabel" />
       </template>
     </wrap>
   </div>

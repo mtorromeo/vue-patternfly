@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.content, { [styles.modifiers.visited]: visited }]">
+  <div v-bind="ouiaProps" :class="[styles.content, { [styles.modifiers.visited]: visited }]">
     <slot />
   </div>
 </template>

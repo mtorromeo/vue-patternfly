@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.hintFooter">
+  <div v-bind="ouiaProps" :class="styles.hintFooter">
     <slot />
   </div>
 </template>

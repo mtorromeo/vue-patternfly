@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.notificationDrawerListItemHeader">
+  <div v-bind="ouiaProps" :class="styles.notificationDrawerListItemHeader">
     <span :class="styles.notificationDrawerListItemHeaderIcon">
       <slot name="icon">
         <component :is="variantIcons[variant]" />
@@ -9,7 +9,7 @@
       <template v-if="textOverflowing" #content>{{ title }}</template>
 
       <component :is="headingLevel" ref="textRef" :class="[styles.notificationDrawerListItemHeaderTitle, { [styles.modifiers.truncate]: truncateTitle }]">
-        <span v-if="srTitle" class="pf-v5-screen-reader">{{ srTitle }}</span>
+        <span v-if="srTitle" class="pf-v6-screen-reader">{{ srTitle }}</span>
         {{ title }}
       </component>
     </pf-tooltip>

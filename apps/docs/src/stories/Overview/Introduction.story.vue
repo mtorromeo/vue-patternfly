@@ -7,9 +7,9 @@
       [![Issues](https://img.shields.io/github/issues/mtorromeo/vue-patternfly.svg?style=flat-square)](https://github.com/mtorromeo/vue-patternfly/issues)
       [![GitHub](https://img.shields.io/github/stars/mtorromeo/vue-patternfly?style=social)][link-github]
 
-      PatternFly 5 components for Vue 3.
+      PatternFly 6 components for Vue 3.
 
-      The components are mostly a straight-forward port of the [PatternFly 5 components][link-patternfly] to Vue 3 with some differences where it makes sense to improve ergonomics or add new features.
+      The components are mostly a straight-forward port of the [PatternFly 6 components][link-patternfly] to Vue 3 with some differences where it makes sense to improve ergonomics or add new features.
 
       ### Common differences from patternfly-react
 
@@ -71,7 +71,7 @@
       [link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly/master/packages/core/LICENSE
       [link-author]: https://github.com/mtorromeo
       [link-contributors]: https://github.com/mtorromeo/vue-patternfly/graphs/contributors
-      [link-patternfly]: https://v5-archive.patternfly.org/
+      [link-patternfly]: https://www.patternfly.org/
     </pre>
   </doc-page>
 </template>

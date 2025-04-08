@@ -2,7 +2,7 @@
   <doc-page title="Search input">
     <template #description>
       <pre v-md>
-        A **search input** is a type of input field that can be user to search, find, or filter. See [filter guidelines](https://v5-archive.patternfly.org/guidelines/filters) for more information on using search input as a filter.
+        A **search input** is a type of input field that can be user to search, find, or filter. See [filter guidelines](https://www.patternfly.org/guidelines/filters) for more information on using search input as a filter.
       </pre>
     </template>
 

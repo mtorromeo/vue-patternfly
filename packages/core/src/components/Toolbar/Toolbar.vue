@@ -1,22 +1,25 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.toolbar, breakpointClasses, {
       [styles.modifiers.fullHeight]: fullHeight,
       [styles.modifiers.static]: static,
-      [styles.modifiers.pageInsets]: pageInsets,
       [styles.modifiers.sticky]: sticky,
+      [styles.modifiers.primary]: colorVariant === 'primary',
+      [styles.modifiers.secondary]: colorVariant === 'secondary',
+      [styles.modifiers.noBackground]: colorVariant === 'no-background',
+      [styles.modifiers.noPadding]: noPadding,
     }]"
   >
     <slot />
-    <pf-toolbar-chip-group-content
+    <pf-toolbar-label-group-content
       :expanded="effectiveExpanded"
       :show-clear-filters-button="showClearFiltersButton"
       :clear-filters-button-text="clearFiltersButtonText"
       :number-of-filters="numberOfFilters"
       :collapse-listed-filters-breakpoint="collapseListedFiltersBreakpoint"
       @clear-all-filters="clearAllFilters"
-      @mounted="chipGroupContent = $event"
+      @mounted="labelGroupContent = $event"
     />
   </div>
 </template>
@@ -28,24 +31,26 @@ export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersB
 export const ToolbarClearAllFiltersKey = Symbol('ToolbarClearAllFiltersKey') as InjectionKey<() => void>;
 export const ToolbarUpdateNumberFiltersKey = Symbol('ToolbarUpdateNumberFiltersKey') as InjectionKey<(category: string, numberOfFilters: number) => void>;
 export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<Ref<boolean>>;
-export const ToolbarChipGroupContentRefKey = Symbol('ToolbarChipGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+export const ToolbarLabelGroupContentRefKey = Symbol('ToolbarLabelGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
 
 export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Text to display in the clear all filters button */
   clearFiltersButtonText?: string;
-  /** The breakpoint at which the listed filters in chip groups are collapsed down to a summary */
+  /** The breakpoint at which the listed filters in label groups are collapsed down to a summary */
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints;
   /** Flag indicating if a data toolbar toggle group's expandable content is expanded */
   expanded?: boolean;
-  /** Flag indicating the toolbar should use the Page insets */
-  pageInsets?: boolean;
   /** Flag indicating the toolbar height should expand to the full height of the container */
   fullHeight?: boolean;
   /** Flag indicating the toolbar is static */
   static?: boolean;
   /** Flag indicating the toolbar should stick to the top of its container */
   sticky?: boolean;
+  /** Background color variant of the toolbar */
+  colorVariant?: 'default' | 'no-background' | 'primary' | 'secondary';
+  /** Flag indicating the toolbar padding is removed */
+  noPadding?: boolean;
 }
 </script>
 
@@ -54,7 +59,7 @@ import { provide, ref, computed, watch, onBeforeUnmount, type InjectionKey, type
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { useWindowSize } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import PfToolbarChipGroupContent from './ToolbarChipGroupContent.vue';
+import PfToolbarLabelGroupContent from './ToolbarLabelGroupContent.vue';
 import { globalBreakpoints } from './common';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -66,6 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
   clearFiltersButtonText: 'Clear all filters',
   collapseListedFiltersBreakpoint: 'lg',
   expanded: undefined,
+  colorVariant: 'default',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
@@ -96,8 +102,8 @@ const effectiveExpanded = computed({
 
 provide(ToolbarExpandedKey, effectiveExpanded);
 
-const chipGroupContent: Ref<HTMLDivElement | null> = ref(null);
-provide(ToolbarChipGroupContentRefKey, chipGroupContent);
+const labelGroupContent: Ref<HTMLDivElement | null> = ref(null);
+provide(ToolbarLabelGroupContentRefKey, labelGroupContent);
 
 const { width: windowWidth } = useWindowSize();
 
@@ -122,8 +128,8 @@ watch(windowWidth, () => {
 });
 
 onBeforeUnmount(() => {
-  if (chipGroupContent.value) {
-    chipGroupContent.value = null;
+  if (labelGroupContent.value) {
+    labelGroupContent.value = null;
   }
 });
 

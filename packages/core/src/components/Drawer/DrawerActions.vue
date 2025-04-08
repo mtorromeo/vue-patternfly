@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.drawerActions">
+  <div v-bind="ouiaProps" :class="styles.drawerActions">
     <slot />
   </div>
 </template>

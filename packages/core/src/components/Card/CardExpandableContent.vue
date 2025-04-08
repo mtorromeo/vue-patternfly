@@ -1,5 +1,5 @@
 <template>
-  <div v-if="expanded" v-bind="(ouiaProps as any)" :class="styles.cardExpandableContent">
+  <div v-if="expanded" v-bind="ouiaProps" :class="styles.cardExpandableContent">
     <slot />
   </div>
 </template>

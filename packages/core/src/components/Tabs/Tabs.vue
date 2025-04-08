@@ -4,78 +4,104 @@
     :is="component"
     :id="id"
     :aria-label="ariaLabel"
-    :class="[styles.tabs, breakpointClasses, {
-      [styles.modifiers.fill]: filled,
-      [styles.modifiers.secondary]: secondary,
-      [styles.modifiers.vertical]: vertical,
-      [styles.modifiers.box]: box,
-      [styles.modifiers.scrollable]: !vertical && showScrollButtons,
-      [styles.modifiers.pageInsets]: pageInsets,
-      [styles.modifiers.noBorderBottom]: noBorderBottom,
-      [styles.modifiers.colorSchemeLight_300]: variant === 'light300',
-    }]"
+    :class="[
+      styles.tabs,
+      classesFromBreakpointProps(props, ['inset'], styles),
+      vertical && expandable && classesFromBreakpointProps(props, ['expandable'], styles, { short: true }),
+      {
+        [styles.modifiers.fill]: filled,
+        [styles.modifiers.subtab]: subtab,
+        [styles.modifiers.vertical]: vertical,
+        [styles.modifiers.expanded]: vertical && expandable && managedExpanded,
+        [styles.modifiers.box]: box,
+        [styles.modifiers.scrollable]: showScrollButtons,
+        [styles.modifiers.pageInsets]: pageInsets,
+        [styles.modifiers.noBorderBottom]: noBorderBottom,
+        [styles.modifiers.secondary]: secondary,
+        [styles.modifiers.overflow]: overflowHorizontal && overflowingTabCount > 0,
+      }
+    ]"
   >
-    <button
-      type="button"
-      :class="[styles.tabsScrollButton, {
-        [buttonStyles.modifiers.secondary]: secondary,
-      }]"
-      :disabled="disableLeftScrollButton"
-      :aria-label="leftScrollAriaLabel"
-      :aria-hidden="disableLeftScrollButton"
-      @click="scrollLeft"
-    >
-      <angle-left-icon />
-    </button>
+    <div :class="styles.tabsScrollButton">
+      <pf-button
+        variant="plain"
+        :disabled="disableLeftScrollButton"
+        :aria-label="backScrollAriaLabel"
+        :aria-hidden="disableLeftScrollButton"
+        @click="scrollLeft"
+      >
+        <angle-left-icon />
+      </pf-button>
+    </div>
 
     <ul
       ref="tabList"
       role="tablist"
       :class="styles.tabsList"
-      @scroll="handleScrollButtons"
-    />
-
-    <button
-      type="button"
-      :class="[styles.tabsScrollButton, {
-        [buttonStyles.modifiers.secondary]: secondary,
-      }]"
-      :disabled="disableRightScrollButton"
-      :aria-label="rightScrollAriaLabel"
-      :aria-hidden="disableRightScrollButton"
-      @click="scrollRight"
+      @scroll.passive="handleScrollButtons"
     >
-      <angle-right-icon />
-    </button>
+      <slot />
+
+      <li
+        v-if="overflowHorizontal && overflowingTabCount > 0"
+        ref="tabMore"
+        :class="[styles.tabsItem, styles.modifiers.overflow]"
+        role="presentation"
+      >
+        <button
+          ref="overflowTabRef"
+          type="button"
+          :class="[styles.tabsLink, {[styles.modifiers.expanded]: managedExpanded}]"
+          aria-haspopup="menu"
+          :aria-expanded="managedExpanded"
+          role="tab"
+          @click="managedExpanded = !managedExpanded"
+        >
+          <pf-tab-title-text>
+            More ({{ overflowingTabCount }})
+          </pf-tab-title-text>
+          <span :class="styles.tabsLinkToggleIcon">
+            <angle-right-icon />
+          </span>
+        </button>
+
+        <floating-ui :teleport-to="tabMoreRef" :reference="overflowTabRef">
+          <pf-menu v-if="managedExpanded" v-bind="$attrs">
+            <pf-menu-content>
+              <pf-menu-list ref="tabOverflow" />
+            </pf-menu-content>
+          </pf-menu>
+        </floating-ui>
+      </li>
+    </ul>
+
+    <div :class="styles.tabsScrollButton">
+      <pf-button
+        variant="plain"
+        :disabled="disableRightScrollButton"
+        :aria-label="forwardScrollAriaLabel"
+        :aria-hidden="disableRightScrollButton"
+        @click="scrollRight"
+      >
+        <angle-right-icon />
+      </pf-button>
+    </div>
   </component>
 
-  <slot />
+  <div ref="contentTargetRef" />
 </template>
 
 <script lang="ts">
-export type TabsProvide = {
-  variant: 'default' | 'light300';
-  activeKey: WritableComputedRef<TabKey | undefined>;
-  idSuffix: ComputedRef<string>;
-  tabListRef: Readonly<Ref<HTMLUListElement | null>>;
-}
-
-export const TabsKey = Symbol("TabsKey") as ChildrenTrackerInjectionKey<ComputedRef<TabKey>>;
-
-export const TabsProvideKey = Symbol('TabsProvide') as InjectionKey<TabsProvide>;
-
-export type TabKey = number | string | symbol;
-
-export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
-  /** Tabs background color variant */
-  variant?: 'default' | 'light300';
   /** The index of the active tab */
   activeKey?: TabKey;
   /** The index of the default active tab. Set this for uncontrolled Tabs */
   defaultActiveKey?: TabKey;
   /** Enables the filled tab list layout */
   filled?: boolean;
+  /** Enables subtab tab styling */
+  subtab?: boolean;
   /** Enables secondary tab styling */
   secondary?: boolean;
   /** Enables box styling to the tab component */
@@ -85,9 +111,9 @@ export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore *
   /** Disables border bottom tab styling on tabs. Defaults to false. To remove the bottom border, set this prop to true. */
   noBorderBottom?: boolean;
   /** Aria-label for the left scroll button */
-  leftScrollAriaLabel?: string;
+  backScrollAriaLabel?: string;
   /** Aria-label for the right scroll button */
-  rightScrollAriaLabel?: string;
+  forwardScrollAriaLabel?: string;
   /** Determines what tag is used around the tabs. Use "nav" to define the tabs inside a navigation region */
   component?: 'div' | 'nav';
   /** Provides an accessible label for the tabs. Labels should be unique for each set of tabs that are present on a page. When component is set to nav, this prop should be defined to differentiate the tabs from other navigation regions on the page. */
@@ -98,21 +124,33 @@ export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore *
   unmountOnExit?: boolean;
   /** Flag indicates that the tabs should use page insets. */
   pageInsets?: boolean;
+  /** Flag to indicate if the vertical tabs are expanded */
+  expanded?: boolean;
+  /** Flag indicating the default expanded state for uncontrolled expand/collapse of */
+  defaultExpanded?: boolean;
+  /** Flag which places overflowing tabs into a menu triggered by the last tab. Additionally an object can be passed with custom settings for the overflow tab. */
+  overflowHorizontal?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
-import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
-import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
+import { classesFromBreakpointProps, type ExpandableBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { watch, watchEffect, nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes, useTemplateRef } from 'vue';
+import { watch, watchEffect, nextTick, onMounted, provide, computed, type Ref, ref, type HTMLAttributes, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { isDefined, useEventListener } from '@vueuse/core';
+import { provideChildrenTracker } from '../../use';
+import { TabsKey, TabsProvideKey, type TabKey } from './common';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-import { isDefined, useEventListener } from '@vueuse/core';
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
+import PfButton from '../Button.vue';
+import PfTabTitleText from './TabTitleText.vue';
+import FloatingUi from '../../helpers/FloatingUi.vue';
+import PfMenu from '../Menu/Menu.vue';
+import PfMenuContent from '../Menu/MenuContent.vue';
+import PfMenuList from '../Menu/MenuList.vue';
 
 defineOptions({
   name: 'PfTabs',
@@ -121,11 +159,13 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   component: 'div',
+  expanded: undefined,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
   (name: 'update:activeKey', value: TabKey): void;
+  (name: 'update:expanded', value: boolean): void;
 }>();
 
 defineSlots<{
@@ -133,53 +173,101 @@ defineSlots<{
 }>();
 
 const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);
+const managedExpanded = useManagedProp('expanded', props.defaultExpanded);
+
 const idSuffix = computed(() => props.id || getUniqueId(''));
 const tabListRef = useTemplateRef('tabList');
-const tabKeys = provideChildrenTracker(TabsKey);
+const tabMoreRef = useTemplateRef('tabMore');
+const tabOverflowRef: Ref<InstanceType<typeof PfMenuList> | undefined> = ref();
+const contentTargetRef: Ref<HTMLElement | undefined> = ref();
+const overflowTabRef: Ref<HTMLButtonElement | undefined> = ref();
+const tabs = provideChildrenTracker(TabsKey);
 
 provide(TabsProvideKey, {
-  variant: props.variant,
+  secondary: props.secondary,
   activeKey: localActiveKey,
   idSuffix,
-  tabListRef,
+  tabOverflowRef,
+  contentTargetRef,
 });
 
 const showScrollButtons = ref(false);
 const disableLeftScrollButton = ref(false);
 const disableRightScrollButton = ref(false);
 
-const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['inset'], styles));
+const overflowingTabCount = computed(() => {
+  return tabs.reduce((acc, tab) => acc + (tab.overflowing ? 1 : 0), 0);
+});
 
 if (!props.vertical) {
   useEventListener('resize', handleScrollButtons, false);
 }
 
 watchEffect(() => {
-  if ((!isDefined(localActiveKey.value) || !tabKeys.find(k => k.value === localActiveKey.value)) && tabKeys.length) {
-    localActiveKey.value = tabKeys[0].value;
+  if ((!isDefined(localActiveKey.value) || !tabs.find(tab => (tab.key) === localActiveKey.value)) && tabs.length) {
+    localActiveKey.value = tabs[0].key;
   }
 });
 
-watch(tabKeys, handleScrollButtons, { immediate: true });
+watch(tabs, handleScrollButtons, { immediate: true });
 
 onMounted(() => {
   nextTick(handleScrollButtons);
 });
+
+function countOverflowingElements() {
+  if (!tabListRef.value || !tabs[0]?.el) {
+    return;
+  }
+
+  if (!isElementInView(tabListRef.value, tabs[0].el, false)) {
+    return;
+  }
+
+  let changed = false;
+  for (const tab of tabs) {
+    if (!tab.overflowing && tab.el && !isElementInView(tabListRef.value, tab.el, false)) {
+      tab.overflowing = true;
+      changed = true;
+    }
+  }
+
+  if (!changed) {
+    return;
+  }
+
+  nextTick(() => {
+    if (tabListRef.value && tabMoreRef.value && tabs.length > 0 && !isElementInView(tabListRef.value, tabMoreRef.value, false)) {
+      for (let i = tabs.length - 1; i >= 0; i--) {
+        const tab = tabs[i];
+        if (!tab.overflowing) {
+          tab.overflowing = true;
+          return;
+        }
+      }
+    }
+  });
+}
 
 function handleScrollButtons() {
   if (!tabListRef.value || props.vertical) {
     return;
   }
 
+  if (props.overflowHorizontal) {
+    countOverflowingElements();
+    return;
+  }
+
   // get first element and check if it is in view
   const overflowOnLeft = !isElementInView(tabListRef.value, tabListRef.value.firstElementChild, false);
+  disableLeftScrollButton.value = !overflowOnLeft;
 
   // get last element and check if it is in view
   const overflowOnRight = !isElementInView(tabListRef.value, tabListRef.value.lastElementChild, false);
+  disableRightScrollButton.value = !overflowOnRight;
 
   showScrollButtons.value = overflowOnLeft || overflowOnRight;
-  disableLeftScrollButton.value = !overflowOnLeft;
-  disableRightScrollButton.value = !overflowOnRight;
 }
 
 function scrollLeft() {

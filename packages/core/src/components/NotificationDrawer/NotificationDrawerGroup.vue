@@ -1,5 +1,5 @@
 <template>
-  <section v-bind="(ouiaProps as any)" :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: managedExpanded }]">
+  <section v-bind="ouiaProps" :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: managedExpanded }]">
     <component :is="headingLevel">
       <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="managedExpanded" @click="managedExpanded = !managedExpanded" @keydown="onKeydown">
         <pf-tooltip :position="tooltipPosition">

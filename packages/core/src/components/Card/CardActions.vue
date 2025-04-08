@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.cardActions, { [styles.modifiers.noOffset]: noOffset }]">
+  <div v-bind="ouiaProps" :class="[styles.cardActions, { [styles.modifiers.noOffset]: noOffset }]">
     <slot />
   </div>
 </template>
@@ -14,7 +14,7 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-    /** Flag indicating that the actions have no offset. */
+  /** Flag indicating that the actions have no offset. */
   noOffset?: boolean;
 }
 

@@ -6,6 +6,7 @@
       <component-info src="packages/core/src/components/Masthead/Masthead.vue" />
       <component-info src="packages/core/src/components/Masthead/MastheadBrand.vue" />
       <component-info src="packages/core/src/components/Masthead/MastheadContent.vue" />
+      <component-info src="packages/core/src/components/Masthead/MastheadLogo.vue" />
       <component-info src="packages/core/src/components/Masthead/MastheadMain.vue" />
       <component-info src="packages/core/src/components/Masthead/MastheadToggle.vue" />
     </template>
@@ -16,13 +17,15 @@
 
     <story-canvas title="Basic">
       <pf-masthead>
-        <pf-masthead-toggle>
-          <pf-button variant="plain" aria-label="Global navigation">
-            <BarsIcon />
-          </pf-button>
-        </pf-masthead-toggle>
         <pf-masthead-main>
-          <pf-masthead-brand>Logo</pf-masthead-brand>
+          <pf-masthead-toggle>
+            <pf-button variant="plain" aria-label="Global navigation">
+              <bars-icon />
+            </pf-button>
+          </pf-masthead-toggle>
+          <pf-masthead-brand>
+            <pf-masthead-logo component="a">Logo</pf-masthead-logo>
+          </pf-masthead-brand>
         </pf-masthead-main>
         <pf-masthead-content>
           <span>Content</span>
@@ -32,13 +35,15 @@
 
     <story-canvas title="Basic with mixed content">
       <pf-masthead>
-        <pf-masthead-toggle>
-          <pf-button variant="plain" aria-label="Global navigation">
-            <BarsIcon />
-          </pf-button>
-        </pf-masthead-toggle>
         <pf-masthead-main>
-          <pf-masthead-brand>Logo</pf-masthead-brand>
+          <pf-masthead-toggle>
+            <pf-button variant="plain" aria-label="Global navigation">
+              <bars-icon />
+            </pf-button>
+          </pf-masthead-toggle>
+          <pf-masthead-brand>
+            <pf-masthead-logo component="a">Logo</pf-masthead-logo>
+          </pf-masthead-brand>
         </pf-masthead-main>
         <pf-masthead-content>
           <pf-flex>
@@ -54,45 +59,15 @@
 
     <story-canvas title="Display stack, display inline responsive">
       <pf-masthead display="inline" display-lg="stack" display-2xl="inline">
-        <pf-masthead-toggle>
-          <pf-button variant="plain" aria-label="Global navigation">
-            <BarsIcon />
-          </pf-button>
-        </pf-masthead-toggle>
         <pf-masthead-main>
-          <pf-masthead-brand>Logo</pf-masthead-brand>
-        </pf-masthead-main>
-        <pf-masthead-content>
-          <span>Content</span>
-        </pf-masthead-content>
-      </pf-masthead>
-    </story-canvas>
-
-    <story-canvas title="Light variant">
-      <pf-masthead background-color="light">
-        <pf-masthead-toggle>
-          <pf-button variant="plain" aria-label="Global navigation">
-            <BarsIcon />
-          </pf-button>
-        </pf-masthead-toggle>
-        <pf-masthead-main>
-          <pf-masthead-brand>Logo</pf-masthead-brand>
-        </pf-masthead-main>
-        <pf-masthead-content>
-          <span>Content</span>
-        </pf-masthead-content>
-      </pf-masthead>
-    </story-canvas>
-
-    <story-canvas title="Light200 variant">
-      <pf-masthead background-color="light200">
-        <pf-masthead-toggle>
-          <pf-button variant="plain" aria-label="Global navigation">
-            <BarsIcon />
-          </pf-button>
-        </pf-masthead-toggle>
-        <pf-masthead-main>
-          <pf-masthead-brand>Logo</pf-masthead-brand>
+          <pf-masthead-toggle>
+            <pf-button variant="plain" aria-label="Global navigation">
+              <bars-icon />
+            </pf-button>
+          </pf-masthead-toggle>
+          <pf-masthead-brand>
+            <pf-masthead-logo>Logo</pf-masthead-logo>
+          </pf-masthead-brand>
         </pf-masthead-main>
         <pf-masthead-content>
           <span>Content</span>
@@ -102,13 +77,15 @@
 
     <story-canvas title="Inset">
       <pf-masthead inset="sm">
-        <pf-masthead-toggle>
-          <pf-button variant="plain" aria-label="Global navigation">
-            <BarsIcon />
-          </pf-button>
-        </pf-masthead-toggle>
         <pf-masthead-main>
-          <pf-masthead-brand>Logo</pf-masthead-brand>
+          <pf-masthead-toggle>
+            <pf-button variant="plain" aria-label="Global navigation">
+              <bars-icon />
+            </pf-button>
+          </pf-masthead-toggle>
+          <pf-masthead-brand>
+            <pf-masthead-logo>Logo</pf-masthead-logo>
+          </pf-masthead-brand>
         </pf-masthead-main>
         <pf-masthead-content>
           <span>Content</span>

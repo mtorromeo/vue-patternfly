@@ -1,5 +1,3 @@
-
-import type JumpLinksListVue from './JumpLinksList.vue';
 <template>
   <li
     v-bind="ouiaProps"
@@ -7,10 +5,12 @@ import type JumpLinksListVue from './JumpLinksList.vue';
     role="list"
     :aria-current="managedActive ? 'location' : undefined"
   >
-    <auto-wrap component="a" :exclude="PfJumpLinksList" :class="styles.jumpLinksLink" v-bind="{ href }" @click="handleClick">
-      <span :class="styles.jumpLinksLinkText">
-        <slot />
-      </span>
+    <auto-wrap component="span" :exclude="PfJumpLinksList" :class="styles.jumpLinksLink">
+      <pf-button variant="link" component="a" :href="href" @click="handleClick">
+        <span :class="styles.jumpLinksLinkText">
+          <slot />
+        </span>
+      </pf-button>
     </auto-wrap>
   </li>
 </template>
@@ -18,6 +18,7 @@ import type JumpLinksListVue from './JumpLinksList.vue';
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import PfJumpLinksList from './JumpLinksList.vue';
+import PfButton from '../Button.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import { type MaybeComputedElementRef } from '@vueuse/core';
 import { inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';

@@ -1,6 +1,6 @@
 <template>
   <nav
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.jumpLinks,
       breakpointClasses, {
@@ -19,12 +19,12 @@
             :aria-expanded="managedExpanded"
             @click="managedExpanded = !managedExpanded"
           >
-            <span :class="styles.jumpLinksToggleIcon">
-              <angle-right-icon />
-            </span>
-            <span v-if="$slots.label" :class="styles.jumpLinksToggleText">
-              <slot name="label" />
-            </span>
+            <template #icon>
+              <span :class="styles.jumpLinksToggleIcon">
+                <angle-right-icon />
+              </span>
+            </template>
+            <slot name="label" />
           </pf-button>
         </div>
         <div v-if="$slots.label && alwaysShowLabel" :class="styles.jumpLinksLabel">

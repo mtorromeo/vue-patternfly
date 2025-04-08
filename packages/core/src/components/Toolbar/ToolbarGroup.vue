@@ -1,11 +1,23 @@
 <template>
-  <div v-bind="ouiaProps" ref="elRef" :class="[styles.toolbarGroup, breakpointClasses, variantClass]">
+  <div
+    v-bind="ouiaProps"
+    ref="elRef"
+    :class="[styles.toolbarGroup, breakpointClasses, variantClass, {
+      [styles.modifiers.alignItemsStart]: alignItems === 'start',
+      [styles.modifiers.alignItemsCenter]: alignItems === 'center',
+      [styles.modifiers.alignItemsBaseline]: alignItems === 'baseline',
+      [styles.modifiers.alignSelfStart]: alignSelf === 'start',
+      [styles.modifiers.alignSelfCenter]: alignSelf === 'center',
+      [styles.modifiers.alignSelfBaseline]: alignSelf === 'baseline',
+      [styles.modifiers.overflowContainer]: overflowContainer,
+    }]"
+  >
     <slot />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type SpacerBreakpointProps, type SpaceItemsBreakpointProps } from '../../breakpoints';
+import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type GapBreakpointProps, type ColumnGapBreakpointProps, type RowGapBreakpointProps, type RowWrapBreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { computed, onMounted, type HTMLAttributes, useTemplateRef } from 'vue';
@@ -15,8 +27,15 @@ defineOptions({
   name: 'PfToolbarGroup',
 });
 
-export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, SpaceItemsBreakpointProps, /* @vue-ignore */ HTMLAttributes {
-  variant?: 'filter-group' | 'icon-button-group' | 'button-group';
+export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+  /** A type modifier which modifies spacing specifically depending on the type of group */
+  variant?: 'filter-group' | 'action-group' | 'action-group-inline' | 'action-group-plain' | 'label-group';
+  /** Vertical alignment of children */
+  alignItems?: 'start' | 'center' | 'baseline' | 'default' | 'end' | 'stretch';
+  /** Vertical alignment */
+  alignSelf?: 'start' | 'center' | 'baseline' | 'default' | 'end' | 'stretch';
+  /** Flag that modifies the toolbar group to hide overflow and respond to available space. Used for horizontal navigation. */
+  overflowContainer?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -35,8 +54,8 @@ const el = useTemplateRef('elRef');
 
 const breakpointClasses = computed(() => {
   return [
-    ...classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
-    ...classesFromBreakpointProps(props, ['spacer', 'spaceItems', 'align'], styles),
+    ...classesFromBreakpointProps(props, ['visibility', 'rowWrap'], styles, { short: true }),
+    ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap'], styles),
   ];
 });
 

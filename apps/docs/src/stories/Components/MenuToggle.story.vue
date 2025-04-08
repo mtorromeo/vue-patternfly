@@ -80,100 +80,142 @@
     </story-canvas>
 
     <story-canvas title="Split button (checkbox)">
-      <pf-menu-toggle split-button>
-        <pf-menu-toggle-checkbox />
+      <pf-menu-toggle>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox />
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button expanded>
-        <pf-menu-toggle-checkbox />
+      <pf-menu-toggle expanded>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox />
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button disabled>
-        <pf-menu-toggle-checkbox disabled />
+      <pf-menu-toggle disabled>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox disabled />
+        </template>
       </pf-menu-toggle>
     </story-canvas>
 
     <story-canvas title="Split button (checkbox indeterminate with toggle text)">
-      <pf-menu-toggle split-button>
-        <pf-menu-toggle-checkbox :checked="null" /> 10 selected
+      <pf-menu-toggle>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox :checked="null">10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button expanded>
-        <pf-menu-toggle-checkbox :checked="null" /> 10 selected
+      <pf-menu-toggle expanded>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox :checked="null">10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button disabled>
-        <pf-menu-toggle-checkbox :checked="null" disabled /> 10 selected
+      <pf-menu-toggle disabled>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox :checked="null" disabled>10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
     </story-canvas>
 
     <story-canvas title="Split button (checkbox, primary)">
-      <pf-menu-toggle split-button variant="primary">
-        <pf-menu-toggle-checkbox /> 10 selected
+      <pf-menu-toggle variant="primary">
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox>10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button variant="primary" expanded>
-        <pf-menu-toggle-checkbox /> 10 selected
+      <pf-menu-toggle variant="primary" expanded>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox>10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button variant="primary" disabled>
-        <pf-menu-toggle-checkbox disabled /> 10 selected
+      <pf-menu-toggle variant="primary" disabled>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox>10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
     </story-canvas>
 
     <story-canvas title="Split button (checkbox, secondary)">
-      <pf-menu-toggle split-button variant="secondary">
-        <pf-menu-toggle-checkbox /> 10 selected
+      <pf-menu-toggle variant="secondary">
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox>10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button variant="secondary" expanded>
-        <pf-menu-toggle-checkbox /> 10 selected
+      <pf-menu-toggle variant="secondary" expanded>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox>10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button variant="secondary" disabled>
-        <pf-menu-toggle-checkbox disabled /> 10 selected
+      <pf-menu-toggle variant="secondary" disabled>
+        <template #split-buttons>
+          <pf-menu-toggle-checkbox disabled>10 selected</pf-menu-toggle-checkbox>
+        </template>
       </pf-menu-toggle>
     </story-canvas>
 
     <story-canvas title="Split button (action)">
-      <pf-menu-toggle split-button="action">
-        <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+      <pf-menu-toggle>
+        <template #split-buttons>
+          <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button="action" expanded>
-        <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+      <pf-menu-toggle expanded>
+        <template #split-buttons>
+          <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button="action" disabled>
-        <pf-menu-toggle-action disabled>Action</pf-menu-toggle-action>
+      <pf-menu-toggle disabled>
+        <template #split-buttons>
+          <pf-menu-toggle-action disabled>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
     </story-canvas>
 
     <story-canvas title="Split button (action, primary)">
-      <pf-menu-toggle split-button="action" variant="primary">
-        <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+      <pf-menu-toggle variant="primary">
+        <template #split-buttons>
+          <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button="action" variant="primary" expanded>
-        <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+      <pf-menu-toggle variant="primary" expanded>
+        <template #split-buttons>
+          <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button="action" variant="primary" disabled>
-        <pf-menu-toggle-action disabled>Action</pf-menu-toggle-action>
+      <pf-menu-toggle variant="primary" disabled>
+        <template #split-buttons>
+          <pf-menu-toggle-action disabled>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
     </story-canvas>
 
     <story-canvas title="Split button (action, secondary)">
-      <pf-menu-toggle split-button="action" variant="secondary">
-        <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+      <pf-menu-toggle variant="secondary">
+        <template #split-buttons>
+          <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button="action" variant="secondary" expanded>
-        <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+      <pf-menu-toggle variant="secondary" expanded>
+        <template #split-buttons>
+          <pf-menu-toggle-action>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle split-button="action" variant="secondary" disabled>
-        <pf-menu-toggle-action disabled>Action</pf-menu-toggle-action>
+      <pf-menu-toggle variant="secondary" disabled>
+        <template #split-buttons>
+          <pf-menu-toggle-action disabled>Action</pf-menu-toggle-action>
+        </template>
       </pf-menu-toggle>
     </story-canvas>
 
@@ -229,7 +271,7 @@
 </template>
 
 <style scoped>
-:deep(.inner-canvas .pf-v5-c-menu-toggle) {
+:deep(.inner-canvas .pf-v6-c-menu-toggle) {
   vertical-align: bottom;
 }
 </style>

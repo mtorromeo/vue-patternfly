@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/table",
-  "version": "5.0.0",
+  "version": "6.0.0-alpha.1",
   "type": "module",
   "files": [
     "dist"
@@ -33,7 +33,7 @@
     "prepack": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@patternfly/react-styles": "^5.4.1",
+    "@patternfly/react-styles": "^6.2.0",
     "@vue-patternfly/core": "workspace:^",
     "@vue-patternfly/icons": "workspace:^"
   },
@@ -41,7 +41,7 @@
     "@types/node": "^22.14.0",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/compiler-sfc": "^3.5.13",
-    "@vueuse/core": "^13.0.0",
+    "@vueuse/core": "^13.1.0",
     "glob": "^11.0.1",
     "rimraf": "^6.0.1",
     "tslib": "^2.8.1",

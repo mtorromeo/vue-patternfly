@@ -81,7 +81,7 @@ import { pluralize } from '../../util';
 import { type Ref, type HTMLAttributes, ref, watch } from 'vue';
 
 defineOptions({
-  name: 'PfNavigation',
+  name: 'PfPaginationNavigation',
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-label'> {

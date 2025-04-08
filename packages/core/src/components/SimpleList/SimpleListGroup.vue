@@ -1,9 +1,9 @@
 <template>
-  <section v-bind="(ouiaProps as any)" :class="styles.simpleListSection">
+  <section v-bind="ouiaProps" :class="styles.simpleListSection">
     <h2 :id="id" :class="[styles.simpleListTitle, titleClass]" aria-hidden>
       <slot name="title">{{ title }}</slot>
     </h2>
-    <ul class="pf-v5-c-simple-list__list" :class="$attrs.class" role="list" :aria-labelledby="id">
+    <ul class="pf-v6-c-simple-list__list" :class="$attrs.class" role="list" :aria-labelledby="id">
       <slot />
     </ul>
   </section>

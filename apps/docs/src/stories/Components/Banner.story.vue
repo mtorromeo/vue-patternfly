@@ -9,58 +9,66 @@
     <story-canvas title="Basic">
       <pf-banner>Default banner</pf-banner>
       <br>
-      <pf-banner variant="blue">Blue banner</pf-banner>
+      <pf-banner color="red">Red banner</pf-banner>
       <br>
-      <pf-banner variant="red">Red banner</pf-banner>
+      <pf-banner color="orangered">Orangered banner</pf-banner>
       <br>
-      <pf-banner variant="green">Green banner</pf-banner>
+      <pf-banner color="orange">Orange banner</pf-banner>
       <br>
-      <pf-banner variant="gold">Gold banner</pf-banner>
+      <pf-banner color="yellow">Yellow banner</pf-banner>
+      <br>
+      <pf-banner color="green">Green banner</pf-banner>
+      <br>
+      <pf-banner color="teal">Teal banner</pf-banner>
+      <br>
+      <pf-banner color="blue">Blue banner</pf-banner>
+      <br>
+      <pf-banner color="purple">Purple banner</pf-banner>
     </story-canvas>
 
     <story-canvas title="Status">
-      <pf-banner screen-reader-text="Default banner">
-        <pf-flex space-items="sm">
-          <pf-flex-item>
-            <bell-icon />
-          </pf-flex-item>
-          <pf-flex-item>Default banner</pf-flex-item>
-        </pf-flex>
-      </pf-banner>
-      <br>
-      <pf-banner variant="blue" screen-reader-text="Blue banner">
-        <pf-flex space-items="sm">
-          <pf-flex-item>
-            <circle-info-icon />
-          </pf-flex-item>
-          <pf-flex-item>Blue banner</pf-flex-item>
-        </pf-flex>
-      </pf-banner>
-      <br>
-      <pf-banner variant="red" screen-reader-text="Red banner">
-        <pf-flex space-items="sm">
-          <pf-flex-item>
-            <circle-exclamation-icon />
-          </pf-flex-item>
-          <pf-flex-item>Red banner</pf-flex-item>
-        </pf-flex>
-      </pf-banner>
-      <br>
-      <pf-banner variant="green" screen-reader-text="Green banner">
+      <pf-banner status="success" screen-reader-text="Success banner">
         <pf-flex space-items="sm">
           <pf-flex-item>
             <circle-check-icon />
           </pf-flex-item>
-          <pf-flex-item>Green banner</pf-flex-item>
+          <pf-flex-item>Success banner</pf-flex-item>
         </pf-flex>
       </pf-banner>
       <br>
-      <pf-banner variant="gold" screen-reader-text="Gold banner">
+      <pf-banner status="warning" screen-reader-text="Warning banner">
         <pf-flex space-items="sm">
           <pf-flex-item>
             <triangle-exclamation-icon />
           </pf-flex-item>
-          <pf-flex-item>Gold banner</pf-flex-item>
+          <pf-flex-item>Warning banner</pf-flex-item>
+        </pf-flex>
+      </pf-banner>
+      <br>
+      <pf-banner status="danger" screen-reader-text="Danger banner">
+        <pf-flex space-items="sm">
+          <pf-flex-item>
+            <circle-exclamation-icon />
+          </pf-flex-item>
+          <pf-flex-item>Danger banner</pf-flex-item>
+        </pf-flex>
+      </pf-banner>
+      <br>
+      <pf-banner status="info" screen-reader-text="Info banner">
+        <pf-flex space-items="sm">
+          <pf-flex-item>
+            <circle-info-icon />
+          </pf-flex-item>
+          <pf-flex-item>Info banner</pf-flex-item>
+        </pf-flex>
+      </pf-banner>
+      <br>
+      <pf-banner status="custom" screen-reader-text="Custom banner">
+        <pf-flex space-items="sm">
+          <pf-flex-item>
+            <triangle-exclamation-icon />
+          </pf-flex-item>
+          <pf-flex-item>Custom banner</pf-flex-item>
         </pf-flex>
       </pf-banner>
     </story-canvas>
@@ -68,7 +76,6 @@
 </template>
 
 <script lang="ts" setup>
-import BellIcon from '@vue-patternfly/icons/bell-icon';
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';

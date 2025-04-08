@@ -1,6 +1,6 @@
 <template>
   <li
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.progressStepperStep, variant ? variantStyle[variant] : undefined, {
       [styles.modifiers.current]: current,
     }]"

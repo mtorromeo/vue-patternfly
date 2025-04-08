@@ -1,6 +1,6 @@
 <template>
   <ul
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.dataList,
       gridBreackpointClass, {

@@ -6,7 +6,7 @@
       [styles.modifiers.plain]: plain,
       [styles.modifiers.scrollable]: scrollable,
       [styles.modifiers.flyout]: containsFlyout,
-      [styles.modifiers.nav]: navFlyout,
+      'pf-m-nav': navFlyout,
     // [styles.modifiers.drilldown]: containsDrilldown,
     // [styles.modifiers.drilledIn]: effectiveMenuDrilledIn,
     }]"

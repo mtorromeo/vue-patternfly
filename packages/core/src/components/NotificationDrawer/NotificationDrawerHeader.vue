@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.notificationDrawerHeader">
+  <div v-bind="ouiaProps" :class="styles.notificationDrawerHeader">
     <pf-text component="h1" :class="styles.notificationDrawerHeaderTitle">
       {{ title }}
     </pf-text>

@@ -2,28 +2,35 @@
   <pf-page v-if="!$route.meta.iframe" managed-sidebar>
     <template #skeleton>
       <pf-masthead>
-        <pf-masthead-toggle>
-          <pf-page-toggle-button>
-            <bars-icon />
-          </pf-page-toggle-button>
-        </pf-masthead-toggle>
         <pf-masthead-main>
+          <pf-masthead-toggle>
+            <pf-page-toggle-button>
+              <bars-icon />
+            </pf-page-toggle-button>
+          </pf-masthead-toggle>
           <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
             <pf-masthead-brand :href="href">
-              <pf-brand
-                src="https://v5-archive.patternfly.org/assets/images/pf_logo.svg"
-                style="height:40px;filter:invert(1)"
-              />
+              <pf-brand src="">
+                <object v-html="PfLogo" />
+              </pf-brand>
             </pf-masthead-brand>
           </router-link>
         </pf-masthead-main>
         <pf-masthead-content>
           <pf-toolbar full-height>
             <pf-toolbar-content>
-              <pf-toolbar-item>header-tools</pf-toolbar-item>
-              <pf-toolbar-item align="right">
-                <pf-switch v-model:checked="darkTheme" label="Dark theme" />
-              </pf-toolbar-item>
+              <pf-toolbar-group align="end">
+                <pf-toolbar-item>
+                  <pf-toggle-group v-model="darkTheme">
+                    <pf-toggle-group-item :value="false">
+                      <sun-icon />
+                    </pf-toggle-group-item>
+                    <pf-toggle-group-item :value="true">
+                      <moon-icon />
+                    </pf-toggle-group-item>
+                  </pf-toggle-group>
+                </pf-toolbar-item>
+              </pf-toolbar-group>
             </pf-toolbar-content>
           </pf-toolbar>
         </pf-masthead-content>
@@ -41,14 +48,7 @@
     <router-view />
 
     <pf-alert-group toast live-region :overflow-message="overflowMessage" @overflow-click="expandAlerts">
-      <pf-alert
-        v-for="a of alerts.notifications.slice(0, maxDisplayed > 0 ? maxDisplayed : alerts.notifications.length)"
-        :key="a.id"
-        :variant="a.variant"
-        :title="a.title"
-        live-region
-        @close="alerts.delete(a.id)"
-      >
+      <pf-alert v-for="a of alerts.notifications.slice(0, maxDisplayed > 0 ? maxDisplayed : alerts.notifications.length)" :key="a.id" :variant="a.variant" :title="a.title" live-region @close="alerts.delete(a.id)">
         <template v-if="a.text" #default>
           <p>{{ a.text }}</p>
         </template>
@@ -60,26 +60,53 @@
 </template>
 
 <style lang="scss">
+.pf-v6-c-brand svg {
+  height: 38px;
+  width: auto;
+
+  :where(.pf-v6-theme-dark) & #PatternFly-Copy-11 {
+    fill: white;
+  }
+
+  #Logo {
+    filter: hue-rotate(257deg) brightness(0.65) contrast(2);
+
+    :where(.pf-v6-theme-dark) & {
+      filter: hue-rotate(257deg) brightness(0.85) contrast(2);
+    }
+  }
+}
+
 .page__layouts {
-  .pf-v5-l-bullseye,
-  .pf-v5-l-flex,
-  .pf-v5-l-gallery,
-  .pf-v5-l-grid,
-  .pf-v5-l-level,
-  .pf-v5-l-split,
-  .pf-v5-l-stack {
-    &, > div {
+  .pf-v6-l-bullseye,
+  .pf-v6-l-flex,
+  .pf-v6-l-gallery,
+  .pf-v6-l-grid,
+  .pf-v6-l-level,
+  .pf-v6-l-split,
+  .pf-v6-l-stack {
+    &,
+    > div {
       border-color: rgba(0, 0, 0, 0.125);
       border-style: dashed;
       border-width: 1px;
 
-      background-color: var(--pf-v5-global--palette--green-100);
+      background-color: var(--pf-t--color--green--10);
+      :where(.pf-v6-theme-dark) & {
+        background-color: var(--pf-t--color--green--50);
+      }
 
       > div {
-        background-color: var(--pf-v5-global--palette--green-200);
+        background-color: var(--pf-t--color--green--20);
+        :where(.pf-v6-theme-dark) & {
+          background-color: var(--pf-t--color--green--60);
+        }
 
         > div {
-          background-color: var(--pf-v5-global--palette--green-300);
+          background-color: var(--pf-t--color--green--30);
+          :where(.pf-v6-theme-dark) & {
+            background-color: var(--pf-t--color--green--70);
+          }
         }
       }
 
@@ -92,45 +119,48 @@
 </style>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { stories } from './router';
-import { useAlertsStore } from './store/alerts';
-import { ref } from 'vue';
-import { watch } from 'vue';
-import BarsIcon from '@vue-patternfly/icons/bars-icon';
+import { computed, ref, watch } from "vue";
+import { stories } from "./router";
+import { useAlertsStore } from "./store/alerts";
+import PfLogo from "@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg?raw";
+import BarsIcon from "@vue-patternfly/icons/bars-icon";
+import SunIcon from "@vue-patternfly/icons/sun-icon";
+import MoonIcon from "@vue-patternfly/icons/moon-icon";
 
 const alerts = useAlertsStore();
 const maxDisplayed = ref(5);
 
 const overflowMessage = computed(() => {
   if (maxDisplayed.value <= 0) {
-    return '';
+    return "";
   }
   const overflow = alerts.notifications.length - maxDisplayed.value;
   if (overflow > 0) {
     return `View ${overflow} more alerts`;
   }
-  return '';
+  return "";
 });
 
-const darkTheme = computed({
-  get: () => document.documentElement.classList.contains('pf-v5-theme-dark'),
-  set(value) {
-    if (value) {
-      document.documentElement.classList.add('pf-v5-theme-dark');
-    } else {
-      document.documentElement.classList.remove('pf-v5-theme-dark');
-    }
-  },
+const darkTheme = ref(document.documentElement.classList.contains("pf-v6-theme-dark"));
+
+watch(darkTheme, (value) => {
+  if (value) {
+    document.documentElement.classList.add("pf-v6-theme-dark");
+  } else {
+    document.documentElement.classList.remove("pf-v6-theme-dark");
+  }
 });
 
 function expandAlerts() {
   maxDisplayed.value = 0;
 }
 
-watch(() => alerts.notifications.length, (l) => {
-  if (l <= 5) {
-    maxDisplayed.value = 5;
-  }
-});
+watch(
+  () => alerts.notifications.length,
+  (l) => {
+    if (l <= 5) {
+      maxDisplayed.value = 5;
+    }
+  },
+);
 </script>

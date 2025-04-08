@@ -1,9 +1,19 @@
 <template>
-  <pf-divider v-if="variant == 'separator'" :class="styles.modifiers.vertical" v-bind="$attrs" />
+  <pf-divider v-if="variant == 'separator'" v-bind="$attrs" orientation="vertical" />
   <div
     v-else
     :class="[styles.toolbarItem, breakpointClasses, variantClass, {
+      [styles.modifiers.pagination]: variant == 'pagination',
+      [styles.modifiers.label]: variant == 'label',
+      [styles.modifiers.labelGroup]: variant == 'label-group',
       [styles.modifiers.expanded]: allExpanded,
+      [styles.modifiers.overflowContainer]: overflowContainer,
+      [styles.modifiers.alignItemsStart]: alignItems === 'start',
+      [styles.modifiers.alignItemsCenter]: alignItems === 'center',
+      [styles.modifiers.alignItemsBaseline]: alignItems === 'baseline',
+      [styles.modifiers.alignSelfStart]: alignSelf === 'start',
+      [styles.modifiers.alignSelfCenter]: alignSelf === 'center',
+      [styles.modifiers.alignSelfBaseline]: alignSelf === 'baseline',
     }]"
     :style="breakpointWidths"
     :aria-hidden="variant == 'label'"
@@ -15,9 +25,10 @@
 
 <script lang="ts" setup>
 import PfDivider from '../Divider.vue';
-import { breakpoints, classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type SpacerBreakpointProps, type WidthBreakpointProps } from '../../breakpoints';
+import { breakpoints, classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type WidthBreakpointProps, type GapBreakpointProps, type ColumnGapBreakpointProps, type RowGapBreakpointProps, type RowWrapBreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import cssWidth from '@patternfly/react-tokens/dist/esm/c_toolbar__item_Width';
 import { computed, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -25,9 +36,17 @@ defineOptions({
   name: 'PfToolbarItem',
 });
 
-export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, SpacerBreakpointProps, WidthBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
-  variant?: 'separator' | 'bulk-select' | 'overflow-menu' | 'pagination' | 'search-filter' | 'label' | 'chip-group' | 'expand-all';
+export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, WidthBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
+  /** A type modifier which modifies spacing specifically depending on the type of item */
+  variant?: 'pagination' | 'label' | 'label-group' | 'separator' | 'expand-all';
+  /** Vertical alignment of children */
+  alignItems?: 'start' | 'center' | 'baseline' | 'default' | 'end' | 'stretch';
+  /** Vertical alignment */
+  alignSelf?: 'start' | 'center' | 'baseline' | 'default' | 'end' | 'stretch';
+  /** Flag indicating if the expand-all variant is expanded or not */
   allExpanded?: boolean;
+  /** Flag that modifies the toolbar item to hide overflow and respond to available space. Used for horizontal navigation. */
+  overflowContainer?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -43,8 +62,8 @@ defineSlots<{
 
 const breakpointClasses = computed(() => {
   return [
-    ...classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
-    ...classesFromBreakpointProps(props, ['spacer', 'align'], styles),
+    ...classesFromBreakpointProps(props, ['visibility', 'rowWrap'], styles, { short: true }),
+    ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap'], styles),
   ];
 });
 
@@ -55,7 +74,7 @@ const breakpointWidths = computed(() => {
     if (!props[prop as keyof Props]) {
       continue;
     }
-    widths[`--pf-v5-c-toolbar__item--Width${b ? `-on-${b.toLowerCase()}` : ''}`] = props[prop as keyof Props];
+    widths[`${cssWidth.name}${b ? `-on-${b.toLowerCase()}` : ''}`] = props[prop as keyof Props];
   }
   return widths;
 });

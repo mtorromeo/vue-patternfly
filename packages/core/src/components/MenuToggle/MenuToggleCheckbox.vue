@@ -1,12 +1,15 @@
 <template>
-  <label v-bind="(ouiaProps as any)" :class="styles.check">
+  <label v-bind="ouiaProps" :class="[styles.check, { [styles.modifiers.standalone]: !$slots.default }]">
     <input
       v-bind="$attrs"
-      :ref="(el) => (el as HTMLInputElement).indeterminate = checked === null"
+      :ref="(el) => el ? (el as HTMLInputElement).indeterminate = checked === null : undefined"
       :class="styles.checkInput"
       type="checkbox"
       :checked="Boolean(checked)"
     >
+    <span v-if="$slots.default" :class="styles.checkLabel" aria-hidden="true">
+      <slot />
+    </span>
   </label>
 </template>
 
@@ -27,7 +30,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
 
 const props = defineProps<Props>();
 
-defineSlots<Record<string, never>>();
+defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>

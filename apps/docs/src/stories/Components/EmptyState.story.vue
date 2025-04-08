@@ -19,7 +19,7 @@
           </template>
         </pf-empty-state-header>
         <pf-empty-state-body>
-          This represents an the empty state pattern in Patternfly 5. Hopefully it's simple enough to use but flexible enough to meet a variety of needs.
+          This represents an the empty state pattern in Patternfly 6. Hopefully it's simple enough to use but flexible enough to meet a variety of needs.
         </pf-empty-state-body>
         <pf-empty-state-footer>
           <pf-empty-state-actions>
@@ -71,7 +71,7 @@
       <pf-empty-state>
         <pf-empty-state-header title="Custom icon color" heading-level="h4">
           <template #icon>
-            <pf-empty-state-icon color="var(--pf-v5-global--success-color--100)">
+            <pf-empty-state-icon color="var(--pf-v6-global--success-color--100)">
               <check-icon />
             </pf-empty-state-icon>
           </template>

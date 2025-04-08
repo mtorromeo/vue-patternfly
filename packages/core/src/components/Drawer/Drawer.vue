@@ -6,7 +6,7 @@
       [styles.modifiers.expanded]: expandedClass,
       [styles.modifiers.inline]: inline,
       [styles.modifiers.static]: static,
-      [styles.modifiers.panelLeft]: position === 'left',
+      [styles.modifiers.panelLeft]: position === 'start',
       [styles.modifiers.panelBottom]: position === 'bottom',
     }]"
     @animationend="display = isOpen"
@@ -38,11 +38,11 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Indicates if the drawer will always show both content and panel. */
   static?: boolean;
   /** Position of the drawer panel */
-  position?: 'left' | 'right' | 'bottom';
+  position?: 'start' | 'end' | 'bottom';
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  position: 'right',
+  position: 'end',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 

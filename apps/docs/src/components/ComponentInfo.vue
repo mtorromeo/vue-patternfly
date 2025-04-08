@@ -27,7 +27,7 @@
       </pf-thead>
       <pf-tbody>
         <pf-tr v-for="prop in doc.props" :key="prop.name">
-          <pf-td>{{ prop.name }} <span v-if="prop.required" :style="{color: 'var(--pf-v5-global--danger-color--100)'}">*</span></pf-td>
+          <pf-td>{{ prop.name }} <span v-if="prop.required" :style="{color: 'var(--pf-v6-global--danger-color--100)'}">*</span></pf-td>
           <pf-td v-if="prop.type?.name === 'union'">{{ (prop.type as any).elements.map((e: any) => e.name).join(' | ') }}</pf-td>
           <pf-td v-else-if="prop.type?.name === 'Array'">{{ (prop.type as any).elements.map((e: any) => e.name).join(' | ') }}[]</pf-td>
           <pf-td v-else-if="prop.type?.name === 'TSFunctionType'">function</pf-td>

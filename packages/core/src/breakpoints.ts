@@ -161,12 +161,12 @@ export type AlignSelfBreakpointProps = {
 }
 
 export type AlignBreakpointProps = {
-  align?: 'left' | 'right';
-  alignSm?: 'left' | 'right';
-  alignMd?: 'left' | 'right';
-  alignLg?: 'left' | 'right';
-  alignXl?: 'left' | 'right';
-  align2xl?: 'left' | 'right';
+  align?: 'start' | 'center' | 'end';
+  alignSm?: 'start' | 'center' | 'end';
+  alignMd?: 'start' | 'center' | 'end';
+  alignLg?: 'start' | 'center' | 'end';
+  alignXl?: 'start' | 'center' | 'end';
+  align2xl?: 'start' | 'center' | 'end';
 }
 
 export type JustifyContentBreakpointProps = {
@@ -203,6 +203,15 @@ export type FlexWrapBreakpointProps = {
   flexWrapLg?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrapXl?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrap2xl?: 'wrap' | 'wrap-reverse' | 'nowrap';
+}
+
+export type RowWrapBreakpointProps = {
+  rowWrap?: 'wrap' | 'nowrap';
+  rowWrapSm?: 'wrap' | 'nowrap';
+  rowWrapMd?: 'wrap' | 'nowrap';
+  rowWrapLg?: 'wrap' | 'nowrap';
+  rowWrapXl?: 'wrap' | 'nowrap';
+  rowWrapXl2?: 'wrap' | 'nowrap';
 }
 
 export type InsetBreakpointProps = {

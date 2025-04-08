@@ -22,6 +22,9 @@
       v-bind="$attrs"
       @click="select"
     >
+      <span v-if="$slots.icon" :class="styles.navLinkIcon">
+        <slot name="icon" />
+      </span>
       <span :class="`${styles.nav}__link-text`">
         <slot />
       </span>
@@ -45,6 +48,7 @@ import { watchEffect, inject, type Ref, ref, computed, onMounted, onBeforeUnmoun
 import type { RouteLocationRaw } from 'vue-router';
 import { isDefined, useElementHover } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
+import dividerStyles from '@patternfly/react-styles/css/components/Divider/divider';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { NavFlyoutRefKey, NavOnSelectKey } from './Nav.vue';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
@@ -81,6 +85,7 @@ const emit = defineEmits<{
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
   flyout?: (props?: Record<never, never>) => any;
 }>();
 
@@ -120,7 +125,7 @@ watchEffect(() => {
   if (flyoutVisible.value) {
     const flyoutMenu = flyoutTarget.value.nextElementSibling;
     const flyoutItems = flyoutMenu ? Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
-      el => !(el.classList.contains('pf-m-disabled') || el.classList.contains(styles.divider)),
+      el => !(el.classList.contains('pf-m-disabled') || el.classList.contains(dividerStyles.divider)),
     ) : [];
     const child = flyoutItems.length ? flyoutItems[0].firstElementChild : null;
     if (child instanceof HTMLElement) {

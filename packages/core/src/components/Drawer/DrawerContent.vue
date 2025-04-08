@@ -6,8 +6,8 @@
       component="div"
       :exclude="PfDrawerPanelContent"
       :class="[styles.drawerContent, {
-        [styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200,
-        [styles.modifiers.noBackground]: colorVariant === DrawerColorVariant.noBackground,
+        [styles.modifiers.primary]: colorVariant === 'primary',
+        [styles.modifiers.secondary]: colorVariant === 'secondary',
       }]"
     >
       <slot />
@@ -23,14 +23,13 @@ export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey
 
 export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
   /** Color variant of the background of the drawer panel */
-  colorVariant?: DrawerColorVariant | 'light-200' | 'no-background' | 'default';
+  colorVariant?: 'default' | 'primary' | 'secondary';
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { type InjectionKey, provide, type Ref, useTemplateRef } from 'vue';
-import { DrawerColorVariant } from './common';
 import type { ComponentProps } from '../../util';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDrawerMain from './DrawerMain.vue';
@@ -42,7 +41,7 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  colorVariant: DrawerColorVariant.default,
+  colorVariant: 'default',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 

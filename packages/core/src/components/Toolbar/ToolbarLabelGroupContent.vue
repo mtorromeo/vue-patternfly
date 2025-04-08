@@ -13,17 +13,15 @@
       @mounted="emit('mounted', $event)"
     />
 
-    <pf-toolbar-group v-if="collapseListedFilters && numberOfFilters > 0 && !expanded">
-      <pf-toolbar-item>{{ numberOfFilters }} filters applied</pf-toolbar-item>
+    <pf-toolbar-group v-if="showNumberOfFilters || showDefaultClearFilter || $slots.default" variant="action-group-inline">
+      <pf-toolbar-item v-if="showNumberOfFilters">{{ numberOfFilters }} filters applied</pf-toolbar-item>
+      <pf-toolbar-item v-if="showDefaultClearFilter">
+        <pf-button variant="link" inline @click="emit('clear-all-filters')">
+          {{ clearFiltersButtonText }}
+        </pf-button>
+      </pf-toolbar-item>
+      <slot />
     </pf-toolbar-group>
-
-    <pf-toolbar-item v-if="showClearFiltersButton && !expanded">
-      <pf-button
-        variant="link"
-        inline
-        @click="emit('clear-all-filters')"
-      >{{ clearFiltersButtonText }}</pf-button>
-    </pf-toolbar-item>
   </div>
 </template>
 
@@ -38,7 +36,7 @@ import { computed, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
-  name: 'PfToolbarChipGroupContent',
+  name: 'PfToolbarLabelGroupContent',
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
@@ -61,7 +59,9 @@ const emit = defineEmits<{
   (name: 'mounted', el: HTMLDivElement): void;
 }>();
 
-defineSlots<Record<string, never>>();
+const slots = defineSlots<{
+  default?: (props?: Record<never, never>) => any;
+}>();
 
 const { width: windowWidth } = useWindowSize();
 
@@ -71,4 +71,7 @@ const collapseListedFilters = computed(() => {
   }
   return windowWidth.value < globalBreakpoints[props.collapseListedFiltersBreakpoint];
 });
+
+const showNumberOfFilters = computed(() => collapseListedFilters.value && props.numberOfFilters > 0 && !props.expanded);
+const showDefaultClearFilter = computed(() => props.showClearFiltersButton && !props.expanded && !slots.default);
 </script>

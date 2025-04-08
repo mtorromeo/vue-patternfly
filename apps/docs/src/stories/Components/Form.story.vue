@@ -19,7 +19,7 @@
       ## Differences from patternfly-react
       - The `novalidate` attribute is not implicitly applied to the form but you can still add it yourself. This makes `pf-form` usable with the native form validation technique.
       - Allowed overriding the `component` used by the form. A typical use-case is when you have a parent form tag already present and you only need `pf-form` to apply the patternfly layout to its children.
-      - There is no FormHelperText component. You can instead use the `helper-text` prop or the `helperText` and `helperTextIcon` slots on `pf-form-group`.
+      - There is a `pf-form-helper-text` component embedded in the FormGroup. You can use the `helper-text` and `helper-text-invalid` props or the slots with the same name on `pf-form-group`. The slots can accomodate `pf-helper-text-item` components.
 
       See [common differences from patternfly-react](#/).
 

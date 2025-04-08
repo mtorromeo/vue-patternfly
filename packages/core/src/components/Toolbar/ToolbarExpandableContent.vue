@@ -1,9 +1,11 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.toolbarExpandableContent, { [styles.modifiers.expanded]: expanded }]">
-    <slot />
+  <div v-bind="ouiaProps" :class="[styles.toolbarExpandableContent, { [styles.modifiers.expanded]: expanded }]">
+    <pf-toolbar-group>
+      <slot />
+    </pf-toolbar-group>
 
-    <pf-toolbar-group v-if="numberOfFilters" :class="styles.modifiers.chipContainer">
-      <slot name="chip-container" />
+    <pf-toolbar-group v-if="numberOfFilters">
+      <slot name="label-container" />
       <pf-toolbar-item v-if="showClearFiltersButton">
         <pf-button variant="link" inline @click="clearAllFilters ?? undefined">{{ clearFiltersButtonText }}</pf-button>
       </pf-toolbar-item>
@@ -37,7 +39,7 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
-  'chip-container'?: (props?: Record<never, never>) => any;
+  'label-container'?: (props?: Record<never, never>) => any;
 }>();
 
 const numberOfFilters = inject(ToolbarNumberOfFiltersKey);

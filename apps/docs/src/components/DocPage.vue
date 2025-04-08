@@ -1,5 +1,5 @@
 <template>
-  <pf-page-section v-if="title || $slots.description" variant="light" translate="no" width-limited>
+  <pf-page-section v-if="title || $slots.description" translate="no" width-limited>
     <pf-title v-if="title" size="4xl">{{ title }}</pf-title>
     <p v-if="$slots.description">
       <slot name="description" />
@@ -29,7 +29,7 @@
 
   <pf-page-section v-if="!$route.params.mainTab || $route.params.mainTab === 'story'" width-limited>
     <pf-flex>
-      <pf-jump-links class="toc" :offset="120" vertical expandable="expandable" expandable-2xl="nonExpandable" scrollable-element="main.pf-v5-c-page__main" auto-link-from-elements="h3.pf-v5-c-title">
+      <pf-jump-links class="toc" :offset="120" vertical expandable="expandable" expandable-2xl="nonExpandable" scrollable-element="main.pf-v6-c-page__main" auto-link-from-elements="h3.pf-v6-c-title">
         <template #label>Table of contents</template>
       </pf-jump-links>
 
@@ -60,7 +60,7 @@
   overflow-y: auto;
   scrollbar-width: none;
   order: 1;
-  padding: 0 var(--pf-v5-global--spacer--lg) var(--pf-v5-global--spacer--lg) var(--pf-v5-global--spacer--2xl);
+  padding: 0 var(--pf-v6-global--spacer--lg) var(--pf-v6-global--spacer--lg) var(--pf-v6-global--spacer--2xl);
   margin: 0;
 }
 </style>
@@ -89,7 +89,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 let pfDocUrl = '';
 if (props.title && !props.noDesignGuidelines) {
-  pfDocUrl = `https://v5-archive.patternfly.org/${props.docSection}/${props.title.replace(/ /g, '-').toLowerCase()}`;
+  pfDocUrl = `https://www.patternfly.org/${props.docSection}/${props.title.replace(/ /g, '-').toLowerCase()}`;
 }
 
 defineSlots<{

@@ -1,5 +1,5 @@
 <template>
-  <footer v-bind="(ouiaProps as any)" :class="styles.loginFooter">
+  <footer v-bind="ouiaProps" :class="styles.loginFooter">
     <slot />
   </footer>
 </template>

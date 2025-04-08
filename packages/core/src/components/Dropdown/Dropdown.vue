@@ -114,7 +114,7 @@ function onSelect(event: Event, itemId: MenuItemId | null | undefined) {
 }
 
 function renderToggles() {
-  const children = [];
+  const children: VNode[] = [];
 
   const toggleProps = {
     id: effectiveId.value,

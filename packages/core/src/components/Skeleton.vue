@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.skeleton, {
       [fontHeightClassName ?? styles.modifiers.circle]: fontSize,
       [styles.modifiers.circle]: shape === 'circle',
@@ -8,7 +8,7 @@
     }]"
     :style="(sizes as any)"
   >
-    <span class="pf-v5-screen-reader">{{ screenreaderText }}</span>
+    <span class="pf-v6-screen-reader">{{ screenreaderText }}</span>
   </div>
 </template>
 

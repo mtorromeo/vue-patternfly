@@ -1,6 +1,6 @@
 <template>
   <span
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.formControl, {
         [styles.modifiers.disabled]: disabled,

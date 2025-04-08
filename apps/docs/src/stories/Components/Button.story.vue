@@ -20,7 +20,7 @@
         </template>
         Link
       </pf-button>
-      <pf-button variant="link" icon-position="right">
+      <pf-button variant="link" icon-position="end">
         <template #icon>
           <square-arrow-up-right-icon />
         </template>
@@ -30,13 +30,17 @@
       <br>
       <br>
       <pf-button variant="plain" aria-label="Action">
-        <xmark-icon />
+        <template #icon>
+          <xmark-icon />
+        </template>
       </pf-button>
       <br>
       <br>
       <pf-button variant="control">Control</pf-button>
       <pf-button variant="control" aria-label="Copy">
-        <copy-icon />
+        <template #icon>
+          <copy-icon />
+        </template>
       </pf-button>
     </story-canvas>
 
@@ -56,7 +60,9 @@
       </pf-button>
       <pf-button disabled variant="link" inline>Inline link disabled</pf-button>
       <pf-button disabled variant="plain" aria-label="Action">
-        <xmark-icon />
+        <template #icon>
+          <xmark-icon />
+        </template>
       </pf-button>
       <pf-button disabled variant="control">Control disabled</pf-button>
     </story-canvas>
@@ -77,7 +83,9 @@
       </pf-button>
       <pf-button aria-disabled variant="link" inline>Inline link aria disabled</pf-button>
       <pf-button aria-disabled variant="plain" aria-label="Action">
-        <xmark-icon />
+        <template #icon>
+          <xmark-icon />
+        </template>
       </pf-button>
       <pf-button aria-disabled variant="control">Control aria disabled</pf-button>
     </story-canvas>
@@ -95,7 +103,7 @@
         <pf-button
           component="a"
           aria-disabled
-          href="https://v5-archive.patternfly.org/"
+          href="https://www.patternfly.org/"
           target="_blank"
           variant="tertiary"
         >
@@ -107,7 +115,7 @@
     <story-canvas title="Links as buttons">
       <pf-button
         component="a"
-        href="https://v5-archive.patternfly.org/"
+        href="https://www.patternfly.org/"
         target="_blank"
         variant="primary"
       >
@@ -115,7 +123,7 @@
       </pf-button>
       <pf-button
         component="a"
-        href="https://v5-archive.patternfly.org/"
+        href="https://www.patternfly.org/"
         target="_blank"
         variant="secondary"
       >
@@ -124,7 +132,7 @@
       <pf-button
         disabled
         component="a"
-        href="https://v5-archive.patternfly.org/"
+        href="https://www.patternfly.org/"
         target="_blank"
         variant="tertiary"
       >
@@ -132,7 +140,7 @@
       </pf-button>
       <pf-button
         component="a"
-        href="https://v5-archive.patternfly.org/contribution/#modifiers"
+        href="https://www.patternfly.org/contribution/#modifiers"
         variant="link"
       >
         Jump to modifiers in contribution guidelines
@@ -188,9 +196,11 @@
       <pf-button variant="primary" large>Call to action</pf-button>
       <pf-button variant="secondary" large>Call to action</pf-button>
       <pf-button variant="tertiary" large>Call to action</pf-button>
-      <pf-button variant="link" large>
+      <pf-button variant="link" large icon-position="end">
+        <template #icon>
+          <arrow-right-icon />
+        </template>
         Call to action
-        <arrow-right-icon />
       </pf-button>
     </story-canvas>
 
@@ -247,7 +257,7 @@
 </template>
 
 <style>
-.story-canvas .pf-v5-c-button + .pf-v5-c-button {
+.story-canvas .pf-v6-c-button + .pf-v6-c-button {
   margin-left: .2rem;
 }
 </style>

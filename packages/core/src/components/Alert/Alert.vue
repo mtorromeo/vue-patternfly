@@ -46,7 +46,7 @@
         :style="truncateTitle ? `${maxLines.name}: ${truncateTitle}` : null"
         :tabindex="tooltipVisible ? '0' : null"
       >
-        <span class="pf-v5-screen-reader">{{ variantLabel }}</span>
+        <span class="pf-v6-screen-reader">{{ variantLabel }}</span>
         {{ title }}
       </component>
       <template v-if="tooltipVisible" #content>{{ title }}</template>

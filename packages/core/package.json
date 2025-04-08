@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "5.0.0",
+  "version": "6.0.0-beta.1",
   "type": "module",
   "files": [
     "dist"
@@ -35,9 +35,9 @@
   "dependencies": {
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",
-    "@patternfly/patternfly": "^5.4.2",
-    "@patternfly/react-styles": "^5.4.1",
-    "@patternfly/react-tokens": "^5.4.1",
+    "@patternfly/patternfly": "^6.2.2",
+    "@patternfly/react-styles": "^6.2.0",
+    "@patternfly/react-tokens": "^6.2.0",
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {

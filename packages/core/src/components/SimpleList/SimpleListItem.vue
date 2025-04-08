@@ -1,5 +1,5 @@
 <template>
-  <li v-bind="(ouiaProps as any)" class="pf-v5-c-simple-list__item">
+  <li v-bind="ouiaProps" class="pf-v6-c-simple-list__item">
     <component
       :is="component"
       v-bind="componentAttrs"

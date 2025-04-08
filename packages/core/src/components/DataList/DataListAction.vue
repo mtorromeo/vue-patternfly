@@ -1,9 +1,6 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.dataListItemAction, breakpointClasses]">
-    <div v-if="plainButton" :class="styles.dataListAction">
-      <slot />
-    </div>
-    <slot v-else />
+  <div v-bind="ouiaProps" :class="[styles.dataListItemAction, breakpointClasses]">
+    <slot />
   </div>
 </template>
 
@@ -18,7 +15,6 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, VisibilityBreakpointProps, /* @vue-ignore */ HTMLAttributes {
-  plainButton?: boolean;
 }
 
 const props = defineProps<Props>();

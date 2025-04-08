@@ -1,6 +1,6 @@
 <template>
   <ol
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.progressStepper, {
       [styles.modifiers.center]: centerAligned,
       [styles.modifiers.vertical]: vertical,

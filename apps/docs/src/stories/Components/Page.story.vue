@@ -6,7 +6,6 @@
       <component-info src="packages/core/src/components/Page/Page.vue" />
       <component-info src="packages/core/src/components/Page/PageBreadcrumb.vue" />
       <component-info src="packages/core/src/components/Page/PageGroup.vue" />
-      <component-info src="packages/core/src/components/Page/PageNavigation.vue" />
       <component-info src="packages/core/src/components/Page/PageSection.vue" />
       <component-info src="packages/core/src/components/Page/PageSidebar.vue" />
       <component-info src="packages/core/src/components/Page/PageSidebarBody.vue" />
@@ -15,7 +14,7 @@
 
     <pre v-md>
       ## Differences from patternfly-react
-      - `pf-page-breadcrumb`, `pf-page-navigation` and `pf-page-section` can be limited in width by setting their `max-width` prop.
+      - `pf-page-breadcrumb` and `pf-page-section` can be limited in width by setting their `max-width` prop.
 
       ## Examples
 
@@ -28,7 +27,7 @@
       - 1 or more `&lt;pf-page-section&gt;` components
     </pre>
 
-    <story-canvas title="Vertical Navigation" style="height:500px">
+    <story-canvas title="Vertical Navigation">
       <template #intro>
         <pre v-md>
           To add a vertical sidebar to a `&lt;pf-page&gt;`, pass a `&lt;pf-page-sidebar&gt;` component into the `sidebar` property. To render navigation in the sidebar, pass a `&lt;pf-page-sidebar-body&gt;` component to `&lt;pf-page-sidebar&gt;`.
@@ -37,21 +36,23 @@
         </pre>
       </template>
 
-      <pf-page managed-sidebar>
+      <pf-page managed-sidebar style="height:500px">
         <template #skeleton>
           <pf-masthead>
-            <pf-masthead-toggle>
-              <pf-page-toggle-button>
-                <bars-icon />
-              </pf-page-toggle-button>
-            </pf-masthead-toggle>
             <pf-masthead-main>
+              <pf-masthead-toggle>
+                <pf-page-toggle-button>
+                  <bars-icon />
+                </pf-page-toggle-button>
+              </pf-masthead-toggle>
+
               <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
                 <pf-masthead-brand :href="href">
                   Logo
                 </pf-masthead-brand>
               </router-link>
             </pf-masthead-main>
+
             <pf-masthead-content>
               <pf-toolbar full-height>
                 <pf-toolbar-content>
@@ -83,37 +84,38 @@
           </pf-breadcrumb>
         </pf-page-breadcrumb>
 
-        <pf-page-section variant="darker">Section with darker background</pf-page-section>
-        <pf-page-section variant="dark">Section with dark background</pf-page-section>
-        <pf-page-section variant="light">Section with light background</pf-page-section>
-        <pf-page-section width-limited>Section with limited width</pf-page-section>
+        <pf-page-section>Section 1</pf-page-section>
+        <pf-page-section variant="secondary">Section 2 with secondary styling</pf-page-section>
+        <pf-page-section>Section 3</pf-page-section>
       </pf-page>
     </story-canvas>
 
     <story-canvas title="Centered" style="height:500px">
       <template #intro>
         <pre v-md>
-          By default, a page section spans the width of the page. To reduce the width of a section, use the `width-limited` property. To center align width-limited page sections, use the `center-aligned` property. When the main content area of a page is wider than the value of a centered, width-limited page section's `--pf-v5-c-page--section--m-limit-width--MaxWidth` custom property, the section will automatically be centered.
+          By default, a page section spans the width of the page. To reduce the width of a section, use the `width-limited` property. To center align width-limited page sections, use the `center-aligned` property. When the main content area of a page is wider than the value of a centered, width-limited page section's `--pf-v6-c-page--section--m-limit-width--MaxWidth` custom property, the section will automatically be centered.
 
           The content in this example is placed in a card to better illustrate how the section behaves when it is centered, but a card is not required to center a page section.
         </pre>
       </template>
 
-      <pf-page managed-sidebar>
+      <pf-page managed-sidebar style="height:500px">
         <template #skeleton>
           <pf-masthead>
-            <pf-masthead-toggle>
-              <pf-page-toggle-button>
-                <bars-icon />
-              </pf-page-toggle-button>
-            </pf-masthead-toggle>
             <pf-masthead-main>
+              <pf-masthead-toggle>
+                <pf-page-toggle-button>
+                  <bars-icon />
+                </pf-page-toggle-button>
+              </pf-masthead-toggle>
+
               <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
                 <pf-masthead-brand :href="href">
                   Logo
                 </pf-masthead-brand>
               </router-link>
             </pf-masthead-main>
+
             <pf-masthead-content>
               <pf-toolbar full-height>
                 <pf-toolbar-content>
@@ -140,7 +142,7 @@
           <pf-card>
             <pf-card-body>
               When a width limited page section is wider than the value of
-              <code>--pf-v5-c-page--section--m-limit-width--MaxWidth</code>, the section will be centered in the main
+              <code>--pf-v6-c-page--section--m-limit-width--MaxWidth</code>, the section will be centered in the main
               section.
               <br>
               <br>
@@ -152,28 +154,30 @@
       </pf-page>
     </story-canvas>
 
-    <story-canvas title="With notification drawer" style="height:500px">
-      <pf-page managed-sidebar :drawer-expanded="expanded">
+    <story-canvas title="With notification drawer">
+      <pf-page managed-sidebar :drawer-expanded="expanded" style="height:500px">
         <template #skeleton>
           <pf-masthead>
-            <pf-masthead-toggle>
-              <pf-page-toggle-button>
-                <bars-icon />
-              </pf-page-toggle-button>
-            </pf-masthead-toggle>
             <pf-masthead-main>
+              <pf-masthead-toggle>
+                <pf-page-toggle-button>
+                  <bars-icon />
+                </pf-page-toggle-button>
+              </pf-masthead-toggle>
+
               <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
                 <pf-masthead-brand :href="href">
                   Logo
                 </pf-masthead-brand>
               </router-link>
             </pf-masthead-main>
+
             <pf-masthead-content>
               <pf-toolbar full-height>
                 <pf-toolbar-content>
-                  <pf-toolbar-group space-items="none" align="right">
+                  <pf-toolbar-group align="end">
                     <pf-toolbar-item visibility="visible">
-                      <pf-notification-badge variant="unread" :expanded="expanded" @click="expanded = !expanded">
+                      <pf-notification-badge variant="read" :expanded="expanded" @click="expanded = !expanded">
                         <bell-icon />
                       </pf-notification-badge>
                     </pf-toolbar-item>
@@ -197,13 +201,12 @@
         </template>
 
         <template #drawer>
-
           <pf-notification-drawer>
             <pf-notification-drawer-header count="4">
               <pf-dropdown position="right">
                 <template #toggle>
                   <pf-menu-toggle variant="plain">
-                    <ellipsis-vertical-icon aria-hidden="true" />
+                    <ellipsis-vertical-icon />
                   </pf-menu-toggle>
                 </template>
 
@@ -227,7 +230,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -248,7 +251,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -270,7 +273,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -292,7 +295,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -321,7 +324,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -342,7 +345,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -364,7 +367,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -385,7 +388,7 @@
                         <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon aria-hidden="true" />
+                              <ellipsis-vertical-icon />
                             </pf-menu-toggle>
                           </template>
 
@@ -428,7 +431,6 @@
               </pf-notification-drawer-group-list>
             </pf-notification-drawer-body>
           </pf-notification-drawer>
-
         </template>
 
         <pf-page-section>

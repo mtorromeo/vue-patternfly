@@ -28,8 +28,8 @@
               [styles.modifiers.md]: variant === 'medium',
             }]"
           :style="{
-            '--pf-v5-c-modal-box--Width': width ? (typeof width !== 'number' ? width : `${width}px`) : undefined,
-            '--pf-v5-c-modal-box--MaxWidth': maxWidth ? (typeof maxWidth !== 'number' ? maxWidth : `${maxWidth}px`) : undefined,
+            '--pf-v6-c-modal-box--Width': width ? (typeof width !== 'number' ? width : `${width}px`) : undefined,
+            '--pf-v6-c-modal-box--MaxWidth': maxWidth ? (typeof maxWidth !== 'number' ? maxWidth : `${maxWidth}px`) : undefined,
             [topSpacer.name]: positionOffset,
           }"
         >
@@ -54,7 +54,7 @@
                     <BellIcon v-else-if="titleIconVariant === 'default'" />
                     <slot v-else name="title-icon" />
                   </span>
-                  <span v-if="label" class="pf-v5-screen-reader">{{ label }}</span>
+                  <span v-if="label" class="pf-v6-screen-reader">{{ label }}</span>
                   <span :class="styles.modalBoxTitleText">{{ title }}</span>
                 </h1>
 

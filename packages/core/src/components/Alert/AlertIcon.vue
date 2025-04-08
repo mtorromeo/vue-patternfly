@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$slots.default || AlertVariantIcons[variant]" v-bind="(ouiaProps as any)" :class="styles.alertIcon">
+  <div v-if="$slots.default || AlertVariantIcons[variant]" v-bind="ouiaProps" :class="styles.alertIcon">
     <slot>
       <component :is="AlertVariantIcons[variant]" />
     </slot>

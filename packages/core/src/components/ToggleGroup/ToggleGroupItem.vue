@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.toggleGroupItem">
+  <div v-bind="ouiaProps" :class="styles.toggleGroupItem">
     <button
       :id="buttonId"
       type="button"

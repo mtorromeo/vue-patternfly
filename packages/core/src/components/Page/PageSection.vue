@@ -10,8 +10,8 @@
         'sticky',
       ], styles, { vertical: true }),
       variantTypes[type],
-      variantStyles[variant],
       {
+        [styles.modifiers.secondary]: variant === 'secondary',
         [styles.modifiers.noFill]: filled === false,
         [styles.modifiers.fill]: filled === true,
         [styles.modifiers.limitWidth]: isWidthLimited,
@@ -22,7 +22,7 @@
       }
     ]"
     :style="{
-      '--pf-v5-c-page--section--m-limit-width--MaxWidth': maxWidth,
+      '--pf-v6-c-page--section--m-limit-width--MaxWidth': maxWidth,
     }"
     :tabindex="overflowScroll ? 0 : undefined"
   >
@@ -42,18 +42,10 @@ import { isDefined } from '@vueuse/shared';
 
 const variantTypes = {
   default: styles.pageMainSection,
-  nav: styles.pageMainNav,
   subnav: styles.pageMainSubnav,
   breadcrumb: styles.pageMainBreadcrumb,
   tabs: styles.pageMainTabs,
   wizard: styles.pageMainWizard,
-};
-
-const variantStyles = {
-  default: '',
-  light: styles.modifiers.light,
-  dark: styles.modifiers.dark_200,
-  darker: styles.modifiers.dark_100,
 };
 
 defineOptions({
@@ -62,14 +54,14 @@ defineOptions({
 
 export interface Props extends OUIAProps, PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Section background color variant */
-  variant?: keyof typeof variantStyles;
+  variant?: 'default' | 'secondary';
   /** Section type variant */
   type?: keyof typeof variantTypes;
   /** Enables the page section to fill the available vertical space */
   filled?: boolean;
   /** Limits the width of the section */
   widthLimited?: boolean;
-  /** Limits the width of the section and sets the --pf-v5-c-page--section--m-limit-width--MaxWidth variable to this value */
+  /** Limits the width of the section and sets the --pf-v6-c-page--section--m-limit-width--MaxWidth variable to this value */
   maxWidth?: string;
   /** Flag indicating if the section content is center aligned. Either widthLimited or maxWidth must be set for this to work  */
   centerAligned?: boolean;

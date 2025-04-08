@@ -18,8 +18,9 @@ import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 import * as flexToken from '@patternfly/react-tokens/dist/esm/l_flex_item_Order';
 
 import { classesFromBreakpointProps, cssVarsFromBreakpointProps } from '../../breakpoints';
-import type { SpacerBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, AlignSelfBreakpointProps, AlignBreakpointProps, FullWidthBreakpointProps, OrderBreakpointProps } from '../../breakpoints';
+import type { SpacerBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, AlignSelfBreakpointProps, FullWidthBreakpointProps, OrderBreakpointProps } from '../../breakpoints';
 import type { Component, HTMLAttributes } from 'vue';
+import type { AlignBreakpointProps } from './Flex.vue';
 
 defineOptions({
   name: 'PfFlexItem',

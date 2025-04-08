@@ -6,5 +6,6 @@ export { default as PfDrawerContentBody } from './DrawerContentBody.vue';
 export { default as PfDrawerHead } from './DrawerHead.vue';
 export { default as PfDrawerMain } from './DrawerMain.vue';
 export { default as PfDrawerPanelBody } from './DrawerPanelBody.vue';
+export { default as PfDrawerPanelDescription } from './DrawerPanelDescription.vue';
 export { default as PfDrawerPanelContent } from './DrawerPanelContent.vue';
 export { default as PfDrawerSection } from './DrawerSection.vue';

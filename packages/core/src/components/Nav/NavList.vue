@@ -1,52 +1,61 @@
 <template>
-  <button
-    v-if="horizontal"
-    v-bind="ouiaProps"
-    :class="styles.navScrollButton"
-    :aria-label="ariaLeftScroll"
-    :disabled="scrollViewAtStart"
-    @click="scrollLeft"
-  >
-    <AngleLeftIcon />
-  </button>
-  <ul ref="navListRef" v-bind="$attrs" :class="styles.navList" @scroll="handleScrollButtons">
+  <div v-if="horizontal && (!scrollViewAtStart || !scrollViewAtEnd)" :class="styles.navScrollButton">
+    <pf-button
+      variant="plain"
+      :aria-label="backScrollAriaLabel"
+      :disabled="scrollViewAtStart"
+      :tabindex="sidebarOpen ? undefined : -1"
+      @click="scrollBack"
+    >
+      <template #icon>
+        <angle-left-icon />
+      </template>
+    </pf-button>
+  </div>
+  <ul ref="navListRef" v-bind="$attrs" :class="styles.navList" @scroll.passive="handleScrollButtons">
     <slot />
   </ul>
-  <button
-    v-if="horizontal"
-    :class="styles.navScrollButton"
-    :aria-label="ariaRightScroll"
-    :disabled="scrollViewAtEnd"
-    @click="scrollRight"
-  >
-    <AngleRightIcon />
-  </button>
+  <div v-if="horizontal && (!scrollViewAtStart || !scrollViewAtEnd)" :class="styles.navScrollButton">
+    <pf-button
+      variant="plain"
+      :aria-label="forwardScrollAriaLabel"
+      :disabled="scrollViewAtEnd"
+      :tabindex="sidebarOpen ? undefined : -1"
+      @click="scrollForward"
+    >
+      <template #icon>
+        <angle-right-icon />
+      </template>
+    </pf-button>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import PfButton from '../Button.vue';
+import { SidebarOpenKey } from '../Page/PageSidebar.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
-import { inject, ref, onMounted, onBeforeUnmount, type HTMLAttributes, useTemplateRef } from 'vue';
-import { NavHorizontalKey, NavScrollablelKey } from './Nav.vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { inject, ref, onMounted, onBeforeUnmount, useTemplateRef, type HTMLAttributes } from 'vue';
+import { NavHorizontalKey, NavScrollableKey } from './Nav.vue';
 
 defineOptions({
   name: 'PfNavList',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
-  ariaLeftScroll?: string;
-  ariaRightScroll?: string;
+export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
+  /** Aria-label for the back scroll button */
+  backScrollAriaLabel?: string;
+  /** Aria-label for the forward scroll button */
+  forwardScrollAriaLabel?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  ariaLeftScroll: 'Scroll left',
-  ariaRightScroll: 'Scroll right',
+withDefaults(defineProps<Props>(), {
+  backScrollAriaLabel: 'Scroll back',
+  forwardScrollAriaLabel: 'Scroll forward',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -54,7 +63,8 @@ defineSlots<{
 
 const navList = useTemplateRef('navListRef');
 const horizontal = inject(NavHorizontalKey);
-const scrollable = inject(NavScrollablelKey);
+const scrollable = inject(NavScrollableKey);
+const sidebarOpen = inject(SidebarOpenKey, false);
 const scrollViewAtStart = ref(false);
 const scrollViewAtEnd = ref(false);
 
@@ -78,7 +88,7 @@ function handleScrollButtons() {
   }
 }
 
-function scrollLeft() {
+function scrollBack() {
   // find first Element that is fully in view on the left, then scroll to the element before it
   const container = navList.value;
   if (container) {
@@ -98,7 +108,7 @@ function scrollLeft() {
   }
 }
 
-function scrollRight() {
+function scrollForward() {
   // find last Element that is fully in view on the right, then scroll to the element after it
   const container = navList.value;
   if (container) {

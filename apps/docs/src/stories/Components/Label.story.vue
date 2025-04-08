@@ -150,51 +150,51 @@
       </pf-label>
       <br>
       <br>
-      <pf-label color="cyan">Cyan</pf-label>
-      <pf-label color="cyan">
+      <pf-label color="teal">Teal</pf-label>
+      <pf-label color="teal">
         <template #icon>
           <circle-info-icon />
         </template>
-        Cyan icon
+        Teal icon
       </pf-label>
-      <pf-label color="cyan" @close="alert">Cyan removeable</pf-label>
-      <pf-label color="cyan" @close="alert">
+      <pf-label color="teal" @close="alert">Teal removeable</pf-label>
+      <pf-label color="teal" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Cyan icon removeable
+        Teal icon removeable
       </pf-label>
-      <pf-label color="cyan" href="#filled">Cyan link</pf-label>
-      <pf-label color="cyan" href="#filled" @close="alert">Cyan link removeable</pf-label>
-      <pf-label color="cyan" text-max-width="16ch" @close="alert">
+      <pf-label color="teal" href="#filled">Teal link</pf-label>
+      <pf-label color="teal" href="#filled" @close="alert">Teal link removeable</pf-label>
+      <pf-label color="teal" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Cyan label with icon that overflows
+        Teal label with icon that overflows
       </pf-label>
       <br>
       <br>
-      <pf-label color="gold">Gold</pf-label>
-      <pf-label color="gold">
+      <pf-label color="yellow">Yellow</pf-label>
+      <pf-label color="yellow">
         <template #icon>
           <circle-info-icon />
         </template>
-        Gold icon
+        Yellow icon
       </pf-label>
-      <pf-label color="gold" @close="alert">Gold removeable</pf-label>
-      <pf-label color="gold" @close="alert">
+      <pf-label color="yellow" @close="alert">Yellow removeable</pf-label>
+      <pf-label color="yellow" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Gold icon removeable
+        Yellow icon removeable
       </pf-label>
-      <pf-label color="gold" href="#filled">Gold link</pf-label>
-      <pf-label color="gold" href="#filled" @close="alert">Gold link removeable</pf-label>
-      <pf-label color="gold" text-max-width="16ch" @close="alert">
+      <pf-label color="yellow" href="#filled">Yellow link</pf-label>
+      <pf-label color="yellow" href="#filled" @close="alert">Yellow link removeable</pf-label>
+      <pf-label color="yellow" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Gold label with icon that overflows
+        Yellow label with icon that overflows
       </pf-label>
     </story-canvas>
 
@@ -342,51 +342,51 @@
       </pf-label>
       <br>
       <br>
-      <pf-label outline color="cyan">Cyan</pf-label>
-      <pf-label outline color="cyan">
+      <pf-label outline color="teal">Teal</pf-label>
+      <pf-label outline color="teal">
         <template #icon>
           <circle-info-icon />
         </template>
-        Cyan icon
+        Teal icon
       </pf-label>
-      <pf-label outline color="cyan" @close="alert">Cyan removeable</pf-label>
-      <pf-label outline color="cyan" @close="alert">
+      <pf-label outline color="teal" @close="alert">Teal removeable</pf-label>
+      <pf-label outline color="teal" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Cyan icon removeable
+        Teal icon removeable
       </pf-label>
-      <pf-label outline color="cyan" href="#filled">Cyan link</pf-label>
-      <pf-label outline color="cyan" href="#filled" @close="alert">Cyan link removeable</pf-label>
-      <pf-label outline color="cyan" text-max-width="16ch" @close="alert">
+      <pf-label outline color="teal" href="#filled">Teal link</pf-label>
+      <pf-label outline color="teal" href="#filled" @close="alert">Teal link removeable</pf-label>
+      <pf-label outline color="teal" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Cyan label with icon that overflows
+        Teal label with icon that overflows
       </pf-label>
       <br>
       <br>
-      <pf-label outline color="gold">Gold</pf-label>
-      <pf-label outline color="gold">
+      <pf-label outline color="yellow">Yellow</pf-label>
+      <pf-label outline color="yellow">
         <template #icon>
           <circle-info-icon />
         </template>
-        Gold icon
+        Yellow icon
       </pf-label>
-      <pf-label outline color="gold" @close="alert">Gold removeable</pf-label>
-      <pf-label outline color="gold" @close="alert">
+      <pf-label outline color="yellow" @close="alert">Yellow removeable</pf-label>
+      <pf-label outline color="yellow" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Gold icon removeable
+        Yellow icon removeable
       </pf-label>
-      <pf-label outline color="gold" href="#filled">Gold link</pf-label>
-      <pf-label outline color="gold" href="#filled" @close="alert">Gold link removeable</pf-label>
-      <pf-label outline color="gold" text-max-width="16ch" @close="alert">
+      <pf-label outline color="yellow" href="#filled">Yellow link</pf-label>
+      <pf-label outline color="yellow" href="#filled" @close="alert">Yellow link removeable</pf-label>
+      <pf-label outline color="yellow" text-max-width="16ch" @close="alert">
         <template #icon>
           <circle-info-icon />
         </template>
-        Gold label with icon that overflows
+        Yellow label with icon that overflows
       </pf-label>
     </story-canvas>
 
@@ -421,8 +421,9 @@
 </template>
 
 <style>
-.story-canvas .pf-v5-c-label + .pf-v5-c-label {
-  margin-left: .2rem;
+.story-canvas .pf-v6-c-label + .pf-v6-c-label {
+  margin-inline-end: var(--pf-t--global--spacer--sm);
+  margin-block-end: var(--pf-t--global--spacer--sm);
 }
 </style>
 
@@ -433,7 +434,7 @@ import { useAlertsStore } from '../../store/alerts';
 const alerts = useAlertsStore();
 
 function alert(e: Event) {
-  const label = (e.target as HTMLElement)?.closest('.pf-v5-c-label');
+  const label = (e.target as HTMLElement)?.closest('.pf-v6-c-label');
   if (label instanceof HTMLElement) {
     alerts.add({
       title: `Clicked close button on "${label.innerText}"`,

@@ -16,7 +16,7 @@
       >
         <caption v-if="hasSelectableRows">
           {{ selectableRowCaptionText }}
-          <div class="pf-v5-screen-reader">
+          <div class="pf-v6-screen-reader">
             This table has selectable rows. It can be navigated by row using tab, and each row can be selected using
             space or enter.
           </div>

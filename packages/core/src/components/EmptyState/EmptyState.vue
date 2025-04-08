@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.emptyState, {
       [styles.modifiers.xs]: variant === 'xs',
       [styles.modifiers.sm]: variant === 'small',

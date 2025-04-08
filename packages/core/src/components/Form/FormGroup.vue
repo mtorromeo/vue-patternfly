@@ -35,25 +35,23 @@
       <slot v-if="!helperTextBeforeField" />
 
       <pf-form-helper-text
-        v-if="internalValidated === 'error' ? (helperTextInvalid || $slots['helper-text-invalid']) : (helperText || $slots['helper-text'])"
+        v-if="(internalValidated === 'error' && helperTextInvalid || $slots['helper-text-invalid']) || (helperText || $slots['helper-text'])"
         :id="`${fieldId}-helper`"
-        :success="internalValidated === 'success'"
-        :warning="internalValidated === 'warning'"
-        :error="internalValidated === 'error'"
       >
-        <template v-if="internalValidated === 'error'">
-          <span v-if="$slots['helper-text-invalid-icon']" :class="styles.formHelperTextIcon">
-            <slot name="helper-text-invalid-icon" />
-          </span>
-          <slot name="helper-text-invalid">{{ helperTextInvalid }}</slot>
-        </template>
-
-        <template v-else-if="helperText || $slots['helper-text']">
-          <span v-if="$slots['helper-text-icon']" :class="styles.formHelperTextIcon">
-            <slot name="helper-text-icon" />
-          </span>
-          <slot name="helper-text">{{ helperText }}</slot>
-        </template>
+        <pf-helper-text v-if="(helperTextInvalid || $slots['helper-text-invalid']) && internalValidated === 'error'">
+          <slot name="helper-text-invalid">
+            <pf-helper-text-item icon variant="error">
+              {{ helperTextInvalid }}
+            </pf-helper-text-item>
+          </slot>
+        </pf-helper-text>
+        <pf-helper-text v-else>
+          <slot name="helper-text">
+            <pf-helper-text-item :icon="helperTextVariant !== 'default'" :variant="helperTextVariant">
+              {{ helperText }}
+            </pf-helper-text-item>
+          </slot>
+        </pf-helper-text>
       </pf-form-helper-text>
 
       <slot v-if="helperTextBeforeField" />
@@ -68,6 +66,8 @@ import PassThrough from '../../helpers/PassThrough.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 import PfFormHelperText from './FormHelperText.vue';
+import PfHelperText from '../HelperText/HelperText.vue';
+import PfHelperTextItem, { type Props as HelperTextItemProps } from '../HelperText/HelperTextItem.vue';
 import type { InputValidateState } from '../../input';
 import { provideChildrenTracker } from '../../use';
 import { FormGroupInputsKey } from './common';
@@ -107,6 +107,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttribut
   /** Helper text regarding the field. */
   helperText?: string;
 
+  /** Helper text variant. */
+  helperTextVariant?: HelperTextItemProps['variant'];
+
   /** Flag to position the helper text before the field. False by default */
   helperTextBeforeField?: boolean;
 
@@ -117,7 +120,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttribut
   fieldId?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  helperTextVariant: 'default',
+});
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
@@ -125,9 +130,7 @@ defineSlots<{
   label?: (props?: Record<never, never>) => any;
   'label-icon'?: (props?: Record<never, never>) => any;
   'label-info'?: (props?: Record<never, never>) => any;
-  'helper-text-invalid-icon'?: (props?: Record<never, never>) => any;
   'helper-text-invalid'?: (props?: Record<never, never>) => any;
-  'helper-text-icon'?: (props?: Record<never, never>) => any;
   'helper-text'?: (props?: Record<never, never>) => any;
 }>();
 

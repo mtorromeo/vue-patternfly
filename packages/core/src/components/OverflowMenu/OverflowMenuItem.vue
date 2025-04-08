@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isBelowBreakpoint || persistent" v-bind="(ouiaProps as any)" :class="styles.overflowMenuItem">
+  <div v-if="!isBelowBreakpoint || persistent" v-bind="ouiaProps" :class="styles.overflowMenuItem">
     <slot />
   </div>
 </template>

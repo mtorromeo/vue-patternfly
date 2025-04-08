@@ -1,13 +1,9 @@
 <template>
   <header
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.masthead,
       classesFromBreakpointProps($props, ['inset', 'display'], styles),
-      {
-        [styles.modifiers.light]: backgroundColor === 'light',
-        [styles.modifiers.light_200]: backgroundColor === 'light200',
-      }
     ]"
   >
     <slot />
@@ -25,8 +21,6 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
-  /** Background theme color of the masthead */
-  backgroundColor?: 'dark' | 'light' | 'light200';
   /** Display type at various breakpoints */
   display?: 'inline' | 'stack';
   displaySm?: 'inline' | 'stack';
@@ -37,7 +31,6 @@ export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore *
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  backgroundColor: 'dark',
   display: 'inline',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});

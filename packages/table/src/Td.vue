@@ -19,11 +19,11 @@
       }
     ]"
     :style="sticky ? {
-      '--pf-v5-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
-      '--pf-v5-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
-      '--pf-v5-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
+      '--pf-v6-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
+      '--pf-v6-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
+      '--pf-v6-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
     } : undefined"
-    :data-label="($attrs.class as string)?.includes('pf-v5-c-table__tree-view-title-cell') || dataLabel"
+    :data-label="($attrs.class as string)?.includes('pf-v6-c-table__tree-view-title-cell') || dataLabel"
   >
     <label v-if="isDefined(selected)">
       <input :checked="selected" type="checkbox" @change="handleSelect($event as InputEvent)">
@@ -105,7 +105,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TdHTMLAttribute
   draggable?: string | boolean;
   /** True to remove padding */
   noPadding?: boolean;
-  /** Applies pf-v5-c-table__action to td */
+  /** Applies pf-v6-c-table__action to td */
   actionCell?: boolean;
   /** Indicates the column should be sticky */
   sticky?: boolean;

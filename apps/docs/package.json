@@ -9,7 +9,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@patternfly/patternfly": "^5.4.2",
+    "@patternfly/patternfly": "^6.2.2",
     "@vue-patternfly/core": "workspace:^",
     "@vue-patternfly/icons": "workspace:^",
     "@vue-patternfly/table": "workspace:^",
@@ -25,7 +25,7 @@
     "@vue/compiler-sfc": "^3.5.13",
     "@vue/runtime-core": "^3.5.13",
     "@vue/shared": "^3.5.13",
-    "@vueuse/core": "^13.0.0",
+    "@vueuse/core": "^13.1.0",
     "markdown-it": "^14.1.0",
     "node-html-parser": "^7.0.1",
     "sass": "^1.87.0",
@@ -37,5 +37,5 @@
     "vue-docgen-api": "^4.79.2",
     "vue-tsc": "^2.2.10"
   },
-  "packageManager": "pnpm@8.6.1"
+  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }

@@ -1,9 +1,10 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.textInputGroup, {
       [styles.modifiers.disabled]: disabled,
       [styles.modifiers.plain]: plain,
+      [styles.modifiers[validated as NonNullable<typeof validated>]]: validated,
     }]"
   >
     <slot />
@@ -18,6 +19,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   disabled?: boolean;
   /** Flag to indicate the toggle has no border or background */
   plain?: boolean;
+  /** Status variant of the text input group. */
+  validated?: 'success' | 'warning' | 'error';
 }
 </script>
 
