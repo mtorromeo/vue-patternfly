@@ -1,7 +1,7 @@
 <template>
   <teleport :disabled="!tabListRef" :to="tabListRef">
     <li
-      v-bind="(ouiaProps as any)"
+      v-bind="ouiaProps as any"
       :class="[styles.tabsItem, {
         [styles.modifiers.current]: key === activeKey,
       }]">
@@ -27,7 +27,7 @@
         <pf-tab-title-text v-if="title">
           {{ title }}
         </pf-tab-title-text>
-        <slot v-else />
+        <slot v-else name="title" />
       </pf-tab-button>
     </li>
   </teleport>
@@ -82,6 +82,8 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'click', event: PointerEvent): void;
+  (name: 'enter'): void;
+  (name: 'leave'): void;
 }>();
 
 defineSlots<{
@@ -104,8 +106,12 @@ const keepAlive = ref(false);
 watch([key, activeKey], () => {
   if (key.value === activeKey?.value) {
     keepAlive.value = true;
-  } else if (props.unmountOnExit) {
-    keepAlive.value = false;
+    emit('enter');
+  } else if (keepAlive.value) {
+    if (props.unmountOnExit) {
+      keepAlive.value = false;
+    }
+    emit('leave');
   }
 }, { immediate: true });
 
