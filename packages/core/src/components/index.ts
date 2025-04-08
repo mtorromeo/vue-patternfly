@@ -22,6 +22,7 @@ export { default as PfTextarea } from './Textarea.vue';
 export { default as PfTextInput } from './TextInput.vue';
 export { default as PfTitle } from './Title.vue';
 export * from './Accordion';
+export * from './ActionList';
 export * from './Alert';
 export * from './Breadcrumb';
 export * from './Card';
