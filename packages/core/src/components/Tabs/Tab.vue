@@ -24,10 +24,11 @@
         <pf-tab-title-icon v-if="$slots.icon">
           <slot name="icon" />
         </pf-tab-title-icon>
-        <pf-tab-title-text v-if="title">
-          {{ title }}
-        </pf-tab-title-text>
-        <slot v-else name="title" />
+        <slot name="title">
+          <pf-tab-title-text v-if="title">
+            {{ title }}
+          </pf-tab-title-text>
+        </slot>
       </pf-tab-button>
     </li>
   </teleport>
@@ -89,6 +90,7 @@ const emit = defineEmits<{
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   icon?: (props?: Record<never, never>) => any;
+  title?: (props?: Record<never, never>) => any;
 }>();
 
 const instance = getCurrentInstance();

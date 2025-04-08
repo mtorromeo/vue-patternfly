@@ -37,7 +37,9 @@
           <keep-alive-test />
         </pf-tab>
         <pf-tab>
-          <template #title>System</template>
+          <template #title>
+            <pf-tab-title-text>System</pf-tab-title-text>
+          </template>
           System
           <keep-alive-test />
         </pf-tab>
