@@ -2,6 +2,7 @@ export { default as PfAvatar } from './Avatar.vue';
 export { default as PfBackdrop } from './Backdrop.vue';
 export { default as PfBackgroundImage } from './BackgroundImage.vue';
 export { default as PfBadge } from './Badge.vue';
+export { default as PfBanner } from './Banner.vue';
 export { default as PfBrand } from './Brand.vue';
 export { default as PfButton } from './Button.vue';
 export { default as PfCheckbox } from './Checkbox.vue';
