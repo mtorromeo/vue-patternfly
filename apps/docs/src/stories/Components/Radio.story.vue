@@ -23,6 +23,23 @@
       />
     </story-canvas>
 
+    <story-canvas title="Basic">
+      <pf-radio id="radio1" name="radio" label="Radio" />
+    </story-canvas>
+
+    <story-canvas title="Radio with same name">
+      <pf-radio
+        component="label"
+        name="radio-choice"
+        label="Choice 1"
+      />
+      <pf-radio
+        component="label"
+        name="radio-choice"
+        label="Choice 2"
+      />
+    </story-canvas>
+
     <story-canvas title="With description and body">
       <pf-radio
         id="radio3"

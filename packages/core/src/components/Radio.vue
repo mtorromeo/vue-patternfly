@@ -73,8 +73,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   valid?: boolean;
   /** Label text of the radio. */
   label?: string;
-  /** Name for group of radios */
-  name: string;
   /** Aria label for the radio. */
   ariaLabel?: string;
   /** Description text of the radio. */
