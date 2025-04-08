@@ -1,7 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [0.1.0-beta.30] - 2025-04-08
+
+### Bug Fixes
+
+- *(Tabs)* Corrected umount-on-exit behavior and added enter/leave emits on pf-tab
+- *(Radio)* Properly assigned name attribute to input
+- *(Tabs)* Added missing title slot declaration
+
+### Documentation
+
+- Reorganized layout documentation stories
+
+### Features
+
+- *(Radio)* Auto generate a unique id for label and input if none is specified and the input is not wrapped in a label
+- *(Banner)* Implemented component
+- *(ActionList)* Implemented components
+
+## [0.1.0-beta.29] - 2025-04-07
 
 ### Bug Fixes
 
