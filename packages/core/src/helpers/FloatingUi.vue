@@ -41,6 +41,7 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
+  teleportTo: 'body',
   width: 'auto',
   minWidth: 'trigger',
   maxWidth: 'auto',
