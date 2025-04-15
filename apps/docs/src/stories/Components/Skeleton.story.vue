@@ -24,7 +24,7 @@
       <pf-skeleton width="100%" />
     </story-canvas>
 
-    <story-canvas title="Percentage widths" style="height: 400px; display: flex; align-items: flex-end; justify-content: space-between">
+    <story-canvas title="Percentage heights" height="450px" style="display: flex; align-items: flex-end; justify-content: space-between">
       <pf-skeleton width="15%" height="33%" />
       <pf-skeleton width="15%" height="50%" />
       <pf-skeleton width="15%" height="60%" />
