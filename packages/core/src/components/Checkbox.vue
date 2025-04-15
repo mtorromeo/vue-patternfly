@@ -77,7 +77,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   body?: string;
   /** Description text of the checkbox. */
   description?: string;
-  name?: string;
   /** Flag to indicate whether the checkbox wrapper element is a <label> element for the checkbox input. Will not apply if a component prop (with a value other than a "label") is specified. */
   labelWrapped?: boolean;
   /** Flag to show if the checkbox label is shown before the checkbox input. */
