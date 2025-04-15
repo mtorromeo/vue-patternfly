@@ -39,8 +39,8 @@
       <slot name="description">{{ description }}</slot>
     </span>
 
-    <span v-if="body || $slots.body" :class="styles.radioBody">
-      <slot name="body">{{ body }}</slot>
+    <span v-if="body || $slots.default" :class="styles.radioBody">
+      <slot>{{ body }}</slot>
     </span>
   </component>
 </template>
@@ -90,7 +90,6 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
   label?: (props?: Record<never, never>) => any;
   description?: (props?: Record<never, never>) => any;
-  body?: (props?: Record<never, never>) => any;
 }>();
 
 const emit = defineEmits<{
