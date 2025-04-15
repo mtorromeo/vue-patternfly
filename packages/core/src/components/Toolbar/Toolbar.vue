@@ -28,7 +28,7 @@ export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersB
 export const ToolbarClearAllFiltersKey = Symbol('ToolbarClearAllFiltersKey') as InjectionKey<() => void>;
 export const ToolbarUpdateNumberFiltersKey = Symbol('ToolbarUpdateNumberFiltersKey') as InjectionKey<(category: string, numberOfFilters: number) => void>;
 export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<Ref<boolean>>;
-export const ToolbarChipGroupContentRefKey = Symbol('ToolbarChipGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
+export const ToolbarChipGroupContentRefKey = Symbol('ToolbarChipGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
 
 export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
@@ -96,7 +96,7 @@ const effectiveExpanded = computed({
 
 provide(ToolbarExpandedKey, effectiveExpanded);
 
-const chipGroupContent: Ref<HTMLDivElement | undefined> = ref();
+const chipGroupContent: Ref<HTMLDivElement | null> = ref(null);
 provide(ToolbarChipGroupContentRefKey, chipGroupContent);
 
 const { width: windowWidth } = useWindowSize();
@@ -123,7 +123,7 @@ watch(windowWidth, () => {
 
 onBeforeUnmount(() => {
   if (chipGroupContent.value) {
-    chipGroupContent.value = undefined;
+    chipGroupContent.value = null;
   }
 });
 

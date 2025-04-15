@@ -61,7 +61,7 @@ import PfSpinner from './Spinner.vue';
 import PassThrough from '../helpers/PassThrough.vue';
 import type { RouteLocationRaw, useLink } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import { type Component, type UnwrapRef, type Ref, ref, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from 'vue';
+import { type Component, type UnwrapRef, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes, useTemplateRef, type ComponentPublicInstance } from 'vue';
 import { isDefined } from '@vueuse/shared';
 
 type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
@@ -138,7 +138,7 @@ defineSlots<{
   badge?: (props?: Record<never, never>) => any;
 }>();
 
-const el: Ref<HTMLElement | undefined> = ref();
+const el = useTemplateRef<HTMLElement | ComponentPublicInstance>('el');
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant});
 
 const buttonComponent = computed(() => {

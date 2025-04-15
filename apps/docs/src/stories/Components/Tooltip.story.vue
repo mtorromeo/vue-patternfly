@@ -92,11 +92,11 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, type Ref, onMounted } from 'vue';
+import { reactive, ref, type Ref, onMounted, useTemplateRef } from 'vue';
 import { PfButton } from '@vue-patternfly/core';
 import type { Placement } from '@vue-patternfly/core/helpers/FloatingUi.vue';
 
-const buttonRef: Ref<InstanceType<typeof PfButton> | undefined> = ref();
+const buttonRef = useTemplateRef('buttonRef');
 const trigger = reactive(['mouseenter', 'focus']);
 const leftAligned = ref(false);
 const flip = ref(true);
@@ -107,11 +107,13 @@ const exitDelay = ref(0);
 const distance = ref(15);
 
 onMounted(() => {
-  buttonRef.value?.el?.scrollIntoView({
-    behavior: 'instant',
-    block: 'center',
-    inline: 'center',
-  });
+  if (buttonRef.value?.el instanceof HTMLElement) {
+    buttonRef.value.el.scrollIntoView({
+      behavior: 'instant',
+      block: 'center',
+      inline: 'center',
+    });
+  }
 });
 
 function checkTrigger(value: string, checked: boolean) {

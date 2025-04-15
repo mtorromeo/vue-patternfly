@@ -53,7 +53,7 @@ import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKe
 import type PfFormSelectOption from './FormSelectOption.vue';
 import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import { computed, ref, type Ref, type SelectHTMLAttributes, getCurrentInstance } from 'vue';
+import { computed, type SelectHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { FormInputsKey } from '../Form/common';
 
@@ -74,7 +74,7 @@ defineSlots<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const input: Ref<HTMLSelectElement | undefined> = ref();
+const input = useTemplateRef('input');
 const options = provideChildrenTracker(FormSelectOptionsKey);
 const value = useManagedProp('modelValue', '');
 const hasStatusIcon = computed(() => props.validated && ['success', 'error', 'warning'].includes(props.validated));

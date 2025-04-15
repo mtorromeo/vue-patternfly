@@ -33,7 +33,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Label/label';
 import cssTextMaxWidth from '@patternfly/react-tokens/dist/esm/c_label__text_MaxWidth';
-import { ref, type Ref, type ButtonHTMLAttributes, type VNode } from 'vue';
+import { type ButtonHTMLAttributes, type VNode, useTemplateRef } from 'vue';
 import { useElementOverflow } from '../use';
 import PfCloseButton from './CloseButton.vue';
 import PfTooltip from './Tooltip/Tooltip.vue';
@@ -90,6 +90,6 @@ defineSlots<{
   actions?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const textRef: Ref<HTMLSpanElement | undefined> = ref();
+const textRef = useTemplateRef('textRef');
 const textOverflowing = useElementOverflow(textRef);
 </script>

@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, ref, watch, type Component, type Ref, type InputHTMLAttributes, getCurrentInstance } from 'vue';
+import { computed, watch, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { getUniqueId } from '../util';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
@@ -99,7 +99,7 @@ defineSlots<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const input: Ref<HTMLInputElement | undefined> = ref();
+const input = useTemplateRef('input');
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
 const validId = computed(() => props.id || getUniqueId());
 

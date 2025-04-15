@@ -1,6 +1,6 @@
 <template>
   <span
-    ref="helpText"
+    ref="helpTextRef"
     v-bind="(ouiaProps as any)"
     :class="[styles.descriptionListText, styles.modifiers.helpText]"
     role="button"
@@ -13,7 +13,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DescriptionList/description-list';
-import { ref, type HTMLAttributes, type Ref } from 'vue';
+import { useTemplateRef, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -30,7 +30,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const helpTextRef: Ref<HTMLElement | undefined> = ref();
+const helpTextRef = useTemplateRef('helpTextRef');
 
 function handleKeys(event: KeyboardEvent) {
   if (!helpTextRef.value || helpTextRef.value !== (event.target as HTMLElement)) {

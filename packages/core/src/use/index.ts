@@ -248,7 +248,7 @@ export function useManagedProp<T>(name: string, value: T, onSet?: (to: T) => voi
   });
 }
 
-export function useElementOverflow(element: Ref<HTMLElement | undefined>): Ref<boolean> {
+export function useElementOverflow(element: Ref<HTMLElement | null>): Ref<boolean> {
   const overflowing = ref(false);
 
   const testElementOverflow = () => {

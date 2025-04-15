@@ -132,8 +132,8 @@ export interface SearchAttribute {
 }
 
 export type SearchInputProvide = {
-  $el: Ref<HTMLDivElement | undefined>;
-  input: Ref<InstanceType<typeof PfTextInputGroupMain> | undefined>;
+  $el: Readonly<Ref<HTMLDivElement | null>>;
+  input: Ref<InstanceType<typeof PfTextInputGroupMain> | null>;
 }
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
@@ -224,7 +224,7 @@ export interface Props extends OUIAProps {
 
 <script lang="ts" setup>
 import textInputGroupStyles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { type InjectionKey, nextTick, provide, type Ref, ref, type RendererElement, getCurrentInstance } from 'vue';
+import { type InjectionKey, nextTick, provide, type Ref, type RendererElement, getCurrentInstance, useTemplateRef } from 'vue';
 import { useChildrenTracker, useManagedProp } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
@@ -291,10 +291,10 @@ const value = useManagedProp('modelValue', '', to => emit('change', to));
 const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
 const managedExpanded = useManagedProp('expanded', false);
 
-const $el: Ref<HTMLDivElement | undefined> = ref();
-const floatingElement: Ref<HTMLSpanElement | undefined> = ref();
-const expandButton: Ref<InstanceType<typeof PfButton> | undefined> = ref();
-const input: Ref<InstanceType<typeof PfTextInputGroupMain> | undefined> = ref();
+const $el = useTemplateRef<HTMLDivElement>('$el');
+const floatingElement = useTemplateRef<HTMLDivElement>('floatingElement');
+const expandButton = useTemplateRef('expandButton');
+const input = useTemplateRef('input');
 
 provide(SearchInputKey, {
   $el,
@@ -347,8 +347,8 @@ function onExpand(e: Event) {
   nextTick(() => {
     if (managedExpanded.value) {
       input.value?.focus();
-    } else {
-      expandButton.value?.el?.focus();
+    } else if (expandButton.value?.el instanceof HTMLElement) {
+      expandButton.value.el.focus();
     }
   });
 }

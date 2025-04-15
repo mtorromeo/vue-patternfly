@@ -28,7 +28,7 @@ import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
-import { inject, ref, type Ref, onMounted, onBeforeUnmount, type HTMLAttributes } from 'vue';
+import { inject, ref, onMounted, onBeforeUnmount, type HTMLAttributes, useTemplateRef } from 'vue';
 import { NavHorizontalKey, NavScrollablelKey } from './Nav.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -52,7 +52,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const navList: Ref<HTMLUListElement | undefined> = ref();
+const navList = useTemplateRef('navList');
 const horizontal = inject(NavHorizontalKey);
 const scrollable = inject(NavScrollablelKey);
 const scrollViewAtStart = ref(false);

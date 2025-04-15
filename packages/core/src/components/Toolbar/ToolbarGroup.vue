@@ -8,7 +8,7 @@
 import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type SpacerBreakpointProps, type SpaceItemsBreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import { computed, onMounted, type HTMLAttributes, ref, type Ref } from 'vue';
+import { computed, onMounted, type HTMLAttributes, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -31,7 +31,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const el: Ref<HTMLDivElement | undefined> = ref();
+const el = useTemplateRef('el');
 
 const breakpointClasses = computed(() => {
   return [

@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watchEffect, inject, type Ref, ref, computed, onMounted, onBeforeUnmount, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
+import { watchEffect, inject, type Ref, ref, computed, onMounted, onBeforeUnmount, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useTemplateRef } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { isDefined, useElementHover } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
@@ -84,10 +84,10 @@ const slots = defineSlots<{
   flyout?: (props?: Record<never, never>) => any;
 }>();
 
-const el: Ref<HTMLElement | undefined> = ref();
-const floatingRef: Ref<HTMLDivElement | undefined> = ref();
+const el = useTemplateRef<HTMLElement>('el');
+const floatingRef = useTemplateRef('floatingRef');
 const onSelect = inject(NavOnSelectKey, undefined);
-const flyoutRef = inject(NavFlyoutRefKey, undefined);
+const flyoutRef = inject(NavFlyoutRefKey, null);
 const sidebarOpen = inject(SidebarOpenKey, false);
 const flyoutTarget: Ref<HTMLElement | null> = ref(null);
 const isHovered = useElementHover(floatingRef);
@@ -105,7 +105,7 @@ const flyoutVisible = computed({
   },
   set(visible: boolean) {
     if (flyoutRef) {
-      flyoutRef.value = visible ? el.value : undefined;
+      flyoutRef.value = visible ? el.value : null;
     }
     if (visible) {
       emit('showflyout');

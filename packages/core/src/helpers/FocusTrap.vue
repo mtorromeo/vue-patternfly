@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { useFocusTrap, type UseFocusTrapOptions } from '@vueuse/integrations/useFocusTrap';
-import { watch, ref, type Ref, type HTMLAttributes } from 'vue';
+import { watch, type HTMLAttributes, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from './ouia';
 
 defineOptions({
@@ -26,7 +26,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const target: Ref<HTMLDivElement | undefined> = ref();
+const target = useTemplateRef('target');
 const { activate, deactivate, pause, unpause } = useFocusTrap(target, {
   immediate: props.active,
   ...props.focusTrapOptions,

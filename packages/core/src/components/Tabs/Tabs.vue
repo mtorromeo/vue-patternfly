@@ -57,7 +57,7 @@ export type TabsProvide = {
   variant: 'default' | 'light300';
   activeKey: WritableComputedRef<TabKey | undefined>;
   idSuffix: ComputedRef<string>;
-  tabListRef: Ref<HTMLUListElement | undefined>;
+  tabListRef: Readonly<Ref<HTMLUListElement | null>>;
 }
 
 export const TabsKey = Symbol("TabsKey") as ChildrenTrackerInjectionKey<ComputedRef<TabKey>>;
@@ -107,7 +107,7 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isElementInView, getUniqueId } from '../../util';
 import { useManagedProp } from '../../use';
-import { watch, watchEffect, nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
+import { watch, watchEffect, nextTick, onMounted, provide, computed, type InjectionKey, type ComputedRef, type Ref, ref, type WritableComputedRef, type HTMLAttributes, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
@@ -134,7 +134,7 @@ defineSlots<{
 
 const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);
 const idSuffix = computed(() => props.id || getUniqueId(''));
-const tabListRef: Ref<HTMLUListElement | undefined> = ref();
+const tabListRef = useTemplateRef('tabListRef');
 const tabKeys = provideChildrenTracker(TabsKey);
 
 provide(TabsProvideKey, {

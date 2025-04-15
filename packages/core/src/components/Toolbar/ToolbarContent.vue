@@ -19,8 +19,8 @@
 </template>
 
 <script lang="ts">
-export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
-export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | undefined>>;
+export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+export const ToolbarContentChipContainerRefKey = Symbol('ToolbarContentChipContainerRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
 
 export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, /* @vue-ignore */ HTMLAttributes {}
 </script>
@@ -45,10 +45,10 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const expandable: Ref<HTMLDivElement | undefined> = ref();
+const expandable: Ref<HTMLDivElement | null> = ref(null);
 provide(ToolbarContentExpandableRefKey, expandable);
 
-const chipContainer: Ref<HTMLDivElement | undefined> = ref();
+const chipContainer: Ref<HTMLDivElement | null> = ref(null);
 provide(ToolbarContentChipContainerRefKey, chipContainer);
 
 const expanded = inject(ToolbarExpandedKey);
@@ -62,10 +62,10 @@ const breakpointClasses = computed(() => [
 
 onBeforeUnmount(() => {
   if (expandable.value) {
-    expandable.value = undefined;
+    expandable.value = null;
   }
   if (chipContainer.value) {
-    chipContainer.value = undefined;
+    chipContainer.value = null;
   }
 });
 </script>

@@ -50,7 +50,7 @@ import styles from '@patternfly/react-styles/css/components/Radio/radio';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
-import { computed, type InputHTMLAttributes, type Component, ref, type Ref, getCurrentInstance } from 'vue';
+import { computed, type InputHTMLAttributes, type Component, getCurrentInstance, useTemplateRef } from 'vue';
 import { useChildrenTracker } from '../use';
 import { FormInputsKey } from './Form/common';
 import { getUniqueId } from '../util';
@@ -99,7 +99,7 @@ const emit = defineEmits<{
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const wrapWithLabel = computed(() => props.component === 'label');
-const input: Ref<HTMLInputElement | undefined> = ref();
+const input = useTemplateRef('input');
 
 const validId = computed(() => props.id || getUniqueId());
 

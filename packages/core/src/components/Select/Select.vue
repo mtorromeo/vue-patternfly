@@ -27,7 +27,7 @@ import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.v
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
-import { nextTick, computed, ref, type Ref, type RendererElement } from 'vue';
+import { nextTick, computed, type RendererElement, useTemplateRef } from 'vue';
 import { useHtmlElementFromVNodes, useManagedProp } from '../../use';
 import { useEventListener } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -95,7 +95,7 @@ const placement = computed((): Placement => {
 });
 
 const managedOpen = useManagedProp('open', false);
-const menuRef: Ref<InstanceType<typeof PfMenu> | undefined> = ref();
+const menuRef = useTemplateRef('menuRef');
 const { element: toggleRef, findReference } = useHtmlElementFromVNodes();
 
 

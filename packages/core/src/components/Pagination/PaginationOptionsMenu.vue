@@ -42,7 +42,7 @@ import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuItem from '../Menu/MenuItem.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
-import { type Ref, ref, type RendererElement } from 'vue';
+import { ref, type RendererElement, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -85,8 +85,8 @@ const emit = defineEmits<{
 }>();
 
 const open = ref(false);
-const el: Ref<HTMLDivElement | undefined> = ref();
-const toggle: Ref<InstanceType<typeof PfMenuToggle> | undefined> = ref();
+const el = useTemplateRef('el');
+const toggle = useTemplateRef('toggle');
 
 function onSelect() {
   open.value = !open.value;

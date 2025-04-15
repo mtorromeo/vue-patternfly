@@ -54,7 +54,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
 </script>
 
 <script lang="ts" setup>
-import { h, mergeProps, ref, type Ref, type VNode, computed, onMounted, onBeforeUnmount, type RendererElement } from 'vue';
+import { h, mergeProps, type VNode, computed, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef } from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
@@ -89,7 +89,7 @@ const slots = defineSlots<{
   toggle?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const menuRef: Ref<InstanceType<typeof PfMenu> | undefined> = ref();
+const menuRef = useTemplateRef('menuRef');
 
 const { element: toggleElementRef, findReference } = useHtmlElementFromVNodes();
 

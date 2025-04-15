@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { computed, provide, type Ref, ref, type HTMLAttributes, watch } from 'vue';
+import { computed, provide, ref, type HTMLAttributes, watch, useTemplateRef } from 'vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import { DrawerKey } from './common';
 import PfDrawerContent from './DrawerContent.vue';
@@ -50,7 +50,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const el: Ref<HTMLDivElement | undefined> = ref();
+const el = useTemplateRef('el');
 const display = ref(props.static || props.expanded);
 const expandedClass = ref(props.expanded);
 const isOpen = computed(() => props.static || props.expanded);

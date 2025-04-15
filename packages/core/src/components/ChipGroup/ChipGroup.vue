@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { h, ref, type Ref, type HTMLAttributes } from 'vue';
+import { h, ref, type HTMLAttributes, useTemplateRef } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Chip/chip-group';
 import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
 import PfChip from './Chip.vue';
@@ -84,7 +84,7 @@ const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const labelRef: Ref<HTMLSpanElement | undefined> = ref();
+const labelRef = useTemplateRef('labelRef');
 const labelOverflowing = useElementOverflow(labelRef);
 const open = ref(props.defaultOpen);
 

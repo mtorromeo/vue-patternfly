@@ -65,7 +65,7 @@ import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import { getUniqueId } from '../../util';
 import { useElementOverflow } from '../../use';
-import { type Component, computed, ref, type Ref, type HTMLAttributes } from 'vue';
+import { type Component, computed, type HTMLAttributes, useTemplateRef } from 'vue';
 import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
@@ -100,7 +100,7 @@ defineSlots<{
   badge?: (props?: Record<never, never>) => any;
 }>();
 
-const textRef: Ref<HTMLSpanElement | undefined> = ref();
+const textRef = useTemplateRef('textRef');
 const textOverflowing = useElementOverflow(textRef);
 const effectiveId = computed(() => props.id ?? getUniqueId());
 </script>

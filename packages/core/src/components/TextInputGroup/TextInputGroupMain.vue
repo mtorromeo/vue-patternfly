@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { inject, type Ref, ref, type InputHTMLAttributes, getCurrentInstance } from 'vue';
+import { inject, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { useChildrenTracker, useManagedProp } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -73,7 +73,7 @@ defineSlots<{
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const value = useManagedProp('modelValue', '');
 const disabled = inject(TextInputGroupDisabledKey, false);
-const input: Ref<HTMLInputElement | undefined> = ref();
+const input = useTemplateRef('input');
 
 defineExpose({
   input,

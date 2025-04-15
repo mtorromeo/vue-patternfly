@@ -60,7 +60,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import { computed, ref, type Ref, type ButtonHTMLAttributes } from 'vue';
+import { computed, type ButtonHTMLAttributes, useTemplateRef } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useManagedProp } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -104,7 +104,7 @@ const isSplitButton = computed(() => !typeahead.value && !!props.splitButton);
 const managedExpanded = useManagedProp('expanded', false);
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
-const el: Ref<HTMLDivElement | HTMLButtonElement | undefined> = ref();
+const el = useTemplateRef<HTMLDivElement | HTMLButtonElement>('el');
 
 function focus() {
   el.value?.focus();

@@ -35,7 +35,7 @@ import maxLines from '@patternfly/react-tokens/dist/esm/c_notification_drawer__g
 import type { HTMLAttributes } from 'vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfBadge from '../Badge.vue';
-import { ref, type Ref } from 'vue';
+import { useTemplateRef } from 'vue';
 import { useElementOverflow, useManagedProp } from '../../use';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -82,7 +82,7 @@ defineSlots<{
 
 const managedExpanded = useManagedProp('expanded', false);
 
-const textRef: Ref<HTMLElement | undefined> = ref();
+const textRef = useTemplateRef('textRef');
 const textOverflowing = useElementOverflow(textRef);
 
 function onKeydown(e: KeyboardEvent) {

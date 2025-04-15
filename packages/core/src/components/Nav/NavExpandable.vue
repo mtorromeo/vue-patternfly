@@ -44,7 +44,7 @@ import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/acc
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { getUniqueId } from '../../util';
-import { type Ref, ref, computed, type LiHTMLAttributes } from 'vue';
+import { ref, computed, type LiHTMLAttributes, useTemplateRef } from 'vue';
 
 defineOptions({
   name: 'PfNavExpandable',
@@ -72,7 +72,7 @@ defineSlots<{
   title?: (props?: Record<never, never>) => any;
 }>();
 
-const expandable: Ref<HTMLButtonElement | undefined> = ref();
+const expandable = useTemplateRef('expandable');
 const expandedState = ref(props.expanded);
 
 const validId = computed(() => {

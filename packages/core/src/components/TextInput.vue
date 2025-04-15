@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type Ref, ref, computed, toRefs, type InputHTMLAttributes, getCurrentInstance } from 'vue';
+import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation, type InputValidateState } from '../input';
@@ -113,7 +113,7 @@ defineSlots<{
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const input: Ref<HTMLInputElement | undefined> = ref();
+const input = useTemplateRef('input');
 const hasStatusIcon = computed(() => !props.noStatusIcon && ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const { validated } = toRefs(props);

@@ -94,8 +94,8 @@ import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/bac
 import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
 
-import { capitalize, ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
-import type { Component, Ref, HTMLAttributes } from 'vue';
+import { capitalize, computed, watch, onMounted, onBeforeUnmount, useTemplateRef } from 'vue';
+import type { Component, HTMLAttributes } from 'vue';
 import PfModalHeader from './ModalHeader.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import PfBackdrop from '../Backdrop.vue';
@@ -175,7 +175,7 @@ defineSlots<{
 }>();
 
 // inject: ['open'],
-const titleRef: Ref<HTMLElement | undefined> = ref();
+const titleRef = useTemplateRef('titleRef');
 const titleOverflowing = useElementOverflow(titleRef);
 
 const teleportTarget = computed(() => {

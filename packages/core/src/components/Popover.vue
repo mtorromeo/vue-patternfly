@@ -66,7 +66,7 @@
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { getUniqueId } from '../util';
 import { useHtmlElementFromVNodes, useManagedProp } from '../use';
-import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount, type RendererElement } from 'vue';
+import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 import PfFocusTrap, { type Props as PfFocusTrapProps } from '../helpers/FocusTrap.vue';
@@ -147,7 +147,7 @@ const emit = defineEmits<{
 }>();
 
 const visible = useManagedProp('open', false);
-const dialog: Ref<InstanceType<typeof PfFocusTrap> | undefined> = ref();
+const dialog = useTemplateRef('dialog');
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 
 watch(referenceElement, (el) => {

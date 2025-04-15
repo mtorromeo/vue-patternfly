@@ -49,7 +49,7 @@ import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import cssPanelMdFlexBasis from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis';
 import cssPanelMdFlexBasisMin from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_min';
 import cssPanelMdFlexBasisMax from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_max';
-import { computed, inject, type Ref, ref, type HTMLAttributes } from 'vue';
+import { computed, inject, type Ref, ref, type HTMLAttributes, useTemplateRef } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
 import { DrawerColorVariant, DrawerKey } from './common';
@@ -104,7 +104,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const panel: Ref<HTMLElement | undefined> = ref();
+const panel = useTemplateRef('panel');
 const panelId = computed(() => props.id || getUniqueId('pf-drawer-panel-'));
 
 const drawerProvide = inject(DrawerKey);
@@ -115,7 +115,7 @@ if (!drawerProvide) {
 
 const { el: drawerRef, position, expanded, display, inline } = drawerProvide;
 const drawerContentRef = inject(DrawerContentRefKey);
-const splitterRef: Ref<HTMLDivElement | undefined> = ref();
+const splitterRef = useTemplateRef('splitterRef');
 
 let isResizing: boolean | null = null;
 const panelSize: Ref<number | undefined> = ref();

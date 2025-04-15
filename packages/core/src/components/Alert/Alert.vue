@@ -77,7 +77,7 @@ import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { ref, watch, type Ref, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component } from 'vue';
+import { ref, watch, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component, useTemplateRef, type ComponentPublicInstance } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import { useManagedProp } from '../../use';
 import type { Placement } from '../../helpers/FloatingUi.vue';
@@ -149,7 +149,7 @@ defineSlots<{
   'action-links'?: (props?: Record<never, never>) => any;
 }>();
 
-const titleRef: Ref<HTMLElement | undefined> = ref();
+const titleRef = useTemplateRef<HTMLElement | ComponentPublicInstance>('titleRef');
 const { width, height } = useElementSize(titleRef);
 const tooltipVisible = ref(false);
 let timer: number | undefined = undefined;
@@ -158,7 +158,7 @@ const isMouseOver = ref(false);
 const timedOut = ref(false);
 const timedOutAnimation = ref(true);
 const containsFocus = ref(false);
-const el: Ref<HTMLDivElement | null> = ref(null);
+const el = useTemplateRef('el');
 
 const managedExpanded = useManagedProp('expanded', false);
 const variantLabel = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)} alert:`);
@@ -166,7 +166,7 @@ const dismissed = computed(() => timedOut.value && timedOutAnimation.value && !i
 
 
 watch(() => [width.value, height.value], () => {
-  if (!titleRef.value || !props.truncateTitle) {
+  if (!(titleRef.value instanceof HTMLElement) || !props.truncateTitle) {
     return false;
   }
   tooltipVisible.value = titleRef.value.offsetHeight < titleRef.value.scrollHeight;

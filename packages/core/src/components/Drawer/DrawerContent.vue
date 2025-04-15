@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-export type DrawerContentRef = Ref<HTMLDivElement | InstanceType<typeof AutoWrap> | undefined>;
+export type DrawerContentRef = Readonly<Ref<HTMLDivElement | InstanceType<typeof AutoWrap> | null>>;
 export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey<DrawerContentRef>;
 
 export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
@@ -29,7 +29,7 @@ export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerM
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { type InjectionKey, provide, type Ref, ref } from 'vue';
+import { type InjectionKey, provide, type Ref, useTemplateRef } from 'vue';
 import { DrawerColorVariant } from './common';
 import type { ComponentProps } from '../../util';
 import AutoWrap from '../../helpers/AutoWrap.vue';
@@ -51,6 +51,6 @@ defineSlots<{
   content?: (props?: Record<never, never>) => any;
 }>();
 
-const el: Ref<HTMLDivElement | undefined> = ref();
+const el = useTemplateRef('el');
 provide(DrawerContentRefKey, el);
 </script>

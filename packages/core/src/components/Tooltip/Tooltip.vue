@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { type Ref, ref, watch, computed, onMounted, onUnmounted, type HTMLAttributes, type RendererElement } from 'vue';
+import { ref, watch, computed, onMounted, onUnmounted, type HTMLAttributes, type RendererElement, useTemplateRef } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow.vue';
 import PfTooltipContent from './TooltipContent.vue';
@@ -117,7 +117,7 @@ defineEmits<{
 }>();
 
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
-const tooltipElement: Ref<HTMLElement | undefined> = ref();
+const tooltipElement = useTemplateRef('tooltipElement');
 const tooltipDisplay = ref(false);
 const managedVisible = useManagedProp('visible', false);
 const opacity = ref(managedVisible.value);

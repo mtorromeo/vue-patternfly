@@ -13,7 +13,7 @@ export function useInputValidation({
 }: {
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
   validated?: Ref<InputValidateState | undefined>;
-  inputElement?: MaybeRef<InputElement | undefined>;
+  inputElement?: MaybeRef<InputElement | null>;
   customCheckValidity?: () => boolean;
 }) {
   const instance = getCurrentInstance()?.proxy;

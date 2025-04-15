@@ -28,8 +28,8 @@ import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
 import { useElementOverflow } from '../../use';
-import { ref } from 'vue';
-import type { HTMLAttributes, Ref } from 'vue';
+import { useTemplateRef } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import type { Placement } from '../../helpers/FloatingUi.vue';
 
@@ -72,6 +72,6 @@ const variantIcons = {
   custom: BellIcon,
 };
 
-const textRef: Ref<HTMLElement | undefined> = ref();
+const textRef = useTemplateRef<HTMLElement>('textRef');
 const textOverflowing = useElementOverflow(textRef);
 </script>

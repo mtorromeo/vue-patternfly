@@ -108,7 +108,7 @@ defineSlots<{
 }>();
 
 const value = useManagedProp('modelValue', '', to => emit('change', to));
-const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | undefined> = ref();
+const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
 const searchInput = inject(SearchInputKey);
 const hasWordsId = getUniqueId();
 

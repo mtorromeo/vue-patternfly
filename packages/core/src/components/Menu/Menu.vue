@@ -32,7 +32,7 @@
 <script lang="ts">
 export type MenuProvide = {
   parentMenu: MenuProvide | undefined;
-  favoriteList: Ref<InstanceType<typeof PfMenuList> | undefined>;
+  favoriteList: Ref<InstanceType<typeof PfMenuList> | null>;
   selected?: WritableComputedRef<MenuItemId | MenuItemId[] | null>;
   // drilldownItemPath: MenuItemId[];
   activeItemId?: MenuItemId;
@@ -92,7 +92,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef, type HTMLAttributes } from 'vue';
+import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef, type HTMLAttributes, useTemplateRef } from 'vue';
 import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey } from '../../use';
 import { isDefined } from '@vueuse/shared';
 import AutoWrap from '../../helpers/AutoWrap.vue';
@@ -132,10 +132,10 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 // const instance = getCurrentInstance();
 
-const el: Ref<HTMLDivElement | undefined> = ref();
+const el = useTemplateRef('el');
 const managedSelected = useManagedProp<MenuItemId | MenuItemId[] | null>('selected', null);
 
-const favoriteList: Ref<InstanceType<typeof PfMenuList> | undefined> = ref();
+const favoriteList = useTemplateRef<InstanceType<typeof PfMenuList>>('favoriteList');
 const items = provideChildrenTracker(MenuItemsKey);
 const favoriteCount = computed(() => items.reduce((c, i) => c + (i.favorited ? 1 : 0), 0));
 

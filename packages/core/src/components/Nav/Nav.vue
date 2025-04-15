@@ -21,7 +21,7 @@
 export const NavScrollablelKey = Symbol('NavScrollablelKey') as InjectionKey<Ref<boolean>>;
 export const NavHorizontalKey = Symbol('NavHorizontalKey') as InjectionKey<boolean>;
 export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<(event: Event, groupId: string | undefined, itemId: string | undefined) => void>;
-export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | undefined>>;
+export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | null>>;
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
@@ -61,6 +61,6 @@ provide(NavHorizontalKey, horizontal);
 
 provide(NavOnSelectKey, (e, groupId, itemId) => emit('select', e, groupId, itemId));
 
-const flyoutRef: Ref<HTMLElement | undefined> = ref();
+const flyoutRef: Ref<HTMLElement | null> = ref(null);
 provide(NavFlyoutRefKey, flyoutRef);
 </script>

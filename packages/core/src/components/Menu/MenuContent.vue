@@ -18,7 +18,7 @@
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import cssHeight from '@patternfly/react-tokens/dist/esm/c_menu__content_Height';
 import cssMaxHeight from '@patternfly/react-tokens/dist/esm/c_menu__content_MaxHeight';
-import { computed, inject, ref, watch, type Ref, type HTMLAttributes } from 'vue';
+import { computed, inject, watch, type HTMLAttributes, useTemplateRef } from 'vue';
 import { MenuListInjectionKey, type MenuListProvide } from './MenuList.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfMenuList from './MenuList.vue';
@@ -46,7 +46,7 @@ defineSlots<{
   default: (props?: Record<never, never>) => any;
 }>();
 
-const el: Ref<HTMLDivElement | undefined> = ref();
+const el = useTemplateRef('el');
 const menuList = inject(MenuListInjectionKey, undefined);
 
 const rootMenuList = computed(() => {

@@ -10,7 +10,7 @@ export type Placement = UIPlacement |'auto';
 export const FloatingElementTeleportKey = Symbol('FloatingElementTeleportKey') as InjectionKey<MaybeRef<string | RendererElement | null | undefined>>;
 
 export interface Props {
-  reference: string | ReferenceElement | undefined;
+  reference: string | ReferenceElement | undefined | null;
   disable?: boolean;
   placement?: Placement;
   flip?: boolean;
@@ -64,7 +64,7 @@ const referenceElement = computed<ReferenceElement | undefined>(() => {
   return typeof reference?.getBoundingClientRect !== 'undefined' ? reference : undefined;
 });
 
-const htmlElement: Ref<HTMLElement | undefined> = ref();
+const htmlElement: Ref<HTMLElement | null> = ref(null);
 
 const floatingOptions = computed<FloatingOptions>(() => {
   const middleware: Middleware[] = [...props.middleware];
@@ -124,7 +124,7 @@ function floatingElement() {
   }
 
   const onElementMounted = (el: unknown) => {
-    htmlElement.value = el instanceof HTMLElement ? el : undefined;
+    htmlElement.value = el instanceof HTMLElement ? el : null;
   };
 
   return withDirectives(cloneVNode(children[0], {
