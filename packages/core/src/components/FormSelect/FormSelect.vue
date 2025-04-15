@@ -33,7 +33,7 @@ export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTr
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
   /** @model */
-  modelValue?: string | null;
+  modelValue?: string | string[] | null;
 
   disabled?: boolean;
 
@@ -66,7 +66,7 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
-  (name: 'update:modelValue', value: string): void;
+  (name: 'update:modelValue', value: string | string[]): void;
 }>();
 
 defineSlots<{

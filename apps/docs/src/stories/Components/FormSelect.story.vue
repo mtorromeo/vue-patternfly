@@ -23,8 +23,8 @@
       ## Examples
     </pre>
 
-    <story-canvas title="Example">
-      <pf-form-select required>
+    <story-canvas title="Single value">
+      <pf-form-select required v-model="value">
         <pf-form-select-option value="" label="Please Choose" placeholder disabled />
         <pf-form-select-option value="mr" label="Mr" />
         <pf-form-select-option value="miss" label="Miss" />
@@ -43,6 +43,30 @@
           <pf-form-select-option value="other" label="Other" />
         </optgroup>
       </pf-form-select>
+      <br>
+      <p>Value: {{ JSON.stringify(value) }}</p>
+    </story-canvas>
+
+    <story-canvas title="Multiple value">
+      <pf-form-select required v-model="values" multiple>
+        <pf-form-select-option value="" label="Please Choose" placeholder disabled />
+        <pf-form-select-option value="white" label="White" />
+        <pf-form-select-option value="black" label="Black" />
+        <pf-form-select-option value="red" label="Red" />
+        <pf-form-select-option value="green" label="Green" />
+        <pf-form-select-option value="blue" label="Blue" />
+        <pf-form-select-option value="yellow" label="Yellow" />
+        <pf-form-select-option value="purple" label="Purple" disabled />
+      </pf-form-select>
+      <br>
+      <p>Values: {{ JSON.stringify(values) }}</p>
     </story-canvas>
   </doc-page>
 </template>
+
+<script setup lang="ts">
+import { ref, type Ref } from 'vue';
+
+const value = ref('');
+const values: Ref<string[]> = ref([]);
+</script>
