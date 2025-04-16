@@ -5,7 +5,6 @@
       :ref="(el) => (el as HTMLInputElement).indeterminate = checked === null"
       :class="styles.checkInput"
       type="checkbox"
-      :aria-invalid="!valid"
       :checked="Boolean(checked)"
     >
   </label>
@@ -22,9 +21,6 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'checked'> {
-  /** Flag to show if the checkbox selection is valid or invalid */
-  valid?: boolean;
-
   /** Flag to show if the checkbox is checked. Use null to set the checkbox indeterminate state */
   checked?: boolean | null;
 }

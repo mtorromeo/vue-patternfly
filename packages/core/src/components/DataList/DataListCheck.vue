@@ -5,8 +5,6 @@
         v-bind="$attrs"
         v-model="managedChecked"
         type="checkbox"
-        :disabled="disabled"
-        :aria-invalid="invalid"
       >
     </div>
   </component>
@@ -23,10 +21,8 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ InputHTMLAttributes {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type'> {
   otherControls?: boolean;
-  disabled?: boolean;
-  invalid?: boolean;
   checked?: boolean;
 }
 

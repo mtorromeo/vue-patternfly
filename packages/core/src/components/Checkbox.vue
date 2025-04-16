@@ -67,8 +67,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   disabled?: boolean;
   /** Flag to show if the checkbox is required. */
   required?: boolean;
-  /** Flag to show if the checkbox selection is valid or invalid. */
-  valid?: boolean;
   /** Id of the checkbox. */
   id?: string;
   /** Label text of the checkbox. */

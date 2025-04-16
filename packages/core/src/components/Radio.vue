@@ -27,7 +27,6 @@
         v-bind="$attrs"
         type="radio"
         :class="styles.radioInput"
-        :aria-invalid="!valid"
         :disabled="disabled"
         :checked="checked"
         :aria-label="(label || $slots.label) ? undefined : ariaLabel"
@@ -60,7 +59,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'aria-invalid'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type'> {
   component?: string | Component;
   /** Id of the radio. */
   id?: string;
@@ -70,8 +69,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   checked?: boolean;
   /** Flag to show if the radio is disabled. */
   disabled?: boolean;
-  /** Flag to show if the radio selection is valid or invalid. */
-  valid?: boolean;
   /** Label text of the radio. */
   label?: string;
   /** Aria label for the radio. */
