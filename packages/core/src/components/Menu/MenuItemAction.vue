@@ -1,24 +1,30 @@
 <template>
-  <button
+  <div
     v-bind="ouiaProps"
     :class="[styles.menuItemAction, {
-      [styles.modifiers.favorite]: isDefined(favorited),
+      'pf-m-favorite': isDefined(favorited),
       [styles.modifiers.favorited]: favorited,
     }]"
-    :disabled="disabled || item?.disabled || undefined"
-    tabindex="-1"
-    @click="onClick"
   >
-    <span :class="styles.menuItemActionIcon">
-      <star-icon v-if="icon === 'favorites' || isDefined(favorited)" />
-      <slot v-else />
-    </span>
-  </button>
+    <pf-button
+      v-bind="$attrs"
+      role="menuitem"
+      variant="plain"
+      :disabled="disabled || item?.disabled || undefined"
+      :tabindex="-1"
+      @click="onClick"
+    >
+      <template #icon v-if="icon === 'favorites' || isDefined(favorited)">
+        <star-icon />
+      </template>
+    </pf-button>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, type ButtonHTMLAttributes } from 'vue';
+import { inject } from 'vue';
+import PfButton, { type Props as ButtonProps } from '../Button.vue';
 import { MenuInjectionKey } from './Menu.vue';
 import { MenuItemInjectionKey } from './MenuItem.vue';
 import StarIcon from '@vue-patternfly/icons/star-icon';
@@ -27,9 +33,10 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfMenuItemAction',
+  inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'tabindex'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonProps, 'onClick' | 'tabindex'> {
   /** The action icon to use */
   icon?: 'favorites';
   /** Flag indicating if the item is favorited */
@@ -45,9 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineSlots<{
-  default: (props?: Record<never, never>) => any;
-}>();
+defineSlots<Record<never, never>>();
 
 const emit = defineEmits<{
   /** Callback on action click, can also specify onActionClick on the Menu instead */

@@ -47,7 +47,7 @@
 </template>
 
   <script lang="ts" setup>
-  import { h, ref, type Ref, type HTMLAttributes } from 'vue';
+  import { h, ref, useTemplateRef, type HTMLAttributes } from 'vue';
   import styles from '@patternfly/react-styles/css/components/Label/label-group';
   import labelStyles from '@patternfly/react-styles/css/components/Label/label';
   import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
@@ -115,7 +115,7 @@
     'add-label-control'?: (props?: Record<never, never>) => any;
   }>();
 
-  const labelRef: Ref<HTMLSpanElement | undefined> = ref();
+  const labelRef = useTemplateRef('labelRef');
   const labelOverflowing = useElementOverflow(labelRef);
   const open = ref(props.defaultOpen);
 

@@ -7,7 +7,6 @@
       breakpointClasses,
       {
         [styles.modifiers.bottom]: variant === 'bottom',
-        [styles.modifiers.compact]: compact,
         [styles.modifiers.static]: static,
         [styles.modifiers.sticky]: sticky,
       },
@@ -39,7 +38,7 @@
       :per-page="perPage"
       @update:per-page="emit('update:perPage', $event)"
     />
-    <pf-navigation
+    <pf-pagination-navigation
       :pages-title="titlePage"
       :pages-title-plural="titlePages"
       :to-last-page-aria-label="toLastPageAriaLabel"
@@ -68,7 +67,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
 import PfPaginationOptionsMenu from './PaginationOptionsMenu.vue';
-import PfNavigation from './Navigation.vue';
+import PfPaginationNavigation from './PaginationNavigation.vue';
 import { computed, type HTMLAttributes } from 'vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
