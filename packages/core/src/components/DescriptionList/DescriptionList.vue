@@ -1,6 +1,6 @@
 <template>
   <dl
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.descriptionList,
       classesFromBreakpointProps($props, ['columns', 'orientation'], styles, { short: true }),

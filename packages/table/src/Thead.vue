@@ -1,6 +1,6 @@
 <template>
   <thead
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.tableThead, {
       [styles.modifiers.nowrap]: noWrap,
       [styles.modifiers.nestedColumnHeader]: nestedHeader,

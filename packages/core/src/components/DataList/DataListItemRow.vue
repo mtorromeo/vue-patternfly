@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.dataListItemRow, {
         [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,

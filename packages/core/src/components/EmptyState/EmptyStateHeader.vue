@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="`${styles.emptyState}__header`">
+  <div v-bind="ouiaProps" :class="`${styles.emptyState}__header`">
     <auto-wrap v-if="$slots.icon" :component="PfEmptyStateIcon">
       <slot name="icon" />
     </auto-wrap>

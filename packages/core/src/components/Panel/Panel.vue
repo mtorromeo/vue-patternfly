@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.panel, {
       [styles.modifiers.raised]: variant === 'raised',
       [styles.modifiers.bordered]: variant === 'bordered',

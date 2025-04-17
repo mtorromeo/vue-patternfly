@@ -1,6 +1,6 @@
 <template>
   <nav
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.jumpLinks,
       breakpointClasses, {

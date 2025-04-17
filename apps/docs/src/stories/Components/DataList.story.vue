@@ -106,7 +106,6 @@
             id="check-action-action1"
             aria-labelledby="check-action-item1 check-action-action1"
             aria-label="Actions"
-            plain-button
           >
             <pf-dropdown position="right">
               <template #toggle>
@@ -137,7 +136,6 @@
             id="check-action-action2"
             aria-labelledby="check-action-item2 check-action-action2"
             aria-label="Actions"
-            plain-button
             visibility-lg="hidden"
           >
             <pf-dropdown position="right">
@@ -156,7 +154,6 @@
             id="check-action-action3"
             aria-labelledby="check-action-item2 check-action-action3"
             aria-label="Actions"
-            plain-button
             visibility="hidden"
             visibility-lg="visible"
           >
@@ -180,7 +177,6 @@
             id="check-action-action3"
             aria-labelledby="check-action-item3 check-action-action3"
             aria-label="Actions"
-            plain-button
             visibility-xl="hidden"
           >
             <pf-dropdown position="right">
@@ -201,7 +197,6 @@
             id="check-action-action3"
             aria-labelledby="check-action-item3 check-action-action3"
             aria-label="Actions"
-            plain-button
             visibility="hidden"
             visibility-xl="visible"
           >
@@ -229,7 +224,6 @@
             id="selectable-action-action1"
             aria-labelledby="selectable-action-item1 selectable-action-action1"
             aria-label="Actions"
-            plain-button
           >
             <pf-dropdown position="right">
               <template #toggle>
@@ -258,7 +252,6 @@
             id="selectable-actions-action2"
             aria-labelledby="selectable-actions-item2 selectable-actions-action2"
             aria-label="Actions"
-            plain-button
           >
             <pf-dropdown position="right">
               <template #toggle>
@@ -302,7 +295,6 @@
             id="ex-action1"
             aria-labelledby="ex-item1 ex-action1"
             aria-label="Actions"
-            plain-button
           >
             <pf-dropdown position="right">
               <template #toggle>
@@ -351,7 +343,6 @@
               id="ex-action2"
               aria-labelledby="ex-item2 ex-action2"
               aria-label="Actions"
-              plain-button
             >
               <pf-dropdown position="right">
                 <template #toggle>
@@ -398,7 +389,6 @@
             id="ex-action3"
             aria-labelledby="ex-item3 ex-action3"
             aria-label="Actions"
-            plain-button
           >
             <pf-dropdown position="right">
               <template #toggle>
@@ -468,7 +458,6 @@
           <pf-data-list-action
             aria-labelledby="width-ex2-item1 width-ex2-action1"
             aria-label="Actions"
-            plain-button
           >
             <pf-dropdown position="right">
               <template #toggle>
@@ -515,7 +504,6 @@
             id="width-ex3-action1"
             aria-labelledby="width-ex3-item1 width-ex3-action1"
             aria-label="Actions"
-            plain-button
           >
             <pf-dropdown position="right">
               <template #toggle>

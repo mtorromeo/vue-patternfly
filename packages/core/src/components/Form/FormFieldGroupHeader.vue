@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.formFieldGroupHeader">
+  <div v-bind="ouiaProps" :class="styles.formFieldGroupHeader">
     <div :class="styles.formFieldGroupHeaderMain">
       <div v-if="title" :class="styles.formFieldGroupHeaderTitle">
         <div :class="styles.formFieldGroupHeaderTitleText">{{ title }}</div>

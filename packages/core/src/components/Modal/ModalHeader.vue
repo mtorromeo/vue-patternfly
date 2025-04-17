@@ -1,6 +1,6 @@
 <template>
   <header
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.modalBoxHeader, {
       [styles.modifiers.help]: $slots.help,
     }]"

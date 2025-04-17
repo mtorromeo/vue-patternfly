@@ -1,5 +1,5 @@
 <template>
-  <section v-bind="(ouiaProps as any)" :class="styles.formSection">
+  <section v-bind="ouiaProps" :class="styles.formSection">
     <component :is="titleElement" v-if="title" :class="styles.formSectionTitle">{{ title }}</component>
     <slot />
   </section>

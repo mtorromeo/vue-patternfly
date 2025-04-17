@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.panelHeader">
+  <div v-bind="ouiaProps" :class="styles.panelHeader">
     <slot />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.toolbar, breakpointClasses, {
       [styles.modifiers.fullHeight]: fullHeight,
       [styles.modifiers.static]: static,

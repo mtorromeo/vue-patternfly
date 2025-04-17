@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.drawerBody, {[styles.modifiers.noPadding]: noPadding}]">
+  <div v-bind="ouiaProps" :class="[styles.drawerBody, {[styles.modifiers.noPadding]: noPadding}]">
     <slot />
   </div>
 </template>

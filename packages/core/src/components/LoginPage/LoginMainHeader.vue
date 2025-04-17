@@ -1,5 +1,5 @@
 <template>
-  <header v-bind="(ouiaProps as any)" :class="styles.loginMainHeader">
+  <header v-bind="ouiaProps" :class="styles.loginMainHeader">
     <pf-title v-if="title" :h="2" size="3xl">
       {{ title }}
     </pf-title>

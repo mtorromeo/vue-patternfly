@@ -1,5 +1,5 @@
 <template>
-  <dt v-bind="(ouiaProps as any)" :class="styles.descriptionListTerm">
+  <dt v-bind="ouiaProps" :class="styles.descriptionListTerm">
     <span v-if="$slots.icon" :class="styles.descriptionListTermIcon">
       <slot name="icon" />
     </span>

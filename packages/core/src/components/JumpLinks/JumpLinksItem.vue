@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import PfJumpLinksList from './JumpLinksList.vue';
-import PfButton from '../Button/Button.vue';
+import PfButton from '../Button.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import { type MaybeComputedElementRef } from '@vueuse/core';
 import { inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';

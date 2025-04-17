@@ -1,7 +1,7 @@
 <template>
-  <pf-background-image :src="PfBgIcon" />
+  <pf-background-image :src="PfBackground" />
 </template>
 
 <script setup lang="ts">
-import PfBgIcon from '@patternfly/patternfly/assets/images/pfbg-icon.svg';
+import PfBackground from '@patternfly/patternfly/assets/images/pf-background.svg';
 </script>

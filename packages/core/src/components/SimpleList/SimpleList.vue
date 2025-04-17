@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.simpleList">
+  <div v-bind="ouiaProps" :class="styles.simpleList">
     <input v-if="name" type="hidden" :name="name" :value="value" :required="required">
     <wrap>
       <default-slot />

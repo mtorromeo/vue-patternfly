@@ -1,5 +1,5 @@
 <template>
-  <section v-bind="(ouiaProps as any)" :class="styles.simpleListSection">
+  <section v-bind="ouiaProps" :class="styles.simpleListSection">
     <h2 :id="id" :class="[styles.simpleListTitle, titleClass]" aria-hidden>
       <slot name="title">{{ title }}</slot>
     </h2>

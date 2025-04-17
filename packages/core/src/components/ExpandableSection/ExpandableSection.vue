@@ -19,7 +19,7 @@
   </define-toggle>
 
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.expandableSection, {
       [styles.modifiers.expanded]: managedExpanded,
       [styles.modifiers.truncate]: truncate,

@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.mastheadContent">
+  <div v-bind="ouiaProps" :class="styles.mastheadContent">
     <slot />
   </div>
 </template>

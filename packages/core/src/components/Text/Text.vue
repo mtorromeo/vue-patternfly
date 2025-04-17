@@ -1,5 +1,5 @@
 <template>
-  <component v-bind="(ouiaProps as any)" :is="component" data-pf-content :class="{[styles.modifiers.visited]: visited && component === 'a'}">
+  <component v-bind="ouiaProps" :is="component" data-pf-content :class="{[styles.modifiers.visited]: visited && component === 'a'}">
     <slot />
   </component>
 </template>

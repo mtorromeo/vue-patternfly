@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.loginMainFooter">
+  <div v-bind="ouiaProps" :class="styles.loginMainFooter">
     <slot />
     <ul v-if="$slots.social" :class="styles.loginMainFooterLinks">
       <slot name="social" />

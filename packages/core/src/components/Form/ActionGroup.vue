@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.formGroup, styles.modifiers.action]">
+  <div v-bind="ouiaProps" :class="[styles.formGroup, styles.modifiers.action]">
     <div :class="styles.formGroupControl">
       <div :class="styles.formActions">
         <slot />

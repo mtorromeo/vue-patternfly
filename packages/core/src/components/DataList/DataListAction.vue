@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.dataListItemAction, breakpointClasses]">
+  <div v-bind="ouiaProps" :class="[styles.dataListItemAction, breakpointClasses]">
     <slot />
   </div>
 </template>

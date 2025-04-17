@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="styles.backgroundImage" :style="{
       [cssBackgroundImage.name]: `url(${src})`
     }"

@@ -1,6 +1,6 @@
 <template>
   <span
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.icon, size && styles.modifiers[size], {
       [styles.modifiers.inline]: inline,
       [styles.modifiers.inProgress]: inProgress,

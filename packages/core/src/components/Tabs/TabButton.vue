@@ -1,5 +1,5 @@
 <template>
-  <component v-bind="(ouiaProps as any)" :is="href ? 'a' : 'button'" :type="href ? undefined : 'button'" :href="href">
+  <component v-bind="ouiaProps" :is="href ? 'a' : 'button'" :type="href ? undefined : 'button'" :href="href">
     <slot />
   </component>
 </template>

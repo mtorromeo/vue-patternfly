@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.cardActions, { [styles.modifiers.noOffset]: noOffset }]">
+  <div v-bind="ouiaProps" :class="[styles.cardActions, { [styles.modifiers.noOffset]: noOffset }]">
     <slot />
   </div>
 </template>

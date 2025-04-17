@@ -1,5 +1,5 @@
 <template>
-  <section v-bind="(ouiaProps as any)" :class="styles.menuGroup">
+  <section v-bind="ouiaProps" :class="styles.menuGroup">
     <component :is="labelHeadingLevel" v-if="label || $slots.label" :class="styles.menuGroupTitle">
       <slot name="label">{{ label }}</slot>
     </component>

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.skeleton, {
       [fontHeightClassName ?? styles.modifiers.circle]: fontSize,
       [styles.modifiers.circle]: shape === 'circle',

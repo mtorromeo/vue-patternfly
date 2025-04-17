@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.drawerClose">
+  <div v-bind="ouiaProps" :class="styles.drawerClose">
     <pf-button variant="plain" :aria-label="ariaLabel" @click="emit('close')">
       <template #icon>
         <xmark-icon />

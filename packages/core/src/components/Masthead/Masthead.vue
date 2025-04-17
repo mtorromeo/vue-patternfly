@@ -1,6 +1,6 @@
 <template>
   <header
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.masthead,
       classesFromBreakpointProps($props, ['inset', 'display'], styles),

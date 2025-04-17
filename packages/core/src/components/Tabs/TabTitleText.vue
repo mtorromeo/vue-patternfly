@@ -1,5 +1,5 @@
 <template>
-  <span v-bind="(ouiaProps as any)" :class="styles.tabsItemText">
+  <span v-bind="ouiaProps" :class="styles.tabsItemText">
     <slot />
   </span>
 </template>

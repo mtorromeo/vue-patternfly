@@ -10,7 +10,7 @@
   </define-header-toggle>
 
   <div
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.cardHeader, {
       [styles.modifiers.toggleRight]: toggleRightAligned,
     }]"

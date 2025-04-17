@@ -1,6 +1,6 @@
 <template>
   <img
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.avatar, {
       [styles.modifiers.bordered]: bordered,
       [styles.modifiers[size as NonNullable<typeof size>]]: size,

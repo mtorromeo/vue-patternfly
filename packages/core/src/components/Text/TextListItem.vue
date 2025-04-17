@@ -1,5 +1,5 @@
 <template>
-  <component v-bind="(ouiaProps as any)" :is="component" data-pf-content>
+  <component v-bind="ouiaProps" :is="component" data-pf-content>
     <slot />
   </component>
 </template>

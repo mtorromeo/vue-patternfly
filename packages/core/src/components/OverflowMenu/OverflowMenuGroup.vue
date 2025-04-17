@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!isBelowBreakpoint || persistent"
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[
       styles.overflowMenuGroup, {
         [styles.modifiers.buttonGroup]: type === 'button',

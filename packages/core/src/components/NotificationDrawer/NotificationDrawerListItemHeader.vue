@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.notificationDrawerListItemHeader">
+  <div v-bind="ouiaProps" :class="styles.notificationDrawerListItemHeader">
     <span :class="styles.notificationDrawerListItemHeaderIcon">
       <slot name="icon">
         <component :is="variantIcons[variant]" />

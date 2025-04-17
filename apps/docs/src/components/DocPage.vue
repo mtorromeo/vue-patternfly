@@ -1,5 +1,5 @@
 <template>
-  <pf-page-section v-if="title || $slots.description" variant="light" translate="no" width-limited>
+  <pf-page-section v-if="title || $slots.description" translate="no" width-limited>
     <pf-title v-if="title" size="4xl">{{ title }}</pf-title>
     <p v-if="$slots.description">
       <slot name="description" />

@@ -1,10 +1,9 @@
 <template>
   <span
     ref="helpTextRef"
-    v-bind="(ouiaProps as any)"
+    v-bind="ouiaProps"
     :class="[styles.descriptionListText, styles.modifiers.helpText]"
     role="button"
-    type="button"
     @keydown="handleKeys"
   >
     <slot />

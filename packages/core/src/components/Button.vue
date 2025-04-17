@@ -35,14 +35,14 @@
         <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
       </span>
       <span
-        v-if="$slots.icon && iconPosition === 'left'"
+        v-if="$slots.icon && iconPosition === 'start'"
         :class="[styles.buttonIcon, styles.modifiers.start]"
       >
         <slot name="icon" />
       </span>
       <slot />
       <span
-        v-if="$slots.icon && iconPosition === 'right'"
+        v-if="$slots.icon && iconPosition === 'end'"
         :class="[styles.buttonIcon, styles.modifiers.end]"
       >
         <slot name="icon" />
@@ -100,7 +100,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttri
   /** Applies no padding on a plain button variant. Use when plain button is placed inline with text */
   noPadding?: boolean;
   /** Sets position of the link icon */
-  iconPosition?: 'left' | 'right';
+  iconPosition?: 'start' | 'end';
   /** Sets the button tabindex. */
   tabindex?: number;
   /** Adds small styling to the button */
@@ -124,7 +124,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttri
 const props = withDefaults(defineProps<Props>(), {
   type: 'button',
   variant: 'primary',
-  iconPosition: 'left',
+  iconPosition: 'start',
   component: 'auto',
   loading: undefined,
 });

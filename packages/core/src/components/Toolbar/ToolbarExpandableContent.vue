@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.toolbarExpandableContent, { [styles.modifiers.expanded]: expanded }]">
+  <div v-bind="ouiaProps" :class="[styles.toolbarExpandableContent, { [styles.modifiers.expanded]: expanded }]">
     <pf-toolbar-group>
       <slot />
     </pf-toolbar-group>

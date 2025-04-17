@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="[styles.drawerSection, {
+  <div v-bind="ouiaProps" :class="[styles.drawerSection, {
     [styles.modifiers.noBackground]: colorVariant === 'no-background',
     [styles.modifiers.secondary]: colorVariant === 'secondary',
   }]">

@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.dataListItemControl">
+  <div v-bind="ouiaProps" :class="styles.dataListItemControl">
     <div :class="styles.dataListToggle">
       <pf-button
         :id="id"

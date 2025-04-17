@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.emptyStateIcon" :style="{ [cssIconColor.name]: hasSpinner ? undefined : color }">
+  <div v-bind="ouiaProps" :class="styles.emptyStateIcon" :style="{ [cssIconColor.name]: hasSpinner ? undefined : color }">
     <render />
   </div>
 </template>
