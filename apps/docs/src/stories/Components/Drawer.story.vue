@@ -12,6 +12,7 @@
       <component-info src="packages/core/src/components/Drawer/DrawerMain.vue" />
       <component-info src="packages/core/src/components/Drawer/DrawerPanelBody.vue" />
       <component-info src="packages/core/src/components/Drawer/DrawerPanelContent.vue" />
+      <component-info src="packages/core/src/components/Drawer/DrawerPanelDescription.vue" />
       <component-info src="packages/core/src/components/Drawer/DrawerSection.vue" />
     </template>
 
@@ -26,7 +27,6 @@
     </pf-form-select><br><br>
     <pf-switch v-model:checked="inline" label="Inline" /><br><br>
     <pf-switch v-model:checked="contentPadding" label="Content padding" /><br><br>
-    <pf-switch v-model:checked="noPanelPadding" label="No panel padding" /><br><br>
     <pf-switch v-model:checked="showSection" label="Show additional section above content" /><br><br>
     <pf-switch v-model:checked="resizable" label="Resizable" /><br><br>
     <pf-button :aria-expanded="expanded" @click="expanded = !expanded">Toggle drawer</pf-button>
@@ -46,7 +46,7 @@
 
           <template #content>
             <pf-drawer-panel-content :resizable="resizable" default-size="350px" min-size="150px">
-              <pf-drawer-head :no-padding="noPanelPadding">
+              <pf-drawer-head>
                 <span :tabindex="expanded ? 0 : -1">
                   drawer-panel
                 </span>
@@ -75,7 +75,7 @@
         </pf-drawer-content-body>
 
         <pf-drawer-panel-content :resizable="resizable" default-size="350px" min-size="150px">
-          <pf-drawer-head :no-padding="noPanelPadding">
+          <pf-drawer-head>
             <span :tabindex="expanded ? 0 : -1">
               drawer-panel
             </span>
@@ -98,7 +98,6 @@ const expanded = ref(false);
 const position: Ref<ComponentProps<(typeof PfDrawer)>['position']> = ref('right');
 const inline = ref(false);
 const contentPadding = ref(true);
-const noPanelPadding = ref(false);
 const showSection = ref(false);
 const resizable = ref(false);
 </script>

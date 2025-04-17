@@ -1,22 +1,19 @@
 <template>
-  <pf-drawer-panel-body v-bind="ouiaProps">
-    <div :class="styles.drawerHead">
-      <slot />
-    </div>
-  </pf-drawer-panel-body>
+  <div v-bind="ouiaProps" :class="styles.drawerHead">
+    <slot />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import PfDrawerPanelBody from './DrawerPanelBody.vue';
-import type { ComponentProps } from '../../util';
-import { useOUIAProps } from '../../helpers/ouia';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfDrawerHead',
 });
 
-export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerPanelBody> {
+export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();

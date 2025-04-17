@@ -6,7 +6,8 @@
     :class="[styles.drawerPanel, {
       [styles.modifiers.resizable]: resizable,
       [styles.modifiers.noBorder]: noBorder,
-      [styles.modifiers.light_200]: colorVariant === DrawerColorVariant.light200,
+      [styles.modifiers.noBackground]: colorVariant === 'no-background',
+      [styles.modifiers.secondary]: colorVariant === 'secondary',
     }]"
     :style="{
       display: display ? 'inherit' : 'none',
@@ -52,7 +53,7 @@ import cssPanelMdFlexBasisMax from '@patternfly/react-tokens/dist/esm/c_drawer__
 import { computed, inject, type Ref, ref, type HTMLAttributes, useTemplateRef } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { getUniqueId } from '../../util';
-import { DrawerColorVariant, DrawerKey } from './common';
+import { DrawerKey } from './common';
 import { resolveOverridableComponent } from '../../helpers';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -61,20 +62,20 @@ defineOptions({
   name: 'PfDrawerPanelContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden' | 'onResize'> {
   /** ID of the drawer panel */
   id?: string;
   /** Flag indicating that the drawer panel should not have a border. */
   noBorder?: boolean;
   /** Flag indicating that the drawer panel should be resizable. */
   resizable?: boolean;
-  /** The minimum size of a drawer, in either pixels or percentage. */
+  /** The minimum size of a drawer. */
   minSize?: string;
-  /** The starting size of a resizable drawer, in either pixels or percentage. */
+  /** The starting size of a resizable drawer. */
   defaultSize?: string;
-  /** The maximum size of a drawer, in either pixels or percentage. */
+  /** The maximum size of a drawer. */
   maxSize?: string;
-  /** The increment amount for keyboard drawer resizing, in pixels. */
+  /** The increment amount for keyboard drawer resizing. */
   increment?: number;
   /** Aria label for the resizable drawer splitter. */
   resizeAriaLabel?: string;
@@ -86,7 +87,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
     '2xl'?: 'width_25' | 'width_33' | 'width_50' | 'width_66' | 'width_75' | 'width_100';
   };
   /** Color variant of the background of the drawer panel */
-  colorVariant?: DrawerColorVariant | 'light-200' | 'default';
+  colorVariant?: 'no-background' | 'default' | 'secondary';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -134,16 +135,16 @@ function calcValueNow() {
   const drR = drawerRef.value?.getBoundingClientRect() ?? { left: 0, right: 0 };
   const dCR = drawerContentEl?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
 
-  if (inline.value && position.value === 'right') {
+  if (inline.value && position.value === 'end') {
     splitterPos = paR.right - spR.left;
     drawerSize = drR.right - drR.left;
-  } else if (inline.value && position.value === 'left') {
+  } else if (inline.value && position.value === 'start') {
     splitterPos = spR.right - paR.left;
     drawerSize = drR.right - drR.left;
-  } else if (position.value === 'right') {
+  } else if (position.value === 'end') {
     splitterPos = dCR.right - spR.left;
     drawerSize = dCR.right - dCR.left;
-  } else if (position.value === 'left') {
+  } else if (position.value === 'start') {
     splitterPos = spR.right - dCR.left;
     drawerSize = dCR.right - dCR.left;
   } else if (position.value === 'bottom') {
@@ -197,9 +198,9 @@ function handleControlMove(e: PointerEvent | TouchEvent, mousePos: number) {
     setInitialVals = false;
   }
   let newSize = 0;
-  if (position.value === 'right') {
+  if (position.value === 'end') {
     newSize = panelRect.right - mousePos;
-  } else if (position.value === 'left') {
+  } else if (position.value === 'start') {
     newSize = mousePos - panelRect.left;
   } else {
     newSize = panelRect.bottom - mousePos;
@@ -260,9 +261,9 @@ function handleKeys(e: KeyboardEvent) {
   const newSize = position.value === 'bottom' ? panelRect.height : panelRect.width;
   let delta = 0;
   if (key === 'ArrowRight') {
-    delta = position.value === 'left' ? props.increment : -props.increment;
+    delta = position.value === 'start' ? props.increment : -props.increment;
   } else if (key === 'ArrowLeft') {
-    delta = position .value=== 'left' ? -props.increment : props.increment;
+    delta = position .value === 'start' ? -props.increment : props.increment;
   } else if (key === 'ArrowUp') {
     delta = props.increment;
   } else if (key === 'ArrowDown') {
