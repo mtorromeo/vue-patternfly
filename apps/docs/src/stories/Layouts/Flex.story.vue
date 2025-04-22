@@ -56,8 +56,23 @@
       </pf-flex>
     </story-canvas>
 
-    <story-canvas title="Row gap">
+    <story-canvas title="Gap">
       <pf-flex gap="2xl">
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+      </pf-flex>
+    </story-canvas>
+
+    <story-canvas title="Row gap">
+      <pf-flex row-gap="2xl">
         <pf-flex-item>Flex item</pf-flex-item>
         <pf-flex-item>Flex item</pf-flex-item>
         <pf-flex-item>Flex item</pf-flex-item>
