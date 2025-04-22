@@ -55,6 +55,36 @@
         <pf-flex-item>Flex item</pf-flex-item>
       </pf-flex>
     </story-canvas>
+
+    <story-canvas title="Row gap">
+      <pf-flex gap="2xl">
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+      </pf-flex>
+    </story-canvas>
+
+    <story-canvas title="Column gap">
+      <pf-flex column-gap="2xl">
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+      </pf-flex>
+    </story-canvas>
   </doc-page>
 </template>
 

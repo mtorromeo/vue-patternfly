@@ -6,8 +6,10 @@
       'alignContent',
       'alignItems',
       'alignSelf',
+      'columnGap',
       'flex',
       'fullWidth',
+      'gap',
       'grow',
       'justifyContent',
       'shrink',
@@ -27,7 +29,7 @@
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
 
 import { classesFromBreakpointProps } from '../../breakpoints';
-import type { SpacerBreakpointProps, SpaceItemsBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, DirectionBreakpointProps, AlignItemsBreakpointProps, AlignContentBreakpointProps, AlignSelfBreakpointProps, AlignBreakpointProps, JustifyContentBreakpointProps, DisplayBreakpointProps, FullWidthBreakpointProps, FlexWrapBreakpointProps } from '../../breakpoints';
+import type { SpacerBreakpointProps, SpaceItemsBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, DirectionBreakpointProps, AlignItemsBreakpointProps, AlignContentBreakpointProps, AlignSelfBreakpointProps, AlignBreakpointProps, JustifyContentBreakpointProps, DisplayBreakpointProps, FullWidthBreakpointProps, FlexWrapBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps } from '../../breakpoints';
 import type { Component, HTMLAttributes } from 'vue';
 
 defineOptions({
@@ -39,11 +41,13 @@ export interface Props extends
   AlignContentBreakpointProps,
   AlignItemsBreakpointProps,
   AlignSelfBreakpointProps,
+  ColumnGapBreakpointProps,
   DirectionBreakpointProps,
   DisplayBreakpointProps,
   FlexBreakpointProps,
   FlexWrapBreakpointProps,
   FullWidthBreakpointProps,
+  GapBreakpointProps,
   GrowBreakpointProps,
   JustifyContentBreakpointProps,
   ShrinkBreakpointProps,
