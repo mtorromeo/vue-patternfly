@@ -62,32 +62,31 @@
 <style lang="scss">
 .page__layouts {
   .pf-v5-l-bullseye,
-  .pf-v5-l-bullseye > div,
-  .pf-v5-l-flex,
-  .pf-v5-l-flex > div,
-  .pf-v5-l-gallery,
-  .pf-v5-l-gallery > div,
-  .pf-v5-l-grid,
-  .pf-v5-l-grid > div,
-  .pf-v5-l-level,
-  .pf-v5-l-level > div,
-  .pf-v5-l-split,
-  .pf-v5-l-split > div,
-  .pf-v5-l-stack,
-  .pf-v5-l-stack > div {
-    border-style: dashed !important;
-    border-width: 2px !important;
-    padding: 1rem !important;
-  }
-
-  .pf-v5-l-bullseye,
   .pf-v5-l-flex,
   .pf-v5-l-gallery,
   .pf-v5-l-grid,
   .pf-v5-l-level,
   .pf-v5-l-split,
   .pf-v5-l-stack {
-    margin: 1rem 0 !important;
+    &, > div {
+      border-color: rgba(0, 0, 0, 0.125);
+      border-style: dashed;
+      border-width: 1px;
+
+      background-color: var(--pf-v5-global--palette--green-100);
+
+      > div {
+        background-color: var(--pf-v5-global--palette--green-200);
+
+        > div {
+          background-color: var(--pf-v5-global--palette--green-300);
+        }
+      }
+
+      &:not(:has(div)) {
+        padding: 1rem;
+      }
+    }
   }
 }
 </style>

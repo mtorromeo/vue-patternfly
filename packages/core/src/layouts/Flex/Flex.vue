@@ -2,21 +2,22 @@
   <component
     :is="component"
     :class="[styles.flex, classesFromBreakpointProps($props, [
-      'spacer',
-      'spaceItems',
-      'grow',
-      'shrink',
-      'flex',
-      'direction',
-      'alignItems',
-      'alignContent',
-      'alignSelf',
       'align',
-      'justifyContent',
-      'display',
+      'alignContent',
+      'alignItems',
+      'alignSelf',
+      'flex',
       'fullWidth',
+      'grow',
+      'justifyContent',
+      'shrink',
+      'spaceItems',
+      'spacer',
+    ], styles), classesFromBreakpointProps($props, [
+      'direction',
+      'display',
       'flexWrap',
-    ], styles)]"
+    ], styles, { short: true })]"
   >
     <slot />
   </component>
@@ -34,20 +35,20 @@ defineOptions({
 });
 
 export interface Props extends
-  SpacerBreakpointProps,
-  SpaceItemsBreakpointProps,
-  GrowBreakpointProps,
-  ShrinkBreakpointProps,
-  FlexBreakpointProps,
-  DirectionBreakpointProps,
-  AlignItemsBreakpointProps,
-  AlignContentBreakpointProps,
-  AlignSelfBreakpointProps,
   AlignBreakpointProps,
-  JustifyContentBreakpointProps,
+  AlignContentBreakpointProps,
+  AlignItemsBreakpointProps,
+  AlignSelfBreakpointProps,
+  DirectionBreakpointProps,
   DisplayBreakpointProps,
-  FullWidthBreakpointProps,
+  FlexBreakpointProps,
   FlexWrapBreakpointProps,
+  FullWidthBreakpointProps,
+  GrowBreakpointProps,
+  JustifyContentBreakpointProps,
+  ShrinkBreakpointProps,
+  SpaceItemsBreakpointProps,
+  SpacerBreakpointProps,
   /* @vue-ignore */ HTMLAttributes {
     component?: string | Component;
   }

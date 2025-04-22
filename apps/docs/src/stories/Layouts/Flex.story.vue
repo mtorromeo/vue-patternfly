@@ -11,29 +11,48 @@
       <component-info src="packages/core/src/layouts/Flex/FlexItem.vue" />
     </template>
 
-    <story-canvas title="Flex">
+    <story-canvas title="Basic">
       <template #intro>
         <input v-model="grow" type="checkbox"> grow flex 2
       </template>
 
-      <pf-flex justify-content="space-between">
+      <pf-flex justify-content="space-evenly">
         <pf-flex-item align-self-sm="flex-start">Flex 1</pf-flex-item>
         <pf-flex-item align-self-sm="flex-start" :grow-md="grow">Flex 2</pf-flex-item>
       </pf-flex>
+    </story-canvas>
 
+    <story-canvas title="Nested">
       <pf-flex>
         <pf-flex flex="1">
           <pf-flex-item>Flex item</pf-flex-item>
         </pf-flex>
         <pf-flex flex="1">
           <pf-flex-item>Flex item</pf-flex-item>
-          <pf-flex-item>Flex item</pf-flex-item>
+          <pf-flex-item grow>Flex item</pf-flex-item>
         </pf-flex>
         <pf-flex flex="1">
           <pf-flex-item>Flex item</pf-flex-item>
           <pf-flex-item>Flex item</pf-flex-item>
           <pf-flex-item>Flex item</pf-flex-item>
         </pf-flex>
+      </pf-flex>
+    </story-canvas>
+
+    <story-canvas title="Column">
+      <pf-flex direction="column" flex-wrap="nowrap" space-items="none" style="height: 250px">
+        <pf-flex-item align-self-sm="flex-start">Flex 1</pf-flex-item>
+        <pf-flex-item align-self-sm="flex-end" grow>Flex 2</pf-flex-item>
+      </pf-flex>
+    </story-canvas>
+
+    <story-canvas title="Inline">
+      <pf-flex display="inline-flex">
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
+        <pf-flex-item>Flex item</pf-flex-item>
       </pf-flex>
     </story-canvas>
   </doc-page>
