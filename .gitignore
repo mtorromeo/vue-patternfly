@@ -8,6 +8,7 @@
 *.gz
 *.tsbuildinfo
 dist
+/v*
 
 # js
 node_modules
