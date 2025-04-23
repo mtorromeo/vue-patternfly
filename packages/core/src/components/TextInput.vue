@@ -91,7 +91,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
-  autoValidate: 'change',
+  autoValidate: true,
   modelValue: undefined,
 });
 

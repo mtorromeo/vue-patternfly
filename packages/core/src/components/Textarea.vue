@@ -93,7 +93,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAtt
 
 const props = withDefaults(defineProps<Props>(), {
   resizeOrientation: 'both',
-  autoValidate: 'change',
+  autoValidate: true,
   modelValue: undefined,
 });
 
