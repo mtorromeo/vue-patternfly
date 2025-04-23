@@ -1,12 +1,20 @@
 <template>
-  <component :is="component" :class="[styles.gridItem, ...gridClasses]">
+  <component
+    :is="component"
+    :class="[styles.gridItem, ...gridClasses]"
+    :style="{
+      ...cssVarsFromBreakpointProps($props, 'order', gridToken.l_grid_item_Order.name),
+    }"
+  >
     <slot />
   </component>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/layouts/Grid/grid';
-import { breakpoints } from '../../breakpoints';
+import * as gridToken from '@patternfly/react-tokens/dist/esm/l_grid_item_Order';
+
+import { breakpoints, cssVarsFromBreakpointProps, type OrderBreakpointProps } from '../../breakpoints';
 import type { HTMLAttributes, Component } from 'vue';
 import { computed } from 'vue';
 import type { GridSpan } from './Grid.vue';
@@ -15,7 +23,7 @@ defineOptions({
   name: 'PfGridItem',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OrderBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** The tag or component to use as container */
   component?: string | Component;
 
