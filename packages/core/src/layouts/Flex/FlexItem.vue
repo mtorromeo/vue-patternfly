@@ -1,15 +1,10 @@
 <template>
   <component
     :is="component"
-    :class="classesFromBreakpointProps($props, [
-      'spacer',
-      'shrink',
-      'flex',
-      'alignSelf',
-      'grow',
-      'align',
-      'fullWidth',
-    ], styles)"
+    :class="[
+      classesFromBreakpointProps($props, ['spacer', 'shrink', 'flex', 'alignSelf', 'grow', 'align', 'fullWidth'], styles),
+      classesFromBreakpointProps($props, ['alignSelf'], styles, { short: true })
+    ]"
     :style="{
       ...cssVarsFromBreakpointProps($props, 'order', flexToken.l_flex_item_Order.name),
     }"
