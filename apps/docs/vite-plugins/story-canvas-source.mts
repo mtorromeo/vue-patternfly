@@ -16,7 +16,7 @@ export type VueCanvasPluginOptions = {
   /**
    * Filter out which files to be included as vue markdown pages.
    *
-   * @default /\.story.vue$/
+   * @default /(?:\.story|-demo).vue$/
    */
   include?: FilterPattern;
 
@@ -28,7 +28,7 @@ export type VueCanvasPluginOptions = {
   exclude?: FilterPattern;
 }
 
-const DEFAULT_INCLUDE_RE = /\.story\.vue$/;
+const DEFAULT_INCLUDE_RE = /(?:\.story|-demo).vue$/;
 
 async function traverse(arr: Node[], callback: (el: Node) => Promise<Node>) {
   for (let i = 0; i < arr.length; i++) {
@@ -110,31 +110,31 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
     async transform(code, id) {
       const dependencies: string[] = [];
 
-      if (filter(id)) {
-        const md = await mdPromise;
-        const html = parse(code);
-
-        await traverse(html.childNodes, async(el) => {
-          if (el instanceof HTMLElement) {
-            if (el.rawTagName === 'story-canvas') {
-              const dep = await addSourceToStoryCanvas(el, id);
-              if (dep) {
-                dependencies.push(id);
-              }
-            } else if (el.rawTagName === 'pre' && el.hasAttribute('v-md')) {
-              replaceMarkdown(md, el);
-            }
-          }
-          return el;
-        });
-
-        return {
-          code: html.toString(),
-          dependencies,
-        };
+      if (!filter(id)) {
+        return null;
       }
 
-      return null;
+      const md = await mdPromise;
+      const html = parse(code);
+
+      await traverse(html.childNodes, async(el) => {
+        if (el instanceof HTMLElement) {
+          if (el.rawTagName === 'story-canvas') {
+            const dep = await addSourceToStoryCanvas(el, id);
+            if (dep) {
+              dependencies.push(id);
+            }
+          } else if (el.rawTagName === 'pre' && el.hasAttribute('v-md')) {
+            replaceMarkdown(md, el);
+          }
+        }
+        return el;
+      });
+
+      return {
+        code: html.toString(),
+        dependencies,
+      };
     },
   };
 }

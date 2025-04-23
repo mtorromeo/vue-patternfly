@@ -12,13 +12,9 @@
     </template>
 
     <story-canvas title="Basic">
-      <template #intro>
-        <input v-model="grow" type="checkbox"> grow flex 2
-      </template>
-
       <pf-flex justify-content="space-evenly">
         <pf-flex-item align-self-sm="flex-start">Flex 1</pf-flex-item>
-        <pf-flex-item align-self-sm="flex-start" :grow-md="grow">Flex 2</pf-flex-item>
+        <pf-flex-item align-self-sm="flex-start" grow-md>Flex 2</pf-flex-item>
       </pf-flex>
     </story-canvas>
 
@@ -100,10 +96,11 @@
         <pf-flex-item>Flex item</pf-flex-item>
       </pf-flex>
     </story-canvas>
+
+    <flex-demo />
   </doc-page>
 </template>
 
-<script lang="ts" setup>
-import { ref } from "vue";
-const grow = ref(false);
+<script setup lang="ts">
+import FlexDemo from './Flex-demo.vue';
 </script>
