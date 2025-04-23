@@ -307,6 +307,21 @@ export type HorizontalTermWidthBreakpointProps = {
   horizontalTermWidthXl2?: string;
 }
 
+export type OrderBreakpointProps = {
+  /** Sets the flex layout element order property */
+  order?: string;
+  /** Sets the flex layout element order property at Sm breakpoint */
+  orderSm?: string;
+  /** Sets the flex layout element order property at Md breakpoint */
+  orderMd?: string;
+  /** Sets the flex layout element order property at Lg breakpoint */
+  orderLg?: string;
+  /** Sets the flex layout element order property at Xl breakpoint */
+  orderXl?: string;
+  /** Sets the flex layout element order property at Xl2 breakpoint */
+  orderXl2?: string;
+}
+
 export type BreakpointProps = {
   sm?: boolean;
   md?: boolean;

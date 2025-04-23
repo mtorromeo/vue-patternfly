@@ -10,6 +10,9 @@
       'align',
       'fullWidth',
     ], styles)"
+    :style="{
+      ...cssVarsFromBreakpointProps($props, 'order', flexToken.l_flex_item_Order.name),
+    }"
   >
     <slot />
   </component>
@@ -17,9 +20,10 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
+import * as flexToken from '@patternfly/react-tokens/dist/esm/l_flex_item_Order';
 
-import { classesFromBreakpointProps } from '../../breakpoints';
-import type { SpacerBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, DirectionBreakpointProps, AlignSelfBreakpointProps, AlignBreakpointProps, FullWidthBreakpointProps } from '../../breakpoints';
+import { classesFromBreakpointProps, cssVarsFromBreakpointProps } from '../../breakpoints';
+import type { SpacerBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, AlignSelfBreakpointProps, AlignBreakpointProps, FullWidthBreakpointProps, OrderBreakpointProps } from '../../breakpoints';
 import type { Component, HTMLAttributes } from 'vue';
 
 defineOptions({
@@ -27,17 +31,17 @@ defineOptions({
 });
 
 export interface Props extends
-  SpacerBreakpointProps,
-  GrowBreakpointProps,
-  ShrinkBreakpointProps,
-  FlexBreakpointProps,
-  DirectionBreakpointProps,
-  AlignSelfBreakpointProps,
   AlignBreakpointProps,
+  AlignSelfBreakpointProps,
+  FlexBreakpointProps,
   FullWidthBreakpointProps,
+  GrowBreakpointProps,
+  OrderBreakpointProps,
+  ShrinkBreakpointProps,
+  SpacerBreakpointProps,
   /* @vue-ignore */ HTMLAttributes {
-    component?: string | Component;
-  }
+  component?: string | Component;
+}
 
 withDefaults(defineProps<Props>(), {
   component: 'div',

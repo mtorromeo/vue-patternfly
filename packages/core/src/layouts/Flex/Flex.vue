@@ -21,6 +21,9 @@
       'display',
       'flexWrap',
     ], styles, { short: true })]"
+    :style="{
+      ...cssVarsFromBreakpointProps($props, 'order', flexToken.l_flex_item_Order.name),
+    }"
   >
     <slot />
   </component>
@@ -28,9 +31,10 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/layouts/Flex/flex';
+import * as flexToken from '@patternfly/react-tokens/dist/esm/l_flex_item_Order';
 
-import { classesFromBreakpointProps } from '../../breakpoints';
-import type { SpacerBreakpointProps, SpaceItemsBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, DirectionBreakpointProps, AlignItemsBreakpointProps, AlignContentBreakpointProps, AlignSelfBreakpointProps, AlignBreakpointProps, JustifyContentBreakpointProps, DisplayBreakpointProps, FullWidthBreakpointProps, FlexWrapBreakpointProps, GapBreakpointProps, RowGapBreakpointProps, ColumnGapBreakpointProps } from '../../breakpoints';
+import { classesFromBreakpointProps, cssVarsFromBreakpointProps } from '../../breakpoints';
+import type { SpacerBreakpointProps, SpaceItemsBreakpointProps, GrowBreakpointProps, ShrinkBreakpointProps, FlexBreakpointProps, DirectionBreakpointProps, AlignItemsBreakpointProps, AlignContentBreakpointProps, AlignSelfBreakpointProps, AlignBreakpointProps, JustifyContentBreakpointProps, DisplayBreakpointProps, FullWidthBreakpointProps, FlexWrapBreakpointProps, GapBreakpointProps, RowGapBreakpointProps, ColumnGapBreakpointProps, OrderBreakpointProps } from '../../breakpoints';
 import type { Component, HTMLAttributes } from 'vue';
 
 defineOptions({
@@ -51,6 +55,7 @@ export interface Props extends
   GapBreakpointProps,
   GrowBreakpointProps,
   JustifyContentBreakpointProps,
+  OrderBreakpointProps,
   RowGapBreakpointProps,
   ShrinkBreakpointProps,
   SpaceItemsBreakpointProps,
