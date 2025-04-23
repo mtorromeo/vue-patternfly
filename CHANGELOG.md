@@ -1,6 +1,40 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [5.0.0] - 2025-04-23
+
+### Bug Fixes
+
+- *(Radio, Checkbox)* [**breaking**] Renamed body slot to default
+- *(Checkbox)* Properly assigned name attribute to input
+- *(Flex)* Fixed direction, display and flex-wrap related css classes
+- *(Flex)* Fixed align-self related css classes
+- [**breaking**] Fixed some responsive props by reverting -xl2 breakpoint suffixes to -2xl
+- *(TextInput, Textarea)* [**breaking**] Changed default value of autoValidate from "change" to true (on enter/submit)
+
+### Documentation
+
+- Fixed skeleton height story
+- Added flex interactive demo
+
+### Features
+
+- *(FormSelect)* Support for multiple values
+- *(FileUpload)* Implemented component
+- *(Flex)* Added gap and column-gap responsive props
+- *(Flex)* Added row-gap responsive props
+- *(Flex)* Added order responsive props
+- *(Gallery)* Added max-width and min-width responsive props
+- *(Grid)* Added order responsive props
+- *(Split)* Added wrappable prop
+- *(MenuItem)* Added target, referrerpolicy and componentAttrs props
+
+### Refactor
+
+- Replaced plain refs to template elements with useTemplateRef
+- *(Checkbox, DataList, MenuToggle, Radio)* [**breaking**] Removed valid/invalid attributes. Use aria-invalid instead.
+- Fixed useTemplateRef and @touchstart related warnings
+
 ## [0.1.0-beta.30] - 2025-04-08
 
 ### Bug Fixes
