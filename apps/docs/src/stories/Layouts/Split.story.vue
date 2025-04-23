@@ -11,10 +11,36 @@
       <component-info src="packages/core/src/layouts/Split/SplitItem.vue" />
     </template>
 
-    <story-canvas title="Split">
+    <story-canvas title="Basic">
+      <pf-split>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item filled>pf-m-fill</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+      </pf-split>
+    </story-canvas>
+
+    <story-canvas title="With gutter">
       <pf-split gutter>
         <pf-split-item>content</pf-split-item>
         <pf-split-item filled>pf-m-fill</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+      </pf-split>
+    </story-canvas>
+
+    <story-canvas title="Wrappable">
+      <pf-split gutter wrappable>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
+        <pf-split-item>content</pf-split-item>
         <pf-split-item>content</pf-split-item>
       </pf-split>
     </story-canvas>

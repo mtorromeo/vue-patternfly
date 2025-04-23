@@ -1,5 +1,11 @@
 <template>
-  <component :is="component" :class="[styles.split, { [styles.modifiers.gutter]: gutter }]">
+  <component
+    :is="component"
+    :class="[styles.split, {
+      [styles.modifiers.gutter]: gutter,
+      [styles.modifiers.wrap]: wrappable,
+    }]"
+  >
     <slot />
   </component>
 </template>
@@ -14,7 +20,11 @@ defineOptions({
 
 export interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: string | Component;
+
+  /** Adds space between children. */
   gutter?: boolean;
+  /** Allows children to wrap */
+  wrappable?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
