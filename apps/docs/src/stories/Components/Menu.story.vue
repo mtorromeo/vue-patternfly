@@ -44,7 +44,7 @@
     <story-canvas title="Basic (simplified)">
       <pf-menu>
         <pf-menu-item>Action</pf-menu-item>
-        <pf-menu-item to="#default-link2" @click.prevent>Link</pf-menu-item>
+        <pf-menu-item to="#default-link2" @click.prevent target="_blank">Link</pf-menu-item>
         <pf-menu-item disabled>Disabled action</pf-menu-item>
         <pf-menu-item disabled to="#default-link4">Disabled link</pf-menu-item>
       </pf-menu>

@@ -17,6 +17,7 @@
 
       <component
         :is="component"
+        v-bind="componentAttrs"
         tabindex="-1"
         :class="[styles.menuItem, {[styles.modifiers.selected]: effectiveSelected && !check}]"
         :aria-current="ariaCurrent"
@@ -27,6 +28,8 @@
         :aria-disabled="component === 'a' && disabled ? disabled : undefined"
         :aria-expanded="onPath || flyoutVisible || undefined"
         :type="component === 'button' ? 'button' : undefined"
+        :target="component === 'a' ? target : undefined"
+        :referrerpolicy="component === 'a' ? referrerpolicy : undefined"
         :download="component === 'a' ? download : undefined"
         @click="!check && onClick($event)"
       >
@@ -114,6 +117,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
   loading?: boolean;
   /** Component used to render the menu item */
   component?: string;
+  /** Additional attrs added to the link component */
+  componentAttrs?: Omit<ButtonHTMLAttributes, 'href' | 'aria-current' | 'disabled' | 'role' | 'for' | 'aria-disabled' | 'aria-expanded' | 'type' | 'download' | 'onClick'> | Omit<AnchorHTMLAttributes, 'href' | 'aria-current' | 'disabled' | 'role' | 'for' | 'aria-disabled' | 'aria-expanded' | 'type' | 'download' | 'onClick' | 'target' | 'referrerpolicy'>;
   /** Render item as disabled option */
   disabled?: boolean;
   /** Description of the menu item */
@@ -132,12 +137,16 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
   onPath?: boolean;
   /** Navigation link download. Only set when the to property is present. */
   download?: string;
+  /** Navigation link target. */
+  target?: string;
+  /** Navigation link referrerpolicy. */
+  referrerpolicy?: AnchorHTMLAttributes['referrerpolicy'];
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes } from 'vue';
+import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
 import { getUniqueId } from '../../util';
 import { MenuInjectionKey, MenuItemsKey, type MenuItemId } from './Menu.vue';
 import PfCheckbox from '../Checkbox.vue';
