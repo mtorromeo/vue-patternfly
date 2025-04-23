@@ -4,8 +4,11 @@
     :is="component"
     :class="[styles.formHelperText, {
       [styles.modifiers.error]: error,
+      [styles.modifiers.success]: success,
+      [styles.modifiers.warning]: warning,
       [styles.modifiers.hidden]: hidden,
     }]"
+    aria-live="polite"
   >
     <span v-if="$slots.icon" :class="styles.formHelperTextIcon">
       <slot name="icon" />
@@ -26,6 +29,10 @@ defineOptions({
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds error styling to the Helper Text  * */
   error?: boolean;
+  /** Adds warning styling to the Helper Text  * */
+  warning?: boolean;
+  /** Adds success styling to the Helper Text  * */
+  success?: boolean;
   /** Hides the helper text * */
   hidden?: boolean;
   /** Component type of the form helper text */

@@ -34,15 +34,12 @@
     >
       <slot v-if="!helperTextBeforeField" />
 
-      <div
+      <pf-form-helper-text
         v-if="internalValidated === 'error' ? (helperTextInvalid || $slots['helper-text-invalid']) : (helperText || $slots['helper-text'])"
         :id="`${fieldId}-helper`"
-        :class="[styles.formHelperText, {
-          [styles.modifiers.success]: internalValidated === 'success',
-          [styles.modifiers.warning]: internalValidated === 'warning',
-          [styles.modifiers.error]: internalValidated === 'error',
-        }]"
-        aria-live="polite"
+        :success="internalValidated === 'success'"
+        :warning="internalValidated === 'warning'"
+        :error="internalValidated === 'error'"
       >
         <template v-if="internalValidated === 'error'">
           <span v-if="$slots['helper-text-invalid-icon']" :class="styles.formHelperTextIcon">
@@ -57,7 +54,8 @@
           </span>
           <slot name="helper-text">{{ helperText }}</slot>
         </template>
-      </div>
+      </pf-form-helper-text>
+
       <slot v-if="helperTextBeforeField" />
     </div>
   </component>
@@ -65,9 +63,15 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import type { FieldsetHTMLAttributes } from 'vue';
+import { type FieldsetHTMLAttributes, computed, toValue } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+
+import PfFormHelperText from './FormHelperText.vue';
+import type { InputValidateState } from '../../input';
+import { provideChildrenTracker } from '../../use';
+import { FormGroupInputsKey } from './common';
+import { isDefined } from '@vueuse/shared';
 
 defineOptions({
   name: 'PfFormGroup',
@@ -83,28 +87,28 @@ export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttribut
   labelInfo?: string;
 
   /** Sets the FormGroup required. */
-  required?: boolean,
+  required?: boolean;
 
   /**
    * Sets the FormGroup validated. If you set to success, text color of helper text will be modified to indicate valid state.
    * If set to error, text color of helper text will be modified to indicate error state.
    * If set to warning, text color of helper text will be modified to indicate warning state.
    */
-  validated?: InputValidateState,
+  validated?: InputValidateState;
 
-  inline?: boolean,
+  inline?: boolean;
 
   /** Sets the FormGroupControl to be stacked */
-  stack?: boolean,
+  stack?: boolean;
 
   /** Removes top spacer from label. */
-  noPaddingTop?: boolean,
+  noPaddingTop?: boolean;
 
   /** Helper text regarding the field. */
   helperText?: string;
 
   /** Flag to position the helper text before the field. False by default */
-  helperTextBeforeField?: boolean,
+  helperTextBeforeField?: boolean;
 
   /** Helper text after the field when the field is invalid. */
   helperTextInvalid?: string;
@@ -127,13 +131,6 @@ defineSlots<{
   'helper-text'?: (props?: Record<never, never>) => any;
 }>();
 
-import { computed } from 'vue';
-import type { InputValidateState } from '../../input';
-import { provideChildrenTracker } from '../../use';
-import { FormGroupInputsKey } from './common';
-import { isDefined } from '@vueuse/shared';
-import { unref } from 'vue';
-
 // components that use useInputValidation
 const inputs = provideChildrenTracker(FormGroupInputsKey);
 
@@ -142,7 +139,7 @@ const internalValidated = computed(() => {
     return props.validated;
   }
   for (const validation of ['error', 'warning', 'success', 'default'] as const) {
-    if (inputs.some(validatedState => unref(validatedState) === validation)) {
+    if (inputs.some(validatedState => toValue(validatedState) === validation)) {
       return validation;
     }
   }
