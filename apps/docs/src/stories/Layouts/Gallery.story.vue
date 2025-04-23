@@ -21,5 +21,16 @@
         <pf-gallery-item>Gallery Item</pf-gallery-item>
       </pf-gallery>
     </story-canvas>
+
+    <story-canvas title="Responsive widths">
+      <pf-gallery gutter min-width-sm="100px" max-width-2xl="390px">
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+        <pf-gallery-item>Gallery Item</pf-gallery-item>
+      </pf-gallery>
+    </story-canvas>
   </doc-page>
 </template>
