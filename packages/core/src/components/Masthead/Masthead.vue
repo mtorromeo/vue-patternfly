@@ -33,7 +33,7 @@ export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore *
   displayMd?: 'inline' | 'stack';
   displayLg?: 'inline' | 'stack';
   displayXl?: 'inline' | 'stack';
-  displayXl2?: 'inline' | 'stack';
+  display2xl?: 'inline' | 'stack';
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -40,7 +40,7 @@
     </story-canvas>
 
     <story-canvas title="Adjusting toolbar inset">
-      <pf-toolbar inset="none" inset-md="sm" inset-xl="2xl" inset-xl2="lg">
+      <pf-toolbar inset="none" inset-md="sm" inset-xl="2xl" inset-2xl="lg">
         <pf-toolbar-content>
           <pf-toolbar-item>
             <pf-input-group>
@@ -66,7 +66,7 @@
     </story-canvas>
 
     <story-canvas title="Adjusting item spacers">
-      <pf-toolbar inset="none" inset-md="sm" inset-xl="2xl" inset-xl2="lg">
+      <pf-toolbar inset="none" inset-md="sm" inset-xl="2xl" inset-2xl="lg">
         <pf-toolbar-content>
           <pf-toolbar-item spacer="none">
             <pf-button variant="secondary">Action</pf-button>
@@ -101,7 +101,7 @@
     </story-canvas>
 
     <story-canvas title="Groups">
-      <pf-toolbar inset="none" inset-md="sm" inset-xl="2xl" inset-xl2="lg">
+      <pf-toolbar inset="none" inset-md="sm" inset-xl="2xl" inset-2xl="lg">
         <pf-toolbar-content>
           <pf-toolbar-group variant="filter-group">
             <pf-toolbar-item>

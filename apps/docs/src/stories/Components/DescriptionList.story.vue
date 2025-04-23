@@ -163,7 +163,7 @@
         horizontal-term-width-md="20ch"
         horizontal-term-width-lg="28ch"
         horizontal-term-width-xl="30ch"
-        horizontal-term-width-xl2="35ch"
+        horizontal-term-width-2xl="35ch"
       >
         <pf-description-list-group>
           <pf-description-list-term>Name</pf-description-list-term>

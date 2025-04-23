@@ -53,7 +53,7 @@
     </story-canvas>
 
     <story-canvas title="Display stack, display inline responsive">
-      <pf-masthead display="inline" display-lg="stack" display-xl2="inline">
+      <pf-masthead display="inline" display-lg="stack" display-2xl="inline">
         <pf-masthead-toggle>
           <pf-button variant="plain" aria-label="Global navigation">
             <BarsIcon />

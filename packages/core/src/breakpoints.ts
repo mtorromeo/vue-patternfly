@@ -31,7 +31,7 @@ export type VisibilityBreakpointProps = {
   visibilityMd?: 'hidden' | 'visible';
   visibilityLg?: 'hidden' | 'visible';
   visibilityXl?: 'hidden' | 'visible';
-  visibilityXl2?: 'hidden' | 'visible';
+  visibility2xl?: 'hidden' | 'visible';
 }
 
 export type WidthBreakpointProps = {
@@ -40,7 +40,7 @@ export type WidthBreakpointProps = {
   widthMd?: string;
   widthLg?: string;
   widthXl?: string;
-  widthXl2?: string;
+  width2xl?: string;
 }
 
 export type HeightBreakpointProps = {
@@ -49,7 +49,7 @@ export type HeightBreakpointProps = {
   heightMd?: string;
   heightLg?: string;
   heightXl?: string;
-  heightXl2?: string;
+  height2xl?: string;
 }
 
 export type SpacerBreakpointProps = {
@@ -58,7 +58,7 @@ export type SpacerBreakpointProps = {
   spacerMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spacerLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spacerXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  spacerXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  spacer2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type SpaceItemsBreakpointProps = {
@@ -67,7 +67,7 @@ export type SpaceItemsBreakpointProps = {
   spaceItemsMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spaceItemsLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   spaceItemsXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  spaceItemsXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  spaceItems2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type GapBreakpointProps = {
@@ -76,7 +76,7 @@ export type GapBreakpointProps = {
   gapMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   gapLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   gapXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  gapXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  gap2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type RowGapBreakpointProps = {
@@ -85,7 +85,7 @@ export type RowGapBreakpointProps = {
   rowGapMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   rowGapLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   rowGapXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  rowGapXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  rowGap2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type ColumnGapBreakpointProps = {
@@ -94,7 +94,7 @@ export type ColumnGapBreakpointProps = {
   columnGapMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   columnGapLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
   columnGapXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
-  columnGapXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  columnGap2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 }
 
 export type GrowBreakpointProps = {
@@ -103,7 +103,7 @@ export type GrowBreakpointProps = {
   growMd?: boolean;
   growLg?: boolean;
   growXl?: boolean;
-  growXl2?: boolean;
+  grow2xl?: boolean;
 }
 
 export type ShrinkBreakpointProps = {
@@ -112,7 +112,7 @@ export type ShrinkBreakpointProps = {
   shrinkMd?: boolean;
   shrinkLg?: boolean;
   shrinkXl?: boolean;
-  shrinkXl2?: boolean;
+  shrink2xl?: boolean;
 }
 
 export type FlexBreakpointProps = {
@@ -121,7 +121,7 @@ export type FlexBreakpointProps = {
   flexMd?: 'default' | 'none' | '1' | '2' | '3' | '4';
   flexLg?: 'default' | 'none' | '1' | '2' | '3' | '4';
   flexXl?: 'default' | 'none' | '1' | '2' | '3' | '4';
-  flexXl2?: 'default' | 'none' | '1' | '2' | '3' | '4';
+  flex2xl?: 'default' | 'none' | '1' | '2' | '3' | '4';
 }
 
 export type DirectionBreakpointProps = {
@@ -130,7 +130,7 @@ export type DirectionBreakpointProps = {
   directionMd?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   directionLg?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   directionXl?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
-  directionXl2?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
+  direction2xl?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
 }
 
 export type AlignItemsBreakpointProps = {
@@ -139,7 +139,7 @@ export type AlignItemsBreakpointProps = {
   alignItemsMd?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignItemsLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignItemsXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-  alignItemsXl2?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  alignItems2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
 }
 
 export type AlignContentBreakpointProps = {
@@ -148,7 +148,7 @@ export type AlignContentBreakpointProps = {
   alignContentMd?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
   alignContentLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
   alignContentXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
-  alignContentXl2?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
+  alignContent2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around';
 }
 
 export type AlignSelfBreakpointProps = {
@@ -157,7 +157,7 @@ export type AlignSelfBreakpointProps = {
   alignSelfMd?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignSelfLg?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   alignSelfXl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-  alignSelfXl2?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  alignSelf2xl?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
 }
 
 export type AlignBreakpointProps = {
@@ -166,7 +166,7 @@ export type AlignBreakpointProps = {
   alignMd?: 'left' | 'right';
   alignLg?: 'left' | 'right';
   alignXl?: 'left' | 'right';
-  alignXl2?: 'left' | 'right';
+  align2xl?: 'left' | 'right';
 }
 
 export type JustifyContentBreakpointProps = {
@@ -175,7 +175,7 @@ export type JustifyContentBreakpointProps = {
   justifyContentMd?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   justifyContentLg?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   justifyContentXl?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
-  justifyContentXl2?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+  justifyContent2xl?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
 }
 
 export type DisplayBreakpointProps = {
@@ -184,7 +184,7 @@ export type DisplayBreakpointProps = {
   displayMd?: 'flex' | 'inline-flex';
   displayLg?: 'flex' | 'inline-flex';
   displayXl?: 'flex' | 'inline-flex';
-  displayXl2?: 'flex' | 'inline-flex';
+  display2xl?: 'flex' | 'inline-flex';
 }
 
 export type FullWidthBreakpointProps = {
@@ -193,7 +193,7 @@ export type FullWidthBreakpointProps = {
   fullWidthMd?: boolean;
   fullWidthLg?: boolean;
   fullWidthXl?: boolean;
-  fullWidthXl2?: boolean;
+  fullWidth2xl?: boolean;
 }
 
 export type FlexWrapBreakpointProps = {
@@ -202,7 +202,7 @@ export type FlexWrapBreakpointProps = {
   flexWrapMd?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrapLg?: 'wrap' | 'wrap-reverse' | 'nowrap';
   flexWrapXl?: 'wrap' | 'wrap-reverse' | 'nowrap';
-  flexWrapXl2?: 'wrap' | 'wrap-reverse' | 'nowrap';
+  flexWrap2xl?: 'wrap' | 'wrap-reverse' | 'nowrap';
 }
 
 export type InsetBreakpointProps = {
@@ -211,7 +211,7 @@ export type InsetBreakpointProps = {
   insetMd?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   insetLg?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   insetXl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
-  insetXl2?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+  inset2xl?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 }
 
 export type PaddingBreakpointProps = {
@@ -220,7 +220,7 @@ export type PaddingBreakpointProps = {
   paddingMd?: 'padding' | 'no-padding';
   paddingLg?: 'padding' | 'no-padding';
   paddingXl?: 'padding' | 'no-padding';
-  paddingXl2?: 'padding' | 'no-padding';
+  padding2xl?: 'padding' | 'no-padding';
 }
 
 export type StickyBreakpointProps = {
@@ -229,7 +229,7 @@ export type StickyBreakpointProps = {
   stickyMd?: 'top' | 'bottom';
   stickyLg?: 'top' | 'bottom';
   stickyXl?: 'top' | 'bottom';
-  stickyXl2?: 'top' | 'bottom';
+  sticky2xl?: 'top' | 'bottom';
 }
 
 export type ExpandableBreakpointProps = {
@@ -244,7 +244,7 @@ export type ExpandableBreakpointProps = {
   /** Toggle collapse/expand state at Xl breakpoint */
   expandableXl?: 'expandable' | 'nonExpandable';
   /** Toggle collapse/expand state at Xl2 breakpoint */
-  expandableXl2?: 'expandable' | 'nonExpandable';
+  expandable2xl?: 'expandable' | 'nonExpandable';
 }
 
 export type ColumnsBreakpointProps = {
@@ -259,7 +259,7 @@ export type ColumnsBreakpointProps = {
   /** Sets the number of columns on the description list at Xl breakpoint */
   columnsXl?: '1Col' | '2Col' | '3Col';
   /** Sets the number of columns on the description list at Xl2 breakpoint */
-  columnsXl2?: '1Col' | '2Col' | '3Col';
+  columns2xl?: '1Col' | '2Col' | '3Col';
 }
 
 export type OrientationBreakpointProps = {
@@ -274,7 +274,7 @@ export type OrientationBreakpointProps = {
   /** Indicates how the menu will align at Xl breakpoint */
   orientationXl?: 'vertical' | 'horizontal';
   /** Indicates how the menu will align at Xl2 breakpoint */
-  orientationXl2?: 'vertical' | 'horizontal';
+  orientation2xl?: 'vertical' | 'horizontal';
 }
 
 export type AutoFitMinBreakpointProps = {
@@ -289,7 +289,7 @@ export type AutoFitMinBreakpointProps = {
   /** Sets the minimum column size for the auto-fit layout at Xl breakpoint */
   autoFitMinXl?: string;
   /** Sets the minimum column size for the auto-fit layout at Xl2 breakpoint */
-  autoFitMinXl2?: string;
+  autoFitMin2xl?: string;
 }
 
 export type HorizontalTermWidthBreakpointProps = {
@@ -304,22 +304,22 @@ export type HorizontalTermWidthBreakpointProps = {
   /** Sets the horizontal description list's term column width at Xl breakpoint */
   horizontalTermWidthXl?: string;
   /** Sets the horizontal description list's term column width at Xl2 breakpoint */
-  horizontalTermWidthXl2?: string;
+  horizontalTermWidth2xl?: string;
 }
 
 export type OrderBreakpointProps = {
   /** Sets the flex layout element order property */
-  order?: string;
+  order?: string | number;
   /** Sets the flex layout element order property at Sm breakpoint */
-  orderSm?: string;
+  orderSm?: string | number;
   /** Sets the flex layout element order property at Md breakpoint */
-  orderMd?: string;
+  orderMd?: string | number;
   /** Sets the flex layout element order property at Lg breakpoint */
-  orderLg?: string;
+  orderLg?: string | number;
   /** Sets the flex layout element order property at Xl breakpoint */
-  orderXl?: string;
+  orderXl?: string | number;
   /** Sets the flex layout element order property at Xl2 breakpoint */
-  orderXl2?: string;
+  order2xl?: string | number;
 }
 
 export type BreakpointProps = {
@@ -336,9 +336,7 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
   for (const baseName of baseNames) {
     for (const breakpoint of breakpoints) {
       let breakpointSuffix: string = breakpoint;
-      const wordSuffixIndex = breakpoint.search(/[a-z]/i);
-      const propSuffix = wordSuffixIndex > 0 ? `${breakpoint.substring(wordSuffixIndex, wordSuffixIndex + 1).toUpperCase()}${breakpoint.substring(wordSuffixIndex + 1)}${breakpoint.substring(0, wordSuffixIndex)}` : breakpoint;
-      const prop = baseName ? `${baseName}${propSuffix}` : propSuffix.toLowerCase();
+      const prop = baseName ? `${baseName}${breakpoint}` : breakpoint.toLowerCase();
       if (!prop) {
         continue;
       }
