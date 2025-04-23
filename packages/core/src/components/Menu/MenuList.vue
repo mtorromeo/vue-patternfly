@@ -1,5 +1,5 @@
 <template>
-  <ul v-bind="ouiaProps" ref="el" role="menu" :class="styles.menuList">
+  <ul v-bind="ouiaProps" ref="elRef" role="menu" :class="styles.menuList">
     <slot />
   </ul>
 </template>
@@ -33,7 +33,7 @@ defineSlots<{
   default: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef('el');
+const el = useTemplateRef('elRef');
 const parentMenu = inject(MenuListInjectionKey, undefined);
 
 provide(MenuListInjectionKey, {

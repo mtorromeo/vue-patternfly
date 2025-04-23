@@ -1,7 +1,7 @@
 <template>
   <pf-drawer-main v-bind="ouiaProps">
     <auto-wrap
-      ref="el"
+      ref="elRef"
       force
       component="div"
       :exclude="PfDrawerPanelContent"
@@ -51,6 +51,6 @@ defineSlots<{
   content?: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef('el');
+const el = useTemplateRef('elRef');
 provide(DrawerContentRefKey, el);
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div
     v-bind="ouiaProps"
-    ref="el"
+    ref="elRef"
     :class="styles.menuContent"
     :style="{
       [cssHeight.name]: menuHeight,
@@ -46,7 +46,7 @@ defineSlots<{
   default: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef('el');
+const el = useTemplateRef('elRef');
 const menuList = inject(MenuListInjectionKey, undefined);
 
 const rootMenuList = computed(() => {

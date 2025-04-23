@@ -12,7 +12,7 @@
   >
     <pf-focus-trap
       v-if="visible"
-      ref="dialog"
+      ref="dialogRef"
       v-bind="{...ouiaProps, ...$attrs}"
       :active="focusTrap && visible"
       :class="[styles.popover, (styles.modifiers as any)[placement], {
@@ -147,7 +147,7 @@ const emit = defineEmits<{
 }>();
 
 const visible = useManagedProp('open', false);
-const dialog = useTemplateRef('dialog');
+const dialog = useTemplateRef('dialogRef');
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 
 watch(referenceElement, (el) => {

@@ -19,7 +19,7 @@
         <slot name="icon" />
       </span>
       <input
-        ref="input"
+        ref="inputRef"
         v-bind="$attrs"
         v-model="value"
         :class="styles.textInputGroupTextInput"
@@ -73,7 +73,7 @@ defineSlots<{
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const value = useManagedProp('modelValue', '');
 const disabled = inject(TextInputGroupDisabledKey, false);
-const input = useTemplateRef('input');
+const input = useTemplateRef('inputRef');
 
 defineExpose({
   input,

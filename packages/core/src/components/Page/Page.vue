@@ -20,7 +20,7 @@
               :tabindex="mainTabIndex"
               :aria-label="mainAriaLabel"
               @click="mainClick"
-              @touchstart="mainClick"
+              @touchstart.passive="mainClick"
             >
               <slot />
             </component>
@@ -38,7 +38,7 @@
       :tabindex="mainTabIndex"
       :aria-label="mainAriaLabel"
       @click="mainClick"
-      @touchstart="mainClick"
+      @touchstart.passive="mainClick"
     >
       <slot />
     </component>

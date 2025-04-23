@@ -173,9 +173,9 @@ const value = useManagedProp<string | ArrayBuffer | null>('modelValue', null);
 const managedFilename = useManagedProp<string | null>('filename', null);
 const managedLoading = useManagedProp('loading', false);
 const validId = computed(() => props.id || getUniqueId());
-const filenameInputRef = useTemplateRef('filenameInputRef');
+const filenameInput = useTemplateRef('filenameInputRef');
 
-useDropZone(() => filenameInputRef.value?.$el, {
+useDropZone(() => filenameInput.value?.$el, {
   dataTypes: props.dataTypes,
   multiple: false,
   async onDrop(files) {

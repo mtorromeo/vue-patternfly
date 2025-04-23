@@ -15,7 +15,7 @@
   >
     <div
       v-if="tooltipDisplay"
-      ref="tooltipElement"
+      ref="tooltipElementRef"
       v-bind="{...ouiaProps, ...$attrs}"
       :class="[styles.tooltip, positionModifiers[placement]]"
       :style="{
@@ -117,7 +117,7 @@ defineEmits<{
 }>();
 
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
-const tooltipElement = useTemplateRef('tooltipElement');
+const tooltipElement = useTemplateRef('tooltipElementRef');
 const tooltipDisplay = ref(false);
 const managedVisible = useManagedProp('visible', false);
 const opacity = ref(managedVisible.value);

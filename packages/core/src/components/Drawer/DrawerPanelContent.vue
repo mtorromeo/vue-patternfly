@@ -2,7 +2,7 @@
   <div
     v-bind="ouiaProps"
     :id="panelId"
-    ref="panel"
+    ref="panelRef"
     :class="[styles.drawerPanel, {
       [styles.modifiers.resizable]: resizable,
       [styles.modifiers.noBorder]: noBorder,
@@ -104,7 +104,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const panel = useTemplateRef('panel');
+const panel = useTemplateRef('panelRef');
 const panelId = computed(() => props.id || getUniqueId('pf-drawer-panel-'));
 
 const drawerProvide = inject(DrawerKey);
@@ -115,7 +115,7 @@ if (!drawerProvide) {
 
 const { el: drawerRef, position, expanded, display, inline } = drawerProvide;
 const drawerContentRef = inject(DrawerContentRefKey);
-const splitterRef = useTemplateRef('splitterRef');
+const splitter = useTemplateRef('splitterRef');
 
 let isResizing: boolean | null = null;
 const panelSize: Ref<number | undefined> = ref();
@@ -130,7 +130,7 @@ function calcValueNow() {
   const drawerContentEl = resolveOverridableComponent(drawerContentRef?.value);
 
   const paR = panel.value?.getBoundingClientRect() ?? { left: 0, right: 0 };
-  const spR = splitterRef.value?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
+  const spR = splitter.value?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
   const drR = drawerRef.value?.getBoundingClientRect() ?? { left: 0, right: 0 };
   const dCR = drawerContentEl?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
 

@@ -89,7 +89,7 @@ const slots = defineSlots<{
   toggle?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const menuRef = useTemplateRef('menuRef');
+const menu = useTemplateRef('menuRef');
 
 const { element: toggleElementRef, findReference } = useHtmlElementFromVNodes();
 
@@ -165,12 +165,12 @@ const handleClick = (event: PointerEvent) => {
   if (toggleElementRef.value?.contains(event.target as Node)) {
     // focus on first menu item
     setTimeout(() => {
-      const firstElement = menuRef.value?.el?.querySelector(
+      const firstElement = menu.value?.el?.querySelector(
         'li button:not(:disabled),li input:not(:disabled),li a:not([aria-disabled="true"])',
       );
       firstElement && (firstElement as HTMLElement).focus();
     }, 0);
-  } else if (!menuRef.value?.el?.contains(event.target as Node)) {
+  } else if (!menu.value?.el?.contains(event.target as Node)) {
     // If the event is not on the toggle, close the menu
     managedOpen.value = false;
   }

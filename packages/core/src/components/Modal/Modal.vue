@@ -175,8 +175,8 @@ defineSlots<{
 }>();
 
 // inject: ['open'],
-const titleRef = useTemplateRef('titleRef');
-const titleOverflowing = useElementOverflow(titleRef);
+const titleEl = useTemplateRef('titleRef');
+const titleOverflowing = useElementOverflow(titleEl);
 
 const teleportTarget = computed(() => {
   if (typeof props.appendTo === 'function') {

@@ -9,7 +9,7 @@
   >
     <button
       :id="srText ? undefined : validId"
-      ref="expandable"
+      ref="expandableRef"
       type="button"
       :class="styles.navLink"
       :aria-expanded="realExpanded"
@@ -72,7 +72,7 @@ defineSlots<{
   title?: (props?: Record<never, never>) => any;
 }>();
 
-const expandable = useTemplateRef('expandable');
+const expandable = useTemplateRef('expandableRef');
 const expandedState = ref(props.expanded);
 
 const validId = computed(() => {

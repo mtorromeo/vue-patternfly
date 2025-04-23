@@ -9,7 +9,7 @@
   >
     <AngleLeftIcon />
   </button>
-  <ul ref="navList" v-bind="$attrs" :class="styles.navList" @scroll="handleScrollButtons">
+  <ul ref="navListRef" v-bind="$attrs" :class="styles.navList" @scroll="handleScrollButtons">
     <slot />
   </ul>
   <button
@@ -52,7 +52,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const navList = useTemplateRef('navList');
+const navList = useTemplateRef('navListRef');
 const horizontal = inject(NavHorizontalKey);
 const scrollable = inject(NavScrollablelKey);
 const scrollViewAtStart = ref(false);

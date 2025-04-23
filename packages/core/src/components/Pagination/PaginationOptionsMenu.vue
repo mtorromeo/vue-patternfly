@@ -1,8 +1,8 @@
 <template>
-  <div v-bind="ouiaProps" ref="el">
+  <div v-bind="ouiaProps" ref="elRef">
     <pf-menu-toggle
       :id="widgetId ? `${widgetId}-toggle` : undefined"
-      ref="toggle"
+      ref="toggleRef"
       v-model:expanded="open"
       :disabled="disabled || Boolean(count && count <= 0)"
       variant="plainText"
@@ -85,8 +85,8 @@ const emit = defineEmits<{
 }>();
 
 const open = ref(false);
-const el = useTemplateRef('el');
-const toggle = useTemplateRef('toggle');
+const el = useTemplateRef('elRef');
+const toggle = useTemplateRef('toggleRef');
 
 function onSelect() {
   open.value = !open.value;

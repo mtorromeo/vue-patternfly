@@ -34,7 +34,7 @@
       :type="component === 'button' ? 'button' : undefined"
     >
       <span :class="styles.chipContent">
-        <span :id="effectiveId" ref="textRef" :class="styles.chipText">
+        <span :id="effectiveId" ref="text" :class="styles.chipText">
           <slot />
         </span>
         <slot name="badge" />
@@ -100,7 +100,7 @@ defineSlots<{
   badge?: (props?: Record<never, never>) => any;
 }>();
 
-const textRef = useTemplateRef('textRef');
+const textRef = useTemplateRef('text');
 const textOverflowing = useElementOverflow(textRef);
 const effectiveId = computed(() => props.id ?? getUniqueId());
 </script>

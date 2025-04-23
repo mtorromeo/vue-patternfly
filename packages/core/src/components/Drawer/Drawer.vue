@@ -1,7 +1,7 @@
 <template>
   <div
     v-bind="ouiaProps"
-    ref="el"
+    ref="elRef"
     :class="[styles.drawer, {
       [styles.modifiers.expanded]: expandedClass,
       [styles.modifiers.inline]: inline,
@@ -50,7 +50,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef('el');
+const el = useTemplateRef('elRef');
 const display = ref(props.static || props.expanded);
 const expandedClass = ref(props.expanded);
 const isOpen = computed(() => props.static || props.expanded);

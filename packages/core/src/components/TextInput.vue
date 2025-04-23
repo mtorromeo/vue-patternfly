@@ -16,7 +16,7 @@
   >
     <input
       v-bind="$attrs"
-      ref="input"
+      ref="inputRef"
       :value="value"
       :type="type"
       :aria-invalid="effectiveValidated === 'error'"
@@ -113,7 +113,7 @@ defineSlots<{
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const input = useTemplateRef('input');
+const input = useTemplateRef('inputRef');
 const hasStatusIcon = computed(() => !props.noStatusIcon && ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const { validated } = toRefs(props);

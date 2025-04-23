@@ -2,7 +2,7 @@
   <component
     v-bind="ouiaProps"
     :is="typeahead || isSplitButton ? 'div' : 'button'"
-    ref="el"
+    ref="elRef"
     :class="[styles.menuToggle, {
       [styles.modifiers.typeahead]: typeahead,
       [styles.modifiers.splitButton]: isSplitButton,
@@ -104,7 +104,7 @@ const isSplitButton = computed(() => !typeahead.value && !!props.splitButton);
 const managedExpanded = useManagedProp('expanded', false);
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
-const el = useTemplateRef<HTMLDivElement | HTMLButtonElement>('el');
+const el = useTemplateRef<HTMLDivElement | HTMLButtonElement>('elRef');
 
 function focus() {
   el.value?.focus();

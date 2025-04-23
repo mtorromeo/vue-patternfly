@@ -1,7 +1,7 @@
 <template>
   <component
     :is="component"
-    ref="el"
+    ref="elRef"
     :class="[styles.navItem, itemClass, {
       [(styles.modifiers.flyout || 'pf-m-flyout')]: $slots.flyout,
     }]"
@@ -84,13 +84,13 @@ const slots = defineSlots<{
   flyout?: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef<HTMLElement>('el');
-const floatingRef = useTemplateRef('floatingRef');
+const el = useTemplateRef<HTMLElement>('elRef');
+const floating = useTemplateRef('floatingRef');
 const onSelect = inject(NavOnSelectKey, undefined);
 const flyoutRef = inject(NavFlyoutRefKey, null);
 const sidebarOpen = inject(SidebarOpenKey, false);
 const flyoutTarget: Ref<HTMLElement | null> = ref(null);
-const isHovered = useElementHover(floatingRef);
+const isHovered = useElementHover(floating);
 
 const linkTag = computed(() => {
   if (props.linkComponent) {

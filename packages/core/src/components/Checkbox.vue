@@ -24,7 +24,7 @@
 
       <input
         :id="validId"
-        ref="input"
+        ref="inputRef"
         v-bind="$attrs"
         type="checkbox"
         :class="styles.checkInput"
@@ -96,7 +96,7 @@ defineSlots<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const input = useTemplateRef('input');
+const input = useTemplateRef('inputRef');
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
 const validId = computed(() => props.id || getUniqueId());
 

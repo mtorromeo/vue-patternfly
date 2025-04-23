@@ -1,7 +1,7 @@
 <template>
   <div
     v-bind="ouiaProps"
-    ref="el"
+    ref="elRef"
     :class="[styles.menu, {
       [styles.modifiers.plain]: plain,
       [styles.modifiers.scrollable]: scrollable,
@@ -13,7 +13,7 @@
   >
     <template v-if="favoriteCount">
       <pf-menu-group :label="favoritesLabel">
-        <pf-menu-list ref="favoriteList" />
+        <pf-menu-list ref="favoriteListRef" />
       </pf-menu-group>
       <pf-divider />
     </template>
@@ -132,10 +132,10 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 // const instance = getCurrentInstance();
 
-const el = useTemplateRef('el');
+const el = useTemplateRef('elRef');
 const managedSelected = useManagedProp<MenuItemId | MenuItemId[] | null>('selected', null);
 
-const favoriteList = useTemplateRef<InstanceType<typeof PfMenuList>>('favoriteList');
+const favoriteList = useTemplateRef<InstanceType<typeof PfMenuList>>('favoriteListRef');
 const items = provideChildrenTracker(MenuItemsKey);
 const favoriteCount = computed(() => items.reduce((c, i) => c + (i.favorited ? 1 : 0), 0));
 

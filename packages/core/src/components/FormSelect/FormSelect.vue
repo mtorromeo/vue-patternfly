@@ -12,7 +12,7 @@
     ]"
   >
     <select
-      ref="input"
+      ref="inputRef"
       v-bind="$attrs"
       v-model="value"
       :disabled="disabled || undefined"
@@ -74,7 +74,7 @@ defineSlots<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const input = useTemplateRef('input');
+const input = useTemplateRef('inputRef');
 const options = provideChildrenTracker(FormSelectOptionsKey);
 const value = useManagedProp('modelValue', '');
 const hasStatusIcon = computed(() => props.validated && ['success', 'error', 'warning'].includes(props.validated));

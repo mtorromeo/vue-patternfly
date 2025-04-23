@@ -9,7 +9,7 @@
     <component
       v-bind="{...ouiaProps, ...$attrs}"
       :is="buttonComponent"
-      ref="el"
+      ref="elRef"
       :type="buttonComponent === 'button' ? type : null"
       :disabled="effectiveDisabled"
       :aria-disabled="effectiveDisabled || ariaDisabled"
@@ -138,7 +138,7 @@ defineSlots<{
   badge?: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef<HTMLElement | ComponentPublicInstance>('el');
+const el = useTemplateRef<HTMLElement | ComponentPublicInstance>('elRef');
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant});
 
 const buttonComponent = computed(() => {

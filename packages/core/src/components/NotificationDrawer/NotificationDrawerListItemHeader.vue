@@ -72,6 +72,6 @@ const variantIcons = {
   custom: BellIcon,
 };
 
-const textRef = useTemplateRef<HTMLElement>('textRef');
-const textOverflowing = useElementOverflow(textRef);
+const text = useTemplateRef<HTMLElement>('textRef');
+const textOverflowing = useElementOverflow(text);
 </script>

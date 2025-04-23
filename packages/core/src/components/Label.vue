@@ -90,6 +90,6 @@ defineSlots<{
   actions?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const textRef = useTemplateRef('textRef');
-const textOverflowing = useElementOverflow(textRef);
+const text = useTemplateRef('textRef');
+const textOverflowing = useElementOverflow(text);
 </script>

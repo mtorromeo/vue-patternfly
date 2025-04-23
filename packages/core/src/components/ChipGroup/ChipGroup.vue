@@ -13,7 +13,7 @@
           {{ category }}
         </template>
 
-        <span ref="labelRef" :class="styles.chipGroupLabel">
+        <span ref="label" :class="styles.chipGroupLabel">
           {{ category }}
         </span>
       </pf-tooltip>
@@ -84,7 +84,7 @@ const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const labelRef = useTemplateRef('labelRef');
+const labelRef = useTemplateRef('label');
 const labelOverflowing = useElementOverflow(labelRef);
 const open = ref(props.defaultOpen);
 

@@ -2,7 +2,7 @@
   <div
     v-if="!dismissed"
     v-bind="ouiaProps"
-    ref="el"
+    ref="elRef"
     :class="[
       styles.alert,
       styles.modifiers[variant], {
@@ -39,7 +39,7 @@
     <component :is="tooltipVisible ? PfTooltip : PassThrough" :position="tooltipPosition">
       <component
         :is="component"
-        ref="titleRef"
+        ref="title"
         :class="[styles.alertTitle, {
           [styles.modifiers.truncate]: truncateTitle,
         }]"
@@ -149,7 +149,7 @@ defineSlots<{
   'action-links'?: (props?: Record<never, never>) => any;
 }>();
 
-const titleRef = useTemplateRef<HTMLElement | ComponentPublicInstance>('titleRef');
+const titleRef = useTemplateRef<HTMLElement | ComponentPublicInstance>('title');
 const { width, height } = useElementSize(titleRef);
 const tooltipVisible = ref(false);
 let timer: number | undefined = undefined;
@@ -158,7 +158,7 @@ const isMouseOver = ref(false);
 const timedOut = ref(false);
 const timedOutAnimation = ref(true);
 const containsFocus = ref(false);
-const el = useTemplateRef('el');
+const el = useTemplateRef('elRef');
 
 const managedExpanded = useManagedProp('expanded', false);
 const variantLabel = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)} alert:`);

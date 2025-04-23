@@ -1,10 +1,10 @@
 <template>
-  <component v-bind="ouiaProps" :is="attributes.length > 0 ? 'div' : PassThrough" ref="$el">
+  <component v-bind="ouiaProps" :is="attributes.length > 0 ? 'div' : PassThrough" ref="elRef">
     <component :is="(!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable) ? PfInputGroup : PassThrough">
       <template v-if="!expandable || managedExpanded">
         <pf-text-input-group :disabled="disabled">
           <pf-text-input-group-main
-            ref="input"
+            ref="inputRef"
             v-model="value"
             :type="type"
             :hint="hint"
@@ -77,7 +77,7 @@
 
       <pf-button
         v-if="expandable"
-        ref="expandButton"
+        ref="expandButtonRef"
         variant="plain"
         :aria-label="expandButtonAriaLabel"
         :aria-expanded="managedExpanded"
@@ -92,7 +92,6 @@
       <component
         :is="appendTo === 'inline' ? PassThrough : 'div'"
         v-if="attributes.length > 0"
-        ref="floatingElement"
       >
         <pf-advanced-search-menu
           v-model="value"
@@ -291,10 +290,9 @@ const value = useManagedProp('modelValue', '', to => emit('change', to));
 const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
 const managedExpanded = useManagedProp('expanded', false);
 
-const $el = useTemplateRef<HTMLDivElement>('$el');
-const floatingElement = useTemplateRef<HTMLDivElement>('floatingElement');
-const expandButton = useTemplateRef('expandButton');
-const input = useTemplateRef('input');
+const $el = useTemplateRef<HTMLDivElement>('elRef');
+const expandButton = useTemplateRef('expandButtonRef');
+const input = useTemplateRef('inputRef');
 
 provide(SearchInputKey, {
   $el,

@@ -23,7 +23,7 @@
 
       <input
         :id="wrapWithLabel ? id : validId"
-        ref="input"
+        ref="inputRef"
         v-bind="$attrs"
         type="radio"
         :class="styles.radioInput"
@@ -96,7 +96,7 @@ const emit = defineEmits<{
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const wrapWithLabel = computed(() => props.component === 'label');
-const input = useTemplateRef('input');
+const input = useTemplateRef('inputRef');
 
 const validId = computed(() => props.id || getUniqueId());
 

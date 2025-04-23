@@ -20,7 +20,7 @@
     }"
   >
     <textarea
-      ref="input"
+      ref="inputRef"
       :value="value"
       v-bind="$attrs"
       :disabled="disabled || undefined"
@@ -111,7 +111,7 @@ defineEmits<{
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const input = useTemplateRef('input');
+const input = useTemplateRef('inputRef');
 const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const { validated } = toRefs(props);

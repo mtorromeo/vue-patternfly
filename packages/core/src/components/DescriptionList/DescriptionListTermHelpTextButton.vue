@@ -30,17 +30,17 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const helpTextRef = useTemplateRef('helpTextRef');
+const helpText = useTemplateRef('helpTextRef');
 
 function handleKeys(event: KeyboardEvent) {
-  if (!helpTextRef.value || helpTextRef.value !== (event.target as HTMLElement)) {
+  if (!helpText.value || helpText.value !== (event.target as HTMLElement)) {
     return;
   }
 
   const key = event.key;
   if (key === 'Enter' || key === ' ') {
     event.preventDefault();
-    helpTextRef.value.click();
+    helpText.value.click();
   }
 }
 </script>

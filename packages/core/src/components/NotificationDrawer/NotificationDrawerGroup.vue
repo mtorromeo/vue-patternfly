@@ -82,8 +82,8 @@ defineSlots<{
 
 const managedExpanded = useManagedProp('expanded', false);
 
-const textRef = useTemplateRef('textRef');
-const textOverflowing = useElementOverflow(textRef);
+const text = useTemplateRef('textRef');
+const textOverflowing = useElementOverflow(text);
 
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' || e.key === ' ') {

@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="ouiaProps" ref="el" :class="[styles.toolbarGroup, breakpointClasses, variantClass]">
+  <div v-bind="ouiaProps" ref="elRef" :class="[styles.toolbarGroup, breakpointClasses, variantClass]">
     <slot />
   </div>
 </template>
@@ -31,7 +31,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef('el');
+const el = useTemplateRef('elRef');
 
 const breakpointClasses = computed(() => {
   return [

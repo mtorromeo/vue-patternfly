@@ -96,7 +96,7 @@ import { reactive, ref, type Ref, onMounted, useTemplateRef } from 'vue';
 import { PfButton } from '@vue-patternfly/core';
 import type { Placement } from '@vue-patternfly/core/helpers/FloatingUi.vue';
 
-const buttonRef = useTemplateRef('buttonRef');
+const button = useTemplateRef('buttonRef');
 const trigger = reactive(['mouseenter', 'focus']);
 const leftAligned = ref(false);
 const flip = ref(true);
@@ -107,8 +107,8 @@ const exitDelay = ref(0);
 const distance = ref(15);
 
 onMounted(() => {
-  if (buttonRef.value?.el instanceof HTMLElement) {
-    buttonRef.value.el.scrollIntoView({
+  if (button.value?.el instanceof HTMLElement) {
+    button.value.el.scrollIntoView({
       behavior: 'instant',
       block: 'center',
       inline: 'center',

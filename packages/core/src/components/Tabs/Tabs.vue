@@ -29,7 +29,7 @@
     </button>
 
     <ul
-      ref="tabListRef"
+      ref="tabList"
       role="tablist"
       :class="styles.tabsList"
       @scroll="handleScrollButtons"
@@ -134,7 +134,7 @@ defineSlots<{
 
 const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);
 const idSuffix = computed(() => props.id || getUniqueId(''));
-const tabListRef = useTemplateRef('tabListRef');
+const tabListRef = useTemplateRef('tabList');
 const tabKeys = provideChildrenTracker(TabsKey);
 
 provide(TabsProvideKey, {

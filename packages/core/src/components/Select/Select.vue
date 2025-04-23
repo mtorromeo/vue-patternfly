@@ -95,7 +95,7 @@ const placement = computed((): Placement => {
 });
 
 const managedOpen = useManagedProp('open', false);
-const menuRef = useTemplateRef('menuRef');
+const menu = useTemplateRef('menuRef');
 const { element: toggleRef, findReference } = useHtmlElementFromVNodes();
 
 
@@ -103,7 +103,7 @@ const handleMenuKeys = (event: KeyboardEvent) => {
   // Close the menu on tab or escape
   if (
     managedOpen.value &&
-    (menuRef.value?.el?.contains(event.target as Node) || toggleRef.value?.contains(event.target as Node))
+    (menu.value?.el?.contains(event.target as Node) || toggleRef.value?.contains(event.target as Node))
   ) {
     if (props.closeOnKeys.includes(event.key)) {
       event.preventDefault();
@@ -119,13 +119,13 @@ const handleClick = (event: PointerEvent) => {
   // focus on first menu item
   if (managedOpen.value && !props.noFocusFirstItemOnOpen && toggleRef.value?.contains(event.target as Node)) {
     nextTick(() => {
-      const firstElement = menuRef.value?.el?.querySelector('li button:not(:disabled),li input:not(:disabled)');
+      const firstElement = menu.value?.el?.querySelector('li button:not(:disabled),li input:not(:disabled)');
       firstElement && (firstElement as HTMLElement).focus();
     });
   }
 
   // If the event is not on the toggle, close the menu
-  if (managedOpen.value && !toggleRef.value?.contains(event.target as Node) && !menuRef.value?.el?.contains(event.target as Node)) {
+  if (managedOpen.value && !toggleRef.value?.contains(event.target as Node) && !menu.value?.el?.contains(event.target as Node)) {
     managedOpen.value = false;
   }
 };

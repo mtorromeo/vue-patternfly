@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="ouiaProps" ref="target">
+  <div v-bind="ouiaProps" ref="targetRef">
     <slot />
   </div>
 </template>
@@ -26,7 +26,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const target = useTemplateRef('target');
+const target = useTemplateRef('targetRef');
 const { activate, deactivate, pause, unpause } = useFocusTrap(target, {
   immediate: props.active,
   ...props.focusTrapOptions,
