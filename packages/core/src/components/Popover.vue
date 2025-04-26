@@ -64,7 +64,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
-import { useHtmlElementFromVNodes, useManagedProp } from '../use';
+import { useHtmlElementFromVNodes } from '../use';
 import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, useId } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
@@ -113,7 +113,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfFocusTrapProp
   maxWidth?: string;
   /** CSS fade transition animation duration */
   animationDuration?: number;
-  open?: boolean;
   closeBtnAriaLabel?: string;
   distance?: number;
   ariaLabel?: string;
@@ -130,6 +129,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+const visible = defineModel<boolean>('open', { default: false });
+
 defineSlots<{
   default: (props?: Record<never, never>) => any;
   header?: (props?: Record<never, never>) => any;
@@ -138,14 +139,12 @@ defineSlots<{
 }>();
 
 const emit = defineEmits<{
-  (name: 'update:open', value: boolean): void;
   (name: 'show'): void;
   (name: 'shown'): void;
   (name: 'hide'): void;
   (name: 'hidden'): void;
 }>();
 
-const visible = useManagedProp('open', false);
 const dialog = useTemplateRef('dialogRef');
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 

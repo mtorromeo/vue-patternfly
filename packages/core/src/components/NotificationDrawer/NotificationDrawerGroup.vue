@@ -1,7 +1,7 @@
 <template>
-  <section v-bind="ouiaProps" :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: managedExpanded }]">
+  <section v-bind="ouiaProps" :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: expanded }]">
     <component :is="headingLevel">
-      <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="managedExpanded" @click="managedExpanded = !managedExpanded" @keydown="onKeydown">
+      <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="expanded" @click="expanded = !expanded" @keydown="onKeydown">
         <pf-tooltip :position="tooltipPosition">
           <template v-if="textOverflowing" #content>{{ title }}</template>
 
@@ -25,7 +25,7 @@
       </button>
     </component>
 
-    <slot v-if="managedExpanded" />
+    <slot v-if="expanded" />
   </section>
 </template>
 
@@ -36,7 +36,7 @@ import type { HTMLAttributes } from 'vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfBadge from '../Badge.vue';
 import { useTemplateRef } from 'vue';
-import { useElementOverflow, useManagedProp } from '../../use';
+import { useElementOverflow } from '../../use';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import type { Placement } from '../../helpers/FloatingUi.vue';
@@ -48,8 +48,6 @@ defineOptions({
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer group count */
   count: number | string;
-  /**  Adds styling to the group to indicate expanded state */
-  expanded?: boolean;
   /**  Adds styling to the group to indicate whether it has been read */
   read?: boolean;
   /**  Callback for when group button is clicked to expand */
@@ -65,22 +63,18 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  expanded: undefined,
   truncateTitle: 0,
   headingLevel: 'h1',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:expanded', value: boolean): void;
-}>();
+/**  Adds styling to the group to indicate expanded state */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   title?: (props?: Record<never, never>) => any;
 }>();
-
-const managedExpanded = useManagedProp('expanded', false);
 
 const text = useTemplateRef('textRef');
 const textOverflowing = useElementOverflow(text);
@@ -88,7 +82,7 @@ const textOverflowing = useElementOverflow(text);
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
-    managedExpanded.value = !managedExpanded.value;
+    expanded.value = !expanded.value;
   }
 }
 </script>

@@ -3,7 +3,7 @@
     v-bind="ouiaProps"
     :class="[
       styles.dataListItem, {
-        [styles.modifiers.expanded]: managedExpanded,
+        [styles.modifiers.expanded]: expanded,
         [styles.modifiers.clickable]: isSelectable,
         [styles.modifiers.selected]: managedSelected,
       },
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 export const DataListItemKey = Symbol('DataListItemKey') as InjectionKey<{
-  expanded: WritableComputedRef<boolean>,
+  expanded: Ref<boolean>,
   expandable: ComputedRef<boolean>,
 }>;
 
@@ -33,20 +33,17 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
   selectionInputValue?: string;
   /** Flag indicating if the pf-data-list-item is expandable */
   expandable?: boolean;
-  /** Flag to show if the expanded content of the pf-data-list-item is visible */
-  expanded?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type WritableComputedRef, type LiHTMLAttributes } from "vue";
+import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type LiHTMLAttributes, type Ref, toValue } from "vue";
 import { DataListKey } from './DataList.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDataListItemRow from './DataListItemRow.vue';
 import PfDataListContent from './DataListContent.vue';
-import { useManagedProp } from '../../use';
 
 defineOptions({
   name: 'PfDataListItem',
@@ -54,15 +51,16 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   selected: undefined,
-  expanded: undefined,
   expandable: undefined,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Flag to show if the expanded content of the pf-data-list-item is visible */
+const expanded = defineModel<boolean>('expanded', { default: false });
+
 const emit = defineEmits<{
   (name: 'click', e: PointerEvent): void;
   (name: 'update:selected', s: boolean): void;
-  (name: 'update:expanded', s: boolean): void;
 }>();
 
 defineSlots<{
@@ -89,10 +87,11 @@ const managedSelected = (() => {
 
       if (datalist?.selectable.value) {
         const value = getValue();
-        if (Array.isArray(datalist.itemSelection.value)) {
-          return datalist.itemSelection.value.includes(value);
+        const itemSelection = toValue(datalist.itemSelection);
+        if (Array.isArray(itemSelection)) {
+          return itemSelection.includes(value);
         }
-        return datalist.itemSelection.value === value;
+        return itemSelection === value;
       }
 
       return innerSelected.value;
@@ -102,25 +101,27 @@ const managedSelected = (() => {
       if (!selectable.value) {
         if (datalist?.selectable.value) {
           const value = getValue();
+          let itemSelection = toValue(datalist.itemSelection);
 
           if (datalist.multipleSelection.value) {
-            if (!Array.isArray(datalist.itemSelection.value)) {
-              if (datalist.itemSelection.value) {
-                datalist.itemSelection.value = [datalist.itemSelection.value];
+            if (!Array.isArray(itemSelection)) {
+              if (itemSelection) {
+                itemSelection = [itemSelection];
               } else {
-                datalist.itemSelection.value = [];
+                itemSelection = [];
               }
             }
-            const index = datalist.itemSelection.value.indexOf(value);
+            const index = itemSelection.indexOf(value);
             if (s && index === -1) {
-              datalist.itemSelection.value.push(value);
+              itemSelection.push(value);
             } else if (!s && index !== -1) {
-              datalist.itemSelection.value.splice(index, 1);
+              itemSelection.splice(index, 1);
             }
           } else {
-            datalist.itemSelection.value = s ? value : null;
+            itemSelection = s ? value : undefined;
           }
-          datalist.emit(`update:selected`, datalist.itemSelection.value);
+
+          datalist.emit(`update:selected`, itemSelection);
 
         } else {
           innerSelected.value = s;
@@ -134,12 +135,11 @@ const managedSelected = (() => {
 
 const isSelectable = computed(() => selectable.value || !!datalist?.selectable.value);
 const isExpandable = computed(() => props.expandable !== undefined || !!datalist?.expandable.value);
-const managedExpanded = useManagedProp('expanded', false);
 const name = computed(() => props.selectionInputName || datalist?.inputName.value);
 const value = computed(() => props.selectionInputValue || datalist?.inputValue.value);
 
 provide(DataListItemKey, {
-  expanded: managedExpanded,
+  expanded,
   expandable: isExpandable,
 });
 

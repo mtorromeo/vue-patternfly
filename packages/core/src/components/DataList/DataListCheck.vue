@@ -3,7 +3,7 @@
     <div :class="styles.dataListCheck">
       <input
         v-bind="$attrs"
-        v-model="managedChecked"
+        v-model="checked"
         type="checkbox"
       >
     </div>
@@ -12,7 +12,6 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
-import { useManagedProp } from '../../use';
 import type { InputHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -23,17 +22,10 @@ defineOptions({
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type'> {
   otherControls?: boolean;
-  checked?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  checked: undefined,
-});
+const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:checked', checked: boolean): void;
-}>();
-
-const managedChecked = useManagedProp('checked', false);
+const checked = defineModel<boolean>('expanded', { default: false });
 </script>

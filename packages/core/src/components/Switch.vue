@@ -12,11 +12,11 @@
       :class="styles.switchInput"
       type="checkbox"
       role="switch"
-      :checked="managedChecked"
-      @change="managedChecked = ($event.currentTarget as HTMLInputElement).checked"
+      :checked="checked"
+      @change="checked = ($event.currentTarget as HTMLInputElement).checked"
     >
     <input
-      v-if="name && isDefined(offValue) && !managedChecked"
+      v-if="name && isDefined(offValue) && !checked"
       :name="name"
       type="hidden"
       :value="offValue"
@@ -44,7 +44,6 @@
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
 import CheckIcon from '@vue-patternfly/icons/check-icon';
 import type { HTMLAttributes, InputHTMLAttributes } from 'vue';
-import { useManagedProp } from '../use';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
@@ -54,8 +53,6 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
-  checked?: boolean;
-
   /** Flag to show if the switch has a check icon. */
   checkIcon?: boolean;
 
@@ -75,16 +72,10 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  checked: undefined,
-});
+const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:checked', value: boolean): void;
-}>();
+const checked = defineModel<boolean>('checked', { default: false });
 
 defineSlots<Record<string, never>>();
-
-const managedChecked = useManagedProp('checked', false);
 </script>

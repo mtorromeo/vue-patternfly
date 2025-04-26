@@ -1,5 +1,5 @@
 <template>
-  <pf-select v-model:open="open" v-model:selected="selected" variant="typeahead" no-focus-first-item-on-open full-width>
+  <pf-select v-model:open="open" variant="typeahead" no-focus-first-item-on-open full-width>
     <template #label>
       <pf-text-input-group plain>
         <pf-text-input-group-main
@@ -42,7 +42,7 @@ import { computed, ref, type Ref } from 'vue';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 
 const open = ref(false);
-const filter = ref('');
+const filter: Ref<string | number | null> = ref('');
 const input = ref('');
 const focusedItemIndex: Ref<number | undefined> = ref();
 const activeItem: Ref<string | undefined> = ref();
@@ -65,7 +65,7 @@ const filteredOptions = computed(() => {
     return newOptions;
   }
 
-  newOptions = allOptions.filter(item => item.label.toLowerCase().includes(filter.value.toLowerCase()));
+  newOptions = allOptions.filter(item => item.label.toLowerCase().includes(String(filter.value).toLowerCase()));
 
   if (!newOptions.length) {
     newOptions = [{ value: '', label: `No results found for ${filter.value}` }];

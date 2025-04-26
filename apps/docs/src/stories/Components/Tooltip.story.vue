@@ -116,7 +116,7 @@ onMounted(() => {
   }
 });
 
-function checkTrigger(value: string, checked: boolean) {
+function checkTrigger(value: string, checked: boolean | null) {
   if (checked) {
     trigger.push(value);
   } else {

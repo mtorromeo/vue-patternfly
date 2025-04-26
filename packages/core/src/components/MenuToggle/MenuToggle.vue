@@ -21,7 +21,7 @@
     :class="[styles.menuToggle, {
       [styles.modifiers.typeahead]: typeahead,
       [styles.modifiers.splitButton]: isSplitButton,
-      [styles.modifiers.expanded]: managedExpanded,
+      [styles.modifiers.expanded]: expanded,
       [styles.modifiers.primary]: variant === 'primary',
       [styles.modifiers.secondary]: variant === 'secondary',
       [styles.modifiers[status as NonNullable<typeof status>]]: status,
@@ -34,9 +34,9 @@
       [styles.modifiers.small]: small,
     }]"
     :type="typeahead || isSplitButton ? undefined : 'button'"
-    :aria-expanded="typeahead || isSplitButton ? undefined : managedExpanded"
+    :aria-expanded="typeahead || isSplitButton ? undefined : expanded"
     :disabled="typeahead || isSplitButton ? undefined : disabled"
-    @click="typeahead || isSplitButton ? undefined : (managedExpanded = !managedExpanded)"
+    @click="typeahead || isSplitButton ? undefined : (expanded = !expanded)"
   >
     <slot v-if="!isSplitButton && variant === 'plain'" />
 
@@ -60,9 +60,9 @@
         type="button"
         :class="styles.menuToggleButton"
         :disabled="disabled"
-        :aria-expanded="managedExpanded"
+        :aria-expanded="expanded"
         aria-label="Menu toggle"
-        @click="managedExpanded = !managedExpanded"
+        @click="expanded = !expanded"
       >
         <span v-if="isSplitButton" :class="styles.menuToggleText">
           <slot />
@@ -83,7 +83,6 @@ import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 import { computed, type ButtonHTMLAttributes, useTemplateRef } from 'vue';
-import { useManagedProp } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { createReusableTemplate } from '@vueuse/core';
 
@@ -93,8 +92,6 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded' | 'placeholder' | 'onClick'> {
-  /** Flag indicating the toggle has expanded styling */
-  expanded?: boolean;
   /** Flag indicating the toggle is disabled */
   disabled?: boolean;
   /** Flag indicating the toggle is full height */
@@ -111,13 +108,10 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttri
   small?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  expanded: undefined,
-});
+const props = defineProps<Props>();
 
-defineEmits<{
-  (name: 'update:expanded', value: boolean): void;
-}>();
+/** Flag indicating the toggle has expanded styling */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -129,7 +123,6 @@ const slots = defineSlots<{
 
 const typeahead = computed(() => props.variant === 'typeahead');
 const isSplitButton = computed(() => !typeahead.value && !!slots['split-buttons']);
-const managedExpanded = useManagedProp('expanded', false);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const el = useTemplateRef<HTMLDivElement | HTMLButtonElement>('elRef');
 

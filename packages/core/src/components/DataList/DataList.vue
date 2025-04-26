@@ -16,20 +16,18 @@
 
 <script lang="ts">
 export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
-  emit: (event: 'update:selected', ...args: any[]) => void;
+  emit: (event: 'update:selected', item: string | number | symbol | (string | number | symbol)[] | undefined) => void;
   selectable: Ref<boolean>,
   expandable: ComputedRef<boolean | undefined>,
   inputName: ComputedRef<string | undefined>,
   inputValue: ComputedRef<string | undefined>,
-  itemSelection: WritableComputedRef<any>,
+  itemSelection: Ref<string | number | symbol | (string | number | symbol)[] | undefined>,
   multipleSelection: ComputedRef<boolean>,
 }>;
 
 export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-    /** Array for multiple selection, single value for single selection, undefined to disable selection */
-  selected?: string | number | symbol | (string | number | symbol)[];
   /** Name of the item input (radio or checkbox) when item selection is enabled */
   selectionInputName?: string;
   /** Defines the value for the input (radio or checkbox) */
@@ -53,8 +51,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type WritableComputedRef, type HTMLAttributes } from "vue";
-import { useManagedProp } from '../../use';
+import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type HTMLAttributes } from "vue";
 
 const gridBreakpointClasses = {
   none: stylesGrid.modifiers.gridNone,
@@ -72,22 +69,20 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   gridBreakpoint: 'md',
-  selected: undefined,
   expandable: undefined,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const emit = defineEmits<{
-  (name: 'update:selected', s: any): void;
-}>();
+const emit = defineEmits();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const managedSelected = useManagedProp('selected', null);
+/** Array for multiple selection, single value for single selection, undefined to disable selection */
+const selected = defineModel<string | number | symbol | (string | number | symbol)[]>('selected');
 
-const selectable = computed(() => !!props['onUpdate:selected'] || props.selected !== undefined || !!props.selectionInputName);
+const selectable = computed(() => !!props['onUpdate:selected'] || selected.value !== undefined || !!props.selectionInputName);
 
 provide(DataListKey, {
   emit,
@@ -95,7 +90,7 @@ provide(DataListKey, {
   expandable: computed(() => props.expandable),
   inputName: computed(() => props.selectionInputName),
   inputValue: computed(() => props.selectionInputValue),
-  itemSelection: managedSelected,
+  itemSelection: selected,
   multipleSelection: computed(() => props.selectionMultiple),
 });
 

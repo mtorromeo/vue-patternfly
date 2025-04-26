@@ -149,7 +149,7 @@ function checkValidity() {
   inputValidationData.setCustomValidity('');
 
   if (props.pattern && value.value) {
-    const error = !regexPattern.value.test(value.value);
+    const error = !regexPattern.value.test(String(value.value));
     if (error) {
       let error = 'Please match the format requested.';
       if (input.value.title) {

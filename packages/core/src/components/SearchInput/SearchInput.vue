@@ -1,7 +1,7 @@
 <template>
   <component v-bind="ouiaProps" :is="attributes.length > 0 ? 'div' : PassThrough" ref="elRef">
     <component :is="(!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable) ? PfInputGroup : PassThrough">
-      <template v-if="!expandable || managedExpanded">
+      <template v-if="!expandable || expanded">
         <pf-text-input-group :disabled="disabled">
           <pf-text-input-group-main
             ref="inputRef"
@@ -53,11 +53,11 @@
 
         <pf-button
           v-if="attributes.length > 0 || !!onToggleAdvancedSearch"
-          :class="{'pf-m-expanded': searchMenuOpen}"
+          :class="{'pf-m-expanded': advancedSearchOpen}"
           variant="control"
           :disabled="disabled"
           :aria-label="openMenuButtonAriaLabel"
-          :aria-expanded="searchMenuOpen"
+          :aria-expanded="advancedSearchOpen"
           @click="onToggle"
         >
           <caret-down-icon />
@@ -80,10 +80,10 @@
         ref="expandButtonRef"
         variant="plain"
         :aria-label="expandButtonAriaLabel"
-        :aria-expanded="managedExpanded"
+        :aria-expanded="expanded"
         @click="onExpand"
       >
-        <xmark-icon v-if="managedExpanded" />
+        <xmark-icon v-if="expanded" />
         <magnifying-glass-icon v-else />
       </pf-button>
     </component>
@@ -100,7 +100,7 @@
           :attributes="attributes"
           :advanced-search-delimiter="advancedSearchDelimiter"
           :get-attr-value-map="getAttrValueMap"
-          :search-menu-open="searchMenuOpen"
+          :search-menu-open="advancedSearchOpen"
           @search="onSearch"
           @clear="onClear"
           @toggle-advanced-menu="onToggle"
@@ -138,8 +138,6 @@ export type SearchInputProvide = {
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
 
 export interface Props extends OUIAProps {
-  /** Value of the search input. */
-  modelValue?: string | null;
   /** Flag indicating if search input is disabled. */
   disabled?: boolean;
   /** An accessible label for the search input. */
@@ -168,8 +166,6 @@ export interface Props extends OUIAProps {
   resetButtonLabel?: string;
   /** Label for the button which calls the onSearch event handler. */
   submitSearchButtonLabel?: string;
-  /** A flag for controlling the open state of a custom advanced search implementation. */
-  advancedSearchOpen?: boolean;
   /** Accessible label for the button which opens the advanced search form menu. */
   openMenuButtonAriaLabel?: string;
   /** Accessible label for the button to navigate to previous result. */
@@ -188,7 +184,6 @@ export interface Props extends OUIAProps {
   attributes?: string[] | SearchAttribute[];
 
   expandable?: boolean;
-  expanded?: boolean;
   expandButtonAriaLabel?: string;
 
   /** Delimiter in the query string for pairing attributes with search values.
@@ -224,7 +219,7 @@ export interface Props extends OUIAProps {
 <script lang="ts" setup>
 import textInputGroupStyles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
 import { type InjectionKey, nextTick, provide, type Ref, type RendererElement, getCurrentInstance, useTemplateRef } from 'vue';
-import { useChildrenTracker, useManagedProp } from '../../use';
+import { useChildrenTracker } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
 import PfTextInputGroupMain from '../TextInputGroup/TextInputGroupMain.vue';
@@ -251,8 +246,6 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   attributes: () => [],
   ariaLabel: 'Search input',
-  advancedSearchOpen: undefined,
-  expanded: undefined,
   resetButtonLabel: 'Reset',
   openMenuButtonAriaLabel: 'Open advanced search',
   previousNavigationButtonAriaLabel: 'Previous',
@@ -265,13 +258,13 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const emit = defineEmits<{
-  (name: 'update:modelValue', v: string): void;
-  (name: 'update:advancedSearchOpen', v: boolean): void;
-  (name: 'update:expanded', v: boolean): void;
-  /** A callback for when the input value changes. */
-  (name: 'change', value: string): void;
-}>();
+/** Value of the search input. */
+const value = defineModel<string>({ default: '' });
+
+/** A flag for controlling the open state of a custom advanced search implementation. */
+const advancedSearchOpen = defineModel<boolean>('advancedSearchOpen', { default: false });
+
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineSlots<{
   'words-attr-label'?: (props?: Record<never, never>) => any;
@@ -286,9 +279,6 @@ if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
 }
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const value = useManagedProp('modelValue', '', to => emit('change', to));
-const searchMenuOpen = useManagedProp('advancedSearchOpen', false);
-const managedExpanded = useManagedProp('expanded', false);
 
 const $el = useTemplateRef<HTMLDivElement>('elRef');
 const expandButton = useTemplateRef('expandButtonRef');
@@ -300,12 +290,12 @@ provide(SearchInputKey, {
 });
 
 function onToggle(e: Event) {
-  searchMenuOpen.value = !searchMenuOpen.value;
-  props.onToggleAdvancedSearch?.(e, searchMenuOpen.value);
+  advancedSearchOpen.value = !advancedSearchOpen.value;
+  props.onToggleAdvancedSearch?.(e, advancedSearchOpen.value);
 }
 
 function onSearchHandler(e: Event) {
-  searchMenuOpen.value = false;
+  advancedSearchOpen.value = false;
   props.onSearch?.(value.value, e, getAttrValueMap());
 }
 
@@ -340,10 +330,10 @@ function onExpand(e: Event) {
   value.value = '';
   props.onClear?.(e);
 
-  managedExpanded.value = !managedExpanded.value;
+  expanded.value = !expanded.value;
 
   nextTick(() => {
-    if (managedExpanded.value) {
+    if (expanded.value) {
       input.value?.focus();
     } else if (expandButton.value?.el instanceof HTMLElement) {
       expandButton.value.el.focus();

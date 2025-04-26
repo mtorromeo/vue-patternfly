@@ -14,9 +14,9 @@
             :disabled="disabled"
             :auto-validate="false"
             :name="name"
-            :aria-label="filenameAriaLabel ?? (managedFilename ? 'Read only filename' : filenamePlaceholder)"
+            :aria-label="filenameAriaLabel ?? (filename ? 'Read only filename' : filenamePlaceholder)"
             :placeholder="filenamePlaceholder"
-            :model-value="managedFilename"
+            :model-value="filename"
             :aria-describedby="`${id}-browse-button`"
           />
         </pf-input-group-item>
@@ -36,7 +36,7 @@
         <pf-input-group-item>
           <pf-button
             variant="control"
-            :disabled="disabled || (clearButtonDisabled ?? (!managedFilename && !value))"
+            :disabled="disabled || (clearButtonDisabled ?? (!filename && !value))"
             @click="onClearButtonClick"
           >
             {{ clearButtonText }}
@@ -50,7 +50,7 @@
         :id="id"
         :disabled="disabled"
         :required="required"
-        :readonly="readonly || (!!managedFilename && !allowEditingUploadedText)"
+        :readonly="readonly || (!!filename && !allowEditingUploadedText)"
         resize-orientation="vertical"
         :validated="validated"
         :aria-label="ariaLabel"
@@ -60,7 +60,7 @@
         @click="$emit('textAreaClick', $event)"
         @blur="$emit('textAreaBlur', $event)"
       />
-      <div v-if="managedLoading" :class="styles.fileUploadFileDetailsSpinner">
+      <div v-if="loading" :class="styles.fileUploadFileDetailsSpinner">
         <pf-spinner size="lg" :aria-valuetext="spinnerAriaValueText" />
       </div>
     </div>
@@ -78,7 +78,6 @@ import PfTextInput from './TextInput.vue';
 import PfButton from './Button.vue';
 import PfTextarea from './Textarea.vue';
 import PfSpinner from './Spinner.vue';
-import { useManagedProp } from '../use';
 import { useDropZone } from '@vueuse/core';
 
 defineOptions({
@@ -96,8 +95,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   browseButtonText?: string;
   /** Text for the clear button. */
   clearButtonText?: string;
-  /** Value to be shown in the read-only filename field. */
-  filename?: string;
   /** Aria-label for the read-only filename field. */
   filenameAriaLabel?: string;
   /** Placeholder string to display in the empty filename field. */
@@ -112,8 +109,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   clearButtonDisabled?: boolean;
   /** Flag to show if the field is disabled. */
   disabled?: boolean;
-  /** Flag to show if a file is being loaded. */
-  loading?: boolean;
   /** Flag to show if the field is read only. */
   readonly?: boolean;
   /** Flag to show if the field is required. */
@@ -129,8 +124,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
    * If set to error,  field will be modified to indicate error state.
    */
   validated?: 'success' | 'error' | 'default';
-  /** Value of the file's contents (string if text file, ArrayBuffer object otherwise). */
-  modelValue?: string | ArrayBuffer;
   /** Flag to show if a file is being dragged over the file upload field. */
   dragActive?: boolean;
   /** Name property for the preview textarea. */
@@ -149,13 +142,20 @@ const props = withDefaults(defineProps<Props>(), {
   browseButtonText: 'Browse...',
   clearButtonText: 'Clear',
   clearButtonDisabled: undefined,
-  loading: undefined,
   id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Value of the file's contents (string if text file, ArrayBuffer object otherwise). */
+const value = defineModel<string | ArrayBuffer | null>({ default: null });
+
+/** Value to be shown in the read-only filename field. */
+const filename = defineModel<string | null>('filename', { default: null });
+
+/** Flag to show if a file is being loaded. */
+const loading = defineModel<boolean>('loading', { default: false });
+
 const emit = defineEmits<{
-  (name: 'onUpdate:modelValue', value: string | File): void;
   (name: 'browseButtonClick', e: PointerEvent): void;
   (name: 'clearButtonClick', e: PointerEvent): void;
   (name: 'textAreaBlur', e: Event): void;
@@ -169,9 +169,6 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const value = useManagedProp<string | ArrayBuffer | null>('modelValue', null);
-const managedFilename = useManagedProp<string | null>('filename', null);
-const managedLoading = useManagedProp('loading', false);
 const filenameInput = useTemplateRef('filenameInputRef');
 
 useDropZone(() => filenameInput.value?.$el, {
@@ -204,7 +201,7 @@ function readFile(fileHandle: File) {
 
 async function setFile(file: File | null) {
   emit('fileInputChange', file);
-  managedFilename.value = file?.name ?? null;
+  filename.value = file?.name ?? null;
 
   if (!file) {
     value.value = null;
@@ -216,12 +213,12 @@ async function setFile(file: File | null) {
   }
 
   emit('readStarted', file);
-  managedLoading.value = true;
+  loading.value = true;
   let content = null;
   try {
     content = await readFile(file);
   } finally {
-    managedLoading.value = false;
+    loading.value = false;
     emit('readFinished', file, content);
     value.value = content;
   }

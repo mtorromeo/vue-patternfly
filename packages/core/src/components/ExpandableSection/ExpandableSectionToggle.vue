@@ -2,7 +2,7 @@
   <div
     v-bind="ouiaProps"
     :class="[styles.expandableSection, {
-      [styles.modifiers.expanded]: managedExpanded,
+      [styles.modifiers.expanded]: expanded,
       [styles.modifiers.truncate]: truncate,
     }]"
   >
@@ -11,13 +11,13 @@
         variant="link"
         :inline="Boolean(truncate)"
         :aria-controls="contentId"
-        :aria-expanded="managedExpanded"
-        @click="managedExpanded = !managedExpanded"
+        :aria-expanded="expanded"
+        @click="expanded = !expanded"
       >
         <span
           v-if="!truncate"
           :class="[styles.expandableSectionToggleIcon, {
-            [styles.modifiers.expandTop]: managedExpanded && direction === 'up',
+            [styles.modifiers.expandTop]: expanded && direction === 'up',
           }]"
         >
           <angle-right-icon aria-hidden />
@@ -32,7 +32,6 @@
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import PfButton from '../Button.vue';
-import { useManagedProp } from '../../use';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -41,9 +40,6 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** Flag to indicate if the content is expanded */
-  expanded?: boolean;
-
   /** ID of the content of the expandable section */
   contentId?: string;
 
@@ -56,17 +52,13 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 const props = withDefaults(defineProps<Props>(), {
   direction: 'down',
-  expanded: undefined,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:expanded', value: boolean): void;
-}>();
+/** Flag to indicate if the content is expanded */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
-
-const managedExpanded = useManagedProp('expanded', false);
 </script>

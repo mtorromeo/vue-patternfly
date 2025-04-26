@@ -5,10 +5,10 @@
       type="button"
       :class="[
         styles.accordionToggle, {
-          [styles.modifiers.expanded]: managedExpanded,
+          [styles.modifiers.expanded]: expanded,
         },
       ]"
-      :aria-expanded="managedExpanded"
+      :aria-expanded="expanded"
       @click="handleClick($event as PointerEvent)"
     >
       <span v-if="accordion?.togglePosition === 'start'" :class="styles.accordionToggleIcon">
@@ -29,10 +29,10 @@
     :class="[
       styles.accordionExpandableContent, {
         [styles.modifiers.fixed]: fixed,
-        [styles.modifiers.expanded]: managedExpanded,
+        [styles.modifiers.expanded]: expanded,
       },
     ]"
-    :hidden="!managedExpanded"
+    :hidden="!expanded"
   >
     <div :class="styles.accordionExpandableContentBody">
       <slot />
@@ -44,7 +44,6 @@
 import { inject, type ButtonHTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-import { useManagedProp } from '../../use';
 import { AccordionKey } from './Accordion.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -58,16 +57,14 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttri
   toggleComponent?: string;
   contentComponent?: string;
   fixed?: boolean;
-  expanded?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  expanded: undefined,
-});
+const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+const expanded = defineModel<boolean>('expanded', { default: false });
+
 const emit = defineEmits<{
-  (name: 'update:expanded', value: boolean): void;
   (name: 'click', event: PointerEvent): void;
 }>();
 
@@ -77,10 +74,9 @@ defineSlots<{
 }>();
 
 const accordion = inject(AccordionKey, undefined);
-const managedExpanded = useManagedProp('expanded', false);
 
 function handleClick(event: PointerEvent) {
-  managedExpanded.value = !managedExpanded.value;
+  expanded.value = !expanded.value;
   emit('click', event);
 }
 </script>

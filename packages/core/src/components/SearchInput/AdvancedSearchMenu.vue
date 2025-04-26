@@ -44,7 +44,6 @@
 
 <script lang="ts" setup>
 import { computed, inject, type Ref, ref, useId } from 'vue';
-import { useManagedProp } from '../../use';
 import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
 import { useOUIAProps } from '../../helpers/ouia';
 import PfTextInput from '../TextInput.vue';
@@ -63,8 +62,6 @@ defineOptions({
 });
 
 export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfPanel>, 'variant'> {
-  /** Value of the search input. */
-  modelValue?: string | null;
   /** Flag for toggling the open/close state of the advanced search menu. */
   searchMenuOpen?: boolean;
   /** Label for the button which resets the advanced search form and clears the search input. */
@@ -90,10 +87,10 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Value of the search input. */
+const value = defineModel<string>('modelValue', { default: '' });
+
 const emit = defineEmits<{
-  (name: 'update:modelValue', v: string): void;
-  /** A callback for when the input value changes. */
-  (name: 'change', value: string): void;
   /** A callback for when the search button is clicked. */
   (name: 'search', value: string, event: Event, attrValueMap: { [key: string]: string }): void;
   /** A callback for when the open advanced search button is clicked. */
@@ -107,7 +104,6 @@ defineSlots<{
   'form-additional-items'?: (props?: Record<never, never>) => any;
 }>();
 
-const value = useManagedProp('modelValue', '', to => emit('change', to));
 const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
 const searchInput = inject(SearchInputKey);
 const hasWordsId = useId();

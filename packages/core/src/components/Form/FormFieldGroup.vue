@@ -2,7 +2,7 @@
   <component
     v-bind="ouiaProps"
     :is="fieldset ? 'fieldset' : 'div'"
-    :class="[styles.formFieldGroup, { [styles.modifiers.expanded]: managedExpandable && managedExpanded }]"
+    :class="[styles.formFieldGroup, { [styles.modifiers.expanded]: managedExpandable && expanded }]"
   >
     <div v-if="managedExpandable" :class="styles.formFieldGroupToggle">
       <div :class="styles.formFieldGroupToggleButton">
@@ -10,9 +10,9 @@
           :id="uniqueId"
           variant="plain"
           :aria-label="toggleAriaLabel"
-          :aria-expanded="managedExpanded"
+          :aria-expanded="expanded"
           :aria-labelledby="uniqueId"
-          @click="managedExpanded = !managedExpanded"
+          @click="expanded = !expanded"
         >
           <span :class="styles.formFieldGroupToggleIcon">
             <pf-angle-right-icon aria-hidden />
@@ -21,7 +21,7 @@
       </div>
     </div>
     <slot name="header" />
-    <div v-if="!managedExpandable || managedExpanded" :class="styles.formFieldGroupBody">
+    <div v-if="!managedExpandable || expanded" :class="styles.formFieldGroupBody">
       <slot />
     </div>
   </component>
@@ -32,7 +32,6 @@ import styles from '@patternfly/react-styles/css/components/Form/form';
 import { type FieldsetHTMLAttributes, computed, useId } from 'vue';
 import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-import { useManagedProp } from '../../use';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -46,28 +45,21 @@ export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttribut
   /** Flag indicating if the field group is expandable */
   expandable?: boolean;
 
-  /** Flag indicate if the form field group is expanded. Modifies the card to be expandable. */
-  expanded?: boolean;
-
   /** Aria-label to use on the form filed group toggle button */
   toggleAriaLabel?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  expanded: undefined,
-});
+const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:expanded', value: boolean): void;
-}>();
+/** Flag indicate if the form field group is expanded. Modifies the card to be expandable. */
+const expanded = defineModel<boolean>('expanded');
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   header?: (props?: Record<never, never>) => any;
 }>();
 
-const managedExpanded = useManagedProp('expanded', false);
-const managedExpandable = computed(() => props.expandable || isDefined(props.expanded));
+const managedExpandable = computed(() => props.expandable || isDefined(expanded.value));
 const uniqueId = computed(() => `form-field-group-toggle-${useId()}`);
 </script>

@@ -5,7 +5,7 @@
 
   <floating-ui :teleport-to="appendTo" flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex">
     <pf-menu
-      v-if="managedOpen"
+      v-if="open"
       ref="menuRef"
       v-bind="$attrs"
       :scrollable="maxMenuHeight !== undefined || menuHeight !== undefined || scrollable"
@@ -28,8 +28,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   text?: string;
   disabled?: boolean;
 
-  /** Flag to indicate if menu is opened.*/
-  open?: boolean;
   /** Flag indicating the toggle should be focused after a selection. */
   autoFocus?: boolean;
   /** Flag indicating that the dropdown should not automatically close on select. */
@@ -60,7 +58,7 @@ import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.v
 import PfMenuContent from '../Menu/MenuContent.vue';
 import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
-import { useManagedProp, useHtmlElementFromVNodes } from '../../use';
+import { useHtmlElementFromVNodes } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 let currentId = 0;
@@ -72,15 +70,16 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   position: 'left',
-  open: undefined,
   autoFocus: true,
   zIndex: 9999,
   placement: 'bottom',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Flag to indicate if menu is opened.*/
+const open = defineModel<boolean>('open', { default: false });
+
 const emit = defineEmits<{
-  (name: 'update:open', value: boolean): void;
   (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
 }>();
 
@@ -93,7 +92,6 @@ const menu = useTemplateRef('menuRef');
 
 const { element: toggleElementRef, findReference } = useHtmlElementFromVNodes();
 
-const managedOpen = useManagedProp('open', false);
 const effectiveId = computed(() => props.id || `pf-dropdown-toggle-id-${currentId++}`);
 
 const placement = computed((): Placement => {
@@ -109,7 +107,7 @@ function onSelect(event: Event, itemId: MenuItemId | null | undefined) {
     toggleElementRef.value.focus();
   }
   if (!props.noCloseOnSelect) {
-    managedOpen.value = false;
+    open.value = false;
   }
 }
 
@@ -119,9 +117,9 @@ function renderToggles() {
   const toggleProps = {
     id: effectiveId.value,
     disabled: props.disabled,
-    expanded: managedOpen.value,
+    expanded: open.value,
     'aria-haspopup': !!slots.default,
-    'onUpdate:expanded': (v: boolean) => (managedOpen.value = v),
+    'onUpdate:expanded': (v: boolean) => (open.value = v),
     onKeydown,
     ...ouiaProps,
   };
@@ -146,19 +144,19 @@ function renderToggles() {
 }
 
 function onKeydown(e: KeyboardEvent) {
-  if (!managedOpen.value || !['Escape', 'Tab'].includes(e.key)) {
+  if (!open.value || !['Escape', 'Tab'].includes(e.key)) {
     return;
   }
 
   // Close the menu on tab or escape if onOpenChange is provided
-  managedOpen.value = false;
+  open.value = false;
   if (toggleElementRef.value instanceof HTMLElement) {
     toggleElementRef.value?.focus();
   }
 }
 
 const handleClick = (event: PointerEvent) => {
-  if (!managedOpen.value) {
+  if (!open.value) {
     return;
   }
 
@@ -172,7 +170,7 @@ const handleClick = (event: PointerEvent) => {
     }, 0);
   } else if (!menu.value?.el?.contains(event.target as Node)) {
     // If the event is not on the toggle, close the menu
-    managedOpen.value = false;
+    open.value = false;
   }
 };
 

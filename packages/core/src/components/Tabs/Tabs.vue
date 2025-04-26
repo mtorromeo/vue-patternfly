@@ -12,7 +12,7 @@
         [styles.modifiers.fill]: filled,
         [styles.modifiers.subtab]: subtab,
         [styles.modifiers.vertical]: vertical,
-        [styles.modifiers.expanded]: vertical && expandable && managedExpanded,
+        [styles.modifiers.expanded]: vertical && expandable && (expanded ?? defaultExpanded),
         [styles.modifiers.box]: box,
         [styles.modifiers.scrollable]: showScrollButtons,
         [styles.modifiers.pageInsets]: pageInsets,
@@ -51,11 +51,11 @@
         <button
           ref="overflowTabRef"
           type="button"
-          :class="[styles.tabsLink, {[styles.modifiers.expanded]: managedExpanded}]"
+          :class="[styles.tabsLink, {[styles.modifiers.expanded]: (expanded ?? defaultExpanded)}]"
           aria-haspopup="menu"
-          :aria-expanded="managedExpanded"
+          :aria-expanded="expanded ?? defaultExpanded"
           role="tab"
-          @click="managedExpanded = !managedExpanded"
+          @click="expanded = !expanded"
         >
           <pf-tab-title-text>
             More ({{ overflowingTabCount }})
@@ -66,7 +66,7 @@
         </button>
 
         <floating-ui :teleport-to="tabMoreRef" :reference="overflowTabRef">
-          <pf-menu v-if="managedExpanded" v-bind="$attrs">
+          <pf-menu v-if="expanded ?? defaultExpanded" v-bind="$attrs">
             <pf-menu-content>
               <pf-menu-list ref="tabOverflow" />
             </pf-menu-content>
@@ -94,8 +94,6 @@
 <script lang="ts">
 export interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
-  /** The index of the active tab */
-  activeKey?: TabKey;
   /** The index of the default active tab. Set this for uncontrolled Tabs */
   defaultActiveKey?: TabKey;
   /** Enables the filled tab list layout */
@@ -124,8 +122,6 @@ export interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakp
   unmountOnExit?: boolean;
   /** Flag indicates that the tabs should use page insets. */
   pageInsets?: boolean;
-  /** Flag to indicate if the vertical tabs are expanded */
-  expanded?: boolean;
   /** Flag indicating the default expanded state for uncontrolled expand/collapse of */
   defaultExpanded?: boolean;
   /** Flag which places overflowing tabs into a menu triggered by the last tab. Additionally an object can be passed with custom settings for the overflow tab. */
@@ -137,7 +133,6 @@ export interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakp
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import { classesFromBreakpointProps, type ExpandableBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isElementInView } from '../../util';
-import { useManagedProp } from '../../use';
 import { watch, watchEffect, nextTick, onMounted, provide, computed, type Ref, ref, type HTMLAttributes, useTemplateRef, useId } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { isDefined, useEventListener } from '@vueuse/core';
@@ -159,22 +154,25 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   component: 'div',
-  expanded: undefined,
   id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:activeKey', value: TabKey): void;
-  (name: 'update:expanded', value: boolean): void;
-}>();
+/** The index of the active tab */
+const activeKey = defineModel<TabKey>('activeKey');
+const localActiveKey = computed({
+  get: () => activeKey.value ?? props.defaultActiveKey,
+  set: (value) => {
+    activeKey.value = value;
+  },
+});
+
+/** Flag to indicate if the vertical tabs are expanded */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
-
-const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);
-const managedExpanded = useManagedProp('expanded', props.defaultExpanded);
 
 const tabListRef = useTemplateRef('tabList');
 const tabMoreRef = useTemplateRef('tabMore');

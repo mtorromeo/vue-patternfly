@@ -5,8 +5,8 @@
         variant="link"
         :inline="Boolean(truncate)"
         :aria-controls="contentId"
-        :aria-expanded="managedExpanded"
-        @click="managedExpanded = !managedExpanded"
+        :aria-expanded="expanded"
+        @click="expanded = !expanded"
       >
         <span v-if="!truncate" :class="styles.expandableSectionToggleIcon">
           <angle-right-icon aria-hidden />
@@ -21,7 +21,7 @@
   <div
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.expandableSection, {
-      [styles.modifiers.expanded]: managedExpanded,
+      [styles.modifiers.expanded]: expanded,
       [styles.modifiers.truncate]: truncate,
       [styles.modifiers.displayLg]: large,
       [styles.modifiers.limitWidth]: widthLimited,
@@ -32,7 +32,7 @@
       ref="expandableContentRef"
       :id="contentId"
       :class="styles.expandableSectionContent"
-      :hidden="!truncate && !managedExpanded"
+      :hidden="!truncate && !expanded"
       role="region"
       :style="{
         [lineClamp.name]: truncate && truncate > 0 ? truncate : undefined
@@ -49,7 +49,6 @@ import styles from '@patternfly/react-styles/css/components/ExpandableSection/ex
 import lineClamp from '@patternfly/react-tokens/dist/esm/c_expandable_section_m_truncate__content_LineClamp';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import PfButton from '../Button.vue';
-import { useManagedProp } from '../../use';
 import { computed, ref, watch, type HTMLAttributes, type Ref } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { createReusableTemplate, useElementSize } from '@vueuse/core';
@@ -60,9 +59,6 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** Flag to indicate if the content is expanded */
-  expanded?: boolean;
-
   /** Text that appears in the attached toggle */
   toggleText?: string;
 
@@ -88,31 +84,27 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   truncate?: number;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  expanded: undefined,
-});
+const props = defineProps<Props>()
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:expanded', value: boolean): void;
-}>();
+/** Flag to indicate if the content is expanded */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   'toggle-text'?: (props?: Record<never, never>) => any;
 }>();
 
-const managedExpanded = useManagedProp('expanded', false);
 const [DefineToggle, Toggle] = createReusableTemplate();
 const expandableContentRef: Ref<HTMLDivElement | undefined> = ref();
 const { width: expandableContentWidth } = useElementSize(expandableContentRef);
 const hasToggle = ref(true);
 
 const computedToggleText = computed(() => {
-  if (managedExpanded.value && props.toggleTextExpanded) {
+  if (expanded.value && props.toggleTextExpanded) {
     return props.toggleTextExpanded;
   }
-  if (!managedExpanded.value && props.toggleTextCollapsed) {
+  if (!expanded.value && props.toggleTextCollapsed) {
     return props.toggleTextCollapsed;
   }
   return props.toggleText;

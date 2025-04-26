@@ -42,7 +42,7 @@ import PfTooltipArrow from './TooltipArrow.vue';
 import PfTooltipContent from './TooltipContent.vue';
 import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
-import { useHtmlElementFromVNodes, useManagedProp } from '../../use';
+import { useHtmlElementFromVNodes } from '../../use';
 import type { Placement as UIPlacement } from '@floating-ui/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -88,8 +88,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
    * By setting this prop to 'flip' it attempts to flip the tooltip to the opposite side if there is no space.
    */
   flip?: boolean;
-  /** value for visibility when trigger is 'manual' */
-  visible?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -107,20 +105,18 @@ const props = withDefaults(defineProps<Props>(), {
 const safe = ref(!props.animationDuration);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: computed(() => safe.value && props.ouiaSafe)});
 
+/** value for visibility when trigger is 'manual' */
+const visible = defineModel('visible', { default: false });
+
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   content?: (props?: Record<never, never>) => any;
 }>();
 
-defineEmits<{
-  (name: 'update:visible', value: boolean): void;
-}>();
-
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 const tooltipElement = useTemplateRef('tooltipElementRef');
 const tooltipDisplay = ref(false);
-const managedVisible = useManagedProp('visible', false);
-const opacity = ref(managedVisible.value);
+const opacity = ref(visible.value);
 const showTimer = ref(0);
 const hideTimer = ref(0);
 
@@ -145,11 +141,11 @@ const positionModifiers: Record<UIPlacement, string> = {
 
 watch([tooltipElement, triggerClick, triggerFocus, triggerMouseEnter], transitionOutEnd);
 
-watch(managedVisible, () => {
+watch(visible, () => {
   safe.value = !props.animationDuration;
   opacity.value = safe.value;
 
-  if (managedVisible.value) {
+  if (visible.value) {
     tooltipDisplay.value = true;
     if (!opacity.value) {
       setTimeout(() => (opacity.value = true), 0);
@@ -220,23 +216,23 @@ function handleMouseLeave() {
 function show(delay?: boolean) {
   clearTimeout(hideTimer.value);
   if (delay === undefined || delay) {
-    showTimer.value = setTimeout(() => (managedVisible.value = true), props.entryDelay);
+    showTimer.value = setTimeout(() => (visible.value = true), props.entryDelay);
   } else {
-    managedVisible.value = true;
+    visible.value = true;
   }
 }
 
 function hide(delay?: boolean) {
   clearTimeout(showTimer.value);
   if (delay === undefined || delay) {
-    hideTimer.value = setTimeout(() => (managedVisible.value = false), props.exitDelay);
+    hideTimer.value = setTimeout(() => (visible.value = false), props.exitDelay);
   } else {
-    managedVisible.value = false;
+    visible.value = false;
   }
 }
 
 function transitionOutEnd() {
-  if (!managedVisible.value) {
+  if (!visible.value) {
     tooltipDisplay.value = false;
   }
 }

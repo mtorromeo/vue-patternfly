@@ -4,7 +4,7 @@
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.card, ...selectableModifiers, {
       [styles.modifiers.compact]: compact,
-      [styles.modifiers.expanded]: managedExpanded,
+      [styles.modifiers.expanded]: expanded,
       [styles.modifiers.displayLg]: large && !compact,
       [styles.modifiers.fullHeight]: fullHeight,
       [styles.modifiers.plain]: plain,
@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts">
-export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean>>;
+export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean | undefined>>;
 export const CardExpandableKey = Symbol('CardExpandableKey') as InjectionKey<ComputedRef<boolean>>;
 export const CardCheckboxKey = Symbol('CardCheckboxKey') as InjectionKey<ComputedRef<{
   name: string | undefined;
   hidden: boolean;
-  checked: WritableComputedRef<boolean>;
+  checked: Ref<boolean>;
   disabled: boolean | undefined;
   onChange: (e: Event) => void;
 } | null>>;
@@ -45,9 +45,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   /** Name of the optional hidden input that tracks the selected status */
   name?: string;
 
-  /** Modifies the card to include selected styling */
-  selected?: boolean,
-
   /** Flag indicating whether a card that is either only clickable or that is both clickable and selectable
    * is currently clicked and has clicked styling.
    */
@@ -65,9 +62,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   /** Modifies the card to be expandable */
   expandable?: boolean;
 
-  /** Flag indicating if a card is expanded. Modifies the card to be expandable. */
-  expanded?: boolean;
-
   /** Flag indicating that a clickable or selectable card is disabled. */
   disabled?: boolean;
 
@@ -80,8 +74,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
-import { provide, computed, type Component, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes, type WritableComputedRef } from 'vue';
-import { useManagedProp } from '../../use';
+import { provide, computed, type Component, type InjectionKey, type ComputedRef, type HTMLAttributes, type Ref } from 'vue';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -92,15 +85,17 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'div',
-  expanded: undefined,
-  selected: undefined,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Flag indicating if a card is expanded. Modifies the card to be expandable. */
+const expanded = defineModel<boolean>('expanded');
+
+/** Modifies the card to include selected styling */
+const selected = defineModel<boolean>('selected', { default: false });
+
 const emit = defineEmits<{
   (name: 'change', e: Event): void;
-  (name: 'update:expanded', value: boolean): void;
-  (name: 'update:selected', value: boolean): void;
 }>();
 
 defineSlots<{
@@ -109,10 +104,8 @@ defineSlots<{
   badge?: (props?: Record<never, never>) => any;
 }>();
 
-const managedExpanded = useManagedProp('expanded', false);
-const managedSelected = useManagedProp('selected', false);
-provide(CardExpandedKey, managedExpanded);
-provide(CardExpandableKey, computed(() => props.expandable || isDefined(props.expanded)));
+provide(CardExpandedKey, expanded);
+provide(CardExpandableKey, computed(() => props.expandable || isDefined(expanded.value)));
 provide(CardCheckboxKey, computed(() => {
   if (!props.selectableInput && !props.name) {
     return null;
@@ -120,7 +113,7 @@ provide(CardCheckboxKey, computed(() => {
   return {
     name: props.name,
     hidden: props.selectableInput !== 'visible',
-    checked: managedSelected,
+    checked: selected,
     disabled: props.disabled,
     onChange: (e: Event) => emit('change', e),
   };
@@ -131,11 +124,11 @@ const selectableModifiers = computed(() => {
     return [
       styles.modifiers.selectable,
       styles.modifiers.clickable,
-      (managedSelected.value || props.clicked) && styles.modifiers.current,
+      (selected.value || props.clicked) && styles.modifiers.current,
     ];
   }
   if (props.selectable) {
-    return [styles.modifiers.selectable, managedSelected.value && styles.modifiers.selected];
+    return [styles.modifiers.selectable, selected.value && styles.modifiers.selected];
   }
   if (props.onClick) {
     return [styles.modifiers.clickable, props.clicked && styles.modifiers.current];
