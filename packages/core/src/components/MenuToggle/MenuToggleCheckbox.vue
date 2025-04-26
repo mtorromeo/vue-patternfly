@@ -2,7 +2,7 @@
   <label v-bind="(ouiaProps as any)" :class="styles.check">
     <input
       v-bind="$attrs"
-      :ref="(el) => (el as HTMLInputElement).indeterminate = checked === null"
+      :ref="(el) => setIndeterminateState(el)"
       :class="styles.checkInput"
       type="checkbox"
       :checked="Boolean(checked)"
@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { type InputHTMLAttributes } from 'vue';
+import { type ComponentPublicInstance, type InputHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -30,4 +30,10 @@ const props = defineProps<Props>();
 defineSlots<Record<string, never>>();
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+
+function setIndeterminateState(el: Element | ComponentPublicInstance | null) {
+  if (el instanceof HTMLInputElement) {
+    el.indeterminate = props.checked === null;
+  }
+}
 </script>
