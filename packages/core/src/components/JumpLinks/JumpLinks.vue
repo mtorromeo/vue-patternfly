@@ -6,7 +6,7 @@
       breakpointClasses, {
         [styles.modifiers.center]: centered,
         [styles.modifiers.vertical]: vertical,
-        [styles.modifiers.expanded]: managedExpanded,
+        [styles.modifiers.expanded]: expanded,
       }
     ]"
   >
@@ -16,8 +16,8 @@
           <pf-button
             variant="plain"
             :aria-label="toggleAriaLabel"
-            :aria-expanded="managedExpanded"
-            @click="managedExpanded = !managedExpanded"
+            :aria-expanded="expanded"
+            @click="expanded = !expanded"
           >
             <span :class="styles.jumpLinksToggleIcon">
               <angle-right-icon />
@@ -67,8 +67,6 @@ export interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ign
   autoLinkFromElements?: string | MaybeRef<HTMLElement[]>;
   /** Offset to add to `scrollPosition`, potentially for a masthead which content scrolls under. */
   offset?: number;
-  /** On mobile whether or not the JumpLinks starts out expanded */
-  expanded?: boolean;
   /** Aria label for expandable toggle */
   toggleAriaLabel?: string;
 }
@@ -78,7 +76,7 @@ export interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ign
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import { classesFromBreakpointProps, type ExpandableBreakpointProps } from '../../breakpoints';
 import { provide, nextTick, ref, type Ref, computed, watch, onMounted, onUnmounted, toValue, type HTMLAttributes, type MaybeRef, type InjectionKey } from 'vue';
-import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey } from '../../use';
+import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 import { computedWithControl, type ComputedRefWithControl, type MaybeComputedElementRef } from '@vueuse/core';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import PfJumpLinksItem from './JumpLinksItem.vue';
@@ -90,12 +88,14 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  expanded: undefined,
   offset: 100,
   alwaysShowLabel: true,
   toggleAriaLabel: 'Toggle jump links',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+
+/** On mobile whether or not the JumpLinks starts out expanded */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineEmits<{
   (name: 'update:activeIndex', value: number): void;
@@ -107,7 +107,6 @@ defineSlots<{
 }>();
 
 const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['expandable'], styles, { short: true }));
-const managedExpanded = useManagedProp('expanded', false);
 
 const links = provideChildrenTracker(JumpLinksKey);
 

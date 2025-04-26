@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
 import { inject, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
-import { useChildrenTracker, useManagedProp } from '../../use';
+import { useChildrenTracker } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { FormInputsKey } from '../Form/common';
@@ -48,15 +48,15 @@ defineOptions({
 export interface Props extends OUIAProps, /* @vue-ignore */ InputHTMLAttributes {
   /** Suggestion that will show up like a placeholder even with text in the input */
   hint?: string;
-  /** Value for the input */
-  modelValue?: string | number | null;
 }
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Value for the input */
+const value = defineModel<string | number | null>({ default: null });
+
 const emit = defineEmits<{
-  (name: 'update:modelValue', v: string): void;
   /** Callback for when there is a change in the input field*/
   (name: 'change', event: Event): void;
   /** Callback for when the input field is focused*/
@@ -71,7 +71,6 @@ defineSlots<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const value = useManagedProp('modelValue', '');
 const disabled = inject(TextInputGroupDisabledKey, false);
 const input = useTemplateRef('inputRef');
 

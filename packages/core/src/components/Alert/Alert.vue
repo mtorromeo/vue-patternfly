@@ -9,7 +9,7 @@
         [styles.modifiers.inline]: inline,
         [styles.modifiers.plain]: plain,
         [styles.modifiers.expandable]: expandable,
-        [styles.modifiers.expanded]: managedExpanded,
+        [styles.modifiers.expanded]: expanded,
       }
     ]"
     :aria-live="liveRegion ? 'polite' : undefined"
@@ -20,9 +20,9 @@
     <div v-if="expandable" :class="styles.alertToggle">
       <pf-button
         variant="plain"
-        :aria-expanded="managedExpanded"
+        :aria-expanded="expanded"
         :aria-label="toggleAriaLabel || `Toggle ${variantLabel} ${title}`"
-        @click="managedExpanded = !managedExpanded"
+        @click="expanded = !expanded"
       >
         <span :class="styles.alertToggleIcon">
           <pf-angle-right-icon aria-hidden />
@@ -79,7 +79,6 @@ import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { ref, watch, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component, useTemplateRef, type ComponentPublicInstance } from 'vue';
 import { useElementSize } from '@vueuse/core';
-import { useManagedProp } from '../../use';
 import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
@@ -93,8 +92,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   id?: string;
   /** Flag indicating that the alert is expandable. */
   expandable?: boolean;
-  /** Flag indicating that the alert is expanded */
-  expanded?: boolean;
   /** Show close button */
   onClose?: (e: Event) => void;
   /** Flag to indicate if the alert is inline. */
@@ -128,7 +125,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  expanded: undefined,
   variant: 'custom',
   truncateTitle: 0,
   timeoutAnimation: 3000,
@@ -136,6 +132,9 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'h4',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant});
+
+/** Flag indicating that the alert is expanded */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 const emit = defineEmits<{
   (name: 'mouseenter', e: Event): void;
@@ -160,7 +159,6 @@ const timedOutAnimation = ref(true);
 const containsFocus = ref(false);
 const el = useTemplateRef('elRef');
 
-const managedExpanded = useManagedProp('expanded', false);
 const variantLabel = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)} alert:`);
 const dismissed = computed(() => timedOut.value && timedOutAnimation.value && !isMouseOver.value && !containsFocus.value);
 

@@ -60,8 +60,6 @@ defineOptions({
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked'> {
   component?: string | Component;
-  /** Flag to show if the checkbox is checked. */
-  modelValue?: boolean | null;
   /** Flag to show if the checkbox is disabled. */
   disabled?: boolean;
   /** Flag to show if the checkbox is required. */
@@ -85,9 +83,11 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Flag to show if the checkbox is checked. */
+const value = defineModel<boolean | null>({ default: false });
+
 const emit = defineEmits<{
   (name: 'change', e: Event): void;
-  (name: 'update:modelValue', value: boolean): void;
 }>();
 
 defineSlots<{
@@ -99,20 +99,19 @@ defineSlots<{
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const input = useTemplateRef('inputRef');
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
-const validId = computed(() => props.id || getUniqueId());
 
-watch(() => props.modelValue, () => {
+watch(value, () => {
   if (!input.value) {
     return;
   }
-  input.value.indeterminate = props.modelValue === null;
+  input.value.indeterminate = value.value === null;
 }, {
   immediate: true,
 });
 
 function onChange(e: Event) {
   emit('change', e);
-  emit('update:modelValue', (e.currentTarget as HTMLInputElement).checked);
+  value.value = (e.currentTarget as HTMLInputElement).checked;
 }
 
 defineExpose({

@@ -1,5 +1,4 @@
-import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref, onBeforeUnmount } from "vue";
-import { useManagedProp } from "./use";
+import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref, onBeforeUnmount, useModel } from "vue";
 import { onMounted } from "vue";
 
 export type InputValidateState = 'success' | 'warning' | 'error' | 'default';
@@ -22,7 +21,7 @@ export function useInputValidation({
   const effectiveValidated = computed(() => validated?.value ?? innerValidated.value);
   watch(effectiveValidated, () => instance?.$emit('update:validated', effectiveValidated.value));
 
-  const value = useManagedProp('modelValue', '');
+  const value = useModel((instance?.$props ?? {}) as { modelValue?: string | number | null }, 'modelValue');
 
   function getInput() {
     return unref(inputElement) ?? (instance?.$el as InputElement | undefined);

@@ -2,15 +2,15 @@
   <div
     v-bind="(ouiaProps as any)"
     :class="[styles.expandableSection, styles.modifiers.detached, {
-      [styles.modifiers.expanded]: managedExpanded,
+      [styles.modifiers.expanded]: expanded,
     }]"
   >
     <button
       :class="styles.expandableSectionToggle"
       type="button"
-      :aria-expanded="managedExpanded"
+      :aria-expanded="expanded"
       :aria-controls="contentId"
-      @click="managedExpanded = !managedExpanded"
+      @click="expanded = !expanded"
     >
       <span
         :class="[styles.expandableSectionToggleIcon, {
@@ -29,7 +29,6 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-import { useManagedProp } from '../../use';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -38,14 +37,10 @@ defineOptions({
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-    /** Flag to indicate if the content is expanded */
-    expanded?: boolean;
-
-    /** ID of the content of the expandable section */
-    contentId?: string;
-
-    /** Direction the toggle arrow should point when the expandable section is expanded. */
-    direction?: 'up' | 'down';
+  /** ID of the content of the expandable section */
+  contentId?: string;
+  /** Direction the toggle arrow should point when the expandable section is expanded. */
+  direction?: 'up' | 'down';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -54,13 +49,10 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:expanded', value: boolean): void;
-}>();
+/** Flag to indicate if the content is expanded */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
-
-const managedExpanded = useManagedProp('expanded', false);
 </script>

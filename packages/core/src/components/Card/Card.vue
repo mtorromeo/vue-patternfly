@@ -4,7 +4,7 @@
     class="pf-v5-screen-reader"
     type="checkbox"
     :name="name"
-    :checked="managedSelected"
+    :checked="selected"
     :disabled="selectableDisabled"
     tabindex="-1"
     @change="emit('change', $event)"
@@ -14,7 +14,7 @@
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.card, ...selectableModifiers, {
       [styles.modifiers.compact]: compact,
-      [styles.modifiers.expanded]: managedExpanded,
+      [styles.modifiers.expanded]: expanded,
       [styles.modifiers.flat]: flat,
       [styles.modifiers.rounded]: rounded,
       [styles.modifiers.displayLg]: large && !compact,
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean>>;
+export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean | undefined>>;
 export const CardExpandableKey = Symbol('CardExpandableKey') as InjectionKey<ComputedRef<boolean>>;
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
@@ -54,9 +54,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
   /** Name of the optional hidden input that tracks the selected status */
   name?: string;
 
-  /** Modifies the card to include selected styling */
-  selected?: boolean,
-
   /** Modifies the card to include flat styling */
   flat?: boolean;
 
@@ -74,16 +71,12 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 
   /** Modifies the card to be expandable */
   expandable?: boolean;
-
-  /** Flag indicating if a card is expanded. Modifies the card to be expandable. */
-  expanded?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
-import { provide, computed, type Component, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes } from 'vue';
-import { useManagedProp } from '../../use';
+import { provide, computed, type Component, type InjectionKey, type ComputedRef, type HTMLAttributes, type Ref } from 'vue';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -99,11 +92,15 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Flag indicating if a card is expanded. Modifies the card to be expandable. */
+const expanded = defineModel<boolean>('expanded');
+
+/** Modifies the card to include selected styling */
+const selected = defineModel<boolean>('selected', { default: false });
+
 const emit = defineEmits<{
   (name: 'click', e: PointerEvent): void;
   (name: 'change', e: Event): void;
-  (name: 'update:expanded', value: boolean): void;
-  (name: 'update:selected', value: boolean): void;
 }>();
 
 defineSlots<{
@@ -112,26 +109,24 @@ defineSlots<{
   badge?: (props?: Record<never, never>) => any;
 }>();
 
-const managedExpanded = useManagedProp('expanded', false);
-const managedSelected = useManagedProp('selected', false);
-provide(CardExpandedKey, managedExpanded);
-provide(CardExpandableKey, computed(() => props.expandable || isDefined(props.expanded)));
+provide(CardExpandedKey, expanded);
+provide(CardExpandableKey, computed(() => props.expandable || isDefined(expanded.value)));
 
 const selectableModifiers = computed(() => {
   if (props.selectableDisabled) {
     return [styles.modifiers.nonSelectableRaised];
   }
   if (props.selectableRaised) {
-    return [styles.modifiers.selectableRaised, managedSelected.value && styles.modifiers.selectedRaised];
+    return [styles.modifiers.selectableRaised, selected.value && styles.modifiers.selectedRaised];
   }
   if (props.selectable) {
-    return [styles.modifiers.selectable, managedSelected.value && styles.modifiers.selected];
+    return [styles.modifiers.selectable, selected.value && styles.modifiers.selected];
   }
   return [];
 });
 
 function onClick(e: PointerEvent)  {
-  managedSelected.value = !managedSelected.value;
+  selected.value = !selected.value;
   emit('click', e);
 }
 </script>

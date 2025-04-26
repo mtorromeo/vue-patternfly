@@ -33,7 +33,7 @@
 export type MenuProvide = {
   parentMenu: MenuProvide | undefined;
   favoriteList: Ref<InstanceType<typeof PfMenuList> | null>;
-  selected?: WritableComputedRef<MenuItemId | MenuItemId[] | null>;
+  selected?: Ref<MenuItemId | MenuItemId[] | null>;
   // drilldownItemPath: MenuItemId[];
   activeItemId?: MenuItemId;
   state: MenuState;
@@ -57,8 +57,6 @@ export interface MenuState {
 export type MenuItemId = string | number | symbol;
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
-  /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
-  selected?: MenuItemId | MenuItemId[] | null;
   /** @beta Indicates if menu contains a flyout menu */
   containsFlyout?: boolean;
   /** @beta Indicating that the menu should have nav flyout styling */
@@ -92,8 +90,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type WritableComputedRef, type HTMLAttributes, useTemplateRef } from 'vue';
-import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey } from '../../use';
+import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type HTMLAttributes, useTemplateRef } from 'vue';
+import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 import { isDefined } from '@vueuse/shared';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDivider from '../Divider.vue';
@@ -115,6 +113,10 @@ const props = withDefaults(defineProps<Props>(), {
   // drilldownItemPath: () => [],
   favoritesLabel: 'Favorites',
 });
+const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+
+/** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
+const selected = defineModel<MenuItemId | MenuItemId[] | null>('selected', { default: null });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
@@ -125,15 +127,11 @@ const emit = defineEmits<{
   (name: 'search-input-change', event: Event, value: string): void;
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
   (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
-  (name: 'update:selected', value: MenuItemId | MenuItemId[] | null): void;
 }>();
-
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 // const instance = getCurrentInstance();
 
 const el = useTemplateRef('elRef');
-const managedSelected = useManagedProp<MenuItemId | MenuItemId[] | null>('selected', null);
 
 const favoriteList = useTemplateRef<InstanceType<typeof PfMenuList>>('favoriteListRef');
 const items = provideChildrenTracker(MenuItemsKey);
@@ -154,7 +152,7 @@ const parentMenu = inject(MenuInjectionKey, undefined);
 provide(MenuInjectionKey, {
   parentMenu,
   favoriteList,
-  selected: managedSelected,
+  selected,
   // drilldownItemPath: $props.drilldownItemPath,
   activeItemId: props.activeItemId,
   state,
@@ -165,20 +163,20 @@ provide(MenuInjectionKey, {
     if (!isDefined(itemId)) {
       return;
     }
-    if (Array.isArray(managedSelected.value)) {
-      const i = managedSelected.value.indexOf(itemId);
+    if (Array.isArray(selected.value)) {
+      const i = selected.value.indexOf(itemId);
       if (i >= 0) {
-        const value = [...managedSelected.value];
+        const value = [...selected.value];
         value.splice(i, 1);
-        emit('update:selected', value);
+        selected.value = value;
       } else {
-        emit('update:selected', [...managedSelected.value, itemId]);
+        selected.value = [...selected.value, itemId];
       }
     } else {
-      if (managedSelected.value === itemId) {
-        emit('update:selected', null);
+      if (selected.value === itemId) {
+        selected.value = null;
       } else {
-        emit('update:selected', itemId);
+        selected.value = itemId;
       }
     }
   },

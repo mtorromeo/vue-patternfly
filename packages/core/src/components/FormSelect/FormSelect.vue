@@ -32,9 +32,6 @@
 export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfFormSelectOption>>;
 
 export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
-  /** @model */
-  modelValue?: string | string[] | null;
-
   disabled?: boolean;
 
   /**
@@ -49,7 +46,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttri
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { provideChildrenTracker, useManagedProp, type ChildrenTrackerInjectionKey, useChildrenTracker } from '../../use';
+import { provideChildrenTracker, type ChildrenTrackerInjectionKey, useChildrenTracker } from '../../use';
 import type PfFormSelectOption from './FormSelectOption.vue';
 import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
@@ -65,9 +62,7 @@ defineOptions({
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-defineEmits<{
-  (name: 'update:modelValue', value: string | string[]): void;
-}>();
+const value = defineModel<string | string[] | null>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -76,7 +71,6 @@ defineSlots<{
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const input = useTemplateRef('inputRef');
 const options = provideChildrenTracker(FormSelectOptionsKey);
-const value = useManagedProp('modelValue', '');
 const hasStatusIcon = computed(() => props.validated && ['success', 'error', 'warning'].includes(props.validated));
 
 const selectedOption = computed(() => {

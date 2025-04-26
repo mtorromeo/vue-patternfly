@@ -12,15 +12,9 @@
 </template>
 
 <script lang="ts">
-export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<WritableComputedRef<string | number | boolean | object | symbol | undefined | null>>;
+export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<Ref<string | number | boolean | object | symbol | undefined | null>>;
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /**
-   * value of the selected item
-   * @model
-   */
-  modelValue?: string | number | boolean | object | null,
-
   /** Form element name */
   name?: string,
   required?: boolean;
@@ -32,9 +26,8 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { type Component, type InjectionKey, provide, type WritableComputedRef, type HTMLAttributes, ref } from 'vue';
+import { type Component, type InjectionKey, provide, type HTMLAttributes, ref, type Ref } from 'vue';
 import { findChildrenVNodes } from '../../util';
-import { useManagedProp } from '../../use';
 import Wrap from '../../helpers/Wrap.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -46,15 +39,13 @@ defineOptions({
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+/** Value for the selected item */
+const value = defineModel<string | number | boolean | object | null>({ default: null });
+
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-defineEmits<{
-  (name: 'update:modelValue', value: string | number | boolean | object): void;
-}>();
-
-const value = useManagedProp<string | number | boolean | object | null>('modelValue', null);
 const grouped = ref(false);
 provide(SimpleListValueKey, value);
 

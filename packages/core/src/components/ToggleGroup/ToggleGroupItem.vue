@@ -38,7 +38,7 @@ export interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup generic="T = string | number">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { inject, computed, ref, type HTMLAttributes } from 'vue';
+import { inject, computed, ref, type HTMLAttributes, type Ref } from 'vue';
 import { ToggleGroupDisabledKey, ToggleGroupSelectionKey } from './ToggleGroup.vue';
 import { isDefined } from '@vueuse/shared';
 
@@ -63,7 +63,7 @@ defineSlots<{
 }>();
 
 const injectedDisabled = inject(ToggleGroupDisabledKey, undefined);
-const selection = inject(ToggleGroupSelectionKey, undefined);
+const selection: Ref<T | undefined> | undefined = inject(ToggleGroupSelectionKey, undefined) as any;
 
 const innerSelected = ref(false);
 
@@ -108,7 +108,7 @@ const effectiveSelected = computed({
     if (Array.isArray(selection.value)) {
       if (to) {
         if (!selection.value.includes(value)) {
-          selection.value = [...selection.value, value];
+          selection.value = [...selection.value, value] as T;
         }
       } else {
         const idx = selection.value.indexOf(value);
@@ -117,7 +117,7 @@ const effectiveSelected = computed({
         }
       }
     } else if (to) {
-      selection.value = value;
+      selection.value = value as T;
     } else {
       selection.value = undefined;
     }
