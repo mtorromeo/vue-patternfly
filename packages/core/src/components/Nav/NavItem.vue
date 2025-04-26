@@ -3,7 +3,7 @@
     :is="component"
     ref="elRef"
     :class="[styles.navItem, itemClass, {
-      [(styles.modifiers.flyout || 'pf-m-flyout')]: $slots.flyout,
+      [styles.modifiers.flyout]: $slots.flyout,
     }]"
     v-bind="{...ouiaProps, ...itemAttrs}"
     @keydown="handleFlyout"
@@ -22,7 +22,7 @@
       v-bind="$attrs"
       @click="select"
     >
-      <span :class="`${styles.nav}__link-text`">
+      <span :class="`${styles.navLink}-text`">
         <slot />
       </span>
       <span v-if="$slots.flyout" :class="styles.navToggle">
