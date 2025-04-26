@@ -25,7 +25,7 @@
       <span v-if="$slots.icon" :class="styles.navLinkIcon">
         <slot name="icon" />
       </span>
-      <span :class="`${styles.nav}__link-text`">
+      <span :class="`${styles.navLink}-text`">
         <slot />
       </span>
       <span v-if="$slots.flyout" :class="styles.navToggle">
