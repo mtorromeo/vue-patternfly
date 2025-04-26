@@ -2,7 +2,7 @@
   <component
     :is="component"
     v-if="overflow"
-    :id="effectiveId"
+    :id="id"
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.chip, styles.modifiers.overflow]"
     :style="{
@@ -34,7 +34,7 @@
       :type="component === 'button' ? 'button' : undefined"
     >
       <span :class="styles.chipContent">
-        <span :id="effectiveId" ref="text" :class="styles.chipText">
+        <span :id="id" ref="text" :class="styles.chipText">
           <slot />
         </span>
         <slot name="badge" />
@@ -43,10 +43,10 @@
       <span v-if="!readonly" :class="styles.chipActions">
         <pf-button
           v-if="!readonly"
-          :id="`remove_${effectiveId}`"
+          :id="`remove_${id}`"
           variant="plain"
           :aria-label="closeBtnAriaLabel"
-          :aria-labelledby="`remove_${effectiveId} ${effectiveId}`"
+          :aria-labelledby="`remove_${id} ${id}`"
           @click="emit('click', $event)"
         >
           <xmark-icon aria-hidden />
@@ -63,9 +63,8 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfButton from '../Button.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
-import { getUniqueId } from '../../util';
 import { useElementOverflow } from '../../use';
-import { type Component, computed, type HTMLAttributes, useTemplateRef } from 'vue';
+import { type Component, type HTMLAttributes, useId, useTemplateRef } from 'vue';
 import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
@@ -88,6 +87,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'div',
   tooltipPosition: 'top',
   closeBtnAriaLabel: 'close',
+  id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
@@ -102,5 +102,4 @@ defineSlots<{
 
 const textRef = useTemplateRef('text');
 const textOverflowing = useElementOverflow(textRef);
-const effectiveId = computed(() => props.id ?? getUniqueId());
 </script>

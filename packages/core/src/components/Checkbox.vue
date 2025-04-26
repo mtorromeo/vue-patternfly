@@ -15,7 +15,7 @@
           :class="[styles.checkLabel, {
             [styles.modifiers.disabled]: disabled,
           }]"
-          :for="wrapWithLabel ? undefined : validId"
+          :for="wrapWithLabel ? undefined : id"
         >
           <slot name="label">{{ label }}</slot>
           <span v-if="required" :class="styles.checkLabelRequired" aria-hidden="true">*</span>
@@ -23,7 +23,7 @@
       </sort-by>
 
       <input
-        :id="validId"
+        :id="id"
         ref="inputRef"
         v-bind="$attrs"
         type="checkbox"
@@ -46,8 +46,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, watch, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
-import { getUniqueId } from '../util';
+import { computed, watch, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef, useId } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
@@ -81,7 +80,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   labelBeforeButton?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  id: () => useId(),
+});
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{

@@ -29,11 +29,10 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { type FieldsetHTMLAttributes, computed } from 'vue';
+import { type FieldsetHTMLAttributes, computed, useId } from 'vue';
 import PfButton from '../Button.vue';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { useManagedProp } from '../../use';
-import { getUniqueId } from '../../util';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -70,5 +69,5 @@ defineSlots<{
 
 const managedExpanded = useManagedProp('expanded', false);
 const managedExpandable = computed(() => props.expandable || isDefined(props.expanded));
-const uniqueId = computed(() => `form-field-group-toggle-${getUniqueId()}`);
+const uniqueId = computed(() => `form-field-group-toggle-${useId()}`);
 </script>

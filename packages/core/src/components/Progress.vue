@@ -1,7 +1,7 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :id="validId"
+    :id="id"
     :class="[
       styles.progress,
       variant && styles.modifiers[variant],
@@ -15,7 +15,7 @@
   >
     <component :is="tooltip ? PfTooltip : PassThrough" :position="tooltipPosition">
       <div
-        :id="`${validId}-description`"
+        :id="`${id}-description`"
         :class="[styles.progressDescription, {
           [styles.modifiers.truncate]: titleTruncated,
         }]"
@@ -60,8 +60,7 @@ import PfTooltip from './Tooltip/Tooltip.vue';
 import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
-import { getUniqueId } from '../util';
-import { ref, computed, type HTMLAttributes } from 'vue';
+import { ref, computed, type HTMLAttributes, useId } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 const variantToIcon = {
@@ -124,6 +123,7 @@ const props = withDefaults(defineProps<Props>(), {
   max: 100,
   measureLocation: 'top',
   tooltipPosition: 'top',
+  id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
@@ -133,16 +133,12 @@ defineSlots<{
 
 const tooltip = ref('');
 
-const validId = computed(() => {
-  return props.id || getUniqueId();
-});
-
 const scaledValue = computed(() => {
   return Math.min(100, Math.max(0, Math.floor(((props.value - props.min) / (props.max - props.min)) * 100)));
 });
 
 const progressLabelledBy = computed(() => {
-  return props.title ? `${validId.value}-description` : props.ariaLabelledby;
+  return props.title ? `${props.id}-description` : props.ariaLabelledby;
 });
 
 const variantIcon = computed(() => {

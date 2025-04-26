@@ -10,8 +10,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { getUniqueId } from '../../util';
-import type { HTMLAttributes } from 'vue';
+import { useId, type HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfNavGroup',
@@ -23,7 +22,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  id: () => getUniqueId(),
+  id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 

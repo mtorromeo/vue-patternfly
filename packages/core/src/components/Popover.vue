@@ -64,9 +64,8 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
-import { getUniqueId } from '../util';
 import { useHtmlElementFromVNodes, useManagedProp } from '../use';
-import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef } from 'vue';
+import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, useId } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 import PfFocusTrap, { type Props as PfFocusTrapProps } from '../helpers/FocusTrap.vue';
@@ -173,7 +172,7 @@ const hideTimer: Ref<number | undefined> = ref();
 const showTimer: Ref<number | undefined> = ref();
 const transitionTimer: Ref<number | undefined> = ref();
 
-const uniqueId = computed(getUniqueId);
+const uniqueId = useId();
 
 const hasCustomMinWidth = computed(() => {
   return props.minWidth !== popoverMinWidth.value;

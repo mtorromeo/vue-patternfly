@@ -151,22 +151,6 @@ export function isElementInView(container: Element | null, element: Element | nu
 }
 
 // copied from react-core/src/helpers/util.ts
-/**
- * @param {string} prefix - String to prefix ID with
- */
-export function getUniqueId(prefix = 'pf') {
-  const uid =
-    new Date().getTime() +
-    Math.random()
-      .toString(36)
-      .slice(2);
-  if (prefix) {
-    prefix += '-';
-  }
-  return `${prefix}${uid}`;
-}
-
-// copied from react-core/src/helpers/util.ts
 export function pluralize(i: number, singular: string, plural?: string) {
   if (!plural) {
     plural = `${singular}s`;

@@ -8,7 +8,7 @@
       <pf-input-group>
         <pf-input-group-item fill>
           <pf-text-input
-            :id="`${validId}-filename`"
+            :id="`${id}-filename`"
             ref="filenameInputRef"
             read-only-variant="default"
             :disabled="disabled"
@@ -17,12 +17,12 @@
             :aria-label="filenameAriaLabel ?? (managedFilename ? 'Read only filename' : filenamePlaceholder)"
             :placeholder="filenamePlaceholder"
             :model-value="managedFilename"
-            :aria-describedby="`${validId}-browse-button`"
+            :aria-describedby="`${id}-browse-button`"
           />
         </pf-input-group-item>
         <pf-input-group-item>
           <pf-button
-            :id="`${validId}-browse-button`"
+            :id="`${id}-browse-button`"
             style="cursor: pointer"
             component="label"
             variant="control"
@@ -70,7 +70,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/FileUpload/file-upload';
-import { computed, useTemplateRef, type HTMLAttributes } from 'vue';
+import { useId, useTemplateRef, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfInputGroup from './InputGroup/InputGroup.vue';
 import PfInputGroupItem from './InputGroup/InputGroupItem.vue';
@@ -78,7 +78,6 @@ import PfTextInput from './TextInput.vue';
 import PfButton from './Button.vue';
 import PfTextarea from './Textarea.vue';
 import PfSpinner from './Spinner.vue';
-import { getUniqueId } from '../util';
 import { useManagedProp } from '../use';
 import { useDropZone } from '@vueuse/core';
 
@@ -151,6 +150,7 @@ const props = withDefaults(defineProps<Props>(), {
   clearButtonText: 'Clear',
   clearButtonDisabled: undefined,
   loading: undefined,
+  id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
@@ -172,7 +172,6 @@ defineSlots<{
 const value = useManagedProp<string | ArrayBuffer | null>('modelValue', null);
 const managedFilename = useManagedProp<string | null>('filename', null);
 const managedLoading = useManagedProp('loading', false);
-const validId = computed(() => props.id || getUniqueId());
 const filenameInput = useTemplateRef('filenameInputRef');
 
 useDropZone(() => filenameInput.value?.$el, {

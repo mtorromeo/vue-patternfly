@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, type Ref, ref } from 'vue';
+import { computed, inject, type Ref, ref, useId } from 'vue';
 import { useManagedProp } from '../../use';
 import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
 import { useOUIAProps } from '../../helpers/ouia';
@@ -56,7 +56,7 @@ import PfForm from '../Form/Form.vue';
 import PfFormGroup from '../Form/FormGroup.vue';
 import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
-import { getUniqueId, type ComponentProps } from '../../util';
+import { type ComponentProps } from '../../util';
 
 defineOptions({
   name: 'PfAdvancedSearchMenu',
@@ -110,7 +110,7 @@ defineSlots<{
 const value = useManagedProp('modelValue', '', to => emit('change', to));
 const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
 const searchInput = inject(SearchInputKey);
-const hasWordsId = getUniqueId();
+const hasWordsId = useId();
 
 useEventListener('mousedown', onDocClick);
 useEventListener('touchstart', onDocClick);
