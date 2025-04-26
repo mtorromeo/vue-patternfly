@@ -8,7 +8,7 @@
     @click="handleToggle"
   >
     <button
-      :id="srText ? undefined : validId"
+      :id="srText ? undefined : id"
       ref="expandableRef"
       type="button"
       :class="styles.navLink"
@@ -28,10 +28,10 @@
     </button>
     <section
       :class="styles.navSubnav"
-      :aria-labelledby="validId"
+      :aria-labelledby="id"
       :hidden="!realExpanded || undefined"
     >
-      <h2 v-if="srText" :id="validId" :class="a11yStyles.screenReader">{{ srText }}</h2>
+      <h2 v-if="srText" :id="id" :class="a11yStyles.screenReader">{{ srText }}</h2>
       <ul :class="styles.navList" role="list">
         <slot />
       </ul>
@@ -44,9 +44,8 @@ import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-import { getUniqueId } from '../../util';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
-import { ref, computed, type LiHTMLAttributes, useTemplateRef, inject } from 'vue';
+import { ref, computed, type LiHTMLAttributes, useTemplateRef, inject, useId } from 'vue';
 
 defineOptions({
   name: 'PfNavExpandable',
@@ -62,7 +61,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
   expanded?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  id: () => useId(),
+});
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
@@ -77,10 +78,6 @@ defineSlots<{
 const expandable = useTemplateRef('expandableRef');
 const expandedState = ref(props.expanded);
 const sidebarOpen = inject(SidebarOpenKey, false);
-
-const validId = computed(() => {
-  return props.id || getUniqueId();
-});
 
 const realExpanded = computed({
   get() {

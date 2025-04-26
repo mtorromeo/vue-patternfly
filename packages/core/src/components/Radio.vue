@@ -15,14 +15,14 @@
           :class="[styles.radioLabel, {
             [styles.modifiers.disabled]: disabled,
           }]"
-          :for="wrapWithLabel ? undefined : validId"
+          :for="wrapWithLabel ? undefined : id"
         >
           <slot name="label">{{ label }}</slot>
         </component>
       </sort-by>
 
       <input
-        :id="wrapWithLabel ? id : validId"
+        :id="id"
         ref="inputRef"
         v-bind="$attrs"
         type="radio"
@@ -49,10 +49,9 @@ import styles from '@patternfly/react-styles/css/components/Radio/radio';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
-import { computed, type InputHTMLAttributes, type Component, getCurrentInstance, useTemplateRef } from 'vue';
+import { computed, type InputHTMLAttributes, type Component, getCurrentInstance, useTemplateRef, useId } from 'vue';
 import { useChildrenTracker } from '../use';
 import { FormInputsKey } from './Form/common';
-import { getUniqueId } from '../util';
 
 defineOptions({
   name: 'PfRadio',
@@ -81,6 +80,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'div',
+  id: () => useId(),
 });
 
 defineSlots<{
@@ -97,8 +97,6 @@ useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const wrapWithLabel = computed(() => props.component === 'label');
 const input = useTemplateRef('inputRef');
-
-const validId = computed(() => props.id || getUniqueId());
 
 defineExpose({
   input,

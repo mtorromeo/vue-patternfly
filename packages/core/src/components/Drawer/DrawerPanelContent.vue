@@ -1,7 +1,7 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :id="panelId"
+    :id="id"
     ref="panelRef"
     :class="[styles.drawerPanel, {
       [styles.modifiers.resizable]: resizable,
@@ -29,7 +29,7 @@
         :aria-valuenow="separatorValue"
         aria-valuemin="0"
         aria-valuemax="100"
-        :aria-controls="panelId"
+        :aria-controls="id"
         @mousedown="handleMouseDown($event as PointerEvent)"
         @keydown="handleKeys"
         @touchstart="handleTouchStart"
@@ -50,9 +50,8 @@ import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import cssPanelMdFlexBasis from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis';
 import cssPanelMdFlexBasisMin from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_min';
 import cssPanelMdFlexBasisMax from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_max';
-import { computed, inject, type Ref, ref, type HTMLAttributes, useTemplateRef } from 'vue';
+import { inject, type Ref, ref, type HTMLAttributes, useTemplateRef, useId } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
-import { getUniqueId } from '../../util';
 import { DrawerKey } from './common';
 import { resolveOverridableComponent } from '../../helpers';
 import { isDefined } from '@vueuse/shared';
@@ -93,6 +92,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 const props = withDefaults(defineProps<Props>(), {
   increment: 5,
   resizeAriaLabel: 'Resize',
+  id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
@@ -106,7 +106,6 @@ defineSlots<{
 }>();
 
 const panel = useTemplateRef('panelRef');
-const panelId = computed(() => props.id || getUniqueId('pf-drawer-panel-'));
 
 const drawerProvide = inject(DrawerKey);
 

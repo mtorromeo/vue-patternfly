@@ -146,8 +146,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from 'vue';
-import { getUniqueId } from '../../util';
+import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useId } from 'vue';
 import { MenuInjectionKey, MenuItemsKey, type MenuItemId } from './Menu.vue';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
@@ -262,7 +261,7 @@ function showFlyout(show: boolean) {
   emit('show-flyout');
 }
 
-const randomId = getUniqueId();
+const randomId = useId();
 
 function onClick(event: PointerEvent) {
   onItemSelect(event);

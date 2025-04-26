@@ -136,9 +136,9 @@ export interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakp
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import { classesFromBreakpointProps, type ExpandableBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
-import { isElementInView, getUniqueId } from '../../util';
+import { isElementInView } from '../../util';
 import { useManagedProp } from '../../use';
-import { watch, watchEffect, nextTick, onMounted, provide, computed, type Ref, ref, type HTMLAttributes, useTemplateRef } from 'vue';
+import { watch, watchEffect, nextTick, onMounted, provide, computed, type Ref, ref, type HTMLAttributes, useTemplateRef, useId } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { isDefined, useEventListener } from '@vueuse/core';
 import { provideChildrenTracker } from '../../use';
@@ -160,6 +160,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   component: 'div',
   expanded: undefined,
+  id: () => useId(),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
@@ -175,7 +176,6 @@ defineSlots<{
 const localActiveKey = useManagedProp('activeKey', props.defaultActiveKey);
 const managedExpanded = useManagedProp('expanded', props.defaultExpanded);
 
-const idSuffix = computed(() => props.id || getUniqueId(''));
 const tabListRef = useTemplateRef('tabList');
 const tabMoreRef = useTemplateRef('tabMore');
 const tabOverflowRef: Ref<InstanceType<typeof PfMenuList> | undefined> = ref();
@@ -186,7 +186,7 @@ const tabs = provideChildrenTracker(TabsKey);
 provide(TabsProvideKey, {
   secondary: props.secondary,
   activeKey: localActiveKey,
-  idSuffix,
+  idSuffix: () => props.id,
   tabOverflowRef,
   contentTargetRef,
 });
