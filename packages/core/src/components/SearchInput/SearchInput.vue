@@ -88,11 +88,8 @@
       </pf-button>
     </component>
 
-    <floating-ui :teleport-to="appendTo" :reference="$el" :z-index="zIndex" flip>
-      <component
-        :is="appendTo === 'inline' ? PassThrough : 'div'"
-        v-if="attributes.length > 0"
-      >
+    <floating-ui :hidden="!attributes.length" :teleport-to="appendTo" :reference="$el" :z-index="zIndex" flip>
+      <component :is="appendTo === 'inline' ? PassThrough : 'div'">
         <pf-advanced-search-menu
           v-model="value"
           :reset-button-label="resetButtonLabel"

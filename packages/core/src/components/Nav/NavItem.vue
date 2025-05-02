@@ -35,7 +35,7 @@
       </span>
     </component>
 
-    <floating-ui v-if="flyoutVisible" :reference="el" placement="right-start">
+    <floating-ui :hidden="!flyoutVisible" :reference="el" placement="right-start">
       <div ref="floatingRef">
         <slot name="flyout" />
       </div>

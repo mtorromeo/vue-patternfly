@@ -9,9 +9,8 @@
     </slot>
   </pass-through>
 
-  <floating-ui :teleport-to="appendTo" :reference="toggleRef" :placement="placement" :z-index="zIndex" flip>
+  <floating-ui :hidden="!open" :teleport-to="appendTo" :reference="toggleRef" :placement="placement" :z-index="zIndex" flip>
     <pf-menu
-      v-if="open"
       ref="menuRef"
       v-bind="$attrs"
       :style="{'--pf-v6-c-menu--MinWidth': minWidth}"

@@ -65,8 +65,8 @@
           </span>
         </button>
 
-        <floating-ui :teleport-to="tabMoreRef" :reference="overflowTabRef">
-          <pf-menu v-if="expanded ?? defaultExpanded" v-bind="$attrs">
+        <floating-ui :hidden="!(expanded ?? defaultExpanded)" :teleport-to="tabMoreRef" :reference="overflowTabRef">
+          <pf-menu v-bind="$attrs">
             <pf-menu-content>
               <pf-menu-list ref="tabOverflow" />
             </pf-menu-content>

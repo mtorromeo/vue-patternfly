@@ -3,9 +3,8 @@
     <render-toggles />
   </pass-through>
 
-  <floating-ui :teleport-to="appendTo" flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex">
+  <floating-ui :teleport-to="appendTo" flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex" :hidden="!open">
     <pf-menu
-      v-if="open"
       ref="menuRef"
       v-bind="$attrs"
       :scrollable="maxMenuHeight !== undefined || menuHeight !== undefined || scrollable"

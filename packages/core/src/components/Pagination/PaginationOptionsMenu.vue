@@ -13,8 +13,8 @@
       {{ itemsTitle }}
     </pf-menu-toggle>
 
-    <floating-ui :teleport-to="appendTo" :reference="el" flip>
-      <pf-menu v-if="open" v-bind="$attrs" @select="onSelect">
+    <floating-ui :hidden="!open" :teleport-to="appendTo" :reference="el" flip>
+      <pf-menu v-bind="$attrs" @select="onSelect">
         <pf-menu-content>
           <pf-menu-item
             v-for="o of perPageOptions"

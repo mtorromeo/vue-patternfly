@@ -9,9 +9,12 @@
     :reference="referenceElement"
     :placement="position"
     :middleware="floatingMiddleware"
+    :hidden="!visible"
+    :animation-duration="animationDuration"
+    @shown="() => $emit('shown')"
+    @hidden="() => $emit('hidden')"
   >
     <pf-focus-trap
-      v-if="visible"
       ref="dialogRef"
       v-bind="{...ouiaProps, ...$attrs}"
       :active="focusTrap && visible"
@@ -27,8 +30,6 @@
       :style="{
         minWidth: hasCustomMinWidth ? minWidth : undefined,
         maxWidth: hasCustomMaxWidth ? maxWidth : undefined,
-        opacity,
-        transition: `opacity ${animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
       }"
       :data-popper-reference-hidden="middlewareData.hide?.referenceHidden"
       :data-popper-escaped="middlewareData.hide?.escaped"
@@ -65,7 +66,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import { useHtmlElementFromVNodes } from '../use';
-import { computed, type Ref, ref, watch, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, useId } from 'vue';
+import { computed, watch, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, useId } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
 import PfFocusTrap, { type Props as PfFocusTrapProps } from '../helpers/FocusTrap.vue';
@@ -129,7 +130,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const visible = defineModel<boolean>('open', { default: false });
+const visible = defineModel('open', { default: false });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
@@ -138,10 +139,8 @@ defineSlots<{
   footer?: (props?: Record<never, never>) => any;
 }>();
 
-const emit = defineEmits<{
-  (name: 'show'): void;
+defineEmits<{
   (name: 'shown'): void;
-  (name: 'hide'): void;
   (name: 'hidden'): void;
 }>();
 
@@ -166,11 +165,6 @@ const floatingMiddleware = computed(() => [
   }),
 ]);
 
-const opacity = ref(0);
-const hideTimer: Ref<number | undefined> = ref();
-const showTimer: Ref<number | undefined> = ref();
-const transitionTimer: Ref<number | undefined> = ref();
-
 const uniqueId = useId();
 
 const hasCustomMinWidth = computed(() => {
@@ -179,35 +173,6 @@ const hasCustomMinWidth = computed(() => {
 
 const hasCustomMaxWidth = computed(() => {
   return props.maxWidth !== popoverMaxWidth.value;
-});
-
-watch(visible, (open) => {
-  if (open) {
-    emit('show');
-    if (transitionTimer.value) {
-      clearTimeout(transitionTimer.value);
-    }
-    if (hideTimer.value) {
-      clearTimeout(hideTimer.value);
-    }
-    showTimer.value = setTimeout(() => {
-      visible.value = true;
-      opacity.value = 1;
-      emit('shown');
-    }, 0);
-  } else {
-    emit('hide');
-    if (showTimer.value) {
-      clearTimeout(showTimer.value);
-    }
-    hideTimer.value = setTimeout(() => {
-      visible.value = false;
-      opacity.value = 0;
-      transitionTimer.value = setTimeout(() => {
-        emit('hidden');
-      }, props.animationDuration);
-    }, 0);
-  }
 });
 
 onMounted(() => {

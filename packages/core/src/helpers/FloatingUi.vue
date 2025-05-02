@@ -18,6 +18,10 @@ export interface Props {
   middleware?: Middleware[];
   strategy?: Strategy,
   offset?: OffsetOptions;
+  /** True to make the floating element invisible */
+  hidden?: boolean;
+  /** The duration of the CSS fade transition animation. */
+  animationDuration?: number;
   /** Custom width of the floating ui. If the value is "trigger", it will set the width to the trigger element's width */
   width?: string | 'trigger' | 'auto';
   /** Minimum width of the floating ui. If the value is "trigger", it will set the min width to the trigger element's width */
@@ -31,7 +35,7 @@ export interface Props {
 
 <script lang="ts" setup>
 import { flip as uiFlip, autoPlacement, size, type Middleware, type Placement as UIPlacement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
-import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement, type InjectionKey, inject, type MaybeRef, toValue } from 'vue';
+import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement, type InjectionKey, inject, type MaybeRef, toValue, watch } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
 import type { ReferenceElement } from '@floating-ui/dom';
 
@@ -46,9 +50,15 @@ const props = withDefaults(defineProps<Props>(), {
   minWidth: 'trigger',
   maxWidth: 'auto',
   placement: 'bottom',
+  animationDuration: 0,
   zIndex: 9999,
   middleware: (): Middleware[] => [],
 });
+
+const emit = defineEmits<{
+  (name: 'hidden'): void;
+  (name: 'shown'): void;
+}>();
 
 const slots = defineSlots<{
   default?: (props: ReturnType<typeof useFloatingUI>) => VNode[];
@@ -56,6 +66,19 @@ const slots = defineSlots<{
 
 const injectedParent = inject(FloatingElementTeleportKey, undefined);
 const parent = computed(() => props.teleportTo ?? toValue(injectedParent));
+
+const internalHidden = ref(props.hidden);
+const opacity = ref(props.hidden ? 0 : 1);
+
+watch(() => props.hidden, (hidden) => {
+  if (hidden) {
+    opacity.value = 0;
+  } else if (internalHidden.value) {
+    internalHidden.value = false;
+  } else {
+    opacity.value = 1;
+  }
+});
 
 const referenceElement = computed<ReferenceElement | undefined>(() => {
   const reference = typeof props.reference === 'string'
@@ -113,6 +136,10 @@ function floatingElement() {
     return () => slots.default?.(ui);
   }
 
+  if (internalHidden.value) {
+    return;
+  }
+
   const children = slots.default?.(ui);
 
   if (!children?.length) {
@@ -125,6 +152,7 @@ function floatingElement() {
 
   const onElementMounted = (el: unknown) => {
     htmlElement.value = el instanceof HTMLElement ? el : null;
+    opacity.value = props.hidden ? 0 : 1;
   };
 
   return withDirectives(cloneVNode(children[0], {
@@ -132,8 +160,20 @@ function floatingElement() {
       position: ui.strategy,
       top: 0,
       left: 0,
+      opacity: opacity.value,
       transform: `translate3d(${Math.round(ui.x)}px,${Math.round(ui.y)}px,0)`,
+      transition: `opacity ${props.animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
       zIndex: props.zIndex,
+    },
+    onTransitionend: (e: TransitionEvent) => {
+      if (e.propertyName === 'opacity') {
+        if (!opacity.value) {
+          internalHidden.value = true;
+          emit('hidden');
+        } else {
+          emit('shown');
+        }
+      }
     },
   }), [
     [{mounted: onElementMounted}],

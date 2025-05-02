@@ -5,6 +5,7 @@
 
   <floating-ui
     v-if="$slots.content"
+    :hidden="!visible"
     v-slot="{ placement }"
     :teleport-to="appendTo"
     :reference="referenceElement"
@@ -12,19 +13,16 @@
     :offset="Number(distance)"
     :flip="flip"
     :min-width="minWidth"
+    :animation-duration="animationDuration"
+    @hidden="safe = true"
+    @shown="safe = true"
   >
     <div
-      v-if="tooltipDisplay"
       ref="tooltipElementRef"
       v-bind="{...ouiaProps, ...$attrs}"
       :class="[styles.tooltip, positionModifiers[placement]]"
-      :style="{
-        maxWidth,
-        opacity: opacity ? 1 : 0,
-        transition: `opacity ${animationDuration}ms cubic-bezier(0.54, 1.5, 0.38, 1.11) 0s`,
-      }"
+      :style="{ maxWidth }"
       role="tooltip"
-      @transitionend="handleTransitionEnd"
     >
       <pf-tooltip-arrow />
       <pf-tooltip-content :left-aligned="leftAligned">
@@ -99,9 +97,9 @@ const props = withDefaults(defineProps<Props>(), {
   aria: 'describedby',
   animationDuration: 300,
   flip: true,
-  visible: undefined,
   ouiaSafe: true,
 });
+
 const safe = ref(!props.animationDuration);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: computed(() => safe.value && props.ouiaSafe)});
 
@@ -115,10 +113,6 @@ defineSlots<{
 
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 const tooltipElement = useTemplateRef('tooltipElementRef');
-const tooltipDisplay = ref(false);
-const opacity = ref(visible.value);
-const showTimer = ref(0);
-const hideTimer = ref(0);
 
 const triggerMouseEnter = computed(() => props.trigger.split(' ').includes('mouseenter'));
 const triggerFocus = computed(() => props.trigger.split(' ').includes('focus'));
@@ -139,18 +133,8 @@ const positionModifiers: Record<UIPlacement, string> = {
   'right-end': styles.modifiers.rightBottom,
 };
 
-watch([tooltipElement, triggerClick, triggerFocus, triggerMouseEnter], transitionOutEnd);
-
 watch(visible, () => {
   safe.value = !props.animationDuration;
-  opacity.value = safe.value;
-
-  if (visible.value) {
-    tooltipDisplay.value = true;
-    if (!opacity.value) {
-      setTimeout(() => (opacity.value = true), 0);
-    }
-  }
 });
 
 watch(referenceElement, (el, oldEl) => {
@@ -170,8 +154,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  clearTimeout(showTimer.value);
-  clearTimeout(hideTimer.value);
   document.removeEventListener('click', handleClick as (e: MouseEvent) => void);
   referenceElement.value?.addEventListener('mouseenter', handleMouseEnter);
   referenceElement.value?.addEventListener('mouseleave', handleMouseLeave);
@@ -182,69 +164,38 @@ onUnmounted(() => {
 function handleClick(e: PointerEvent) {
   if (triggerClick.value) {
     if (e.target === referenceElement.value) {
-      show(false);
+      visible.value = true;
     } else {
-      hide(false);
+      visible.value = false;
     }
   }
 }
 
 function handleFocus() {
   if (triggerFocus.value) {
-    show();
+    visible.value = true;
   }
 }
 
 function handleBlur() {
   if (triggerFocus.value) {
-    hide();
+    visible.value = false;
   }
 }
 
 function handleMouseEnter() {
   if (triggerMouseEnter.value) {
-    show();
+    visible.value = true;
   }
 }
 
 function handleMouseLeave() {
   if (triggerMouseEnter.value) {
-    hide();
-  }
-}
-
-function show(delay?: boolean) {
-  clearTimeout(hideTimer.value);
-  if (delay === undefined || delay) {
-    showTimer.value = setTimeout(() => (visible.value = true), props.entryDelay);
-  } else {
-    visible.value = true;
-  }
-}
-
-function hide(delay?: boolean) {
-  clearTimeout(showTimer.value);
-  if (delay === undefined || delay) {
-    hideTimer.value = setTimeout(() => (visible.value = false), props.exitDelay);
-  } else {
     visible.value = false;
   }
 }
 
-function transitionOutEnd() {
-  if (!visible.value) {
-    tooltipDisplay.value = false;
-  }
-}
-
-function handleTransitionEnd() {
-  safe.value = true;
-  transitionOutEnd();
-}
-
 defineExpose({
   el: tooltipElement,
-  show,
-  hide,
 });
 </script>
