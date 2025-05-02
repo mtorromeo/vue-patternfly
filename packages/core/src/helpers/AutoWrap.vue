@@ -52,7 +52,7 @@ export interface Props {
    */
   exclude?: NodeFilter;
 
-  /** Flag to wrap each child element individually */
+  /** Flag to wrap each child element individually, even when consecutives */
   each?: boolean;
 
   /** Flag to always create the wrapping component, even if empty */
@@ -84,30 +84,38 @@ function renderGroup(childrenNodes: VNode[], component: VNodeTypes | undefined, 
   const includeFn = makeFilterFunction(include);
   const excludeFn = makeFilterFunction(exclude, false);
 
-  let firstMatch: number | null = null;
+  const c = resolveDynamicComponent(component) as Component;
+  const nodeProps = {...attrs, ref: (node: Element | ComponentPublicInstance | null) => (el.value = node)};
+
+  const wrap = (c: Component, vnodes: VNode | VNode[]) => h(c, nodeProps, typeof component === 'string' ? vnodes : () => vnodes);
+
   const children: VNode[] = [];
-  const inject: VNode[] = [];
-  for (const [index, child] of childrenNodes.entries()) {
+  let consecutives: VNode[] = [];
+
+  for (const child of childrenNodes) {
     if (component !== child.type && includeFn(child) && !excludeFn(child)) {
-      firstMatch ??= index;
-      inject.push(child);
+      if (each) {
+        children.push(wrap(c, child))
+      } else {
+        consecutives.push(child);
+      }
     } else {
+      if (consecutives.length) {
+        children.push(wrap(c, consecutives));
+        consecutives = [];
+      }
+
       children.push(child);
     }
   }
 
-  if (!force && !inject.length) {
-    return null;
+  if (consecutives.length) {
+    children.push(wrap(c, consecutives));
   }
 
-  const c = resolveDynamicComponent(component) as Component;
-  const nodeProps = {...attrs, ref: (node: Element | ComponentPublicInstance | null) => (el.value = node)};
-
-  const nodes = each
-    ? inject.map(n => h(c, nodeProps, typeof component === 'string' ? n : () => n))
-    : [h(c, nodeProps, typeof component === 'string' ? inject : () => inject)];
-
-  children.splice(firstMatch ?? 0, 0, ...nodes);
+  if (!force && !children.length) {
+    return null;
+  }
 
   return children;
 }
