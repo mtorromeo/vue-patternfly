@@ -1,6 +1,8 @@
 <template>
   <pf-button v-bind="ouiaProps" variant="plain" aria-label="Close">
-    <xmark-icon />
+    <template #icon>
+      <xmark-icon />
+    </template>
   </pf-button>
 </template>
 
