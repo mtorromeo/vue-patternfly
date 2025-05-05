@@ -8,28 +8,17 @@
 export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as InjectionKey<ComputedRef<boolean | undefined>>;
 export const ToggleGroupSelectionKey = Symbol('ToggleGroupSelectionKey') as InjectionKey<Ref<unknown>>;
 
-// TODO: readd `extends /* @vue-ignore */ Omit<HTMLAttributes, 'role'>` once https://github.com/vuejs/language-tools/issues/3723 is fixed
-export interface Props extends OUIAProps {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {
   /** Modifies the toggle group to include compact styling. */
   compact?: boolean;
   /** Disable all toggle group items under this component. */
   disabled?: boolean;
 }
-
-import { PfToggleGroup, PfToggleGroupItem } from '.';
-
-export function useSingleToggleGroup<T>() {
-  return [PfToggleGroup<T | undefined | null>, PfToggleGroupItem<T>];
-}
-
-export function useMultiToggleGroup<T>() {
-  return [PfToggleGroup<T[]>, PfToggleGroupItem<T>];
-}
 </script>
 
 <script lang="ts" setup generic="T = string | number | (string | number)[]">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
-import { type InjectionKey, provide, computed, type ComputedRef, type Ref } from 'vue';
+import { type InjectionKey, provide, computed, type ComputedRef, type Ref, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
