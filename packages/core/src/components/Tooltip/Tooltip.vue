@@ -104,7 +104,7 @@ const safe = ref(!props.animationDuration);
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: computed(() => safe.value && props.ouiaSafe)});
 
 /** value for visibility when trigger is 'manual' */
-const visible = defineModel('visible', { default: false });
+const visible = defineModel<boolean>('visible', { default: false });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

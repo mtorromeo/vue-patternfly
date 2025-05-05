@@ -130,7 +130,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const visible = defineModel('open', { default: false });
+const visible = defineModel<boolean>('open', { default: false });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
