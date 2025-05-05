@@ -1,13 +1,14 @@
 <template>
   <teleport-copy v-slot="{ copy }" :disabled="!menu?.favoriteList.value?.$el || !favorited" :to="menu?.favoriteList.value?.$el">
     <li
+      ref="elRef"
       v-bind="{...ouiaProps, ...$attrs}"
       :class="[styles.menuListItem, {
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.currentPath]: effectiveOnPath,
         [styles.modifiers.load]: loadButton,
         [styles.modifiers.loading]: loading,
-        [styles.modifiers.focus]: focused,
+        [styles.modifiers.focus]: isFocused,
         [styles.modifiers.danger]: danger,
       }]"
       :role="check ? 'menuitem' : 'none'"
@@ -17,6 +18,7 @@
 
       <component
         :is="component"
+        ref="menuItemRef"
         v-bind="componentAttrs"
         tabindex="-1"
         :class="[styles.menuItem, {[styles.modifiers.selected]: effectiveSelected && !check}]"
@@ -83,7 +85,7 @@
         :aria-label="favorited ? 'starred' : 'not starred'"
         tabindex="-1"
         action-id="fav"
-        @click="$emit('update:favorited', !favorited)"
+        @click="favorited = !favorited"
       />
     </li>
   </teleport-copy>
@@ -109,8 +111,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
   checkName?: string;
   /** Flag indicating whether the item is active */
   active?: boolean;
-  /** Flag indicating if the item is favorited */
-  favorited?: boolean;
   /** Flag indicating if the item causes a load */
   loadButton?: boolean;
   /** Flag indicating a loading state */
@@ -146,7 +146,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttribute
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useId } from 'vue';
+import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useId, useTemplateRef, onMounted, nextTick, watch } from 'vue';
 import { MenuInjectionKey, MenuItemsKey, type MenuItemId } from './Menu.vue';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
@@ -167,16 +167,17 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   component: 'button',
   selected: undefined,
-  favorited: undefined,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+
+/** Flag indicating if the item is favorited */
+const favorited = defineModel<boolean | undefined>('favorited', { default: undefined });
 
 const emit = defineEmits<{
   /** Callback for item click */
   (name: 'click', event: Event): void;
   /** @beta Callback function when mouse leaves trigger */
   (name: 'show-flyout', event?: Event): void;
-  (name: 'update:favorited', value: boolean): void;
 }>();
 
 const $slots = defineSlots<{
@@ -189,19 +190,37 @@ const $slots = defineSlots<{
 
 const instance = getCurrentInstance();
 
-const menu = inject(MenuInjectionKey);
-useChildrenTracker(MenuItemsKey);
-
 const itemId = computed(() => props.value === undefined ? instance?.vnode.key : props.value);
+const el = useTemplateRef('elRef');
+const menuItem = useTemplateRef<HTMLElement>('menuItemRef');
+const isFocused = ref(props.focused);
+
+const menu = inject(MenuInjectionKey);
+useChildrenTracker(MenuItemsKey, {
+  element: el,
+  disabled: computed(() => props.disabled),
+  focused: isFocused,
+  favorited,
+  focus,
+});
+
+watch(() => props.focused, (value) => {
+  isFocused.value = value;
+});
 
 provide(MenuItemInjectionKey, {
   disabled: props.disabled,
   itemId,
 });
 
-// if (!menu) {
-//   throw new Error('MenuItems can only be used inside Menu components');
-// }
+onMounted(() => {
+  if (!menu) {
+    throw new Error('MenuItems can only be used inside Menu components');
+  }
+  if (isFocused.value) {
+    nextTick(focus);
+  }
+});
 
 const component = computed(() => {
   if (props.to) {
@@ -310,4 +329,20 @@ function handleFlyout(event: PointerEvent | KeyboardEvent) {
     }
   }
 }
+
+function focus() {
+  if (!menuItem.value) {
+    return;
+  }
+  menuItem.value.focus();
+  menuItem.value.scrollIntoView({
+    behavior: 'auto',
+    block: 'nearest',
+  });
+}
+
+defineExpose({
+  focus,
+  focused: isFocused,
+});
 </script>

@@ -10,7 +10,7 @@
     </template>
 
     <story-canvas title="Basic">
-      <pf-dropdown v-model:open="open1" text="Dropdown">
+      <pf-dropdown v-model:open="open1" text="Dropdown" should-focus-first-item-on-open>
         <pf-dropdown-item @click="onClick">Link</pf-dropdown-item>
         <pf-dropdown-item component="button" @click="onClick">
           Action

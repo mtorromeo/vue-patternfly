@@ -47,13 +47,15 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
   menuHeight?: string;
   /** Maximum height of dropdown menu */
   maxMenuHeight?: string;
+  /** @beta Flag indicating the first menu item should be focused after opening the dropdown. */
+  shouldFocusFirstItemOnOpen?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
-import { h, mergeProps, type VNode, computed, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef } from 'vue';
+import { h, mergeProps, type VNode, computed, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, type Reactive } from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
-import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.vue';
+import PfMenu, { type MenuItemId, type MenuItemTrack, type Props as MenuProps } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
@@ -143,7 +145,12 @@ function renderToggles() {
 }
 
 function onKeydown(e: KeyboardEvent) {
-  if (!open.value || !['Escape', 'Tab'].includes(e.key)) {
+  if (!open.value) {
+    return;
+  }
+
+  if (!['Escape', 'Tab'].includes(e.key)) {
+    menu.value?.$.exposed?.handleKeyboard(e);
     return;
   }
 
@@ -160,13 +167,12 @@ const handleClick = (event: PointerEvent) => {
   }
 
   if (toggleElementRef.value?.contains(event.target as Node)) {
-    // focus on first menu item
-    setTimeout(() => {
-      const firstElement = menu.value?.el?.querySelector(
-        'li button:not(:disabled),li input:not(:disabled),li a:not([aria-disabled="true"])',
-      );
-      firstElement && (firstElement as HTMLElement).focus();
-    }, 0);
+    if (props.shouldFocusFirstItemOnOpen) {
+      const items = menu.value?.$.exposed?.items as Reactive<MenuItemTrack[]>;
+      if (props.shouldFocusFirstItemOnOpen && items.length) {
+        items[0].focus();
+      }
+    }
   } else if (!menu.value?.el?.contains(event.target as Node)) {
     // If the event is not on the toggle, close the menu
     open.value = false;

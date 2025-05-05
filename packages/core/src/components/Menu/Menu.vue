@@ -10,6 +10,7 @@
     // [styles.modifiers.drilldown]: containsDrilldown,
     // [styles.modifiers.drilledIn]: effectiveMenuDrilledIn,
     }]"
+    @keydown="handleKeyboard"
   >
     <template v-if="favoriteCount">
       <pf-menu-group :label="favoritesLabel">
@@ -44,7 +45,15 @@ export type MenuProvide = {
   // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
 };
 
-export const MenuItemsKey = Symbol("MenuItemsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfMenuItem>>;
+export type MenuItemTrack = {
+  element: Readonly<Ref<HTMLLIElement | null>>;
+  disabled: ComputedRef<boolean>;
+  focused: Ref<boolean>;
+  favorited: ModelRef<boolean | undefined>;
+  focus: () => void;
+}
+
+export const MenuItemsKey = Symbol("MenuItemsKey") as ChildrenTrackerInjectionKey<MenuItemTrack>;
 export const MenuInjectionKey = Symbol('MenuInjectionKey') as InjectionKey<MenuProvide>;
 
 export interface MenuState {
@@ -90,7 +99,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes,
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type HTMLAttributes, useTemplateRef } from 'vue';
+import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type HTMLAttributes, useTemplateRef, type ComputedRef, type ModelRef } from 'vue';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 import { isDefined } from '@vueuse/shared';
 import AutoWrap from '../../helpers/AutoWrap.vue';
@@ -184,7 +193,35 @@ provide(MenuInjectionKey, {
   // onDrillOut: $props.onDrillOut,
 });
 
+function handleKeyboard(event: KeyboardEvent) {
+  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+    return;
+  }
+
+  const focusable = items.filter((item) => !item.disabled);
+  if (!focusable.length) {
+    return;
+  }
+
+  let focused = focusable.findIndex((item) => item.focused);
+  if (focused < 0) {
+    focused = focusable.findIndex((item) => event.target instanceof Node && item.element?.contains(event.target));
+  }
+
+  for (const item of items) {
+    item.focused = false;
+  }
+
+  const nextFocused = ((focused < 0 && event.key === 'ArrowUp' ? focusable.length : focused + focusable.length) + (event.key === 'ArrowDown' ? 1 : -1)) % focusable.length;
+  const nextFocusedItem = focusable[nextFocused];
+  if (nextFocusedItem) {
+    nextFocusedItem?.focus();
+  }
+}
+
 defineExpose({
   el,
+  items,
+  handleKeyboard,
 });
 </script>
