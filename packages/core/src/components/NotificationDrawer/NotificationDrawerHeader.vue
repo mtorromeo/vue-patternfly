@@ -1,8 +1,8 @@
 <template>
   <div v-bind="ouiaProps" :class="styles.notificationDrawerHeader">
-    <pf-text component="h1" :class="styles.notificationDrawerHeaderTitle">
+    <h1 :class="styles.notificationDrawerHeaderTitle">
       {{ title }}
-    </pf-text>
+    </h1>
 
     <span v-if="customText || count !== undefined" :class="styles.notificationDrawerHeaderStatus" aria-live="polite">
       {{ customText || `${count} ${unreadText}` }}
@@ -20,7 +20,6 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
 import type { HTMLAttributes } from 'vue';
-import PfText from '../Text/Text.vue';
 import PfCloseButton from '../CloseButton.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
