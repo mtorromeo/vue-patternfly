@@ -168,8 +168,8 @@ const handleClick = (event: PointerEvent) => {
 
   if (toggleElementRef.value?.contains(event.target as Node)) {
     if (props.shouldFocusFirstItemOnOpen) {
-      const items = menu.value?.$.exposed?.items as Reactive<MenuItemTrack[]>;
-      if (props.shouldFocusFirstItemOnOpen && items.length) {
+      const items = menu.value?.$.exposed?.items as Reactive<MenuItemTrack[]> | null | undefined;
+      if (props.shouldFocusFirstItemOnOpen && items?.length) {
         items[0].focus();
       }
     }
