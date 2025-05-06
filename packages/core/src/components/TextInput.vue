@@ -80,6 +80,11 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
     | 'week';
   /** Value of the text input. */
   modelValue?: string | number | null;
+  modelModifiers?: {
+    number?: boolean;
+    trim?: boolean;
+    lazy?: boolean;
+  };
   /** Aria-label. The text input requires an associated id or aria-label. */
   ariaLabel?: string;
   /** Trim text at start */

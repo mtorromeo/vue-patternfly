@@ -21,7 +21,7 @@ export function useInputValidation({
   const effectiveValidated = computed(() => validated?.value ?? innerValidated.value);
   watch(effectiveValidated, () => instance?.$emit('update:validated', effectiveValidated.value));
 
-  const value = useModel((instance?.$props ?? {}) as { modelValue?: string | number | null }, 'modelValue');
+  const [value, modifiers] = useModel((instance?.$props ?? {}) as { modelValue?: string | number | null }, 'modelValue');
 
   function getInput() {
     return unref(inputElement) ?? (instance?.$el as InputElement | undefined);
@@ -98,7 +98,9 @@ export function useInputValidation({
 
     onInput(event: InputEvent) {
       instance?.$emit('input', event);
-      value.value = (event.target as InputElement).value;
+      if (!modifiers.lazy) {
+        value.value = (event.target as InputElement).value;
+      }
       if (autoValidate === 'input') {
         reportValidity();
       } else {
@@ -117,6 +119,9 @@ export function useInputValidation({
 
     onChange(event: Event) {
       instance?.$emit('change', event);
+      if (modifiers.lazy) {
+        value.value = (event.target as InputElement).value;
+      }
       if (autoValidate === 'change') {
         reportValidity();
       }

@@ -75,6 +75,11 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAtt
 
   /** Value of the text area. */
   modelValue?: string | number | null;
+  modelModifiers?: {
+    number?: boolean;
+    trim?: boolean;
+    lazy?: boolean;
+  };
 
   /** Value to indicate if the text area is modified to show that validation state.
    * If set to success, text area will be modified to indicate valid state.

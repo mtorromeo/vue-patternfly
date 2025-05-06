@@ -54,19 +54,34 @@
         </pf-form-group>
 
         <pf-form-group label="Animation duration">
-          <pf-text-input v-model="animationDuration" type="number" />
+          <pf-input-group>
+            <pf-input-group-item fill>
+              <pf-text-input v-model.number.lazy="animationDuration" type="number" />
+            </pf-input-group-item>
+            <pf-input-group-text>ms</pf-input-group-text>
+          </pf-input-group>
         </pf-form-group>
 
         <pf-form-group label="Entry delay">
-          <pf-text-input v-model="entryDelay" type="number" />
+          <pf-input-group>
+            <pf-input-group-item fill>
+              <pf-text-input v-model.number.lazy="entryDelay" type="number" />
+            </pf-input-group-item>
+            <pf-input-group-text>ms</pf-input-group-text>
+          </pf-input-group>
         </pf-form-group>
 
         <pf-form-group label="Exit delay">
-          <pf-text-input v-model="exitDelay" type="number" />
+          <pf-input-group>
+            <pf-input-group-item fill>
+              <pf-text-input v-model.number.lazy="exitDelay" type="number" />
+            </pf-input-group-item>
+            <pf-input-group-text>ms</pf-input-group-text>
+          </pf-input-group>
         </pf-form-group>
 
         <pf-form-group label="Distance">
-          <pf-text-input v-model="distance" type="number" />
+          <pf-text-input v-model.lazy="distance" />
         </pf-form-group>
       </pf-form>
 
