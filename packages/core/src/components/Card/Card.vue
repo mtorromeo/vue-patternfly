@@ -89,7 +89,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 /** Flag indicating if a card is expanded. Modifies the card to be expandable. */
-const expanded = defineModel<boolean>('expanded');
+const expanded = defineModel<boolean | undefined>('expanded', { default: undefined });
 
 /** Modifies the card to include selected styling */
 const selected = defineModel<boolean>('selected', { default: false });
