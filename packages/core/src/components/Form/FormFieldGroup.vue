@@ -53,7 +53,7 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 /** Flag indicate if the form field group is expanded. Modifies the card to be expandable. */
-const expanded = defineModel<boolean>('expanded');
+const expanded = defineModel<boolean | undefined>('expanded', { default: undefined });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
