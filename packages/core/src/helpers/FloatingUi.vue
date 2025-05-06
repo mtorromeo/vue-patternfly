@@ -69,10 +69,14 @@ const parent = computed(() => props.teleportTo ?? toValue(injectedParent));
 
 const internalHidden = ref(props.hidden);
 const opacity = ref(props.hidden ? 0 : 1);
+const isVisible = ref(false);
 
 watch(() => props.hidden, (hidden) => {
   if (hidden) {
     opacity.value = 0;
+    if (!isVisible.value) {
+      internalHidden.value = true;
+    }
   } else if (internalHidden.value) {
     internalHidden.value = false;
   } else {
@@ -152,7 +156,7 @@ function floatingElement() {
 
   const onElementMounted = (el: unknown) => {
     htmlElement.value = el instanceof HTMLElement ? el : null;
-    opacity.value = props.hidden ? 0 : 1;
+    opacity.value = 1;
   };
 
   return withDirectives(cloneVNode(children[0], {
@@ -165,10 +169,16 @@ function floatingElement() {
       transition: `opacity ${props.animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
       zIndex: props.zIndex,
     },
+    onTransitionstart: (e: TransitionEvent) => {
+      if (e.propertyName === 'opacity' && opacity.value > 0) {
+        isVisible.value = true;
+      }
+    },
     onTransitionend: (e: TransitionEvent) => {
       if (e.propertyName === 'opacity') {
         if (!opacity.value) {
           internalHidden.value = true;
+          isVisible.value = false;
           emit('hidden');
         } else {
           emit('shown');
