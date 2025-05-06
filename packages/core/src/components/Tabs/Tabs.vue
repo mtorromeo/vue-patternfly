@@ -168,7 +168,7 @@ const localActiveKey = computed({
 });
 
 /** Flag to indicate if the vertical tabs are expanded */
-const expanded = defineModel<boolean>('expanded', { default: false });
+const expanded = defineModel<boolean | undefined>('expanded', { default: undefined });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
