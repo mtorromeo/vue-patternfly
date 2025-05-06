@@ -62,9 +62,6 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   /** Text value for the label when on */
   label?: string;
 
-  /** Text value for the label when off */
-  labelOff?: string;
-
   labelAttrs?: HTMLAttributes;
 
   offValue?: string;
