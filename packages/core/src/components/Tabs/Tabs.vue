@@ -141,7 +141,7 @@ const tabKeys = provideChildrenTracker(TabsKey);
 provide(TabsProvideKey, {
   variant: props.variant,
   activeKey: localActiveKey,
-  idSuffix: () => props.id,
+  idSuffix: props.id,
   tabListRef,
 });
 
