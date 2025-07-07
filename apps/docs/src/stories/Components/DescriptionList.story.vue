@@ -1,5 +1,5 @@
 <template>
-  <doc-page title="Data list">
+  <doc-page title="Description list">
     <template #description>A <b>description list</b> contains terms and their corresponding descriptions.</template>
 
     <template #apidocs>

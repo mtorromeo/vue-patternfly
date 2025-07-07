@@ -107,7 +107,7 @@
 
   const emit = defineEmits<{
     (name: 'click', e: PointerEvent): void;
-    (name: 'overflow-chip-click', e: PointerEvent): void;
+    (name: 'overflowChipClick', e: PointerEvent): void;
   }>();
 
   const slots = defineSlots<{
@@ -121,7 +121,7 @@
 
   function overflowChipClick(e: PointerEvent) {
     toggleCollapse();
-    emit('overflow-chip-click', e);
+    emit('overflowChipClick', e);
   }
 
   function toggleCollapse() {

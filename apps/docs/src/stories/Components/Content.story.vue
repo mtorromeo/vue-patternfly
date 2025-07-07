@@ -1,6 +1,6 @@
 <template>
   <doc-page title="Content">
-    <template #description><b>PfText</b> and <b>PfTextList</b> components are always wrapped in <b>PfTextContent</b> and provide correct formatting to a number of standard HTML tags.</template>
+    <template #description>A <b>content</b> component contains a block of styled HTML content.</template>
 
     <template #apidocs>
       <component-info src="packages/core/src/components/Content.vue" />

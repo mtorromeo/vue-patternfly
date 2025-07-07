@@ -19,7 +19,7 @@ defineOptions({
   name: 'PfChipGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LabelGroupProps, 'numLabels'> {
+export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LabelGroupProps & { onClick?: (event: PointerEvent) => void }, 'numLabels'> {
   id?: string;
   numChips?: number;
   closeBtnAriaLabel?: string;

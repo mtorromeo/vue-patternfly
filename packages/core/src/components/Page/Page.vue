@@ -104,7 +104,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'page-resize', v: { mobileView: boolean, windowSize: number }): void;
+  (name: 'pageResize', v: { mobileView: boolean, windowSize: number }): void;
 }>();
 
 defineSlots<{
@@ -143,7 +143,7 @@ const { width: windowWidth } = useWindowSize();
 
 watch(windowWidth, (width) => {
   mobileView.value = width < Number.parseInt(globalBreakpointXl.value, 10);
-  emit('page-resize', { mobileView: mobileView.value, windowSize: width });
+  emit('pageResize', { mobileView: mobileView.value, windowSize: width });
 }, { immediate: true });
 
 function navToggle() {

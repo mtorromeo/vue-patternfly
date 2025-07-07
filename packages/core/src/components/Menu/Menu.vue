@@ -133,7 +133,7 @@ defineSlots<{
 
 const emit = defineEmits<{
   /** A callback for when the input value changes. */
-  (name: 'search-input-change', event: Event, value: string): void;
+  (name: 'searchInputChange', event: Event, value: string): void;
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
   (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
 }>();

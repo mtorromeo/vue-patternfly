@@ -129,11 +129,11 @@ defineSlots<{
 }>();
 
 const emit = defineEmits<{
-  (name: 'first-click', page: number): void;
-  (name: 'previous-click', page: number): void;
-  (name: 'next-click', page: number): void;
-  (name: 'last-click', page: number): void;
-  (name: 'set-page', newPage: number, perPage: number, startIdx: number, endIdx: number): void;
+  (name: 'firstClick', page: number): void;
+  (name: 'previousClick', page: number): void;
+  (name: 'nextClick', page: number): void;
+  (name: 'lastClick', page: number): void;
+  (name: 'setPage', newPage: number, perPage: number, startIdx: number, endIdx: number): void;
 }>();
 
 const userInputPage: Ref<string | number> = ref(props.page);
@@ -143,7 +143,7 @@ watch(() => props.page, (v: number) => (userInputPage.value = v), { immediate: t
 function handleNewPage(newPage: number) {
   const startIdx = (newPage - 1) * props.perPage;
   const endIdx = newPage * props.perPage;
-  emit('set-page', newPage, props.perPage, startIdx, endIdx);
+  emit('setPage', newPage, props.perPage, startIdx, endIdx);
 }
 
 function parseInteger(input: string | number, lastPage: number) {
@@ -184,27 +184,27 @@ function onChange(e: Event) {
 }
 
 function goToFirstPage() {
-  emit('first-click', 1);
+  emit('firstClick', 1);
   userInputPage.value = 1;
   handleNewPage(1);
 }
 
 function goToPreviousPage() {
   const newPage = props.page - 1 >= 1 ? props.page - 1 : 1;
-  emit('previous-click', newPage);
+  emit('previousClick', newPage);
   userInputPage.value = newPage;
   handleNewPage(newPage);
 }
 
 function goToNextPage() {
   const newPage = props.page + 1 <= props.lastPage ? props.page + 1 : props.lastPage;
-  emit('next-click', newPage);
+  emit('nextClick', newPage);
   userInputPage.value = newPage;
   handleNewPage(newPage);
 }
 
 function goToLastPage() {
-  emit('last-click', props.lastPage);
+  emit('lastClick', props.lastPage);
   userInputPage.value = props.lastPage;
   handleNewPage(props.lastPage);
 }

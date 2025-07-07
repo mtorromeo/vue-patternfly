@@ -54,10 +54,10 @@
       :disabled="disabled"
       :compact="compact"
       @set-page="emit('update:page', $event)"
-      @first-click="emit('first-click', $event)"
-      @previous-click="emit('previous-click', $event)"
-      @next-click="emit('next-click', $event)"
-      @last-click="emit('last-click', $event)"
+      @first-click="emit('firstClick', $event)"
+      @previous-click="emit('previousClick', $event)"
+      @next-click="emit('nextClick', $event)"
+      @last-click="emit('lastClick', $event)"
     />
 
     <slot />
@@ -149,10 +149,10 @@ defineSlots<{
 const emit = defineEmits<{
   (name: 'update:page', value: number): void;
   (name: 'update:perPage', value: number): void;
-  (name: 'first-click', page: number): void;
-  (name: 'previous-click', page: number): void;
-  (name: 'next-click', page: number): void;
-  (name: 'last-click', page: number): void;
+  (name: 'firstClick', page: number): void;
+  (name: 'previousClick', page: number): void;
+  (name: 'nextClick', page: number): void;
+  (name: 'lastClick', page: number): void;
 }>();
 
 const breakpointClasses = classesFromBreakpointProps(props, ['inset'], styles);

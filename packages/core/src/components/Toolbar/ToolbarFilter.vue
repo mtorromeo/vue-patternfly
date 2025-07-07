@@ -10,14 +10,14 @@
         closable
         :collapsed-text="labelGroupCollapsedText"
         :expanded-text="labelGroupExpandedText"
-        @click="emit('delete-label-group', category)"
+        @click="emit('deleteLabelGroup', category)"
       >
         <slot name="labels">
           <pf-label
             v-for="label of labels"
             :key="labelKey(label)"
             variant="outline"
-            @click="emit('delete-label', category, labelKey(label))"
+            @click="emit('deleteLabel', category, labelKey(label))"
           >{{ labelLabel(label) }}</pf-label>
         </slot>
       </pf-label-group>
@@ -64,8 +64,8 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'delete-label', category: string | undefined, labelKey: string): void;
-  (name: 'delete-label-group', category?: string): void;
+  (name: 'deleteLabel', category: string | undefined, labelKey: string): void;
+  (name: 'deleteLabelGroup', category?: string): void;
 }>();
 
 defineSlots<{

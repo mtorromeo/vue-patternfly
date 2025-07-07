@@ -53,7 +53,7 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineEmits<{
-  (name: 'clear-all-filters'): void;
+  (name: 'clearAllFilters'): void;
 }>();
 
 defineSlots<{

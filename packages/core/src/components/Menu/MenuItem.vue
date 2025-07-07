@@ -177,7 +177,7 @@ const emit = defineEmits<{
   /** Callback for item click */
   (name: 'click', event: Event): void;
   /** @beta Callback function when mouse leaves trigger */
-  (name: 'show-flyout', event?: Event): void;
+  (name: 'showFlyout', event?: Event): void;
 }>();
 
 const $slots = defineSlots<{
@@ -277,7 +277,7 @@ function showFlyout(show: boolean) {
   } else if (flyoutVisible.value && !show) {
     menu.flyout.value = null;
   }
-  emit('show-flyout');
+  emit('showFlyout');
 }
 
 const randomId = useId();

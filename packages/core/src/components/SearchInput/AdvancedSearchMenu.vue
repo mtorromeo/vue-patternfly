@@ -94,7 +94,7 @@ const emit = defineEmits<{
   /** A callback for when the search button is clicked. */
   (name: 'search', value: string, event: Event, attrValueMap: { [key: string]: string }): void;
   /** A callback for when the open advanced search button is clicked. */
-  (name: 'toggle-advanced-menu', event: Event): void;
+  (name: 'toggleAdvancedMenu', event: Event): void;
 }>();
 
 defineSlots<{
@@ -156,14 +156,14 @@ const hasWords = useAttributeValue('haswords');
 const onSearch = (event: Event) => {
   emit('search', value.value, event, props.getAttrValueMap?.() ?? {});
   if (props.searchMenuOpen) {
-    emit('toggle-advanced-menu', event);
+    emit('toggleAdvancedMenu', event);
   }
 };
 
 function onDocClick(event: Event) {
   const clickedWithinSearchInput = searchInput?.$el.value?.contains(event.target as Node);
   if (props.searchMenuOpen && !clickedWithinSearchInput) {
-    emit('toggle-advanced-menu', event);
+    emit('toggleAdvancedMenu', event);
   }
 }
 
@@ -173,7 +173,7 @@ function onEscPress(event: KeyboardEvent) {
     event.key === 'Escape' &&
     searchInput?.$el.value?.contains(event.target as Node)
   ) {
-    emit('toggle-advanced-menu', event);
+    emit('toggleAdvancedMenu', event);
     searchInput?.input.value?.focus();
   }
 }

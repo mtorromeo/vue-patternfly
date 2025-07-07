@@ -77,7 +77,7 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
   (name: 'update:expanded', value: boolean): void;
-  (name: 'clear-all-filters'): void;
+  (name: 'clearAllFilters'): void;
 }>();
 
 defineSlots<{
@@ -146,6 +146,6 @@ function updateNumberFilters(category: string, numberOfFilters: number) {
 }
 
 function clearAllFilters() {
-  emit('clear-all-filters');
+  emit('clearAllFilters');
 }
 </script>

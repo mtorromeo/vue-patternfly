@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'update:sidebar-open', value: boolean): void;
+  (name: 'update:sidebarOpen', value: boolean): void;
 }>();
 
 defineSlots<{
@@ -54,7 +54,7 @@ const sidebarOpen = computed({
     if (managedSidebar?.value && managedSidebarOpen) {
       managedSidebarOpen.value = value;
     } else {
-      emit('update:sidebar-open', value);
+      emit('update:sidebarOpen', value);
     }
   },
 });

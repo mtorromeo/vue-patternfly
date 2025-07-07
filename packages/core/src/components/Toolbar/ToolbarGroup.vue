@@ -42,7 +42,7 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'clear-all-filters'): void;
+  (name: 'clearAllFilters'): void;
   (name: 'mounted', el: HTMLDivElement): void;
 }>();
 

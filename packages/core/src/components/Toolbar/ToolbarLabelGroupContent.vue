@@ -16,7 +16,7 @@
     <pf-toolbar-group v-if="showNumberOfFilters || showDefaultClearFilter || $slots.default" variant="action-group-inline">
       <pf-toolbar-item v-if="showNumberOfFilters">{{ numberOfFilters }} filters applied</pf-toolbar-item>
       <pf-toolbar-item v-if="showDefaultClearFilter">
-        <pf-button variant="link" inline @click="emit('clear-all-filters')">
+        <pf-button variant="link" inline @click="emit('clearAllFilters')">
           {{ clearFiltersButtonText }}
         </pf-button>
       </pf-toolbar-item>
@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const emit = defineEmits<{
-  (name: 'clear-all-filters'): void;
+  (name: 'clearAllFilters'): void;
   (name: 'mounted', el: HTMLDivElement): void;
 }>();
 

@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Chip">
-    <template #description>A <b>chip</b> is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.</template>
+    <template #description>
+      <p>A <b>chip</b> is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.</p>
+      <p><b>Node:</b> The chip component has been deprecated. Our new recommendation is to use <router-link :to="'/components/label'">the label component</router-link> instead.</p>
+    </template>
 
     <template #apidocs>
       <component-info src="packages/core/src/components/ChipGroup/Chip.vue" />
