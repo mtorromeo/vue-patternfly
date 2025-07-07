@@ -30,6 +30,17 @@
                     </pf-toggle-group-item>
                   </pf-toggle-group>
                 </pf-toolbar-item>
+                <pf-toolbar-item>
+                  <pf-dropdown>
+                    <template #toggle>
+                      <pf-menu-toggle>
+                        VuePatternfly v6
+                      </pf-menu-toggle>
+                    </template>
+
+                    <pf-dropdown-item to="https://mtorromeo.github.io/vue-patternfly/v5/">VuePatternFly v5</pf-dropdown-item>
+                  </pf-dropdown>
+                </pf-toolbar-item>
               </pf-toolbar-group>
             </pf-toolbar-content>
           </pf-toolbar>
