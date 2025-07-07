@@ -18,12 +18,31 @@
           </router-link>
         </pf-masthead-main>
         <pf-masthead-content>
-          <pf-toolbar full-height>
+          <pf-toolbar class="docs-toolbar" full-height>
             <pf-toolbar-content>
-              <pf-toolbar-item>header-tools</pf-toolbar-item>
-              <pf-toolbar-item align="right">
-                <pf-switch v-model:checked="darkTheme" label="Dark theme" />
-              </pf-toolbar-item>
+              <pf-toolbar-group align="right">
+                <pf-toolbar-item>
+                  <pf-toggle-group v-model="darkTheme">
+                    <pf-toggle-group-item :value="false">
+                      <sun-icon />
+                    </pf-toggle-group-item>
+                    <pf-toggle-group-item :value="true">
+                      <moon-icon />
+                    </pf-toggle-group-item>
+                  </pf-toggle-group>
+                </pf-toolbar-item>
+                <pf-toolbar-item>
+                  <pf-dropdown>
+                    <template #toggle>
+                      <pf-menu-toggle full-height>
+                        VuePatternfly v5
+                      </pf-menu-toggle>
+                    </template>
+
+                    <pf-dropdown-item to="https://mtorromeo.github.io/vue-patternfly/">VuePatternFly v6</pf-dropdown-item>
+                  </pf-dropdown>
+                </pf-toolbar-item>
+              </pf-toolbar-group>
             </pf-toolbar-content>
           </pf-toolbar>
         </pf-masthead-content>
@@ -89,6 +108,12 @@
     }
   }
 }
+
+.docs-toolbar .pf-v5-c-toggle-group {
+  --pf-v5-c-toggle-group__button--m-selected--BackgroundColor: var(--pf-v5-global--palette--blue-400);
+  --pf-v5-c-toggle-group__button--focus--BackgroundColor: transparent;
+  --pf-v5-c-toggle-group__button--hover--BackgroundColor: transparent;
+}
 </style>
 
 <script lang="ts" setup>
@@ -98,6 +123,8 @@ import { useAlertsStore } from './store/alerts';
 import { ref } from 'vue';
 import { watch } from 'vue';
 import BarsIcon from '@vue-patternfly/icons/bars-icon';
+import SunIcon from "@vue-patternfly/icons/sun-icon";
+import MoonIcon from "@vue-patternfly/icons/moon-icon";
 
 const alerts = useAlertsStore();
 const maxDisplayed = ref(5);
@@ -113,15 +140,14 @@ const overflowMessage = computed(() => {
   return '';
 });
 
-const darkTheme = computed({
-  get: () => document.documentElement.classList.contains('pf-v5-theme-dark'),
-  set(value) {
-    if (value) {
-      document.documentElement.classList.add('pf-v5-theme-dark');
-    } else {
-      document.documentElement.classList.remove('pf-v5-theme-dark');
-    }
-  },
+const darkTheme = ref(document.documentElement.classList.contains("pf-v5-theme-dark"));
+
+watch(darkTheme, (value) => {
+  if (value) {
+    document.documentElement.classList.add("pf-v5-theme-dark");
+  } else {
+    document.documentElement.classList.remove("pf-v5-theme-dark");
+  }
 });
 
 function expandAlerts() {
