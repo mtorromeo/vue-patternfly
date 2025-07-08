@@ -16,7 +16,7 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div style="position: relative">
       <div v-if="src" class="source-link">
-        <pf-button :href="`https://github.com/mtorromeo/vue-patternfly/tree/master/apps/docs/src/${storySrc}`" variant="link" title="Full source code" target="_blank">
+        <pf-button :href="`https://github.com/mtorromeo/vue-patternfly/blob/v5/apps/docs/src/${storySrc}`" variant="link" title="Full source code" target="_blank">
           <github-icon />
         </pf-button>
       </div>

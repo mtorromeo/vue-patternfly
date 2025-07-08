@@ -71,8 +71,8 @@ If you discover any security related issues, please email massimiliano.torromeo@
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
-[link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly/master/packages/core/LICENSE
-[link-CONDUCT]: https://github.com/mtorromeo/vue-patternfly/blob/master/packages/core/CONDUCT.md
+[link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly/main/packages/core/LICENSE
+[link-CONDUCT]: https://github.com/mtorromeo/vue-patternfly/blob/main/packages/core/CONDUCT.md
 [link-author]: https://github.com/mtorromeo
 [link-contributors]: ../../contributors
 [link-patternfly]: https://v5-archive.patternfly.org/

@@ -4,7 +4,7 @@
     {{ componentName }} <component-title :name="componentName" />
   </pf-title>
   <pf-text>
-    <pf-button variant="link" inline target="_blank" :href="`https://github.com/mtorromeo/vue-patternfly/blob/master/${src}`">
+    <pf-button variant="link" inline target="_blank" :href="`https://github.com/mtorromeo/vue-patternfly/blob/v5/${src}`">
       <github-icon /> Source code
     </pf-button>
   </pf-text>

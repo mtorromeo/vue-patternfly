@@ -19,7 +19,7 @@
           <up-right-from-square-icon />
         </template>
       </pf-tab>
-      <pf-tab v-if="name && !noGithubLink" title="Page source code" :href="`https://github.com/mtorromeo/vue-patternfly/tree/master/apps/docs/src/stories/${name}`" target="_blank">
+      <pf-tab v-if="name && !noGithubLink" title="Page source code" :href="`https://github.com/mtorromeo/vue-patternfly/blob/v5/apps/docs/src/stories/${name}`" target="_blank">
         <template #icon>
           <github-icon />
         </template>
