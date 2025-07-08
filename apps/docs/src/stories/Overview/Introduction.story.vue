@@ -68,7 +68,7 @@
       The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
       [link-github]: https://github.com/mtorromeo/vue-patternfly
-      [link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly/master/packages/core/LICENSE
+      [link-LICENSE]: https://raw.githubusercontent.com/mtorromeo/vue-patternfly/main/packages/core/LICENSE
       [link-author]: https://github.com/mtorromeo
       [link-contributors]: https://github.com/mtorromeo/vue-patternfly/graphs/contributors
       [link-patternfly]: https://www.patternfly.org/
