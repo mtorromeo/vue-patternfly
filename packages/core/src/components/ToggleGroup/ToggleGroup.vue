@@ -41,6 +41,10 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const value = defineModel<T | null>({ default: null });
 
+defineEmits<{
+  (e: 'update:modelValue', value: T): void;
+}>();
+
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();

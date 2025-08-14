@@ -105,8 +105,8 @@ defineEmits<{
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
-  (name: 'update:modelValue'): void;
-  (name: 'update:validated'): void;
+  (name: 'update:modelValue', value: string): void;
+  (name: 'update:validated', value: 'success' | 'warning' | 'error' | 'default'): void;
 }>();
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
@@ -127,7 +127,7 @@ const {
 } = useInputValidation({
   inputElement: input,
   autoValidate: props.autoValidate,
-  validated: validated,
+  validated,
   customCheckValidity: checkValidity,
 });
 

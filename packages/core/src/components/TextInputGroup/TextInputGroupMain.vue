@@ -63,6 +63,8 @@ const emit = defineEmits<{
   (name: 'focus', event: FocusEvent): void;
   /** Callback for when focus is lost on the input field*/
   (name: 'blur', event: FocusEvent): void;
+  /** Callback for when the model value changes */
+  (name: 'update:modelValue', value: string): void;
 }>();
 
 defineSlots<{

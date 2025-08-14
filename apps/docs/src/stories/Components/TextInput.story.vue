@@ -101,9 +101,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 import ClockIcon from '@vue-patternfly/icons/clock-icon';
 
-const text1 = ref('');
+const text1: Ref<string | null> = ref(null);
 const text2 = ref('');
 </script>
