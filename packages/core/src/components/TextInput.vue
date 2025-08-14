@@ -18,7 +18,7 @@
       v-bind="$attrs"
       ref="inputRef"
       :value="value"
-      :type="type"
+      :type="type ?? 'text'"
       :aria-invalid="effectiveValidated === 'error'"
       :disabled="disabled || undefined"
       :readonly="!!readOnlyVariant || readonly"
@@ -37,21 +37,10 @@
   </span>
 </template>
 
-<script lang="ts" setup>
-import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
-import { useChildrenTracker } from '../use';
-import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useInputValidation, type InputValidateState } from '../input';
-import { FormGroupInputsKey, FormInputsKey } from './Form/common';
-import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import PfFormControlIcon from './FormControlIcon.vue';
+<script lang="ts">
+export type InputType = 'text' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'time' | 'url' | 'week';
 
-defineOptions({
-  name: 'PfTextInput',
-  inheritAttrs: false,
-});
-
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
+export interface Props<T extends InputType = 'text'> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
@@ -65,19 +54,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
    */
   validated?: InputValidateState;
   /** Type that the text input accepts. */
-  type?:
-    | 'text'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'search'
-    | 'tel'
-    | 'time'
-    | 'url'
-    | 'week';
+  type?: T;
   /** Value of the text input. */
   modelValue?: string | number | null;
   /** Aria-label. The text input requires an associated id or aria-label. */
@@ -88,9 +65,23 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttrib
   /** Disables validation status icon */
   noStatusIcon?: boolean;
 }
+</script>
 
-const props = withDefaults(defineProps<Props>(), {
-  type: 'text',
+<script lang="ts" setup generic="T extends InputType = 'text'">
+import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
+import { useChildrenTracker } from '../use';
+import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+import { useInputValidation, type InputValidateState } from '../input';
+import { FormGroupInputsKey, FormInputsKey } from './Form/common';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import PfFormControlIcon from './FormControlIcon.vue';
+
+defineOptions({
+  name: 'PfTextInput',
+  inheritAttrs: false,
+});
+
+const props = withDefaults(defineProps<Props<T>>(), {
   autoValidate: true,
   modelValue: undefined,
 });
@@ -103,7 +94,7 @@ defineEmits<{
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
-  (name: 'update:modelValue', value: string): void;
+  (name: 'update:modelValue', value: T extends 'number' ? number : string): void;
   (name: 'update:validated', value: InputValidateState): void;
 }>();
 
@@ -122,7 +113,7 @@ const {
   effectiveValidated,
   onBlur,
   onChange,
-  onInput,
+  onInput: commonOnInput,
   onInvalid,
   onKeyUp,
   ...inputValidationData
@@ -137,6 +128,18 @@ useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 function focus() {
   input.value?.focus();
+}
+
+function onInput(event: InputEvent) {
+  if (!input.value) {
+    return;
+  }
+  const value = input.value.value;
+  if (props.type === 'number') {
+    commonOnInput(event, value ? parseFloat(value) : null);
+  } else {
+    commonOnInput(event, value);
+  }
 }
 
 defineExpose({

@@ -96,9 +96,9 @@ export function useInputValidation({
     reportValidity,
     setCustomValidity,
 
-    onInput(event: InputEvent) {
+    onInput(event: InputEvent, value?: any) {
       instance?.$emit('input', event);
-      value.value = (event.target as InputElement).value;
+      value.value = value ?? (event.target as InputElement).value;
       if (autoValidate === 'input') {
         reportValidity();
       } else {
