@@ -15,16 +15,6 @@ export interface Props extends OUIAProps {
   /** Disable all toggle group items under this component. */
   disabled?: boolean;
 }
-
-import { PfToggleGroup, PfToggleGroupItem } from '.';
-
-export function useSingleToggleGroup<T>() {
-  return [PfToggleGroup<T | undefined | null>, PfToggleGroupItem<T>];
-}
-
-export function useMultiToggleGroup<T>() {
-  return [PfToggleGroup<T[]>, PfToggleGroupItem<T>];
-}
 </script>
 
 <script lang="ts" setup generic="T = string | number | (string | number)[]">

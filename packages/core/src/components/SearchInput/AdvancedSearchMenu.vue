@@ -9,7 +9,6 @@
             </template>
             <pf-text-input
               :id="`${attribute.attr}_${index}`"
-              :ref="el => index === 0 ? firstAttrRef = el as any : null"
               v-model="attribute.computed.value"
               type="text"
             />
@@ -43,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, type Ref, ref, useId } from 'vue';
+import { computed, inject, useId } from 'vue';
 import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
 import { useOUIAProps } from '../../helpers/ouia';
 import PfTextInput from '../TextInput.vue';
@@ -104,7 +103,6 @@ defineSlots<{
   'form-additional-items'?: (props?: Record<never, never>) => any;
 }>();
 
-const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
 const searchInput = inject(SearchInputKey);
 const hasWordsId = useId();
 

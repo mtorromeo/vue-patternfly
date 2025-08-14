@@ -7,7 +7,7 @@ import type JumpLinksListVue from './JumpLinksList.vue';
     role="list"
     :aria-current="managedActive ? 'location' : undefined"
   >
-    <auto-wrap component="a" :exclude="PfJumpLinksList" :class="styles.jumpLinksLink" v-bind="{ href }" @click="handleClick">
+    <auto-wrap component="a" :exclude="PfJumpLinksList" :class="styles.jumpLinksLink" v-bind="{ href, onClick }">
       <span :class="styles.jumpLinksLinkText">
         <slot />
       </span>
@@ -72,7 +72,7 @@ function searchTarget() {
 watch(() => [props.node, jumpLinks?.scrollableHTMLElement], searchTarget);
 onMounted(searchTarget);
 
-function handleClick(event: PointerEvent) {
+function onClick(event: PointerEvent) {
   emit('click', event);
 
   const scrollableElement = toValue(jumpLinks?.scrollableHTMLElement);
