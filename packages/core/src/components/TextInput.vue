@@ -115,8 +115,8 @@ const {
   value,
   effectiveValidated,
   onBlur,
-  onChange,
-  onInput,
+  onChange: commonOnChange,
+  onInput: commonOnInput,
   onInvalid,
   onKeyUp,
   ...inputValidationData
@@ -132,6 +132,30 @@ useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 function focus() {
   input.value?.focus();
+}
+
+function onChange(event: Event) {
+  if (!input.value) {
+    return;
+  }
+  const value = input.value.value;
+  if (props.type === 'number') {
+    commonOnChange(event, value ? parseFloat(value) : null);
+  } else {
+    commonOnChange(event, value);
+  }
+}
+
+function onInput(event: InputEvent) {
+  if (!input.value) {
+    return;
+  }
+  const value = input.value.value;
+  if (props.type === 'number') {
+    commonOnInput(event, value ? parseFloat(value) : null);
+  } else {
+    commonOnInput(event, value);
+  }
 }
 
 defineExpose({

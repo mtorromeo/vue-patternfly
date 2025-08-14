@@ -108,10 +108,10 @@ export function useInputValidation({
     reportValidity,
     setCustomValidity,
 
-    onInput(event: InputEvent) {
+    onInput(event: InputEvent, value?: any) {
       instance?.$emit('input', event);
       if (!modifiers.lazy) {
-        value.value = (event.target as InputElement).value;
+        value.value = value ?? (event.target as InputElement).value;
       }
       if (autoValidate === 'input') {
         reportValidity();
@@ -129,10 +129,10 @@ export function useInputValidation({
       }
     },
 
-    onChange(event: Event) {
+    onChange(event: Event, value?: any) {
       instance?.$emit('change', event);
       if (modifiers.lazy) {
-        value.value = (event.target as InputElement).value;
+        value.value = value ?? (event.target as InputElement).value;
       }
       if (autoValidate === 'change') {
         reportValidity();
