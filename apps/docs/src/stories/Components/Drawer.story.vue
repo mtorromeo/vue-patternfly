@@ -19,7 +19,7 @@
       ## Demo
     </pre>
 
-    <pf-form-select v-model="position" required>
+    <pf-form-select :model-value="position" @update:model-value="(position = $event as 'right' | 'left' | 'bottom')" required>
       <pf-form-select-option value="right" label="right" />
       <pf-form-select-option value="left" label="left" />
       <pf-form-select-option value="bottom" label="bottom" />

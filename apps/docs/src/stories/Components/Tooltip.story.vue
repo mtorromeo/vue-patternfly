@@ -36,7 +36,7 @@
         <pf-form-group label="Position">
           <pf-checkbox v-model="flip" label="Flip (used only with position != 'auto')" />
 
-          <pf-form-select v-model="position">
+          <pf-form-select :model-value="position" @update:model-value="position = $event as Placement">
             <pf-form-select-option value="auto">auto</pf-form-select-option>
             <pf-form-select-option value="top">top</pf-form-select-option>
             <pf-form-select-option value="bottom">bottom</pf-form-select-option>
