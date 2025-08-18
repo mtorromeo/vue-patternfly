@@ -38,9 +38,7 @@
 </template>
 
 <script lang="ts">
-export type InputType = 'text' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'time' | 'url' | 'week';
-
-export interface Props<T extends InputType = 'text'> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
+export interface Props<T extends InputType = 'text', N extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
@@ -57,6 +55,11 @@ export interface Props<T extends InputType = 'text'> extends OUIAProps, /* @vue-
   type?: T;
   /** Value of the text input. */
   modelValue?: string | number | null;
+  modelModifiers?: {
+    number?: N;
+    trim?: boolean;
+    lazy?: boolean;
+  };
   /** Aria-label. The text input requires an associated id or aria-label. */
   ariaLabel?: string;
   /** Trim text at start */
@@ -67,11 +70,11 @@ export interface Props<T extends InputType = 'text'> extends OUIAProps, /* @vue-
 }
 </script>
 
-<script lang="ts" setup generic="T extends InputType = 'text'">
+<script lang="ts" setup generic="T extends InputType = 'text', N extends boolean = false">
 import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useInputValidation, type InputValidateState } from '../input';
+import { useInputValidation, type InputType, type InputValidateState } from '../input';
 import { FormGroupInputsKey, FormInputsKey } from './Form/common';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
@@ -81,7 +84,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<Props<T>>(), {
+const props = withDefaults(defineProps<Props<T, N>>(), {
   autoValidate: true,
   modelValue: undefined,
 });
@@ -94,7 +97,7 @@ defineEmits<{
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
-  (name: 'update:modelValue', value: T extends 'number' ? number : string): void;
+  (name: 'update:modelValue', value: N extends true ? number : (T extends 'number' ? number : string)): void;
   (name: 'update:validated', value: InputValidateState): void;
 }>();
 
@@ -113,7 +116,7 @@ const {
   effectiveValidated,
   onBlur,
   onChange,
-  onInput: commonOnInput,
+  onInput,
   onInvalid,
   onKeyUp,
   ...inputValidationData
@@ -121,6 +124,7 @@ const {
   inputElement: input,
   autoValidate: props.autoValidate,
   validated: validated,
+  type: props.type,
 });
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
@@ -128,18 +132,6 @@ useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 
 function focus() {
   input.value?.focus();
-}
-
-function onInput(event: InputEvent) {
-  if (!input.value) {
-    return;
-  }
-  const value = input.value.value;
-  if (props.type === 'number') {
-    commonOnInput(event, value ? parseFloat(value) : null);
-  } else {
-    commonOnInput(event, value);
-  }
 }
 
 defineExpose({

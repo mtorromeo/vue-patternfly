@@ -8,10 +8,27 @@
 
     <story-canvas title="Basic">
       <pf-text-input v-model="text1" aria-label="text input example" />
+      <pre>Value: {{ JSON.stringify(text1) }}</pre>
     </story-canvas>
 
     <story-canvas title="Numeric">
       <pf-text-input v-model="number1" type="number" aria-label="text input example" />
+      <pre>Value: {{ JSON.stringify(number1) }}</pre>
+    </story-canvas>
+
+    <story-canvas title="Number modifier">
+      <pf-text-input v-model.number="number2" aria-label="text input example" />
+      <pre>Value: {{ JSON.stringify(number2) }}</pre>
+    </story-canvas>
+
+    <story-canvas title="Trim modifier">
+      <pf-text-input v-model.trim="text2" aria-label="text input example" />
+      <pre>Value: {{ JSON.stringify(text2) }}</pre>
+    </story-canvas>
+
+    <story-canvas title="Lazy modifier">
+      <pf-text-input v-model.lazy="text3" aria-label="text input example" />
+      <pre>Value: {{ JSON.stringify(text3) }}</pre>
     </story-canvas>
 
     <story-canvas title="Disabled">
@@ -56,7 +73,7 @@
       />
       <br>
       <pf-text-input
-        v-model="text2"
+        v-model="text4"
         required
         pattern="[0-9a-f]*"
         placeholder="hexadecimal value (validates on change)"
@@ -110,5 +127,8 @@ import ClockIcon from '@vue-patternfly/icons/clock-icon';
 
 const text1: Ref<string | null> = ref(null);
 const text2 = ref('');
+const text3 = ref('');
+const text4 = ref('');
 const number1 = ref(0);
+const number2 = ref(0);
 </script>
