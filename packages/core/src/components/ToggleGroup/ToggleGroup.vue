@@ -17,7 +17,7 @@ export interface Props extends OUIAProps {
 }
 </script>
 
-<script lang="ts" setup generic="T = string | number | (string | number)[]">
+<script lang="ts" setup generic="T extends string | number | (string | number)[] = string | number | (string | number)[]">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
 import { type InjectionKey, provide, computed, type ComputedRef, type Ref } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';

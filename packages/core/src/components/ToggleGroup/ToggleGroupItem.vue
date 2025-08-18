@@ -35,7 +35,7 @@ export interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 </script>
 
-<script lang="ts" setup generic="T = string | number">
+<script lang="ts" setup generic="T extends string | number = string | number">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { inject, computed, ref, type HTMLAttributes, type Ref } from 'vue';
@@ -63,7 +63,7 @@ defineSlots<{
 }>();
 
 const injectedDisabled = inject(ToggleGroupDisabledKey, undefined);
-const selection: Ref<T | undefined> | undefined = inject(ToggleGroupSelectionKey, undefined) as any;
+const selection: Ref<T | T[] | undefined> | undefined = inject(ToggleGroupSelectionKey, undefined) as any;
 
 const innerSelected = ref(false);
 
@@ -83,7 +83,7 @@ const effectiveSelected = computed({
     }
 
     if (Array.isArray(selection.value)) {
-      return selection.value.includes(value);
+      return selection.value.includes(value as T);
     }
     return selection.value === value;
   },
@@ -107,11 +107,11 @@ const effectiveSelected = computed({
 
     if (Array.isArray(selection.value)) {
       if (to) {
-        if (!selection.value.includes(value)) {
-          selection.value = [...selection.value, value] as T;
+        if (!selection.value.includes(value as T)) {
+          selection.value = [...selection.value, value] as T[];
         }
       } else {
-        const idx = selection.value.indexOf(value);
+        const idx = selection.value.indexOf(value as T);
         if (idx >= 0) {
           selection.value.splice(idx, 1);
         }
