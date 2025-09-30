@@ -6,7 +6,7 @@
         aria-label="Show Filters"
         :aria-expanded="expanded"
         :aria-haspopup="expanded && isContentPopup"
-        @click="toggleExpanded ?? undefined"
+        @click="toggleExpanded"
       >
         <slot name="icon" />
       </pf-button>
