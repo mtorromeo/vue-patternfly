@@ -27,8 +27,6 @@
   >
     <slot name="skeleton" />
 
-    <main-container />
-
     <div v-if="$slots.drawer" :class="styles.pageDrawer">
       <pf-drawer :expanded="drawerExpanded">
         <pf-drawer-content>
@@ -44,6 +42,9 @@
         </pf-drawer-content>
       </pf-drawer>
     </div>
+
+    <main-container v-else/>
+
   </div>
 </template>
 
