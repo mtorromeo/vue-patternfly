@@ -17,7 +17,7 @@
             v-for="label of labels"
             :key="labelKey(label)"
             variant="outline"
-            @click="emit('deleteLabel', category, labelKey(label))"
+            @close="emit('deleteLabel', category, labelKey(label))"
           >{{ labelLabel(label) }}</pf-label>
         </slot>
       </pf-label-group>
