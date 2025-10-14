@@ -18,7 +18,7 @@
       v-bind="$attrs"
       ref="inputRef"
       :value="value"
-      :type="type"
+      :type="type ?? 'text'"
       :aria-invalid="effectiveValidated === 'error'"
       :disabled="disabled || undefined"
       :readonly="!!readOnlyVariant || readonly"
@@ -37,21 +37,8 @@
   </span>
 </template>
 
-<script lang="ts" setup>
-import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
-import { useChildrenTracker } from '../use';
-import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useInputValidation, type InputValidateState } from '../input';
-import { FormGroupInputsKey, FormInputsKey } from './Form/common';
-import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import PfFormControlIcon from './FormControlIcon.vue';
-
-defineOptions({
-  name: 'PfTextInput',
-  inheritAttrs: false,
-});
-
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
+<script lang="ts">
+interface Props<T extends InputType = 'text', N extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
@@ -65,23 +52,11 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, '
    */
   validated?: InputValidateState;
   /** Type that the text input accepts. */
-  type?:
-    | 'text'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'search'
-    | 'tel'
-    | 'time'
-    | 'url'
-    | 'week';
+  type?: T;
   /** Value of the text input. */
   modelValue?: string | number | null;
   modelModifiers?: {
-    number?: boolean;
+    number?: N;
     trim?: boolean;
     lazy?: boolean;
   };
@@ -93,9 +68,23 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, '
   /** Disables validation status icon */
   noStatusIcon?: boolean;
 }
+</script>
 
-const props = withDefaults(defineProps<Props>(), {
-  type: 'text',
+<script lang="ts" setup generic="T extends InputType = 'text', N extends boolean = false">
+import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
+import { useChildrenTracker } from '../use';
+import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+import { useInputValidation, type InputType, type InputValidateState } from '../input';
+import { FormGroupInputsKey, FormInputsKey } from './Form/common';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import PfFormControlIcon from './FormControlIcon.vue';
+
+defineOptions({
+  name: 'PfTextInput',
+  inheritAttrs: false,
+});
+
+const props = withDefaults(defineProps<Props<T, N>>(), {
   autoValidate: true,
   modelValue: undefined,
 });
@@ -108,7 +97,7 @@ defineEmits<{
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
-  (name: 'update:modelValue', value: string): void;
+  (name: 'update:modelValue', value: N extends true ? number : (T extends 'number' ? number : string)): void;
   (name: 'update:validated', value: InputValidateState): void;
 }>();
 
@@ -135,6 +124,7 @@ const {
   inputElement: input,
   autoValidate: props.autoValidate,
   validated: validated,
+  type: props.type,
 });
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);

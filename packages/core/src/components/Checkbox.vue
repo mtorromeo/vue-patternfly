@@ -88,6 +88,7 @@ const value = defineModel<boolean | null>({ default: false });
 
 const emit = defineEmits<{
   (name: 'change', e: Event): void;
+  (name: 'update:modelValue', value: boolean): void;
 }>();
 
 defineSlots<{
