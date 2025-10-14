@@ -38,22 +38,8 @@
   </span>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-
-import { computed, onMounted, toRefs, type TextareaHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
-import { useInputValidation } from '../input';
-import { useChildrenTracker } from '../use';
-import { FormGroupInputsKey, FormInputsKey } from './Form/common';
-import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import PfFormControlIcon from './FormControlIcon.vue';
-
-defineOptions({
-  name: 'PfTextarea',
-  inheritAttrs: false,
-});
-
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
+<script lang="ts">
+export interface Props<N extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
   /** Flag to show if the text area is disabled. */
   disabled?: boolean;
 
@@ -76,7 +62,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAtt
   /** Value of the text area. */
   modelValue?: string | number | null;
   modelModifiers?: {
-    number?: boolean;
+    number?: N;
     trim?: boolean;
     lazy?: boolean;
   };
@@ -95,8 +81,24 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAtt
   /** Maximum width */
   maxWidth?: string;
 }
+</script>
 
-const props = withDefaults(defineProps<Props>(), {
+<script lang="ts" setup generic="N extends boolean = false">
+import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+
+import { computed, onMounted, toRefs, type TextareaHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
+import { useInputValidation } from '../input';
+import { useChildrenTracker } from '../use';
+import { FormGroupInputsKey, FormInputsKey } from './Form/common';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import PfFormControlIcon from './FormControlIcon.vue';
+
+defineOptions({
+  name: 'PfTextarea',
+  inheritAttrs: false,
+});
+
+const props = withDefaults(defineProps<Props<N>>(), {
   resizeOrientation: 'both',
   autoValidate: true,
   modelValue: undefined,
@@ -110,8 +112,8 @@ defineEmits<{
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
-  (name: 'update:modelValue'): void;
-  (name: 'update:validated'): void;
+  (name: 'update:modelValue', value: N extends true ? number : string): void;
+  (name: 'update:validated', value: 'success' | 'warning' | 'error' | 'default'): void;
 }>();
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
@@ -132,7 +134,7 @@ const {
 } = useInputValidation({
   inputElement: input,
   autoValidate: props.autoValidate,
-  validated: validated,
+  validated,
   customCheckValidity: checkValidity,
 });
 
