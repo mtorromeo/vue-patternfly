@@ -32,7 +32,7 @@
 <script lang="ts">
 export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfFormSelectOption>>;
 
-export interface Props<M extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
+interface Props<M extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
   multiple?: M;
   disabled?: boolean;
 

@@ -8,7 +8,7 @@
 export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as InjectionKey<ComputedRef<boolean | undefined>>;
 export const ToggleGroupSelectionKey = Symbol('ToggleGroupSelectionKey') as InjectionKey<Ref<unknown>>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {
   /** Modifies the toggle group to include compact styling. */
   compact?: boolean;
   /** Disable all toggle group items under this component. */

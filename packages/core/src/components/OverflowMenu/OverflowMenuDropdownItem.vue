@@ -8,14 +8,15 @@
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 import { OverflowMenuIsBelowBreakpointKey } from './OverflowMenu.vue';
 import { inject } from 'vue';
-import PfDropdownItem, { type Props as DropdownItemProps } from '../Menu/MenuItem.vue';
+import PfDropdownItem from '../Menu/MenuItem.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfOverflowMenuDropdownItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<DropdownItemProps, 'component'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfDropdownItem>, 'component' | 'ouiaId' | 'ouiaSafe'> {
   shared?: boolean;
 }
 

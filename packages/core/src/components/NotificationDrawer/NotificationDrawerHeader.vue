@@ -27,7 +27,7 @@ defineOptions({
   name: 'PfNotificationDrawerHeader',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer heading count */
   count?: number | string;
   /**  Notification drawer heading custom text which can be used instead of providing count/unreadText */

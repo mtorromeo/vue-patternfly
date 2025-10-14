@@ -85,7 +85,7 @@ defineOptions({
   name: 'PfAlert',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
   /** Adds accessible text to the alert. */
   ariaLabel?: string;
   /** Uniquely identifies the alert. */

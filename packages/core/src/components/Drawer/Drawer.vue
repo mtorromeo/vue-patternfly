@@ -30,7 +30,7 @@ defineOptions({
   name: 'PfDrawer',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Indicates if the drawer is expanded */
   expanded?: boolean;
   /** Indicates if the content element and panel element are displayed side by side. */

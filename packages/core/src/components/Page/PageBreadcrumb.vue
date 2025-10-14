@@ -36,7 +36,7 @@ defineOptions({
   name: 'PfPageBreadcrumb',
 });
 
-export interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
+interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Limits the width of the breadcrumb */
   widthLimited?: boolean;
   /** Limits the width of the section and sets the --pf-v6-c-page--section--m-limit-width--MaxWidth variable to this value */

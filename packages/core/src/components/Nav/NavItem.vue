@@ -60,7 +60,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
   component?: string;
   linkComponent?: string;
   groupId?: string;

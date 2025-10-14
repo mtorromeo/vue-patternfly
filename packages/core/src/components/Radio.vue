@@ -58,7 +58,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type'> {
   component?: string | Component;
   /** Id of the radio. */
   id?: string;

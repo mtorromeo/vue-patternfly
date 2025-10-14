@@ -25,7 +25,7 @@ defineOptions({
   name: 'PfFormControlIcon',
 });// expands object types one level deep
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** The status icon to render. */
   status?: 'success' | 'error' | 'warning';
 }

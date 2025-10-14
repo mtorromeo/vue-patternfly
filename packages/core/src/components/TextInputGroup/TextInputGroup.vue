@@ -14,7 +14,7 @@
 <script lang="ts">
 export const TextInputGroupDisabledKey = Symbol('TextInputGroupDisabledKey') as InjectionKey<boolean | undefined>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds disabled styling and a disabled context value which text input group main hooks into for the input itself */
   disabled?: boolean;
   /** Flag to indicate the toggle has no border or background */

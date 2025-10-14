@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import PfMenu, { type MenuItemId, type Props as MenuProps } from '../Menu/Menu.vue';
+import PfMenu, { type MenuItemId } from '../Menu/Menu.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';
@@ -31,13 +31,14 @@ import { useHtmlElementFromVNodes } from '../../use';
 import { useEventListener } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import type { Placement } from '@floating-ui/core';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfSelect',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'ouiaId' | 'ouiaSafe'> {
   /** Minimum width of the select menu */
   minWidth?: string;
   /** z-index of the select menu */
@@ -65,6 +66,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  selected: undefined,
   placement: 'bottom',
   closeOnKeys: () => ['Escape', 'Tab'],
 });

@@ -51,7 +51,7 @@ defineOptions({
   name: 'PfNavExpandable',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onClick'> {
   title?: string;
   srText?: string;
   groupId?: string | number;

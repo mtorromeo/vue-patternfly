@@ -78,7 +78,7 @@ defineOptions({
   name: 'PfPagination',
 });
 
-export interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Position where pagination is rendered. */
   variant?: 'top' | 'bottom';
   /** Flag indicating if pagination should not be sticky on mobile */

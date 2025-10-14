@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfFormAlert',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ FormHTMLAttributes {}
+interface Props extends OUIAProps, /* @vue-ignore */ FormHTMLAttributes {}
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});

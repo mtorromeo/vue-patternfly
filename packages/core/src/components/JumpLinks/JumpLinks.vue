@@ -54,7 +54,7 @@ export const JumpLinkInjectionKey = Symbol('JumpLinkInjectionKey') as InjectionK
   scrollableHTMLElement: ComputedRefWithControl<HTMLElement | undefined>;
 }>;
 
-export interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Whether to center children. */
   centered?: boolean;
   /** Whether the layout of children is vertical or horizontal. */

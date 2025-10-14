@@ -92,7 +92,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   /** The index of the default active tab. Set this for uncontrolled Tabs */
   defaultActiveKey?: TabKey;

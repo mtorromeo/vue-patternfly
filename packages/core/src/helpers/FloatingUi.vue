@@ -9,7 +9,7 @@ export type Placement = UIPlacement |'auto';
 
 export const FloatingElementTeleportKey = Symbol('FloatingElementTeleportKey') as InjectionKey<MaybeRef<string | RendererElement | null | undefined>>;
 
-export interface Props {
+interface Props {
   reference: string | ReferenceElement | undefined | null;
   disable?: boolean;
   placement?: Placement;

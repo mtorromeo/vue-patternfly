@@ -32,7 +32,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'aria-current' | 'type'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'aria-current' | 'type'> {
   href?: string;
   to?: RouteLocationRaw;
   active?: boolean;

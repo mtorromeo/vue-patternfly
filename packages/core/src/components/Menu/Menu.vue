@@ -65,7 +65,7 @@ export interface MenuState {
 
 export type MenuItemId = string | number | symbol;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   /** @beta Indicates if menu contains a flyout menu */
   containsFlyout?: boolean;
   /** @beta Indicating that the menu should have nav flyout styling */

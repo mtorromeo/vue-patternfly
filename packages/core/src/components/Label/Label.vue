@@ -73,7 +73,7 @@ defineOptions({
   name: 'PfLabel',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
   /** The color of the label outline/fill */
   color?: 'blue' | 'teal' | 'green' | 'orange' | 'purple' | 'red' | 'orangered' | 'grey' | 'yellow',
   /** Variant of the label. */

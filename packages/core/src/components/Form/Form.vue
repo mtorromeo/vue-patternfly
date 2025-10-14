@@ -24,7 +24,7 @@ defineOptions({
   name: 'PfForm',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ FormHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ FormHTMLAttributes {
   component?: string | Component;
   /** Sets the Form to horizontal. */
   horizontal?: boolean;

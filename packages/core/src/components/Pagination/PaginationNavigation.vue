@@ -84,7 +84,7 @@ defineOptions({
   name: 'PfPaginationNavigation',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-label'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-label'> {
   /** Flag indicating if the pagination is disabled. */
   disabled?: boolean;
   /** Flag indicating if the pagination is compact. */

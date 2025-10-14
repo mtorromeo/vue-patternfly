@@ -26,7 +26,7 @@ defineOptions({
   name: 'PfToolbarExpandableContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   expanded?: boolean;
   showClearFiltersButton?: boolean;
   clearFiltersButtonText?: string;

@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfGallery',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: string | Component;
 
   /** Adds space between children. */

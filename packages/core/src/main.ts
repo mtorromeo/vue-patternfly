@@ -5,7 +5,6 @@ import * as components from './components';
 export * from './layouts';
 export * from './components';
 export * from './use';
-export { type ComponentProps } from './util';
 
 const all = { ...layouts, ...components };
 

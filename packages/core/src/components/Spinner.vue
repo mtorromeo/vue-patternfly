@@ -26,7 +26,7 @@ export enum spinnerSize {
   xl = 'xl'
 }
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'role' | 'viewBox'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'role' | 'viewBox'> {
   /** Size variant of progress. */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Text describing that current loading status or progress */

@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfDrawerContentBody',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Indicates if there should be padding around the drawer content body */
   padding?: boolean;
 }

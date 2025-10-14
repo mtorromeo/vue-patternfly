@@ -38,7 +38,7 @@ defineOptions({
   name: 'PfHelperTextItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /** Variant styling of the helper text item. */
   variant?: 'default' | 'warning' | 'success' | 'error' | 'indeterminate';
 

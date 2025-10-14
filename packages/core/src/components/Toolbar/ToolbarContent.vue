@@ -38,7 +38,7 @@
 export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
 export const ToolbarContentLabelContainerRefKey = Symbol('ToolbarContentLabelContainerRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
 
-export interface Props extends OUIAProps, VisibilityBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, VisibilityBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Vertical alignment of children */
   alignItems?: 'start' | 'center' | 'baseline' | 'default';
 }

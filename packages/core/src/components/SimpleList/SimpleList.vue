@@ -14,7 +14,7 @@
 <script lang="ts">
 export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<Ref<string | number | boolean | object | symbol | undefined | null>>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Form element name */
   name?: string,
   required?: boolean;

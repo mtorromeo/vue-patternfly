@@ -134,7 +134,7 @@ export type SearchInputProvide = {
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
 
-export interface Props extends OUIAProps {
+interface Props extends OUIAProps {
   /** Flag indicating if search input is disabled. */
   disabled?: boolean;
   /** An accessible label for the search input. */

@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfLoginHeader',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {}
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {}
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});

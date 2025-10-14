@@ -14,7 +14,7 @@ defineOptions({
   name: 'PfDataListAction',
 });
 
-export interface Props extends OUIAProps, VisibilityBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, VisibilityBreakpointProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();

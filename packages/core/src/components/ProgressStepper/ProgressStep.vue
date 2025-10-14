@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /** Variant of the progress step. Each variant has a default icon. */
   variant?: 'default' | 'success' | 'info' | 'pending' | 'warning' | 'danger';
   /** Flag indicating the progress step is the current step. */

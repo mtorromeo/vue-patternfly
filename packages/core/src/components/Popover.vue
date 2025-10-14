@@ -69,20 +69,21 @@ import { useHtmlElementFromVNodes } from '../use';
 import { computed, watch, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, useId } from 'vue';
 import popoverMaxWidth from '@patternfly/react-tokens/dist/js/c_popover_MaxWidth';
 import popoverMinWidth from '@patternfly/react-tokens/dist/js/c_popover_MinWidth';
-import PfFocusTrap, { type Props as PfFocusTrapProps } from '../helpers/FocusTrap.vue';
+import PfFocusTrap from '../helpers/FocusTrap.vue';
 import PfCloseButton from './CloseButton.vue';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
 import PassThrough from '../helpers/PassThrough.vue';
 import { offset, autoPlacement, type Placement, hide, flip as uiFlip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfPopover',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfFocusTrapProps, 'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfFocusTrap>, 'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby' | 'ouiaId' | 'ouiaSafe'> {
   /** Whether to trap focus in the popover */
   focusTrap?: boolean;
   /** Element or selector where to render the floating menu */

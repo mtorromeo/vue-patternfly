@@ -16,7 +16,7 @@ defineOptions({
   name: 'PfDrawerSection',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Color variant of the background of the drawer Section */
   colorVariant?: 'no-background' | 'default' | 'secondary';
 }

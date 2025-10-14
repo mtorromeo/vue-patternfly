@@ -41,9 +41,9 @@
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^22.14.1",
+    "@types/node": "^24.7.2",
     "@types/web-bluetooth": "^0.0.21",
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue": "^6.0.1",
     "@vue/compiler-sfc": "^3.5.13",
     "@vueuse/core": "^13.1.0",
     "@vueuse/integrations": "^13.1.0",
@@ -56,10 +56,11 @@
     "rimraf": "^6.0.1",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
-    "vite": "^6.3.2",
+    "vite": "^7.1.10",
     "vue": "^3.5.13",
+    "vue-component-type-helpers": "^3.1.1",
     "vue-router": "^4.5.0",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^3.1.1"
   },
   "peerDependencies": {
     "@vueuse/core": "^13",

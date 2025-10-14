@@ -31,7 +31,7 @@ import type { HTMLAttributes } from "vue";
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Modifies the body to allow for expandable rows */
   expanded?: boolean;
   /** Flag indicating the <tbody> contains oddly striped rows. */

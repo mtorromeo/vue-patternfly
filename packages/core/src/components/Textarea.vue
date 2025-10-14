@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-export interface Props<N extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
+interface Props<N extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
   /** Flag to show if the text area is disabled. */
   disabled?: boolean;
 

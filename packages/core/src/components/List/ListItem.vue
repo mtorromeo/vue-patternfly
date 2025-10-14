@@ -16,7 +16,7 @@ defineOptions({
   name: 'PfListItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
 }
 
 const props = defineProps<Props>();

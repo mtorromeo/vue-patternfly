@@ -5,14 +5,15 @@
 </template>
 
 <script lang="ts" setup>
-import PfLabel, { type Props as LabelProps } from '../Label/Label.vue';
+import PfLabel from '../Label/Label.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfChip',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LabelProps, 'variant'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfLabel>, 'variant' | 'ouiaId' | 'ouiaSafe'> {
 }
 
 const props = defineProps<Props>();

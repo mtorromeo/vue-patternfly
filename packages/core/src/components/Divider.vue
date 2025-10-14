@@ -24,7 +24,7 @@ defineOptions({
   name: 'PfDivider',
 });
 
-export interface Props extends OUIAProps, InsetBreakpointProps, OrientationBreakpointProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role'> {
+interface Props extends OUIAProps, InsetBreakpointProps, OrientationBreakpointProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role'> {
   component?: 'hr' | 'li' | 'div';
   vertical?: boolean;
 }

@@ -13,7 +13,7 @@
     name: 'PfMastheadLogo',
   });
 
-  export interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
+  interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
     component?: string | Component;
     href?: string;
   }

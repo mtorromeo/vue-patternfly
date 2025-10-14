@@ -39,7 +39,7 @@ defineOptions({
   name: 'PfToolbarLabelGroupContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
   clearFiltersButtonText?: string;
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
   numberOfFilters?: number;

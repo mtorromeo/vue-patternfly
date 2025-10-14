@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'ouiaId' | 'ouiaSafe'> {
   id?: string;
   position?: 'left' | 'right';
   /** Element or selector where to render the floating menu */
@@ -55,12 +55,13 @@ export interface Props extends OUIAProps, /* @vue-ignore */ MenuProps {
 <script lang="ts" setup>
 import { h, mergeProps, type VNode, computed, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, type Reactive } from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
-import PfMenu, { type MenuItemId, type MenuItemTrack, type Props as MenuProps } from '../Menu/Menu.vue';
+import PfMenu, { type MenuItemId, type MenuItemTrack } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useHtmlElementFromVNodes } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 let currentId = 0;
 

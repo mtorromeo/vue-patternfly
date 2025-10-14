@@ -16,7 +16,7 @@ defineOptions({
   name: 'PfNavGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-labelledby'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-labelledby'> {
   title: string;
   id?: string;
 }

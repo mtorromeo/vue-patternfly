@@ -22,7 +22,7 @@ defineOptions({
   name: 'PfTitle',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** The size of the Title  */
   size?: keyof typeof styles.modifiers;
   /** Heading level to use */

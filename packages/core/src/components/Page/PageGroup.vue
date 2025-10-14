@@ -29,7 +29,7 @@ defineOptions({
   name: 'PfPageGroup',
 });
 
-export interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex' | 'role'> {
+interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex' | 'role'> {
   /** Flag indicating if PageBreadcrumb should have a shadow at the top */
   shadowTop?: boolean;
   /** Flag indicating if PageBreadcrumb should have a shadow at the bottom */

@@ -63,7 +63,7 @@
     name: 'PfLabelGroup',
   });
 
-  export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
+  interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
     id?: string;
     /** Flag for having the label group default to expanded */
     defaultOpen?: boolean;

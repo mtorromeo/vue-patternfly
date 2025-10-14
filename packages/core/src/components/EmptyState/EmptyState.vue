@@ -24,7 +24,7 @@ defineOptions({
   name: 'PfEmptyState',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Cause component to consume the available height of its container */
   fullHeight?: boolean;
 

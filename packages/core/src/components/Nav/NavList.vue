@@ -45,7 +45,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
+interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
   /** Aria-label for the back scroll button */
   backScrollAriaLabel?: string;
   /** Aria-label for the forward scroll button */

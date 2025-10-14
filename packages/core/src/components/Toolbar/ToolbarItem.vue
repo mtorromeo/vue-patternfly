@@ -36,7 +36,7 @@ defineOptions({
   name: 'PfToolbarItem',
 });
 
-export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, WidthBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
+interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, WidthBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
   /** A type modifier which modifies spacing specifically depending on the type of item */
   variant?: 'pagination' | 'label' | 'label-group' | 'separator' | 'expand-all';
   /** Vertical alignment of children */

@@ -12,7 +12,7 @@ defineOptions({
   name: 'PfStackItem',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: string | Component;
   filled?: boolean;
 }

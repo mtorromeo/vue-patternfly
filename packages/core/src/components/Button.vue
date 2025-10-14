@@ -70,7 +70,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
   /** Sets the base component to render. defaults to button */
   component?: string | Component;
   /** Adds block styling to button */

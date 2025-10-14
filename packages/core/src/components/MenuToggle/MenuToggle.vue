@@ -91,7 +91,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded' | 'placeholder' | 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded' | 'placeholder' | 'onClick'> {
   /** Flag indicating the toggle is disabled */
   disabled?: boolean;
   /** Flag indicating the toggle is full height */

@@ -21,7 +21,7 @@ defineOptions({
   name: 'PfNotificationDrawerListItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /**  Modifies the list item to include hover styles on :hover */
   hoverable?: boolean;
   /**  Adds styling to the list item to indicate it has been read */

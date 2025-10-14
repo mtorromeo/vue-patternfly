@@ -115,7 +115,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
   /** Flag to show the modal */
   open?: boolean,
   /** Flag to remove the close button in the header area of the modal */

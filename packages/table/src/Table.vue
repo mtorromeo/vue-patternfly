@@ -75,7 +75,7 @@ import { toCamelCase } from '@vue-patternfly/core/util';
 import { provideChildrenTracker } from '@vue-patternfly/core';
 import { TableTrKey } from './common';
 
-export interface Props extends OUIAProps, /* @vue-ignore */ TableHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ TableHTMLAttributes {
   /** Reduces spacing and makes the table more compact */
   compact?: boolean;
   /** Do not render borders */

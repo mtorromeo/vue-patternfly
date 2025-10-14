@@ -22,7 +22,7 @@ defineOptions({
   name: 'PfDataListContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   noPadding?: boolean;
   hidden?: boolean;
 }

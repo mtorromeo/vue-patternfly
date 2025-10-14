@@ -30,14 +30,15 @@ import { useWindowSize } from '@vueuse/core';
 import { computed, inject } from 'vue';
 import { ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
 import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
-import type { Props as ToolbarGroupProps } from './ToolbarGroup.vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type PfToolbarGroup from './ToolbarGroup.vue';
+import { useOUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfToolbarToggleGroup',
 });
 
-export interface Props extends OUIAProps, ToolbarGroupProps, BreakpointProps {
+interface Props extends ComponentProps<typeof PfToolbarGroup>, BreakpointProps {
 }
 
 const props = defineProps<Props>();

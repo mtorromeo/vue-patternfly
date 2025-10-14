@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, /* @vue-ignore */ OlHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ OlHTMLAttributes {
   /** Flag indicating the progress stepper should be centered. */
   centerAligned?: boolean;
   /** Flag indicating the progress stepper has a vertical layout. */

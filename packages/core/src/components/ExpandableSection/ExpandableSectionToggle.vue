@@ -39,7 +39,7 @@ defineOptions({
   name: 'PfExpandableSectionToggle',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** ID of the content of the expandable section */
   contentId?: string;
 

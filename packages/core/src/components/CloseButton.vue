@@ -7,16 +7,16 @@
 </template>
 
 <script lang="ts" setup>
-import type { ComponentProps } from '../util';
 import PfButton from './Button.vue';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import { useOUIAProps } from '../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfCloseButton',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'aria-label'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'aria-label'> {
 }
 
 const props = defineProps<Props>();

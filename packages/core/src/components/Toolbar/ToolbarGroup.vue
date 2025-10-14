@@ -27,7 +27,7 @@ defineOptions({
   name: 'PfToolbarGroup',
 });
 
-export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** A type modifier which modifies spacing specifically depending on the type of group */
   variant?: 'filter-group' | 'action-group' | 'action-group-inline' | 'action-group-plain' | 'label-group';
   /** Vertical alignment of children */

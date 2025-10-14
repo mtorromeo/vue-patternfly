@@ -29,13 +29,14 @@
 <script lang="ts" setup>
 import PfLabelGroup from '../Label/LabelGroup.vue';
 import PfLabel from '../Label/Label.vue';
-import PfToolbarItem, { type Props as ToolbarItemProps } from './ToolbarItem.vue';
+import PfToolbarItem from './ToolbarItem.vue';
 import { ToolbarLabelGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
 import { ToolbarContentLabelContainerRefKey } from './ToolbarContent.vue';
 import { inject, ref, onMounted, onUpdated, computed } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { provideChildrenTracker } from '../../use';
 import { LabelKey } from '../Label/common';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 export type FilterLabel = {
   key: string;
@@ -47,7 +48,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ ToolbarItemProps {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfToolbarItem>, 'ouiaId' | 'ouiaSafe'> {
   labels?: FilterLabel[];
   category?: string;
   hideToolbarItem?: boolean;

@@ -20,7 +20,7 @@ defineOptions({
   name: 'PfMasthead',
 });
 
-export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Display type at various breakpoints */
   display?: 'inline' | 'stack';
   displaySm?: 'inline' | 'stack';

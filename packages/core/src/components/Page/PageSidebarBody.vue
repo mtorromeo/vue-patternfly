@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag indicating that the page sidebar body should use page insets. */
   insets?: boolean;
   /** Flag indicating that the page sidebar body should fill the available vertical space. */

@@ -26,7 +26,7 @@ defineOptions({
   name: 'PfFlexItem',
 });
 
-export interface Props extends
+interface Props extends
   AlignBreakpointProps,
   AlignSelfBreakpointProps,
   FlexBreakpointProps,

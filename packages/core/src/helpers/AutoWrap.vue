@@ -33,7 +33,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props {
+interface Props {
   /**
    * Defines the component to look for in children.
    * If there is already a matching component the children are left untouched, otherwise a new component of this type is created and children matching the optional include/exclude filters are nested inside it.

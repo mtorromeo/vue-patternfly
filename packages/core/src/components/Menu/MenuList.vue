@@ -12,7 +12,7 @@ export type MenuListProvide = {
 
 export const MenuListInjectionKey = Symbol('MenuListInjectionKey') as InjectionKey<MenuListProvide>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {
 }
 </script>
 

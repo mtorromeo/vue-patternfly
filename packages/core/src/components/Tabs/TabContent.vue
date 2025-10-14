@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfTabContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});

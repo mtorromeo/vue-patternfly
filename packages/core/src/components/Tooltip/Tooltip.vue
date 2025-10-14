@@ -49,7 +49,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'onTransitionend'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'onTransitionend'> {
   /** Element or selector where to render the floating menu */
   appendTo?: 'inline' | string | RendererElement | null | undefined;
   /** Tooltip position */

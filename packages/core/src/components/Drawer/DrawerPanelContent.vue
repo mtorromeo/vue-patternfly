@@ -61,7 +61,7 @@ defineOptions({
   name: 'PfDrawerPanelContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden' | 'onResize'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden' | 'onResize'> {
   /** ID of the drawer panel */
   id?: string;
   /** Flag indicating that the drawer panel should not have a border. */

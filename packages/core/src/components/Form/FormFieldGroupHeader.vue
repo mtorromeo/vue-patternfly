@@ -21,7 +21,7 @@ defineOptions({
   name: 'PfFormFieldGroupHeader',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Header title */
   title?: string;
 

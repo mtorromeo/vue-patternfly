@@ -57,17 +57,18 @@ import { TabsKey, TabsProvideKey } from './common';
 import PfTabTitleIcon from './TabTitleIcon.vue';
 import PfTabTitleText from './TabTitleText.vue';
 import PfTabButton from './TabButton.vue';
-import PfTabContent, { type Props as PfTabContentProps } from './TabContent.vue';
+import PfTabContent from './TabContent.vue';
 import PfMenuItem from '../Menu/MenuItem.vue';
 import { useChildrenTracker } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfTab',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ PfTabContentProps {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfTabContent>, 'ouiaId' | 'ouiaSafe'> {
   /** Content rendered in the tab title. */
   title?: string;
   /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */

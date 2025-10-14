@@ -9,7 +9,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props {
+interface Props {
   alter?: (v: VNode[]) => VNode[];
   useRef?: ComponentPublicInstance<object, object, {
     templateFn?: Slot,

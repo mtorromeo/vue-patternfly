@@ -29,7 +29,7 @@ export const CardCheckboxKey = Symbol('CardCheckboxKey') as InjectionKey<Compute
   onChange: (e: Event) => void;
 } | null>>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex' | 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex' | 'onClick'> {
   /** Content rendered inside the Card */
   component?: string | Component;
 

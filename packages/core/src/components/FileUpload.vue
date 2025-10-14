@@ -84,7 +84,7 @@ defineOptions({
   name: 'PfFileUpload',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Unique id for the text area. Also used to generate ids for accessible labels. */
   id?: string;
   /** Flag to allow editing of a text file's contents after it is selected from disk. */

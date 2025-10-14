@@ -241,8 +241,12 @@ pre {
 
 <script lang="ts" setup>
 import { ref, reactive, watch, type Ref } from "vue";
-import type { Props as FlexProps } from "@vue-patternfly/core/layouts/Flex/Flex.vue";
-import type { Props as FlexItemProps } from "@vue-patternfly/core/layouts/Flex/FlexItem.vue";
+import type PfFlex from "@vue-patternfly/core/layouts/Flex/Flex.vue";
+import type PfFlexItem from "@vue-patternfly/core/layouts/Flex/FlexItem.vue";
+import type { ComponentProps } from 'vue-component-type-helpers';
+
+type FlexProps = ComponentProps<typeof PfFlex>;
+type FlexItemProps = ComponentProps<typeof PfFlexItem>;
 
 interface FlexItem {
   align: FlexProps["align"];

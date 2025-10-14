@@ -23,7 +23,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'checked'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'checked'> {
   /** Flag to show if the checkbox is checked. Use null to set the checkbox indeterminate state */
   checked?: boolean | null;
 }

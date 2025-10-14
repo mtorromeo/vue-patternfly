@@ -73,7 +73,7 @@ defineOptions({
   name: 'PfProgress',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Id of the progress component. */
   id?: string;
 

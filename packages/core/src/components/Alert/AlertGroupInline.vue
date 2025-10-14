@@ -27,7 +27,7 @@ defineOptions({
   name: 'PfAlertGroupInline',
 });// expands object types one level deep
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
   toast?: boolean;
   liveRegion?: boolean;
   overflowMessage?: string;

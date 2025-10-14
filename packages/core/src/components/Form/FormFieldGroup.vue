@@ -39,7 +39,7 @@ defineOptions({
   name: 'PfFormFieldGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
   fieldset?: boolean;
 
   /** Flag indicating if the field group is expandable */

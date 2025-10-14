@@ -27,7 +27,7 @@ export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
 
 export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Name of the item input (radio or checkbox) when item selection is enabled */
   selectionInputName?: string;
   /** Defines the value for the input (radio or checkbox) */

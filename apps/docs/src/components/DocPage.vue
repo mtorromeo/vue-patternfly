@@ -67,11 +67,12 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import type { ComponentProps, PfPageSection } from '@vue-patternfly/core';
+import type { PfPageSection } from '@vue-patternfly/core';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import UpRightFromSquareIcon from '@vue-patternfly/icons/up-right-from-square-icon';
 import GithubIcon from '@vue-patternfly/icons/github-icon';
 
-export interface Props extends /* @vue-ignore */ ComponentProps<typeof PfPageSection> {
+interface Props extends /* @vue-ignore */ ComponentProps<typeof PfPageSection> {
   title?: string;
   name?: string;
   docSection?: string;

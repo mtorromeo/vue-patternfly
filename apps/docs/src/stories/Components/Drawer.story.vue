@@ -84,7 +84,8 @@
 
 <script lang="ts" setup>
 import { ref, type Ref } from "vue";
-import type { ComponentProps, PfDrawer } from "@vue-patternfly/core";
+import type { PfDrawer } from "@vue-patternfly/core";
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 const expanded = ref(false);
 const position: Ref<ComponentProps<typeof PfDrawer>["position"]> = ref("end");

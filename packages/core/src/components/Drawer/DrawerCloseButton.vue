@@ -19,7 +19,7 @@ defineOptions({
   name: 'PfDrawerCloseButton',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Accessible label for the drawer close button */
   ariaLabel?: string;
 }

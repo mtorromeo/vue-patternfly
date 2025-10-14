@@ -55,13 +55,13 @@ import PfForm from '../Form/Form.vue';
 import PfFormGroup from '../Form/FormGroup.vue';
 import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
-import { type ComponentProps } from '../../util';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfAdvancedSearchMenu',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfPanel>, 'variant'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfPanel>, 'variant'> {
   /** Flag for toggling the open/close state of the advanced search menu. */
   searchMenuOpen?: boolean;
   /** Label for the button which resets the advanced search form and clears the search input. */

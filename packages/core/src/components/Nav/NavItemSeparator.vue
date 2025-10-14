@@ -4,14 +4,14 @@
 
 <script lang="ts" setup>
 import PfDivider from '../Divider.vue';
-import type { ComponentProps } from '../../util';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import { useOUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfNavItemSeparator',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfDivider>, 'component'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfDivider>, 'component'> {
 }
 
 const props = defineProps<Props>();
