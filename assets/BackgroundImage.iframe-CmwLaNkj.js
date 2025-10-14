@@ -1,0 +1,1 @@
+import{g as o,a as n,c as r,o as a,u as c}from"./index-Bro5Nqn3.js";const s=""+new URL("pf-background-QLrFvAJG.svg",import.meta.url).href,_=o({__name:"BackgroundImage.iframe",setup(t){return(m,p)=>{const e=n("pf-background-image");return a(),r(e,{src:c(s)},null,8,["src"])}}});export{_ as default};
