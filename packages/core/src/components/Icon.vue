@@ -28,7 +28,7 @@ import PfSpinner from './Spinner.vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
-  name: 'PfNotificationBadge',
+  name: 'PfIcon',
 });
 
 export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
