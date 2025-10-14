@@ -23,8 +23,9 @@
     <pf-form-select v-model="position" required>
       <pf-form-select-option value="right" label="right" />
       <pf-form-select-option value="left" label="left" />
-      <pf-form-select-option value="bottom" label="bottom" /> </pf-form-select
-    ><br /><br />
+      <pf-form-select-option value="bottom" label="bottom" />
+    </pf-form-select>
+    <br /><br />
     <pf-switch v-model:checked="inline" label="Inline" /><br /><br />
     <pf-switch v-model:checked="contentPadding" label="Content padding" /><br /><br />
     <pf-switch v-model:checked="showSection" label="Show additional section above content" /><br /><br />
