@@ -16,6 +16,7 @@
       v-bind="$attrs"
       v-model="value"
       :disabled="disabled || undefined"
+      :multiple="multiple || undefined"
     >
       <slot />
     </select>
@@ -31,7 +32,8 @@
 <script lang="ts">
 export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfFormSelectOption>>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
+export interface Props<M extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
+  multiple?: M;
   disabled?: boolean;
 
   /**
@@ -44,7 +46,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttri
 }
 </script>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="M extends boolean = false">
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey, useChildrenTracker } from '../../use';
 import type PfFormSelectOption from './FormSelectOption.vue';
@@ -59,10 +61,14 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = defineProps<Props>();
+const props = defineProps<Props<M>>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const value = defineModel<string | string[] | null>();
+
+defineEmits<{
+  (name: 'update:modelValue', value: M extends true ? string[] : string): void;
+}>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
