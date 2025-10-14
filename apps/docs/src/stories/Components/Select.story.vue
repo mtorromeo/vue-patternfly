@@ -129,12 +129,12 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, type Ref } from 'vue';
 
 const divider = ref(false);
 const disabled = ref(false);
 const selectedSingle = ref();
-const selectedMulti = ref([]);
+const selectedMulti: Ref<string[]> = ref([]);
 const filter = ref('');
 
 type Option = {

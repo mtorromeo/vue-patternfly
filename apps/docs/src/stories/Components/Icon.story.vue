@@ -87,23 +87,23 @@
     </story-canvas>
 
     <story-canvas title="Inline">
-      <pf-text-content>
-        <pf-text component="h1">
+      <pf-content>
+        <h1>
           Heading
           <pf-icon inline>
             <CirclePlusIcon />
           </pf-icon>
-        </pf-text>
-        <pf-text component="p">
+        </h1>
+        <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit Sed hendrerit nisi in cursus maximus.
-        </pf-text>
-        <pf-text component="h2">
+        </p>
+        <h2>
           Second level
           <pf-icon inline>
             <CirclePlusIcon />
           </pf-icon>
-        </pf-text>
-        <pf-text component="p">
+        </h2>
+        <p>
           <pf-icon inline>
             <CirclePlusIcon />
           </pf-icon>
@@ -116,7 +116,7 @@
           </strong>
           blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus
           venenatis. Suspendisse potenti.
-        </pf-text>
+        </p>
         <small>
           Sometimes you need small text
           <pf-icon inline>
@@ -140,7 +140,7 @@
           <CirclePlusIcon />
         </pf-icon>
         extra large
-      </pf-text-content>
+      </pf-content>
     </story-canvas>
 
     <story-canvas title="In progress">

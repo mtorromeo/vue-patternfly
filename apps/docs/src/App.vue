@@ -21,7 +21,7 @@
             <pf-toolbar-content>
               <pf-toolbar-group align="end">
                 <pf-toolbar-item>
-                  <pf-toggle-group v-model="darkTheme">
+                  <pf-toggle-group :model-value="darkTheme" @update:model-value="darkTheme = Boolean($event)" aria-label="Dark mode toggle">
                     <pf-toggle-group-item :value="false">
                       <sun-icon />
                     </pf-toggle-group-item>
