@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfFormSelectOption>>;
+export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<ComponentExposed<typeof PfFormSelectOption>>;
 
 interface Props<M extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
   multiple?: M;
@@ -55,6 +55,7 @@ import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import { computed, type SelectHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { FormInputsKey } from '../Form/common';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfFormSelect',

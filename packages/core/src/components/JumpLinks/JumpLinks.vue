@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-export const JumpLinksKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<InstanceType<typeof PfJumpLinksItem>>;
+export const JumpLinksKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<ComponentExposed<typeof PfJumpLinksItem>>;
 export const JumpLinkInjectionKey = Symbol('JumpLinkInjectionKey') as InjectionKey<{
   offset: number;
   scrollPosition: Ref<number>;
@@ -82,6 +82,7 @@ import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import PfJumpLinksItem from './JumpLinksItem.vue';
 import PfButton from '../Button.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfJumpLinks',

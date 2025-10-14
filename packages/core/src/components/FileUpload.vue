@@ -171,7 +171,7 @@ defineSlots<{
 
 const filenameInput = useTemplateRef('filenameInputRef');
 
-useDropZone(() => filenameInput.value?.$el, {
+useDropZone(() => filenameInput.value?.input, {
   dataTypes: props.dataTypes,
   multiple: false,
   async onDrop(files) {

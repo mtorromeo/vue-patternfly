@@ -55,7 +55,7 @@ import PfForm from '../Form/Form.vue';
 import PfFormGroup from '../Form/FormGroup.vue';
 import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
-import type { ComponentProps } from 'vue-component-type-helpers';
+import type { ComponentExposed, ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfAdvancedSearchMenu',
@@ -104,7 +104,7 @@ defineSlots<{
   'form-additional-items'?: (props?: Record<never, never>) => any;
 }>();
 
-const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
+const firstAttrRef: Ref<ComponentExposed<typeof PfTextInput> | null> = ref(null);
 const searchInput = inject(SearchInputKey);
 const hasWordsId = useId();
 

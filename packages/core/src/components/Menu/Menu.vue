@@ -33,7 +33,7 @@
 <script lang="ts">
 export type MenuProvide = {
   parentMenu: MenuProvide | undefined;
-  favoriteList: Ref<InstanceType<typeof PfMenuList> | null>;
+  favoriteList: Ref<ComponentExposed<typeof PfMenuList> | null>;
   selected?: Ref<MenuItemId | MenuItemId[] | null>;
   // drilldownItemPath: MenuItemId[];
   activeItemId?: MenuItemId;
@@ -113,6 +113,7 @@ import PfTextInput from '../TextInput.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
 import PfSearchInput from '../SearchInput/SearchInput.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfMenu',
@@ -142,7 +143,7 @@ const emit = defineEmits<{
 
 const el = useTemplateRef('elRef');
 
-const favoriteList = useTemplateRef<InstanceType<typeof PfMenuList>>('favoriteListRef');
+const favoriteList = useTemplateRef<ComponentExposed<typeof PfMenuList>>('favoriteListRef');
 const items = provideChildrenTracker(MenuItemsKey);
 const favoriteCount = computed(() => items.reduce((c, i) => c + (i.favorited ? 1 : 0), 0));
 

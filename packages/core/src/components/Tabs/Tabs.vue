@@ -146,6 +146,7 @@ import FloatingUi from '../../helpers/FloatingUi.vue';
 import PfMenu from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuList from '../Menu/MenuList.vue';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfTabs',
@@ -176,7 +177,7 @@ defineSlots<{
 
 const tabListRef = useTemplateRef('tabList');
 const tabMoreRef = useTemplateRef('tabMore');
-const tabOverflowRef: Ref<InstanceType<typeof PfMenuList> | undefined> = ref();
+const tabOverflowRef: Ref<ComponentExposed<typeof PfMenuList> | undefined> = ref();
 const contentTargetRef: Ref<HTMLElement | undefined> = ref();
 const overflowTabRef: Ref<HTMLButtonElement | undefined> = ref();
 const tabs = provideChildrenTracker(TabsKey);

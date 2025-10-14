@@ -129,7 +129,7 @@ export interface SearchAttribute {
 
 export type SearchInputProvide = {
   $el: Readonly<Ref<HTMLDivElement | null>>;
-  input: Ref<InstanceType<typeof PfTextInputGroupMain> | null>;
+  input: Ref<ComponentExposed<typeof PfTextInputGroupMain> | null>;
 }
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
@@ -234,6 +234,7 @@ import AngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import ArrowRightIcon from '@vue-patternfly/icons/arrow-right-icon';
 import { FormInputsKey } from '../Form/common';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfSearchInput',

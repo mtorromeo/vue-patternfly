@@ -1,12 +1,13 @@
 import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref, WritableComputedRef } from 'vue';
 import type { ChildrenTrackerInjectionKey } from '../../use';
 import PfMenuList from '../Menu/MenuList.vue';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 export type TabsProvide = {
   secondary: boolean;
   activeKey: WritableComputedRef<TabKey | undefined>;
   idSuffix: MaybeRefOrGetter<string>;
-  tabOverflowRef: Ref<InstanceType<typeof PfMenuList> | undefined>;
+  tabOverflowRef: Ref<ComponentExposed<typeof PfMenuList> | undefined>;
   contentTargetRef: Ref<HTMLElement | undefined>;
 }
 
