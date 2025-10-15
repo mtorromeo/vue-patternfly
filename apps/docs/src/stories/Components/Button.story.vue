@@ -253,6 +253,14 @@
       <pf-button disabled variant="tertiary">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
       <pf-button disabled variant="link">View issues <template #badge><pf-badge read>7</pf-badge></template></pf-button>
     </story-canvas>
+
+    <story-canvas title="Animated examples">
+      <pf-button variant="plain" favorite :favorited="favorited" @click="favorited = !favorited" />
+      <pf-button variant="plain" settings />
+      <pf-button variant="plain" hamburger />
+      <pf-button variant="plain" hamburger hamburger-variant="expand" />
+      <pf-button variant="plain" hamburger hamburger-variant="collapse" />
+    </story-canvas>
   </doc-page>
 </template>
 
@@ -274,6 +282,7 @@ import { useAlertsStore } from '../../store/alerts';
 const alerts = useAlertsStore();
 const primaryLoading = ref(false);
 const secondaryLoading = ref(false);
+const favorited = ref(false);
 
 function handleKeydown() {
   alerts.add({

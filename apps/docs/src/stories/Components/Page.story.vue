@@ -41,9 +41,7 @@
           <pf-masthead>
             <pf-masthead-main>
               <pf-masthead-toggle>
-                <pf-page-toggle-button>
-                  <bars-icon />
-                </pf-page-toggle-button>
+                <pf-page-toggle-button hamburger />
               </pf-masthead-toggle>
 
               <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
@@ -104,9 +102,7 @@
           <pf-masthead>
             <pf-masthead-main>
               <pf-masthead-toggle>
-                <pf-page-toggle-button>
-                  <bars-icon />
-                </pf-page-toggle-button>
+                <pf-page-toggle-button hamburger />
               </pf-masthead-toggle>
 
               <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
@@ -160,9 +156,7 @@
           <pf-masthead>
             <pf-masthead-main>
               <pf-masthead-toggle>
-                <pf-page-toggle-button>
-                  <bars-icon />
-                </pf-page-toggle-button>
+                <pf-page-toggle-button hamburger />
               </pf-masthead-toggle>
 
               <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
@@ -424,7 +418,6 @@
 </template>
 
 <script lang="ts" setup>
-import BarsIcon from '@vue-patternfly/icons/bars-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
 import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
 import { ref } from 'vue';
