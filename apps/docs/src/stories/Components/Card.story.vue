@@ -28,6 +28,14 @@
       </pf-card>
     </story-canvas>
 
+    <story-canvas title="Secondary">
+      <pf-card variant="secondary">
+        <pf-card-title>Header</pf-card-title>
+        <pf-card-body>Body</pf-card-body>
+        <pf-card-footer>Footer</pf-card-footer>
+      </pf-card>
+    </story-canvas>
+
     <story-canvas title="With image and actions">
       <pf-card>
         <pf-card-header>
