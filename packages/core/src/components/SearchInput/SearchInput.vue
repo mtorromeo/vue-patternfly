@@ -26,7 +26,9 @@
                 :aria-label="previousNavigationButtonAriaLabel"
                 @click="onPreviousClick"
               >
-                <angle-up-icon />
+                <template #icon>
+                  <angle-up-icon />
+                </template>
               </pf-button>
 
               <pf-button
@@ -35,7 +37,9 @@
                 :aria-label="nextNavigationButtonAriaLabel"
                 @click="onNextClick"
               >
-                <angle-down-icon />
+                <template #icon>
+                  <angle-down-icon />
+                </template>
               </pf-button>
             </div>
 
@@ -46,7 +50,9 @@
               :aria-label="resetButtonLabel"
               @click="onClearInput"
             >
-              <xmark-icon />
+              <template #icon>
+                <xmark-icon />
+              </template>
             </pf-button>
           </pf-text-input-group-utilities>
         </pf-text-input-group>
@@ -60,7 +66,9 @@
           :aria-expanded="advancedSearchOpen"
           @click="onToggle"
         >
-          <caret-down-icon />
+          <template #icon>
+            <caret-down-icon />
+          </template>
         </pf-button>
 
         <pf-button
@@ -71,7 +79,9 @@
           :aria-label="submitSearchButtonLabel"
           @click="onSearchHandler"
         >
-          <arrow-right-icon />
+          <template #icon>
+            <arrow-right-icon />
+          </template>
         </pf-button>
       </template>
 
@@ -83,8 +93,10 @@
         :aria-expanded="expanded"
         @click="onExpand"
       >
-        <xmark-icon v-if="expanded" />
-        <magnifying-glass-icon v-else />
+        <template #icon>
+          <xmark-icon v-if="expanded" />
+          <magnifying-glass-icon v-else />
+        </template>
       </pf-button>
     </component>
 

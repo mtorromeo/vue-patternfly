@@ -39,7 +39,9 @@
 
       <div v-if="closable" :class="styles.labelGroupClose">
         <pf-button variant="plain" no-padding :aria-label="closeBtnAriaLabel" @click="emit('click', $event)">
-          <circle-xmark-icon aria-hidden />
+          <template #icon>
+            <circle-xmark-icon aria-hidden />
+          </template>
         </pf-button>
       </div>
     </div>

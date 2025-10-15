@@ -30,7 +30,9 @@
         :aria-hidden="disableLeftScrollButton"
         @click="scrollLeft"
       >
-        <angle-left-icon />
+        <template #icon>
+          <angle-left-icon />
+        </template>
       </pf-button>
     </div>
 
@@ -83,7 +85,9 @@
         :aria-hidden="disableRightScrollButton"
         @click="scrollRight"
       >
-        <angle-right-icon />
+        <template #icon>
+          <angle-right-icon />
+        </template>
       </pf-button>
     </div>
   </component>
