@@ -23,7 +23,9 @@
             <pf-input-group>
               <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
-                <magnifying-glass-icon />
+                <template #icon>
+                  <magnifying-glass-icon />
+                </template>
               </pf-button>
             </pf-input-group>
           </pf-toolbar-item>
@@ -45,7 +47,9 @@
             <pf-input-group>
               <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
-                <magnifying-glass-icon />
+                <template #icon>
+                  <magnifying-glass-icon />
+                </template>
               </pf-button>
             </pf-input-group>
           </pf-toolbar-item>
@@ -131,17 +135,23 @@
           <pf-toolbar-group>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="edit">
-                <pen-to-square-icon />
+                <template #icon>
+                  <pen-to-square-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="clone">
-                <CloneIcon />
+                <template #icon>
+                  <clone-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="sync">
-                <rotate-icon />
+                <template #icon>
+                  <rotate-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
           </pf-toolbar-group>
@@ -165,14 +175,16 @@
         <pf-toolbar-content>
           <pf-toolbar-toggle-group xl>
             <template #icon>
-              <FilterIcon />
+              <filter-icon />
             </template>
 
             <pf-toolbar-item>
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <magnifying-glass-icon />
+                  <template #icon>
+                    <magnifying-glass-icon />
+                  </template>
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -213,7 +225,9 @@
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <magnifying-glass-icon />
+                  <template #icon>
+                    <magnifying-glass-icon />
+                  </template>
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -254,7 +268,9 @@
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <magnifying-glass-icon />
+                  <template #icon>
+                    <magnifying-glass-icon />
+                  </template>
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -287,17 +303,23 @@
           <pf-toolbar-group>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="edit">
-                <pen-to-square-icon />
+                <template #icon>
+                  <pen-to-square-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="clone">
-                <CloneIcon />
+                <template #icon>
+                  <clone-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="sync">
-                <rotate-icon />
+                <template #icon>
+                  <rotate-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
           </pf-toolbar-group>
@@ -328,7 +350,7 @@
         <pf-toolbar-content>
           <pf-toolbar-toggle-group lg>
             <template #icon>
-              <FilterIcon />
+              <filter-icon />
             </template>
             <pf-toolbar-item id="stacked-example-resource-select" variant="label">Resource</pf-toolbar-item>
             <pf-toolbar-item>

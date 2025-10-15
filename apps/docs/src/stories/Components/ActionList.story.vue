@@ -52,10 +52,18 @@
     <story-canvas title="Action list with icons">
       <pf-action-list icon-list>
         <pf-action-list-item>
-          <pf-button variant="plain"><x-icon /></pf-button>
+          <pf-button variant="plain">
+            <template #icon>
+              <x-icon />
+            </template>
+          </pf-button>
         </pf-action-list-item>
         <pf-action-list-item>
-          <pf-button variant="plain"><check-icon /></pf-button>
+          <pf-button variant="plain">
+            <template #icon>
+              <check-icon />
+            </template>
+          </pf-button>
         </pf-action-list-item>
       </pf-action-list>
     </story-canvas>

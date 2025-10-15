@@ -86,7 +86,9 @@
             <template #header>
               <pf-form-field-group-header title="Nested field group 1" description="Nested field group 1 description.">
                 <pf-button variant="plain" aria-label="Remove">
-                  <trash-icon />
+                  <template #icon>
+                    <trash-icon />
+                  </template>
                 </pf-button>
               </pf-form-field-group-header>
             </template>
@@ -101,7 +103,9 @@
             <template #header>
               <pf-form-field-group-header title="Nested field group 2" description="Nested field group 2 description.">
                 <pf-button variant="plain" aria-label="Remove">
-                  <trash-icon />
+                  <template #icon>
+                    <trash-icon />
+                  </template>
                 </pf-button>
               </pf-form-field-group-header>
             </template>

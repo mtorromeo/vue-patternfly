@@ -33,7 +33,9 @@
         </pf-text-input-group-main>
         <pf-text-input-group-utilities v-if="!!inputValue">
           <pf-button variant="plain" aria-label="Clear button and input" @click="inputValue = ''">
-            <xmark-icon />
+            <template #icon>
+              <xmark-icon />
+            </template>
           </pf-button>
         </pf-text-input-group-utilities>
       </pf-text-input-group>
@@ -51,7 +53,9 @@
         </pf-text-input-group-main>
         <pf-text-input-group-utilities v-if="!!inputValue2">
           <pf-button variant="plain" aria-label="Clear button and input" @click="inputValue2 = ''">
-            <xmark-icon />
+            <template #icon>
+              <xmark-icon />
+            </template>
           </pf-button>
         </pf-text-input-group-utilities>
       </pf-text-input-group>

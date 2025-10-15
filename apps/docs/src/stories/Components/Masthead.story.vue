@@ -20,7 +20,9 @@
         <pf-masthead-main>
           <pf-masthead-toggle>
             <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
+              <template #icon>
+                <bars-icon />
+              </template>
             </pf-button>
           </pf-masthead-toggle>
           <pf-masthead-brand>
@@ -38,7 +40,9 @@
         <pf-masthead-main>
           <pf-masthead-toggle>
             <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
+              <template #icon>
+                <bars-icon />
+              </template>
             </pf-button>
           </pf-masthead-toggle>
           <pf-masthead-brand>
@@ -62,7 +66,9 @@
         <pf-masthead-main>
           <pf-masthead-toggle>
             <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
+              <template #icon>
+                <bars-icon />
+              </template>
             </pf-button>
           </pf-masthead-toggle>
           <pf-masthead-brand>
@@ -80,7 +86,9 @@
         <pf-masthead-main>
           <pf-masthead-toggle>
             <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
+              <template #icon>
+                <bars-icon />
+              </template>
             </pf-button>
           </pf-masthead-toggle>
           <pf-masthead-brand>

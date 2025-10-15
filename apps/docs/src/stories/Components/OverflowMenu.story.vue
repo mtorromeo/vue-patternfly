@@ -55,13 +55,25 @@
           </pf-overflow-menu-group>
           <pf-overflow-menu-group type="icon" persistent>
             <pf-overflow-menu-item persistent>
-              <pf-button variant="plain"><align-left-icon /></pf-button>
+              <pf-button variant="plain">
+                <template #icon>
+                  <align-left-icon />
+                </template>
+              </pf-button>
             </pf-overflow-menu-item>
             <pf-overflow-menu-item persistent>
-              <pf-button variant="plain"><align-center-icon /></pf-button>
+              <pf-button variant="plain">
+                <template #icon>
+                  <align-center-icon />
+                </template>
+              </pf-button>
             </pf-overflow-menu-item>
             <pf-overflow-menu-item persistent>
-              <pf-button variant="plain"><align-right-icon /></pf-button>
+              <pf-button variant="plain">
+                <template #icon>
+                  <align-right-icon />
+                </template>
+              </pf-button>
             </pf-overflow-menu-item>
           </pf-overflow-menu-group>
         </pf-overflow-menu-content>
