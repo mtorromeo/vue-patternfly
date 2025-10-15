@@ -29,8 +29,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { computed, type ComputedRef, inject, type InjectionKey, provide, type HTMLAttributes } from 'vue';
-import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
+import { PageManagedSidebarKey, PageSidebarOpenKey, PageSidebarsKey } from './Page.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { useChildrenTracker } from '../../use';
 
 defineOptions({
   name: 'PfPageSidebar',
@@ -46,6 +47,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
+useChildrenTracker(PageSidebarsKey);
 const managedSidebarOpen = inject(PageSidebarOpenKey);
 const managedSidebar = inject(PageManagedSidebarKey);
 
