@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Text input group">
-    <template #description>A <b>text input group</b> is a more flexible composable version of a [text input](#/stories/components/text-input). It enables consumers of PatternFly to build custom inputs for filtering and similar use cases by placing elements like icons, chips groups and buttons within a text input.</template>
+    <template #description>
+      <pre v-md>
+        A **text input group** is a more flexible composable version of a [text input](#/stories/components/text-input). It enables consumers of PatternFly to build custom inputs for filtering and similar use cases by placing elements like icons, chips groups and buttons within a text input.
+      </pre>
+    </template>
 
     <template #apidocs>
       <component-info src="packages/core/src/components/TextInputGroup/TextInputGroup.vue" />

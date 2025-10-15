@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-interface Props<T extends InputType = 'text', N extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
+interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
@@ -124,7 +124,7 @@ const {
   inputElement: input,
   autoValidate: props.autoValidate,
   validated: validated,
-  type: props.type,
+  type: () => props.type ?? 'text',
 });
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);

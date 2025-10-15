@@ -93,7 +93,7 @@
     <story-canvas title="Custom icon">
       <pf-text-input aria-label="text input example">
         <template #icon>
-          <ClockIcon />
+          <clock-icon />
         </template>
       </pf-text-input>
     </story-canvas>

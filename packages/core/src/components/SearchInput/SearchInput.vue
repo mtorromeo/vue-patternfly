@@ -5,12 +5,13 @@
         <pf-text-input-group :disabled="disabled">
           <pf-text-input-group-main
             ref="inputRef"
-            v-model="value"
+            :model-value="value"
             :type="type"
             :hint="hint"
             :placeholder="placeholder"
             :aria-label="ariaLabel"
             @keydown="onEnter"
+            @update:model-value="value = String($event)"
           >
             <template #icon>
               <magnifying-glass-icon />

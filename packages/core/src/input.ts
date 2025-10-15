@@ -1,4 +1,4 @@
-import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref, onBeforeUnmount, useModel } from "vue";
+import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref, onBeforeUnmount, useModel, type MaybeRefOrGetter, toValue } from "vue";
 import { onMounted } from "vue";
 
 export type InputValidateState = 'success' | 'warning' | 'error' | 'default';
@@ -15,7 +15,7 @@ export function useInputValidation({
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
   validated?: Ref<InputValidateState | undefined>;
   inputElement?: MaybeRef<InputElement | null>;
-  type?: InputType;
+  type?: MaybeRefOrGetter<InputType>;
   customCheckValidity?: () => boolean;
 }) {
   const instance = getCurrentInstance()?.proxy;
@@ -28,7 +28,7 @@ export function useInputValidation({
     get: (v) => v,
     set: (v) => {
       // force number cast unlike default number modifier
-      if (modifiers.number || type === 'number') {
+      if (modifiers.number || toValue(type) === 'number') {
         return Number(v) as any;
       }
       return String(v) as any;
