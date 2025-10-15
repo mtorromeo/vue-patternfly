@@ -43,6 +43,10 @@
         Icon
       </pf-menu-toggle>
       {{ ' ' }}
+      <pf-menu-toggle variant="primary" settings>
+        Settings
+      </pf-menu-toggle>
+      {{ ' ' }}
       <pf-menu-toggle variant="primary" expanded>Expanded</pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle variant="primary" disabled>Disabled</pf-menu-toggle>
@@ -56,6 +60,10 @@
           <gear-icon />
         </template>
         Icon
+      </pf-menu-toggle>
+      {{ ' ' }}
+      <pf-menu-toggle variant="secondary" settings>
+        Settings
       </pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle variant="secondary" expanded>Expanded</pf-menu-toggle>
