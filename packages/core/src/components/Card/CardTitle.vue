@@ -1,7 +1,9 @@
 <template>
-  <component v-bind="ouiaProps" :is="component" :class="styles.cardTitle">
-    <slot />
-  </component>
+  <div :class="styles.cardTitle">
+    <component v-bind="ouiaProps" :is="component" :class="styles.cardTitleText">
+      <slot />
+    </component>
+  </div>
 </template>
 
 <script lang="ts" setup>
