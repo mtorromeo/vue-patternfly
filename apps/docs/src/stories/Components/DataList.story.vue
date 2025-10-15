@@ -109,9 +109,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -140,9 +138,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item component="button">Primary</pf-dropdown-item>
@@ -181,9 +177,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item component="button">Primary</pf-dropdown-item>
@@ -227,9 +221,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -255,9 +247,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -298,9 +288,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -346,9 +334,7 @@
             >
               <pf-dropdown position="right">
                 <template #toggle>
-                  <pf-menu-toggle variant="plain">
-                    <ellipsis-vertical-icon />
-                  </pf-menu-toggle>
+                  <pf-menu-toggle variant="plain" />
                 </template>
 
                 <pf-dropdown-item>Link</pf-dropdown-item>
@@ -392,9 +378,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -461,9 +445,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -507,9 +489,7 @@
           >
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item>Link</pf-dropdown-item>
@@ -578,5 +558,4 @@
 const log = console.log;
 
 import CodeBranchIcon from '@vue-patternfly/icons/code-branch-icon';
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 </script>

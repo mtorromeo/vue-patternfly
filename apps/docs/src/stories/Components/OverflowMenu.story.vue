@@ -25,9 +25,7 @@
         <pf-overflow-menu-control>
           <pf-dropdown v-model:open="open">
             <template #toggle>
-              <pf-menu-toggle variant="plain">
-                <ellipsis-vertical-icon />
-              </pf-menu-toggle>
+              <pf-menu-toggle variant="plain" />
             </template>
             <pf-overflow-menu-dropdown-item shared>Item 1</pf-overflow-menu-dropdown-item>
             <pf-overflow-menu-dropdown-item shared>Item 2</pf-overflow-menu-dropdown-item>
@@ -80,9 +78,7 @@
         <pf-overflow-menu-control additional-options>
           <pf-dropdown v-model:open="open">
             <template #toggle>
-              <pf-menu-toggle variant="plain">
-                <ellipsis-vertical-icon />
-              </pf-menu-toggle>
+              <pf-menu-toggle variant="plain" />
             </template>
             <pf-overflow-menu-dropdown-item shared>Secondary</pf-overflow-menu-dropdown-item>
             <pf-overflow-menu-dropdown-item shared>Tertiary</pf-overflow-menu-dropdown-item>
@@ -98,7 +94,6 @@
 import AlignLeftIcon from '@vue-patternfly/icons/align-left-icon';
 import AlignCenterIcon from "@vue-patternfly/icons/align-center-icon";
 import AlignRightIcon from "@vue-patternfly/icons/align-right-icon";
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 import { ref } from "vue";
 
 const open = ref(false);

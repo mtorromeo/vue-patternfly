@@ -43,9 +43,7 @@
           <pf-card-actions no-offset>
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -79,9 +77,7 @@
           <pf-card-actions>
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -116,9 +112,7 @@
           <pf-card-actions>
             <pf-dropdown position="right">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
               <pf-dropdown-item>Link</pf-dropdown-item>
               <pf-dropdown-item component="button">
@@ -155,7 +149,6 @@
 </template>
 
 <script lang="ts" setup>
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 import PfLogo from '@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg';
 import PfIconLogo from '@patternfly/patternfly/assets/images/PF-IconLogo.svg';
 </script>

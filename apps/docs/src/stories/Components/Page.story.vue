@@ -205,9 +205,7 @@
             <pf-notification-drawer-header count="4">
               <pf-dropdown position="right">
                 <template #toggle>
-                  <pf-menu-toggle variant="plain">
-                    <ellipsis-vertical-icon />
-                  </pf-menu-toggle>
+                  <pf-menu-toggle variant="plain" />
                 </template>
 
                 <pf-dropdown-item>Action</pf-dropdown-item>
@@ -229,9 +227,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -250,9 +246,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -272,9 +266,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -294,9 +286,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -323,9 +313,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -344,9 +332,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -366,9 +352,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -387,9 +371,7 @@
                       >
                         <pf-dropdown position="right">
                           <template #toggle>
-                            <pf-menu-toggle variant="plain">
-                              <ellipsis-vertical-icon />
-                            </pf-menu-toggle>
+                            <pf-menu-toggle variant="plain" />
                           </template>
 
                           <pf-dropdown-item>Action</pf-dropdown-item>
@@ -444,7 +426,6 @@
 <script lang="ts" setup>
 import BarsIcon from '@vue-patternfly/icons/bars-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
 import { ref } from 'vue';
 

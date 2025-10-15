@@ -38,13 +38,17 @@
     :disabled="typeahead || isSplitButton ? undefined : disabled"
     @click="typeahead || isSplitButton ? undefined : (expanded = !expanded)"
   >
-    <slot v-if="!isSplitButton && variant === 'plain'" />
+    <span v-if="!isSplitButton && $slots.icon" :class="styles.menuToggleIcon">
+      <slot name="icon" />
+    </span>
+
+    <slot v-if="!isSplitButton && variant === 'plain'">
+      <span v-if="!$slots.icon && !$slots.badge" :class="styles.menuToggleIcon">
+        <ellipsis-vertical-icon />
+      </span>
+    </slot>
 
     <template v-else>
-      <span v-if="!isSplitButton && $slots.icon" :class="styles.menuToggleIcon">
-        <slot name="icon" />
-      </span>
-
       <span v-if="!isSplitButton && !typeahead" :class="styles.menuToggleText">
         <slot />
       </span>
@@ -78,13 +82,15 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
+import { computed, type ButtonHTMLAttributes, useTemplateRef } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { createReusableTemplate } from '@vueuse/core';
+
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
-import { computed, type ButtonHTMLAttributes, useTemplateRef } from 'vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { createReusableTemplate } from '@vueuse/core';
+import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 
 defineOptions({
   name: 'PfMenuToggle',

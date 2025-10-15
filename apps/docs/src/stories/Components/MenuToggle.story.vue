@@ -64,11 +64,11 @@
     </story-canvas>
 
     <story-canvas title="Plain">
-      <pf-menu-toggle variant="plain"><ellipsis-vertical-icon /></pf-menu-toggle>
+      <pf-menu-toggle variant="plain" />
       {{ ' ' }}
-      <pf-menu-toggle variant="plain" expanded><ellipsis-vertical-icon /></pf-menu-toggle>
+      <pf-menu-toggle variant="plain" expanded />
       {{ ' ' }}
-      <pf-menu-toggle variant="plain" disabled><ellipsis-vertical-icon /></pf-menu-toggle>
+      <pf-menu-toggle variant="plain" disabled />
     </story-canvas>
 
     <story-canvas title="Plain with text">
@@ -278,5 +278,4 @@
 
 <script lang="ts" setup>
 import GearIcon from '@vue-patternfly/icons/gear-icon';
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 </script>

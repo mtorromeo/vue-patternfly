@@ -327,9 +327,7 @@
           <pf-toolbar-item>
             <pf-dropdown v-model:open="dropdownOpen">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item key="link">Link</pf-dropdown-item>
@@ -395,9 +393,7 @@
               <pf-overflow-menu-control additional-options>
                 <pf-dropdown v-model:open="kebabIsOpen">
                   <template #toggle>
-                    <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon />
-                    </pf-menu-toggle>
+                    <pf-menu-toggle variant="plain" />
                   </template>
                   <pf-dropdown-item key="link">Link</pf-dropdown-item>
                   <pf-dropdown-item key="action" component="button">Action</pf-dropdown-item>
@@ -443,7 +439,6 @@ import FilterIcon from "@vue-patternfly/icons/filter-icon";
 import CloneIcon from "@vue-patternfly/icons/clone-icon";
 import PenToSquareIcon from "@vue-patternfly/icons/pen-to-square-icon";
 import RotateIcon from "@vue-patternfly/icons/rotate-icon";
-import EllipsisVerticalIcon from "@vue-patternfly/icons/ellipsis-vertical-icon";
 
 import { reactive, ref } from "vue";
 

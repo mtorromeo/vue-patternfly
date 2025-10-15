@@ -32,9 +32,7 @@
         <pf-action-list-item>
           <pf-dropdown>
             <template #toggle>
-              <pf-menu-toggle variant="plain">
-                <ellipsis-vertical-icon />
-              </pf-menu-toggle>
+              <pf-menu-toggle variant="plain" />
             </template>
 
             <pf-dropdown-item>Link</pf-dropdown-item>
@@ -92,7 +90,6 @@
 </template>
 
 <script lang="ts" setup>
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 import XIcon from '@vue-patternfly/icons/x-icon';
 import CheckIcon from '@vue-patternfly/icons/check-icon';
 </script>
