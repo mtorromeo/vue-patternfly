@@ -1,5 +1,5 @@
 <template>
-  <pf-divider v-bind="ouiaProps" component="li" />
+  <pf-divider v-bind="ouiaProps" component="li" role="presentation" />
 </template>
 
 <script lang="ts" setup>

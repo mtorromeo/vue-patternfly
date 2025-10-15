@@ -2,7 +2,7 @@
   <component
     v-bind="ouiaProps"
     :is="component"
-    :role="component !== 'hr' ? 'separator' : undefined"
+    :role="component !== 'hr' ? role : undefined"
     :class="[
       styles.divider,
       classesFromBreakpointProps($props, ['inset'], styles),
@@ -27,6 +27,8 @@ defineOptions({
 interface Props extends OUIAProps, InsetBreakpointProps, OrientationBreakpointProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role'> {
   component?: 'hr' | 'li' | 'div';
   vertical?: boolean;
+  /** The ARIA role of the divider when the component property has a value other than "hr". */
+  role?: 'separator' | 'presentation';
 }
 
 const props = withDefaults(defineProps<Props>(), {
