@@ -30,6 +30,7 @@
       :class="styles.navSubnav"
       :aria-labelledby="id"
       :hidden="!realExpanded || undefined"
+      :inert="!realExpanded || undefined"
     >
       <h2 v-if="srText" :id="id" :class="a11yStyles.screenReader">{{ srText }}</h2>
       <ul :class="styles.navList" role="list">
