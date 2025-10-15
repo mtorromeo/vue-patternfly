@@ -13,6 +13,7 @@
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.cardHeader, {
       [styles.modifiers.toggleRight]: toggleRightAligned,
+      [styles.modifiers.wrap]: wrap,
     }]"
   >
     <header-toggle v-if="!toggleRightAligned" />
@@ -60,6 +61,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
   /** Additional props for expandable toggle button */
   toggleButtonAttrs?: ComponentProps<typeof PfButton>,
+
+  /** Flag indicating that header wrapping is enabled */
+  wrap?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
