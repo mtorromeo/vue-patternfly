@@ -6,7 +6,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "pub": "pnpm publish -r --publish-branch v6 --filter ./packages/core --filter ./packages/icons --filter ./packages/table",
+    "pub": "pnpm publish -r --publish-branch main --filter ./packages/core --filter ./packages/icons --filter ./packages/table",
     "clean": "turbo run clean",
     "build": "turbo run build",
     "lint": "turbo run lint"
