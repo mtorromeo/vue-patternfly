@@ -10,19 +10,25 @@
         [styles.modifiers.error]: validated === 'error',
       },
     ]"
+    :style="{
+      '--pf-v6-c-form-control--PaddingInlineEnd': (multiple !== false && multiple !== undefined) ? 'var(--pf-v6-c-form-control__select--PaddingInlineEnd)' : undefined,
+      '--pf-v6-c-form-control__utilities--Gap': (multiple !== false && multiple !== undefined) ? '0px' : undefined,
+      '--pf-v6-c-form-control--ColumnGap': (multiple !== false && multiple !== undefined) ? '0px' : undefined,
+      '--pf-v6-c-form-control--m-icon--icon--spacer': (multiple !== false && multiple !== undefined) ? '0px' : undefined,
+    }"
   >
     <select
       ref="inputRef"
       v-bind="$attrs"
       v-model="value"
       :disabled="disabled || undefined"
-      :multiple="multiple || undefined"
+      :multiple="(multiple !== false && multiple !== undefined) || undefined"
     >
       <slot />
     </select>
     <span :class="styles.formControlUtilities">
       <pf-form-control-icon v-if="hasStatusIcon" :status="(validated as 'success' | 'error' | 'warning')" />
-      <span :class="styles.formControlToggleIcon">
+      <span v-if="!(multiple !== false && multiple !== undefined)" :class="styles.formControlToggleIcon">
         <caret-down-icon />
       </span>
     </span>
@@ -68,7 +74,7 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const value = defineModel<string | string[] | null>();
 
 defineEmits<{
-  (name: 'update:modelValue', value: M extends true ? string[] : string): void;
+  (name: 'update:modelValue', value: M extends false ? (M extends undefined ? string : string[]) : string[]): void;
 }>();
 
 defineSlots<{
