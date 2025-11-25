@@ -171,7 +171,7 @@ const handleClick = (event: PointerEvent) => {
     if (props.shouldFocusFirstItemOnOpen) {
       const items = menu.value?.$.exposed?.items as Reactive<MenuItemTrack[]> | null | undefined;
       if (props.shouldFocusFirstItemOnOpen && items?.length) {
-        items[0].focus();
+        items[0]?.focus();
       }
     }
   } else if (!menu.value?.el?.contains(event.target as Node)) {

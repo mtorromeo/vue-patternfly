@@ -25,7 +25,7 @@
     "@vue/compiler-sfc": "^3.5.13",
     "@vue/runtime-core": "^3.5.13",
     "@vue/shared": "^3.5.13",
-    "@vueuse/core": "^13.1.0",
+    "@vueuse/core": "^14.0.0",
     "markdown-it": "^14.1.0",
     "node-html-parser": "^7.0.1",
     "sass": "^1.87.0",

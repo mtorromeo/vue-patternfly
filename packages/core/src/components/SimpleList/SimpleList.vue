@@ -71,7 +71,7 @@ provide(SimpleListValueKey, value);
 
 function defaultSlot() {
   const children = slots.default ? findChildrenVNodes(slots.default({})) : [];
-  grouped.value = children.length === 0 ? false : typeof children[0].type === 'object' && (children[0].type as Component).name === 'PfSimpleListGroup';
+  grouped.value = typeof children[0]?.type === 'object' && (children[0].type as Component).name === 'PfSimpleListGroup';
   return children;
 }
 </script>

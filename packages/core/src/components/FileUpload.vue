@@ -175,7 +175,7 @@ useDropZone(() => filenameInput.value?.input, {
   dataTypes: props.dataTypes,
   multiple: false,
   async onDrop(files) {
-    if (!files?.length) {
+    if (!files?.[0]) {
       return;
     }
     await setFile(files[0]);

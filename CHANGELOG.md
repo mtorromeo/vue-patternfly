@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.6] - 2025-11-25
+
+### Bug Fixes
+
+- *(FormSelect)* Fixed form-select multiple behavior
+
+### Documentation
+
+- Added some input test cases
+
 ## [6.0.0-beta.5] - 2025-10-15
 
 ### Bug Fixes

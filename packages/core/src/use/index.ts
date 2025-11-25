@@ -101,12 +101,12 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
       }
     } else if (position === 'left') {
       if (innerIndex <= 0) {
-        nextInnerIndex = items[index].length - 1;
+        nextInnerIndex = items[index]?.length - 1;
       } else {
         nextInnerIndex = innerIndex - 1;
       }
     } else if (position === 'right') {
-      if (innerIndex >= items[index].length - 1) {
+      if (innerIndex >= items[index]?.length - 1) {
         nextInnerIndex = 0;
       } else {
         nextInnerIndex = innerIndex + 1;
@@ -121,7 +121,10 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
     }
 
     if (Array.isArray(items[nextIndex])) {
-      (items[nextIndex] as C[])[nextInnerIndex].focused = true;
+      const item = (items[nextIndex] as C[])[nextInnerIndex];
+      if (item) {
+        item.focused = true;
+      }
     } else {
       (items[nextIndex] as C).focused = true;
     }

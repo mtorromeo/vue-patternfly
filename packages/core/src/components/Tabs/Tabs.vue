@@ -208,7 +208,7 @@ if (!props.vertical) {
 
 watchEffect(() => {
   if ((!isDefined(localActiveKey.value) || !tabs.find(tab => (tab.key) === localActiveKey.value)) && tabs.length) {
-    localActiveKey.value = tabs[0].key;
+    localActiveKey.value = tabs[0]?.key;
   }
 });
 
@@ -243,7 +243,7 @@ function countOverflowingElements() {
     if (tabListRef.value && tabMoreRef.value && tabs.length > 0 && !isElementInView(tabListRef.value, tabMoreRef.value, false)) {
       for (let i = tabs.length - 1; i >= 0; i--) {
         const tab = tabs[i];
-        if (!tab.overflowing) {
+        if (tab && !tab.overflowing) {
           tab.overflowing = true;
           return;
         }
@@ -284,8 +284,9 @@ function scrollLeft() {
   let lastElementOutOfView;
   let i;
   for (i = 0; i < childrenArr.length && !firstElementInView; i++) {
-    if (isElementInView(tabListRef.value, childrenArr[i], false)) {
-      firstElementInView = childrenArr[i];
+    const child = childrenArr[i];
+    if (child && isElementInView(tabListRef.value, child, false)) {
+      firstElementInView = child;
       lastElementOutOfView = childrenArr[i - 1];
       break;
     }
@@ -305,8 +306,9 @@ function scrollRight() {
   let lastElementInView;
   let firstElementOutOfView;
   for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
-    if (isElementInView(tabListRef.value, childrenArr[i], false)) {
-      lastElementInView = childrenArr[i];
+    const child = childrenArr[i];
+    if (child && isElementInView(tabListRef.value, child, false)) {
+      lastElementInView = child;
       firstElementOutOfView = childrenArr[i + 1];
       break;
     }

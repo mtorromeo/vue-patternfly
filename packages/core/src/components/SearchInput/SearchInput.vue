@@ -315,9 +315,9 @@ function getAttrValueMap() {
   const pairs = value.value.split(' ');
   pairs.map(pair => {
     const splitPair = props.advancedSearchDelimiter ? pair.split(props.advancedSearchDelimiter) : [];
-    if (splitPair.length === 2) {
+    if (splitPair[0] && splitPair[1]) {
       attrValue[splitPair[0]] = splitPair[1];
-    } else if (splitPair.length === 1) {
+    } else if (splitPair[0]) {
       attrValue.haswords = Object.hasOwnProperty.call(attrValue, 'haswords')
         ? `${attrValue.haswords} ${splitPair[0]}`
         : splitPair[0];

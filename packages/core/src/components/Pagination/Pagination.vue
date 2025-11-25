@@ -130,7 +130,7 @@ const props = withDefaults(defineProps<Props>(), {
   currPageAriaLabel: 'Current page',
   paginationAriaLabel: 'Pagination',
   page: 1,
-  perPage: defaultPerPageOptions[0].value,
+  perPage: defaultPerPageOptions[0]?.value,
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'options-menu',
 });
