@@ -76,10 +76,8 @@ export function getDefaultOUIAId(componentType?: string, variant?: MaybeRef<stri
       // node/SSR environments
       key = `${componentType}-${variant || ''}`;
     }
-    if (!ouiaIdByRoute[key]) {
-      ouiaIdByRoute[key] = 0;
-    }
-    return `${ouiaPrefix}${componentType}-${variant ? `${variant}-` : ''}${++ouiaIdByRoute[key]}`;
+    ouiaIdByRoute[key] = (ouiaIdByRoute[key] ?? 0) + 1;
+    return `${ouiaPrefix}${componentType}-${variant ? `${variant}-` : ''}${ouiaIdByRoute[key]}`;
   } catch (exception) {
     return `${ouiaPrefix}${componentType}-${variant ? `${variant}-` : ''}${++uid}`;
   }

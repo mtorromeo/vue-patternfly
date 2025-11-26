@@ -86,8 +86,9 @@ function scrollLeft() {
     let firstElementInView;
     let lastElementOutOfView;
     for (let i = 0; i < childrenArr.length && !firstElementInView; i++) {
-      if (isElementInView(container, childrenArr[i], false)) {
-        firstElementInView = childrenArr[i];
+      const child = childrenArr[i];
+      if (child && isElementInView(container, child, false)) {
+        firstElementInView = child;
         lastElementOutOfView = childrenArr[i - 1];
       }
     }
@@ -106,8 +107,9 @@ function scrollRight() {
     let lastElementInView;
     let firstElementOutOfView;
     for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
-      if (isElementInView(container, childrenArr[i], false)) {
-        lastElementInView = childrenArr[i];
+      const child = childrenArr[i];
+      if (child && isElementInView(container, child, false)) {
+        lastElementInView = child;
         firstElementOutOfView = childrenArr[i + 1];
       }
     }

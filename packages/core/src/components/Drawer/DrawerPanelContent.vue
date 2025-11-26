@@ -181,6 +181,9 @@ function handleMouseMove(e: PointerEvent) {
 function handleTouchMove(e: TouchEvent) {
   e.preventDefault();
   e.stopImmediatePropagation();
+  if (!e.touches[0]) {
+    return;
+  }
   const touchPos = position.value === 'bottom' ? e.touches[0].clientY : e.touches[0].clientX;
   handleControlMove(e, touchPos);
 }

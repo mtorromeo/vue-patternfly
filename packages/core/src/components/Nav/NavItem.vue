@@ -119,10 +119,11 @@ watchEffect(() => {
   }
   if (flyoutVisible.value) {
     const flyoutMenu = flyoutTarget.value.nextElementSibling;
-    const flyoutItems = flyoutMenu ? Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
+    const ul = flyoutMenu?.getElementsByTagName('UL')[0];
+    const flyoutItems = ul ? Array.from(ul.children).filter(
       el => !(el.classList.contains('pf-m-disabled') || el.classList.contains(styles.divider)),
     ) : [];
-    const child = flyoutItems.length ? flyoutItems[0].firstElementChild : null;
+    const child = flyoutItems.length ? flyoutItems[0]?.firstElementChild : null;
     if (child instanceof HTMLElement) {
       child.focus();
     }

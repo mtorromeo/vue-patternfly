@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [5.1.1] - 2025-11-26
+
+### Bug Fixes
+
+- *(Form)* Fixed `pf-form-field-group` default expandable state
+
 ## [5.1.0] - 2025-08-18
 
 ### Bug Fixes

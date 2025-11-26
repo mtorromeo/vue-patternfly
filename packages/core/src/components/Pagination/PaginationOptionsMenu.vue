@@ -70,7 +70,7 @@ const props = withDefaults(defineProps<Props>(), {
   perPageSuffix: 'per page',
   optionsToggle: 'Items per page',
   page: 0,
-  perPage: defaultPerPageOptions[0].value,
+  perPage: defaultPerPageOptions[0]?.value,
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'pagination-options-menu',
 });

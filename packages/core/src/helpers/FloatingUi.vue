@@ -115,7 +115,7 @@ function floatingElement() {
 
   const children = slots.default?.(ui);
 
-  if (!children?.length) {
+  if (!children?.[0]) {
     return;
   }
 

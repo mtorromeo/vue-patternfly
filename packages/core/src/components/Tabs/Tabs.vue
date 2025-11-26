@@ -157,7 +157,7 @@ if (!props.vertical) {
 
 watchEffect(() => {
   if ((!isDefined(localActiveKey.value) || !tabKeys.find(k => k.value === localActiveKey.value)) && tabKeys.length) {
-    localActiveKey.value = tabKeys[0].value;
+    localActiveKey.value = tabKeys[0]?.value;
   }
 });
 
@@ -194,8 +194,9 @@ function scrollLeft() {
   let lastElementOutOfView;
   let i;
   for (i = 0; i < childrenArr.length && !firstElementInView; i++) {
-    if (isElementInView(tabListRef.value, childrenArr[i], false)) {
-      firstElementInView = childrenArr[i];
+    const child = childrenArr[i];
+    if (child && isElementInView(tabListRef.value, child, false)) {
+      firstElementInView = child;
       lastElementOutOfView = childrenArr[i - 1];
       break;
     }
@@ -215,8 +216,9 @@ function scrollRight() {
   let lastElementInView;
   let firstElementOutOfView;
   for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
-    if (isElementInView(tabListRef.value, childrenArr[i], false)) {
-      lastElementInView = childrenArr[i];
+    const child = childrenArr[i];
+    if (child && isElementInView(tabListRef.value, child, false)) {
+      lastElementInView = child;
       firstElementOutOfView = childrenArr[i + 1];
       break;
     }
