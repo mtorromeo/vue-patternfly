@@ -44,10 +44,10 @@
       <slot v-if="iconPosition === 'end'" />
       <span v-if="$slots.icon || favorite || settings || hamburger" :class="[styles.buttonIcon, {[styles.modifiers.start]: iconPosition === 'start', [styles.modifiers.end]: iconPosition === 'end'}]">
         <template v-if="favorite">
-          <span class="pf-v6-c-button__icon-favorite">
+          <span :class="styles.buttonIconFavorite">
             <outlined-star-icon />
           </span>
-          <span class="pf-v6-c-button__icon-favorited">
+          <span :class="styles.buttonIconFavorited">
             <star-icon />
           </span>
         </template>
