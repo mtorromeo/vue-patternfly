@@ -37,9 +37,7 @@
             </pf-drawer-panel-content>
           </template>
 
-          <pf-drawer-content-body>
-            <main-container />
-          </pf-drawer-content-body>
+          <main-container />
         </pf-drawer-content>
       </pf-drawer>
     </div>
