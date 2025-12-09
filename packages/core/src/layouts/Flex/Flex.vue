@@ -56,7 +56,7 @@ export type AlignBreakpointProps = {
   alignXl2?: 'left' | 'right';
 }
 
-export interface Props extends
+interface Props extends
   AlignBreakpointProps,
   AlignContentBreakpointProps,
   AlignItemsBreakpointProps,

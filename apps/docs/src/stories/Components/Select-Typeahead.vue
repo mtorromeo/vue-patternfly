@@ -17,7 +17,9 @@
         />
         <pf-text-input-group-utilities>
           <pf-button v-if="input" variant="plain" @click="handleClick">
-            <xmark-icon aria-hidden />
+            <template #icon>
+              <xmark-icon aria-hidden />
+            </template>
           </pf-button>
         </pf-text-input-group-utilities>
       </pf-text-input-group>

@@ -28,10 +28,10 @@ import PfSpinner from './Spinner.vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
-  name: 'PfNotificationBadge',
+  name: 'PfIcon',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Size of the icon component container and icon. */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Size of icon. Overrides the icon size set by the size property. */

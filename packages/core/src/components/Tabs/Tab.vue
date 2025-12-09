@@ -57,17 +57,18 @@ import { TabsKey, TabsProvideKey } from './common';
 import PfTabTitleIcon from './TabTitleIcon.vue';
 import PfTabTitleText from './TabTitleText.vue';
 import PfTabButton from './TabButton.vue';
-import PfTabContent, { type Props as PfTabContentProps } from './TabContent.vue';
+import PfTabContent from './TabContent.vue';
 import PfMenuItem from '../Menu/MenuItem.vue';
 import { useChildrenTracker } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentExposed, ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfTab',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ PfTabContentProps {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfTabContent>, 'ouiaId' | 'ouiaSafe'> {
   /** Content rendered in the tab title. */
   title?: string;
   /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */
@@ -78,7 +79,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ PfTabContentProps {
   disabled?: boolean;
   /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
   ariaDisabled?: boolean;
-  contentRef?: InstanceType<typeof PfTabContent>;
+  contentRef?: ComponentExposed<typeof PfTabContent>;
   /** Waits until the first "enter" transition to mount tab children (add them to the DOM) */
   mountOnEnter?: boolean;
   /** Unmounts tab children (removes them from the DOM) when they are no longer visible */

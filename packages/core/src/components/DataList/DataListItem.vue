@@ -25,7 +25,7 @@ export const DataListItemKey = Symbol('DataListItemKey') as InjectionKey<{
   expandable: ComputedRef<boolean>,
 }>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'tabindex' | 'aria-selected' | 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'tabindex' | 'aria-selected' | 'onClick'> {
   selected?: boolean;
   /** Name of the item inputs (radio or checkbox) when item selection is enabled */
   selectionInputName?: string;

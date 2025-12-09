@@ -64,7 +64,7 @@ import inlineStyles from '@patternfly/react-styles/css/components/InlineEdit/inl
 import { useChildrenTracker } from "@vue-patternfly/core";
 import { TableTrKey } from "./common";
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
   /** Flag indicating the Tr is hidden */
   hidden?: boolean;
   /** Only applicable to Tr within the Tbody: Makes the row expandable and determines if it's expanded or not.

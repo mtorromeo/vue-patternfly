@@ -14,7 +14,7 @@ defineOptions({
   name: 'PfFormSelectOption',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<OptionHTMLAttributes, 'placeholder'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<OptionHTMLAttributes, 'placeholder'> {
   placeholder?: boolean;
 }
 

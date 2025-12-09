@@ -29,7 +29,7 @@ defineOptions({
   name: 'PfDataListToggle',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   expanded?: boolean;
   noPadding?: boolean;

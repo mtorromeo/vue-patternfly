@@ -16,7 +16,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props {
+interface Props {
   reverse?: boolean;
 }
 

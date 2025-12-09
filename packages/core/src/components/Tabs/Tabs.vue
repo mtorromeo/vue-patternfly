@@ -30,7 +30,9 @@
         :aria-hidden="disableLeftScrollButton"
         @click="scrollLeft"
       >
-        <angle-left-icon />
+        <template #icon>
+          <angle-left-icon />
+        </template>
       </pf-button>
     </div>
 
@@ -83,7 +85,9 @@
         :aria-hidden="disableRightScrollButton"
         @click="scrollRight"
       >
-        <angle-right-icon />
+        <template #icon>
+          <angle-right-icon />
+        </template>
       </pf-button>
     </div>
   </component>
@@ -92,7 +96,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   /** The index of the default active tab. Set this for uncontrolled Tabs */
   defaultActiveKey?: TabKey;
@@ -146,6 +150,7 @@ import FloatingUi from '../../helpers/FloatingUi.vue';
 import PfMenu from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuList from '../Menu/MenuList.vue';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfTabs',
@@ -176,7 +181,7 @@ defineSlots<{
 
 const tabListRef = useTemplateRef('tabList');
 const tabMoreRef = useTemplateRef('tabMore');
-const tabOverflowRef: Ref<InstanceType<typeof PfMenuList> | undefined> = ref();
+const tabOverflowRef: Ref<ComponentExposed<typeof PfMenuList> | undefined> = ref();
 const contentTargetRef: Ref<HTMLElement | undefined> = ref();
 const overflowTabRef: Ref<HTMLButtonElement | undefined> = ref();
 const tabs = provideChildrenTracker(TabsKey);
@@ -203,7 +208,7 @@ if (!props.vertical) {
 
 watchEffect(() => {
   if ((!isDefined(localActiveKey.value) || !tabs.find(tab => (tab.key) === localActiveKey.value)) && tabs.length) {
-    localActiveKey.value = tabs[0].key;
+    localActiveKey.value = tabs[0]?.key;
   }
 });
 
@@ -238,7 +243,7 @@ function countOverflowingElements() {
     if (tabListRef.value && tabMoreRef.value && tabs.length > 0 && !isElementInView(tabListRef.value, tabMoreRef.value, false)) {
       for (let i = tabs.length - 1; i >= 0; i--) {
         const tab = tabs[i];
-        if (!tab.overflowing) {
+        if (tab && !tab.overflowing) {
           tab.overflowing = true;
           return;
         }
@@ -279,8 +284,9 @@ function scrollLeft() {
   let lastElementOutOfView;
   let i;
   for (i = 0; i < childrenArr.length && !firstElementInView; i++) {
-    if (isElementInView(tabListRef.value, childrenArr[i], false)) {
-      firstElementInView = childrenArr[i];
+    const child = childrenArr[i];
+    if (child && isElementInView(tabListRef.value, child, false)) {
+      firstElementInView = child;
       lastElementOutOfView = childrenArr[i - 1];
       break;
     }
@@ -300,8 +306,9 @@ function scrollRight() {
   let lastElementInView;
   let firstElementOutOfView;
   for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
-    if (isElementInView(tabListRef.value, childrenArr[i], false)) {
-      lastElementInView = childrenArr[i];
+    const child = childrenArr[i];
+    if (child && isElementInView(tabListRef.value, child, false)) {
+      lastElementInView = child;
       firstElementOutOfView = childrenArr[i + 1];
       break;
     }

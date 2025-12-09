@@ -14,7 +14,7 @@ defineOptions({
   name: 'PfFormSection',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Title for the section */
   title?: string;
 

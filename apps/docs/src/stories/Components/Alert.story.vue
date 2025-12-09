@@ -303,7 +303,8 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, type HTMLAttributes } from 'vue';
-import type { ComponentProps, PfAlert } from '@vue-patternfly/core';
+import type { PfAlert } from '@vue-patternfly/core';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import UsersIcon from '@vue-patternfly/icons/users-icon';
 import BoxIcon from '@vue-patternfly/icons/box-icon';
 import DatabaseIcon from '@vue-patternfly/icons/database-icon';

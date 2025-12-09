@@ -80,9 +80,7 @@
     <story-canvas title="With kebab">
       <pf-dropdown v-model:open="open7">
         <template #toggle>
-          <pf-menu-toggle variant="plain">
-            <ellipsis-vertical-icon />
-          </pf-menu-toggle>
+          <pf-menu-toggle variant="plain" />
         </template>
 
         <pf-dropdown-item>Link</pf-dropdown-item>
@@ -99,7 +97,9 @@
       <pf-dropdown v-model:open="open8">
         <template #toggle>
           <pf-menu-toggle aria-label="Applications" variant="plain">
-            <table-cells-icon />
+            <template #icon>
+              <table-cells-icon />
+            </template>
           </pf-menu-toggle>
         </template>
 
@@ -191,7 +191,6 @@
 import BellIcon from '@vue-patternfly/icons/bell-icon';
 import CubesIcon from '@vue-patternfly/icons/cubes-icon';
 import TableCellsIcon from '@vue-patternfly/icons/table-cells-icon';
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 import { ref } from "vue";
 import { useAlertsStore } from '../../store/alerts';
 

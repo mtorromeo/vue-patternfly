@@ -43,6 +43,10 @@
         Icon
       </pf-menu-toggle>
       {{ ' ' }}
+      <pf-menu-toggle variant="primary" settings>
+        Settings
+      </pf-menu-toggle>
+      {{ ' ' }}
       <pf-menu-toggle variant="primary" expanded>Expanded</pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle variant="primary" disabled>Disabled</pf-menu-toggle>
@@ -58,17 +62,21 @@
         Icon
       </pf-menu-toggle>
       {{ ' ' }}
+      <pf-menu-toggle variant="secondary" settings>
+        Settings
+      </pf-menu-toggle>
+      {{ ' ' }}
       <pf-menu-toggle variant="secondary" expanded>Expanded</pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle variant="secondary" disabled>Disabled</pf-menu-toggle>
     </story-canvas>
 
     <story-canvas title="Plain">
-      <pf-menu-toggle variant="plain"><ellipsis-vertical-icon /></pf-menu-toggle>
+      <pf-menu-toggle variant="plain" />
       {{ ' ' }}
-      <pf-menu-toggle variant="plain" expanded><ellipsis-vertical-icon /></pf-menu-toggle>
+      <pf-menu-toggle variant="plain" expanded />
       {{ ' ' }}
-      <pf-menu-toggle variant="plain" disabled><ellipsis-vertical-icon /></pf-menu-toggle>
+      <pf-menu-toggle variant="plain" disabled />
     </story-canvas>
 
     <story-canvas title="Plain with text">
@@ -278,5 +286,4 @@
 
 <script lang="ts" setup>
 import GearIcon from '@vue-patternfly/icons/gear-icon';
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 </script>

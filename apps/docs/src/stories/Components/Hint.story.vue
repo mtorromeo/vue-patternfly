@@ -18,9 +18,7 @@
         <template #actions>
           <pf-dropdown position="right">
             <template #toggle>
-              <pf-menu-toggle variant="plain">
-                <ellipsis-vertical-icon />
-              </pf-menu-toggle>
+              <pf-menu-toggle variant="plain" />
             </template>
             <pf-dropdown-item>Action 1</pf-dropdown-item>
             <pf-dropdown-item>Action 2</pf-dropdown-item>
@@ -37,7 +35,3 @@
     </story-canvas>
   </doc-page>
 </template>
-
-<script lang="ts" setup>
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
-</script>

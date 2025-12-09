@@ -21,11 +21,11 @@
     "@rollup/pluginutils": "^5.1.4",
     "@toycode/markdown-it-class": "^1.2.4",
     "@types/markdown-it": "^14.1.2",
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue": "^6.0.1",
     "@vue/compiler-sfc": "^3.5.13",
     "@vue/runtime-core": "^3.5.13",
     "@vue/shared": "^3.5.13",
-    "@vueuse/core": "^13.1.0",
+    "@vueuse/core": "^14.0.0",
     "markdown-it": "^14.1.0",
     "node-html-parser": "^7.0.1",
     "sass": "^1.87.0",
@@ -33,9 +33,10 @@
     "ts-dedent": "^2.2.0",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
-    "vite": "^6.3.3",
+    "vite": "^7.1.10",
+    "vue-component-type-helpers": "^3.1.1",
     "vue-docgen-api": "^4.79.2",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^3.1.1"
   },
   "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }

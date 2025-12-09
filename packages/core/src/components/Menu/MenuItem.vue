@@ -99,7 +99,7 @@ export type MenuItemProvide = {
 
 export const MenuItemInjectionKey = Symbol('MenuItemInjectionKey') as InjectionKey<MenuItemProvide>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'onMouseover' | 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'onMouseover' | 'onClick'> {
   name?: string;
   value?: string;
 
@@ -178,6 +178,7 @@ const emit = defineEmits<{
   (name: 'click', event: Event): void;
   /** @beta Callback function when mouse leaves trigger */
   (name: 'showFlyout', event?: Event): void;
+  (name: 'update:favorited', value: boolean): void;
 }>();
 
 const $slots = defineSlots<{

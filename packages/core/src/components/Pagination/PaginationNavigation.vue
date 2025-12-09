@@ -8,7 +8,9 @@
         data-action="first"
         @click="goToFirstPage"
       >
-        <angles-left-icon />
+        <template #icon>
+          <angles-left-icon />
+        </template>
       </pf-button>
     </div>
 
@@ -20,7 +22,9 @@
         data-action="previous"
         @click="goToPreviousPage"
       >
-        <angle-left-icon />
+        <template #icon>
+          <angle-left-icon />
+        </template>
       </pf-button>
     </div>
 
@@ -49,7 +53,9 @@
         data-action="next"
         @click="goToNextPage"
       >
-        <angle-right-icon />
+        <template #icon>
+          <angle-right-icon />
+        </template>
       </pf-button>
     </div>
 
@@ -61,7 +67,9 @@
         data-action="last"
         @click="goToLastPage"
       >
-        <angles-right-icon />
+        <template #icon>
+          <angles-right-icon />
+        </template>
       </pf-button>
     </div>
   </nav>
@@ -84,7 +92,7 @@ defineOptions({
   name: 'PfPaginationNavigation',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-label'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-label'> {
   /** Flag indicating if the pagination is disabled. */
   disabled?: boolean;
   /** Flag indicating if the pagination is compact. */

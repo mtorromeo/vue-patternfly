@@ -60,7 +60,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
   component?: string;
   linkComponent?: string;
   groupId?: string;
@@ -124,10 +124,11 @@ watchEffect(() => {
   }
   if (flyoutVisible.value) {
     const flyoutMenu = flyoutTarget.value.nextElementSibling;
-    const flyoutItems = flyoutMenu ? Array.from(flyoutMenu.getElementsByTagName('UL')[0].children).filter(
+    const ul = flyoutMenu?.getElementsByTagName('UL')[0];
+    const flyoutItems = ul ? Array.from(ul.children).filter(
       el => !(el.classList.contains('pf-m-disabled') || el.classList.contains(dividerStyles.divider)),
     ) : [];
-    const child = flyoutItems.length ? flyoutItems[0].firstElementChild : null;
+    const child = flyoutItems.length ? flyoutItems[0]?.firstElementChild : null;
     if (child instanceof HTMLElement) {
       child.focus();
     }

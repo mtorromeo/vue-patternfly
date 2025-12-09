@@ -58,7 +58,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked'> {
   component?: string | Component;
   /** Flag to show if the checkbox is disabled. */
   disabled?: boolean;
@@ -88,6 +88,7 @@ const value = defineModel<boolean | null>({ default: false });
 
 const emit = defineEmits<{
   (name: 'change', e: Event): void;
+  (name: 'update:modelValue', value: boolean): void;
 }>();
 
 defineSlots<{

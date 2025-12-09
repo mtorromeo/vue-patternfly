@@ -13,6 +13,7 @@
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.cardHeader, {
       [styles.modifiers.toggleRight]: toggleRightAligned,
+      [styles.modifiers.wrap]: wrap,
     }]"
   >
     <header-toggle v-if="!toggleRightAligned" />
@@ -40,25 +41,29 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
 import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
-import PfButton, { type Props as ButtonProps } from '../Button.vue';
+import PfButton from '../Button.vue';
 import { computed, type HTMLAttributes, inject } from 'vue';
 import { CardCheckboxKey, CardExpandableKey, CardExpandedKey } from './Card.vue';
 import PfCardActions from './CardActions.vue';
 import PfCheckbox from '../Checkbox.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { createReusableTemplate } from '@vueuse/core';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfCardHeader',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Whether to right-align expandable toggle button */
   toggleRightAligned?: boolean;
 
   /** Additional props for expandable toggle button */
-  toggleButtonAttrs?: ButtonProps,
+  toggleButtonAttrs?: ComponentProps<typeof PfButton>,
+
+  /** Flag indicating that header wrapping is enabled */
+  wrap?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {

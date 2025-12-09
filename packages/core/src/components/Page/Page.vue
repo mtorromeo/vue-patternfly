@@ -23,6 +23,7 @@
       'pf-m-resize-observer': width && height,
       [`pf-m-breakpoint-${getBreakpoint(width)}`]: width,
       [`pf-m-height-breakpoint-${getVerticalBreakpoint(height)}`]: height,
+      [styles.modifiers.noSidebar]: sidebars.length === 0,
     }]"
   >
     <slot name="skeleton" />
@@ -51,8 +52,9 @@
 <script lang="ts">
 export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
 export const PageSidebarOpenKey = Symbol('PageSidebarOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
+export const PageSidebarsKey = Symbol('PageSidebarsKey') as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the value for role on the <main> element */
   role?: string;
   /** an id to use for the [role="main"] element */
@@ -85,13 +87,14 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/t_global_breakpoint_xl';
 import { createReusableTemplate, useElementSize, useWindowSize } from '@vueuse/core';
-import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes, useTemplateRef } from 'vue';
+import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes, useTemplateRef, type ComponentPublicInstance } from 'vue';
 import PfDrawer from '../Drawer/Drawer.vue';
 import PfDrawerContent from '../Drawer/DrawerContent.vue';
 import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
 import PfDrawerContentBody from '../Drawer/DrawerContentBody.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { getBreakpoint, getVerticalBreakpoint } from '../../util';
+import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 
 defineOptions({
   name: 'PfPage',
@@ -117,6 +120,7 @@ defineSlots<{
 const [DefineMainContainer, MainContainer] = createReusableTemplate();
 const pageRef = useTemplateRef('page');
 const { width, height } = useElementSize(pageRef);
+const sidebars = provideChildrenTracker(PageSidebarsKey);
 
 const mobileView = ref(false);
 const mobileSidebarOpen = ref(false);

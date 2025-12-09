@@ -11,7 +11,7 @@ defineOptions({
   name: 'PfGalleryItem',
 });
 
-export interface Props extends /* @vue-ignore */ HTMLAttributes {
+interface Props extends /* @vue-ignore */ HTMLAttributes {
   component?: string | Component;
 }
 

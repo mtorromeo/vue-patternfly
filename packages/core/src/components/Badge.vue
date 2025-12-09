@@ -18,7 +18,7 @@ defineOptions({
   name: 'PfBadge',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   read?: boolean;
 }
 

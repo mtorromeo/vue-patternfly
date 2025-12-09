@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfCardFooter',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the base component to render. */
   component?: string | Component;
 }

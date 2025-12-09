@@ -7,10 +7,11 @@ import { h, useAttrs, ref, resolveDynamicComponent, type VNode, type VNodeTypes,
 import { findChildrenVNodes } from "../util";
 import type { ComponentPublicInstance } from "vue";
 import type { Component } from "vue";
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 // Teleport is already in VNodeTypes but it is explicitly defined to avoid a runtime warning (bug)
 // where NodeFilter would not be allowed to be an object
-type NodeFilter = VNodeTypes[] | VNodeTypes | InstanceType<typeof Teleport> | ((vnode: VNode) => boolean);
+type NodeFilter = VNodeTypes[] | VNodeTypes | ComponentExposed<typeof Teleport> | ((vnode: VNode) => boolean);
 
 function makeFilterFunction(filter: NodeFilter | undefined, fallback = true): (vnode: VNode) => boolean {
   if (typeof filter === 'function') {
@@ -33,7 +34,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props {
+interface Props {
   /**
    * Defines the component to look for in children.
    * If there is already a matching component the children are left untouched, otherwise a new component of this type is created and children matching the optional include/exclude filters are nested inside it.

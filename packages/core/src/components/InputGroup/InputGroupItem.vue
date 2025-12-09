@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfInputGroupItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Enables box styling to the input group item */
   box?: boolean;
   /** Flag to indicate if the input group item is plain. */

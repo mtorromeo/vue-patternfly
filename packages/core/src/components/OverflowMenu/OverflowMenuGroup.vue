@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfOverflowMenuGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   persistent?: boolean;
   type?: 'button' | 'icon';
 }

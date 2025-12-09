@@ -17,7 +17,9 @@
     <div style="position: relative">
       <div v-if="src" class="source-link">
         <pf-button :href="`https://github.com/mtorromeo/vue-patternfly/blob/main/apps/docs/src/${storySrc}`" variant="link" title="Full source code" target="_blank">
-          <github-icon />
+          <template #icon>
+            <github-icon />
+          </template>
         </pf-button>
       </div>
       <div class="language-vue" v-html="highlighted" />

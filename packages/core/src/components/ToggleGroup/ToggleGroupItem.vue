@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-export interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Text rendered inside the toggle group item */
   text?: string;
   value?: T;

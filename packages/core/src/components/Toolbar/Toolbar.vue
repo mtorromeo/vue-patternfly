@@ -34,7 +34,7 @@ export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<R
 export const ToolbarLabelGroupContentRefKey = Symbol('ToolbarLabelGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
 
-export interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Text to display in the clear all filters button */
   clearFiltersButtonText?: string;
   /** The breakpoint at which the listed filters in label groups are collapsed down to a summary */

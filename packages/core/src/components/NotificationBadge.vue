@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Button/button';
-import type { ComponentProps } from '../util';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import PfButton from './Button.vue';
 import { useOUIAProps } from '../helpers/ouia';
 import { ref } from 'vue';
@@ -20,7 +20,7 @@ defineOptions({
   name: 'PfNotificationBadge',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant'> {
   /** Determines the variant of the notification badge */
   variant?: 'read' | 'unread' | 'attention';
 

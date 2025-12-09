@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds list variant styles */
   variant?: 'inline';
   /** Modifies the list to add borders between items */

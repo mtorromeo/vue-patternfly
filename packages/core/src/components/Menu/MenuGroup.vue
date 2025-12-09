@@ -21,7 +21,7 @@ defineOptions({
   name: 'PfMenuGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Group label */
   label?: string;
   /** ID for title label */

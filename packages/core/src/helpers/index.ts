@@ -9,12 +9,13 @@ export { default as Wrap } from './Wrap.vue';
 
 import type { ComponentPublicInstance } from 'vue';
 import AutoWrap from "./AutoWrap.vue";
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
-export function isOverridableWrapper(el: any): el is InstanceType<typeof AutoWrap> {
+export function isOverridableWrapper(el: any): el is ComponentExposed<typeof AutoWrap> {
   return typeof el === 'object' && el.$?.vnode?.type === AutoWrap;
 }
 
-export function resolveOverridableComponent<T extends Element | ComponentPublicInstance | undefined | null>(node: InstanceType<typeof AutoWrap> | T): T {
+export function resolveOverridableComponent<T extends Element | ComponentPublicInstance | undefined | null>(node: ComponentExposed<typeof AutoWrap> | T): T {
   if (!isOverridableWrapper(node)) {
     return node;
   }

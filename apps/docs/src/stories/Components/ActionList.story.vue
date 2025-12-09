@@ -32,9 +32,7 @@
         <pf-action-list-item>
           <pf-dropdown>
             <template #toggle>
-              <pf-menu-toggle variant="plain">
-                <ellipsis-vertical-icon />
-              </pf-menu-toggle>
+              <pf-menu-toggle variant="plain" />
             </template>
 
             <pf-dropdown-item>Link</pf-dropdown-item>
@@ -52,10 +50,18 @@
     <story-canvas title="Action list with icons">
       <pf-action-list icon-list>
         <pf-action-list-item>
-          <pf-button variant="plain"><x-icon /></pf-button>
+          <pf-button variant="plain">
+            <template #icon>
+              <x-icon />
+            </template>
+          </pf-button>
         </pf-action-list-item>
         <pf-action-list-item>
-          <pf-button variant="plain"><check-icon /></pf-button>
+          <pf-button variant="plain">
+            <template #icon>
+              <check-icon />
+            </template>
+          </pf-button>
         </pf-action-list-item>
       </pf-action-list>
     </story-canvas>
@@ -84,7 +90,6 @@
 </template>
 
 <script lang="ts" setup>
-import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
 import XIcon from '@vue-patternfly/icons/x-icon';
 import CheckIcon from '@vue-patternfly/icons/check-icon';
 </script>

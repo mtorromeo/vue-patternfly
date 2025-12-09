@@ -37,7 +37,7 @@ defineOptions({
   name: 'PfNotificationDrawerListItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer list item header screen reader title */
   srTitle?: string;
   /**  Notification drawer list item title */

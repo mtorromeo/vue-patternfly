@@ -8,15 +8,16 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
-import PfInputGroupItem, { type Props as PfInputGroupItemProps } from './InputGroupItem.vue';
+import PfInputGroupItem from './InputGroupItem.vue';
 import type { Component } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfInputGroupText',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfInputGroupItemProps, 'box'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfInputGroupItem>, 'box' | 'ouiaId' | 'ouiaSafe'> {
     /** Component that wraps the input group text. */
   component?: string | Component;
 }

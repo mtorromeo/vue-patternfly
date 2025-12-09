@@ -55,13 +55,13 @@ import PfForm from '../Form/Form.vue';
 import PfFormGroup from '../Form/FormGroup.vue';
 import PfActionGroup from '../Form/ActionGroup.vue';
 import { useEventListener } from '@vueuse/core';
-import { type ComponentProps } from '../../util';
+import type { ComponentExposed, ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfAdvancedSearchMenu',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfPanel>, 'variant'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfPanel>, 'variant'> {
   /** Flag for toggling the open/close state of the advanced search menu. */
   searchMenuOpen?: boolean;
   /** Label for the button which resets the advanced search form and clears the search input. */
@@ -104,7 +104,7 @@ defineSlots<{
   'form-additional-items'?: (props?: Record<never, never>) => any;
 }>();
 
-const firstAttrRef: Ref<InstanceType<typeof PfTextInput> | null> = ref(null);
+const firstAttrRef: Ref<ComponentExposed<typeof PfTextInput> | null> = ref(null);
 const searchInput = inject(SearchInputKey);
 const hasWordsId = useId();
 

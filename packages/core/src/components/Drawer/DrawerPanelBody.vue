@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfDrawerPanelBody',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Indicates if there should be no padding around the drawer panel body */
   noPadding?: boolean;
 }

@@ -17,7 +17,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   active?: boolean;
   paused?: boolean;
   focusTrapOptions?: UseFocusTrapOptions;

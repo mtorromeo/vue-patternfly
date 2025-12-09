@@ -84,7 +84,7 @@ defineOptions({
   name: 'PfFileUpload',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Unique id for the text area. Also used to generate ids for accessible labels. */
   id?: string;
   /** Flag to allow editing of a text file's contents after it is selected from disk. */
@@ -171,11 +171,11 @@ defineSlots<{
 
 const filenameInput = useTemplateRef('filenameInputRef');
 
-useDropZone(() => filenameInput.value?.$el, {
+useDropZone(() => filenameInput.value?.input, {
   dataTypes: props.dataTypes,
   multiple: false,
   async onDrop(files) {
-    if (!files?.length) {
+    if (!files?.[0]) {
       return;
     }
     await setFile(files[0]);

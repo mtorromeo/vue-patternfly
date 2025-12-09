@@ -17,7 +17,7 @@ defineOptions({
   name: 'PfAvatar',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ ImgHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ ImgHTMLAttributes {
   /** Flag to indicate the avatar should have a border. */
   bordered?: boolean;
 

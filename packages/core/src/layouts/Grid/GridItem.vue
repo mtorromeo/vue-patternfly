@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfGridItem',
 });
 
-export interface Props extends OrderBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OrderBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** The tag or component to use as container */
   component?: string | Component;
 

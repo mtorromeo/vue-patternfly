@@ -23,7 +23,7 @@ export const AlertVariantIcons = {
   custom: BellIcon,
 };
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   variant?: keyof typeof AlertVariantIcons;
 }
 </script>

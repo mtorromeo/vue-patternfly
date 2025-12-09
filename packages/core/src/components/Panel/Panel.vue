@@ -20,7 +20,7 @@ defineOptions({
   name: 'PfPanel',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds panel variant styles */
   variant?: 'raised' | 'bordered';
   /** Flag to add scrollable styling to the panel */

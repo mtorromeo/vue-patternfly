@@ -40,7 +40,7 @@ defineOptions({
   name: 'PfContent',
 });
 
-export interface Props extends
+interface Props extends
   OUIAProps,
   /* @vue-ignore */ AnchorHTMLAttributes,
   /* @vue-ignore */ BlockquoteHTMLAttributes,

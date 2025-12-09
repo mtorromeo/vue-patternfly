@@ -36,7 +36,7 @@
         <pf-form-group label="Position">
           <pf-checkbox v-model="flip" label="Flip (used only with position != 'auto')" />
 
-          <pf-form-select v-model="position">
+          <pf-form-select :model-value="position" @update:model-value="position = ($event as Placement)">
             <pf-form-select-option value="auto">auto</pf-form-select-option>
             <pf-form-select-option value="top">top</pf-form-select-option>
             <pf-form-select-option value="bottom">bottom</pf-form-select-option>
@@ -81,7 +81,7 @@
         </pf-form-group>
 
         <pf-form-group label="Distance">
-          <pf-text-input v-model.lazy="distance" />
+          <pf-text-input v-model.lazy="distance" type="number" />
         </pf-form-group>
       </pf-form>
 

@@ -45,7 +45,7 @@ defineOptions({
   name: 'PfNotificationDrawerGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer group count */
   count: number | string;
   /**  Adds styling to the group to indicate whether it has been read */

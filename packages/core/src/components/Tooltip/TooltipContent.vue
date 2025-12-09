@@ -18,7 +18,7 @@ defineOptions({
   name: 'PfTooltipContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   leftAligned?: boolean;
 }
 

@@ -74,7 +74,7 @@ import scrollStyles from '@patternfly/react-styles/css/components/Table/table-sc
 import { classesFromBreakpointProps } from "@vue-patternfly/core/breakpoints";
 import { isDefined } from "@vueuse/core";
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<TdHTMLAttributes, 'draggable' | 'onSelect'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<TdHTMLAttributes, 'draggable' | 'onSelect'> {
   /** Element to render */
   component?: string | Component;
   /** Modifies cell to center its contents. */

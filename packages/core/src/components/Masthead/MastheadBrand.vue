@@ -33,7 +33,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
   component?: string;
   href?: string;
   to?: RouteLocationRaw;

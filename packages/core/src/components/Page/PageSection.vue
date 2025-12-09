@@ -52,7 +52,7 @@ defineOptions({
   name: 'PfPageSection',
 });
 
-export interface Props extends OUIAProps, PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
+interface Props extends OUIAProps, PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Section background color variant */
   variant?: 'default' | 'secondary';
   /** Section type variant */

@@ -14,7 +14,7 @@ defineOptions({
   name: 'PfOverflowMenuItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   persistent?: boolean;
 }
 

@@ -12,14 +12,14 @@
 import PfMenu from './Menu.vue';
 import PfMenuContent from './MenuContent.vue';
 import PfMenuList from './MenuList.vue';
-import type { ComponentProps } from '../../util';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import { useOUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDrilldownMenu',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'rootMenu'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'rootMenu'> {
   /** Optional callback to get the height of the sub menu */
   onHeight?: (height: string) => void;
 }

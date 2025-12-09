@@ -13,7 +13,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props {
+interface Props {
   weight: number;
 }
 

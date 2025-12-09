@@ -1,5 +1,5 @@
 <template>
-  <component :is="`h${h}`" v-bind="ouiaProps" :class="[styles.title, size && size in styles.modifiers ? styles.modifiers[size] : styles.modifiers[hSize]]">
+  <component :is="`h${h}`" v-bind="ouiaProps" :class="[styles.title, size && size in styles.modifiers ? styles.modifiers[size] : hModifier]">
     <slot />
   </component>
 </template>
@@ -22,7 +22,7 @@ defineOptions({
   name: 'PfTitle',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** The size of the Title  */
   size?: keyof typeof styles.modifiers;
   /** Heading level to use */
@@ -39,5 +39,8 @@ defineSlots<{
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const hSize = computed(() => headingLevelSizeMap[Number(props.h) as keyof typeof headingLevelSizeMap]);
+const hModifier = computed(() => {
+  const level = headingLevelSizeMap[Number(props.h) as keyof typeof headingLevelSizeMap];
+  return level ? styles.modifiers[level] : undefined;
+});
 </script>

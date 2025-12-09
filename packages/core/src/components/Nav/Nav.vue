@@ -19,7 +19,7 @@ export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<(event: E
 export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | null>>;
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   theme?: 'dark' | 'light';
   variant?: 'default' | 'horizontal' | 'horizontal-subnav';
   ariaLabel?: string;

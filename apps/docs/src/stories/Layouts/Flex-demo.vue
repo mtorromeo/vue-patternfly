@@ -7,7 +7,7 @@
           <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
             <pf-form-group label="Direction">
               <pf-form-select v-model="direction">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="row">row</pf-form-select-option>
                 <pf-form-select-option value="row-reverse">row-reverse</pf-form-select-option>
                 <pf-form-select-option value="column">column</pf-form-select-option>
@@ -17,7 +17,7 @@
 
             <pf-form-group label="Display">
               <pf-form-select v-model="display">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex">flex</pf-form-select-option>
                 <pf-form-select-option value="inline-flex">inline-flex</pf-form-select-option>
               </pf-form-select>
@@ -25,7 +25,7 @@
 
             <pf-form-group label="Justify Content">
               <pf-form-select v-model="justifyContent">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
                 <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
                 <pf-form-select-option value="center">center</pf-form-select-option>
@@ -37,7 +37,7 @@
 
             <pf-form-group label="Align Items">
               <pf-form-select v-model="alignItems">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
                 <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
                 <pf-form-select-option value="center">center</pf-form-select-option>
@@ -48,7 +48,7 @@
 
             <pf-form-group label="Align Content">
               <pf-form-select v-model="alignContent">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
                 <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
                 <pf-form-select-option value="center">center</pf-form-select-option>
@@ -60,7 +60,7 @@
 
             <pf-form-group label="Flex Wrap">
               <pf-form-select v-model="flexWrap">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="nowrap">nowrap</pf-form-select-option>
                 <pf-form-select-option value="wrap">wrap</pf-form-select-option>
                 <pf-form-select-option value="wrap-reverse">wrap-reverse</pf-form-select-option>
@@ -69,7 +69,7 @@
 
             <pf-form-group label="Space Items">
               <pf-form-select v-model="spaceItems">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
                 <pf-form-select-option value="sm">sm</pf-form-select-option>
@@ -84,7 +84,7 @@
 
             <pf-form-group label="Gap">
               <pf-form-select v-model="gap">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
                 <pf-form-select-option value="sm">sm</pf-form-select-option>
@@ -99,7 +99,7 @@
 
             <pf-form-group label="Row Gap">
               <pf-form-select v-model="rowGap">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
                 <pf-form-select-option value="sm">sm</pf-form-select-option>
@@ -114,7 +114,7 @@
 
             <pf-form-group label="Column Gap">
               <pf-form-select v-model="columnGap">
-                <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
                 <pf-form-select-option value="sm">sm</pf-form-select-option>
@@ -141,7 +141,7 @@
               <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
                 <pf-form-group label="Align">
                   <pf-form-select v-model="item.align">
-                    <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                    <pf-form-select-option>[undefined]</pf-form-select-option>
                     <pf-form-select-option value="left">left</pf-form-select-option>
                     <pf-form-select-option value="right">right</pf-form-select-option>
                   </pf-form-select>
@@ -149,7 +149,7 @@
 
                 <pf-form-group label="Align Self">
                   <pf-form-select v-model="item.alignSelf">
-                    <pf-form-select-option value="">default</pf-form-select-option>
+                    <pf-form-select-option>default</pf-form-select-option>
                     <pf-form-select-option value="auto">auto</pf-form-select-option>
                     <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
                     <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
@@ -172,7 +172,7 @@
 
                 <pf-form-group label="Spacer">
                   <pf-form-select v-model="item.spacer">
-                    <pf-form-select-option value="">[undefined]</pf-form-select-option>
+                    <pf-form-select-option>[undefined]</pf-form-select-option>
                     <pf-form-select-option value="none">none</pf-form-select-option>
                     <pf-form-select-option value="xs">xs</pf-form-select-option>
                     <pf-form-select-option value="sm">sm</pf-form-select-option>
@@ -241,8 +241,12 @@ pre {
 
 <script lang="ts" setup>
 import { ref, reactive, watch, type Ref } from "vue";
-import type { Props as FlexProps } from "@vue-patternfly/core/layouts/Flex/Flex.vue";
-import type { Props as FlexItemProps } from "@vue-patternfly/core/layouts/Flex/FlexItem.vue";
+import type PfFlex from "@vue-patternfly/core/layouts/Flex/Flex.vue";
+import type PfFlexItem from "@vue-patternfly/core/layouts/Flex/FlexItem.vue";
+import type { ComponentProps } from 'vue-component-type-helpers';
+
+type FlexProps = ComponentProps<typeof PfFlex>;
+type FlexItemProps = ComponentProps<typeof PfFlexItem>;
 
 interface FlexItem {
   align: FlexProps["align"];

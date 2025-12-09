@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
-import type { Props as AlertProps } from '@vue-patternfly/core/components/Alert/Alert.vue';
+import type PfAlert from '@vue-patternfly/core/components/Alert/Alert.vue';
+import type { ComponentProps } from 'vue-component-type-helpers';
+
+type AlertProps = ComponentProps<typeof PfAlert>;
 
 let globalId = 0;
 

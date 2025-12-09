@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfEmptyStateBody',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Text of the title inside empty state header, will be wrapped in headingLevel */
   title?: string;
   /** The heading level to use, default is h1 */

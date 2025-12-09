@@ -5,12 +5,13 @@
         <pf-text-input-group :disabled="disabled">
           <pf-text-input-group-main
             ref="inputRef"
-            v-model="value"
+            :model-value="value"
             :type="type"
             :hint="hint"
             :placeholder="placeholder"
             :aria-label="ariaLabel"
             @keydown="onEnter"
+            @update:model-value="value = String($event)"
           >
             <template #icon>
               <magnifying-glass-icon />
@@ -26,7 +27,9 @@
                 :aria-label="previousNavigationButtonAriaLabel"
                 @click="onPreviousClick"
               >
-                <angle-up-icon />
+                <template #icon>
+                  <angle-up-icon />
+                </template>
               </pf-button>
 
               <pf-button
@@ -35,7 +38,9 @@
                 :aria-label="nextNavigationButtonAriaLabel"
                 @click="onNextClick"
               >
-                <angle-down-icon />
+                <template #icon>
+                  <angle-down-icon />
+                </template>
               </pf-button>
             </div>
 
@@ -46,7 +51,9 @@
               :aria-label="resetButtonLabel"
               @click="onClearInput"
             >
-              <xmark-icon />
+              <template #icon>
+                <xmark-icon />
+              </template>
             </pf-button>
           </pf-text-input-group-utilities>
         </pf-text-input-group>
@@ -60,7 +67,9 @@
           :aria-expanded="advancedSearchOpen"
           @click="onToggle"
         >
-          <caret-down-icon />
+          <template #icon>
+            <caret-down-icon />
+          </template>
         </pf-button>
 
         <pf-button
@@ -71,7 +80,9 @@
           :aria-label="submitSearchButtonLabel"
           @click="onSearchHandler"
         >
-          <arrow-right-icon />
+          <template #icon>
+            <arrow-right-icon />
+          </template>
         </pf-button>
       </template>
 
@@ -83,8 +94,10 @@
         :aria-expanded="expanded"
         @click="onExpand"
       >
-        <xmark-icon v-if="expanded" />
-        <magnifying-glass-icon v-else />
+        <template #icon>
+          <xmark-icon v-if="expanded" />
+          <magnifying-glass-icon v-else />
+        </template>
       </pf-button>
     </component>
 
@@ -129,12 +142,12 @@ export interface SearchAttribute {
 
 export type SearchInputProvide = {
   $el: Readonly<Ref<HTMLDivElement | null>>;
-  input: Ref<InstanceType<typeof PfTextInputGroupMain> | null>;
+  input: Ref<ComponentExposed<typeof PfTextInputGroupMain> | null>;
 }
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
 
-export interface Props extends OUIAProps {
+interface Props extends OUIAProps {
   /** Flag indicating if search input is disabled. */
   disabled?: boolean;
   /** An accessible label for the search input. */
@@ -234,6 +247,7 @@ import AngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import ArrowRightIcon from '@vue-patternfly/icons/arrow-right-icon';
 import { FormInputsKey } from '../Form/common';
+import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfSearchInput',
@@ -301,9 +315,9 @@ function getAttrValueMap() {
   const pairs = value.value.split(' ');
   pairs.map(pair => {
     const splitPair = props.advancedSearchDelimiter ? pair.split(props.advancedSearchDelimiter) : [];
-    if (splitPair.length === 2) {
+    if (splitPair[0] && splitPair[1]) {
       attrValue[splitPair[0]] = splitPair[1];
-    } else if (splitPair.length === 1) {
+    } else if (splitPair[0]) {
       attrValue.haswords = Object.hasOwnProperty.call(attrValue, 'haswords')
         ? `${attrValue.haswords} ${splitPair[0]}`
         : splitPair[0];

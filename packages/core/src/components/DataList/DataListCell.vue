@@ -25,7 +25,7 @@ defineOptions({
   name: 'PfDataListCell',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   noFill?: boolean;
   width?: 1 | 2 | 3 | 4 | 5;
   alignRight?: boolean;

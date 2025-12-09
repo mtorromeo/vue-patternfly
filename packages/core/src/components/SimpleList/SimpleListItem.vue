@@ -29,7 +29,7 @@ defineOptions({
   name: 'PfSimpleListItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /**
    * Identifier fot the item. If the SimpleList has a name it will be used as the form field value.
    */

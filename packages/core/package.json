@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/core",
-  "version": "6.0.0-beta.4",
+  "version": "6.0.0-beta.7",
   "type": "module",
   "files": [
     "dist"
@@ -35,31 +35,32 @@
   "dependencies": {
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",
-    "@patternfly/patternfly": "^6.2.2",
-    "@patternfly/react-styles": "^6.2.0",
-    "@patternfly/react-tokens": "^6.2.0",
+    "@patternfly/patternfly": "^6.4.0",
+    "@patternfly/react-styles": "^6.4.0",
+    "@patternfly/react-tokens": "^6.4.0",
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^22.14.1",
+    "@types/node": "^24.10.1",
     "@types/web-bluetooth": "^0.0.21",
-    "@vitejs/plugin-vue": "^5.2.3",
-    "@vue/compiler-sfc": "^3.5.13",
-    "@vueuse/core": "^13.1.0",
-    "@vueuse/integrations": "^13.1.0",
-    "@vueuse/shared": "^13.1.0",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vue/compiler-sfc": "^3.5.25",
+    "@vueuse/core": "^14.0.0",
+    "@vueuse/integrations": "^14.0.0",
+    "@vueuse/shared": "^14.0.0",
     "concurrently": "^9.1.2",
-    "focus-trap": "^7.6.4",
+    "focus-trap": "^7.6.6",
     "fs-extra": "^11.3.0",
-    "glob": "^11.0.1",
-    "nodemon": "^3.1.10",
-    "rimraf": "^6.0.1",
+    "glob": "^13.0.0",
+    "nodemon": "^3.1.11",
+    "rimraf": "^6.1.2",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
-    "vite": "^6.3.2",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "vue-tsc": "^2.2.10"
+    "vite": "^7.2.4",
+    "vue": "^3.5.25",
+    "vue-component-type-helpers": "^3.1.5",
+    "vue-router": "^4.6.3",
+    "vue-tsc": "^3.1.5"
   },
   "peerDependencies": {
     "@vueuse/core": "^13",

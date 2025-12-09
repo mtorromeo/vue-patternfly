@@ -17,7 +17,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   timestamp?: string;
 }
 

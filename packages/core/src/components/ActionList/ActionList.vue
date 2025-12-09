@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfActionList',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag indicating the action list contains multiple icons and item padding should be removed */
   iconList?: boolean;
 }

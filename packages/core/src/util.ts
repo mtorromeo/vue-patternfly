@@ -1,5 +1,5 @@
 import { isDefined } from '@vueuse/shared';
-import { Fragment, Comment, type VNode, type VNodeTypes, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren, type Component, type ComponentOptionsMixin, type VNodeProps, type AllowedComponentProps } from 'vue';
+import { Fragment, Comment, type VNode, type VNodeTypes, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren, type Component, type ComponentOptionsMixin } from 'vue';
 import { globalHeightBreakpoints, globalWidthBreakpoints } from './constants';
 
 const camelize = (s: string) =>
@@ -230,10 +230,6 @@ export function fillTemplate(templateString: string, templateVars: any) {
 export function isRawSlots(children: VNodeNormalizedChildren | undefined): children is Exclude<VNodeNormalizedChildren, string | VNodeArrayChildren | null | undefined> {
   return isDefined(children) && typeof children === 'object' && !Array.isArray(children);
 }
-
-export type ComponentProps<C extends Component> = C extends new (...args: any) => any
-  ? Omit<InstanceType<C>['$props'], keyof VNodeProps | keyof AllowedComponentProps>
-  : never;
 
 /**
  * Return the breakpoint for the given width

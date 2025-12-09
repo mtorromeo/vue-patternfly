@@ -3,11 +3,14 @@
   <pf-title h="2">
     {{ componentName }} <component-title :name="componentName" />
   </pf-title>
-  <pf-text>
+  <pf-content>
     <pf-button variant="link" inline target="_blank" :href="`https://github.com/mtorromeo/vue-patternfly/blob/main/${src}`">
-      <github-icon /> Source code
+      <template #icon>
+        <github-icon />
+      </template>
+      Source code
     </pf-button>
-  </pf-text>
+  </pf-content>
 
   <template v-if="doc">
     <br>

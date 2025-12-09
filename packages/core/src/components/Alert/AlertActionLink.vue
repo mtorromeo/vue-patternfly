@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ComponentProps } from '../../util';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import PfButton from '../Button.vue';
 import { useOUIAProps } from '../../helpers/ouia';
 
@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfAlertActionLink',
 });
 
-export interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'inline'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'inline'> {
 }
 
 const props = defineProps<Props>();

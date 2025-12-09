@@ -16,7 +16,7 @@
 <script lang="ts">
 export const SidebarOpenKey = Symbol('SidebarOpenKey') as InjectionKey<ComputedRef<boolean> | boolean>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sidebar id */
   id?: string;
   /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
@@ -29,8 +29,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { computed, type ComputedRef, inject, type InjectionKey, provide, type HTMLAttributes } from 'vue';
-import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
+import { PageManagedSidebarKey, PageSidebarOpenKey, PageSidebarsKey } from './Page.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { useChildrenTracker } from '../../use';
 
 defineOptions({
   name: 'PfPageSidebar',
@@ -46,6 +47,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
+useChildrenTracker(PageSidebarsKey);
 const managedSidebarOpen = inject(PageSidebarOpenKey);
 const managedSidebar = inject(PageManagedSidebarKey);
 

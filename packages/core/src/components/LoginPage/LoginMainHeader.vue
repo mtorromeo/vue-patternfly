@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfLoginMainHeader',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Title for the login main header */
   title?: string;
   /** Subtitle that contains the text, URL, and URL text for the login main header */

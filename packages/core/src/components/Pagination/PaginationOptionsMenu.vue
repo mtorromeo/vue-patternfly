@@ -34,9 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import PfMenu, {
-  type Props as MenuProps,
-} from '../Menu/Menu.vue';
+import PfMenu from '../Menu/Menu.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import PfMenuItem from '../Menu/MenuItem.vue';
@@ -44,13 +42,14 @@ import FloatingUi from '../../helpers/FloatingUi.vue';
 import { defaultPerPageOptions, type CommonPaginationProps } from './common';
 import { ref, type RendererElement, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfPaginationOptionsMenu',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, CommonPaginationProps, /* @vue-ignore */ Omit<MenuProps, 'onSelect'> {
+interface Props extends OUIAProps, CommonPaginationProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'onSelect' | 'ouiaId' | 'ouiaSafe'> {
   count?: number;
   firstIndex?: number;
   lastIndex?: number;
@@ -70,7 +69,7 @@ const props = withDefaults(defineProps<Props>(), {
   perPageSuffix: 'per page',
   optionsToggle: 'Items per page',
   page: 0,
-  perPage: defaultPerPageOptions[0].value,
+  perPage: defaultPerPageOptions[0]?.value,
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'pagination-options-menu',
 });

@@ -4,9 +4,7 @@
       <pf-masthead>
         <pf-masthead-main>
           <pf-masthead-toggle>
-            <pf-page-toggle-button>
-              <bars-icon />
-            </pf-page-toggle-button>
+            <pf-page-toggle-button hamburger />
           </pf-masthead-toggle>
           <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
             <pf-masthead-brand :href="href">
@@ -21,7 +19,7 @@
             <pf-toolbar-content>
               <pf-toolbar-group align="end">
                 <pf-toolbar-item>
-                  <pf-toggle-group v-model="darkTheme">
+                  <pf-toggle-group :model-value="darkTheme" @update:model-value="darkTheme = Boolean($event)" aria-label="Dark mode toggle">
                     <pf-toggle-group-item :value="false">
                       <sun-icon />
                     </pf-toggle-group-item>
@@ -134,7 +132,6 @@ import { computed, ref, watch } from "vue";
 import { stories } from "./router";
 import { useAlertsStore } from "./store/alerts";
 import PfLogo from "@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg?raw";
-import BarsIcon from "@vue-patternfly/icons/bars-icon";
 import SunIcon from "@vue-patternfly/icons/sun-icon";
 import MoonIcon from "@vue-patternfly/icons/moon-icon";
 

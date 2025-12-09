@@ -19,9 +19,7 @@
       <pf-masthead>
         <pf-masthead-main>
           <pf-masthead-toggle>
-            <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
-            </pf-button>
+            <pf-button variant="plain" hamburger aria-label="Global navigation" />
           </pf-masthead-toggle>
           <pf-masthead-brand>
             <pf-masthead-logo component="a">Logo</pf-masthead-logo>
@@ -37,9 +35,7 @@
       <pf-masthead>
         <pf-masthead-main>
           <pf-masthead-toggle>
-            <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
-            </pf-button>
+            <pf-button variant="plain" hamburger aria-label="Global navigation" />
           </pf-masthead-toggle>
           <pf-masthead-brand>
             <pf-masthead-logo component="a">Logo</pf-masthead-logo>
@@ -61,9 +57,7 @@
       <pf-masthead display="inline" display-lg="stack" display-2xl="inline">
         <pf-masthead-main>
           <pf-masthead-toggle>
-            <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
-            </pf-button>
+            <pf-button variant="plain" hamburger aria-label="Global navigation" />
           </pf-masthead-toggle>
           <pf-masthead-brand>
             <pf-masthead-logo>Logo</pf-masthead-logo>
@@ -79,9 +73,7 @@
       <pf-masthead inset="sm">
         <pf-masthead-main>
           <pf-masthead-toggle>
-            <pf-button variant="plain" aria-label="Global navigation">
-              <bars-icon />
-            </pf-button>
+            <pf-button variant="plain" hamburger aria-label="Global navigation" />
           </pf-masthead-toggle>
           <pf-masthead-brand>
             <pf-masthead-logo>Logo</pf-masthead-logo>
@@ -94,7 +86,3 @@
     </story-canvas>
   </doc-page>
 </template>
-
-<script lang="ts" setup>
-import BarsIcon from '@vue-patternfly/icons/bars-icon';
-</script>

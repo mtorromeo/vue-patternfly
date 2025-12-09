@@ -23,7 +23,9 @@
             <pf-input-group>
               <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
-                <magnifying-glass-icon />
+                <template #icon>
+                  <magnifying-glass-icon />
+                </template>
               </pf-button>
             </pf-input-group>
           </pf-toolbar-item>
@@ -45,7 +47,9 @@
             <pf-input-group>
               <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
-                <magnifying-glass-icon />
+                <template #icon>
+                  <magnifying-glass-icon />
+                </template>
               </pf-button>
             </pf-input-group>
           </pf-toolbar-item>
@@ -131,17 +135,23 @@
           <pf-toolbar-group>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="edit">
-                <pen-to-square-icon />
+                <template #icon>
+                  <pen-to-square-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="clone">
-                <CloneIcon />
+                <template #icon>
+                  <clone-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="sync">
-                <rotate-icon />
+                <template #icon>
+                  <rotate-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
           </pf-toolbar-group>
@@ -165,14 +175,16 @@
         <pf-toolbar-content>
           <pf-toolbar-toggle-group xl>
             <template #icon>
-              <FilterIcon />
+              <filter-icon />
             </template>
 
             <pf-toolbar-item>
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <magnifying-glass-icon />
+                  <template #icon>
+                    <magnifying-glass-icon />
+                  </template>
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -213,7 +225,9 @@
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <magnifying-glass-icon />
+                  <template #icon>
+                    <magnifying-glass-icon />
+                  </template>
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -254,7 +268,9 @@
               <pf-input-group>
                 <pf-text-input type="search" aria-label="search input example" />
                 <pf-button variant="control" aria-label="search button for search input">
-                  <magnifying-glass-icon />
+                  <template #icon>
+                    <magnifying-glass-icon />
+                  </template>
                 </pf-button>
               </pf-input-group>
             </pf-toolbar-item>
@@ -287,17 +303,23 @@
           <pf-toolbar-group>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="edit">
-                <pen-to-square-icon />
+                <template #icon>
+                  <pen-to-square-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="clone">
-                <CloneIcon />
+                <template #icon>
+                  <clone-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
             <pf-toolbar-item>
               <pf-button variant="plain" aria-label="sync">
-                <rotate-icon />
+                <template #icon>
+                  <rotate-icon />
+                </template>
               </pf-button>
             </pf-toolbar-item>
           </pf-toolbar-group>
@@ -305,9 +327,7 @@
           <pf-toolbar-item>
             <pf-dropdown v-model:open="dropdownOpen">
               <template #toggle>
-                <pf-menu-toggle variant="plain">
-                  <ellipsis-vertical-icon />
-                </pf-menu-toggle>
+                <pf-menu-toggle variant="plain" />
               </template>
 
               <pf-dropdown-item key="link">Link</pf-dropdown-item>
@@ -328,7 +348,7 @@
         <pf-toolbar-content>
           <pf-toolbar-toggle-group lg>
             <template #icon>
-              <FilterIcon />
+              <filter-icon />
             </template>
             <pf-toolbar-item id="stacked-example-resource-select" variant="label">Resource</pf-toolbar-item>
             <pf-toolbar-item>
@@ -373,9 +393,7 @@
               <pf-overflow-menu-control additional-options>
                 <pf-dropdown v-model:open="kebabIsOpen">
                   <template #toggle>
-                    <pf-menu-toggle variant="plain">
-                      <ellipsis-vertical-icon />
-                    </pf-menu-toggle>
+                    <pf-menu-toggle variant="plain" />
                   </template>
                   <pf-dropdown-item key="link">Link</pf-dropdown-item>
                   <pf-dropdown-item key="action" component="button">Action</pf-dropdown-item>
@@ -421,7 +439,6 @@ import FilterIcon from "@vue-patternfly/icons/filter-icon";
 import CloneIcon from "@vue-patternfly/icons/clone-icon";
 import PenToSquareIcon from "@vue-patternfly/icons/pen-to-square-icon";
 import RotateIcon from "@vue-patternfly/icons/rotate-icon";
-import EllipsisVerticalIcon from "@vue-patternfly/icons/ellipsis-vertical-icon";
 
 import { reactive, ref } from "vue";
 

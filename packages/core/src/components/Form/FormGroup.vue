@@ -67,17 +67,18 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 import PfFormHelperText from './FormHelperText.vue';
 import PfHelperText from '../HelperText/HelperText.vue';
-import PfHelperTextItem, { type Props as HelperTextItemProps } from '../HelperText/HelperTextItem.vue';
+import PfHelperTextItem from '../HelperText/HelperTextItem.vue';
 import type { InputValidateState } from '../../input';
 import { provideChildrenTracker } from '../../use';
 import { FormGroupInputsKey } from './common';
 import { isDefined } from '@vueuse/shared';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfFormGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
   fieldset?: boolean;
 
     /** Label text before the field. */
@@ -108,7 +109,7 @@ export interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttribut
   helperText?: string;
 
   /** Helper text variant. */
-  helperTextVariant?: HelperTextItemProps['variant'];
+  helperTextVariant?: ComponentProps<typeof PfHelperTextItem>['variant'];
 
   /** Flag to position the helper text before the field. False by default */
   helperTextBeforeField?: boolean;

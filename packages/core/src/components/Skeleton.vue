@@ -23,7 +23,7 @@ defineOptions({
   name: 'PfSkeleton',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** The width of the Skeleton. Must specify pixels or percentage. */
   width?: string;
   /** The height of the Skeleton. Must specify pixels or percentage. */

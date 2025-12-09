@@ -45,7 +45,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
+interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
   /** Aria-label for the back scroll button */
   backScrollAriaLabel?: string;
   /** Aria-label for the forward scroll button */
@@ -93,11 +93,12 @@ function scrollBack() {
   const container = navList.value;
   if (container) {
     const childrenArr = Array.from(container.children);
-    let firstElementInView;
-    let lastElementOutOfView;
+    let firstElementInView: Element | undefined;
+    let lastElementOutOfView: Element | undefined;
     for (let i = 0; i < childrenArr.length && !firstElementInView; i++) {
-      if (isElementInView(container, childrenArr[i], false)) {
-        firstElementInView = childrenArr[i];
+      const child = childrenArr[i];
+      if (child && isElementInView(container, child, false)) {
+        firstElementInView = child;
         lastElementOutOfView = childrenArr[i - 1];
       }
     }
@@ -113,11 +114,12 @@ function scrollForward() {
   const container = navList.value;
   if (container) {
     const childrenArr = Array.from(container.children);
-    let lastElementInView;
-    let firstElementOutOfView;
+    let lastElementInView: Element | undefined;
+    let firstElementOutOfView: Element | undefined;
     for (let i = childrenArr.length - 1; i >= 0 && !lastElementInView; i--) {
-      if (isElementInView(container, childrenArr[i], false)) {
-        lastElementInView = childrenArr[i];
+      const child = childrenArr[i];
+      if (child && isElementInView(container, child, false)) {
+        lastElementInView = child;
         firstElementOutOfView = childrenArr[i + 1];
       }
     }

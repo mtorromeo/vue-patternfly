@@ -78,7 +78,7 @@ defineOptions({
   name: 'PfPagination',
 });
 
-export interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Position where pagination is rendered. */
   variant?: 'top' | 'bottom';
   /** Flag indicating if pagination should not be sticky on mobile */
@@ -130,7 +130,7 @@ const props = withDefaults(defineProps<Props>(), {
   currPageAriaLabel: 'Current page',
   paginationAriaLabel: 'Pagination',
   page: 1,
-  perPage: defaultPerPageOptions[0].value,
+  perPage: defaultPerPageOptions[0]?.value,
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'options-menu',
 });

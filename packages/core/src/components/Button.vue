@@ -12,6 +12,7 @@
       ref="elRef"
       :type="buttonComponent === 'button' ? type : null"
       :disabled="effectiveDisabled"
+      :aria-expanded="expanded"
       :aria-disabled="effectiveDisabled || ariaDisabled"
       :class="[styles.button, styles.modifiers[variant], {
         [styles.modifiers.block]: block,
@@ -25,6 +26,11 @@
         [styles.modifiers.progress]: isDefined(loading),
         [styles.modifiers.inProgress]: loading,
         [styles.modifiers[state as NonNullable<typeof state>]]: state && variant === 'stateful',
+        [styles.modifiers.settings]: settings,
+        [styles.modifiers.favorite]: favorite,
+        [styles.modifiers.favorited]: favorited && favorite,
+        [styles.modifiers.hamburger]: hamburger,
+        [styles.modifiers[hamburgerVariant as NonNullable<typeof hamburgerVariant>]]: hamburger && hamburgerVariant,
       }]"
       :tabindex="tabIdx"
       :role="buttonComponent !== 'button' ? 'button' : null"
@@ -34,19 +40,28 @@
       <span v-if="loading" :class="styles.buttonProgress">
         <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
       </span>
-      <span
-        v-if="$slots.icon && iconPosition === 'start'"
-        :class="[styles.buttonIcon, styles.modifiers.start]"
-      >
-        <slot name="icon" />
+
+      <slot v-if="iconPosition === 'end'" />
+      <span v-if="$slots.icon || favorite || settings || hamburger" :class="[styles.buttonIcon, {[styles.modifiers.start]: iconPosition === 'start', [styles.modifiers.end]: iconPosition === 'end'}]">
+        <template v-if="favorite">
+          <span class="pf-v6-c-button__icon-favorite">
+            <outlined-star-icon />
+          </span>
+          <span class="pf-v6-c-button__icon-favorited">
+            <star-icon />
+          </span>
+        </template>
+        <gear-icon v-else-if="settings" />
+        <svg v-else-if="hamburger" viewBox="0 0 10 10" :class="[styles.buttonHamburgerIcon, 'pf-v6-svg']" width="1em" height="1em">
+          <path :class="styles.buttonHamburgerIconTop" d="M1,1 L9,1"></path>
+          <path :class="styles.buttonHamburgerIconMiddle" d="M1,5 L9,5"></path>
+          <path :class="styles.buttonHamburgerIconArrow" d="M1,5 L1,5 L1,5"></path>
+          <path :class="styles.buttonHamburgerIconBottom" d="M9,9 L1,9"></path>
+        </svg>
+        <slot v-else name="icon" />
       </span>
-      <slot />
-      <span
-        v-if="$slots.icon && iconPosition === 'end'"
-        :class="[styles.buttonIcon, styles.modifiers.end]"
-      >
-        <slot name="icon" />
-      </span>
+      <slot v-if="iconPosition !== 'end'" />
+
       <span v-if="$slots.badge" :class="[styles.buttonCount, badgeClass]">
         <slot name="badge" />
       </span>
@@ -62,6 +77,9 @@ import type { RouteLocationRaw, useLink } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import { type Component, type UnwrapRef, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes, useTemplateRef, type ComponentPublicInstance } from 'vue';
 import { isDefined } from '@vueuse/shared';
+import GearIcon from '@vue-patternfly/icons/gear-icon';
+import StarIcon from '@vue-patternfly/icons/star-icon';
+import OutlinedStarIcon from '@vue-patternfly/icons/outlined-star-icon';
 
 type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
@@ -70,7 +88,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
   /** Sets the base component to render. defaults to button */
   component?: string | Component;
   /** Adds block styling to button */
@@ -91,6 +109,10 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttri
   inoperableEvents?: string[];
   /** Adds inline styling to a link button */
   inline?: boolean;
+  /** Adds favorite styling to a button */
+  favorite?: boolean;
+  /** Flag indicating whether the button is favorited or not, only when favorite is true. */
+  favorited?: boolean;
   /** Sets button type */
   type?: 'button' | 'submit' | 'reset';
   /** Adds button variant styles */
@@ -111,6 +133,14 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttri
   danger?: boolean;
   /** Class name for the badge container */
   badgeClass?: string;
+  /** Flag indicating whether content the button controls is expanded or not. Required when hamburger is true. */
+  expanded?: boolean;
+  /** Flag indicating the button is a settings button. This will override the icon property. */
+  settings?: boolean;
+  /** Flag indicating the button is a hamburger button. This will override the icon property. */
+  hamburger?: boolean;
+  /** Adjusts and animates the hamburger icon to indicate what will happen upon clicking the button. */
+  hamburgerVariant?: 'expand' | 'collapse';
 
   // router-link attributes
   /** Route Location the link should navigate to when clicked on. */

@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Text input group">
-    <template #description>A <b>text input group</b> is a more flexible composable version of a [text input](#/stories/components/text-input). It enables consumers of PatternFly to build custom inputs for filtering and similar use cases by placing elements like icons, chips groups and buttons within a text input.</template>
+    <template #description>
+      <pre v-md>
+        A **text input group** is a more flexible composable version of a [text input](#/stories/components/text-input). It enables consumers of PatternFly to build custom inputs for filtering and similar use cases by placing elements like icons, chips groups and buttons within a text input.
+      </pre>
+    </template>
 
     <template #apidocs>
       <component-info src="packages/core/src/components/TextInputGroup/TextInputGroup.vue" />
@@ -33,7 +37,9 @@
         </pf-text-input-group-main>
         <pf-text-input-group-utilities v-if="!!inputValue">
           <pf-button variant="plain" aria-label="Clear button and input" @click="inputValue = ''">
-            <xmark-icon />
+            <template #icon>
+              <xmark-icon />
+            </template>
           </pf-button>
         </pf-text-input-group-utilities>
       </pf-text-input-group>
@@ -51,7 +57,9 @@
         </pf-text-input-group-main>
         <pf-text-input-group-utilities v-if="!!inputValue2">
           <pf-button variant="plain" aria-label="Clear button and input" @click="inputValue2 = ''">
-            <xmark-icon />
+            <template #icon>
+              <xmark-icon />
+            </template>
           </pf-button>
         </pf-text-input-group-utilities>
       </pf-text-input-group>

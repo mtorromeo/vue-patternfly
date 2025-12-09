@@ -29,7 +29,7 @@ import type { HTMLAttributes } from "vue";
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Won't wrap the table head if true */
   noWrap?: boolean;
   /** Indicates the <thead> contains a nested header */

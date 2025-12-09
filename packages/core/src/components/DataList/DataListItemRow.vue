@@ -32,7 +32,7 @@ defineOptions({
   name: 'PfDataListItemRow',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   wrapModifier?: DataListWrapModifier
 }
 

@@ -19,7 +19,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, WidthBreakpointProps, HeightBreakpointProps, /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height' | 'src' | 'alt'> {
+interface Props extends OUIAProps, WidthBreakpointProps, HeightBreakpointProps, /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height' | 'src' | 'alt'> {
   src: string;
   alt?: string;
 }

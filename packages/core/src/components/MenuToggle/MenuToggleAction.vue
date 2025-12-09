@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfMenuToggleAction',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type'> {}
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type'> {}
 
 const props = defineProps<Props>();
 

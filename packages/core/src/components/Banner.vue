@@ -24,7 +24,7 @@ defineOptions({
   name: 'PfBanner',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** If set to true, the banner sticks to the top of its container */
   sticky?: boolean;
   /** Text announced by screen readers to indicate the type of banner. This prop should only

@@ -15,7 +15,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props {
+interface Props {
   disabled?: boolean;
 }
 
@@ -32,6 +32,10 @@ function render() {
   if (!props.disabled && slots.with) {
     const wrapper = slots.with({});
     const wrapperNode = findChildrenVNodes(wrapper);
+
+    if (!wrapperNode[0]) {
+      return;
+    }
 
     if (wrapperNode.length > 1) {
       throw new Error("Wrap's \"with\" slot can only contain a single child node");

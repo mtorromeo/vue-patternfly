@@ -12,14 +12,15 @@
 </template>
 
 <script lang="ts" setup>
-import PfLabelGroup, { type Props as LabelGroupProps } from '../Label/LabelGroup.vue';
+import PfLabelGroup from '../Label/LabelGroup.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfChipGroup',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<LabelGroupProps & { onClick?: (event: PointerEvent) => void }, 'numLabels'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfLabelGroup> & { onClick?: (event: PointerEvent) => void }, 'numLabels' | 'ouiaId' | 'ouiaSafe'> {
   id?: string;
   numChips?: number;
   closeBtnAriaLabel?: string;

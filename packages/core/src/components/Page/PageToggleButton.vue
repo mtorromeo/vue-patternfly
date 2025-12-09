@@ -14,7 +14,7 @@
 <script lang="ts">
 export const SidebarOpenKey = Symbol('SidebarOpenKey') as InjectionKey<ComputedRef<boolean> | boolean>;
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfButtonProps, 'variant' | 'aria-label' | 'aria-expanded' | 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'aria-label' | 'aria-expanded' | 'onClick' | 'ouiaId' | 'ouiaSafe'> {
   /** Sidebar id */
   id?: string;
   /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
@@ -25,8 +25,9 @@ export interface Props extends OUIAProps, /* @vue-ignore */ Omit<PfButtonProps, 
 <script lang="ts" setup>
 import { computed, type ComputedRef, inject, type InjectionKey } from 'vue';
 import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
-import PfButton, { type Props as PfButtonProps } from '../Button.vue';
+import PfButton from '../Button.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfPageToggleButton',

@@ -1,18 +1,21 @@
-import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref, onBeforeUnmount, useModel } from "vue";
+import { computed, getCurrentInstance, ref, unref, watch, type MaybeRef, type Ref, onBeforeUnmount, useModel, type MaybeRefOrGetter, toValue } from "vue";
 import { onMounted } from "vue";
 
 export type InputValidateState = 'success' | 'warning' | 'error' | 'default';
 type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+export type InputType = 'text' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'search' | 'tel' | 'time' | 'url' | 'week';
 
 export function useInputValidation({
   autoValidate,
   validated,
   inputElement,
+  type,
   customCheckValidity,
 }: {
   autoValidate: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
   validated?: Ref<InputValidateState | undefined>;
   inputElement?: MaybeRef<InputElement | null>;
+  type?: MaybeRefOrGetter<InputType>;
   customCheckValidity?: () => boolean;
 }) {
   const instance = getCurrentInstance()?.proxy;
@@ -21,7 +24,16 @@ export function useInputValidation({
   const effectiveValidated = computed(() => validated?.value ?? innerValidated.value);
   watch(effectiveValidated, () => instance?.$emit('update:validated', effectiveValidated.value));
 
-  const [value, modifiers] = useModel((instance?.$props ?? {}) as { modelValue?: string | number | null }, 'modelValue');
+  const [value, modifiers] = useModel((instance?.$props ?? {}) as { modelValue?: string | number | null }, 'modelValue', {
+    get: (v) => v,
+    set: (v) => {
+      // force number cast unlike default number modifier
+      if (modifiers.number || toValue(type) === 'number') {
+        return Number(v) as any;
+      }
+      return String(v) as any;
+    },
+  });
 
   function getInput() {
     return unref(inputElement) ?? (instance?.$el as InputElement | undefined);
@@ -96,10 +108,10 @@ export function useInputValidation({
     reportValidity,
     setCustomValidity,
 
-    onInput(event: InputEvent) {
+    onInput(event: InputEvent, inputValue?: any) {
       instance?.$emit('input', event);
       if (!modifiers.lazy) {
-        value.value = (event.target as InputElement).value;
+        value.value = inputValue ?? (event.target as InputElement).value;
       }
       if (autoValidate === 'input') {
         reportValidity();
@@ -117,10 +129,10 @@ export function useInputValidation({
       }
     },
 
-    onChange(event: Event) {
+    onChange(event: Event, inputValue?: any) {
       instance?.$emit('change', event);
       if (modifiers.lazy) {
-        value.value = (event.target as InputElement).value;
+        value.value = inputValue ?? (event.target as InputElement).value;
       }
       if (autoValidate === 'change') {
         reportValidity();

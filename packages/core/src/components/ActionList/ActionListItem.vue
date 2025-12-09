@@ -13,7 +13,7 @@ defineOptions({
   name: 'PfActionListItem',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();

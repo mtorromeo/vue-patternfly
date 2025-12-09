@@ -52,7 +52,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'onChange'> {
   /** Flag to show if the switch has a check icon. */
   checkIcon?: boolean;
 

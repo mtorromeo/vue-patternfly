@@ -14,7 +14,7 @@ defineOptions({
   name: 'PfCardExpandableContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
     /** Flag indicating that the actions have no offset. */
   noOffset?: boolean;
 }

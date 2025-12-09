@@ -31,13 +31,13 @@ import { computed, inject } from 'vue';
 import { ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
 import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
 import type { Props as ToolbarGroupProps } from './ToolbarGroup.vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { useOUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfToolbarToggleGroup',
 });
 
-export interface Props extends OUIAProps, ToolbarGroupProps, BreakpointProps {
+interface Props extends ToolbarGroupProps, BreakpointProps {
 }
 
 const props = defineProps<Props>();

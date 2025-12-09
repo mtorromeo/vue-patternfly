@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Heading level to use */
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | number;
   /** Flag to indicate whether use definition list or div */

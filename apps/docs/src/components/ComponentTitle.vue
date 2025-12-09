@@ -4,7 +4,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import type { ComponentProps, PfTitle } from '@vue-patternfly/core';
+import type { PfTitle } from '@vue-patternfly/core';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 interface Props extends /* @vue-ignore */ ComponentProps<typeof PfTitle> {
   name: string;

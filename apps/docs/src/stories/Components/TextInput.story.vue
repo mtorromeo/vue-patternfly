@@ -10,6 +10,10 @@
       <pf-text-input v-model="text1" aria-label="text input example" />
     </story-canvas>
 
+    <story-canvas title="Numeric">
+      <pf-text-input v-model="number1" type="number" aria-label="text input example" />
+    </story-canvas>
+
     <story-canvas title="Disabled">
       <pf-text-input
         disabled
@@ -93,7 +97,7 @@
     <story-canvas title="Custom icon">
       <pf-text-input aria-label="text input example">
         <template #icon>
-          <ClockIcon />
+          <clock-icon />
         </template>
       </pf-text-input>
     </story-canvas>
@@ -101,9 +105,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 import ClockIcon from '@vue-patternfly/icons/clock-icon';
 
-const text1 = ref('');
+const text1: Ref<string | null> = ref(null);
 const text2 = ref('');
+const number1 = ref(0);
 </script>

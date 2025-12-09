@@ -16,7 +16,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'size'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'size'> {
   /** Changes the color of the icon.  */
   color?: string;
 }

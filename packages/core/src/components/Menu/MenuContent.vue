@@ -29,7 +29,7 @@ defineOptions({
   name: 'PfMenuContent',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Height of the menu content */
   menuHeight?: string;
   /** Maximum height of menu content */

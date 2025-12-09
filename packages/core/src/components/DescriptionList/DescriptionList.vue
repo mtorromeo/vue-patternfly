@@ -39,7 +39,7 @@ defineOptions({
   name: 'PfDescriptionList',
 });
 
-export interface Props extends OUIAProps, ColumnsBreakpointProps, OrientationBreakpointProps, AutoFitMinBreakpointProps, HorizontalTermWidthBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, ColumnsBreakpointProps, OrientationBreakpointProps, AutoFitMinBreakpointProps, HorizontalTermWidthBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the description list to auto fit. */
   autoFit?: boolean;
   /** Sets the description list component term and description pair to a horizontal layout. */

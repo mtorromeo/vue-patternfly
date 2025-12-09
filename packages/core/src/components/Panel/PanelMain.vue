@@ -18,7 +18,7 @@ defineOptions({
   name: 'PfPanelMain',
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Max height of the panel main div as a string with the value and unit */
   maxHeight?: string;
 }

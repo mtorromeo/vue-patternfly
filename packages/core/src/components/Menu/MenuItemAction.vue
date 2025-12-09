@@ -24,19 +24,20 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { inject } from 'vue';
-import PfButton, { type Props as ButtonProps } from '../Button.vue';
+import PfButton from '../Button.vue';
 import { MenuInjectionKey } from './Menu.vue';
 import { MenuItemInjectionKey } from './MenuItem.vue';
 import StarIcon from '@vue-patternfly/icons/star-icon';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfMenuItemAction',
   inheritAttrs: false,
 });
 
-export interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonProps, 'onClick' | 'tabindex'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick' | 'tabindex' | 'ouiaId' | 'ouiaSafe'> {
   /** The action icon to use */
   icon?: 'favorites';
   /** Flag indicating if the item is favorited */
