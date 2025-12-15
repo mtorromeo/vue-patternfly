@@ -7,8 +7,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/layouts/Gallery/Gallery.vue" />
-      <component-info src="packages/core/src/layouts/Gallery/GalleryItem.vue" />
+      <component-info name="PfGallery" />
+      <component-info name="PfGalleryItem" />
     </template>
 
     <story-canvas title="Gallery">

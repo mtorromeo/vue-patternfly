@@ -7,9 +7,9 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/TextInputGroup/TextInputGroup.vue" />
-      <component-info src="packages/core/src/components/TextInputGroup/TextInputGroupMain.vue" />
-      <component-info src="packages/core/src/components/TextInputGroup/TextInputGroupUtilities.vue" />
+      <component-info name="PfTextInputGroup" />
+      <component-info name="PfTextInputGroupMain" />
+      <component-info name="PfTextInputGroupUtilities" />
     </template>
 
     <pre v-md>

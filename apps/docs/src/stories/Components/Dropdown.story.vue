@@ -3,10 +3,10 @@
     <template #description>A <b>dropdown</b> presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location. See select component guidelines for more information about making one or more selections from a list of items in a value list.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Dropdown/Dropdown.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" alias="DropdownGroup" />
-      <component-info src="packages/core/src/components/Menu/MenuItem.vue" alias="DropdownItem" />
-      <component-info src="packages/core/src/components/Menu/MenuList.vue" alias="DropdownList" />
+      <component-info name="PfDropdown" />
+      <component-info name="PfMenuGroup" alias="DropdownGroup" />
+      <component-info name="PfMenuItem" alias="DropdownItem" />
+      <component-info name="PfMenuList" alias="DropdownList" />
     </template>
 
     <story-canvas title="Basic">

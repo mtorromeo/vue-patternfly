@@ -3,7 +3,7 @@
     <template #description>A <b>banner</b> is a 1-line, full color, full width container that can be used to communicate short snippets of information to users. Banners are un-intrusive and non-dismissible.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Banner.vue" />
+      <component-info name="PfBanner" />
     </template>
 
     <story-canvas title="Basic">

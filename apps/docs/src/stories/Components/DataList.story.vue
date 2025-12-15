@@ -3,15 +3,15 @@
     <template #description>A <b>data list</b> is used to display large data sets when you need a flexible layout or need to include interactive content like charts.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/DataList/DataList.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListAction.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListCell.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListCheck.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListContent.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListItem.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListItemCells.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListItemRow.vue" />
-      <component-info src="packages/core/src/components/DataList/DataListToggle.vue" />
+      <component-info name="PfDataList" />
+      <component-info name="PfDataListAction" />
+      <component-info name="PfDataListCell" />
+      <component-info name="PfDataListCheck" />
+      <component-info name="PfDataListContent" />
+      <component-info name="PfDataListItem" />
+      <component-info name="PfDataListItemCells" />
+      <component-info name="PfDataListItemRow" />
+      <component-info name="PfDataListToggle" />
     </template>
 
     <pre v-md>

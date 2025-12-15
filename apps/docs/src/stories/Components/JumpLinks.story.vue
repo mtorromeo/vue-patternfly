@@ -3,9 +3,9 @@
     <template #description><b>Jump links</b> allow users to navigate to sections within a page.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/JumpLinks/JumpLinks.vue" />
-      <component-info src="packages/core/src/components/JumpLinks/JumpLinksItem.vue" />
-      <component-info src="packages/core/src/components/JumpLinks/JumpLinksList.vue" />
+      <component-info name="PfJumpLinks" />
+      <component-info name="PfJumpLinksItem" />
+      <component-info name="PfJumpLinksList" />
     </template>
 
     <pre v-md>

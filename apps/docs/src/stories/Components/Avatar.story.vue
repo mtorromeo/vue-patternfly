@@ -3,7 +3,7 @@
     <template #description>An <b>avatar</b> is a visual used to represent a user. It may contain an image or a placeholder graphic.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Avatar.vue" />
+      <component-info name="PfAvatar" />
     </template>
 
     <story-canvas title="Example">

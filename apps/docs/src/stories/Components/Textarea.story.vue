@@ -3,7 +3,7 @@
     <template #description>A <b>text area</b> component is used for entering a paragraph of text that is longer than one line.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Textarea.vue" />
+      <component-info name="PfTextarea" />
     </template>
 
     <pre v-md>

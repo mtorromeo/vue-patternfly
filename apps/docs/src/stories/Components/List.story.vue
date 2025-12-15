@@ -3,8 +3,8 @@
     <template #description>A <b>list</b> component embeds a formatted list (bulleted or numbered list) into page content.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/List/List.vue" />
-      <component-info src="packages/core/src/components/List/ListItem.vue" />
+      <component-info name="PfList" />
+      <component-info name="PfListItem" />
     </template>
 
     <pre v-md>

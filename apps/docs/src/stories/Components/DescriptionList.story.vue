@@ -3,12 +3,12 @@
     <template #description>A <b>description list</b> contains terms and their corresponding descriptions.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/DescriptionList/DescriptionList.vue" />
-      <component-info src="packages/core/src/components/DescriptionList/DescriptionListDescription.vue" />
-      <component-info src="packages/core/src/components/DescriptionList/DescriptionListGroup.vue" />
-      <component-info src="packages/core/src/components/DescriptionList/DescriptionListTerm.vue" />
-      <component-info src="packages/core/src/components/DescriptionList/DescriptionListTermHelpText.vue" />
-      <component-info src="packages/core/src/components/DescriptionList/DescriptionListTermHelpTextButton.vue" />
+      <component-info name="PfDescriptionList" />
+      <component-info name="PfDescriptionListDescription" />
+      <component-info name="PfDescriptionListGroup" />
+      <component-info name="PfDescriptionListTerm" />
+      <component-info name="PfDescriptionListTermHelpText" />
+      <component-info name="PfDescriptionListTermHelpTextButton" />
     </template>
 
     <pre v-md>

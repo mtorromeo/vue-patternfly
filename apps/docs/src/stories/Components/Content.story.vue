@@ -3,7 +3,7 @@
     <template #description>A <b>content</b> component contains a block of styled HTML content.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Content.vue" />
+      <component-info name="PfContent" />
     </template>
 
     <pre v-md>

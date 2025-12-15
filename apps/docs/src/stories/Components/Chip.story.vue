@@ -6,8 +6,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/ChipGroup/Chip.vue" />
-      <component-info src="packages/core/src/components/ChipGroup/ChipGroup.vue" />
+      <component-info name="PfChip" />
+      <component-info name="PfChipGroup" />
     </template>
 
     <story-canvas title="Simple">

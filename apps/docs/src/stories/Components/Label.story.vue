@@ -3,7 +3,7 @@
     <template #description>The <b>label</b> component allows users to add specific element captions for user clarity and convenience.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Label.vue" />
+      <component-info name="PfLabel" />
     </template>
 
     <story-canvas title="Filled">

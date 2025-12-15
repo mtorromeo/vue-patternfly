@@ -3,8 +3,8 @@
     <template #description>A <b>modal</b> displays important information to a user without requiring them to navigate to a new page.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Modal/Modal.vue" />
-      <component-info src="packages/core/src/components/Modal/ModalHeader.vue" />
+      <component-info name="PfModal" />
+      <component-info name="PfModalHeader" />
     </template>
 
     <story-canvas title="Default">

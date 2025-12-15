@@ -3,8 +3,8 @@
     <template #description>Progress steppers have default icons associated with the variant property, and may be overriden and customized using the icon slot.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/ProgressStepper/ProgressStepper.vue" />
-      <component-info src="packages/core/src/components/ProgressStepper/ProgressStep.vue" />
+      <component-info name="PfProgressStepper" />
+      <component-info name="PfProgressStep" />
     </template>
 
     <pre v-md>

@@ -3,12 +3,12 @@
     <template #description>An <b>overflow menu</b> groups a set of actions in a responsive horizontal list to help declutter an interface. Actions can be set to persist or collapse into a kebab as the viewpoint shrinks. Overflow menus are useful in toolbars or other places where a group of actions is required.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/OverflowMenu/OverflowMenu.vue" />
-      <component-info src="packages/core/src/components/OverflowMenu/OverflowMenuContent.vue" />
-      <component-info src="packages/core/src/components/OverflowMenu/OverflowMenuControl.vue" />
-      <component-info src="packages/core/src/components/OverflowMenu/OverflowMenuDropdownItem.vue" />
-      <component-info src="packages/core/src/components/OverflowMenu/OverflowMenuGroup.vue" />
-      <component-info src="packages/core/src/components/OverflowMenu/OverflowMenuItem.vue" />
+      <component-info name="PfOverflowMenu" />
+      <component-info name="PfOverflowMenuContent" />
+      <component-info name="PfOverflowMenuControl" />
+      <component-info name="PfOverflowMenuDropdownItem" />
+      <component-info name="PfOverflowMenuGroup" />
+      <component-info name="PfOverflowMenuItem" />
     </template>
 
     <story-canvas title="Default" style="min-height: 350px">

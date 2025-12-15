@@ -3,13 +3,13 @@
     <template #description>The <b>page</b> component is used to define the basic layout of a page with either vertical or horizontal navigation.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Page/Page.vue" />
-      <component-info src="packages/core/src/components/Page/PageBreadcrumb.vue" />
-      <component-info src="packages/core/src/components/Page/PageGroup.vue" />
-      <component-info src="packages/core/src/components/Page/PageSection.vue" />
-      <component-info src="packages/core/src/components/Page/PageSidebar.vue" />
-      <component-info src="packages/core/src/components/Page/PageSidebarBody.vue" />
-      <component-info src="packages/core/src/components/Page/PageToggleButton.vue" />
+      <component-info name="PfPage" />
+      <component-info name="PfPageBreadcrumb" />
+      <component-info name="PfPageGroup" />
+      <component-info name="PfPageSection" />
+      <component-info name="PfPageSidebar" />
+      <component-info name="PfPageSidebarBody" />
+      <component-info name="PfPageToggleButton" />
     </template>
 
     <pre v-md>

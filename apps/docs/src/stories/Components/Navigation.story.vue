@@ -6,12 +6,12 @@
     >
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Nav/Nav.vue" />
-      <component-info src="packages/core/src/components/Nav/NavExpandable.vue" />
-      <component-info src="packages/core/src/components/Nav/NavGroup.vue" />
-      <component-info src="packages/core/src/components/Nav/NavItem.vue" />
-      <component-info src="packages/core/src/components/Nav/NavItemSeparator.vue" />
-      <component-info src="packages/core/src/components/Nav/NavList.vue" />
+      <component-info name="PfNav" />
+      <component-info name="PfNavExpandable" />
+      <component-info name="PfNavGroup" />
+      <component-info name="PfNavItem" />
+      <component-info name="PfNavItemSeparator" />
+      <component-info name="PfNavList" />
     </template>
 
     <story-canvas title="Default" :dark="theme !== 'light' && variant !== 'tertiary'" max-width="300px">

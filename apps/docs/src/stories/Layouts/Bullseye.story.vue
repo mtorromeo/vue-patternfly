@@ -7,7 +7,7 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/layouts/Bullseye.vue" />
+      <component-info name="PfBullseye" />
     </template>
 
     <story-canvas title="Bullseye">

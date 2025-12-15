@@ -3,7 +3,7 @@
     <template #description>A <b>checkbox</b> is used to select a single item or multiple items, typically to choose elements to perform an action or to reflect a binary setting.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Checkbox.vue" />
+      <component-info name="PfCheckbox" />
     </template>
 
     <story-canvas title="Default">

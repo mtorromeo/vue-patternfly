@@ -7,8 +7,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/SearchInput/AdvancedSearchMenu.vue" />
-      <component-info src="packages/core/src/components/SearchInput/SearchInput.vue" />
+      <component-info name="PfAdvancedSearchMenu" />
+      <component-info name="PfSearchInput" />
     </template>
 
     <pre v-md>

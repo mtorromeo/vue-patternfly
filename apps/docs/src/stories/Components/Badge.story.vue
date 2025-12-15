@@ -3,7 +3,7 @@
     <template #description>A <b>badge</b> is used to annotate other information like a label or an object name.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Badge.vue" />
+      <component-info name="PfBadge" />
     </template>
 
     <story-canvas title="Read">

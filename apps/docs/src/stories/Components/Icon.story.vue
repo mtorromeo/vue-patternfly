@@ -4,7 +4,7 @@
     <template #description>An <b>icon</b> component is a container that allows for icons of varying dimensions, as well as spinners, to seamlessly replace each other without shifting surrounding content.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Icon.vue" />
+      <component-info name="PfIcon" />
     </template>
 
     <pre v-md>

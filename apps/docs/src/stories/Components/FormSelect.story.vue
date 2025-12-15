@@ -3,8 +3,8 @@
     <template #description>A <b>form select</b> embeds browser native select lists into a form.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/FormSelect/FormSelect.vue" />
-      <component-info src="packages/core/src/components/FormSelect/FormSelectOption.vue" />
+      <component-info name="PfFormSelect" />
+      <component-info name="PfFormSelectOption" />
     </template>
 
     <pre v-md>

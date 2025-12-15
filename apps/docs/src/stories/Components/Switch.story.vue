@@ -3,7 +3,7 @@
     <template #description>A <b>switch</b> toggles the state of a setting (between on and off). Switches and checkboxes can often be used interchangeably, but the switch provides a more explicit, visible representation on a setting.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Switch.vue" />
+      <component-info name="PfSwitch" />
     </template>
 
     <story-canvas title="Basic">

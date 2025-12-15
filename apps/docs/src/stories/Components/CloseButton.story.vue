@@ -1,7 +1,7 @@
 <template>
   <doc-page title="Close Button" no-design-guidelines>
     <template #apidocs>
-      <component-info src="packages/core/src/components/CloseButton.vue" />
+      <component-info name="PfCloseButton" />
     </template>
 
     <story-canvas title="Example">

@@ -7,8 +7,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/layouts/Split/Split.vue" />
-      <component-info src="packages/core/src/layouts/Split/SplitItem.vue" />
+      <component-info name="PfSplit" />
+      <component-info name="PfSplitItem" />
     </template>
 
     <story-canvas title="Basic">

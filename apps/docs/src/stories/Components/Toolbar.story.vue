@@ -6,14 +6,14 @@
     >
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Toolbar/Toolbar.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarLabelGroupContent.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarContent.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarExpandableContent.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarFilter.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarGroup.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarItem.vue" />
-      <component-info src="packages/core/src/components/Toolbar/ToolbarToggleGroup.vue" />
+      <component-info name="PfToolbar" />
+      <component-info name="PfToolbarLabelGroupContent" />
+      <component-info name="PfToolbarContent" />
+      <component-info name="PfToolbarExpandableContent" />
+      <component-info name="PfToolbarFilter" />
+      <component-info name="PfToolbarGroup" />
+      <component-info name="PfToolbarItem" />
+      <component-info name="PfToolbarToggleGroup" />
     </template>
 
     <story-canvas title="Default">

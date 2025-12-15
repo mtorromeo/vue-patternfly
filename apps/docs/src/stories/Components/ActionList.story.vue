@@ -5,9 +5,9 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/ActionList.vue" />
-      <component-info src="packages/core/src/components/ActionListGroup.vue" />
-      <component-info src="packages/core/src/components/ActionListItem.vue" />
+      <component-info name="PfActionList" />
+      <component-info name="PfActionListGroup" />
+      <component-info name="PfActionListItem" />
     </template>
 
     <story-canvas title="Action list single group">

@@ -7,8 +7,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/layouts/Stack/Stack.vue" />
-      <component-info src="packages/core/src/layouts/Stack/StackItem.vue" />
+      <component-info name="PfStack" />
+      <component-info name="PfStackItem" />
     </template>
 
     <story-canvas title="Stack">

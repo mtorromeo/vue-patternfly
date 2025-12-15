@@ -7,8 +7,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/layouts/Grid/Grid.vue" />
-      <component-info src="packages/core/src/layouts/Grid/GridItem.vue" />
+      <component-info name="PfGrid" />
+      <component-info name="PfGridItem" />
     </template>
 
     <story-canvas title="Grid">

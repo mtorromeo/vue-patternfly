@@ -3,11 +3,11 @@
     <template #description>An <b>alert</b> is a notification that provides brief information to the user without blocking their workflow.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Alert/Alert.vue" />
-      <component-info src="packages/core/src/components/Alert/AlertActionLink.vue" />
-      <component-info src="packages/core/src/components/Alert/AlertGroup.vue" />
-      <component-info src="packages/core/src/components/Alert/AlertGroupInline.vue" />
-      <component-info src="packages/core/src/components/Alert/AlertIcon.vue" />
+      <component-info name="PfAlert" />
+      <component-info name="PfAlertActionLink" />
+      <component-info name="PfAlertGroup" />
+      <component-info name="PfAlertGroupInline" />
+      <component-info name="PfAlertIcon" />
     </template>
 
     <story-canvas title="Types">

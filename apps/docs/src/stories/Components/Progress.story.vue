@@ -3,7 +3,7 @@
     <template #description>A <b>progress</b> bar informs users about the completion status of an ongoing process or task.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Progress.vue" />
+      <component-info name="PfProgress" />
     </template>
 
     <pre v-md>

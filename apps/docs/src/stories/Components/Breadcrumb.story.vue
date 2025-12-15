@@ -3,8 +3,8 @@
     <template #description>A <b>breadcrumb</b> provides page context to help users navigate more efficiently and understand where they are in the application hierarchy.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Breadcrumb/Breadcrumb.vue" />
-      <component-info src="packages/core/src/components/Breadcrumb/BreadcrumbItem.vue" />
+      <component-info name="PfBreadcrumb" />
+      <component-info name="PfBreadcrumbItem" />
     </template>
 
     <story-canvas title="Example">

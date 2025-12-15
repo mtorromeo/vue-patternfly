@@ -3,7 +3,7 @@
     <template #description>A <b>spinner</b> is used to indicate to users that an action is in progress. For actions that may take a long time, use a [progress bar](#/stories/components/progress) instead.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Spinner.vue" />
+      <component-info name="PfSpinner" />
     </template>
 
     <pre v-md>

@@ -7,7 +7,7 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Title.vue" />
+      <component-info name="PfTitle" />
     </template>
 
     <story-canvas title="Sizes">

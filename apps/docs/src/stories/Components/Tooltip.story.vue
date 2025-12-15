@@ -3,9 +3,9 @@
     <template #description>A <b>tooltip</b> is in-app messaging used to identify elements on a page with short, clarifying text.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Tooltip/Tooltip.vue" />
-      <component-info src="packages/core/src/components/Tooltip/TooltipArrow.vue" />
-      <component-info src="packages/core/src/components/Tooltip/TooltipContent.vue" />
+      <component-info name="PfTooltip" />
+      <component-info name="PfTooltipArrow" />
+      <component-info name="PfTooltipContent" />
     </template>
 
     <pre v-md>

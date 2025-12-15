@@ -3,9 +3,9 @@
     <template #description>The <b>menu toggle</b> component pairs with the menu OR the panel component to create more customizable dropdown and select implementations. Using a menu toggle with a menu enables you to create custom component configurations not supported by the standard dropdown or select components.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/MenuToggle/MenuToggle.vue" />
-      <component-info src="packages/core/src/components/MenuToggle/MenuToggleAction.vue" />
-      <component-info src="packages/core/src/components/MenuToggle/MenuToggleCheckbox.vue" />
+      <component-info name="PfMenuToggle" />
+      <component-info name="PfMenuToggleAction" />
+      <component-info name="PfMenuToggleCheckbox" />
     </template>
 
     <pre v-md>

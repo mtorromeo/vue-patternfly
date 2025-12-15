@@ -3,7 +3,7 @@
     <template #description>A <b>text input</b> is used to gather free-form text from a user.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/TextInput.vue" />
+      <component-info name="PfTextInput" />
     </template>
 
     <story-canvas title="Basic">

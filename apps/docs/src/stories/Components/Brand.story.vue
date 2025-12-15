@@ -3,7 +3,7 @@
     <template #description>A <b>brand</b> is used to place a product logotype on a screen.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Brand.vue" />
+      <component-info name="PfBrand" />
     </template>
 
     <pre v-md>

@@ -3,10 +3,10 @@
     <template #description>A <b>select list</b> enables users to select one or more items from a list. Use a select list when options are dynamic or variable.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Select/Select.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" alias="SelectGroup" />
-      <component-info src="packages/core/src/components/Menu/MenuList.vue" alias="SelectList" />
-      <component-info src="packages/core/src/components/Menu/MenuItem.vue" alias="SelectItem" />
+      <component-info name="PfSelect" />
+      <component-info name="PfMenuGroup" alias="SelectGroup" />
+      <component-info name="PfMenuList" alias="SelectList" />
+      <component-info name="PfMenuItem" alias="SelectItem" />
     </template>
 
     <pre v-md>

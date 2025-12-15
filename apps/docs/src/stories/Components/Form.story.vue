@@ -3,14 +3,14 @@
     <template #description>A <b>form</b> is a group of elements used to collect information from a user in a variety of contexts including in a modal, in a wizard, or on a page. Use cases for forms include tasks reliant on user-inputted information for completion like logging in, registering, configuring settings, or completing surveys.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Form/ActionGroup.vue" />
-      <component-info src="packages/core/src/components/Form/Form.vue" />
-      <component-info src="packages/core/src/components/Form/FormAlert.vue" />
-      <component-info src="packages/core/src/components/Form/FormFieldGroup.vue" />
-      <component-info src="packages/core/src/components/Form/FormFieldGroupHeader.vue" />
-      <component-info src="packages/core/src/components/Form/FormGroup.vue" />
-      <component-info src="packages/core/src/components/Form/FormHelperText.vue" />
-      <component-info src="packages/core/src/components/Form/FormSection.vue" />
+      <component-info name="PfActionGroup" />
+      <component-info name="PfForm" />
+      <component-info name="PfFormAlert" />
+      <component-info name="PfFormFieldGroup" />
+      <component-info name="PfFormFieldGroupHeader" />
+      <component-info name="PfFormGroup" />
+      <component-info name="PfFormHelperText" />
+      <component-info name="PfFormSection" />
     </template>
 
     <pre v-md>

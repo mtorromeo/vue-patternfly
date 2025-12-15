@@ -3,8 +3,8 @@
     <template #description><b>Helper text</b> is an on-screen field guideline that helps provide context regarding field inputs.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/HelperText/HelperText.vue" />
-      <component-info src="packages/core/src/components/HelperText/HelperTextItem.vue" />
+      <component-info name="PfHelperText" />
+      <component-info name="PfHelperTextItem" />
     </template>
 
     <pre v-md>

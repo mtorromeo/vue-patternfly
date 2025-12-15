@@ -7,8 +7,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/layouts/Level/Level.vue" />
-      <component-info src="packages/core/src/layouts/Level/LevelItem.vue" />
+      <component-info name="PfLevel" />
+      <component-info name="PfLevelItem" />
     </template>
 
     <story-canvas title="Level">

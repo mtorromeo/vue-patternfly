@@ -3,10 +3,10 @@
     <template #description>A <b>hint</b> is in-app messaging that provides a one-step reminder, explanation, or call to action for a page or modal.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Hint/Hint.vue" />
-      <component-info src="packages/core/src/components/Hint/HintBody.vue" />
-      <component-info src="packages/core/src/components/Hint/HintFooter.vue" />
-      <component-info src="packages/core/src/components/Hint/HintTitle.vue" />
+      <component-info name="PfHint" />
+      <component-info name="PfHintBody" />
+      <component-info name="PfHintFooter" />
+      <component-info name="PfHintTitle" />
     </template>
 
     <pre v-md>

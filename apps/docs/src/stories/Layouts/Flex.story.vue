@@ -7,8 +7,8 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/layouts/Flex/Flex.vue" />
-      <component-info src="packages/core/src/layouts/Flex/FlexItem.vue" />
+      <component-info name="PfFlex" />
+      <component-info name="PfFlexItem" />
     </template>
 
     <story-canvas title="Basic">

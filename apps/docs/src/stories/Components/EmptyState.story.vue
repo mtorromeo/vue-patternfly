@@ -3,12 +3,12 @@
     <template #description>An <b>empty state</b> is a screen that is not yet populated with data or information. Empty states typically contain a short message and next steps for the user.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/EmptyState/EmptyState.vue" />
-      <component-info src="packages/core/src/components/EmptyState/EmptyStateActions.vue" />
-      <component-info src="packages/core/src/components/EmptyState/EmptyStateBody.vue" />
-      <component-info src="packages/core/src/components/EmptyState/EmptyStateFooter.vue" />
-      <component-info src="packages/core/src/components/EmptyState/EmptyStateHeader.vue" />
-      <component-info src="packages/core/src/components/EmptyState/EmptyStateIcon.vue" />
+      <component-info name="PfEmptyState" />
+      <component-info name="PfEmptyStateActions" />
+      <component-info name="PfEmptyStateBody" />
+      <component-info name="PfEmptyStateFooter" />
+      <component-info name="PfEmptyStateHeader" />
+      <component-info name="PfEmptyStateIcon" />
     </template>
 
     <story-canvas title="Example">

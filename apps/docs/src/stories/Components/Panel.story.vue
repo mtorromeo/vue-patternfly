@@ -3,11 +3,11 @@
     <template #description>The <b>panel</b> component is a container that supports flexible content layouts. It can be used to house other components such as fields, forms, videos, buttons, and more. The panel should not be confused with the drawer component, which allows you to surface information via a collapsable container.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Panel/Panel.vue" />
-      <component-info src="packages/core/src/components/Panel/PanelFooter.vue" />
-      <component-info src="packages/core/src/components/Panel/PanelHeader.vue" />
-      <component-info src="packages/core/src/components/Panel/PanelMain.vue" />
-      <component-info src="packages/core/src/components/Panel/PanelMainBody.vue" />
+      <component-info name="PfPanel" />
+      <component-info name="PfPanelFooter" />
+      <component-info name="PfPanelHeader" />
+      <component-info name="PfPanelMain" />
+      <component-info name="PfPanelMainBody" />
     </template>
 
     <pre v-md>

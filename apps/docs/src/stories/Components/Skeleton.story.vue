@@ -3,7 +3,7 @@
     <template #description>A <b>skeleton</b> is a type of loading state that allows you to expose content incrementally. For content that may take a long time to load, use a progress bar in place of a skeleton.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Skeleton.vue" />
+      <component-info name="PfSkeleton" />
     </template>
 
     <pre v-md>

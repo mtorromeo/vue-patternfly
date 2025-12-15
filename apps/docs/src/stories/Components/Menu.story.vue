@@ -7,16 +7,16 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Menu/DrilldownMenu.vue" />
-      <component-info src="packages/core/src/components/Menu/Menu.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuBreadcrumb.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuContent.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuFooter.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuGroup.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuInput.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuItem.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuItemAction.vue" />
-      <component-info src="packages/core/src/components/Menu/MenuList.vue" />
+      <component-info name="PfDrilldownMenu" />
+      <component-info name="PfMenu" />
+      <component-info name="PfMenuBreadcrumb" />
+      <component-info name="PfMenuContent" />
+      <component-info name="PfMenuFooter" />
+      <component-info name="PfMenuGroup" />
+      <component-info name="PfMenuInput" />
+      <component-info name="PfMenuItem" />
+      <component-info name="PfMenuItemAction" />
+      <component-info name="PfMenuList" />
     </template>
 
     <pre v-md>

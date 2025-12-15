@@ -3,17 +3,17 @@
     <template #description>A <b>drawer</b> is a sliding panel that enters from the right edge of the viewport. It can be configured to either overlay content on a page or create a sidebar by pushing that content to the left.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Drawer/Drawer.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerActions.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerCloseButton.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerContent.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerContentBody.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerHead.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerMain.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerPanelBody.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerPanelContent.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerPanelDescription.vue" />
-      <component-info src="packages/core/src/components/Drawer/DrawerSection.vue" />
+      <component-info name="PfDrawer" />
+      <component-info name="PfDrawerActions" />
+      <component-info name="PfDrawerCloseButton" />
+      <component-info name="PfDrawerContent" />
+      <component-info name="PfDrawerContentBody" />
+      <component-info name="PfDrawerHead" />
+      <component-info name="PfDrawerMain" />
+      <component-info name="PfDrawerPanelBody" />
+      <component-info name="PfDrawerPanelContent" />
+      <component-info name="PfDrawerPanelDescription" />
+      <component-info name="PfDrawerSection" />
     </template>
 
     <pre v-md>

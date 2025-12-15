@@ -3,12 +3,12 @@
     <template #description>A <b>table</b> is used to display large data sets that can be easily laid out in a simple grid with column headers.</template>
 
     <template #apidocs>
-      <component-info src="packages/table/src/Table.vue" />
-      <component-info src="packages/table/src/Thead.vue" />
-      <component-info src="packages/table/src/Tbody.vue" />
-      <component-info src="packages/table/src/Tr.vue" />
-      <component-info src="packages/table/src/Th.vue" />
-      <component-info src="packages/table/src/Td.vue" />
+      <component-info name="PfTable" />
+      <component-info name="PfThead" />
+      <component-info name="PfTbody" />
+      <component-info name="PfTr" />
+      <component-info name="PfTh" />
+      <component-info name="PfTd" />
     </template>
 
     <pre v-md>

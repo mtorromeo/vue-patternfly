@@ -3,12 +3,12 @@
     <template #description><b>Tabs</b> allow users to navigate between views within the same page or context.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/Tabs/Tabs.vue" />
-      <component-info src="packages/core/src/components/Tabs/Tab.vue" />
-      <component-info src="packages/core/src/components/Tabs/TabButton.vue" />
-      <component-info src="packages/core/src/components/Tabs/TabContent.vue" />
-      <component-info src="packages/core/src/components/Tabs/TabTitleIcon.vue" />
-      <component-info src="packages/core/src/components/Tabs/TabTitleText.vue" />
+      <component-info name="PfTabs" />
+      <component-info name="PfTab" />
+      <component-info name="PfTabButton" />
+      <component-info name="PfTabContent" />
+      <component-info name="PfTabTitleIcon" />
+      <component-info name="PfTabTitleText" />
     </template>
 
     <pre v-md>

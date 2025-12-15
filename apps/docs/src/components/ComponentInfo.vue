@@ -4,7 +4,7 @@
     {{ componentName }} <component-title :name="componentName" />
   </pf-title>
   <pf-content>
-    <pf-button variant="link" inline target="_blank" :href="`https://github.com/mtorromeo/vue-patternfly/blob/main/${src}`">
+    <pf-button v-if="doc?.sourceFiles?.[0]" variant="link" inline target="_blank" :href="`https://github.com/mtorromeo/vue-patternfly/blob/main/${doc?.sourceFiles?.[0]}`">
       <template #icon>
         <github-icon />
       </template>
@@ -101,12 +101,15 @@ import type { ComponentDoc } from 'vue-docgen-api';
 import GithubIcon from '@vue-patternfly/icons/github-icon';
 
 interface Props {
-  src: string;
+  name: string;
+  fallthrough?: string[];
+  noFallthrough?: string[];
   alias?: string;
   doc?: ComponentDoc;
 }
 
 const props = defineProps<Props>();
+console.log(props.doc);
 
-const componentName = `Pf${(props.alias ?? props.src.replace(/^.*\/|\..*$/g, ''))}`;
+const componentName = props.alias ?? props.doc?.name ?? '';
 </script>

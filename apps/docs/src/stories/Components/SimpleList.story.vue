@@ -3,9 +3,9 @@
     <template #description>A <b>simple list</b> provides a list of selectable items that can be shown within a page. Each item is described by a text label. The list may be divided into logical sections by introducing group headers.</template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/SimpleList/SimpleList.vue" />
-      <component-info src="packages/core/src/components/SimpleList/SimpleListGroup.vue" />
-      <component-info src="packages/core/src/components/SimpleList/SimpleListItem.vue" />
+      <component-info name="PfSimpleList" />
+      <component-info name="PfSimpleListGroup" />
+      <component-info name="PfSimpleListItem" />
     </template>
 
     <pre v-md>

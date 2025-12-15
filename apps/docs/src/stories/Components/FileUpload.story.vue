@@ -5,7 +5,7 @@
     </template>
 
     <template #apidocs>
-      <component-info src="packages/core/src/components/FielUpload.vue" />
+      <component-info name="PfFielUpload" />
     </template>
 
     <story-canvas title="Simple text file">
