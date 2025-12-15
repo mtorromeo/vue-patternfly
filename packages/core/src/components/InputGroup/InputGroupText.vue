@@ -1,8 +1,6 @@
 <template>
   <pf-input-group-item v-bind="ouiaProps" box>
-    <component :is="component" :class="[styles.inputGroupText, {
-        [styles.modifiers.plain]: plain
-      }]">
+    <component :is="component" :class="styles.inputGroupText">
       <slot />
     </component>
   </pf-input-group-item>
@@ -22,8 +20,6 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfInputGroupItem>, 'box' | 'ouiaId' | 'ouiaSafe'> {
     /** Component that wraps the input group text. */
   component?: string | Component;
-    /** Flag to indicate if the input group item is plain. */
-  plain?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
