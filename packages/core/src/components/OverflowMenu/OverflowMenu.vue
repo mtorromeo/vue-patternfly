@@ -8,7 +8,7 @@
 export const OverflowMenuIsBelowBreakpointKey = Symbol('OverflowMenuIsBelowBreakpointKey') as InjectionKey<Ref<boolean> | boolean>;
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  breakpoint: keyof typeof globalBreakpoints;
+  breakpoint: keyof typeof globalWidthBreakpoints;
 }
 </script>
 
@@ -16,7 +16,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 import { watch, ref, provide, type HTMLAttributes, type InjectionKey, type Ref } from 'vue';
 import { useWindowSize } from '@vueuse/core';
-import { globalBreakpoints } from '../Toolbar/common';
+import { globalWidthBreakpoints } from '../../constants';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -36,8 +36,6 @@ provide(OverflowMenuIsBelowBreakpointKey, isBelowBreakpoint);
 const { width: windowWidth } = useWindowSize();
 
 watch(windowWidth, (width) => {
-  const breakpointPx = globalBreakpoints[props.breakpoint];
-  const breakpointWidth = Number(breakpointPx.toString().replace('px', ''));
-  isBelowBreakpoint.value = width < breakpointWidth;
+  isBelowBreakpoint.value = width < globalWidthBreakpoints[props.breakpoint];
 }, { immediate: true });
 </script>
