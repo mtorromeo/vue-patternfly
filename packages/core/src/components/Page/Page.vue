@@ -82,7 +82,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import globalBreakpointXl from '@patternfly/react-tokens/dist/esm/t_global_breakpoint_xl';
+import { globalWidthBreakpoints } from '../../constants';
 import { createReusableTemplate, useElementSize, useWindowSize } from '@vueuse/core';
 import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes, useTemplateRef, type ComponentPublicInstance } from 'vue';
 import PfDrawer from '../Drawer/Drawer.vue';
@@ -143,7 +143,7 @@ provide(PageSidebarOpenKey, sidebarOpen);
 const { width: windowWidth } = useWindowSize();
 
 watch(windowWidth, (width) => {
-  mobileView.value = width < Number.parseInt(globalBreakpointXl.value, 10);
+  mobileView.value = width < globalWidthBreakpoints.xl;
   emit('pageResize', { mobileView: mobileView.value, windowSize: width });
 }, { immediate: true });
 
