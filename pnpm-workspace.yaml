@@ -1,6 +1,6 @@
 packages:
   - apps/*
-  - build-plugins/*
+  - vite-plugins/*
   - packages/*
 
 onlyBuiltDependencies:

@@ -50,7 +50,7 @@ const managedSidebarOpen = inject(PageSidebarOpenKey);
 const managedSidebar = inject(PageManagedSidebarKey);
 
 const sidebarOpen = computed({
-  get: () => managedSidebar?.value ? !!managedSidebarOpen?.value : props.sidebarOpen,
+  get: () => Boolean(managedSidebar?.value ? managedSidebarOpen?.value : props.sidebarOpen),
   set(value) {
     if (managedSidebar?.value && managedSidebarOpen) {
       managedSidebarOpen.value = value;

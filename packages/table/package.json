@@ -1,6 +1,6 @@
 {
   "name": "@vue-patternfly/table",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.2",
   "type": "module",
   "files": [
     "dist"
@@ -8,13 +8,11 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     },
     "./*": {
       "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "require": "./dist/*.cjs"
+      "import": "./dist/*.js"
     },
     "./style.css": "./dist/style.css"
   },
@@ -23,9 +21,7 @@
     "clean": "rimraf dist",
     "build": "concurrently 'npm:build:*'",
     "build:vite": "vite build",
-    "build:bundle": "vite build -c vite-bundle.config.ts",
     "build:declarations": "vue-tsc --declaration --emitDeclarationOnly",
-    "build:esm": "tsc --build --verbose tsconfig.json",
     "lint": "vue-tsc --noEmit",
     "watch": "concurrently 'npm:watch:*'",
     "watch:vite": "vite build --watch",
@@ -38,7 +34,7 @@
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^24.7.2",
+    "@types/node": "^25.5.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/compiler-sfc": "^3.5.22",
     "@vueuse/core": "^14.0.0",
@@ -46,7 +42,7 @@
     "rimraf": "^6.0.1",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10",
+    "vite": "^8.0.0",
     "vue": "^3.5.22",
     "vue-tsc": "^3.1.1"
   },

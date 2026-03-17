@@ -1,18 +1,20 @@
 import { defineConfig } from 'vite';
 import { globSync } from 'glob';
-import path from 'path';
 import vue from '@vitejs/plugin-vue';
+import { inlineVueScriptModules } from '../../vite-plugins/inline-vue-script-modules.mts';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   build: {
     emptyOutDir: false,
     lib: {
-      entry: globSync(path.resolve(__dirname, 'src/**/*.{ts,vue}')),
+      entry: globSync('src/**/*.{ts,vue}'),
       name: '',
+      formats: ['es'],
     },
-    rollupOptions: {
-      external: ['vue', '@vueuse/core', '@vueuse/integrations', 'focus-trap'],
+    rolldownOptions: {
+      external: id => ['vue', 'focus-trap'].includes(id)
+        || id.startsWith('@vueuse/')
+        || id.startsWith('@vue-patternfly/'),
       output: {
         exports: 'named',
         preserveModules: true,
@@ -25,6 +27,7 @@ export default defineConfig({
       name: 'ignore-css-imports',
       load: id => /\.css$/.test(id) ? '' : null,
     },
+    inlineVueScriptModules(),
     vue(),
   ],
 });

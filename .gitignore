@@ -6,9 +6,12 @@
 !.vscode
 *.log
 *.gz
+*.tgz
 *.tsbuildinfo
 dist
+# ignore versioned worktree directories
 /v*
+!/vite-plugins
 
 # js
 node_modules

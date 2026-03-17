@@ -19,13 +19,6 @@
 </template>
 
 <script lang="ts">
-export enum spinnerSize {
-  sm = 'sm',
-  md = 'md',
-  lg = 'lg',
-  xl = 'xl'
-}
-
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'role' | 'viewBox'> {
   /** Size variant of progress. */
   size?: 'sm' | 'md' | 'lg' | 'xl';

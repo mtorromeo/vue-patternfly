@@ -12,20 +12,21 @@
     "lint": "turbo run lint"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.11.0",
-    "@vue/eslint-config-typescript": "^14.5.0",
+    "@rushstack/eslint-patch": "^1.16.1",
+    "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.8.1",
     "concurrently": "^9.1.2",
-    "eslint": "^9.24.0",
+    "eslint": "^9.39.4",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.17.0",
+    "eslint-plugin-n": "^17.24.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^7.2.1",
-    "eslint-plugin-vue": "^10.0.0",
-    "turbo": "^2.5.0",
-    "typescript": "^5.8.3"
+    "eslint-plugin-vue": "^10.8.0",
+    "turbo": "^2.8.17",
+    "typescript": "^5.8.3",
+    "vite": "^8.0.0"
   },
-  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f",
+  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
   "name": "vue-patternfly"
 }
