@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-export interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
+export interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid' | 'autocomplete'>, /* @vue-ignore */ OverriddenInputAttributes {
   /** Type that the text input accepts. */
   type?: T;
   /** Value of the text input. */
@@ -68,7 +68,7 @@ import { useChildrenTracker } from '../../use';
 import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { FormInputsKey } from '../Form/common';
-import { useInputValidation, type InputType, type InputValidateState } from '../../input';
+import { useInputValidation, type InputType, type InputValidateState, type OverriddenInputAttributes } from '../../input';
 import { toRefs } from 'vue';
 
 defineOptions({

@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid'> {
+interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid' | 'autocomplete'>, /* @vue-ignore */ OverriddenInputAttributes {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
@@ -74,7 +74,7 @@ interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @v
 import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { useInputValidation, type InputType, type InputValidateState } from '../input';
+import { useInputValidation, type InputType, type InputValidateState, type OverriddenInputAttributes } from '../input';
 import { FormGroupInputsKey, FormInputsKey } from './Form/common';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
