@@ -1,6 +1,30 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.8] - 2026-03-18
+
+### Bug Fixes
+
+- *(Page)* Remove drawer content body wrapper from notification drawer
+- *(Page)* Wrong breakpoint calculation
+- *(OverflowMenu)* Wrong breakpoint calculation
+- *(Toolbar)* Wrong breakpoint calculation
+- Avoid exposing vue's definition of the html autocomplete attribute to avoid "type too complex" errors
+
+### Documentation
+
+- Implemented fallthrough attributes documentation on component-info component
+
+### Features
+
+- *(InputGroup)* Add plain input group text variant
+
+## [6.0.0-beta.7] - 2025-11-26
+
+### Bug Fixes
+
+- *(input)* Fixed errors on input validation
+
 ## [6.0.0-beta.6] - 2025-11-25
 
 ### Bug Fixes
