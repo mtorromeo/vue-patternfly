@@ -2,7 +2,8 @@
   <pf-button v-bind="ouiaProps" :variant="variant === 'plain' ? 'plain' : 'stateful'" :state="variant === 'plain' ? undefined : variant" :class="{ [styles.modifiers.notify]: animating }" @animationend="handleAnimationEnd">
     <template #icon>
       <slot name="icon">
-        <bell-icon />
+        <attention-bell-icon v-if="variant === 'attention'" />
+        <bell-icon v-else />
       </slot>
     </template>
     <template v-if="count > 0">{{ count }}</template>
@@ -13,6 +14,7 @@
 <script lang="ts" setup>
 import styles from "@patternfly/react-styles/css/components/Button/button";
 import BellIcon from "@vue-patternfly/icons/bell-icon";
+import AttentionBellIcon from "@vue-patternfly/icons/attention-bell-icon";
 import type { ComponentProps } from "vue-component-type-helpers";
 import PfButton from "./Button.vue";
 import { useOUIAProps } from "../helpers/ouia";

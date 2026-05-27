@@ -17,5 +17,17 @@
     <story-canvas title="With count" style="background-color: var(--pf-v6-global--BackgroundColor--dark-100)">
       <pf-notification-badge :count="30" />
     </story-canvas>
+
+    <story-canvas title="Attention variant" style="background-color: var(--pf-v6-global--BackgroundColor--dark-100)">
+      <pf-notification-badge variant="attention" />
+      &nbsp;
+      <pf-notification-badge variant="attention" :count="30" />
+    </story-canvas>
+
+    <story-canvas title="Plain variant" style="background-color: var(--pf-v6-global--BackgroundColor--dark-100)">
+      <pf-notification-badge variant="plain" />
+      &nbsp;
+      <pf-notification-badge variant="plain" :count="30" />
+    </story-canvas>
   </doc-page>
 </template>
