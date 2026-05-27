@@ -36,6 +36,8 @@
         [styles.modifiers.settings]: settings,
         [styles.modifiers.small]: small,
         [styles.modifiers.circle]: circle,
+        [styles.modifiers.docked]: docked,
+        [styles.modifiers.textExpanded]: textExpanded,
       },
     ]"
     :type="typeahead || isSplitButton ? undefined : 'button'"
@@ -115,6 +117,10 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 
   small?: boolean;
   /** Flag indicating the toggle has circular styling. Can only be applied to plain toggles. */
   circle?: boolean;
+  /** Flag indicating the menu toggle is a docked variant. For use in docked navigation. */
+  docked?: boolean;
+  /** Flag indicating the docked toggle should display text. Only applies when isDocked is true. */
+  textExpanded?: boolean;
 }
 
 const props = defineProps<Props>();

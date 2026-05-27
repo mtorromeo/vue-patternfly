@@ -29,6 +29,8 @@
           [styles.modifiers.hamburger]: hamburger,
           [styles.modifiers[hamburgerVariant as NonNullable<typeof hamburgerVariant>]]: hamburger && hamburgerVariant,
           [styles.modifiers.circle]: circle,
+          [styles.modifiers.docked]: docked,
+          [styles.modifiers.textExpanded]: textExpanded,
         },
       ]"
       :tabindex="tabIdx"
@@ -142,6 +144,10 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
   hamburgerVariant?: "expand" | "collapse";
   /** Flag indicating the button is a circle button. Intended for buttons that only contain an icon.. */
   circle?: boolean;
+  /** Flag indicating the button is a docked variant button. For use in docked navigation. */
+  docked?: boolean;
+  /** Flag indicating the docked button should display text. Only applies when isDocked is true. */
+  textExpanded?: boolean;
 
   // router-link attributes
   /** Route Location the link should navigate to when clicked on. */

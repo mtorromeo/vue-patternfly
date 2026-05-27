@@ -25,6 +25,21 @@
 
     <slot name="masthead" />
 
+    <div
+      v-if="variant === 'docked'"
+      :class="[
+        styles.pageDock,
+        {
+          [styles.modifiers.expanded]: dockExpanded,
+          [styles.modifiers.textExpanded]: dockTextExpanded,
+        },
+      ]"
+    >
+      <div :class="styles.pageDockMain">
+        <slot name="dock-content" />
+      </div>
+    </div>
+
     <slot name="sidebar" />
 
     <div v-if="$slots.drawer" :class="styles.pageDrawer">
@@ -76,6 +91,12 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   mainComponent?: "main" | "div";
   /** Enables children to fill the available vertical space. Child page sections or groups that should fill should be passed the isFilled property. */
   contentFilled?: boolean;
+  /** Indicates the layout variant */
+  variant?: "default" | "docked";
+  /** Flag indicating the docked nav is expanded on mobile. Only applies when variant is docked. */
+  dockExpanded?: boolean;
+  /** Flag indicating the docked nav should display text on desktop. Only applies when variant is docked, and will handle setting isTextExpanded on individual isDocked components. */
+  dockTextExpanded?: boolean;
 }
 </script>
 
@@ -110,6 +131,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
   drawer?: (props?: Record<never, never>) => any;
   "skip-to-content"?: (props?: Record<never, never>) => any;
+  "dock-content"?: (props?: Record<never, never>) => any;
   masthead?: (props?: Record<never, never>) => any;
   sidebar?: (props?: Record<never, never>) => any;
 }>();
