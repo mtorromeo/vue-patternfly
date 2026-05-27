@@ -1,5 +1,5 @@
 <template>
-  <pf-button v-bind="ouiaProps" variant="stateful" :state="variant" :class="{ [styles.modifiers.notify]: animating }" @animationend="handleAnimationEnd">
+  <pf-button v-bind="ouiaProps" :variant="variant === 'plain' ? 'plain' : 'stateful'" :state="variant === 'plain' ? undefined : variant" :class="{ [styles.modifiers.notify]: animating }" @animationend="handleAnimationEnd">
     <template #icon>
       <slot name="icon">
         <bell-icon />
@@ -25,7 +25,7 @@ defineOptions({
 
 interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, "variant"> {
   /** Determines the variant of the notification badge */
-  variant?: "read" | "unread" | "attention";
+  variant?: "read" | "unread" | "attention" | "plain";
 
   /** A number displayed in the badge alongside the icon */
   count?: number;
