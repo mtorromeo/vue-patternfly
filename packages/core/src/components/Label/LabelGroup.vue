@@ -3,11 +3,14 @@
     v-if="$slots.default"
     v-bind="ouiaProps"
     :id="id"
-    :class="[styles.labelGroup, {
-      [styles.modifiers.category]: category,
-      [styles.modifiers.vertical]: vertical,
-      [styles.modifiers.editable]: editable,
-    }]"
+    :class="[
+      styles.labelGroup,
+      {
+        [styles.modifiers.category]: category,
+        [styles.modifiers.vertical]: vertical,
+        [styles.modifiers.editable]: editable,
+      },
+    ]"
   >
     <div :class="styles.labelGroupMain">
       <pf-tooltip v-if="category">
@@ -22,12 +25,7 @@
         </span>
       </pf-tooltip>
 
-      <ul
-        :class="styles.labelGroupList"
-        :aria-labelledby="id"
-        :aria-label="ariaLabel"
-        role="list"
-      >
+      <ul :class="styles.labelGroupList" :aria-labelledby="id" :aria-label="ariaLabel" role="list">
         <render />
         <li v-if="slots['add-label-control']" :class="styles.labelGroupListItem">
           <slot name="add-label-control" />
@@ -38,9 +36,9 @@
       </ul>
 
       <div v-if="closable" :class="styles.labelGroupClose">
-        <pf-button variant="plain" no-padding :aria-label="closeBtnAriaLabel" @click="emit('click', $event)">
+        <pf-button variant="plain" small :aria-label="closeBtnAriaLabel" @click="emit('click', $event)">
           <template #icon>
-            <circle-xmark-icon aria-hidden />
+            <xmark-icon aria-hidden />
           </template>
         </pf-button>
       </div>
@@ -49,23 +47,23 @@
 </template>
 
 <script lang="ts" setup>
-import { h, ref, useTemplateRef, type HTMLAttributes } from 'vue';
-import styles from '@patternfly/react-styles/css/components/Label/label-group';
-import labelStyles from '@patternfly/react-styles/css/components/Label/label';
-import CircleXmarkIcon from '@vue-patternfly/icons/circle-xmark-icon';
-import PfLabel from './Label.vue';
-import PfButton from '../Button.vue';
-import PfTooltip from '../Tooltip/Tooltip.vue';
-import { findChildrenVNodes, fillTemplate } from '../../util';
-import { useElementOverflow } from '../../use';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import type { Placement } from '../../helpers/FloatingUi.vue';
+import { h, ref, useTemplateRef, type HTMLAttributes } from "vue";
+import styles from "@patternfly/react-styles/css/components/Label/label-group";
+import labelStyles from "@patternfly/react-styles/css/components/Label/label";
+import XmarkIcon from "@vue-patternfly/icons/xmark-icon";
+import PfLabel from "./Label.vue";
+import PfButton from "../Button.vue";
+import PfTooltip from "../Tooltip/Tooltip.vue";
+import { findChildrenVNodes, fillTemplate } from "../../util";
+import { useElementOverflow } from "../../use";
+import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
+import type { Placement } from "../../helpers/FloatingUi.vue";
 
 defineOptions({
-  name: 'PfLabelGroup',
+  name: "PfLabelGroup",
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, "onClick"> {
   id?: string;
   /** Flag for having the label group default to expanded */
   defaultOpen?: boolean;
@@ -99,31 +97,31 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCli
 
 const props = withDefaults(defineProps<Props>(), {
   numLabels: 3,
-  tooltipPosition: 'top',
-  closeBtnAriaLabel: 'Close chip group',
-  ariaLabel: 'Chip group category',
-  expandedText: 'Show Less',
-  collapsedText: '${remaining} more',
+  tooltipPosition: "top",
+  closeBtnAriaLabel: "Close chip group",
+  ariaLabel: "Chip group category",
+  expandedText: "Show Less",
+  collapsedText: "${remaining} more",
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: 'click', e: PointerEvent): void;
-  (name: 'overflowChipClick', e: PointerEvent): void;
+  (name: "click", e: PointerEvent): void;
+  (name: "overflowChipClick", e: PointerEvent): void;
 }>();
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
-  'add-label-control'?: (props?: Record<never, never>) => any;
+  "add-label-control"?: (props?: Record<never, never>) => any;
 }>();
 
-const label = useTemplateRef('labelRef');
+const label = useTemplateRef("labelRef");
 const labelOverflowing = useElementOverflow(label);
 const open = ref(props.defaultOpen);
 
 function overflowChipClick(e: PointerEvent) {
   toggleCollapse();
-  emit('overflowChipClick', e);
+  emit("overflowChipClick", e);
 }
 
 function toggleCollapse() {
@@ -135,22 +133,26 @@ function render() {
 
   const chipArray = open.value ? children : children.slice(0, props.numLabels);
 
-  const lis = chipArray.map((child, i) => h('li', { key: i, class: styles.labelGroupListItem }, child));
+  const lis = chipArray.map((child, i) => h("li", { key: i, class: styles.labelGroupListItem }, child));
 
   if (children.length > props.numLabels) {
     const collapsedTextResult = fillTemplate(props.collapsedText, {
       remaining: children.length - chipArray.length,
     });
-    lis.push(h('li', { class: styles.labelGroupListItem }, [
-      h(PfLabel, {
-        class: { [labelStyles.modifiers.compact]: props.compact },
-        component: 'button',
-        overflow: true,
-        onClick: overflowChipClick as (e: Event) => void,
-      },
-        () => open.value ? props.expandedText : collapsedTextResult,
-      ),
-    ]));
+    lis.push(
+      h("li", { class: styles.labelGroupListItem }, [
+        h(
+          PfLabel,
+          {
+            class: { [labelStyles.modifiers.compact]: props.compact },
+            component: "button",
+            overflow: true,
+            onClick: overflowChipClick as (e: Event) => void,
+          },
+          () => (open.value ? props.expandedText : collapsedTextResult),
+        ),
+      ]),
+    );
   }
 
   return lis;
