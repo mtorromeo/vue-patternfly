@@ -1,28 +1,31 @@
 <template>
   <pf-button v-bind="ouiaProps" variant="stateful" :state="variant" :class="{ [styles.modifiers.notify]: animating }" @animationend="handleAnimationEnd">
-    <template #icon v-if="$slots.icon">
-      <slot name="icon" />
+    <template #icon>
+      <slot name="icon">
+        <bell-icon />
+      </slot>
     </template>
-    <template v-if="count > 0" :class="styles.notificationBadgeCount">{{ count }}</template>
+    <template v-if="count > 0">{{ count }}</template>
     <slot v-else />
   </pf-button>
 </template>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Button/button';
-import type { ComponentProps } from 'vue-component-type-helpers';
-import PfButton from './Button.vue';
-import { useOUIAProps } from '../helpers/ouia';
-import { ref } from 'vue';
-import { watch } from 'vue';
+import styles from "@patternfly/react-styles/css/components/Button/button";
+import BellIcon from "@vue-patternfly/icons/bell-icon";
+import type { ComponentProps } from "vue-component-type-helpers";
+import PfButton from "./Button.vue";
+import { useOUIAProps } from "../helpers/ouia";
+import { ref } from "vue";
+import { watch } from "vue";
 
 defineOptions({
-  name: 'PfNotificationBadge',
+  name: "PfNotificationBadge",
 });
 
-interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant'> {
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, "variant"> {
   /** Determines the variant of the notification badge */
-  variant?: 'read' | 'unread' | 'attention';
+  variant?: "read" | "unread" | "attention";
 
   /** A number displayed in the badge alongside the icon */
   count?: number;
@@ -39,10 +42,10 @@ interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'read',
+  variant: "read",
   count: 0,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -50,11 +53,14 @@ defineSlots<{
 }>();
 
 const animating = ref(false);
-watch(() => props.shouldNotify, (newValue) => {
-  if (newValue) {
-    animating.value = true;
-  }
-});
+watch(
+  () => props.shouldNotify,
+  (newValue) => {
+    if (newValue) {
+      animating.value = true;
+    }
+  },
+);
 
 function handleAnimationEnd() {
   animating.value = false;

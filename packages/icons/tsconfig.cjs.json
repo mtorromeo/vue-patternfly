@@ -3,10 +3,10 @@
   "compilerOptions": {
     "outDir": "dist/js",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "composite": true,
     "preserveValueImports": false,
     "verbatimModuleSyntax": false,
     "tsBuildInfoFile": "dist/cjs.tsbuildinfo",
-  }
+  },
 }
