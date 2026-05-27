@@ -1,0 +1,105 @@
+import{D as e,E as t,I as n,N as r,O as i,R as a,S as o,T as s,_ as c,h as l,j as u,x as d,z as f}from"./index-mFbvqZfx.js";import{t as p}from"./help-icon-DSzqUsMr.js";var m=c({name:`TrashIcon`,height:512,width:448,svgPathData:`M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z`,yOffset:0,xOffset:0}),h=i({__name:`Form.story`,setup(i){let c=a(`Five`),h=a(`Nice description
+my email: mail@mail.com`);return(i,a)=>{let g=r(`component-info`),_=r(`pf-tooltip`),v=r(`pf-text-input`),y=r(`pf-form-group`),b=r(`pf-button`),x=r(`pf-action-group`),S=r(`pf-form`),C=r(`story-canvas`),w=r(`pf-textarea`),T=r(`pf-form-field-group-header`),E=r(`pf-form-field-group`),D=r(`doc-page`);return u(),o(D,{name:`Components/Form.story.vue`,title:`Form`},{description:n(()=>[...a[2]||=[t(`A `,-1),d(`b`,null,`form`,-1),t(` is a group of elements used to collect information from a user in a variety of contexts including in a modal, in a wizard, or on a page. Use cases for forms include tasks reliant on user-inputted information for completion like logging in, registering, configuring settings, or completing surveys.`,-1)]]),apidocs:n(()=>[e(g,{name:`PfActionGroup`,doc:{name:`PfActionGroup`,exportName:`PfActionGroup`,displayName:`ActionGroup`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/ActionGroup.vue`]}}),e(g,{name:`PfForm`,doc:{name:`PfForm`,exportName:`PfForm`,displayName:`Form`,description:``,tags:{},expose:[{name:`elements`}],props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`component`,required:!1,type:{name:`union`,elements:[{name:`string`},{name:`Component`}]},defaultValue:{func:!1,value:`'form'`}},{name:`horizontal`,description:`Sets the Form to horizontal.`,required:!1,type:{name:`boolean`}},{name:`widthLimited`,description:`Limits the max-width of the form.`,required:!1,type:{name:`boolean`}},{name:`maxWidth`,description:`Sets a custom max-width for the form.`,required:!1,type:{name:`string`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/Form.vue`]}}),e(g,{name:`PfFormAlert`,doc:{name:`PfFormAlert`,exportName:`PfFormAlert`,displayName:`FormAlert`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/FormAlert.vue`]}}),e(g,{name:`PfFormFieldGroup`,doc:{name:`PfFormFieldGroup`,exportName:`PfFormFieldGroup`,displayName:`FormFieldGroup`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`fieldset`,required:!1,type:{name:`boolean`}},{name:`expandable`,description:`Flag indicating if the field group is expandable`,required:!1,type:{name:`boolean`}},{name:`toggleAriaLabel`,description:`Aria-label to use on the form filed group toggle button`,required:!1,type:{name:`string`}}],events:[],slots:[{name:`header`},{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/FormFieldGroup.vue`]}}),e(g,{name:`PfFormFieldGroupHeader`,doc:{name:`PfFormFieldGroupHeader`,exportName:`PfFormFieldGroupHeader`,displayName:`FormFieldGroupHeader`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`title`,description:`Header title`,required:!1,type:{name:`string`}},{name:`description`,description:`Header description`,required:!1,type:{name:`string`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/FormFieldGroupHeader.vue`]}}),e(g,{name:`PfFormGroup`,doc:{name:`PfFormGroup`,exportName:`PfFormGroup`,displayName:`FormGroup`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`fieldset`,required:!1,type:{name:`boolean`}},{name:`label`,description:`Label text before the field.`,required:!1,type:{name:`string`}},{name:`labelInfo`,description:`Additional label information displayed after the label.`,required:!1,type:{name:`string`}},{name:`required`,description:`Sets the FormGroup required.`,required:!1,type:{name:`boolean`}},{name:`validated`,description:`Sets the FormGroup validated. If you set to success, text color of helper text will be modified to indicate valid state.
+If set to error, text color of helper text will be modified to indicate error state.
+If set to warning, text color of helper text will be modified to indicate warning state.`,required:!1,type:{name:`InputValidateState`}},{name:`inline`,required:!1,type:{name:`boolean`}},{name:`stack`,description:`Sets the FormGroupControl to be stacked`,required:!1,type:{name:`boolean`}},{name:`noPaddingTop`,description:`Removes top spacer from label.`,required:!1,type:{name:`boolean`}},{name:`helperText`,description:`Helper text regarding the field.`,required:!1,type:{name:`string`}},{name:`helperTextVariant`,description:`Helper text variant.`,required:!1,type:{name:`TSIndexedAccessType`},defaultValue:{func:!1,value:`'default'`}},{name:`helperTextBeforeField`,description:`Flag to position the helper text before the field. False by default`,required:!1,type:{name:`boolean`}},{name:`helperTextInvalid`,description:`Helper text after the field when the field is invalid.`,required:!1,type:{name:`string`}},{name:`fieldId`,description:`ID of the included field. It has to be the same for proper working.`,required:!1,type:{name:`string`}}],events:[],slots:[{name:`label`},{name:`label-icon`},{name:`label-info`},{name:`default`},{name:`helper-text-invalid`},{name:`helper-text`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/FormGroup.vue`]}}),e(g,{name:`PfFormHelperText`,doc:{name:`PfFormHelperText`,exportName:`PfFormHelperText`,displayName:`FormHelperText`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/FormHelperText.vue`]}}),e(g,{name:`PfFormSection`,doc:{name:`PfFormSection`,exportName:`PfFormSection`,displayName:`FormSection`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`title`,description:`Title for the section`,required:!1,type:{name:`string`}},{name:`titleElement`,description:`Header description`,required:!1,type:{name:`string`},defaultValue:{func:!1,value:`'div'`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Form/FormSection.vue`]}})]),default:n(()=>[a[9]||=d(`div`,{class:`markdown pf-v6-c-content`},[d(`p`,null,`Use forms to accomplish tasks reliant on user-inputted information like logging in, registering for accounts or services, configuring settings, or completing surveys.`),d(`h2`,{class:`pf-v6-c-title`},`Differences from patternfly-react`),d(`ul`,null,[d(`li`,null,[t(`The `),d(`code`,null,`novalidate`),t(` attribute is not implicitly applied to the form but you can still add it yourself. This makes `),d(`code`,null,`pf-form`),t(` usable with the native form validation technique.`)]),d(`li`,null,[t(`Allowed overriding the `),d(`code`,null,`component`),t(` used by the form. A typical use-case is when you have a parent form tag already present and you only need `),d(`code`,null,`pf-form`),t(` to apply the patternfly layout to its children.`)]),d(`li`,null,[t(`There is a `),d(`code`,null,`pf-form-helper-text`),t(` component embedded in the FormGroup. You can use the `),d(`code`,null,`helper-text`),t(` and `),d(`code`,null,`helper-text-invalid`),t(` props or the slots with the same name on `),d(`code`,null,`pf-form-group`),t(`. The slots can accomodate `),d(`code`,null,`pf-helper-text-item`),t(` components.`)])]),d(`p`,null,[t(`See `),d(`a`,{href:`#/`},`common differences from patternfly-react`),t(`.`)]),d(`h2`,{class:`pf-v6-c-title`},`Examples`)],-1),e(C,{title:`Basic`,source:`<pf-form>
+  <pf-form-group label="Name" required field-id="simple-form-name-01" helper-text="Please provide your full name">
+    <template #label-icon>
+      <pf-tooltip>
+        <template #content>
+          Several patterns can be added in Filename mask with "," delimiter.
+          Example:
+          /home/*/mail/,/home/*/tmp,*.php
+        </template>
+        <help-icon />
+      </pf-tooltip>
+    </template>
+    <pf-text-input id="simple-form-name-01" required name="simple-form-name-01" aria-describedby="simple-form-name-01-helper" />
+  </pf-form-group>
+  <pf-action-group>
+    <pf-button type="submit" variant="primary">Submit</pf-button>
+    <pf-button variant="link">Cancel</pf-button>
+  </pf-action-group>
+</pf-form>`},{default:n(()=>[e(S,null,{default:n(()=>[e(y,{label:`Name`,required:``,"field-id":`simple-form-name-01`,"helper-text":`Please provide your full name`},{"label-icon":n(()=>[e(_,null,{content:n(()=>[...a[3]||=[t(` Several patterns can be added in Filename mask with "," delimiter. Example: /home/*/mail/,/home/*/tmp,*.php `,-1)]]),default:n(()=>[e(f(p))]),_:1})]),default:n(()=>[e(v,{id:`simple-form-name-01`,required:``,name:`simple-form-name-01`,"aria-describedby":`simple-form-name-01-helper`})]),_:1}),e(x,null,{default:n(()=>[e(b,{type:`submit`,variant:`primary`},{default:n(()=>[...a[4]||=[t(`Submit`,-1)]]),_:1}),e(b,{variant:`link`},{default:n(()=>[...a[5]||=[t(`Cancel`,-1)]]),_:1})]),_:1})]),_:1})]),_:1}),e(C,{title:`Invalid with form alert`,source:`<pf-form>
+  <pf-form-group label="Age" label-info="Additional label info" field-id="age" helper-text-invalid="Age has to be a number">
+    <template v-if="age === ''" #helper-text>
+      Please enter your age
+    </template>
+    <template #helper-text-icon>
+      <circle-exclamation-icon />
+    </template>
+    <template #helper-text-invalid-icon>
+      <circle-exclamation-icon />
+    </template>
+    <pf-text-input id="age" v-model="age" pattern="[0-9]+" required name="age" aria-describedby="age" />
+  </pf-form-group>
+  <pf-form-group label="Description" field-id="description" helper-text-invalid="No emails allowed in the description">
+    <template #helper-text-invalid-icon>
+      <circle-exclamation-icon />
+    </template>
+    <pf-textarea id="description" v-model="description" pattern="(?!.*[A-Za-z0-9]@[A-Za-z].*).*" name="description" aria-describedby="description" spellcheck="false" />
+  </pf-form-group>
+</pf-form>`},{default:n(()=>[e(S,null,{default:n(()=>[e(y,{label:`Age`,"label-info":`Additional label info`,"field-id":`age`,"helper-text-invalid":`Age has to be a number`},s({"helper-text-icon":n(()=>[e(f(l))]),"helper-text-invalid-icon":n(()=>[e(f(l))]),default:n(()=>[e(v,{id:`age`,modelValue:c.value,"onUpdate:modelValue":a[0]||=e=>c.value=e,pattern:`[0-9]+`,required:``,name:`age`,"aria-describedby":`age`},null,8,[`modelValue`])]),_:2},[c.value===``?{name:`helper-text`,fn:n(()=>[a[6]||=t(` Please enter your age `,-1)]),key:`0`}:void 0]),1024),e(y,{label:`Description`,"field-id":`description`,"helper-text-invalid":`No emails allowed in the description`},{"helper-text-invalid-icon":n(()=>[e(f(l))]),default:n(()=>[e(w,{id:`description`,modelValue:h.value,"onUpdate:modelValue":a[1]||=e=>h.value=e,pattern:`(?!.*[A-Za-z0-9]@[A-Za-z].*).*`,name:`description`,"aria-describedby":`description`,spellcheck:`false`},null,8,[`modelValue`])]),_:1})]),_:1})]),_:1}),e(C,{title:`Field group`,source:`<pf-form>
+  <pf-form-group label="Name" required field-id="form-expandable-field-groups-label1">
+    <pf-text-input id="form-expandable-field-groups-label1" required name="form-expandable-field-groups-label1" />
+  </pf-form-group>
+  <pf-form-field-group expandable toggle-aria-label="Details">
+    <template #header>
+      <pf-form-field-group-header title="Field group 1" description="Field group 1 description.">
+        <pf-button variant="link">Delete all</pf-button>
+      </pf-form-field-group-header>
+    </template>
+    <pf-form-field-group expandable toggle-aria-label="Details">
+      <template #header>
+        <pf-form-field-group-header title="Nested field group 1" description="Nested field group 1 description.">
+          <pf-button variant="plain" aria-label="Remove">
+            <template #icon>
+              <trash-icon />
+            </template>
+          </pf-button>
+        </pf-form-field-group-header>
+      </template>
+      <pf-form-group label="City" required field-id="form-expandable-field-groups-city">
+        <pf-text-input id="form-expandable-field-groups-city" required name="form-expandable-field-groups-city" />
+      </pf-form-group>
+      <pf-form-group label="State" required field-id="form-expandable-field-groups-state">
+        <pf-text-input id="form-expandable-field-groups-state" required name="form-expandable-field-groups-state" />
+      </pf-form-group>
+    </pf-form-field-group>
+    <pf-form-field-group expandable toggle-aria-label="Details">
+      <template #header>
+        <pf-form-field-group-header title="Nested field group 2" description="Nested field group 2 description.">
+          <pf-button variant="plain" aria-label="Remove">
+            <template #icon>
+              <trash-icon />
+            </template>
+          </pf-button>
+        </pf-form-field-group-header>
+      </template>
+      <pf-form-group label="City 2" required field-id="form-expandable-field-groups-city2">
+        <pf-text-input id="form-expandable-field-groups-city2" required name="form-expandable-field-groups-city2" />
+      </pf-form-group>
+      <pf-form-group label="State 2" required field-id="form-expandable-field-groups-state2">
+        <pf-text-input id="form-expandable-field-groups-state2" required name="form-expandable-field-groups-state2" />
+      </pf-form-group>
+    </pf-form-field-group>
+    <pf-form-group label="Phone" required field-id="form-expandable-field-groups-phone">
+      <pf-text-input id="form-expandable-field-groups-phone" required name="form-expandable-field-groups-phone" />
+    </pf-form-group>
+    <pf-form-group label="Mobile" required field-id="form-expandable-field-groups-mobile">
+      <pf-text-input id="form-expandable-field-groups-mobile" required name="form-expandable-field-groups-mobile" />
+    </pf-form-group>
+  </pf-form-field-group>
+  <pf-form-field-group toggle-aria-label="Details">
+    <template #header>
+      <pf-form-field-group-header title="Field group 2 (non-expandable)" description="Field group 2 description.">
+        <pf-button variant="link">Delete all</pf-button>
+      </pf-form-field-group-header>
+    </template>
+    <pf-form-group label="Username" required field-id="form-expandable-field-groups-username">
+      <pf-text-input id="form-expandable-field-groups-username" required name="form-expandable-field-groups-username" />
+    </pf-form-group>
+    <pf-form-group label="Nickname" required field-id="form-expandable-field-groups-nickname">
+      <pf-text-input id="form-expandable-field-groups-nickname" required name="form-expandable-field-groups-nickname" />
+    </pf-form-group>
+  </pf-form-field-group>
+</pf-form>`},{default:n(()=>[e(S,null,{default:n(()=>[e(y,{label:`Name`,required:``,"field-id":`form-expandable-field-groups-label1`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-label1`,required:``,name:`form-expandable-field-groups-label1`})]),_:1}),e(E,{expandable:``,"toggle-aria-label":`Details`},{header:n(()=>[e(T,{title:`Field group 1`,description:`Field group 1 description.`},{default:n(()=>[e(b,{variant:`link`},{default:n(()=>[...a[7]||=[t(`Delete all`,-1)]]),_:1})]),_:1})]),default:n(()=>[e(E,{expandable:``,"toggle-aria-label":`Details`},{header:n(()=>[e(T,{title:`Nested field group 1`,description:`Nested field group 1 description.`},{default:n(()=>[e(b,{variant:`plain`,"aria-label":`Remove`},{icon:n(()=>[e(f(m))]),_:1})]),_:1})]),default:n(()=>[e(y,{label:`City`,required:``,"field-id":`form-expandable-field-groups-city`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-city`,required:``,name:`form-expandable-field-groups-city`})]),_:1}),e(y,{label:`State`,required:``,"field-id":`form-expandable-field-groups-state`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-state`,required:``,name:`form-expandable-field-groups-state`})]),_:1})]),_:1}),e(E,{expandable:``,"toggle-aria-label":`Details`},{header:n(()=>[e(T,{title:`Nested field group 2`,description:`Nested field group 2 description.`},{default:n(()=>[e(b,{variant:`plain`,"aria-label":`Remove`},{icon:n(()=>[e(f(m))]),_:1})]),_:1})]),default:n(()=>[e(y,{label:`City 2`,required:``,"field-id":`form-expandable-field-groups-city2`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-city2`,required:``,name:`form-expandable-field-groups-city2`})]),_:1}),e(y,{label:`State 2`,required:``,"field-id":`form-expandable-field-groups-state2`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-state2`,required:``,name:`form-expandable-field-groups-state2`})]),_:1})]),_:1}),e(y,{label:`Phone`,required:``,"field-id":`form-expandable-field-groups-phone`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-phone`,required:``,name:`form-expandable-field-groups-phone`})]),_:1}),e(y,{label:`Mobile`,required:``,"field-id":`form-expandable-field-groups-mobile`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-mobile`,required:``,name:`form-expandable-field-groups-mobile`})]),_:1})]),_:1}),e(E,{"toggle-aria-label":`Details`},{header:n(()=>[e(T,{title:`Field group 2 (non-expandable)`,description:`Field group 2 description.`},{default:n(()=>[e(b,{variant:`link`},{default:n(()=>[...a[8]||=[t(`Delete all`,-1)]]),_:1})]),_:1})]),default:n(()=>[e(y,{label:`Username`,required:``,"field-id":`form-expandable-field-groups-username`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-username`,required:``,name:`form-expandable-field-groups-username`})]),_:1}),e(y,{label:`Nickname`,required:``,"field-id":`form-expandable-field-groups-nickname`},{default:n(()=>[e(v,{id:`form-expandable-field-groups-nickname`,required:``,name:`form-expandable-field-groups-nickname`})]),_:1})]),_:1})]),_:1})]),_:1})]),_:1})}}});export{h as default};

@@ -1,0 +1,34 @@
+import{D as e,E as t,I as n,N as r,O as i,R as a,S as o,V as s,j as c,x as l}from"./index-mFbvqZfx.js";var u={label:`Group 1`},d={label:`Group 2`},f={label:`Group 3`,disabled:``},p=i({__name:`FormSelect.story`,setup(i){let p=a(``),m=a([]);return(i,a)=>{let h=r(`component-info`),g=r(`pf-form-select-option`),_=r(`pf-form-select`),v=r(`story-canvas`),y=r(`doc-page`);return c(),o(y,{name:`Components/FormSelect.story.vue`,title:`Form Select`},{description:n(()=>[...a[2]||=[t(`A `,-1),l(`b`,null,`form select`,-1),t(` embeds browser native select lists into a form.`,-1)]]),apidocs:n(()=>[e(h,{name:`PfFormSelect`,doc:{name:`PfFormSelect`,exportName:`PfFormSelect`,displayName:`FormSelect`,description:``,tags:{},expose:[{name:`input`}],props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`multiple`,required:!1,type:{name:`M`}},{name:`disabled`,required:!1,type:{name:`boolean`}},{name:`validated`,description:`Value to indicate if the input is modified to show that validation state.
+If set to success, input will be modified to indicate valid state.
+If set to error,  input will be modified to indicate error state.`,tags:{values:[{description:`default, success, warning, error`,title:`values`}]},required:!1,type:{name:`union`,elements:[{name:`"default"`},{name:`"success"`},{name:`"warning"`},{name:`"error"`}]}}],events:[{name:`update:modelValue`,type:{names:[`TSConditionalType`]}}],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/FormSelect/FormSelect.vue`]}}),e(h,{name:`PfFormSelectOption`,doc:{name:`PfFormSelectOption`,exportName:`PfFormSelectOption`,displayName:`FormSelectOption`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`placeholder`,required:!1,type:{name:`boolean`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/FormSelect/FormSelectOption.vue`]}})]),default:n(()=>[a[7]||=l(`div`,{class:`markdown pf-v6-c-content`},[l(`h2`,{class:`pf-v6-c-title`},`Usage`),l(`p`,null,[t(`If your use case only calls for simple selects, you may opt to use a form select as an field inside a form. However, if your use case requires more customization and capability, use a custom select list. `),l(`strong`,null,`Note`),t(`: Use only custom selects or only form selects in the same context. Mixing them together compromises visual consistency in your UI.`)]),l(`h2`,{class:`pf-v6-c-title`},`Differences from patternfly-react`),l(`ul`,null,[l(`li`,null,[t(`The `),l(`code`,null,`FormSelectOptionGroup`),t(` component is not implemented as it does not provide any value over native `),l(`code`,null,`<optgroup>`),t(`.`)]),l(`li`,null,[t(`The `),l(`code`,null,`value`),t(` prop is replaced by `),l(`code`,null,`modelValue`),t(` so that the component can be used with `),l(`code`,null,`v-model`),t(`. See `),l(`a`,{href:`#/`},`common differences from patternfly-react`),t(`.`)])]),l(`h1`,{class:`pf-v6-c-title`},[t(`PfFormSelectOption `),l(`code`,null,`pf-form-select-option`)]),l(`p`,null,[t(`Wraps a native `),l(`code`,null,`<option>`),t(` element and adds a `),l(`code`,null,`placeholder`),t(` identifier flag. You can either use the default slot or the `),l(`code`,null,`label`),t(` prop to render the content.`)]),l(`h2`,{class:`pf-v6-c-title`},`Examples`)],-1),e(v,{title:`Single value`,source:`<pf-form-select required v-model="value">
+  <pf-form-select-option value="" label="Please Choose" placeholder disabled />
+  <pf-form-select-option value="mr" label="Mr" />
+  <pf-form-select-option value="miss" label="Miss" />
+  <pf-form-select-option value="mrs" label="Mrs" />
+  <pf-form-select-option value="ms" label="Ms" />
+  <pf-form-select-option value="dr" label="Dr" disabled />
+  <optgroup label="Group 1">
+    <pf-form-select-option value="opt1" label="Option 1" />
+    <pf-form-select-option value="opt2" label="Option 2" />
+  </optgroup>
+  <optgroup label="Group 2">
+    <pf-form-select-option value="opt3">Option 3</pf-form-select-option>
+    <pf-form-select-option value="opt4">Option 4</pf-form-select-option>
+  </optgroup>
+  <optgroup label="Group 3" disabled>
+    <pf-form-select-option value="other" label="Other" />
+  </optgroup>
+</pf-form-select>
+<br>
+<p>Value: {{ JSON.stringify(value) }}</p>`},{default:n(()=>[e(_,{required:``,modelValue:p.value,"onUpdate:modelValue":a[0]||=e=>p.value=e},{default:n(()=>[e(g,{value:``,label:`Please Choose`,placeholder:``,disabled:``}),e(g,{value:`mr`,label:`Mr`}),e(g,{value:`miss`,label:`Miss`}),e(g,{value:`mrs`,label:`Mrs`}),e(g,{value:`ms`,label:`Ms`}),e(g,{value:`dr`,label:`Dr`,disabled:``}),l(`optgroup`,u,[e(g,{value:`opt1`,label:`Option 1`}),e(g,{value:`opt2`,label:`Option 2`})]),l(`optgroup`,d,[e(g,{value:`opt3`},{default:n(()=>[...a[3]||=[t(`Option 3`,-1)]]),_:1}),e(g,{value:`opt4`},{default:n(()=>[...a[4]||=[t(`Option 4`,-1)]]),_:1})]),l(`optgroup`,f,[e(g,{value:`other`,label:`Other`})])]),_:1},8,[`modelValue`]),a[5]||=l(`br`,null,null,-1),l(`p`,null,`Value: `+s(JSON.stringify(p.value)),1)]),_:1}),e(v,{title:`Multiple value`,source:`<pf-form-select required v-model="values" multiple>
+  <pf-form-select-option value="" label="Please Choose" placeholder disabled />
+  <pf-form-select-option value="white" label="White" />
+  <pf-form-select-option value="black" label="Black" />
+  <pf-form-select-option value="red" label="Red" />
+  <pf-form-select-option value="green" label="Green" />
+  <pf-form-select-option value="blue" label="Blue" />
+  <pf-form-select-option value="yellow" label="Yellow" />
+  <pf-form-select-option value="purple" label="Purple" disabled />
+</pf-form-select>
+<br>
+<p>Values: {{ JSON.stringify(values) }}</p>`},{default:n(()=>[e(_,{required:``,modelValue:m.value,"onUpdate:modelValue":a[1]||=e=>m.value=e,multiple:``},{default:n(()=>[e(g,{value:``,label:`Please Choose`,placeholder:``,disabled:``}),e(g,{value:`white`,label:`White`}),e(g,{value:`black`,label:`Black`}),e(g,{value:`red`,label:`Red`}),e(g,{value:`green`,label:`Green`}),e(g,{value:`blue`,label:`Blue`}),e(g,{value:`yellow`,label:`Yellow`}),e(g,{value:`purple`,label:`Purple`,disabled:``})]),_:1},8,[`modelValue`]),a[6]||=l(`br`,null,null,-1),l(`p`,null,`Values: `+s(JSON.stringify(m.value)),1)]),_:1})]),_:1})}}});export{p as default};

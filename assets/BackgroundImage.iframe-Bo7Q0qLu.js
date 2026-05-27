@@ -1,0 +1,1 @@
+import{N as e,O as t,S as n,j as r,z as i}from"./index-mFbvqZfx.js";var a=``+new URL(`pf-background-QLrFvAJG.svg`,import.meta.url).href,o=t({__name:`BackgroundImage.iframe`,setup(t){return(t,o)=>{let s=e(`pf-background-image`);return r(),n(s,{src:i(a)},null,8,[`src`])}}});export{o as default};

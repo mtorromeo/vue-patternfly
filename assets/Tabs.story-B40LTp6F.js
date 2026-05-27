@@ -1,0 +1,110 @@
+import{A as e,D as t,E as n,I as r,N as i,O as a,R as o,S as s,V as c,_ as l,j as u,k as d,w as f,x as p,z as m}from"./index-mFbvqZfx.js";import{a as h,i as g,n as _,r as v,t as y}from"./laptop-icon-Dv8qlZg6.js";var b=a({inheritAttrs:!1,__name:`KeepAliveTest`,setup(t){let n=o(0),r=o();return d(()=>r.value=setInterval(()=>n.value++,1e3)),e(()=>clearInterval(r.value)),(e,t)=>(u(),f(`div`,null,`Time alive: `+c(n.value)+`s`,1))}}),x=l({name:`DiagramProjectIcon`,height:512,width:576,svgPathData:`M0 80C0 53.5 21.5 32 48 32l96 0c26.5 0 48 21.5 48 48l0 16 192 0 0-16c0-26.5 21.5-48 48-48l96 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-96 0c-26.5 0-48-21.5-48-48l0-16-192 0 0 16c0 1.7-.1 3.4-.3 5L272 288l96 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-96 0c-26.5 0-48-21.5-48-48l0-96c0-1.7 .1-3.4 .3-5L144 224l-96 0c-26.5 0-48-21.5-48-48L0 80z`,yOffset:0,xOffset:0}),S=a({__name:`Tabs.story`,setup(e){let a=o(),c=o(),l=o();return(e,o)=>{let d=i(`component-info`),f=i(`pf-tab`),S=i(`pf-tab-title-text`),C=i(`pf-tabs`),w=i(`story-canvas`),T=i(`pf-tab-title-icon`),E=i(`pf-tab-content`),D=i(`doc-page`);return u(),s(D,{name:`Components/Tabs.story.vue`,title:`Tabs`},{description:r(()=>[...o[0]||=[p(`b`,null,`Tabs`,-1),n(` allow users to navigate between views within the same page or context.`,-1)]]),apidocs:r(()=>[t(d,{name:`PfTabs`,doc:{name:`PfTabs`,exportName:`PfTabs`,displayName:`Tabs`,description:``,tags:{},props:[{name:`expandable2xl`,description:`Toggle collapse/expand state at Xl2 breakpoint`,required:!1,type:{name:`union`,elements:[{name:`"expandable"`},{name:`"nonExpandable"`}]}},{name:`expandableXl`,description:`Toggle collapse/expand state at Xl breakpoint`,required:!1,type:{name:`union`,elements:[{name:`"expandable"`},{name:`"nonExpandable"`}]}},{name:`expandableLg`,description:`Toggle collapse/expand state at Lg breakpoint`,required:!1,type:{name:`union`,elements:[{name:`"expandable"`},{name:`"nonExpandable"`}]}},{name:`expandableMd`,description:`Toggle collapse/expand state at Md breakpoint`,required:!1,type:{name:`union`,elements:[{name:`"expandable"`},{name:`"nonExpandable"`}]}},{name:`expandableSm`,description:`Toggle collapse/expand state at Sm breakpoint`,required:!1,type:{name:`union`,elements:[{name:`"expandable"`},{name:`"nonExpandable"`}]}},{name:`expandable`,description:`Toggle collapse/expand state`,required:!1,type:{name:`union`,elements:[{name:`"expandable"`},{name:`"nonExpandable"`}]}},{name:`inset2xl`,required:!1,type:{name:`union`,elements:[{name:`"none"`},{name:`"xs"`},{name:`"sm"`},{name:`"md"`},{name:`"lg"`},{name:`"xl"`},{name:`"2xl"`},{name:`"3xl"`}]}},{name:`insetXl`,required:!1,type:{name:`union`,elements:[{name:`"none"`},{name:`"xs"`},{name:`"sm"`},{name:`"md"`},{name:`"lg"`},{name:`"xl"`},{name:`"2xl"`},{name:`"3xl"`}]}},{name:`insetLg`,required:!1,type:{name:`union`,elements:[{name:`"none"`},{name:`"xs"`},{name:`"sm"`},{name:`"md"`},{name:`"lg"`},{name:`"xl"`},{name:`"2xl"`},{name:`"3xl"`}]}},{name:`insetMd`,required:!1,type:{name:`union`,elements:[{name:`"none"`},{name:`"xs"`},{name:`"sm"`},{name:`"md"`},{name:`"lg"`},{name:`"xl"`},{name:`"2xl"`},{name:`"3xl"`}]}},{name:`insetSm`,required:!1,type:{name:`union`,elements:[{name:`"none"`},{name:`"xs"`},{name:`"sm"`},{name:`"md"`},{name:`"lg"`},{name:`"xl"`},{name:`"2xl"`},{name:`"3xl"`}]}},{name:`inset`,required:!1,type:{name:`union`,elements:[{name:`"none"`},{name:`"xs"`},{name:`"sm"`},{name:`"md"`},{name:`"lg"`},{name:`"xl"`},{name:`"2xl"`},{name:`"3xl"`}]}},{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`id`,required:!1,type:{name:`string`},defaultValue:{func:!1,value:`() => useId()`}},{name:`defaultActiveKey`,description:`The index of the default active tab. Set this for uncontrolled Tabs`,required:!1,type:{name:`TabKey`}},{name:`filled`,description:`Enables the filled tab list layout`,required:!1,type:{name:`boolean`}},{name:`subtab`,description:`Enables subtab tab styling`,required:!1,type:{name:`boolean`}},{name:`secondary`,description:`Enables secondary tab styling`,required:!1,type:{name:`boolean`}},{name:`box`,description:`Enables box styling to the tab component`,required:!1,type:{name:`boolean`}},{name:`vertical`,description:`Enables vertical tab styling`,required:!1,type:{name:`boolean`}},{name:`noBorderBottom`,description:`Disables border bottom tab styling on tabs. Defaults to false. To remove the bottom border, set this prop to true.`,required:!1,type:{name:`boolean`}},{name:`backScrollAriaLabel`,description:`Aria-label for the left scroll button`,required:!1,type:{name:`string`}},{name:`forwardScrollAriaLabel`,description:`Aria-label for the right scroll button`,required:!1,type:{name:`string`}},{name:`component`,description:`Determines what tag is used around the tabs. Use "nav" to define the tabs inside a navigation region`,required:!1,type:{name:`union`,elements:[{name:`"div"`},{name:`"nav"`}]},defaultValue:{func:!1,value:`'div'`}},{name:`ariaLabel`,description:`Provides an accessible label for the tabs. Labels should be unique for each set of tabs that are present on a page. When component is set to nav, this prop should be defined to differentiate the tabs from other navigation regions on the page.`,required:!1,type:{name:`string`}},{name:`mountOnEnter`,description:`Waits until the first "enter" transition to mount tab children (add them to the DOM)`,required:!1,type:{name:`boolean`}},{name:`unmountOnExit`,description:`Unmounts tab children (removes them from the DOM) when they are no longer visible`,required:!1,type:{name:`boolean`}},{name:`pageInsets`,description:`Flag indicates that the tabs should use page insets.`,required:!1,type:{name:`boolean`}},{name:`defaultExpanded`,description:`Flag indicating the default expanded state for uncontrolled expand/collapse of`,required:!1,type:{name:`boolean`}},{name:`overflowHorizontal`,description:`Flag which places overflowing tabs into a menu triggered by the last tab. Additionally an object can be passed with custom settings for the overflow tab.`,required:!1,type:{name:`boolean`}},{name:`variant`,defaultValue:{func:!1,value:`'default'`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Tabs/Tabs.vue`]}}),t(d,{name:`PfTab`,doc:{name:`PfTab`,exportName:`PfTab`,displayName:`Tab`,description:``,tags:{},expose:[{name:`key`}],props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`title`,description:`Content rendered in the tab title.`,required:!1,type:{name:`string`}},{name:`href`,description:`URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href.`,required:!1,type:{name:`string`}},{name:`target`,description:`Link target`,required:!1,type:{name:`string`}},{name:`disabled`,description:`Adds disabled styling and disables the button using the disabled html attribute`,required:!1,type:{name:`boolean`}},{name:`ariaDisabled`,description:`Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute`,required:!1,type:{name:`boolean`}},{name:`contentRef`,required:!1,type:{name:`ComponentExposed`,elements:[{name:`TSTypeQuery`}]}},{name:`mountOnEnter`,description:`Waits until the first "enter" transition to mount tab children (add them to the DOM)`,required:!1,type:{name:`boolean`}},{name:`unmountOnExit`,description:`Unmounts tab children (removes them from the DOM) when they are no longer visible`,required:!1,type:{name:`boolean`}}],events:[{name:`click`,type:{names:[`PointerEvent`]}},{name:`enter`},{name:`leave`}],slots:[{name:`icon`},{name:`title`},{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Tabs/Tab.vue`]}}),t(d,{name:`PfTabButton`,doc:{name:`PfTabButton`,exportName:`PfTabButton`,displayName:`TabButton`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`href`,description:`URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href.`,required:!1,type:{name:`string`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Tabs/TabButton.vue`]}}),t(d,{name:`PfTabContent`,doc:{name:`PfTabContent`,exportName:`PfTabContent`,displayName:`TabContent`,description:``,tags:{},expose:[{name:`hidden`}],props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Tabs/TabContent.vue`]}}),t(d,{name:`PfTabTitleIcon`,doc:{name:`PfTabTitleIcon`,exportName:`PfTabTitleIcon`,displayName:`TabTitleIcon`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Tabs/TabTitleIcon.vue`]}}),t(d,{name:`PfTabTitleText`,doc:{name:`PfTabTitleText`,exportName:`PfTabTitleText`,displayName:`TabTitleText`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Tabs/TabTitleText.vue`]}})]),default:r(()=>[o[57]||=p(`div`,{class:`markdown pf-v6-c-content`},[p(`h2`,{class:`pf-v6-c-title`},`Usage`),p(`p`,null,`PatternFly offers a few types of tabs:`),p(`ul`,null,[p(`li`,null,`Default tabs (recommended)`),p(`li`,null,`Boxed tabs`),p(`li`,null,`Vertical tabs`)]),p(`p`,null,`You can use as many tabs as you want in a page, although it is recommended you keep the total number of tabs to a minimum for a better user experience. If you have more tabs than fit on the page, you may use a default overflow which would allow a user to horizontal scroll through your tabs. The uses of both default and boxed stylings are flexible, so use either according to your needs and preferences.`),p(`h2`,{class:`pf-v6-c-title`},`Examples`)],-1),t(w,{title:`Default`,source:`<pf-tabs>
+  <pf-tab title="Users"> Users </pf-tab>
+  <pf-tab title="Containers" mount-on-enter>
+    Containers
+    <keep-alive-test />
+  </pf-tab>
+  <pf-tab title="Database"> Database </pf-tab>
+  <pf-tab title="Server" mount-on-enter unmount-on-exit>
+    Server
+    <keep-alive-test />
+  </pf-tab>
+  <pf-tab>
+    <template #title>
+      <pf-tab-title-text>System</pf-tab-title-text>
+    </template>
+    System
+    <keep-alive-test />
+  </pf-tab>
+  <pf-tab title="Network"> Network </pf-tab>
+</pf-tabs>`},{default:r(()=>[t(C,null,{default:r(()=>[t(f,{title:`Users`},{default:r(()=>[...o[1]||=[n(` Users `,-1)]]),_:1}),t(f,{title:`Containers`,"mount-on-enter":``},{default:r(()=>[o[2]||=n(` Containers `,-1),t(b)]),_:1}),t(f,{title:`Database`},{default:r(()=>[...o[3]||=[n(` Database `,-1)]]),_:1}),t(f,{title:`Server`,"mount-on-enter":``,"unmount-on-exit":``},{default:r(()=>[o[4]||=n(` Server `,-1),t(b)]),_:1}),t(f,null,{title:r(()=>[t(S,null,{default:r(()=>[...o[5]||=[n(`System`,-1)]]),_:1})]),default:r(()=>[o[6]||=n(` System `,-1),t(b)]),_:1}),t(f,{title:`Network`},{default:r(()=>[...o[7]||=[n(` Network `,-1)]]),_:1})]),_:1})]),_:1}),t(w,{title:`Icons and text`,source:`<pf-tabs>
+  <pf-tab>
+    <template #title>
+      <pf-tab-title-icon><users-icon /></pf-tab-title-icon>
+      <pf-tab-title-text>Users</pf-tab-title-text>
+    </template>
+    Users
+  </pf-tab>
+  <pf-tab key="containers-tab">
+    <template #title>
+      <pf-tab-title-icon><box-icon /></pf-tab-title-icon>
+      <pf-tab-title-text>Containers</pf-tab-title-text>
+    </template>
+    Containers
+  </pf-tab>
+  <pf-tab disabled>
+    <template #title>
+      <pf-tab-title-icon><database-icon /></pf-tab-title-icon>
+      <pf-tab-title-text>Database</pf-tab-title-text>
+    </template>
+    Database
+  </pf-tab>
+  <pf-tab>
+    <template #title>
+      <pf-tab-title-icon><server-icon /></pf-tab-title-icon>
+      <pf-tab-title-text>Server</pf-tab-title-text>
+    </template>
+    Server
+  </pf-tab>
+  <pf-tab>
+    <template #title>
+      <pf-tab-title-icon><laptop-icon /></pf-tab-title-icon>
+      <pf-tab-title-text>System</pf-tab-title-text>
+    </template>
+    System
+  </pf-tab>
+  <pf-tab>
+    <template #title>
+      <pf-tab-title-icon><diagram-project-icon /></pf-tab-title-icon>
+      <pf-tab-title-text>Network</pf-tab-title-text>
+    </template>
+    Network
+  </pf-tab>
+</pf-tabs>`},{default:r(()=>[t(C,null,{default:r(()=>[t(f,null,{title:r(()=>[t(T,null,{default:r(()=>[t(m(h))]),_:1}),t(S,null,{default:r(()=>[...o[8]||=[n(`Users`,-1)]]),_:1})]),default:r(()=>[o[9]||=n(` Users `,-1)]),_:1}),t(f,{key:`containers-tab`},{title:r(()=>[t(T,null,{default:r(()=>[t(m(g))]),_:1}),t(S,null,{default:r(()=>[...o[10]||=[n(`Containers`,-1)]]),_:1})]),default:r(()=>[o[11]||=n(` Containers `,-1)]),_:1}),t(f,{disabled:``},{title:r(()=>[t(T,null,{default:r(()=>[t(m(v))]),_:1}),t(S,null,{default:r(()=>[...o[12]||=[n(`Database`,-1)]]),_:1})]),default:r(()=>[o[13]||=n(` Database `,-1)]),_:1}),t(f,null,{title:r(()=>[t(T,null,{default:r(()=>[t(m(_))]),_:1}),t(S,null,{default:r(()=>[...o[14]||=[n(`Server`,-1)]]),_:1})]),default:r(()=>[o[15]||=n(` Server `,-1)]),_:1}),t(f,null,{title:r(()=>[t(T,null,{default:r(()=>[t(m(y))]),_:1}),t(S,null,{default:r(()=>[...o[16]||=[n(`System`,-1)]]),_:1})]),default:r(()=>[o[17]||=n(` System `,-1)]),_:1}),t(f,null,{title:r(()=>[t(T,null,{default:r(()=>[t(m(x))]),_:1}),t(S,null,{default:r(()=>[...o[18]||=[n(`Network`,-1)]]),_:1})]),default:r(()=>[o[19]||=n(` Network `,-1)]),_:1})]),_:1})]),_:1}),t(w,{title:`Tabs with sub tabs`,source:`<pf-tabs>
+  <pf-tab title="Users">
+    <pf-tabs subtab default-active-key="1">
+      <pf-tab title="Subtab item 1"> Subtab section 1 </pf-tab>
+      <pf-tab title="Subtab item 2"> Subtab section 2 </pf-tab>
+      <pf-tab title="Subtab item 3"> Subtab section 3 </pf-tab>
+      <pf-tab title="Subtab item 4"> Subtab section 4 </pf-tab>
+      <pf-tab disabled title="Subtab item 5"> Subtab section 5 </pf-tab>
+      <pf-tab disabled title="Subtab item 6"> Subtab section 6 </pf-tab>
+      <pf-tab title="Subtab item 7"> Subtab section 7 </pf-tab>
+      <pf-tab title="Subtab item 8"> Subtab section 8 </pf-tab>
+      <pf-tab title="Subtab item 9"> Subtab section 9 </pf-tab>
+      <pf-tab title="Subtab item 10"> Subtab section 10 </pf-tab>
+      <pf-tab title="Subtab item 11"> Subtab section 11 </pf-tab>
+    </pf-tabs>
+  </pf-tab>
+  <pf-tab title="Containers"> Containers </pf-tab>
+  <pf-tab disabled title="Database"> Database </pf-tab>
+  <pf-tab title="Server"> Server </pf-tab>
+  <pf-tab title="System"> System </pf-tab>
+  <pf-tab title="Network"> Network </pf-tab>
+  <pf-tab title="Tab item 7"> Tab section 7 </pf-tab>
+  <pf-tab title="Tab item 8"> Tab section 8 </pf-tab>
+  <pf-tab title="Tab item 9"> Tab section 9 </pf-tab>
+  <pf-tab title="Tab item 10"> Tab section 10 </pf-tab>
+  <pf-tab title="Tab item 11"> Tab section 11 </pf-tab>
+</pf-tabs>`},{default:r(()=>[t(C,null,{default:r(()=>[t(f,{title:`Users`},{default:r(()=>[t(C,{subtab:``,"default-active-key":`1`},{default:r(()=>[t(f,{title:`Subtab item 1`},{default:r(()=>[...o[20]||=[n(` Subtab section 1 `,-1)]]),_:1}),t(f,{title:`Subtab item 2`},{default:r(()=>[...o[21]||=[n(` Subtab section 2 `,-1)]]),_:1}),t(f,{title:`Subtab item 3`},{default:r(()=>[...o[22]||=[n(` Subtab section 3 `,-1)]]),_:1}),t(f,{title:`Subtab item 4`},{default:r(()=>[...o[23]||=[n(` Subtab section 4 `,-1)]]),_:1}),t(f,{disabled:``,title:`Subtab item 5`},{default:r(()=>[...o[24]||=[n(` Subtab section 5 `,-1)]]),_:1}),t(f,{disabled:``,title:`Subtab item 6`},{default:r(()=>[...o[25]||=[n(` Subtab section 6 `,-1)]]),_:1}),t(f,{title:`Subtab item 7`},{default:r(()=>[...o[26]||=[n(` Subtab section 7 `,-1)]]),_:1}),t(f,{title:`Subtab item 8`},{default:r(()=>[...o[27]||=[n(` Subtab section 8 `,-1)]]),_:1}),t(f,{title:`Subtab item 9`},{default:r(()=>[...o[28]||=[n(` Subtab section 9 `,-1)]]),_:1}),t(f,{title:`Subtab item 10`},{default:r(()=>[...o[29]||=[n(` Subtab section 10 `,-1)]]),_:1}),t(f,{title:`Subtab item 11`},{default:r(()=>[...o[30]||=[n(` Subtab section 11 `,-1)]]),_:1})]),_:1})]),_:1}),t(f,{title:`Containers`},{default:r(()=>[...o[31]||=[n(` Containers `,-1)]]),_:1}),t(f,{disabled:``,title:`Database`},{default:r(()=>[...o[32]||=[n(` Database `,-1)]]),_:1}),t(f,{title:`Server`},{default:r(()=>[...o[33]||=[n(` Server `,-1)]]),_:1}),t(f,{title:`System`},{default:r(()=>[...o[34]||=[n(` System `,-1)]]),_:1}),t(f,{title:`Network`},{default:r(()=>[...o[35]||=[n(` Network `,-1)]]),_:1}),t(f,{title:`Tab item 7`},{default:r(()=>[...o[36]||=[n(` Tab section 7 `,-1)]]),_:1}),t(f,{title:`Tab item 8`},{default:r(()=>[...o[37]||=[n(` Tab section 8 `,-1)]]),_:1}),t(f,{title:`Tab item 9`},{default:r(()=>[...o[38]||=[n(` Tab section 9 `,-1)]]),_:1}),t(f,{title:`Tab item 10`},{default:r(()=>[...o[39]||=[n(` Tab section 10 `,-1)]]),_:1}),t(f,{title:`Tab item 11`},{default:r(()=>[...o[40]||=[n(` Tab section 11 `,-1)]]),_:1})]),_:1})]),_:1}),t(w,{title:`Tabs horizontal overflow`,source:`<pf-tabs overflow-horizontal>
+  <pf-tab title="Users"> Users </pf-tab>
+  <pf-tab title="Containers"> Containers </pf-tab>
+  <pf-tab disabled title="Database"> Database </pf-tab>
+  <pf-tab title="Server"> Server </pf-tab>
+  <pf-tab title="System"> System </pf-tab>
+  <pf-tab title="Network"> Network </pf-tab>
+  <pf-tab title="Tab item 7"> Tab section 7 </pf-tab>
+  <pf-tab title="Tab item 8"> Tab section 8 </pf-tab>
+  <pf-tab title="Tab item 9"> Tab section 9 </pf-tab>
+  <pf-tab title="Tab item 10"> Tab section 10 </pf-tab>
+  <pf-tab title="Tab item 11"> Tab section 11 </pf-tab>
+</pf-tabs>`},{default:r(()=>[t(C,{"overflow-horizontal":``},{default:r(()=>[t(f,{title:`Users`},{default:r(()=>[...o[41]||=[n(` Users `,-1)]]),_:1}),t(f,{title:`Containers`},{default:r(()=>[...o[42]||=[n(` Containers `,-1)]]),_:1}),t(f,{disabled:``,title:`Database`},{default:r(()=>[...o[43]||=[n(` Database `,-1)]]),_:1}),t(f,{title:`Server`},{default:r(()=>[...o[44]||=[n(` Server `,-1)]]),_:1}),t(f,{title:`System`},{default:r(()=>[...o[45]||=[n(` System `,-1)]]),_:1}),t(f,{title:`Network`},{default:r(()=>[...o[46]||=[n(` Network `,-1)]]),_:1}),t(f,{title:`Tab item 7`},{default:r(()=>[...o[47]||=[n(` Tab section 7 `,-1)]]),_:1}),t(f,{title:`Tab item 8`},{default:r(()=>[...o[48]||=[n(` Tab section 8 `,-1)]]),_:1}),t(f,{title:`Tab item 9`},{default:r(()=>[...o[49]||=[n(` Tab section 9 `,-1)]]),_:1}),t(f,{title:`Tab item 10`},{default:r(()=>[...o[50]||=[n(` Tab section 10 `,-1)]]),_:1}),t(f,{title:`Tab item 11`},{default:r(()=>[...o[51]||=[n(` Tab section 11 `,-1)]]),_:1})]),_:1})]),_:1}),t(w,{title:`Separate content`,source:`<pf-tabs>
+  <pf-tab title="Users" :content-ref="tabUsers" />
+  <pf-tab title="Containers" :content-ref="tabContainers" />
+  <pf-tab title="Database" :content-ref="tabDatabase" />
+  <pf-tab title="Server"> Server </pf-tab>
+  <pf-tab title="Network"> Network </pf-tab>
+</pf-tabs>
+<pf-tab-content ref="tabUsers">Users section</pf-tab-content>
+<pf-tab-content ref="tabContainers">Containers section</pf-tab-content>
+<pf-tab-content ref="tabDatabase">Database section</pf-tab-content>`},{default:r(()=>[t(C,null,{default:r(()=>[t(f,{title:`Users`,"content-ref":a.value},null,8,[`content-ref`]),t(f,{title:`Containers`,"content-ref":c.value},null,8,[`content-ref`]),t(f,{title:`Database`,"content-ref":l.value},null,8,[`content-ref`]),t(f,{title:`Server`},{default:r(()=>[...o[52]||=[n(` Server `,-1)]]),_:1}),t(f,{title:`Network`},{default:r(()=>[...o[53]||=[n(` Network `,-1)]]),_:1})]),_:1}),t(E,{ref_key:`tabUsers`,ref:a},{default:r(()=>[...o[54]||=[n(`Users section`,-1)]]),_:1},512),t(E,{ref_key:`tabContainers`,ref:c},{default:r(()=>[...o[55]||=[n(`Containers section`,-1)]]),_:1},512),t(E,{ref_key:`tabDatabase`,ref:l},{default:r(()=>[...o[56]||=[n(`Database section`,-1)]]),_:1},512)]),_:1})]),_:1})}}});export{S as default};
