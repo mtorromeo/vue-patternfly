@@ -1,6 +1,6 @@
 <template>
   <pf-page v-if="!$route.meta.iframe" managed-sidebar>
-    <template #skeleton>
+    <template #masthead>
       <pf-masthead>
         <pf-masthead-main>
           <pf-masthead-toggle>
@@ -31,9 +31,7 @@
                 <pf-toolbar-item>
                   <pf-dropdown>
                     <template #toggle>
-                      <pf-menu-toggle>
-                        VuePatternfly v6
-                      </pf-menu-toggle>
+                      <pf-menu-toggle> VuePatternfly v6 </pf-menu-toggle>
                     </template>
 
                     <pf-dropdown-item to="https://mtorromeo.github.io/vue-patternfly/v5/">VuePatternFly v5</pf-dropdown-item>
@@ -44,7 +42,9 @@
           </pf-toolbar>
         </pf-masthead-content>
       </pf-masthead>
+    </template>
 
+    <template #sidebar>
       <pf-page-sidebar sidebar-open>
         <pf-nav>
           <pf-nav-group v-for="(categoryStories, category) of stories" :key="category" :title="category">

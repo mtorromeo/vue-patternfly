@@ -1,16 +1,7 @@
 <template>
   <define-main-container>
-    <div :class="[styles.pageMainContainer, {[styles.modifiers.fill]: contentFilled}]">
-      <component
-        :is="mainComponent"
-        :id="mainContainerId"
-        :role="role"
-        :class="styles.pageMain"
-        :tabindex="mainTabIndex"
-        :aria-label="mainAriaLabel"
-        @click="mainClick"
-        @touchstart.passive="mainClick"
-      >
+    <div :class="[styles.pageMainContainer, { [styles.modifiers.fill]: contentFilled }]">
+      <component :is="mainComponent" :id="mainContainerId" :role="role" :class="styles.pageMain" :tabindex="mainTabIndex" :aria-label="mainAriaLabel" @click="mainClick" @touchstart.passive="mainClick">
         <slot />
       </component>
     </div>
@@ -18,15 +9,23 @@
 
   <div
     ref="page"
-    v-bind="{...ouiaProps, ...$attrs}"
-    :class="[styles.page, {
-      'pf-m-resize-observer': width && height,
-      [`pf-m-breakpoint-${getBreakpoint(width)}`]: width,
-      [`pf-m-height-breakpoint-${getVerticalBreakpoint(height)}`]: height,
-      [styles.modifiers.noSidebar]: sidebars.length === 0,
-    }]"
+    v-bind="{ ...ouiaProps, ...$attrs }"
+    :class="[
+      styles.page,
+      {
+        'pf-m-resize-observer': width && height,
+        [`pf-m-breakpoint-${getBreakpoint(width)}`]: width,
+        [`pf-m-height-breakpoint-${getVerticalBreakpoint(height)}`]: height,
+        [styles.modifiers.docked]: variant === 'docked',
+        [styles.modifiers.noSidebar]: sidebars.length === 0,
+      },
+    ]"
   >
-    <slot name="skeleton" />
+    <slot name="skip-to-content" />
+
+    <slot name="masthead" />
+
+    <slot name="sidebar" />
 
     <div v-if="$slots.drawer" :class="styles.pageDrawer">
       <pf-drawer :expanded="drawerExpanded">
@@ -42,14 +41,14 @@
       </pf-drawer>
     </div>
 
-    <main-container v-else/>
+    <main-container v-else />
   </div>
 </template>
 
 <script lang="ts">
-export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
-export const PageSidebarOpenKey = Symbol('PageSidebarOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
-export const PageSidebarsKey = Symbol('PageSidebarsKey') as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
+export const PageManagedSidebarKey = Symbol("PageManagedSidebarKey") as InjectionKey<Ref<boolean>>;
+export const PageSidebarOpenKey = Symbol("PageSidebarOpenKey") as InjectionKey<WritableComputedRef<boolean>>;
+export const PageSidebarsKey = Symbol("PageSidebarsKey") as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the value for role on the <main> element */
@@ -74,47 +73,49 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag indicating Notification drawer in expanded */
   drawerExpanded?: boolean;
   /** HTML component used as main component of the page. Defaults to 'main', only pass in 'div' if another 'main' element already exists. */
-  mainComponent?: 'main' | 'div';
+  mainComponent?: "main" | "div";
   /** Enables children to fill the available vertical space. Child page sections or groups that should fill should be passed the isFilled property. */
   contentFilled?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Page/page';
-import { globalWidthBreakpoints } from '../../constants';
-import { createReusableTemplate, useElementSize, useWindowSize } from '@vueuse/core';
-import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes, useTemplateRef, type ComponentPublicInstance } from 'vue';
-import PfDrawer from '../Drawer/Drawer.vue';
-import PfDrawerContent from '../Drawer/DrawerContent.vue';
-import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { getBreakpoint, getVerticalBreakpoint } from '../../util';
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
+import styles from "@patternfly/react-styles/css/components/Page/page";
+import { globalWidthBreakpoints } from "../../constants";
+import { createReusableTemplate, useElementSize, useWindowSize } from "@vueuse/core";
+import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes, useTemplateRef, type ComponentPublicInstance } from "vue";
+import PfDrawer from "../Drawer/Drawer.vue";
+import PfDrawerContent from "../Drawer/DrawerContent.vue";
+import PfDrawerPanelContent from "../Drawer/DrawerPanelContent.vue";
+import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
+import { getBreakpoint, getVerticalBreakpoint } from "../../util";
+import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from "../../use";
 
 defineOptions({
-  name: 'PfPage',
+  name: "PfPage",
   inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<Props>(), {
   defaultManagedSidebarOpen: true,
-  mainComponent: 'main',
+  mainComponent: "main",
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: 'pageResize', v: { mobileView: boolean, windowSize: number }): void;
+  (name: "pageResize", v: { mobileView: boolean; windowSize: number }): void;
 }>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   drawer?: (props?: Record<never, never>) => any;
-  skeleton?: (props?: Record<never, never>) => any;
+  "skip-to-content"?: (props?: Record<never, never>) => any;
+  masthead?: (props?: Record<never, never>) => any;
+  sidebar?: (props?: Record<never, never>) => any;
 }>();
 
 const [DefineMainContainer, MainContainer] = createReusableTemplate();
-const pageRef = useTemplateRef('page');
+const pageRef = useTemplateRef("page");
 const { width, height } = useElementSize(pageRef);
 const sidebars = provideChildrenTracker(PageSidebarsKey);
 
@@ -142,10 +143,14 @@ provide(PageSidebarOpenKey, sidebarOpen);
 
 const { width: windowWidth } = useWindowSize();
 
-watch(windowWidth, (width) => {
-  mobileView.value = width < globalWidthBreakpoints.xl;
-  emit('pageResize', { mobileView: mobileView.value, windowSize: width });
-}, { immediate: true });
+watch(
+  windowWidth,
+  (width) => {
+    mobileView.value = width < globalWidthBreakpoints.xl;
+    emit("pageResize", { mobileView: mobileView.value, windowSize: width });
+  },
+  { immediate: true },
+);
 
 function navToggle() {
   sidebarOpen.value = !sidebarOpen.value;

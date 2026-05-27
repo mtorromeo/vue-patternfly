@@ -3,6 +3,10 @@ packages:
   - vite-plugins/*
   - packages/*
 
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
