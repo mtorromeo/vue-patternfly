@@ -1,7 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [6.0.0-beta.8] - 2026-03-18
+## [6.0.0-beta.9] - 2026-06-22
+
+### Bug Fixes
+
+- *(DataList)* Allow per-item override of the expandable prop
+- *(NotificationBadge)* Changed default icon for attention variant
+- *(LabelGroup)* Updated close icon
+- *(Page)* Pass sidebar state to button for expanded toggle state
+- *(Tabs)* Incorrect pf-tab-button and pf-tab-content ids ([#14](https://github.com/mtorromeo/vue-patternfly/issues/14))
+
+### Features
+
+- *(Icons)* Allow more complex paths and SVGs
+- *(Button)* Added circle variant
+- *(Page)* [**breaking**] Replaced skeleton slot with skip-to-content + masthead + sidebar slots
+- *(Page)* Added responsive docked nav
+- *(NotificationBadge)* Add support for plain variant
+
+## [6.0.0-beta.8] - 2026-05-27
 
 ### Bug Fixes
 
@@ -10,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - *(OverflowMenu)* Wrong breakpoint calculation
 - *(Toolbar)* Wrong breakpoint calculation
 - Avoid exposing vue's definition of the html autocomplete attribute to avoid "type too complex" errors
+- Update peerDependency for @useuse and added package.json to exports
 
 ### Documentation
 
