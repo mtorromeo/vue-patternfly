@@ -1,6 +1,41 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.10] - 2026-08-14
+
+### Bug Fixes
+
+- *(MenuToggle)* Removed empty span when no text is present
+- *(MenuToggle)* Fixed duplicated default slot in type-ahead variant
+- *(HelperTextItem)* Used non-default variant icon by default, removed icon and dynamic flags
+- *(MenuToggle)* Circle style applied only to plain variant
+- *(docs)* Removed icon and dynamic props from HelperText story
+- *(FormGroup)* Removed icon props from HelperTextItems
+- *(Alert)* Moved toggle icon in proper pf-button slot
+- Switch right angle icon to down angle icon in all vertical expanding components
+- *(Label)* Applied status classes and icons
+- *(Label)* Fixed label @click event
+- *(Label)* Disabled state for label with links
+
+### Documentation
+
+- *(MenuToggle)* Added circle and placeholder variant and status toggle examples
+
+### Features
+
+- *(MenuToggle)* InForm style modifier
+- *(Badge)* Disabled state
+- *(Banner)* Add pill variant
+- *(Select)* Added label prop and icon slot for menu toggle
+- *(docs)* Added selector for all the available themes
+- *(Card)* Added subtitle slot to CardTitle
+- *(Card)* Add glass prop
+- *(Label)* Add variant
+
+### Refactor
+
+- Implemented optional capture slot in pass-through that captures all contained vnodes and passes them to the default slot to re-render
+
 ## [6.0.0-beta.9] - 2026-06-22
 
 ### Bug Fixes
