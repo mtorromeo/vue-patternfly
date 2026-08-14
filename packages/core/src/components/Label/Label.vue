@@ -1,13 +1,14 @@
 <template>
   <component
     v-bind="ouiaProps"
-    :is="overflow ? 'button' : 'span'"
-    :type="overflow ? 'button' : undefined"
+    :is="overflow || variant === 'add' ? 'button' : 'span'"
+    :type="overflow || variant === 'add' ? 'button' : undefined"
     :class="[styles.label, colorStyles[color], status ? styles.modifiers[status] : null, {
       [styles.modifiers.filled]: variant === 'filled',
       [styles.modifiers.outline]: outline || variant === 'outline',
       [styles.modifiers.compact]: compact,
       [styles.modifiers.overflow]: overflow,
+      [styles.modifiers.add]: variant === 'add',
     }]">
     <pf-tooltip :position="tooltipPosition">
       <component
