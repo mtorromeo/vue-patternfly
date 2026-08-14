@@ -27,7 +27,6 @@ export * from './ActionList';
 export * from './Alert';
 export * from './Breadcrumb';
 export * from './Card';
-export * from './ChipGroup';
 export * from './DataList';
 export * from './DescriptionList';
 export * from './Drawer';
