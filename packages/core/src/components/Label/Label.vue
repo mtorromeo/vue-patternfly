@@ -3,7 +3,7 @@
     v-bind="ouiaProps"
     :is="overflow ? 'button' : 'span'"
     :type="overflow ? 'button' : undefined"
-    :class="[styles.label, colorStyles[color], {
+    :class="[styles.label, colorStyles[color], status ? styles.modifiers[status] : null, {
       [styles.modifiers.filled]: variant === 'filled',
       [styles.modifiers.outline]: outline || variant === 'outline',
       [styles.modifiers.compact]: compact,
@@ -19,8 +19,14 @@
         :aria-disabled="contentComponent === 'a' && isClickableDisabled ? true : undefined"
         :class="[styles.labelContent, { [styles.modifiers.clickable]: isClickable }]"
       >
-        <span v-if="$slots.icon" :class="styles.labelIcon">
-          <slot name="icon" />
+        <span v-if="$slots.icon || status" :class="styles.labelIcon">
+          <slot name="icon">
+            <pf-circle-check-icon v-if="status === 'success'" />
+            <pf-triangle-exclamation-icon v-else-if="status === 'warning'" />
+            <pf-circle-exclamation-icon v-else-if="status === 'danger'" />
+            <pf-circle-info-icon v-else-if="status === 'info'" />
+            <pf-bell-icon v-else />
+          </slot>
         </span>
 
         <span ref="textRef" :class="styles.labelText" :style="textMaxWidth ? {[cssTextMaxWidth.name]: textMaxWidth} : undefined">
@@ -54,8 +60,13 @@ import PfTooltip from '../Tooltip/Tooltip.vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import type { Placement } from '../../helpers/FloatingUi.vue';
-import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import { LabelKey } from './common';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
+import PfBellIcon from '@vue-patternfly/icons/bell-icon';
+import PfCircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
+import PfTriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
+import PfCircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
+import PfCircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 
 const colorStyles = {
   blue: styles.modifiers.blue,

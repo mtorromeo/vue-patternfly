@@ -6,7 +6,10 @@
       <component-info name="PfLabel" />
     </template>
 
-    <story-canvas title="Filled">
+    <story-canvas title="Filled labels">
+      <pf-title h="4">Non-status:</pf-title>
+      <br>
+
       <pf-label>Grey</pf-label>
       <pf-label>
         <template #icon>
@@ -196,9 +199,65 @@
         </template>
         Yellow label with icon that overflows
       </pf-label>
+      <br>
+      <br>
+
+      <pf-title h="4">Status:</pf-title>
+      <br>
+
+      <pf-label status="success">Success</pf-label>
+      <pf-label status="success" @close="alert">Success removeable</pf-label>
+      <pf-label status="success" href="#filled">Success link</pf-label>
+      <pf-label status="success" href="#filled" @close="alert">Success link removeable</pf-label>
+      <pf-label status="success" text-max-width="16ch" @close="alert">
+        Success label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label status="warning">Warning</pf-label>
+      <pf-label status="warning" @close="alert">Warning removeable</pf-label>
+      <pf-label status="warning" href="#filled">Warning link</pf-label>
+      <pf-label status="warning" href="#filled" @close="alert">Warning link removeable</pf-label>
+      <pf-label status="warning" text-max-width="16ch" @close="alert">
+        Warning label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label status="danger">Danger</pf-label>
+      <pf-label status="danger" @close="alert">Danger removeable</pf-label>
+      <pf-label status="danger" href="#filled">Danger link</pf-label>
+      <pf-label status="danger" href="#filled" @close="alert">Danger link removeable</pf-label>
+      <pf-label status="danger" text-max-width="16ch" @close="alert">
+        Danger label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label status="info">Info</pf-label>
+      <pf-label status="info" @close="alert">Info removeable</pf-label>
+      <pf-label status="info" href="#filled">Info link</pf-label>
+      <pf-label status="info" href="#filled" @close="alert">Info link removeable</pf-label>
+      <pf-label status="info" text-max-width="16ch" @close="alert">
+        Info label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label status="custom">Custom</pf-label>
+      <pf-label status="custom" @close="alert">Custom removeable</pf-label>
+      <pf-label status="custom" href="#filled">Custom link</pf-label>
+      <pf-label status="custom" href="#filled" @close="alert">Custom link removeable</pf-label>
+      <pf-label status="custom" text-max-width="16ch" @close="alert">
+        Custom label with text that overflows
+      </pf-label>
     </story-canvas>
 
-    <story-canvas title="Outline">
+    <story-canvas title="Outline labels">
+      <pf-title h="4">Non-status:</pf-title>
+      <br>
+
       <pf-label outline>Grey</pf-label>
       <pf-label outline>
         <template #icon>
@@ -388,9 +447,62 @@
         </template>
         Yellow label with icon that overflows
       </pf-label>
+      <br>
+      <br>
+
+      <pf-title h="4">Status:</pf-title>
+      <br>
+
+      <pf-label outline status="success">Success</pf-label>
+      <pf-label outline status="success" @close="alert">Success removeable</pf-label>
+      <pf-label outline status="success" href="#filled">Success link</pf-label>
+      <pf-label outline status="success" href="#filled" @close="alert">Success link removeable</pf-label>
+      <pf-label outline status="success" text-max-width="16ch" @close="alert">
+        Success label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label outline status="warning">Warning</pf-label>
+      <pf-label outline status="warning" @close="alert">Warning removeable</pf-label>
+      <pf-label outline status="warning" href="#filled">Warning link</pf-label>
+      <pf-label outline status="warning" href="#filled" @close="alert">Warning link removeable</pf-label>
+      <pf-label outline status="warning" text-max-width="16ch" @close="alert">
+        Warning label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label outline status="danger">Danger</pf-label>
+      <pf-label outline status="danger" @close="alert">Danger removeable</pf-label>
+      <pf-label outline status="danger" href="#filled">Danger link</pf-label>
+      <pf-label outline status="danger" href="#filled" @close="alert">Danger link removeable</pf-label>
+      <pf-label outline status="danger" text-max-width="16ch" @close="alert">
+        Danger label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label outline status="info">Info</pf-label>
+      <pf-label outline status="info" @close="alert">Info removeable</pf-label>
+      <pf-label outline status="info" href="#filled">Info link</pf-label>
+      <pf-label outline status="info" href="#filled" @close="alert">Info link removeable</pf-label>
+      <pf-label outline status="info" text-max-width="16ch" @close="alert">
+        Info label with text that overflows
+      </pf-label>
+      <br>
+      <br>
+
+      <pf-label outline status="custom">Custom</pf-label>
+      <pf-label outline status="custom" @close="alert">Custom removeable</pf-label>
+      <pf-label outline status="custom" href="#filled">Custom link</pf-label>
+      <pf-label outline status="custom" href="#filled" @close="alert">Custom link removeable</pf-label>
+      <pf-label outline status="custom" text-max-width="16ch" @close="alert">
+        Custom label with text that overflows
+      </pf-label>
     </story-canvas>
 
-    <story-canvas title="Compact">
+    <story-canvas title="Compact labels">
       <pf-label compact>Compact</pf-label>
       <pf-label compact>
         <template #icon>
@@ -414,7 +526,7 @@
       </pf-label>
     </story-canvas>
 
-    <story-canvas title="Truncated">
+    <story-canvas title="Truncated labels">
       <pf-label text-max-width="16ch" tooltip-position="right">Label is too long to fit in the label</pf-label>
     </story-canvas>
   </doc-page>
@@ -422,8 +534,8 @@
 
 <style>
 .story-canvas .pf-v6-c-label + .pf-v6-c-label {
-  margin-inline-end: var(--pf-t--global--spacer--sm);
-  margin-block-end: var(--pf-t--global--spacer--sm);
+  margin-inline-start: var(--pf-t--global--spacer--sm);
+  margin-block-start: var(--pf-t--global--spacer--sm);
 }
 </style>
 
