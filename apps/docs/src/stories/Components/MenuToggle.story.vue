@@ -285,6 +285,22 @@
     <story-canvas title="Full width">
       <pf-menu-toggle full-width>Full width</pf-menu-toggle>
     </story-canvas>
+
+    <story-canvas title="Typeahead toggle">
+      <pf-menu-toggle variant="typeahead" full-width>
+        <pf-text-input-group plain>
+          <pf-text-input-group-main autocomplete="off" v-model="inputValue" />
+
+          <pf-text-input-group-utilities>
+            <pf-button v-if="inputValue" variant="plain" aria-label="Clear input">
+              <template #icon>
+                <x-icon />
+              </template>
+            </pf-button>
+          </pf-text-input-group-utilities>
+        </pf-text-input-group>
+      </pf-menu-toggle>
+    </story-canvas>
   </doc-page>
 </template>
 
@@ -296,4 +312,8 @@
 
 <script lang="ts" setup>
 import GearIcon from '@vue-patternfly/icons/gear-icon';
+import XIcon from '@vue-patternfly/icons/x-icon';
+import { ref } from 'vue';
+
+const inputValue = ref('');
 </script>

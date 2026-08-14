@@ -68,11 +68,18 @@
         <slot name="badge" />
       </span>
 
-      <button v-if="typeahead || isSplitButton" type="button" :class="styles.menuToggleButton" :disabled="disabled" :aria-expanded="expanded" aria-label="Menu toggle" @click="expanded = !expanded">
+      <button
+        v-if="typeahead || isSplitButton"
+        type="button"
+        :class="[styles.menuToggleButton, { [styles.modifiers.text]: isSplitButton && $slots.default }]"
+        :disabled="disabled"
+        :aria-expanded="expanded"
+        aria-label="Menu toggle"
+        @click="expanded = !expanded"
+      >
         <span v-if="isSplitButton && $slots.default" :class="styles.menuToggleText">
           <slot />
         </span>
-        <slot v-else />
         <toggle-controls />
       </button>
 
