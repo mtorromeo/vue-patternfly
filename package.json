@@ -15,7 +15,7 @@
     "@rushstack/eslint-patch": "^1.16.1",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.9.1",
-    "concurrently": "^9.1.2",
+    "concurrently": "^10.0.4",
     "eslint": "^10.4.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.31.0",

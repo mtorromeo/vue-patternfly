@@ -1,6 +1,6 @@
 <template>
   <define-toggle-controls>
-    <span :class="styles.menuToggleControls">
+    <span v-if="variant !== 'plain'" :class="styles.menuToggleControls">
       <span v-if="status || $slots['status-icon']" :class="styles.menuToggleStatusIcon">
         <slot name="status-icon">
           <circle-check-icon v-if="status === 'success'" />
@@ -50,14 +50,14 @@
       <slot v-else name="icon" />
     </span>
 
-    <slot v-if="!isSplitButton && variant === 'plain'">
+    <slot v-if="!isSplitButton && variant === 'plain' && ((!settings && !$slots.icon && !$slots.badge) || $slots.default)">
       <span v-if="!settings && !$slots.icon && !$slots.badge" :class="styles.menuToggleIcon">
         <ellipsis-vertical-icon />
       </span>
     </slot>
 
     <template v-else>
-      <span v-if="!isSplitButton && !typeahead" :class="styles.menuToggleText">
+      <span v-if="!isSplitButton && !typeahead && $slots.default" :class="styles.menuToggleText">
         <slot />
       </span>
       <slot v-else-if="!isSplitButton" />
@@ -68,7 +68,7 @@
       </span>
 
       <button v-if="typeahead || isSplitButton" type="button" :class="styles.menuToggleButton" :disabled="disabled" :aria-expanded="expanded" aria-label="Menu toggle" @click="expanded = !expanded">
-        <span v-if="isSplitButton" :class="styles.menuToggleText">
+        <span v-if="isSplitButton && $slots.default" :class="styles.menuToggleText">
           <slot />
         </span>
         <slot v-else />

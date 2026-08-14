@@ -24,13 +24,23 @@
       <pf-menu-toggle disabled>Disabled</pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Count">
+    <story-canvas title="With a badge">
       <pf-menu-toggle>
         Count
         <template #badge>
           <pf-badge>4 selected</pf-badge>
         </template>
       </pf-menu-toggle>
+      <pf-menu-toggle variant="plainText">
+        <template #badge>
+          <pf-badge>4</pf-badge>
+        </template>
+      </pf-menu-toggle>
+    </story-canvas>
+
+    <story-canvas title="Settings toggle">
+      <pf-menu-toggle settings>Settings</pf-menu-toggle>
+      <pf-menu-toggle settings variant="plain" aria-label="Settings" />
     </story-canvas>
 
     <story-canvas title="Primary">
