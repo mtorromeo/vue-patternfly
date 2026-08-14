@@ -19,6 +19,13 @@
       <pf-badge>240</pf-badge>
       <pf-badge>999+</pf-badge>
     </story-canvas>
+
+    <story-canvas title="Disabled">
+      <pf-badge disabled>7</pf-badge>
+      <pf-badge disabled>24</pf-badge>
+      <pf-badge disabled>240</pf-badge>
+      <pf-badge disabled>999+</pf-badge>
+    </story-canvas>
   </doc-page>
 </template>
 

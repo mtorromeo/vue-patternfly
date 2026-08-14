@@ -4,6 +4,7 @@
     :class="[styles.badge, {
       [styles.modifiers.read]: read,
       [styles.modifiers.unread]: !read,
+      [styles.modifiers.disabled]: disabled,
     }]">
     <slot />
   </span>
@@ -19,7 +20,10 @@ defineOptions({
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /**  Adds styling to the badge to indicate it has been read */
   read?: boolean;
+  /** Adds styling to the badge to indicate it is disabled */
+  disabled?: boolean;
 }
 
 const props = defineProps<Props>();
