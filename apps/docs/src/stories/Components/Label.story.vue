@@ -529,6 +529,17 @@
     <story-canvas title="Truncated labels">
       <pf-label text-max-width="16ch" tooltip-position="right">Label is too long to fit in the label</pf-label>
     </story-canvas>
+
+    <story-canvas title="Label group with overflow">
+      <pf-label-group>
+        <pf-label><template #icon><circle-info-icon /></template> Label 1</pf-label>
+        <pf-label color="blue"><template #icon><circle-info-icon /></template> Label 2</pf-label>
+        <pf-label color="green"><template #icon><circle-info-icon /></template> Label 3</pf-label>
+        <pf-label color="yellow"><template #icon><circle-info-icon /></template> Label 4</pf-label>
+        <pf-label color="red"><template #icon><circle-info-icon /></template> Label 5</pf-label>
+        <pf-label color="purple"><template #icon><circle-info-icon /></template> Label 6</pf-label>
+      </pf-label-group>
+    </story-canvas>
   </doc-page>
 </template>
 

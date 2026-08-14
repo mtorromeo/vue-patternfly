@@ -147,7 +147,7 @@ function render() {
             class: { [labelStyles.modifiers.compact]: props.compact },
             component: "button",
             overflow: true,
-            onClick: overflowChipClick as (e: Event) => void,
+            onClick: overflowChipClick,
           },
           () => (open.value ? props.expandedText : collapsedTextResult),
         ),

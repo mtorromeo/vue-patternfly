@@ -18,6 +18,7 @@
         :disabled="contentComponent === 'button' && isClickableDisabled ? true : undefined"
         :aria-disabled="contentComponent === 'a' && isClickableDisabled ? true : undefined"
         :class="[styles.labelContent, { [styles.modifiers.clickable]: isClickable }]"
+        @click="onClick"
       >
         <span v-if="$slots.icon || status" :class="styles.labelIcon">
           <slot name="icon">
@@ -109,7 +110,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
   /** Callback for when the label is clicked. This should not be passed in if the href or editable props are also passed in. */
   onClose?: (e: Event) => void;
   /** Callback for when the label is clicked. This should not be passed in if the href or isEditable props are also passed in. */
-  onClick?: (e: Event) => void;
+  onClick?: (e: PointerEvent) => void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
