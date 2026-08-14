@@ -13,13 +13,14 @@
     <pf-tooltip :position="tooltipPosition">
       <component
         :is="contentComponent"
+        :class="[styles.labelContent, { [styles.modifiers.clickable]: isClickable }]"
         :to="to"
         :href="href"
         :type="contentComponent === 'button' ? 'button' : undefined"
         :disabled="contentComponent === 'button' && isClickableDisabled ? true : undefined"
+        :tabindex="contentComponent === 'a' && isClickableDisabled ? -1 : undefined"
         :aria-disabled="contentComponent === 'a' && isClickableDisabled ? true : undefined"
-        :class="[styles.labelContent, { [styles.modifiers.clickable]: isClickable }]"
-        @click="onClick"
+        @click="(event: PointerEvent) => (contentComponent === 'a' && disabled) ? event.preventDefault() : onClick?.(event)"
       >
         <span v-if="$slots.icon || status" :class="styles.labelIcon">
           <slot name="icon">
@@ -132,8 +133,8 @@ useChildrenTracker(LabelKey);
 
 const text = useTemplateRef('textRef');
 const textOverflowing = useElementOverflow(text);
-const isClickable = computed(() => props.onClick && !props.overflow);
-const isClickableDisabled = computed(() => (props.href || props.onClick) && props.disabled);
+const isClickable = computed(() => (props.onClick && !props.overflow && props.variant !== 'add') || props.href || props.to);
+const isClickableDisabled = computed(() => (props.href || props.to || props.onClick) && props.disabled);
 
 const contentComponent = computed(() => {
   if (props.href) {
