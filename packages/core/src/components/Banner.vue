@@ -3,6 +3,7 @@
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.banner, {
       [styles.modifiers.sticky]: sticky,
+      [styles.modifiers.pill]: pill,
       [styles.modifiers[variant as NonNullable<typeof variant>]]: variant,
     }]"
   >
@@ -27,6 +28,8 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** If set to true, the banner sticks to the top of its container */
   sticky?: boolean;
+  /** If set to true, the banner will have a pill shape */
+  pill?: boolean;
   /** Text announced by screen readers to indicate the type of banner. This prop should only
    * be passed in when the banner conveys status/severity.
    */

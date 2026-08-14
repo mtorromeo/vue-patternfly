@@ -72,6 +72,26 @@
         </pf-flex>
       </pf-banner>
     </story-canvas>
+
+    <story-canvas title="Pill">
+      <pf-banner pill>Default banner</pf-banner>
+      <br>
+      <pf-banner pill color="red">Red banner</pf-banner>
+      <br>
+      <pf-banner pill color="orangered">Orangered banner</pf-banner>
+      <br>
+      <pf-banner pill color="orange">Orange banner</pf-banner>
+      <br>
+      <pf-banner pill color="yellow">Yellow banner</pf-banner>
+      <br>
+      <pf-banner pill color="green">Green banner</pf-banner>
+      <br>
+      <pf-banner pill color="teal">Teal banner</pf-banner>
+      <br>
+      <pf-banner pill color="blue">Blue banner</pf-banner>
+      <br>
+      <pf-banner pill color="purple">Purple banner</pf-banner>
+    </story-canvas>
   </doc-page>
 </template>
 
