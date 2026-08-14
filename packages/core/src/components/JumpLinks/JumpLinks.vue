@@ -21,7 +21,7 @@
           >
             <template #icon>
               <span :class="styles.jumpLinksToggleIcon">
-                <angle-right-icon />
+                <pf-angle-down-icon />
               </span>
             </template>
             <slot name="label" />
@@ -78,7 +78,7 @@ import { classesFromBreakpointProps, type ExpandableBreakpointProps } from '../.
 import { provide, nextTick, ref, type Ref, computed, watch, onMounted, onUnmounted, toValue, type HTMLAttributes, type MaybeRef, type InjectionKey } from 'vue';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 import { computedWithControl, type ComputedRefWithControl, type MaybeComputedElementRef } from '@vueuse/core';
-import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfJumpLinksItem from './JumpLinksItem.vue';
 import PfButton from '../Button.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';

@@ -26,7 +26,7 @@
       >
         <template #icon>
           <span :class="styles.alertToggleIcon">
-            <pf-angle-right-icon />
+            <pf-angle-down-icon />
           </span>
         </template>
       </pf-button>
@@ -77,7 +77,7 @@ import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfButton from '../Button.vue';
 import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
-import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { ref, watch, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component, useTemplateRef, type ComponentPublicInstance } from 'vue';
 import { useElementSize } from '@vueuse/core';

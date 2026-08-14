@@ -11,7 +11,7 @@
         @click="emit('click', $event)"
       >
         <div :class="styles.dataListToggleIcon">
-          <pf-angle-right-icon />
+          <pf-angle-down-icon />
         </div>
       </pf-button>
     </div>
@@ -22,7 +22,7 @@
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfButton from '../Button.vue';
-import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import type { HTMLAttributes } from 'vue';
 
 defineOptions({

@@ -22,7 +22,7 @@
       </span>
       <span :class="styles.navToggle">
         <span :class="styles.navToggleIcon">
-          <angle-right-icon />
+          <pf-angle-down-icon />
         </span>
       </span>
     </button>
@@ -44,7 +44,7 @@
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
 import { ref, computed, type LiHTMLAttributes, useTemplateRef, inject, useId } from 'vue';
 

@@ -12,13 +12,13 @@
       @click="handleClick($event as PointerEvent)"
     >
       <span v-if="accordion?.togglePosition === 'start'" :class="styles.accordionToggleIcon">
-        <angle-right-icon />
+        <pf-angle-down-icon />
       </span>
       <span :class="styles.accordionToggleText">
         <slot name="toggle">{{ title }}</slot>
       </span>
       <span v-if="accordion?.togglePosition === 'end'" :class="styles.accordionToggleIcon">
-        <angle-right-icon />
+        <pf-angle-down-icon />
       </span>
     </button>
   </component>
@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import { inject, type ButtonHTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
-import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import { AccordionKey } from './Accordion.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 

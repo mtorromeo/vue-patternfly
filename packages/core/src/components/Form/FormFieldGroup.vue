@@ -15,7 +15,7 @@
           @click="expanded = !expanded"
         >
           <span :class="styles.formFieldGroupToggleIcon">
-            <pf-angle-right-icon aria-hidden />
+            <pf-angle-down-icon />
           </span>
         </pf-button>
       </div>
@@ -31,7 +31,7 @@
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import { type FieldsetHTMLAttributes, computed, useId } from 'vue';
 import PfButton from '../Button.vue';
-import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 

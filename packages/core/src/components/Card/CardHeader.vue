@@ -3,7 +3,7 @@
     <div v-if="expandable" :class="styles.cardHeaderToggle">
       <pf-button variant="plain" v-bind="toggleButtonAttrs" @click="toggle">
         <span :class="styles.cardHeaderToggleIcon">
-          <pf-angle-right-icon aria-hidden />
+          <pf-angle-down-icon />
         </span>
       </pf-button>
     </div>
@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
-import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfButton from '../Button.vue';
 import { computed, type HTMLAttributes, inject } from 'vue';
 import { CardCheckboxKey, CardExpandableKey, CardExpandedKey } from './Card.vue';

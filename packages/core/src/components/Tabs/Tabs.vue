@@ -31,7 +31,7 @@
         @click="scrollLeft"
       >
         <template #icon>
-          <angle-left-icon />
+          <pf-angle-left-icon />
         </template>
       </pf-button>
     </div>
@@ -63,7 +63,7 @@
             More ({{ overflowingTabCount }})
           </pf-tab-title-text>
           <span :class="styles.tabsLinkToggleIcon">
-            <angle-right-icon />
+            <pf-angle-down-icon />
           </span>
         </button>
 
@@ -86,7 +86,7 @@
         @click="scrollRight"
       >
         <template #icon>
-          <angle-right-icon />
+          <pf-angle-right-icon />
         </template>
       </pf-button>
     </div>
@@ -142,8 +142,9 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { isDefined, useEventListener } from '@vueuse/core';
 import { provideChildrenTracker } from '../../use';
 import { TabsKey, TabsProvideKey, type TabKey } from './common';
-import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
-import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
+import PfAngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfButton from '../Button.vue';
 import PfTabTitleText from './TabTitleText.vue';
 import FloatingUi from '../../helpers/FloatingUi.vue';

@@ -20,7 +20,7 @@
             [styles.modifiers.expandTop]: expanded && direction === 'up',
           }]"
         >
-          <angle-right-icon aria-hidden />
+          <pf-angle-down-icon />
         </span>
         <slot />
       </pf-button>
@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
-import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfButton from '../Button.vue';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';

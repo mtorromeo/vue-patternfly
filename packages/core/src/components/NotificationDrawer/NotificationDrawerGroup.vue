@@ -20,7 +20,7 @@
         </div>
 
         <span :class="styles.notificationDrawerGroupToggleIcon">
-          <angle-right-icon />
+          <pf-angle-down-icon />
         </span>
       </button>
     </component>
@@ -37,7 +37,7 @@ import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfBadge from '../Badge.vue';
 import { useTemplateRef } from 'vue';
 import { useElementOverflow } from '../../use';
-import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
+import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import type { Placement } from '../../helpers/FloatingUi.vue';
 
