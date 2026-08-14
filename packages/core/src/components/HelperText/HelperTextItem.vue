@@ -5,12 +5,9 @@
     :class="[
       styles.helperTextItem,
       variant === 'default' ? null : styles.modifiers[variant],
-      {
-        [styles.modifiers.dynamic]: dynamic,
-      },
     ]"
   >
-    <span v-if="icon || $slots.icon" :class="styles.helperTextItemIcon" aria-hidden>
+    <span v-if="variant !== 'default' || $slots.icon" :class="styles.helperTextItemIcon" aria-hidden>
       <slot name="icon">
         <minus-icon v-if="variant === 'default' || variant === 'indeterminate'" />
         <triangle-exclamation-icon v-else-if="variant === 'warning'" />
@@ -41,12 +38,6 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /** Variant styling of the helper text item. */
   variant?: 'default' | 'warning' | 'success' | 'error' | 'indeterminate';
-
-  /** Flag indicating the helper text should have an icon. Dynamic helper texts include icons by default while static helper texts do not. */
-  icon?: boolean;
-
-  /** Flag indicating the helper text item is dynamic. */
-  dynamic?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
