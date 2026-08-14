@@ -1,6 +1,6 @@
 <template>
   <nav v-bind="ouiaProps" :class="styles.breadcrumb" :aria-label="ariaLabel">
-    <ol :class="styles.breadcrumbList">
+    <ol :class="styles.breadcrumbList" role="list">
       <slot-with-dividers />
     </ol>
   </nav>

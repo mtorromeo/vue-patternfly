@@ -19,15 +19,58 @@
             <pf-toolbar-content>
               <pf-toolbar-group align="end">
                 <pf-toolbar-item>
-                  <pf-toggle-group :model-value="darkTheme" @update:model-value="darkTheme = Boolean($event)" aria-label="Dark mode toggle">
-                    <pf-toggle-group-item :value="false">
-                      <sun-icon />
-                    </pf-toggle-group-item>
-                    <pf-toggle-group-item :value="true">
-                      <moon-icon />
-                    </pf-toggle-group-item>
-                  </pf-toggle-group>
+                  <pf-select label="">
+                    <template #icon>
+                      <sun-icon v-if="!darkTheme" />
+                      <moon-icon v-else />
+                    </template>
+
+                    <pf-menu-content>
+                      <pf-menu-group label="Theme">
+                        <pf-menu-input>
+                          <pf-toggle-group :model-value="feltTheme" @update:model-value="feltTheme = Boolean($event)">
+                            <pf-toggle-group-item :value="false">
+                              Default
+                            </pf-toggle-group-item>
+                            <pf-toggle-group-item :value="true">
+                              Project Felt
+                            </pf-toggle-group-item>
+                          </pf-toggle-group>
+                        </pf-menu-input>
+                      </pf-menu-group>
+                      <pf-divider />
+                      <pf-menu-group label="Color scheme">
+                        <pf-menu-input>
+                          <pf-toggle-group :model-value="darkTheme" @update:model-value="darkTheme = Boolean($event)" aria-label="Dark mode toggle">
+                            <pf-toggle-group-item :value="false">
+                              Light
+                            </pf-toggle-group-item>
+                            <pf-toggle-group-item :value="true">
+                              Dark
+                            </pf-toggle-group-item>
+                          </pf-toggle-group>
+                        </pf-menu-input>
+                      </pf-menu-group>
+                      <pf-divider />
+                      <pf-menu-group label="Contrast mode">
+                        <pf-menu-input>
+                          <pf-toggle-group v-model="contrastTheme">
+                            <pf-toggle-group-item value="Default">
+                              Default
+                            </pf-toggle-group-item>
+                            <pf-toggle-group-item value="High contrast">
+                              High contrast
+                            </pf-toggle-group-item>
+                            <pf-toggle-group-item value="Glass">
+                              Glass
+                            </pf-toggle-group-item>
+                          </pf-toggle-group>
+                        </pf-menu-input>
+                      </pf-menu-group>
+                    </pf-menu-content>
+                  </pf-select>
                 </pf-toolbar-item>
+
                 <pf-toolbar-item>
                   <pf-dropdown>
                     <template #toggle>
@@ -128,7 +171,7 @@
 </style>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, type Ref } from "vue";
 import { stories } from "./router";
 import { useAlertsStore } from "./store/alerts";
 import PfLogo from "@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg?raw";
@@ -149,13 +192,35 @@ const overflowMessage = computed(() => {
   return "";
 });
 
-const darkTheme = ref(document.documentElement.classList.contains("pf-v6-theme-dark"));
+const feltTheme = ref(document.documentElement.classList.contains("pf-v6-theme-felt"));
+watch(feltTheme, (value) => {
+  if (value) {
+    document.documentElement.classList.add("pf-v6-theme-felt");
+  } else {
+    document.documentElement.classList.remove("pf-v6-theme-felt");
+  }
+});
 
+const darkTheme = ref(document.documentElement.classList.contains("pf-v6-theme-dark"));
 watch(darkTheme, (value) => {
   if (value) {
     document.documentElement.classList.add("pf-v6-theme-dark");
   } else {
     document.documentElement.classList.remove("pf-v6-theme-dark");
+  }
+});
+
+const contrastTheme: Ref<string | null> = ref(document.documentElement.classList.contains("pf-v6-theme-glass") ? "Glass" : document.documentElement.classList.contains("pf-v6-theme-high-contrast") ? "High contrast" : "Default");
+watch(contrastTheme, (value) => {
+  if (value === "Glass") {
+    document.documentElement.classList.add("pf-v6-theme-glass");
+    document.documentElement.classList.remove("pf-v6-theme-high-contrast");
+  } else if (value === "High contrast") {
+    document.documentElement.classList.add("pf-v6-theme-high-contrast");
+    document.documentElement.classList.remove("pf-v6-theme-glass");
+  } else {
+    document.documentElement.classList.remove("pf-v6-theme-glass");
+    document.documentElement.classList.remove("pf-v6-theme-high-contrast");
   }
 });
 
