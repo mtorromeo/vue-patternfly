@@ -2,9 +2,15 @@
   <pass-through @children="findReference">
     <slot name="toggle">
       <pf-menu-toggle v-bind="ouiaProps" v-model:expanded="open" :disabled="disabled" :variant="variant" :full-height="fullHeight" :full-width="fullWidth">
-        <slot name="label">
-          Select a value
-        </slot>
+        <template v-if="$slots.icon" #icon>
+          <slot name="icon" />
+        </template>
+        
+        <template v-if="$slots.label || label" #default>
+          <slot name="label">
+            {{ label }}
+          </slot>
+        </template>
       </pf-menu-toggle>
     </slot>
   </pass-through>
@@ -63,11 +69,14 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
   fullWidth?: boolean;
   /** Variant styles of the menu toggle */
   variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
+  /** Label for the menu toggle */
+  label?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   selected: undefined,
   placement: 'bottom',
+  label: 'Select a value',
   closeOnKeys: () => ['Escape', 'Tab'],
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
@@ -78,6 +87,7 @@ const open = defineModel<boolean>('open', { default: false });
 defineSlots<{
   default: (props?: Record<never, never>) => any;
   toggle: (props?: Record<never, never>) => any;
+  icon: (props?: Record<never, never>) => any;
   label: (props?: Record<never, never>) => any;
 }>();
 
