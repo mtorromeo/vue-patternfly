@@ -24,9 +24,11 @@
         :aria-label="toggleAriaLabel || `Toggle ${variantLabel} ${title}`"
         @click="expanded = !expanded"
       >
-        <span :class="styles.alertToggleIcon">
-          <pf-angle-right-icon aria-hidden />
-        </span>
+        <template #icon>
+          <span :class="styles.alertToggleIcon">
+            <pf-angle-right-icon />
+          </span>
+        </template>
       </pf-button>
     </div>
 
