@@ -4,6 +4,7 @@
 
 <script lang="ts" setup>
 import { type ComponentPublicInstance, type Slot, type VNode } from "vue";
+import { findChildrenVNodes } from "../util";
 
 defineOptions({
   inheritAttrs: false,
@@ -20,7 +21,8 @@ interface Props {
 const props = defineProps<Props>();
 
 const slots = defineSlots<{
-  default?: (props?: Record<never, never>) => VNode[];
+  default?: (props: { children: VNode[] }) => VNode[];
+  capture?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const emit = defineEmits<{
@@ -48,7 +50,14 @@ function render() {
     return retEmit([]);
   }
 
-  let children = slots.default({});
+  let captured: VNode[];
+  if (slots.capture) {
+    captured = findChildrenVNodes(slots.capture());
+  } else {
+    captured = [];
+  }
+
+  let children = slots.default({ children: captured });
   if (props.alter) {
     children = props.alter(children);
   }

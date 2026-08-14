@@ -26,7 +26,25 @@
       </pf-tooltip>
 
       <ul :class="styles.labelGroupList" :aria-labelledby="id" :aria-label="ariaLabel" role="list">
-        <render />
+        <pass-through>
+          <template #capture>
+            <slot />
+          </template>
+
+          <template #default="{ children }">
+            <template v-for="(child, i) in children" :key="i">
+              <li v-if="open || i < numLabels" :class="styles.labelGroupListItem">
+                <component :is="child" />
+              </li>
+            </template>
+            <li :class="styles.labelGroupListItem">
+              <pf-label :compact="compact" overflow @click="overflowChipClick">
+                {{ open ? expandedText : fillTemplate(collapsedText, { remaining: children.length - numLabels }) }}
+              </pf-label>
+            </li>
+          </template>
+        </pass-through>
+
         <li v-if="slots['add-label-control']" :class="styles.labelGroupListItem">
           <slot name="add-label-control" />
         </li>
@@ -47,17 +65,17 @@
 </template>
 
 <script lang="ts" setup>
-import { h, ref, useTemplateRef, type HTMLAttributes } from "vue";
+import { ref, useTemplateRef, type HTMLAttributes } from "vue";
 import styles from "@patternfly/react-styles/css/components/Label/label-group";
-import labelStyles from "@patternfly/react-styles/css/components/Label/label";
 import XmarkIcon from "@vue-patternfly/icons/xmark-icon";
 import PfLabel from "./Label.vue";
 import PfButton from "../Button.vue";
 import PfTooltip from "../Tooltip/Tooltip.vue";
-import { findChildrenVNodes, fillTemplate } from "../../util";
+import { fillTemplate } from "../../util";
 import { useElementOverflow } from "../../use";
 import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
 import type { Placement } from "../../helpers/FloatingUi.vue";
+import PassThrough from "../../helpers/PassThrough.vue";
 
 defineOptions({
   name: "PfLabelGroup",
@@ -126,35 +144,5 @@ function overflowChipClick(e: PointerEvent) {
 
 function toggleCollapse() {
   open.value = !open.value;
-}
-
-function render() {
-  const children = slots.default ? findChildrenVNodes(slots.default({})) : [];
-
-  const chipArray = open.value ? children : children.slice(0, props.numLabels);
-
-  const lis = chipArray.map((child, i) => h("li", { key: i, class: styles.labelGroupListItem }, child));
-
-  if (children.length > props.numLabels) {
-    const collapsedTextResult = fillTemplate(props.collapsedText, {
-      remaining: children.length - chipArray.length,
-    });
-    lis.push(
-      h("li", { class: styles.labelGroupListItem }, [
-        h(
-          PfLabel,
-          {
-            class: { [labelStyles.modifiers.compact]: props.compact },
-            component: "button",
-            overflow: true,
-            onClick: overflowChipClick,
-          },
-          () => (open.value ? props.expandedText : collapsedTextResult),
-        ),
-      ]),
-    );
-  }
-
-  return lis;
 }
 </script>
