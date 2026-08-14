@@ -36,7 +36,7 @@
         [styles.modifiers.placeholder]: placeholder,
         [styles.modifiers.settings]: settings,
         [styles.modifiers.small]: small,
-        [styles.modifiers.circle]: circle,
+        [styles.modifiers.circle]: circle && variant === 'plain',
         [styles.modifiers.docked]: docked,
         [styles.modifiers.textExpanded]: textExpanded,
       },
