@@ -40,14 +40,14 @@
       >
         <pf-helper-text v-if="(helperTextInvalid || $slots['helper-text-invalid']) && internalValidated === 'error'">
           <slot name="helper-text-invalid">
-            <pf-helper-text-item icon variant="error">
+            <pf-helper-text-item variant="error">
               {{ helperTextInvalid }}
             </pf-helper-text-item>
           </slot>
         </pf-helper-text>
         <pf-helper-text v-else>
           <slot name="helper-text">
-            <pf-helper-text-item :icon="helperTextVariant !== 'default'" :variant="helperTextVariant">
+            <pf-helper-text-item :variant="helperTextVariant">
               {{ helperText }}
             </pf-helper-text-item>
           </slot>
