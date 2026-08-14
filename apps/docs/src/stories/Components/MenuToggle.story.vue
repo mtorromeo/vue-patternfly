@@ -81,7 +81,7 @@
       <pf-menu-toggle variant="secondary" disabled>Disabled</pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Plain">
+    <story-canvas title="Plain toggle with icon">
       <pf-menu-toggle variant="plain" />
       {{ ' ' }}
       <pf-menu-toggle variant="plain" expanded />
@@ -89,7 +89,15 @@
       <pf-menu-toggle variant="plain" disabled />
     </story-canvas>
 
-    <story-canvas title="Plain with text">
+    <story-canvas title="Plain circle toggle">
+      <pf-menu-toggle circle variant="plain" />
+      {{ ' ' }}
+      <pf-menu-toggle circle variant="plain" expanded />
+      {{ ' ' }}
+      <pf-menu-toggle circle variant="plain" disabled />
+    </story-canvas>
+
+    <story-canvas title="Plain toggle with text label">
       <pf-menu-toggle variant="plainText">Custom text</pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle variant="plainText" expanded>Custom text (expanded)</pf-menu-toggle>
@@ -97,7 +105,7 @@
       <pf-menu-toggle variant="plainText" disabled>Disabled</pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (checkbox)">
+    <story-canvas title="Split toggle with checkbox">
       <pf-menu-toggle>
         <template #split-buttons>
           <pf-menu-toggle-checkbox />
@@ -117,7 +125,7 @@
       </pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (checkbox indeterminate with toggle text)">
+    <story-canvas title="Split toggle (checkbox indeterminate with toggle text)">
       <pf-menu-toggle>
         <template #split-buttons>
           <pf-menu-toggle-checkbox :checked="null">10 selected</pf-menu-toggle-checkbox>
@@ -137,7 +145,7 @@
       </pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (checkbox, primary)">
+    <story-canvas title="Split toggle (checkbox, primary)">
       <pf-menu-toggle variant="primary">
         <template #split-buttons>
           <pf-menu-toggle-checkbox>10 selected</pf-menu-toggle-checkbox>
@@ -157,7 +165,7 @@
       </pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (checkbox, secondary)">
+    <story-canvas title="Split toggle (checkbox, secondary)">
       <pf-menu-toggle variant="secondary">
         <template #split-buttons>
           <pf-menu-toggle-checkbox>10 selected</pf-menu-toggle-checkbox>
@@ -177,7 +185,7 @@
       </pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (action)">
+    <story-canvas title="Split toggle (action)">
       <pf-menu-toggle>
         <template #split-buttons>
           <pf-menu-toggle-action>Action</pf-menu-toggle-action>
@@ -197,7 +205,7 @@
       </pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (action, primary)">
+    <story-canvas title="Split toggle (action, primary)">
       <pf-menu-toggle variant="primary">
         <template #split-buttons>
           <pf-menu-toggle-action>Action</pf-menu-toggle-action>
@@ -217,7 +225,7 @@
       </pf-menu-toggle>
     </story-canvas>
 
-    <story-canvas title="Split button (action, secondary)">
+    <story-canvas title="Split toggle (action, secondary)">
       <pf-menu-toggle variant="secondary">
         <template #split-buttons>
           <pf-menu-toggle-action>Action</pf-menu-toggle-action>
@@ -300,6 +308,26 @@
           </pf-text-input-group-utilities>
         </pf-text-input-group>
       </pf-menu-toggle>
+    </story-canvas>
+
+    <story-canvas title="Status toggle">
+      <pf-menu-toggle status="success">Success</pf-menu-toggle>
+      <br>
+      <br>
+      <pf-menu-toggle status="warning">Warning</pf-menu-toggle>
+      <pf-helper-text>
+        <pf-helper-text-item variant="warning">Warning text that provides context about the menu toggle</pf-helper-text-item>
+      </pf-helper-text>
+      <br>
+      <br>
+      <pf-menu-toggle status="danger">Danger</pf-menu-toggle>
+      <pf-helper-text>
+        <pf-helper-text-item variant="error">Danger text that provides context about the menu toggle</pf-helper-text-item>
+      </pf-helper-text>
+    </story-canvas>
+
+    <story-canvas title="Placeholder text in toggle">
+      <pf-menu-toggle placeholder>Placeholder text</pf-menu-toggle>
     </story-canvas>
   </doc-page>
 </template>
