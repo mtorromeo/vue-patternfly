@@ -8,6 +8,7 @@
       [styles.modifiers.displayLg]: large && !compact,
       [styles.modifiers.fullHeight]: fullHeight,
       [styles.modifiers.plain]: plain,
+      [styles.modifiers.glass]: glass,
       [styles.modifiers.secondary]: variant === 'secondary',
       [styles.modifiers.disabled]: disabled,
     }]"
@@ -58,6 +59,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabin
 
   /** Modifies the card to include plain styling; this removes border and background */
   plain?: boolean;
+
+  /** Modifies the card to include glass styling when glass theme is enabled */
+  glass?: boolean;
 
   /** Modifies the card to be expandable */
   expandable?: boolean;
