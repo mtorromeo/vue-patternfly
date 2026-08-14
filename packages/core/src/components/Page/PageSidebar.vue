@@ -7,8 +7,10 @@
       [styles.modifiers.collapsed]: !sidebarOpen,
     }]"
   >
-    <div :class="styles.pageSidebarBody">
-      <slot />
+    <div :class="styles.pageSidebarMain">
+      <div :class="styles.pageSidebarBody">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
