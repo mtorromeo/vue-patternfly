@@ -31,6 +31,7 @@
         [styles.modifiers.text]: variant === 'plainText',
         [styles.modifiers.fullHeight]: fullHeight,
         [styles.modifiers.fullWidth]: fullWidth,
+        [styles.modifiers.form]: inForm,
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.placeholder]: placeholder,
         [styles.modifiers.settings]: settings,
@@ -105,6 +106,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 
   fullHeight?: boolean;
   /** Flag indicating the toggle takes up the full width of its parent */
   fullWidth?: boolean;
+  /** Flag indicating the toggle is placed inside a form */
+  inForm?: boolean;
   /** Flag indicating the toggle contains placeholder text */
   placeholder?: boolean;
   /** Flag indicating whether the toggle is a settings toggle. This will override the icon property */
