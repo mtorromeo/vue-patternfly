@@ -11,7 +11,7 @@
       ## Examples
     </pre>
 
-    <story-canvas title="Static">
+    <story-canvas title="Basic">
       <pf-helper-text>
         <pf-helper-text-item>This is default helper text</pf-helper-text-item>
         <pf-helper-text-item variant="indeterminate">This is indeterminate helper text</pf-helper-text-item>
@@ -21,17 +21,7 @@
       </pf-helper-text>
     </story-canvas>
 
-    <story-canvas title="Static with default icons">
-      <pf-helper-text>
-        <pf-helper-text-item icon>This is default helper text</pf-helper-text-item>
-        <pf-helper-text-item icon variant="indeterminate">This is indeterminate helper text</pf-helper-text-item>
-        <pf-helper-text-item icon variant="warning">This is warning helper text</pf-helper-text-item>
-        <pf-helper-text-item icon variant="success">This is success helper text</pf-helper-text-item>
-        <pf-helper-text-item icon variant="error">This is error helper text</pf-helper-text-item>
-      </pf-helper-text>
-    </story-canvas>
-
-    <story-canvas title="Static with custom icons">
+    <story-canvas title="With custom icons">
       <pf-helper-text>
         <pf-helper-text-item>
           <template #icon>
@@ -63,16 +53,6 @@
           </template>
           This is error helper text
         </pf-helper-text-item>
-      </pf-helper-text>
-    </story-canvas>
-
-    <story-canvas title="Dynamic list">
-      <pf-helper-text>
-        <pf-helper-text-item icon dynamic>This is default helper text</pf-helper-text-item>
-        <pf-helper-text-item icon dynamic variant="indeterminate">This is indeterminate helper text</pf-helper-text-item>
-        <pf-helper-text-item icon dynamic variant="warning">This is warning helper text</pf-helper-text-item>
-        <pf-helper-text-item icon dynamic variant="success">This is success helper text</pf-helper-text-item>
-        <pf-helper-text-item icon dynamic variant="error">This is error helper text</pf-helper-text-item>
       </pf-helper-text>
     </story-canvas>
   </doc-page>
