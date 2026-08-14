@@ -3,6 +3,9 @@
     <component v-bind="ouiaProps" :is="component" :class="styles.cardTitleText">
       <slot />
     </component>
+    <div v-if="$slots.subtitle" :class="styles.cardSubtitle">
+      <slot name="subtitle" />
+    </div>
   </div>
 </template>
 
@@ -27,5 +30,6 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
+  subtitle?: (props?: Record<never, never>) => any;
 }>();
 </script>

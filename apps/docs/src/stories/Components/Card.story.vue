@@ -22,7 +22,20 @@
 
     <story-canvas title="Basic">
       <pf-card>
-        <pf-card-title>Header</pf-card-title>
+        <pf-card-title>Title</pf-card-title>
+        <pf-card-body>Body</pf-card-body>
+        <pf-card-footer>Footer</pf-card-footer>
+      </pf-card>
+    </story-canvas>
+
+    <story-canvas title="Card with subtitle">
+      <pf-card>
+        <pf-card-title>
+          Title
+          <template #subtitle>
+            Subtitle
+          </template>
+        </pf-card-title>
         <pf-card-body>Body</pf-card-body>
         <pf-card-footer>Footer</pf-card-footer>
       </pf-card>
@@ -30,7 +43,7 @@
 
     <story-canvas title="Secondary">
       <pf-card variant="secondary">
-        <pf-card-title>Header</pf-card-title>
+        <pf-card-title>Title</pf-card-title>
         <pf-card-body>Body</pf-card-body>
         <pf-card-footer>Footer</pf-card-footer>
       </pf-card>
@@ -64,7 +77,7 @@
             <pf-checkbox aria-label="card checkbox example" />
           </pf-card-actions>
         </pf-card-header>
-        <pf-card-title>Header</pf-card-title>
+        <pf-card-title>Title</pf-card-title>
         <pf-card-body>Body</pf-card-body>
         <pf-card-footer>Footer</pf-card-footer>
       </pf-card>
