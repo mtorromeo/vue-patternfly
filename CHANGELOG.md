@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.11] - 2026-09-08
+
+### Bug Fixes
+
+- *(AlertGroup)* Unintended forced re-rendering of inner alert items, which also caused automatic dismiss not to always work properly
+
+### Features
+
+- *(Page)* Added styles for glass
+
 ## [6.0.0-beta.10] - 2026-08-14
 
 ### Bug Fixes
