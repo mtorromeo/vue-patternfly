@@ -46,6 +46,6 @@ const slots = defineSlots<{
 
 function renderChildren() {
   const children = findChildrenVNodes(slots.default?.({}));
-  return children.map((e, index) => h('li', { key: index }, e));
+  return children.map((e, index) => h('li', { key: e.key ?? index }, e));
 }
 </script>
