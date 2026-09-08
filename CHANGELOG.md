@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [5.1.2] - 2026-09-08
+
+### Bug Fixes
+
+- *(AlertGroup)* Unintended forced re-rendering of inner alert items, which also caused automatic dismiss not to always work properly
+
 ## [5.1.1] - 2025-11-26
 
 ### Bug Fixes
