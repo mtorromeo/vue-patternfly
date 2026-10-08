@@ -15,6 +15,7 @@
     <pre v-md>
       ## Differences from patternfly-react
       - The expanded state is controlled by `v-model:expanded` or managed internally with the prop `expandable`.
+      - The `isFilled` prop of `pf-card-body` is replaced by `no-fill` with inverted behavior.
       See [common differences from patternfly-react](#/).
 
       ## Examples

@@ -1,5 +1,5 @@
 <template>
-  <component v-bind="ouiaProps" :is="component" :class="[styles.cardBody, { [styles.modifiers.noFill]: !filled }]">
+  <component v-bind="ouiaProps" :is="component" :class="[styles.cardBody, { [styles.modifiers.noFill]: noFill }]">
     <slot />
   </component>
 </template>
@@ -17,8 +17,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the base component to render. */
   component?: string | Component;
 
-  /** Enables the body Content to fill the height of the card. */
-  filled?: boolean;
+  /** Disables the body Content to fill the height of the card. */
+  noFill?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {

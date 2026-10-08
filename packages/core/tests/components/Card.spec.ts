@@ -289,16 +289,14 @@ describe('CardBody', () => {
     expect(wrapper.element.tagName).toBe('SECTION');
   });
 
-  it('does not apply the no-fill modifier when filled', () => {
-    const wrapper = mount(PfCardBody, { props: { filled: true } });
+  it('fills the card height by default', () => {
+    const wrapper = mount(PfCardBody);
     expect(wrapper.classes()).not.toContain(styles.modifiers.noFill);
   });
 
-  // BUG: CardBody.vue:2 applies pf-m-no-fill whenever `filled` is falsy, and `filled` defaults to false,
-  // so every body is no-fill by default (PatternFly React defaults isFilled to true)
-  it.fails('fills the card height by default', () => {
-    const wrapper = mount(PfCardBody);
-    expect(wrapper.classes()).not.toContain(styles.modifiers.noFill);
+  it('applies the no-fill modifier with noFill', () => {
+    const wrapper = mount(PfCardBody, { props: { noFill: true } });
+    expect(wrapper.classes()).toContain(styles.modifiers.noFill);
   });
 });
 
