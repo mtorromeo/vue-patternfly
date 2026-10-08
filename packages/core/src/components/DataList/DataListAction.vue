@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { classesFromBreakpointProps, type VisibilityBreakpointProps } from '../../breakpoints';
-import type { HTMLAttributes } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -24,5 +24,5 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styles, { short: true });
+const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['visibility'], styles, { short: true }));
 </script>

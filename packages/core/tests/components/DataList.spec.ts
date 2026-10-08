@@ -332,8 +332,7 @@ describe('DataListAction', () => {
     expect(wrapper.text()).toBe('Act');
   });
 
-  // BUG: DataListAction.vue:27 computes breakpointClasses once at setup, so later prop changes are ignored
-  it.fails('updates visibility modifiers when props change', async () => {
+  it('updates visibility modifiers when props change', async () => {
     const wrapper = mount(PfDataListAction);
     await wrapper.setProps({ visibility: 'hidden' });
     expect(wrapper.classes()).toContain(styles.modifiers.hidden);
