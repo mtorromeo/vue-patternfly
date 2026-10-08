@@ -92,8 +92,7 @@ describe('SimpleList', () => {
     expect(input.element.value).toBe('two');
   });
 
-  // BUG: SimpleList.vue:3 binds the internal Symbol id of value-less items to the hidden input, submitting "Symbol()"
-  it.fails('keeps the hidden input empty when selecting an item without a value', async () => {
+  it('keeps the hidden input empty when selecting an item without a value', async () => {
     const wrapper = mount(PfSimpleList, {
       props: { name: 'choice' },
       slots: { default: () => [h(PfSimpleListItem, () => 'A')] },

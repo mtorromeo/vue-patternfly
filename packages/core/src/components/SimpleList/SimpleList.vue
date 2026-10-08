@@ -1,6 +1,6 @@
 <template>
   <div v-bind="ouiaProps" :class="styles.simpleList">
-    <input v-if="name" type="hidden" :name="name" :value="value" :required="required">
+    <input v-if="name" type="hidden" :name="name" :value="typeof value === 'string' ? value : ''" :required="required">
     <wrap>
       <default-slot />
 
