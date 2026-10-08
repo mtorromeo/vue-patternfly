@@ -69,8 +69,7 @@ describe('Pagination', () => {
       expect(wrapper.classes()).toContain(styles.modifiers.insetNoneOnLg);
     });
 
-    // BUG: Pagination.vue uses the non reactive classesFromBreakpointProps, so inset classes never update
-    it.fails('updates inset modifiers when props change', async () => {
+    it('updates inset modifiers when props change', async () => {
       const wrapper = mount(PfPagination, { props: { inset: 'sm' } });
       await wrapper.setProps({ inset: 'lg' });
       expect(wrapper.classes()).toContain(styles.modifiers.insetLg);

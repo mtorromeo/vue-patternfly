@@ -156,7 +156,7 @@ const emit = defineEmits<{
   (name: 'lastClick', page: number): void;
 }>();
 
-const breakpointClasses = classesFromBreakpointProps(props, ['inset'], styles);
+const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['inset'], styles));
 
 const firstIndex = computed(() => {
   return props.count <= 0
