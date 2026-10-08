@@ -181,8 +181,7 @@ describe('DrawerPanelContent', () => {
     expect(wrapper.find(`.${styles.drawerPanel}`).attributes('id')).toBeTruthy();
   });
 
-  // BUG: DrawerPanelContent.vue declares a `widths` prop but never applies the width modifiers
-  it.fails('applies width modifiers', () => {
+  it('applies width modifiers', () => {
     const wrapper = mountDrawer({}, { widths: { default: 'width_50', lg: 'width_33' } });
     const panel = wrapper.find(`.${styles.drawerPanel}`);
     expect(panel.classes()).toContain(styles.modifiers.width_50);

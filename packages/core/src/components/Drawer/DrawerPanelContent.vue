@@ -8,7 +8,7 @@
       [styles.modifiers.noBorder]: noBorder,
       [styles.modifiers.noBackground]: colorVariant === 'no-background',
       [styles.modifiers.secondary]: colorVariant === 'secondary',
-    }]"
+    }, widthModifiers]"
     :style="{
       display: display ? 'inherit' : 'none',
       [cssPanelMdFlexBasis.name]: isDefined(panelSize) ? `${panelSize}px` : defaultSize,
@@ -50,11 +50,12 @@ import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import cssPanelMdFlexBasis from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis';
 import cssPanelMdFlexBasisMin from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_min';
 import cssPanelMdFlexBasisMax from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_max';
-import { inject, type Ref, ref, type HTMLAttributes, useTemplateRef, useId } from 'vue';
+import { computed, inject, type Ref, ref, type HTMLAttributes, useTemplateRef, useId } from 'vue';
 import { DrawerContentRefKey } from './DrawerContent.vue';
 import { DrawerKey } from './common';
 import { resolveOverridableComponent } from '../../helpers';
 import { isDefined } from '@vueuse/shared';
+import { ucfirst } from '../../util';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -122,6 +123,17 @@ const panelSize: Ref<number | undefined> = ref();
 let panelRect: DOMRect;
 let setInitialVals = true;
 const separatorValue = ref(0);
+
+const widthModifiers = computed(() => Object.entries(props.widths ?? {}).map(([breakpoint, width]) => {
+  if (!width) {
+    return undefined;
+  }
+  if (breakpoint === 'default') {
+    return styles.modifiers[width];
+  }
+  const suffix = breakpoint === '2xl' ? '_2xl' : ucfirst(breakpoint);
+  return styles.modifiers[`${width}On${suffix}` as keyof typeof styles.modifiers];
+}));
 
 function calcValueNow() {
   let splitterPos;
