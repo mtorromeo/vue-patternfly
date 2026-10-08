@@ -229,9 +229,7 @@ describe('FileUpload', () => {
     expect(wrapper.emitted('browseButtonClick')).toHaveLength(1);
   });
 
-  // BUG: FileUpload.vue binds :model-value on the preview textarea without listening to
-  // update:modelValue, so text typed in an editable preview never reaches the v-model
-  it.fails('updates the model when editing the text preview', async () => {
+  it('updates the model when editing the text preview', async () => {
     const wrapper = mount(PfFileUpload, { props: { modelValue: 'hello' } });
     await wrapper.find('textarea').setValue('edited');
     expect(wrapper.emitted('update:modelValue')).toEqual([['edited']]);

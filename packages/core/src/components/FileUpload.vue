@@ -57,6 +57,7 @@
         :model-value="typeof value === 'string' ? value : ''"
         :name="textareaName"
         :placeholder="textareaPlaceholder"
+        @update:model-value="value = $event"
         @click="$emit('textAreaClick', $event)"
         @blur="$emit('textAreaBlur', $event)"
       />
