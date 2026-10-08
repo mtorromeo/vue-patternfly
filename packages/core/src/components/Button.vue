@@ -8,6 +8,7 @@
       :disabled="effectiveDisabled"
       :aria-expanded="expanded ?? $attrs['aria-expanded']"
       :aria-disabled="effectiveDisabled || ariaDisabled"
+      :aria-current="ariaCurrent"
       :class="[
         styles.button,
         styles.modifiers[variant],

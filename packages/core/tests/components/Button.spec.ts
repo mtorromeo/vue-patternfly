@@ -232,8 +232,7 @@ describe('Button', () => {
     });
   });
 
-  // ariaCurrent is declared as a prop (so it is removed from $attrs) but it is never bound to the element.
-  it.fails('forwards aria-current', () => {
+  it('forwards aria-current', () => {
     const wrapper = mount(PfButton, { props: { href: '/', ariaCurrent: 'page' } });
     expect(btn(wrapper).attributes('aria-current')).toBe('page');
   });
