@@ -219,8 +219,7 @@ describe('Card', () => {
       expect(toggle.attributes('id')).toBe('toggle');
     });
 
-    // BUG: CardHeader.vue:4 does not set aria-expanded on the toggle button (PatternFly React does)
-    it.fails('exposes the expanded state on the toggle button', () => {
+    it('exposes the expanded state on the toggle button', () => {
       const wrapper = mount(PfCard, { props: { expanded: true }, slots: expandableSlots });
       expect(wrapper.find(`.${styles.cardHeaderToggle} button`).attributes('aria-expanded')).toBe('true');
     });

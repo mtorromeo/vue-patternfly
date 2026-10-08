@@ -1,7 +1,7 @@
 <template>
   <define-header-toggle>
     <div v-if="expandable" :class="styles.cardHeaderToggle">
-      <pf-button variant="plain" v-bind="toggleButtonAttrs" @click="toggle">
+      <pf-button variant="plain" :aria-expanded="expanded" v-bind="toggleButtonAttrs" @click="toggle">
         <span :class="styles.cardHeaderToggleIcon">
           <pf-angle-down-icon />
         </span>
