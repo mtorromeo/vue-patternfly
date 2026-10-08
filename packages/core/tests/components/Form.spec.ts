@@ -65,9 +65,7 @@ describe('FormAlert', () => {
     expect(wrapper.find('p').text()).toBe('Alert');
   });
 
-  // BUG: FormAlert renders a <form> element, which ends up nested inside the parent PfForm (invalid HTML).
-  // PatternFly renders a <div>.
-  it.fails('renders a div so it can be nested in a form', () => {
+  it('renders a div so it can be nested in a form', () => {
     const wrapper = mount(PfFormAlert);
     expect(wrapper.element.tagName).toBe('DIV');
   });
