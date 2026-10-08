@@ -167,8 +167,7 @@ describe('DescriptionListTermHelpTextButton', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
-  // BUG: DescriptionListTermHelpTextButton.vue:2 has role="button" but no tabindex, so it can't be focused to use the key handler
-  it.fails('is focusable', () => {
+  it('is focusable', () => {
     const wrapper = mount(PfDescriptionListTermHelpTextButton);
     expect(wrapper.attributes('tabindex')).toBe('0');
   });

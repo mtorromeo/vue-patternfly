@@ -4,6 +4,7 @@
     v-bind="ouiaProps"
     :class="[styles.descriptionListText, styles.modifiers.helpText]"
     role="button"
+    tabindex="0"
     @keydown="handleKeys"
   >
     <slot />
