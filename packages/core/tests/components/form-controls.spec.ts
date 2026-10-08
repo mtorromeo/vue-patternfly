@@ -355,9 +355,7 @@ describe('Textarea', () => {
     expect(vm.checkValidity()).toBe(true);
   });
 
-  // The template binds `@keyUp`, which Vue maps to a `key-up` DOM event that never fires, so `keyup`
-  // is never emitted and the enter-to-validate behaviour of autoValidate does not work for textareas.
-  it.fails('emits keyup', async () => {
+  it('emits keyup', async () => {
     const wrapper = mount(PfTextarea);
     await wrapper.find('textarea').trigger('keyup', { key: 'Enter' });
     expect(wrapper.emitted('keyup')).toHaveLength(1);

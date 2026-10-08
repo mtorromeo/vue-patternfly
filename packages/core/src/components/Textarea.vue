@@ -30,7 +30,7 @@
       @input="onInput($event as InputEvent)"
       @blur="onBlur"
       @invalid="onInvalid"
-      @keyUp="onKeyUp"
+      @keyup="onKeyUp"
     />
     <span v-if="hasStatusIcon" :class="styles.formControlUtilities">
       <pf-form-control-icon :status="(effectiveValidated as 'success' | 'error' | 'warning')" />
