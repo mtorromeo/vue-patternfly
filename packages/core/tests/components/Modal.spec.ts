@@ -222,9 +222,7 @@ describe('Modal', () => {
     wrapper.unmount();
   });
 
-  // Suspected bug: noBodyWrapper uses the string 'pass-through' as dynamic component, which is
-  // not registered, so a literal <pass-through> custom element with the body class is rendered.
-  it.fails('renders the content without a body wrapper when noBodyWrapper is set', () => {
+  it('renders the content without a body wrapper when noBodyWrapper is set', () => {
     const wrapper = mountModal({ noBodyWrapper: true }, { default: '<p class="content">Body</p>' });
     const el = dialog()!;
     expect(el.querySelector(`.${styles.modalBoxBody}`)).toBeNull();

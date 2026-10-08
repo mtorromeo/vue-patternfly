@@ -72,7 +72,7 @@
           </pf-modal-header>
 
           <component
-            :is="noBodyWrapper ? 'pass-through' : 'div'"
+            :is="noBodyWrapper ? PassThrough : 'div'"
             :id="$slots.description || ariaDescribedby ? null : descriptorId"
             :class="styles.modalBoxBody"
           >
