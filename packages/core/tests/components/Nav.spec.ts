@@ -58,9 +58,7 @@ describe('Nav', () => {
     expect(notDocked.classes()).not.toContain(styles.modifiers.textExpanded);
   });
 
-  // BUG: Nav.vue:14 `ariaLabel || variant === 'horizontal-subnav' ? 'Local' : 'Global'` lacks parentheses,
-  // so any custom ariaLabel is replaced by 'Local'
-  it.fails('uses a custom aria-label', () => {
+  it('uses a custom aria-label', () => {
     const wrapper = mount(PfNav, { props: { ariaLabel: 'Main' } });
     expect(wrapper.attributes('aria-label')).toBe('Main');
   });

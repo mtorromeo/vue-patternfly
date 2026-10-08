@@ -11,7 +11,7 @@
         [styles.modifiers.textExpanded]: variant === 'docked' && textExpanded,
       },
     ]"
-    :aria-label="ariaLabel || variant === 'horizontal-subnav' ? 'Local' : 'Global'"
+    :aria-label="ariaLabel || (variant === 'horizontal-subnav' ? 'Local' : 'Global')"
   >
     <slot />
   </nav>
