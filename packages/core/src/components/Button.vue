@@ -78,7 +78,7 @@ import PfSpinner from "./Spinner.vue";
 import PassThrough from "../helpers/PassThrough.vue";
 import type { RouteLocationRaw, useLink } from "vue-router";
 import { useOUIAProps, type OUIAProps } from "../helpers/ouia";
-import { type Component, type UnwrapRef, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes, useTemplateRef, type ComponentPublicInstance } from "vue";
+import { type Component, type UnwrapRef, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes, useTemplateRef, type ComponentPublicInstance, toRaw } from "vue";
 import { isDefined } from "@vueuse/shared";
 import { ucfirst } from "../util";
 import GearIcon from "@vue-patternfly/icons/gear-icon";
@@ -185,7 +185,8 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant
 
 const buttonComponent = computed(() => {
   if (props.component !== "auto") {
-    return props.component;
+    // the component could have been made reactive by the parent (e.g. if stored in a reactive state)
+    return toRaw(props.component);
   }
   return props.href || props.to ? "a" : "button";
 });

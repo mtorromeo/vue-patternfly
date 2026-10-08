@@ -155,10 +155,12 @@ describe('Button', () => {
     });
 
     it('renders a custom component', () => {
+      const warn = vi.spyOn(console, 'warn');
       const Custom = defineComponent({ setup: (_, { slots }) => () => h('div', { class: 'custom' }, slots.default?.()) });
       const wrapper = mount(PfButton, { props: { component: Custom }, slots: { default: 'text' } });
       expect(wrapper.find('div.custom').text()).toBe('text');
       expect(wrapper.find('div.custom').classes()).toContain(styles.button);
+      expect(warn).not.toHaveBeenCalled();
     });
 
     it('honours an explicit tabindex', () => {
