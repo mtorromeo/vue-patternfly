@@ -53,7 +53,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 </script>
 
 <script lang="ts" setup>
-import { h, mergeProps, type VNode, computed, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, type Reactive } from 'vue';
+import { h, mergeProps, type VNode, computed, watch, nextTick, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, type Reactive } from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenu, { type MenuItemId, type MenuItemTrack } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
@@ -168,18 +168,20 @@ const handleClick = (event: PointerEvent) => {
     return;
   }
 
-  if (toggleElementRef.value?.contains(event.target as Node)) {
-    if (props.shouldFocusFirstItemOnOpen) {
-      const items = menu.value?.$.exposed?.items as Reactive<MenuItemTrack[]> | null | undefined;
-      if (props.shouldFocusFirstItemOnOpen && items?.length) {
-        items[0]?.focus();
-      }
-    }
-  } else if (!menu.value?.el?.contains(event.target as Node)) {
-    // If the event is not on the toggle, close the menu
+  // If the event is not on the toggle, close the menu
+  if (!toggleElementRef.value?.contains(event.target as Node) && !menu.value?.el?.contains(event.target as Node)) {
     open.value = false;
   }
 };
+
+watch(open, (isOpen) => {
+  if (isOpen && props.shouldFocusFirstItemOnOpen) {
+    nextTick(() => {
+      const items = menu.value?.$.exposed?.items as Reactive<MenuItemTrack[]> | null | undefined;
+      items?.find(i => !i.disabled)?.focus();
+    });
+  }
+});
 
 onMounted(() => {
   window.addEventListener('click', handleClick as (e: MouseEvent) => void);

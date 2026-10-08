@@ -185,14 +185,26 @@ describe('Dropdown', () => {
     wrapper.unmount();
   });
 
-  // BUG: Dropdown.vue handleClick runs synchronously in the window click listener, before the menu is rendered
-  // (FloatingUi does not render hidden content), so there are no items to focus yet
-  it.fails('focuses the first item on open with shouldFocusFirstItemOnOpen', async () => {
+  it('focuses the first item on open with shouldFocusFirstItemOnOpen', async () => {
     const wrapper = await mountDropdown({ shouldFocusFirstItemOnOpen: true });
 
     toggle().click();
     await flushPromises();
     expect(document.activeElement).toBe(menuItems()[0]);
+    wrapper.unmount();
+  });
+
+  it('skips disabled items when focusing the first item on open', async () => {
+    const wrapper = await mountDropdown({ shouldFocusFirstItemOnOpen: true }, {
+      default: () => [
+        h(PfDropdownItem, { value: 'a', disabled: true }, () => 'Action A'),
+        h(PfDropdownItem, { value: 'b' }, () => 'Action B'),
+      ],
+    });
+
+    toggle().click();
+    await flushPromises();
+    expect(document.activeElement).toBe(menuItems()[1]);
     wrapper.unmount();
   });
 
