@@ -138,7 +138,7 @@ const ui = useFloatingUI(referenceElement, htmlElement, floatingOptions);
 
 function floatingElement() {
   if (props.disable) {
-    return () => slots.default?.(ui);
+    return slots.default?.(ui);
   }
 
   if (internalHidden.value) {

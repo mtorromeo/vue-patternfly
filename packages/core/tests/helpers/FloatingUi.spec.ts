@@ -179,9 +179,7 @@ describe('FloatingUi', () => {
     expect(wrapper.find('.host').element.children).toHaveLength(0);
   });
 
-  // BUG: with `disable` the floatingElement functional component returns a function instead of
-  // vnodes (FloatingUi.vue `return () => slots.default?.(ui)`), so the slot content is never rendered
-  it.fails('renders the content unpositioned when disabled', () => {
+  it('renders the content unpositioned when disabled', () => {
     createReference();
     mount(() => floating({ disable: true }), { attachTo: document.body });
     const el = findFloating();
