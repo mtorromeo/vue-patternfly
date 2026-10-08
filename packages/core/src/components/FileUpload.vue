@@ -29,7 +29,7 @@
             :disabled="disabled"
             @click="$emit('browseButtonClick', $event)"
           >
-            <input type="file" :accept="props.dataTypes?.join(',')" :name="name" :required="required" style="display: none" @change="setFile(($event.target as HTMLInputElement | undefined)?.files?.[0] ?? null)">
+            <input type="file" :accept="props.dataTypes?.join(',')" :name="name" :required="required" style="display: none" @click.stop @change="setFile(($event.target as HTMLInputElement | undefined)?.files?.[0] ?? null)">
             {{ browseButtonText }}
           </pf-button>
         </pf-input-group-item>

@@ -223,9 +223,7 @@ describe('FileUpload', () => {
     expect(wrapper.emitted('textAreaBlur')).toHaveLength(1);
   });
 
-  // BUG: the browse button is a <label> wrapping the file input, so the click the browser forwards to
-  // the input bubbles back to the label and browseButtonClick is emitted twice (FileUpload.vue:30)
-  it.fails('emits browseButtonClick once per click', async () => {
+  it('emits browseButtonClick once per click', async () => {
     const wrapper = mount(PfFileUpload);
     await buttons(wrapper).browse.trigger('click');
     expect(wrapper.emitted('browseButtonClick')).toHaveLength(1);
