@@ -137,9 +137,7 @@ describe('DrawerContent', () => {
     expect(wrapper.find(`.${styles.drawerContent}`).classes()).toContain(modifier);
   });
 
-  // BUG: AutoWrap.vue:117 `force` never creates the wrapper when there are no children,
-  // so DrawerContent (which relies on `force`) renders no drawer__content div when empty
-  it.fails('renders the content div even without children', () => {
+  it('renders the content div even without children', () => {
     const wrapper = mount(PfDrawer, { slots: { default: () => h(PfDrawerContent) } });
     expect(wrapper.find(`.${styles.drawerMain} .${styles.drawerContent}`).exists()).toBe(true);
   });

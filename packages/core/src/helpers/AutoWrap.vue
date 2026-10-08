@@ -114,6 +114,10 @@ function renderGroup(childrenNodes: VNode[], component: VNodeTypes | undefined, 
     children.push(wrap(c, consecutives));
   }
 
+  if (force && !children.some(child => child.type === component || child.type === c)) {
+    children.unshift(wrap(c, []));
+  }
+
   if (!force && !children.length) {
     return null;
   }
