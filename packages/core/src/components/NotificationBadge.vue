@@ -17,7 +17,7 @@ import BellIcon from "@vue-patternfly/icons/bell-icon";
 import AttentionBellIcon from "@vue-patternfly/icons/attention-bell-icon";
 import type { ComponentProps } from "vue-component-type-helpers";
 import PfButton from "./Button.vue";
-import { useOUIAProps } from "../helpers/ouia";
+import { useOUIAProps, type OUIAProps } from "../helpers/ouia";
 import { ref } from "vue";
 import { watch } from "vue";
 
@@ -25,7 +25,7 @@ defineOptions({
   name: "PfNotificationBadge",
 });
 
-interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, "variant"> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, "variant" | "ouiaId" | "ouiaSafe"> {
   /** Determines the variant of the notification badge */
   variant?: "read" | "unread" | "attention" | "plain";
 

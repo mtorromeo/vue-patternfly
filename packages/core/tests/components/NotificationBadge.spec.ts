@@ -73,9 +73,7 @@ describe('NotificationBadge', () => {
     expect(button.classes()).toContain(styles.modifiers.clicked);
   });
 
-  // BUG: NotificationBadge.vue's ouiaId comes from a @vue-ignore'd type, so it is not a declared prop
-  // and the generated OUIA id it binds overrides the given one
-  it.fails('uses the given ouiaId', () => {
+  it('uses the given ouiaId', () => {
     const wrapper = mount(PfNotificationBadge, { attrs: { ouiaId: 'bell' } });
     expect(wrapper.find('button').attributes('data-ouia-component-id')).toBe('bell');
   });
