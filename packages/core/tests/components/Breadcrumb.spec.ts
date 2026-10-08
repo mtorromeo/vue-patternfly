@@ -84,8 +84,7 @@ describe('BreadcrumbItem', () => {
     expect(wrapper.find('a').attributes('aria-current')).toBe('page');
   });
 
-  // BUG: BreadcrumbItem.vue:9 never applies styles.breadcrumbLink / styles.modifiers.current to the link (PatternFly React does)
-  it.fails('applies the link and current classes to the link', () => {
+  it('applies the link and current classes to the link', () => {
     const wrapper = mount(PfBreadcrumbItem, { props: { href: '#here', active: true } });
     expect(wrapper.find('a').classes()).toContain(styles.breadcrumbLink);
     expect(wrapper.find('a').classes()).toContain(styles.modifiers.current);

@@ -11,6 +11,8 @@
       :aria-current="ariaCurrent"
       :class="{
         [styles.breadcrumbDropdown]: dropdown,
+        [styles.breadcrumbLink]: !dropdown && tag !== PassThrough,
+        [styles.modifiers.current]: active && !dropdown && tag !== PassThrough,
       }"
       :type="isButton ? 'button' : undefined"
     >
