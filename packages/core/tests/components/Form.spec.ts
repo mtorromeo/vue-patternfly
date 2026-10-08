@@ -250,9 +250,7 @@ describe('FormFieldGroup', () => {
     expect(wrapper.find(`.${styles.formFieldGroupBody}`).exists()).toBe(false);
   });
 
-  // BUG: when expandable and uncontrolled, `expanded` is undefined so the toggle has no aria-expanded attribute
-  // until it is clicked once (src/components/Form/FormFieldGroup.vue:13).
-  it.fails('sets aria-expanded=false on the collapsed toggle', () => {
+  it('sets aria-expanded=false on the collapsed toggle', () => {
     const wrapper = mount(PfFormFieldGroup, { props: { expandable: true } });
     expect(wrapper.find('button').attributes('aria-expanded')).toBe('false');
   });

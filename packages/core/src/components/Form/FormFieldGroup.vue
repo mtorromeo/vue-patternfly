@@ -10,7 +10,7 @@
           :id="uniqueId"
           variant="plain"
           :aria-label="toggleAriaLabel"
-          :aria-expanded="expanded"
+          :aria-expanded="!!expanded"
           :aria-labelledby="uniqueId"
           @click="expanded = !expanded"
         >
