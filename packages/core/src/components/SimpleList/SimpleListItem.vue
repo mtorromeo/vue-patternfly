@@ -6,7 +6,6 @@
       :class="[styles.simpleListItemLink, componentClass, {
         [styles.modifiers.current]: current,
       }]"
-      aria-hidden="true"
       :type="component === 'button' ? type : undefined"
       :href="component === 'a' ? href : undefined"
       :tabindex="component === 'a' ? 0 : undefined"

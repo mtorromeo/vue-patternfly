@@ -155,8 +155,7 @@ describe('SimpleListItem', () => {
     expect(link.attributes('type')).toBeUndefined();
   });
 
-  // BUG: SimpleListItem.vue:9 sets aria-hidden="true" on the interactive button/link, hiding it from assistive technology
-  it.fails('exposes the interactive element to assistive technology', () => {
+  it('exposes the interactive element to assistive technology', () => {
     const wrapper = mount(PfSimpleListItem, { slots: { default: () => 'Item' } });
     expect(wrapper.find('button').attributes('aria-hidden')).toBeUndefined();
   });
