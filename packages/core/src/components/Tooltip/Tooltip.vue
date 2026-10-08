@@ -20,6 +20,7 @@
     <div
       ref="tooltipElementRef"
       v-bind="{...ouiaProps, ...$attrs}"
+      :id="tooltipId"
       :class="[styles.tooltip, positionModifiers[placement]]"
       :style="{ maxWidth }"
       role="tooltip"
@@ -34,7 +35,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { ref, watch, computed, onMounted, onUnmounted, type HTMLAttributes, type RendererElement, useTemplateRef } from 'vue';
+import { ref, watch, computed, onMounted, onUnmounted, type HTMLAttributes, type RendererElement, useTemplateRef, useId } from 'vue';
 
 import PfTooltipArrow from './TooltipArrow.vue';
 import PfTooltipContent from './TooltipContent.vue';
@@ -52,6 +53,8 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'onTransitionend'> {
   /** Element or selector where to render the floating menu */
   appendTo?: 'inline' | string | RendererElement | null | undefined;
+  /** Id of the tooltip, generated if not set */
+  id?: string;
   /** Tooltip position */
   position?: Placement;
   /** A combination of the strings 'mouseenter', 'focus' and 'click' */
@@ -113,6 +116,8 @@ defineSlots<{
 
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 const tooltipElement = useTemplateRef('tooltipElementRef');
+const randomId = useId();
+const tooltipId = computed(() => props.id || `pf-tooltip-${randomId}`);
 
 const triggerMouseEnter = computed(() => props.trigger.split(' ').includes('mouseenter'));
 const triggerFocus = computed(() => props.trigger.split(' ').includes('focus'));
@@ -148,6 +153,19 @@ watch(referenceElement, (el, oldEl) => {
   el?.addEventListener('focus', handleFocus);
   el?.addEventListener('blur', handleBlur);
 });
+
+let ariaApplied: [Element, string] | undefined;
+watch([referenceElement, () => props.aria, tooltipId, visible], ([el, aria, id, isVisible]) => {
+  if (ariaApplied) {
+    ariaApplied[0].removeAttribute(ariaApplied[1]);
+    ariaApplied = undefined;
+  }
+  const attr = `aria-${aria}`;
+  if (el && isVisible && aria !== 'none' && !el.hasAttribute(attr)) {
+    el.setAttribute(attr, id);
+    ariaApplied = [el, attr];
+  }
+}, { immediate: true });
 
 onMounted(() => {
   document.addEventListener('click', handleClick as (e: MouseEvent) => void);

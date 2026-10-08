@@ -192,12 +192,45 @@ describe('Tooltip', () => {
     expect(wrapper.emitted('update:visible')).toEqual([[true], [false]]);
   });
 
-  // BUG: Tooltip.vue declares the aria prop (default 'describedby') but never links the trigger to the tooltip
-  it.fails('describes the trigger with the tooltip', async () => {
+  it('describes the trigger with the tooltip', async () => {
     await mountTooltip({ visible: true });
     const id = trigger().getAttribute('aria-describedby');
     expect(id).toBeTruthy();
     expect(tooltip()!.id).toBe(id);
+  });
+
+  it('links the trigger to the tooltip only while it is visible', async () => {
+    const wrapper = await mountTooltip();
+    expect(trigger().hasAttribute('aria-describedby')).toBe(false);
+
+    await wrapper.setProps({ visible: true });
+    expect(trigger().getAttribute('aria-describedby')).toBe(tooltip()!.id);
+
+    await wrapper.setProps({ visible: false });
+    expect(trigger().hasAttribute('aria-describedby')).toBe(false);
+  });
+
+  it('labels the trigger with aria="labelledby" and a custom id', async () => {
+    await mountTooltip({ visible: true, aria: 'labelledby', id: 'tip' });
+    expect(trigger().getAttribute('aria-labelledby')).toBe('tip');
+    expect(trigger().hasAttribute('aria-describedby')).toBe(false);
+    expect(tooltip()!.id).toBe('tip');
+  });
+
+  it('follows changes of the id', async () => {
+    const wrapper = await mountTooltip({ visible: true, id: 'tip' });
+    await wrapper.setProps({ id: 'other' });
+    expect(tooltip()!.id).toBe('other');
+    expect(trigger().getAttribute('aria-describedby')).toBe('other');
+  });
+
+  it('does not link the trigger with aria="none" or an existing aria attribute', async () => {
+    const none = await mountTooltip({ aria: 'none' });
+    expect(trigger().hasAttribute('aria-describedby')).toBe(false);
+    none.unmount();
+
+    await mountTooltip({}, { default: () => h('button', { class: 'trigger', 'aria-describedby': 'own' }, 'Trigger') });
+    expect(trigger().getAttribute('aria-describedby')).toBe('own');
   });
 });
 
