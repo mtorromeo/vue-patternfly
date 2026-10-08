@@ -4,13 +4,7 @@
     :class="[styles.jumpLinksItem, { [styles.modifiers.current]: managedActive }]"
     :aria-current="managedActive ? 'location' : undefined"
   >
-    <auto-wrap component="span" :exclude="PfJumpLinksList" :class="styles.jumpLinksLink">
-      <pf-button variant="link" component="a" :href="href" @click="handleClick">
-        <span :class="styles.jumpLinksLinkText">
-          <slot />
-        </span>
-      </pf-button>
-    </auto-wrap>
+    <component :is="fragment(renderChildren())" />
   </li>
 </template>
 
@@ -18,12 +12,12 @@
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import PfJumpLinksList from './JumpLinksList.vue';
 import PfButton from '../Button.vue';
-import AutoWrap from '../../helpers/AutoWrap.vue';
 import { type MaybeComputedElementRef } from '@vueuse/core';
-import { inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';
+import { h, inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';
 import { JumpLinkInjectionKey, JumpLinksKey } from './JumpLinks.vue';
 import { useChildrenTracker } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { findChildrenVNodes, fragment } from '../../util';
 
 defineOptions({
   name: 'PfJumpLinksItem',
@@ -47,7 +41,7 @@ const emit = defineEmits<{
   (name: 'click', event: PointerEvent): void;
 }>();
 
-defineSlots<{
+const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
@@ -82,6 +76,22 @@ function handleClick(event: PointerEvent) {
       behavior: 'smooth',
     });
   }
+}
+
+function renderChildren() {
+  const children = findChildrenVNodes(slots.default?.());
+  const sublists = children.filter(c => c.type === PfJumpLinksList);
+  const linkChildren = children.filter(c => c.type !== PfJumpLinksList);
+
+  return [
+    h('span', { class: styles.jumpLinksLink }, h(PfButton, {
+      variant: 'link',
+      component: 'a',
+      href: props.href,
+      onClick: handleClick,
+    }, () => h('span', { class: styles.jumpLinksLinkText }, linkChildren))),
+    ...sublists,
+  ];
 }
 
 const managedActive = computed(() => {

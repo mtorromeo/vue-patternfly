@@ -257,13 +257,12 @@ describe('JumpLinksItem', () => {
     expect(wrapper.findComponent(PfJumpLinksItem).vm.target).toBe(sections[1]);
   });
 
-  // BUG: the default slot (including nested JumpLinksList sub-lists) is rendered inside the link text span,
-  // so sub-lists end up inside the <a> (src/components/JumpLinks/JumpLinksItem.vue:8-14).
-  it.fails('renders nested lists outside of the link', () => {
+  it('renders nested lists outside of the link', () => {
     const wrapper = mount(PfJumpLinksItem, {
       slots: { default: () => ['Parent', h(PfJumpLinksList, () => h(PfJumpLinksItem, () => 'Child'))] },
     });
     expect(wrapper.find('a').find(`.${styles.jumpLinksList}`).exists()).toBe(false);
+    expect(wrapper.find(`.${styles.jumpLinksLinkText}`).text()).toBe('Parent');
     expect(wrapper.find(`:scope > .${styles.jumpLinksList}`).exists()).toBe(true);
   });
 });
