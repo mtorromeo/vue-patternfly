@@ -138,8 +138,8 @@ const handleClick = (event: PointerEvent) => {
   }
 };
 
-function handleSelect(event: Event) {
-  emit('select', event);
+function handleSelect(event: Event, itemId: MenuItemId | null | undefined) {
+  emit('select', event, itemId);
   if (props.focusToggleOnSelect && toggleRef.value instanceof HTMLElement) {
     toggleRef.value?.focus();
   }

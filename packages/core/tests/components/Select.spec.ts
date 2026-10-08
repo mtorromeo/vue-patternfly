@@ -190,8 +190,7 @@ describe('Select', () => {
     wrapper.unmount();
   });
 
-  // BUG: Select.vue handleSelect drops the itemId received from the Menu and only emits the event
-  it.fails('emits select with the selected item id', async () => {
+  it('emits select with the selected item id', async () => {
     const wrapper = await mountSelect({ open: true });
 
     options()[1]!.click();
