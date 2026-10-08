@@ -8,7 +8,7 @@
     ]"
   >
     <slot v-if="!!datalistItem?.expandable.value" name="toggle">
-      <pf-data-list-toggle @click="toggle" />
+      <pf-data-list-toggle :expanded="datalistItem?.expanded.value" @click="toggle" />
     </slot>
 
     <auto-wrap :component="PfDataListItemCells" :include="PfDataListCell">

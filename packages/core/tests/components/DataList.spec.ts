@@ -287,9 +287,8 @@ describe('DataListItemRow', () => {
     expect(wrapper.find(`.${styles.dataListToggle}`).exists()).toBe(false);
   });
 
-  // BUG: DataListItemRow.vue:11 does not pass the expanded state to PfDataListToggle, so aria-expanded is never set
-  it.fails('reflects the expanded state on the default toggle', () => {
-    const wrapper = mount(PfDataListItem, { props: { expandable: true, expanded: true } });
+  it('reflects the expanded state on the default toggle', () => {
+    const wrapper = mount(PfDataListItem, { props: { expandable: true, expanded: true }, slots: { default: () => h(PfDataListItemRow) } });
     expect(wrapper.find(`.${styles.dataListToggle} button`).attributes('aria-expanded')).toBe('true');
   });
 });
