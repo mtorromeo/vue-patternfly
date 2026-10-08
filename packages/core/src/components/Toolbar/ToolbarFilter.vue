@@ -3,7 +3,7 @@
     <slot />
   </pf-toolbar-item>
   <teleport v-if="mounted && teleportTarget" :to="teleportTarget">
-    <pf-toolbar-item v-if="slotLabels.length || labels.length" v-bind="ouiaProps" variant="label-group">
+    <pf-toolbar-item v-if="$slots.labels || labels.length" v-show="slotLabels.length || labels.length" v-bind="ouiaProps" variant="label-group">
       <pf-label-group
         :key="category"
         :category="category"
@@ -22,7 +22,6 @@
         </slot>
       </pf-label-group>
     </pf-toolbar-item>
-    <slot v-else name="labels" />
   </teleport>
 </template>
 

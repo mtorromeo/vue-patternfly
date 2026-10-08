@@ -217,10 +217,7 @@ describe('Toolbar', () => {
       expect(wrapper.findComponent(PfToolbarFilter).emitted('deleteLabelGroup')).toEqual([['Status']]);
     });
 
-    // BUG: ToolbarFilter.vue switches between the `labels` slot and the label group branch depending on the number of
-    // registered slot labels, which re-mounts the labels and loops ("Maximum recursive updates exceeded").
-    // Skipped instead of it.fails because the error is thrown asynchronously by the scheduler and fails the whole run.
-    it.skip('renders labels from the labels slot', async () => {
+    it('renders labels from the labels slot', async () => {
       const wrapper = mount(PfToolbar, {
         slots: {
           default: () => h(PfToolbarContent, () => h(PfToolbarFilter, { category: 'Type' }, {
