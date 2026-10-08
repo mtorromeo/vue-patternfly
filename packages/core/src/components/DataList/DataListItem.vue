@@ -12,6 +12,7 @@
     :tabindex="isSelectable ? 0 : undefined"
     :aria-selected="isSelectable && managedSelected ? 'true' : undefined"
     @click="handleClick($event as PointerEvent)"
+    @keydown="handleKeydown"
   >
     <input v-if="isSelectable" :name="name" :value="value" class="pf-v6-screen-reader" :type="datalist?.multipleSelection.value ? 'checkbox' : 'radio'" tabindex="-1" :checked="managedSelected" @change="select" />
     <auto-wrap :component="PfDataListItemRow" :exclude="PfDataListContent">
@@ -145,6 +146,16 @@ provide(DataListItemKey, {
 function select() {
   if (isSelectable.value) {
     managedSelected.value = !managedSelected.value;
+  }
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.target !== event.currentTarget || !isSelectable.value) {
+    return;
+  }
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    select();
   }
 }
 

@@ -251,8 +251,7 @@ describe('DataListItem', () => {
     expect(wrapper.find(`.${styles.dataListToggle}`).exists()).toBe(false);
   });
 
-  // BUG: DataListItem.vue has no keydown handler, so a focusable selectable item cannot be selected with Enter/Space
-  it.fails('selects with the keyboard', async () => {
+  it('selects with the keyboard', async () => {
     const wrapper = mount(PfDataListItem, { props: { selected: false } });
     await wrapper.trigger('keydown', { key: ' ' });
     expect(wrapper.emitted('update:selected')).toEqual([[true]]);
