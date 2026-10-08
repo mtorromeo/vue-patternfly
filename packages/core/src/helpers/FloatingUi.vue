@@ -45,7 +45,6 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  teleportTo: 'body',
   width: 'auto',
   minWidth: 'trigger',
   maxWidth: 'auto',
@@ -65,7 +64,9 @@ const slots = defineSlots<{
 }>();
 
 const injectedParent = inject(FloatingElementTeleportKey, undefined);
-const parent = computed(() => props.teleportTo ?? toValue(injectedParent));
+const parent = computed(() => props.teleportTo === undefined
+  ? toValue(injectedParent) ?? 'body'
+  : props.teleportTo ?? toValue(injectedParent));
 
 const internalHidden = ref(props.hidden);
 const opacity = ref(props.hidden ? 0 : 1);

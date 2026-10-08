@@ -70,9 +70,7 @@ describe('FloatingUi', () => {
     expect(target.querySelector('.floating')).not.toBeNull();
   });
 
-  // BUG: FloatingUi.vue gives teleportTo a 'body' default, so `props.teleportTo ?? injected` never
-  // falls back to the FloatingElementTeleportKey injection unless null is passed explicitly
-  it.fails('uses the injected teleport target when teleportTo is not set', () => {
+  it('uses the injected teleport target when teleportTo is not set', () => {
     createReference();
     const target = document.createElement('div');
     document.body.appendChild(target);
