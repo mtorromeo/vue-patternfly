@@ -51,7 +51,7 @@ export function findComponentVNode(vnodes: VNode[] | VNodeNormalizedChildren): V
   for (const n of vnodes) {
     if (isVNode(n) && n.type === Fragment) {
       const child = findComponentVNode(n.children);
-      if (child !== null) {
+      if (child !== undefined) {
         return child;
       }
     }

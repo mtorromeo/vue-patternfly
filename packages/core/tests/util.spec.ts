@@ -118,9 +118,7 @@ describe('findComponentVNode', () => {
     expect(findComponentVNode([h('div'), h(Fragment, [h('span')])])).toBeUndefined();
   });
 
-  // The fragment loop checks `child !== null`, but the recursive call returns `undefined` when nothing is found,
-  // so the search stops at the first fragment even if a later fragment contains a component.
-  it.fails('searches all fragments, not only the first one', () => {
+  it('searches all fragments, not only the first one', () => {
     const nested = h(Comp);
     expect(findComponentVNode([h(Fragment, [h('div')]), h(Fragment, [nested])])).toBe(nested);
   });
