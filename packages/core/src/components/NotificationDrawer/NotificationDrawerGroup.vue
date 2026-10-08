@@ -1,7 +1,7 @@
 <template>
   <section v-bind="ouiaProps" :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: expanded }]">
     <component :is="headingLevel">
-      <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="expanded" @click="expanded = !expanded" @keydown="onKeydown">
+      <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="expanded" @click="toggle" @keydown="onKeydown">
         <pf-tooltip :position="tooltipPosition">
           <template v-if="textOverflowing" #content>{{ title }}</template>
 
@@ -79,10 +79,16 @@ defineSlots<{
 const text = useTemplateRef('textRef');
 const textOverflowing = useElementOverflow(text);
 
+function toggle(e: Event) {
+  const value = !expanded.value;
+  expanded.value = value;
+  props.onExpand?.(e, value);
+}
+
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
-    expanded.value = !expanded.value;
+    toggle(e);
   }
 }
 </script>

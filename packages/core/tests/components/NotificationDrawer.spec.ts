@@ -323,8 +323,7 @@ describe('NotificationDrawerGroup', () => {
     expect((title.element as HTMLElement).style.getPropertyValue(maxLines.name)).toBe('2');
   });
 
-  // BUG: NotificationDrawerGroup.vue declares an onExpand callback prop but never calls it
-  it.fails('calls onExpand when toggled', async () => {
+  it('calls onExpand when toggled', async () => {
     const onExpand = vi.fn();
     const wrapper = mount(PfNotificationDrawerGroup, { props: { count: 1, onExpand } });
     await wrapper.find('button').trigger('click');
