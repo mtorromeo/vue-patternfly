@@ -7,13 +7,13 @@
 <script lang="ts" setup>
 import type { ComponentProps } from 'vue-component-type-helpers';
 import PfButton from '../Button.vue';
-import { useOUIAProps } from '../../helpers/ouia';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfAlertActionLink',
 });
 
-interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'inline'> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'inline' | 'ouiaId' | 'ouiaSafe'> {
 }
 
 const props = defineProps<Props>();

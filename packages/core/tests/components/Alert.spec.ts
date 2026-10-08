@@ -303,9 +303,7 @@ describe('AlertActionLink', () => {
     expect(wrapper.find('button').attributes('data-ouia-component-type')).toBe('PF/AlertActionLink');
   });
 
-  // BUG: AlertActionLink.vue only declares props via a @vue-ignore'd type, so ouiaId is not a real prop,
-  // props.ouiaId is undefined and the generated id bound via ouiaProps overrides the Button's own one
-  it.fails('uses the given ouiaId', () => {
+  it('uses the given ouiaId', () => {
     const wrapper = mount(PfAlertActionLink, { attrs: { ouiaId: 'link' } });
     expect(wrapper.find('button').attributes('data-ouia-component-id')).toBe('link');
   });
