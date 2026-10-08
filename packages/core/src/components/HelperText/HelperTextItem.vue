@@ -7,7 +7,7 @@
       variant === 'default' ? null : styles.modifiers[variant],
     ]"
   >
-    <span v-if="variant !== 'default' || $slots.icon" :class="styles.helperTextItemIcon" aria-hidden>
+    <span v-if="variant !== 'default' || $slots.icon" :class="styles.helperTextItemIcon" aria-hidden="true">
       <slot name="icon">
         <minus-icon v-if="variant === 'default' || variant === 'indeterminate'" />
         <triangle-exclamation-icon v-else-if="variant === 'warning'" />

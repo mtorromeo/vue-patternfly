@@ -54,9 +54,7 @@ describe('HelperTextItem', () => {
     expect(icon.find('svg').exists()).toBe(false);
   });
 
-  // BUG: the icon wrapper uses a bare `aria-hidden` attribute which renders as aria-hidden="", an invalid value
-  // that assistive technologies treat as "undefined", so the icon is not hidden (src/components/HelperText/HelperTextItem.vue:9).
-  it.fails('hides the icon from assistive technologies', () => {
+  it('hides the icon from assistive technologies', () => {
     const wrapper = mount(PfHelperTextItem, { props: { variant: 'error' } });
     expect(wrapper.find(`.${styles.helperTextItemIcon}`).attributes('aria-hidden')).toBe('true');
   });
