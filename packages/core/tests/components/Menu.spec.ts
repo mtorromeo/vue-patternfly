@@ -122,9 +122,7 @@ describe('Menu', () => {
       expect(itemButtons(wrapper)[1]!.classes()).toContain(styles.modifiers.selected);
     });
 
-    // BUG: MenuItem.vue `active` is a boolean prop without an `undefined` default, so it is always false and
-    // isDefined(props.active) short-circuits the activeItemId comparison
-    it.fails('marks the item matching activeItemId as current', () => {
+    it('marks the item matching activeItemId as current', () => {
       const wrapper = mount(PfMenu, { props: { activeItemId: 'b' }, slots: { default: items('a', 'b') } });
 
       expect(itemButtons(wrapper)[0]!.attributes('aria-current')).toBeUndefined();

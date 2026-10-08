@@ -166,6 +166,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'button',
+  active: undefined,
   selected: undefined,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
@@ -250,7 +251,7 @@ const ariaCurrent = computed(() => {
       return null;
     }
   } else if (isDefined(itemId.value) && isDefined(menu?.activeItemId)) {
-    return itemId.value === menu?.activeItemId;
+    return itemId.value === menu?.activeItemId || null;
   }
   return null;
 });
