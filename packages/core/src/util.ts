@@ -1,5 +1,5 @@
 import { isDefined } from '@vueuse/shared';
-import { Fragment, Comment, type VNode, type VNodeTypes, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren, type Component, type ComponentOptionsMixin } from 'vue';
+import { h, Fragment, Comment, type VNode, type VNodeTypes, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren, type Component, type ComponentOptionsMixin } from 'vue';
 import { globalHeightBreakpoints, globalWidthBreakpoints } from './constants';
 
 const camelize = (s: string) =>
@@ -89,6 +89,16 @@ export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren | u
     .filter(n => isVNode(n) && n.type !== Comment)
     .map(n => isVNode(n) && n.type === Fragment ? findChildrenVNodes(n.children) : n)
     .flat() as VNode[];
+}
+
+/**
+ * Wraps the given nodes in a Fragment vnode, so that the output of a render function can be rendered inline
+ * from a template with `<component :is="fragment(render())" />`.
+ * Unlike `<render />`, which mounts a separate functional component that does not update when its parent re-renders,
+ * this always re-evaluates the render function together with the parent.
+ */
+export function fragment(vnodes: VNode | VNodeArrayChildren | null | undefined): VNode {
+  return h(Fragment, Array.isArray(vnodes) ? vnodes : vnodes ? [vnodes] : []);
 }
 
 export function walkChildrenVNodes<T extends VNode[] | VNodeNormalizedChildren | undefined>(vnodes: T, mapFn: (node: VNode, index: number) => VNode, startIndex?: number): T {

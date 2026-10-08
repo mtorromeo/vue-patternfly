@@ -1,10 +1,10 @@
 <template>
-  <render />
+  <component :is="fragment(render())" />
 </template>
 
 <script lang="ts" setup>
 import { type ComponentPublicInstance, type Slot, type VNode } from "vue";
-import { findChildrenVNodes } from "../util";
+import { findChildrenVNodes, fragment } from "../util";
 
 defineOptions({
   inheritAttrs: false,

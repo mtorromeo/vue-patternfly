@@ -1,10 +1,10 @@
 <template>
-  <render />
+  <component :is="fragment(render())" />
 </template>
 
 <script lang="ts" setup>
 import { h, useAttrs, ref, resolveDynamicComponent, type VNode, type VNodeTypes, type Ref, type Teleport } from "vue";
-import { findChildrenVNodes } from "../util";
+import { findChildrenVNodes, fragment } from "../util";
 import type { ComponentPublicInstance } from "vue";
 import type { Component } from "vue";
 import type { ComponentExposed } from 'vue-component-type-helpers';

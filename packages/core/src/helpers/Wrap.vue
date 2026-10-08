@@ -1,5 +1,5 @@
 <template>
-  <render />
+  <component :is="fragment(render())" />
 </template>
 
 <script lang="ts" setup>
@@ -9,7 +9,7 @@
  */
 
 import { h, type VNode } from 'vue';
-import { findChildrenVNodes } from '../util';
+import { findChildrenVNodes, fragment } from '../util';
 
 defineOptions({
   inheritAttrs: false,

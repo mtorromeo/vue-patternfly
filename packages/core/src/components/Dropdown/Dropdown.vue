@@ -1,6 +1,6 @@
 <template>
   <pass-through @children="findReference">
-    <render-toggles />
+    <component :is="fragment(renderToggles())" />
   </pass-through>
 
   <floating-ui :teleport-to="appendTo" flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex" :hidden="!open">
@@ -61,6 +61,7 @@ import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useHtmlElementFromVNodes } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { fragment } from '../../util';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
 let currentId = 0;

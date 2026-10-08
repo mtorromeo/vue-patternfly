@@ -1,5 +1,5 @@
 <template>
-  <render />
+  <component :is="fragment(render())" />
 </template>
 
 <script lang="ts" setup>
@@ -10,7 +10,7 @@
  */
 
 import type { VNode } from 'vue';
-import { vnodeTypeIsComponent } from "../util";
+import { fragment, vnodeTypeIsComponent } from "../util";
 
 defineOptions({
   inheritAttrs: false,

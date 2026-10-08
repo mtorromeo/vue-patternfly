@@ -7,7 +7,7 @@
     :aria-live="liveRegion ? 'polite' : undefined"
     :aria-atomic="liveRegion ? false : undefined"
   >
-    <render-children />
+    <component :is="fragment(renderChildren())" />
 
     <li v-if="overflowMessage">
       <button :class="styles.alertGroupOverflowButton" @click="emit('overflowClick', $event as PointerEvent)">
@@ -21,7 +21,7 @@
 import styles from '@patternfly/react-styles/css/components/Alert/alert-group';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { h, type HTMLAttributes } from 'vue';
-import { findChildrenVNodes } from '../../util';
+import { findChildrenVNodes, fragment } from '../../util';
 
 defineOptions({
   name: 'PfAlertGroupInline',

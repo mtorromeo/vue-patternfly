@@ -1,10 +1,11 @@
 <template>
-  <render />
+  <component :is="fragment(render())" />
 </template>
 
 <script lang="ts" setup>
 import type { VNode, RendererElement } from 'vue';
 import { h, Teleport } from 'vue';
+import { fragment } from '../util';
 
 defineOptions({
   inheritAttrs: false,
