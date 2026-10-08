@@ -5,7 +5,7 @@
     :class="[
       styles.progress,
       variant && styles.modifiers[variant],
-      measureLocation === 'inside' || measureLocation === 'outside' && styles.modifiers[measureLocation],
+      (measureLocation === 'inside' || measureLocation === 'outside') && styles.modifiers[measureLocation],
       measureLocation !== 'inside' && size && size !== 'md' && styles.modifiers[size],
       {
         [styles.modifiers.lg]: measureLocation === 'inside',

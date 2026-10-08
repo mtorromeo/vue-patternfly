@@ -74,9 +74,7 @@ describe('Progress', () => {
     expect(wrapper.find(`.${styles.progressIndicator} .${styles.progressMeasure}`).text()).toBe('40%');
   });
 
-  // BUG: Progress.vue:7 `measureLocation === 'inside' || measureLocation === 'outside' && ...` has wrong
-  // precedence, so with 'inside' the class `true` is added instead of the inside modifier
-  it.fails('applies the inside modifier', () => {
+  it('applies the inside modifier', () => {
     const wrapper = mount(PfProgress, { props: { measureLocation: 'inside' } });
     expect(wrapper.classes()).toContain(styles.modifiers.inside);
     expect(wrapper.classes()).not.toContain('true');
