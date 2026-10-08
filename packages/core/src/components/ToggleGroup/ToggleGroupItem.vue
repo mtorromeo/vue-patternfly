@@ -111,9 +111,8 @@ const effectiveSelected = computed({
           selection.value = [...selection.value, value];
         }
       } else {
-        const idx = selection.value.indexOf(value);
-        if (idx >= 0) {
-          selection.value.splice(idx, 1);
+        if (selection.value.includes(value)) {
+          selection.value = selection.value.filter(v => v !== value);
         }
       }
     } else if (to) {

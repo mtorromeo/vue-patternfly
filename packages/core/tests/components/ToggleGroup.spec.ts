@@ -93,9 +93,7 @@ describe('ToggleGroup', () => {
     expect(pressed(wrapper)).toEqual([true, true, false]);
   });
 
-  // BUG: ToggleGroupItem.vue:116 removes the value with an in-place splice on the model array, so update:modelValue
-  // is never emitted and the item does not re-render as unselected
-  it.fails('removes from an array selection with v-model', async () => {
+  it('removes from an array selection with v-model', async () => {
     const wrapper = mountWithModel(PfToggleGroup, 'modelValue', { modelValue: [1, 2] }, { slots: { default: items } });
     await wrapper.findAll('button')[0]!.trigger('click');
     expect(wrapper.emitted('update:modelValue')).toEqual([[[2]]]);
