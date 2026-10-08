@@ -23,12 +23,14 @@ describe('Wrap', () => {
   });
 
   it('wraps the content with a component, keeping its props', () => {
+    const warn = vi.spyOn(console, 'warn');
     const wrapper = mount(() => h('div', [h(Wrap, null, {
       default: () => [h('span', 'content')],
       with: () => [h(Box, { color: 'red' })],
     })]));
     expect(wrapper.find('section').attributes('data-color')).toBe('red');
     expect(wrapper.find('section > span').text()).toBe('content');
+    expect(warn).not.toHaveBeenCalled();
   });
 
   it('does not wrap when disabled', async () => {

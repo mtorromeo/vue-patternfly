@@ -41,7 +41,9 @@ function render() {
       throw new Error("Wrap's \"with\" slot can only contain a single child node");
     }
 
-    return h(wrapperNode[0], content);
+    const wrapperType = wrapperNode[0].type;
+    const isComponent = typeof wrapperType === 'object' || typeof wrapperType === 'function';
+    return h(wrapperNode[0], null, isComponent ? { default: () => content } : content);
   }
 
   return content;
