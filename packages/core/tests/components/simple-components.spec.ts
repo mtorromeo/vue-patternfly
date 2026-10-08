@@ -146,9 +146,7 @@ describe('CloseButton', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  // BUG: CloseButton.vue declares props only through a @vue-ignore'd type, so ouiaId is never a real prop
-  // and the generated OUIA id it binds overrides the one the Button would use
-  it.fails('uses the given ouiaId', () => {
+  it('uses the given ouiaId', () => {
     const wrapper = mount(PfCloseButton, { attrs: { ouiaId: 'close' } });
     expect(wrapper.find('button').attributes('data-ouia-component-id')).toBe('close');
   });
