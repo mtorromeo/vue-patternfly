@@ -114,9 +114,7 @@ describe('PassThrough', () => {
     });
   });
 
-  // `templateFn` is a plain `let` that is exposed by value at setup time, so it is always `undefined` on the
-  // exposed instance and the `template` + `useRef` combination never renders the stored template.
-  it.fails('renders the template stored by another PassThrough through useRef', async () => {
+  it('renders the template stored by another PassThrough through useRef', async () => {
     const source = ref();
     const Host = defineComponent({
       setup() {

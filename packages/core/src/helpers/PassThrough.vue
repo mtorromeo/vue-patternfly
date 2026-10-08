@@ -29,8 +29,6 @@ const emit = defineEmits<{
   (name: 'children', c: VNode[]): void;
 }>();
 
-let templateFn: Slot | undefined = undefined;
-
 function render() {
   const retEmit = (children: VNode[]) => {
     emit('children', children);
@@ -38,7 +36,6 @@ function render() {
   };
 
   if (props.template) {
-    templateFn = slots.default;
     return retEmit([]);
   }
 
@@ -66,6 +63,8 @@ function render() {
 }
 
 defineExpose({
-  templateFn,
+  get templateFn(): Slot | undefined {
+    return props.template ? slots.default as Slot | undefined : undefined;
+  },
 });
 </script>
