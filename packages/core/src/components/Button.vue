@@ -40,7 +40,7 @@
       @click="onClick($event, (routerCtx as RouterLinkContext | undefined)?.navigate)"
     >
       <span v-if="loading" :class="styles.buttonProgress">
-        <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" />
+        <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" :aria-label="spinnerAriaLabel" :aria-labelledby="spinnerAriaLabelledBy" />
       </span>
 
       <slot v-if="iconPosition === 'end'" />

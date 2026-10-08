@@ -175,10 +175,16 @@ describe('Button', () => {
       expect(btn(wrapper).classes()).not.toContain(styles.modifiers.progress);
     });
 
-    // spinnerAriaLabel / spinnerAriaLabelledBy are declared props but are never passed to the spinner.
-    it.fails('forwards the spinner aria-label', () => {
+    it('forwards the spinner aria-label', () => {
       const wrapper = mount(PfButton, { props: { loading: true, spinnerAriaLabel: 'Saving' } });
       expect(wrapper.find('[role="progressbar"]').attributes('aria-label')).toBe('Saving');
+    });
+
+    it('forwards the spinner aria-labelledby', () => {
+      const wrapper = mount(PfButton, { props: { loading: true, spinnerAriaLabelledBy: 'label-id' } });
+      const spinner = wrapper.find('[role="progressbar"]');
+      expect(spinner.attributes('aria-labelledby')).toBe('label-id');
+      expect(spinner.attributes('aria-label')).toBeUndefined();
     });
   });
 
