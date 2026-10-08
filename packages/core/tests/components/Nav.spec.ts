@@ -88,14 +88,13 @@ describe('NavList', () => {
     expect(wrapper.find(`.${styles.navScrollButton}`).exists()).toBe(false);
   });
 
-  // BUG: NavList.vue never calls handleScrollButtons on mount (only on scroll/resize), so the scroll
-  // buttons of a horizontal nav are rendered until the first resize, even when every item fits
-  it.fails('does not render scroll buttons for a horizontal nav whose items fit', () => {
+  it('does not render scroll buttons for a horizontal nav whose items fit', async () => {
     const wrapper = mount(PfNav, {
       props: { variant: 'horizontal' },
       slots: { default: () => h(PfNavList, () => h('li', 'Item')) },
       attachTo: document.body,
     });
+    await nextTick();
     expect(wrapper.find(`.${styles.navScrollButton}`).exists()).toBe(false);
   });
 

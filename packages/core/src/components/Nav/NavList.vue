@@ -70,6 +70,7 @@ const scrollViewAtEnd = ref(false);
 
 onMounted(() => {
   window.addEventListener('resize', handleScrollButtons, false);
+  handleScrollButtons();
 });
 
 onBeforeUnmount(() => {
