@@ -214,9 +214,7 @@ describe('Modal', () => {
     wrapper.unmount();
   });
 
-  // Suspected bug: Modal always passes a #help template to PfModalHeader, so $slots.help is
-  // always defined and the header gets the help modifier and an empty help container.
-  it.fails('does not apply the help layout to the header without a help slot', () => {
+  it('does not apply the help layout to the header without a help slot', () => {
     const wrapper = mountModal({ title: 'T' });
     const header = dialog()!.querySelector(`.${styles.modalBoxHeader}`)!;
     expect(header.classList.contains(styles.modifiers.help)).toBe(false);

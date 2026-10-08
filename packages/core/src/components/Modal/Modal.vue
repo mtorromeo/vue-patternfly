@@ -66,7 +66,7 @@
               </div>
             </slot>
 
-            <template #help>
+            <template v-if="$slots.help" #help>
               <slot name="help" />
             </template>
           </pf-modal-header>
