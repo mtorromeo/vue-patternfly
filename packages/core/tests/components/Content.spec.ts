@@ -38,9 +38,7 @@ describe('Content', () => {
     expect(wrapper.classes()).toContain(className);
   });
 
-  // BUG: Content.vue always applies styles.content (first entry of the class array), while it
-  // should only be used as the wrapper class when component is 'div' (as in PatternFly React)
-  it.fails('does not apply the wrapper class to specific elements', () => {
+  it('does not apply the wrapper class to specific elements', () => {
     const wrapper = mount(PfContent, { props: { component: 'h1' } });
     expect(wrapper.classes()).not.toContain(styles.content);
   });

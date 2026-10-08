@@ -2,7 +2,7 @@
   <component
     :is="component"
     v-bind="ouiaProps"
-    :class="[styles.content, {
+    :class="{
       [styles.modifiers.visited]: visited,
       [styles.modifiers.plain]: plainList && ['ul', 'ol', 'dl'].includes(component),
       [styles.modifiers.editorial]: editorial,
@@ -25,7 +25,7 @@
       [styles.contentLi]: component === 'li',
       [styles.contentDt]: component === 'dt',
       [styles.contentDd]: component === 'dd',
-    }]"
+    }"
   >
     <slot />
   </component>
