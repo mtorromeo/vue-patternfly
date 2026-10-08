@@ -9,6 +9,7 @@
     v-bind="{...ouiaProps, ...$attrs}"
     :is="component"
     role="columnheader"
+    :scope="scope"
     :class="[
       styles.tableTh,
       width && [styles.modifiers[`width_${width}`]],

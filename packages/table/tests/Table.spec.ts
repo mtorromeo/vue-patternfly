@@ -261,9 +261,7 @@ describe('Th', () => {
     expect(cell(wrapper).attributes('data-test')).toBe('th');
   });
 
-  // Suspected bug: `scope` is declared as a prop (default 'col') but never bound to the element,
-  // so header cells are never associated with their column.
-  it.fails('renders the scope attribute', () => {
+  it('renders the scope attribute', () => {
     const wrapper = mount(PfTh);
     expect(cell(wrapper).attributes('scope')).toBe('col');
   });
