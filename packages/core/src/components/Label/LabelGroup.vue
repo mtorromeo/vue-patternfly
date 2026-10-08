@@ -37,7 +37,7 @@
                 <component :is="child" />
               </li>
             </template>
-            <li :class="styles.labelGroupListItem">
+            <li v-if="children.length > numLabels" :class="styles.labelGroupListItem">
               <pf-label :compact="compact" overflow @click="overflowChipClick">
                 {{ open ? expandedText : fillTemplate(collapsedText, { remaining: children.length - numLabels }) }}
               </pf-label>

@@ -226,9 +226,7 @@ describe('LabelGroup', () => {
     expect(overflow().text()).toBe('Less');
   });
 
-  // BUG: since b9e6bf65 the overflow label is rendered unconditionally, even when there are
-  // no hidden labels (it shows "0 more", or a negative count).
-  it.fails('does not render the overflow label when all labels fit', () => {
+  it('does not render the overflow label when all labels fit', () => {
     const wrapper = mount(PfLabelGroup, { props: { numLabels: 3 }, slots: { default: labels(2) } });
     expect(wrapper.find(`.${styles.modifiers.overflow}`).exists()).toBe(false);
   });
