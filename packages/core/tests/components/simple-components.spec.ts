@@ -328,9 +328,7 @@ describe('Title', () => {
     expect(wrapper.classes()).not.toContain(titleStyles.modifiers.lg);
   });
 
-  // BUG: Title.vue renders `h${h}`, so the documented 'h1'..'h6' values produce an invalid <hh2> tag
-  // and the heading-level size modifier is not applied (Number('h2') is NaN)
-  it.fails('accepts the h1..h6 string form of the heading level', () => {
+  it('accepts the h1..h6 string form of the heading level', () => {
     const wrapper = mount(PfTitle, { props: { h: 'h2' } });
     expect(wrapper.element.tagName).toBe('H2');
     expect(wrapper.classes()).toContain(titleStyles.modifiers.xl);

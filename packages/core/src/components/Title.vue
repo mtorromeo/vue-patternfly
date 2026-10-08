@@ -1,5 +1,5 @@
 <template>
-  <component :is="`h${h}`" v-bind="ouiaProps" :class="[styles.title, size && size in styles.modifiers ? styles.modifiers[size] : hModifier]">
+  <component :is="`h${level}`" v-bind="ouiaProps" :class="[styles.title, size && size in styles.modifiers ? styles.modifiers[size] : hModifier]">
     <slot />
   </component>
 </template>
@@ -39,8 +39,10 @@ defineSlots<{
 
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
+const level = computed(() => Number(String(props.h).replace(/^h/, '')));
+
 const hModifier = computed(() => {
-  const level = headingLevelSizeMap[Number(props.h) as keyof typeof headingLevelSizeMap];
-  return level ? styles.modifiers[level] : undefined;
+  const size = headingLevelSizeMap[level.value];
+  return size ? styles.modifiers[size] : undefined;
 });
 </script>
