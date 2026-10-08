@@ -299,9 +299,7 @@ describe('PageToggleButton', () => {
     expect(wrapper.emitted('update:sidebarOpen')).toEqual([[true], [false]]);
   });
 
-  // BUG: PageToggleButton.vue:2 passes `:expanded="hamburger && sidebarOpen"` to PfButton, which is false for
-  // non hamburger toggles and takes precedence over the aria-expanded attribute, so it is always "false"
-  it.fails('reflects the open state in aria-expanded for non hamburger toggles', () => {
+  it('reflects the open state in aria-expanded for non hamburger toggles', () => {
     const wrapper = mount(PfPageToggleButton, { props: { sidebarOpen: true } });
     expect(wrapper.find('button').attributes('aria-expanded')).toBe('true');
   });

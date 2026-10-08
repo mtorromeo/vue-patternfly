@@ -1,5 +1,5 @@
 <template>
-  <pf-button v-bind="ouiaProps" :id="id" variant="plain" :hamburger="hamburger" :expanded="hamburger && sidebarOpen" aria-label="Side navigation toggle" :aria-expanded="sidebarOpen ? 'true' : 'false'" @click="sidebarOpen = !sidebarOpen">
+  <pf-button v-bind="ouiaProps" :id="id" variant="plain" :hamburger="hamburger" :expanded="sidebarOpen" aria-label="Side navigation toggle" @click="sidebarOpen = !sidebarOpen">
     <slot />
   </pf-button>
 </template>
