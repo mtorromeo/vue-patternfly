@@ -4,7 +4,7 @@
   </pass-through>
 
   <floating-ui
-    v-if="$slots.content"
+    v-if="$slots.content || content"
     :hidden="!visible"
     v-slot="{ placement }"
     :teleport-to="appendTo"

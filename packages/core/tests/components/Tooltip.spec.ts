@@ -149,8 +149,7 @@ describe('Tooltip', () => {
     expect(wrapper.vm.el).toBe(tooltip());
   });
 
-  // BUG: Tooltip.vue renders the floating element only `v-if="$slots.content"`, so the content prop alone never shows
-  it.fails('renders the content prop without a content slot', async () => {
+  it('renders the content prop without a content slot', async () => {
     mount(PfTooltip, {
       props: { visible: true, content: 'From prop', animationDuration: 0 },
       slots: { default: () => h('button', 'T') },
