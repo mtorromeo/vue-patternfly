@@ -9,11 +9,14 @@
     "pub": "pnpm publish -r --publish-branch main --filter ./packages/core --filter ./packages/icons --filter ./packages/table",
     "clean": "turbo run clean",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.16.1",
+    "@vitest/coverage-v8": "^5.0.3",
     "@vue/eslint-config-typescript": "^14.7.0",
+    "@vue/test-utils": "^2.5.1",
     "@vue/tsconfig": "^0.9.1",
     "concurrently": "^10.0.4",
     "eslint": "^10.4.0",
@@ -23,9 +26,11 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^7.3.0",
     "eslint-plugin-vue": "^10.9.1",
+    "happy-dom": "^20.14.5",
     "turbo": "^2.9.14",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14"
+    "vite": "^8.0.14",
+    "vitest": "^5.0.3"
   },
   "packageManager": "pnpm@11.3.0",
   "name": "vue-patternfly"

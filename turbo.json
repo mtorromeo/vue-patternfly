@@ -19,12 +19,16 @@
     },
     "test": {
       "dependsOn": [
-        "build"
+        "^build"
       ],
-      "outputs": [],
+      "outputs": [
+        "coverage/**"
+      ],
       "inputs": [
         "src/**/*.vue",
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "tests/**/*.ts",
+        "vitest.config.mts"
       ]
     },
     "lint": {
