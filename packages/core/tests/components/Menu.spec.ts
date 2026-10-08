@@ -477,9 +477,7 @@ describe('MenuItem', () => {
       expect(wrapper.findAllComponents(PfMenuItem)[0]!.emitted('showFlyout')).toHaveLength(1);
     });
 
-    // BUG: Menu.vue:156 stores the component instance in a deep ref(), so menu.flyout.value returns a
-    // reactive proxy and MenuItem.vue:259 (`instance === menu.flyout.value`) is never true: flyouts never open
-    it.fails('shows the flyout on click and hover, hides on hovering another item', async () => {
+    it('shows the flyout on click and hover, hides on hovering another item', async () => {
       const wrapper = mountFlyout();
       const item = wrapper.findAllComponents(PfMenuItem)[0]!;
 

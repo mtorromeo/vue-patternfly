@@ -99,7 +99,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSel
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, ref, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type HTMLAttributes, useTemplateRef, type ComputedRef, type ModelRef } from 'vue';
+import { inject, provide, reactive, shallowRef, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type HTMLAttributes, useTemplateRef, type ComputedRef, type ModelRef } from 'vue';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 import { isDefined } from '@vueuse/shared';
 import AutoWrap from '../../helpers/AutoWrap.vue';
@@ -153,7 +153,7 @@ const state: MenuState = reactive({
   disableHover: false,
 });
 
-const flyout: Ref<ComponentInternalInstance | null> = ref(null);
+const flyout: Ref<ComponentInternalInstance | null> = shallowRef(null);
 
 // const effectiveMenuDrilledIn = computed(() => $props.menuDrilledIn || (instance?.vnode.key && $props.drilledInMenus?.includes(instance?.vnode.key)));
 
