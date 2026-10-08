@@ -106,8 +106,7 @@ describe('EmptyStateHeader', () => {
     expect(wrapper.findAll(`.${styles.emptyStateIcon}`)).toHaveLength(1);
   });
 
-  // BUG: EmptyStateHeader.vue:24 declares `name: 'PfEmptyStateBody'`, so its OUIA type is reported as PF/EmptyStateBody
-  it.fails('reports its own OUIA component type', () => {
+  it('reports its own OUIA component type', () => {
     const wrapper = mount(PfEmptyStateHeader);
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/EmptyStateHeader');
   });

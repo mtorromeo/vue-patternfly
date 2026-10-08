@@ -20,7 +20,7 @@ import styles from '@patternfly/react-styles/css/components/EmptyState/empty-sta
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
-  name: 'PfEmptyStateBody',
+  name: 'PfEmptyStateHeader',
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
