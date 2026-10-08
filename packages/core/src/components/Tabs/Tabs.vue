@@ -188,7 +188,7 @@ const overflowTabRef: Ref<HTMLButtonElement | undefined> = ref();
 const tabs = provideChildrenTracker(TabsKey);
 
 provide(TabsProvideKey, {
-  secondary: props.secondary,
+  secondary: () => props.secondary,
   activeKey: localActiveKey,
   idSuffix: () => props.id,
   tabOverflowRef,

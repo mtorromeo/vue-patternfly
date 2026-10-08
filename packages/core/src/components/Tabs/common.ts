@@ -4,7 +4,7 @@ import PfMenuList from '../Menu/MenuList.vue';
 import type { ComponentExposed } from 'vue-component-type-helpers';
 
 export type TabsProvide = {
-  secondary: boolean;
+  secondary: MaybeRefOrGetter<boolean>;
   activeKey: WritableComputedRef<TabKey | undefined>;
   idSuffix: MaybeRefOrGetter<string>;
   tabOverflowRef: Ref<ComponentExposed<typeof PfMenuList> | undefined>;

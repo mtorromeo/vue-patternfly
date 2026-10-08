@@ -309,9 +309,7 @@ describe('TabContent', () => {
     expect(tabPanels(wrapper)[0].classes()).toContain(contentStyles.modifiers.secondary);
   });
 
-  // BUG: Tabs.vue:191 provides `secondary: props.secondary` as a plain value, so TabContent does not
-  // react to later changes of the Tabs secondary prop
-  it.fails('follows changes of the Tabs secondary prop', async () => {
+  it('follows changes of the Tabs secondary prop', async () => {
     const secondary = ref(false);
     const wrapper = mount(defineComponent({
       setup: () => () => h(PfTabs, { secondary: secondary.value }, { default: () => [h(PfTab, { key: 'a', title: 'A' }, () => 'A')] }),

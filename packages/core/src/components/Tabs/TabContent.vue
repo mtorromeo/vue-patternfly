@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, ref } from 'vue';
+import { computed, inject, ref, toValue } from 'vue';
 import styles from '@patternfly/react-styles/css/components/TabContent/tab-content';
 import { TabsProvideKey } from './common';
 import type { HTMLAttributes } from 'vue';
@@ -33,7 +33,8 @@ defineSlots<{
 }>();
 
 const hidden = ref(false);
-const secondary = inject(TabsProvideKey, undefined)?.secondary;
+const tabs = inject(TabsProvideKey, undefined);
+const secondary = computed(() => toValue(tabs?.secondary));
 
 defineExpose({
   hidden,
