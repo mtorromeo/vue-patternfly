@@ -118,7 +118,7 @@ const flip = ref(true);
 const position: Ref<Placement> = ref('auto');
 const animationDuration = ref(300);
 const entryDelay = ref(300);
-const exitDelay = ref(0);
+const exitDelay = ref(300);
 const distance = ref(15);
 
 onMounted(() => {

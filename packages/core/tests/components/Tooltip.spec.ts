@@ -7,6 +7,9 @@ import PfTooltipArrow from '../../src/components/Tooltip/TooltipArrow.vue';
 import PfTooltipContent from '../../src/components/Tooltip/TooltipContent.vue';
 
 enableAutoUnmount(afterEach);
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
   const wrapper: VueWrapper<any> = mount(component as any, {
@@ -20,7 +23,7 @@ function mountWithModel<C>(component: C, model: string, props: Record<string, un
 }
 
 async function mountTooltip(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = {}) {
-  const wrapper = mountWithModel(PfTooltip, 'visible', { animationDuration: 0, ...props }, {
+  const wrapper = mountWithModel(PfTooltip, 'visible', { animationDuration: 0, entryDelay: 0, exitDelay: 0, ...props }, {
     slots: {
       default: () => h('button', { class: 'trigger' }, 'Trigger'),
       content: () => 'Tooltip text',
@@ -167,10 +170,9 @@ describe('Tooltip', () => {
     expect(tooltip()!.textContent).toBe('From prop');
   });
 
-  // BUG: Tooltip.vue declares entryDelay (default 1000ms) and exitDelay but never uses them: it shows immediately
-  it.fails('waits entryDelay before showing', async () => {
+  it('waits entryDelay before showing and exitDelay before hiding', async () => {
     vi.useFakeTimers();
-    const wrapper = await mountTooltip({ entryDelay: 500 });
+    const wrapper = await mountTooltip({ entryDelay: 500, exitDelay: 200 });
 
     trigger().dispatchEvent(new MouseEvent('mouseenter'));
     await flushPromises();
@@ -179,6 +181,15 @@ describe('Tooltip', () => {
     vi.advanceTimersByTime(500);
     await flushPromises();
     expect(wrapper.emitted('update:visible')).toEqual([[true]]);
+
+    trigger().dispatchEvent(new MouseEvent('mouseleave'));
+    vi.advanceTimersByTime(199);
+    await flushPromises();
+    expect(wrapper.emitted('update:visible')).toEqual([[true]]);
+
+    vi.advanceTimersByTime(1);
+    await flushPromises();
+    expect(wrapper.emitted('update:visible')).toEqual([[true], [false]]);
   });
 
   // BUG: Tooltip.vue declares the aria prop (default 'describedby') but never links the trigger to the tooltip

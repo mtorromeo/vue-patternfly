@@ -91,8 +91,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'
 const props = withDefaults(defineProps<Props>(), {
   position: 'top',
   trigger: 'mouseenter focus',
-  entryDelay: 1000,
-  exitDelay: 0,
+  entryDelay: 300,
+  exitDelay: 300,
   distance: 15,
   aria: 'describedby',
   animationDuration: 300,
@@ -154,6 +154,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  clearTimeout(visibilityTimer);
   document.removeEventListener('click', handleClick as (e: MouseEvent) => void);
   referenceElement.value?.removeEventListener('mouseenter', handleMouseEnter);
   referenceElement.value?.removeEventListener('mouseleave', handleMouseLeave);
@@ -161,37 +162,58 @@ onUnmounted(() => {
   referenceElement.value?.removeEventListener('blur', handleBlur);
 });
 
+let visibilityTimer: ReturnType<typeof setTimeout> | undefined;
+
+function setVisibleAfter(value: boolean, delay: number) {
+  clearTimeout(visibilityTimer);
+  if (delay > 0) {
+    visibilityTimer = setTimeout(() => {
+      visible.value = value;
+    }, delay);
+  } else {
+    visible.value = value;
+  }
+}
+
+function show() {
+  setVisibleAfter(true, props.entryDelay);
+}
+
+function hide() {
+  setVisibleAfter(false, props.exitDelay);
+}
+
 function handleClick(e: PointerEvent) {
   if (triggerClick.value) {
     if (e.target === referenceElement.value) {
-      visible.value = true;
+      show();
     } else {
-      visible.value = false;
+      hide();
     }
   }
 }
 
 function handleFocus() {
   if (triggerFocus.value) {
-    visible.value = true;
+    show();
   }
 }
 
 function handleBlur() {
   if (triggerFocus.value) {
-    visible.value = false;
+    hide();
   }
 }
 
 function handleMouseEnter() {
   if (triggerMouseEnter.value) {
-    visible.value = true;
+    show();
   }
 }
 
 function handleMouseLeave() {
   if (triggerMouseEnter.value) {
-    visible.value = false;
+    hide();
   }
 }
 
