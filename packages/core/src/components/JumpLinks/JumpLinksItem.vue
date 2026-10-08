@@ -2,7 +2,6 @@
   <li
     v-bind="ouiaProps"
     :class="[styles.jumpLinksItem, { [styles.modifiers.current]: managedActive }]"
-    role="list"
     :aria-current="managedActive ? 'location' : undefined"
   >
     <auto-wrap component="span" :exclude="PfJumpLinksList" :class="styles.jumpLinksLink">

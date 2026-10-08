@@ -213,9 +213,7 @@ describe('JumpLinksItem', () => {
     expect(wrapper.attributes('aria-current')).toBe('location');
   });
 
-  // BUG: the <li> is given role="list" instead of keeping its implicit listitem role
-  // (src/components/JumpLinks/JumpLinksItem.vue:5).
-  it.fails('keeps the implicit listitem role', () => {
+  it('keeps the implicit listitem role', () => {
     const wrapper = mount(PfJumpLinksItem);
     expect(wrapper.attributes('role')).toBeUndefined();
   });
