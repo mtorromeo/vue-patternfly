@@ -12,7 +12,7 @@
   >
     <div :class="styles.jumpLinksMain">
       <div :class="`${styles.jumpLinks}__header`">
-        <div v-if="expandable" :class="styles.jumpLinksToggle">
+        <div v-if="hasToggle" :class="styles.jumpLinksToggle">
           <pf-button
             variant="plain"
             :aria-label="toggleAriaLabel"
@@ -108,6 +108,15 @@ defineSlots<{
 }>();
 
 const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['expandable'], styles, { short: true }));
+
+const hasToggle = computed(() => [
+  props.expandable,
+  props.expandableSm,
+  props.expandableMd,
+  props.expandableLg,
+  props.expandableXl,
+  props.expandable2xl,
+].includes('expandable'));
 
 const links = provideChildrenTracker(JumpLinksKey);
 

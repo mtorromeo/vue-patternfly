@@ -105,11 +105,14 @@ describe('JumpLinks', () => {
     expect(wrapper.classes()).not.toContain(styles.modifiers.expanded);
   });
 
-  // BUG: the toggle is rendered for any truthy `expandable` value, including 'nonExpandable'
-  // (src/components/JumpLinks/JumpLinks.vue:15).
-  it.fails('does not render a toggle when nonExpandable', () => {
+  it('does not render a toggle when nonExpandable', () => {
     const wrapper = mount(PfJumpLinks, { props: { expandable: 'nonExpandable' } });
     expect(wrapper.find(`.${styles.jumpLinksToggle}`).exists()).toBe(false);
+  });
+
+  it('renders a toggle when expandable only at some breakpoint', () => {
+    const wrapper = mount(PfJumpLinks, { props: { expandable: 'nonExpandable', expandableMd: 'expandable' } });
+    expect(wrapper.find(`.${styles.jumpLinksToggle}`).exists()).toBe(true);
   });
 
   it('generates links from the elements of the scrollable element', async () => {
