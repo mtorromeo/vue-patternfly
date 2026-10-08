@@ -6,7 +6,7 @@
       ref="elRef"
       :type="buttonComponent === 'button' ? type : null"
       :disabled="effectiveDisabled"
-      :aria-expanded="expanded"
+      :aria-expanded="expanded ?? $attrs['aria-expanded']"
       :aria-disabled="effectiveDisabled || ariaDisabled"
       :class="[
         styles.button,
@@ -164,6 +164,7 @@ const props = withDefaults(defineProps<Props>(), {
   iconPosition: "start",
   component: "auto",
   loading: undefined,
+  expanded: undefined,
 });
 
 const emit = defineEmits<{

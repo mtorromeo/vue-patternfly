@@ -28,6 +28,18 @@ describe('Button', () => {
     expect(btn(wrapper).attributes('data-ouia-component-id')).toBe('my-button');
   });
 
+  it('sets aria-expanded only when expanded is provided', async () => {
+    const wrapper = mount(PfButton);
+    expect(btn(wrapper).attributes('aria-expanded')).toBeUndefined();
+    await wrapper.setProps({ expanded: true });
+    expect(btn(wrapper).attributes('aria-expanded')).toBe('true');
+  });
+
+  it('keeps an aria-expanded attribute passed by the parent', () => {
+    const wrapper = mount(PfButton, { attrs: { 'aria-expanded': 'true' } });
+    expect(btn(wrapper).attributes('aria-expanded')).toBe('true');
+  });
+
   it('applies the type attribute', () => {
     const wrapper = mount(PfButton, { props: { type: 'submit' } });
     expect(btn(wrapper).attributes('type')).toBe('submit');

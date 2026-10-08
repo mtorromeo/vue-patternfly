@@ -247,9 +247,7 @@ describe('Alert', () => {
       expect(wrapper.find(`.${styles.alertDescription}`).exists()).toBe(false);
     });
 
-    // BUG: Alert binds `:aria-expanded` on pf-button, but PfButton always overrides it with its own
-    // boolean `expanded` prop (which defaults to false), so the toggle is always aria-expanded="false".
-    it.fails('reflects the expanded state in the toggle aria-expanded attribute', async () => {
+    it('reflects the expanded state in the toggle aria-expanded attribute', async () => {
       const wrapper = mount(PfAlert, {
         props: { title: 'Title', expandable: true },
         slots: { default: () => 'Details' },

@@ -44,10 +44,7 @@ describe('ExpandableSection', () => {
     expect(content(wrapper).attributes('hidden')).toBeDefined();
   });
 
-  // Suspected bug: PfButton binds its own boolean `expanded` prop (which defaults to false) as
-  // aria-expanded after the fallthrough attrs, so the aria-expanded passed by the toggle is
-  // always overridden with "false".
-  it.fails('updates aria-expanded on the toggle button', async () => {
+  it('updates aria-expanded on the toggle button', async () => {
     const wrapper = mount(PfExpandableSection, { props: { toggleText: 'Toggle' } });
     await wrapper.get('button').trigger('click');
     expect(wrapper.get('button').attributes('aria-expanded')).toBe('true');
@@ -173,8 +170,7 @@ describe('ExpandableSectionToggle', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.expanded);
   });
 
-  // Suspected bug: same PfButton `expanded` prop override as in ExpandableSection.
-  it.fails('sets aria-expanded="true" when expanded', () => {
+  it('sets aria-expanded="true" when expanded', () => {
     const wrapper = mount(PfExpandableSectionToggle, { props: { expanded: true } });
     expect(wrapper.get('button').attributes('aria-expanded')).toBe('true');
   });
