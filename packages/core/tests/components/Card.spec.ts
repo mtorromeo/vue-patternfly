@@ -141,8 +141,7 @@ describe('Card', () => {
     expect(wrapper.find(`.${styles.cardSelectableActions}`).exists()).toBe(false);
   });
 
-  // BUG: Card.vue declares a `change` event but the onChange callback provided to the header checkbox is never called
-  it.fails('emits change when the selection checkbox changes', async () => {
+  it('emits change when the selection checkbox changes', async () => {
     const wrapper = mount(PfCard, { props: { name: 'n' }, slots: { default: () => h(PfCardHeader) } });
     await wrapper.find(`.${styles.cardSelectableActions} input`).setValue(true);
     expect(wrapper.emitted('change')).toHaveLength(1);

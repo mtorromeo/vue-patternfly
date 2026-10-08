@@ -26,6 +26,7 @@
           v-model="checkboxChecked"
           :disabled="checkbox.disabled"
           tabindex="-1"
+          @change="checkbox.onChange"
         >
           <template #label />
         </pf-checkbox>
