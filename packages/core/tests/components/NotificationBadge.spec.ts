@@ -65,9 +65,7 @@ describe('NotificationBadge', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  // BUG: NotificationBadge.vue declares the `expanded` prop but never uses it, so it is swallowed
-  // and neither aria-expanded nor the clicked modifier reach the button
-  it.fails('sets aria-expanded and the clicked modifier when expanded', () => {
+  it('sets aria-expanded and the clicked modifier when expanded', () => {
     const button = mount(PfNotificationBadge, { props: { expanded: true } }).find('button');
     expect(button.attributes('aria-expanded')).toBe('true');
     expect(button.classes()).toContain(styles.modifiers.clicked);

@@ -1,5 +1,5 @@
 <template>
-  <pf-button v-bind="ouiaProps" :variant="variant === 'plain' ? 'plain' : 'stateful'" :state="variant === 'plain' ? undefined : variant" :class="{ [styles.modifiers.notify]: animating }" @animationend="handleAnimationEnd">
+  <pf-button v-bind="ouiaProps" :variant="variant === 'plain' ? 'plain' : 'stateful'" :state="variant === 'plain' ? undefined : variant" :expanded="expanded" :class="{ [styles.modifiers.clicked]: expanded, [styles.modifiers.notify]: animating }" @animationend="handleAnimationEnd">
     <template #icon>
       <slot name="icon">
         <attention-bell-icon v-if="variant === 'attention'" />
