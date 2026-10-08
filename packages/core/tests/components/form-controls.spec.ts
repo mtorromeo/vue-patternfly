@@ -294,9 +294,7 @@ describe('TextInput', () => {
     expect(wrapper.find('input').attributes('aria-describedby')).toBe('help');
   });
 
-  // `ariaLabel` is declared as a prop (so it is removed from $attrs) but never bound to the <input>,
-  // leaving inputs without a visible label with no accessible name.
-  it.fails('forwards aria-label to the input', () => {
+  it('forwards aria-label to the input', () => {
     const wrapper = mount(PfTextInput, { attrs: { 'aria-label': 'Name' } });
     expect(wrapper.find('input').attributes('aria-label')).toBe('Name');
   });

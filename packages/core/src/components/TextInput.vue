@@ -19,6 +19,7 @@
       ref="inputRef"
       :value="value"
       :type="type ?? 'text'"
+      :aria-label="ariaLabel"
       :aria-invalid="effectiveValidated === 'error'"
       :disabled="disabled || undefined"
       :readonly="!!readOnlyVariant || readonly"
