@@ -330,12 +330,16 @@ describe('Th', () => {
       expect(wrapper.get('th').attributes('aria-sort')).toBe('descending');
     });
 
-    // Suspected bug: `defaultDirection` is documented to default to "asc" but is ignored:
-    // the first click on a header without a direction always requests "desc".
-    it.fails('uses the default direction (asc) when sorting a column for the first time', async () => {
+    it('uses the default direction (asc) when sorting a column for the first time', async () => {
       const wrapper = mount(PfTh, { props: { sortable: true } });
       await wrapper.get('button').trigger('click');
       expect(wrapper.emitted('update:direction')).toEqual([['asc']]);
+    });
+
+    it('starts from defaultDirection when the column is not the sorted one', async () => {
+      const wrapper = mount(PfTh, { props: { sortable: true, direction: 'asc', defaultDirection: 'desc' } });
+      await wrapper.get('button').trigger('click');
+      expect(wrapper.emitted('update:direction')).toEqual([['desc']]);
     });
   });
 

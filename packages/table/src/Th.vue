@@ -97,6 +97,10 @@ const breakpointClasses = classesFromBreakpointProps(props, ['visibility'], styl
 
 function setSort() {
   emit('sort');
+  if (!props.sorted || !props.direction) {
+    emit('update:direction', props.defaultDirection ?? 'asc');
+    return;
+  }
   emit('update:direction', props.direction === 'desc' ? 'asc' : 'desc');
 }
 
