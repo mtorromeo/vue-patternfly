@@ -96,13 +96,12 @@ describe('Label', () => {
       expect(onClick.mock.calls[0]?.[0]).toBeInstanceOf(Event);
     });
 
-    // BUG: `disabled` is not a declared prop of PfLabel (it only comes from the @vue-ignore'd
-    // ButtonHTMLAttributes), so `props.disabled` is always undefined: the attribute falls through to the
-    // root <span> and the clickable content (button/link) and close button are never disabled.
-    it.fails('does not call onClick when disabled', async () => {
+    it('does not call onClick when disabled', async () => {
       const onClick = vi.fn();
       const wrapper = mount(PfLabel, { props: { onClick, disabled: true } });
 
+      expect(wrapper.classes()).toContain(styles.modifiers.disabled);
+      expect(wrapper.attributes('disabled')).toBeUndefined();
       const content = wrapper.find(`.${styles.labelContent}`);
       expect(content.attributes('disabled')).toBeDefined();
       await content.trigger('click');
@@ -132,10 +131,7 @@ describe('Label', () => {
       expect(event.defaultPrevented).toBe(false);
     });
 
-    // BUG: `disabled` is not a declared prop of PfLabel (it only comes from the @vue-ignore'd
-    // ButtonHTMLAttributes), so `props.disabled` is always undefined: the attribute falls through to the
-    // root <span> and the clickable content (button/link) and close button are never disabled.
-    it.fails('marks disabled links as aria-disabled, removes them from tab order and prevents navigation', () => {
+    it('marks disabled links as aria-disabled, removes them from tab order and prevents navigation', () => {
       const onClick = vi.fn();
       const wrapper = mount(PfLabel, { props: { href: '#target', disabled: true, onClick } });
 
@@ -151,8 +147,7 @@ describe('Label', () => {
       expect(onClick).not.toHaveBeenCalled();
     });
 
-    // BUG: see above, `disabled` is not a declared prop
-    it.fails('disables the close button of a disabled link label', () => {
+    it('disables the close button of a disabled link label', () => {
       const wrapper = mount(PfLabel, { props: { href: '#target', disabled: true, onClose: vi.fn() } });
       expect(wrapper.find(`.${styles.labelActions} button`).attributes('disabled')).toBeDefined();
     });

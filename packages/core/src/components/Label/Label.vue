@@ -9,6 +9,7 @@
       [styles.modifiers.compact]: compact,
       [styles.modifiers.overflow]: overflow,
       [styles.modifiers.add]: variant === 'add',
+      [styles.modifiers.disabled]: disabled,
     }]">
     <pf-tooltip :position="tooltipPosition">
       <component
@@ -103,6 +104,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
   outline?: boolean;
   /** Flag indicating the label is compact. */
   compact?: boolean;
+  /** Flag indicating the label is disabled. Applies to clickable and link labels, and to the close button. */
+  disabled?: boolean;
   /** Flag indicating if the label is an overflow label. */
   overflow?: boolean;
   /** The max width of the label before it is truncated. Can be any valid CSS unit, such as '100%', '100px', or '16ch'. */
