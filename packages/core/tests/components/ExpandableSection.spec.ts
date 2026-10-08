@@ -103,9 +103,7 @@ describe('ExpandableSection', () => {
     expect(wrapper.get('button').attributes('aria-controls')).toBe('my-content');
   });
 
-  // Suspected bug: PatternFly generates a unique content id when none is provided, so the
-  // toggle's aria-controls always references the region. Here it is omitted.
-  it.fails('links the toggle to the content even without an explicit contentId', () => {
+  it('links the toggle to the content even without an explicit contentId', () => {
     const wrapper = mount(PfExpandableSection, { props: { toggleText: 'Toggle' } });
     const id = content(wrapper).attributes('id');
     expect(id).toBeTruthy();

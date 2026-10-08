@@ -4,7 +4,7 @@
       <pf-button
         variant="link"
         :inline="Boolean(truncate)"
-        :aria-controls="contentId"
+        :aria-controls="effectiveContentId"
         :aria-expanded="expanded"
         @click="expanded = !expanded"
       >
@@ -30,7 +30,7 @@
     <toggle v-if="!truncate" />
     <div
       ref="expandableContentRef"
-      :id="contentId"
+      :id="effectiveContentId"
       :class="styles.expandableSectionContent"
       :hidden="!truncate && !expanded"
       role="region"
@@ -49,7 +49,7 @@ import styles from '@patternfly/react-styles/css/components/ExpandableSection/ex
 import lineClamp from '@patternfly/react-tokens/dist/esm/c_expandable_section_m_truncate__content_LineClamp';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfButton from '../Button.vue';
-import { computed, ref, watch, type HTMLAttributes, type Ref } from 'vue';
+import { computed, ref, useId, watch, type HTMLAttributes, type Ref } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { createReusableTemplate, useElementSize } from '@vueuse/core';
 
@@ -86,6 +86,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 const props = defineProps<Props>()
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const generatedContentId = useId();
+const effectiveContentId = computed(() => props.contentId ?? generatedContentId);
 
 /** Flag to indicate if the content is expanded */
 const expanded = defineModel<boolean>('expanded', { default: false });
