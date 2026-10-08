@@ -533,9 +533,7 @@ describe('MenuItemAction', () => {
     expect(button.classes()).toContain(buttonStyles.modifiers.plain);
   });
 
-  // BUG: MenuItemAction.vue:11 passes role="menuitem" to PfButton, but Button.vue:38 overrides it with
-  // `:role="... : null"` after binding $attrs, so the role is dropped
-  it.fails('renders the action button with the menuitem role', () => {
+  it('renders the action button with the menuitem role', () => {
     expect(mountAction().find('button').attributes('role')).toBe('menuitem');
   });
 

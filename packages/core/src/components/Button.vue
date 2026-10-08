@@ -35,7 +35,7 @@
         },
       ]"
       :tabindex="tabIdx"
-      :role="buttonComponent !== 'button' ? 'button' : null"
+      :role="$attrs.role ?? (buttonComponent !== 'button' ? 'button' : null)"
       :href="href || (buttonComponent === 'a' ? (routerCtx as RouterLinkContext | undefined)?.href : null)"
       v-on="inoperableListeners"
       @click="onClick($event, (routerCtx as RouterLinkContext | undefined)?.navigate)"
