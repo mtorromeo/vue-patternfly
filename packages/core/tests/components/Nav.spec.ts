@@ -179,9 +179,7 @@ describe('NavItem', () => {
     expect(wrapper.find(`.${styles.navLink}`).attributes('tabindex')).toBeUndefined();
   });
 
-  // BUG: NavItem.vue `:tabindex="tabindex || sidebarOpen ? null : '-1'"` lacks parentheses, so an explicit
-  // tabindex is always dropped
-  it.fails('applies an explicit tabindex', () => {
+  it('applies an explicit tabindex', () => {
     const wrapper = mountItem({ tabindex: 2 });
     expect(wrapper.find(`.${styles.navLink}`).attributes('tabindex')).toBe('2');
   });

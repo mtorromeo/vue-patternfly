@@ -18,7 +18,7 @@
       :aria-current="active ? 'page' : null"
       :to="to"
       :active-class="to ? styles.modifiers.current : null"
-      :tabindex="tabindex || sidebarOpen ? null : '-1'"
+      :tabindex="tabindex ?? (sidebarOpen ? null : '-1')"
       v-bind="$attrs"
       @click="select"
     >
