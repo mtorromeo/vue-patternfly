@@ -130,9 +130,7 @@ describe('Tabs', () => {
       });
     });
 
-    // BUG: PatternFly's TabContent sets aria-labelledby to the id of its tab button, so that the
-    // tabpanel gets an accessible name. The Vue port never sets it.
-    it.fails('labels every tab panel with its tab button via aria-labelledby', async () => {
+    it('labels every tab panel with its tab button via aria-labelledby', async () => {
       const wrapper = await mountTabs({ id: 'my-tabs' });
 
       const buttons = tabButtons(wrapper);

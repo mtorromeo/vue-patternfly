@@ -45,7 +45,7 @@
   </teleport>
 
   <teleport v-if="contentTargetRef && !contentRef" :to="contentTargetRef">
-    <pf-tab-content v-if="!mountOnEnter || keepAlive" v-show="key === activeKey" :id="`pf-tab-section-${stringKey}-${toValue(idSuffix)}`" :key="key" v-bind="$attrs">
+    <pf-tab-content v-if="!mountOnEnter || keepAlive" v-show="key === activeKey" :id="`pf-tab-section-${stringKey}-${toValue(idSuffix)}`" :key="key" :aria-labelledby="`pf-tab-${stringKey}-${toValue(idSuffix)}`" v-bind="$attrs">
       <slot />
     </pf-tab-content>
   </teleport>
