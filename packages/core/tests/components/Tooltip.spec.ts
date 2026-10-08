@@ -139,6 +139,14 @@ describe('Tooltip', () => {
     expect(wrapper.emitted('update:visible')).toBeUndefined();
   });
 
+  it('does not register trigger listeners again on unmount', async () => {
+    const wrapper = await mountTooltip();
+    const add = vi.spyOn(trigger(), 'addEventListener');
+
+    wrapper.unmount();
+    expect(add).not.toHaveBeenCalled();
+  });
+
   it('marks ouia safe once shown without animation', async () => {
     await mountTooltip({ visible: true });
     expect(tooltip()!.getAttribute('data-ouia-safe')).toBe('true');

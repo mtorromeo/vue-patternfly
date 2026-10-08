@@ -155,8 +155,8 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClick as (e: MouseEvent) => void);
-  referenceElement.value?.addEventListener('mouseenter', handleMouseEnter);
-  referenceElement.value?.addEventListener('mouseleave', handleMouseLeave);
+  referenceElement.value?.removeEventListener('mouseenter', handleMouseEnter);
+  referenceElement.value?.removeEventListener('mouseleave', handleMouseLeave);
   referenceElement.value?.removeEventListener('focus', handleFocus);
   referenceElement.value?.removeEventListener('blur', handleBlur);
 });
