@@ -192,9 +192,7 @@ describe('AccordionItem', () => {
     expect(wrapper.get(`.${styles.accordionExpandableContent}`).element.tagName).toBe('SECTION');
   });
 
-  // Suspected bug: $attrs are bound both to the toggle button and the content element,
-  // so e.g. an id ends up duplicated in the DOM.
-  it.fails('does not duplicate an id attribute on button and content', () => {
+  it('does not duplicate an id attribute on button and content', () => {
     const wrapper = mount(PfAccordionItem, { attrs: { id: 'item-1' } });
     expect(wrapper.findAll('#item-1')).toHaveLength(1);
   });

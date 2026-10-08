@@ -24,7 +24,6 @@
   </component>
 
   <component
-    v-bind="$attrs"
     :is="contentComponent || (accordion?.dl ? 'dd' : 'div')"
     :class="[
       styles.accordionExpandableContent, {
