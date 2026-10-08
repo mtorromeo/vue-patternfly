@@ -118,6 +118,7 @@ interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, 
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  variant: 'top',
   count: 0,
   firstPage: 1,
   titleItemsPerPage: 'Items per page',

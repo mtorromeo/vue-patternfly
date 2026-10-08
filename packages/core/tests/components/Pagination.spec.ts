@@ -27,9 +27,7 @@ const toggleText = (wrapper: VueWrapper<any>) => wrapper.find('button[aria-haspo
 
 describe('Pagination', () => {
   describe('rendering', () => {
-    // BUG: Pagination.vue has no default for variant (PatternFly defaults to 'top'), so by default the total items
-    // are not rendered and the id becomes 'options-menu-undefined-pagination'
-    it.fails('defaults to the top variant', () => {
+    it('defaults to the top variant', () => {
       const wrapper = mount(PfPagination, { props: { count: 52 } });
       expect(wrapper.attributes('id')).toBe('options-menu-top-pagination');
       expect(wrapper.find(`.${styles.paginationTotalItems}`).exists()).toBe(true);
