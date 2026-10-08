@@ -5,6 +5,7 @@ import styles from '@patternfly/react-styles/css/components/Alert/alert';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import PfAlert from '../../src/components/Alert/Alert.vue';
 import PfAlertIcon from '../../src/components/Alert/AlertIcon.vue';
+import PfAlertActionLink from '../../src/components/Alert/AlertActionLink.vue';
 
 describe('Alert', () => {
   describe('rendering', () => {
@@ -274,5 +275,47 @@ describe('Alert', () => {
       const wrapper = mount(PfAlert, { props: { title: 'Title', expandable: true, toggleAriaLabel: 'Show details' } });
       expect(wrapper.find(`.${styles.alertToggle} button`).attributes('aria-label')).toBe('Show details');
     });
+  });
+});
+
+describe('AlertActionLink', () => {
+  it('renders an inline link button with the default slot', () => {
+    const wrapper = mount(PfAlertActionLink, { slots: { default: () => 'View details' } });
+    const button = wrapper.find('button');
+    expect(button.classes()).toContain(buttonStyles.button);
+    expect(button.classes()).toContain(buttonStyles.modifiers.link);
+    expect(button.classes()).toContain(buttonStyles.modifiers.inline);
+    expect(button.text()).toBe('View details');
+  });
+
+  it('forwards button props, attributes and listeners', async () => {
+    const onClick = vi.fn();
+    const wrapper = mount(PfAlertActionLink, { props: { href: '#details' }, attrs: { onClick, id: 'action' }, slots: { default: () => 'Details' } });
+    const link = wrapper.find('a');
+    expect(link.attributes('href')).toBe('#details');
+    expect(link.attributes('id')).toBe('action');
+    await link.trigger('click');
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('sets its own OUIA type', () => {
+    const wrapper = mount(PfAlertActionLink);
+    expect(wrapper.find('button').attributes('data-ouia-component-type')).toBe('PF/AlertActionLink');
+  });
+
+  // BUG: AlertActionLink.vue only declares props via a @vue-ignore'd type, so ouiaId is not a real prop,
+  // props.ouiaId is undefined and the generated id bound via ouiaProps overrides the Button's own one
+  it.fails('uses the given ouiaId', () => {
+    const wrapper = mount(PfAlertActionLink, { attrs: { ouiaId: 'link' } });
+    expect(wrapper.find('button').attributes('data-ouia-component-id')).toBe('link');
+  });
+
+  it('renders inside the alert action group', () => {
+    const wrapper = mount(PfAlert, {
+      props: { title: 'Title' },
+      slots: { 'action-links': () => [h(PfAlertActionLink, null, () => 'One'), h(PfAlertActionLink, null, () => 'Two')] },
+    });
+    const links = wrapper.findAll(`.${styles.alertActionGroup} button`);
+    expect(links.map(l => l.text())).toEqual(['One', 'Two']);
   });
 });

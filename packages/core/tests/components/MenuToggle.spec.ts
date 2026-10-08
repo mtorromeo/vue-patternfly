@@ -1,8 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mount, type VueWrapper } from '@vue/test-utils';
 import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
+import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import PfMenuToggle from '../../src/components/MenuToggle/MenuToggle.vue';
+import PfMenuToggleAction from '../../src/components/MenuToggle/MenuToggleAction.vue';
+import PfMenuToggleCheckbox from '../../src/components/MenuToggle/MenuToggleCheckbox.vue';
 
 // the component renders a fragment (the reusable toggle-controls template adds a node), so look up the toggle itself
 function root(wrapper: VueWrapper) {
@@ -256,5 +259,86 @@ describe('MenuToggle', () => {
     wrapper.vm.focus();
     expect(document.activeElement).toBe(root(wrapper).element);
     wrapper.unmount();
+  });
+});
+
+describe('MenuToggleAction', () => {
+  it('renders a button with the menu toggle button class', () => {
+    const wrapper = mount(PfMenuToggleAction, { attrs: { 'aria-label': 'Action' }, slots: { default: () => 'Run' } });
+    expect(wrapper.element.tagName).toBe('BUTTON');
+    expect(wrapper.attributes('type')).toBe('button');
+    expect(wrapper.classes()).toContain(styles.menuToggleButton);
+    expect(wrapper.attributes('aria-label')).toBe('Action');
+    expect(wrapper.text()).toBe('Run');
+  });
+
+  it('forwards disabled and click listeners', async () => {
+    const onClick = vi.fn();
+    const wrapper = mount(PfMenuToggleAction, { attrs: { onClick } });
+    await wrapper.trigger('click');
+    expect(onClick).toHaveBeenCalledTimes(1);
+
+    const disabled = mount(PfMenuToggleAction, { attrs: { disabled: true } });
+    expect(disabled.attributes('disabled')).toBeDefined();
+  });
+
+  it('works inside a split button toggle', () => {
+    const wrapper = mount(PfMenuToggle, { slots: { 'split-buttons': () => h(PfMenuToggleAction, { class: 'action', 'aria-label': 'Action' }, () => 'Action') } });
+    expect(root(wrapper).classes()).toContain(styles.modifiers.splitButton);
+    const action = wrapper.find('button.action');
+    expect(action.classes()).toContain(styles.menuToggleButton);
+    expect(action.text()).toBe('Action');
+  });
+});
+
+describe('MenuToggleCheckbox', () => {
+  it('renders a standalone checkbox without a label', () => {
+    const wrapper = mount(PfMenuToggleCheckbox, { attrs: { 'aria-label': 'Select all', id: 'select-all' } });
+    expect(wrapper.element.tagName).toBe('LABEL');
+    expect(wrapper.classes()).toContain(checkStyles.check);
+    expect(wrapper.classes()).toContain(checkStyles.modifiers.standalone);
+
+    const input = wrapper.find<HTMLInputElement>('input');
+    expect(input.attributes('type')).toBe('checkbox');
+    expect(input.classes()).toContain(checkStyles.checkInput);
+    expect(input.attributes('aria-label')).toBe('Select all');
+    expect(input.attributes('id')).toBe('select-all');
+    expect(wrapper.attributes('aria-label')).toBeUndefined();
+    expect(input.element.checked).toBe(false);
+    expect(input.element.indeterminate).toBe(false);
+  });
+
+  it('renders a hidden label from the default slot', () => {
+    const wrapper = mount(PfMenuToggleCheckbox, { slots: { default: () => '10 selected' } });
+    expect(wrapper.classes()).not.toContain(checkStyles.modifiers.standalone);
+    const label = wrapper.find(`.${checkStyles.checkLabel}`);
+    expect(label.text()).toBe('10 selected');
+    expect(label.attributes('aria-hidden')).toBe('true');
+  });
+
+  it('reflects checked, unchecked and indeterminate states', async () => {
+    const wrapper = mount(PfMenuToggleCheckbox, { props: { checked: true } });
+    const input = wrapper.find<HTMLInputElement>('input');
+    expect(input.element.checked).toBe(true);
+
+    await wrapper.setProps({ checked: null });
+    expect(input.element.checked).toBe(false);
+    expect(input.element.indeterminate).toBe(true);
+
+    await wrapper.setProps({ checked: false });
+    expect(input.element.indeterminate).toBe(false);
+  });
+
+  it('forwards change listeners to the input', async () => {
+    const onChange = vi.fn();
+    const wrapper = mount(PfMenuToggleCheckbox, { attrs: { onChange } });
+    await wrapper.find('input').setValue(true);
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders inside a split button toggle', () => {
+    const wrapper = mount(PfMenuToggle, { slots: { 'split-buttons': () => h(PfMenuToggleCheckbox, { 'aria-label': 'Select' }) } });
+    expect(root(wrapper).classes()).toContain(styles.modifiers.splitButton);
+    expect(wrapper.find(`.${checkStyles.check} input[type="checkbox"]`).exists()).toBe(true);
   });
 });

@@ -5,7 +5,11 @@ import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import contentStyles from '@patternfly/react-styles/css/components/TabContent/tab-content';
 import PfTabs from '../../src/components/Tabs/Tabs.vue';
 import PfTab from '../../src/components/Tabs/Tab.vue';
-import type { TabKey } from '../../src/components/Tabs/common';
+import PfTabButton from '../../src/components/Tabs/TabButton.vue';
+import PfTabContent from '../../src/components/Tabs/TabContent.vue';
+import PfTabTitleIcon from '../../src/components/Tabs/TabTitleIcon.vue';
+import PfTabTitleText from '../../src/components/Tabs/TabTitleText.vue';
+import { TabsProvideKey, type TabKey, type TabsProvide } from '../../src/components/Tabs/common';
 
 type TabDef = { key?: string | number; title: string; content: string; disabled?: boolean };
 
@@ -241,5 +245,98 @@ describe('Tabs', () => {
     expect(classes).toContain(styles.modifiers.box);
     expect(classes).toContain(styles.modifiers.vertical);
     expect(classes).toContain(styles.modifiers.secondary);
+  });
+});
+
+describe('TabButton', () => {
+  it('renders a button by default', () => {
+    const wrapper = mount(PfTabButton, { attrs: { 'aria-controls': 'panel' }, slots: { default: () => 'Tab' } });
+    expect(wrapper.element.tagName).toBe('BUTTON');
+    expect(wrapper.attributes('type')).toBe('button');
+    expect(wrapper.attributes('href')).toBeUndefined();
+    expect(wrapper.attributes('aria-controls')).toBe('panel');
+    expect(wrapper.text()).toBe('Tab');
+  });
+
+  it('renders a link when href is set', () => {
+    const wrapper = mount(PfTabButton, { props: { href: '#users' } });
+    expect(wrapper.element.tagName).toBe('A');
+    expect(wrapper.attributes('href')).toBe('#users');
+    expect(wrapper.attributes('type')).toBeUndefined();
+  });
+
+  it('sets OUIA attributes', () => {
+    const wrapper = mount(PfTabButton, { props: { ouiaId: 'tb' } });
+    expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/TabButton');
+    expect(wrapper.attributes('data-ouia-component-id')).toBe('tb');
+  });
+});
+
+describe('TabContent', () => {
+  it('renders an accessible focusable tab panel', () => {
+    const wrapper = mount(PfTabContent, { attrs: { id: 'panel', 'aria-labelledby': 'tab' }, slots: { default: () => 'Panel' } });
+    expect(wrapper.element.tagName).toBe('SECTION');
+    expect(wrapper.classes()).toContain(contentStyles.tabContent);
+    expect(wrapper.classes()).not.toContain(contentStyles.modifiers.secondary);
+    expect(wrapper.attributes('role')).toBe('tabpanel');
+    expect(wrapper.attributes('tabindex')).toBe('0');
+    expect(wrapper.attributes('hidden')).toBeUndefined();
+    expect(wrapper.attributes('id')).toBe('panel');
+    expect(wrapper.attributes('aria-labelledby')).toBe('tab');
+    expect(wrapper.text()).toBe('Panel');
+  });
+
+  it('can be hidden through the exposed hidden ref', async () => {
+    const wrapper = mount(PfTabContent);
+    wrapper.vm.hidden = true;
+    await nextTick();
+    expect(wrapper.attributes('hidden')).toBeDefined();
+
+    wrapper.vm.hidden = false;
+    await nextTick();
+    expect(wrapper.attributes('hidden')).toBeUndefined();
+  });
+
+  it('applies the secondary modifier from the parent tabs', () => {
+    const wrapper = mount(PfTabContent, {
+      global: { provide: { [TabsProvideKey as symbol]: { secondary: true } as Partial<TabsProvide> } },
+    });
+    expect(wrapper.classes()).toContain(contentStyles.modifiers.secondary);
+  });
+
+  it('is secondary inside secondary Tabs', async () => {
+    const wrapper = await mountTabs({ secondary: true });
+    expect(tabPanels(wrapper)[0].classes()).toContain(contentStyles.modifiers.secondary);
+  });
+
+  // BUG: Tabs.vue:191 provides `secondary: props.secondary` as a plain value, so TabContent does not
+  // react to later changes of the Tabs secondary prop
+  it.fails('follows changes of the Tabs secondary prop', async () => {
+    const secondary = ref(false);
+    const wrapper = mount(defineComponent({
+      setup: () => () => h(PfTabs, { secondary: secondary.value }, { default: () => [h(PfTab, { key: 'a', title: 'A' }, () => 'A')] }),
+    }), { attachTo: document.body });
+    await flushPromises();
+    secondary.value = true;
+    await flushPromises();
+    expect(tabPanels(wrapper)[0].classes()).toContain(contentStyles.modifiers.secondary);
+  });
+});
+
+describe('TabTitleText', () => {
+  it('renders a span with the tab item text class', () => {
+    const wrapper = mount(PfTabTitleText, { slots: { default: () => 'Users' } });
+    expect(wrapper.element.tagName).toBe('SPAN');
+    expect(wrapper.classes()).toContain(styles.tabsItemText);
+    expect(wrapper.text()).toBe('Users');
+  });
+});
+
+describe('TabTitleIcon', () => {
+  it('renders a span with the tab item icon class', () => {
+    const wrapper = mount(PfTabTitleIcon, { slots: { default: () => h('svg', { class: 'icon' }) } });
+    expect(wrapper.element.tagName).toBe('SPAN');
+    expect(wrapper.classes()).toContain(`${styles.tabsItem}-icon`);
+    expect(wrapper.find('svg.icon').exists()).toBe(true);
   });
 });
