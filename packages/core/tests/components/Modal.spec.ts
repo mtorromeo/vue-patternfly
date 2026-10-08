@@ -93,14 +93,19 @@ describe('Modal', () => {
     wrapper.unmount();
   });
 
-  // Suspected bug: PatternFly modals close on Escape (onEscapePress -> onClose), but this
-  // component has no keydown handling: Escape only deactivates the focus trap.
-  it.fails('emits update:open with false when Escape is pressed', async () => {
+  it('emits update:open with false when Escape is pressed', async () => {
     const wrapper = mountModal({ title: 'Title' });
     dialog()!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await nextTick();
     expect(wrapper.emitted('update:open')).toEqual([[false]]);
+    wrapper.unmount();
+  });
+
+  it('ignores Escape while closed', async () => {
+    const wrapper = mountModal({ open: false });
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+    expect(wrapper.emitted('update:open')).toBeUndefined();
     wrapper.unmount();
   });
 

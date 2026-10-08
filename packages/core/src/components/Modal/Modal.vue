@@ -110,6 +110,7 @@ import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
 import { useElementOverflow } from '../../use';
+import { useEventListener } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -211,6 +212,12 @@ onMounted(() => {
     teleportTarget.value.classList.add(backdropStyles.backdropOpen);
   } else {
     teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
+  }
+});
+
+useEventListener('keydown', (e: KeyboardEvent) => {
+  if (props.open && e.key === 'Escape') {
+    emit('update:open', false);
   }
 });
 
