@@ -277,9 +277,7 @@ describe('Toolbar', () => {
       expect(expandableContent(wrapper).findAll('button').some(b => b.text() === 'Clear all filters')).toBe(true);
     });
 
-    // BUG: ToolbarExpandableContent.vue:10 uses `@click="clearAllFilters ?? undefined"`, which Vue compiles to an
-    // inline expression that never calls clearAllFilters
-    it.fails('emits clearAllFilters from the expandable content clear button', async () => {
+    it('emits clearAllFilters from the expandable content clear button', async () => {
       const wrapper = mountFilterToolbar({ expanded: true });
       await nextTick();
       await nextTick();

@@ -7,7 +7,7 @@
     <pf-toolbar-group v-if="numberOfFilters">
       <slot name="label-container" />
       <pf-toolbar-item v-if="showClearFiltersButton">
-        <pf-button variant="link" inline @click="clearAllFilters ?? undefined">{{ clearFiltersButtonText }}</pf-button>
+        <pf-button variant="link" inline @click="clearAllFilters?.()">{{ clearFiltersButtonText }}</pf-button>
       </pf-toolbar-item>
     </pf-toolbar-group>
   </div>
