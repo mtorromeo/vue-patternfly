@@ -24,7 +24,7 @@
 import { classesFromBreakpointProps, type BreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
-import globalBreakpointLg from '@patternfly/react-tokens/dist/js/t_global_breakpoint_lg';
+import { globalBreakpoints } from './common';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
 import { computed, inject } from 'vue';
@@ -66,7 +66,6 @@ const variantClass = computed(() => {
 });
 
 const isContentPopup = computed(() => {
-  const lgBreakpointValue = parseInt(globalBreakpointLg.value);
-  return windowWidth.value < lgBreakpointValue;
+  return windowWidth.value < globalBreakpoints.lg;
 });
 </script>

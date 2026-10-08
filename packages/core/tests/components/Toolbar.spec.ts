@@ -421,9 +421,7 @@ describe('ToolbarToggleGroup', () => {
     ]));
   });
 
-  // BUG: ToolbarToggleGroup.vue isContentPopup compares the window width in px with parseInt of the rem based
-  // breakpoint token (no * 16), so aria-haspopup is never set on small screens
-  it.fails('sets aria-haspopup when expanded on small screens', async () => {
+  it('sets aria-haspopup when expanded on small screens', async () => {
     setWindowWidth(500);
     const wrapper = mount(PfToolbar, {
       props: { expanded: true },
