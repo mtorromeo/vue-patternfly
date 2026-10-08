@@ -174,9 +174,7 @@ describe('NavItem', () => {
     expect(wrapper.find(`.${styles.navLink}`).attributes('tabindex')).toBe('-1');
   });
 
-  // BUG: NavItem.vue/NavList.vue/NavExpandable.vue inject SidebarOpenKey with a `false` default, so a nav
-  // used outside of a PageSidebar (e.g. a horizontal nav in a masthead) is removed from the tab order
-  it.fails('keeps items focusable outside of a page sidebar', () => {
+  it('keeps items focusable outside of a page sidebar', () => {
     const wrapper = mount(PfNavItem, { slots: { default: () => 'Item' } });
     expect(wrapper.find(`.${styles.navLink}`).attributes('tabindex')).toBeUndefined();
   });

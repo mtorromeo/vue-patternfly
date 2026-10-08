@@ -78,7 +78,7 @@ defineSlots<{
 
 const expandable = useTemplateRef('expandableRef');
 const expandedState = ref(props.expanded);
-const sidebarOpen = inject(SidebarOpenKey, false);
+const sidebarOpen = inject(SidebarOpenKey, true);
 
 const realExpanded = computed({
   get() {

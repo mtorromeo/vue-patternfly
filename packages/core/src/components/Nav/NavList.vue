@@ -64,7 +64,7 @@ defineSlots<{
 const navList = useTemplateRef('navListRef');
 const horizontal = inject(NavHorizontalKey);
 const scrollable = inject(NavScrollableKey);
-const sidebarOpen = inject(SidebarOpenKey, false);
+const sidebarOpen = inject(SidebarOpenKey, true);
 const scrollViewAtStart = ref(false);
 const scrollViewAtEnd = ref(false);
 

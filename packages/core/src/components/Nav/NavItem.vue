@@ -93,7 +93,7 @@ const el = useTemplateRef<HTMLElement>('elRef');
 const floating = useTemplateRef('floatingRef');
 const onSelect = inject(NavOnSelectKey, undefined);
 const flyoutRef = inject(NavFlyoutRefKey, null);
-const sidebarOpen = inject(SidebarOpenKey, false);
+const sidebarOpen = inject(SidebarOpenKey, true);
 const flyoutTarget: Ref<HTMLElement | null> = ref(null);
 const isHovered = useElementHover(floating);
 
