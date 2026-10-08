@@ -1,7 +1,7 @@
 <template>
   <component :is="to ? 'router-link' : PassThrough" v-slot="routerCtx" :to="to" :replace="replace" custom>
     <component
-      v-bind="{ ...ouiaProps, ...$attrs }"
+      v-bind="{ ...ouiaProps, ...omitInoperableListeners($attrs) }"
       :is="buttonComponent"
       ref="elRef"
       :type="buttonComponent === 'button' ? type : null"
@@ -37,6 +37,7 @@
       :tabindex="tabIdx"
       :role="buttonComponent !== 'button' ? 'button' : null"
       :href="href || (buttonComponent === 'a' ? (routerCtx as RouterLinkContext | undefined)?.href : null)"
+      v-on="inoperableListeners"
       @click="onClick($event, (routerCtx as RouterLinkContext | undefined)?.navigate)"
     >
       <span v-if="loading" :class="styles.buttonProgress">
@@ -79,6 +80,7 @@ import type { RouteLocationRaw, useLink } from "vue-router";
 import { useOUIAProps, type OUIAProps } from "../helpers/ouia";
 import { type Component, type UnwrapRef, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes, useTemplateRef, type ComponentPublicInstance } from "vue";
 import { isDefined } from "@vueuse/shared";
+import { ucfirst } from "../util";
 import GearIcon from "@vue-patternfly/icons/gear-icon";
 import StarIcon from "@vue-patternfly/icons/star-icon";
 import OutlinedStarIcon from "@vue-patternfly/icons/outlined-star-icon";
@@ -107,7 +109,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
   spinnerAriaLabel?: string;
   /** Id of element which describes what is being loaded */
   spinnerAriaLabelledBy?: string;
-  /** Events to prevent when the button is in an aria-disabled state */
+  /** Events to prevent when the button is in an aria-disabled state. Defaults to click and keypress */
   inoperableEvents?: string[];
   /** Adds inline styling to a link button */
   inline?: boolean;
@@ -205,8 +207,24 @@ const tabIdx = computed(() => {
   return null;
 });
 
+const preventedEvents = computed(() => props.ariaDisabled ? (props.inoperableEvents ?? ["click", "keypress"]) : []);
+
+const inoperableListeners = computed(() => Object.fromEntries(
+  preventedEvents.value
+    .filter(name => name !== "click")
+    .map(name => [name, (e: Event) => e.preventDefault()]),
+));
+
+function omitInoperableListeners(attrs: Record<string, unknown>) {
+  if (!preventedEvents.value.length) {
+    return attrs;
+  }
+  const listeners = preventedEvents.value.map(name => `on${ucfirst(name)}`);
+  return Object.fromEntries(Object.entries(attrs).filter(([key]) => !listeners.includes(key)));
+}
+
 function onClick(e: PointerEvent, navigate: RouterLinkContext["navigate"] | undefined) {
-  if (effectiveDisabled.value) {
+  if (effectiveDisabled.value || preventedEvents.value.includes("click")) {
     e.preventDefault();
     return;
   }

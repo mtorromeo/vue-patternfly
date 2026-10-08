@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { defineComponent, h } from 'vue';
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils';
 import { createRouter, createMemoryHistory } from 'vue-router';
@@ -112,12 +112,28 @@ describe('Button', () => {
       expect(btn(wrapper).classes()).not.toContain(styles.modifiers.disabled);
     });
 
-    // PatternFly prevents the `inoperableEvents` (click by default) on aria-disabled buttons,
-    // but here the click is still emitted and the `inoperableEvents` prop is ignored.
-    it.fails('does not emit click when aria-disabled', async () => {
+    it('does not emit click when aria-disabled', async () => {
       const wrapper = mount(PfButton, { props: { ariaDisabled: true } });
       await btn(wrapper).trigger('click');
       expect(wrapper.emitted('click')).toBeUndefined();
+    });
+
+    it('prevents keypress listeners when aria-disabled', async () => {
+      const onKeypress = vi.fn();
+      const wrapper = mount(PfButton, { props: { ariaDisabled: true }, attrs: { onKeypress } });
+      const event = new KeyboardEvent('keypress', { key: 'Enter', cancelable: true, bubbles: true });
+      btn(wrapper).element.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(true);
+      expect(onKeypress).not.toHaveBeenCalled();
+    });
+
+    it('only prevents the configured inoperable events', async () => {
+      const onKeypress = vi.fn();
+      const wrapper = mount(PfButton, { props: { ariaDisabled: true, inoperableEvents: ['keypress'] }, attrs: { onKeypress } });
+      await btn(wrapper).trigger('click');
+      expect(wrapper.emitted('click')).toHaveLength(1);
+      await btn(wrapper).trigger('keypress');
+      expect(onKeypress).not.toHaveBeenCalled();
     });
   });
 
