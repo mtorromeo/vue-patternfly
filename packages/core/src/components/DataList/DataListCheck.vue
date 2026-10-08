@@ -1,5 +1,5 @@
 <template>
-  <component v-bind="ouiaProps" :is="otherControls ? 'pass-through' : 'div'" :class="styles.dataListItemControl">
+  <component v-bind="ouiaProps" :is="otherControls ? PassThrough : 'div'" :class="styles.dataListItemControl">
     <div :class="styles.dataListCheck">
       <input
         v-bind="$attrs"
@@ -14,6 +14,7 @@
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import type { InputHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import PassThrough from '../../helpers/PassThrough.vue';
 
 defineOptions({
   name: 'PfDataListCheck',

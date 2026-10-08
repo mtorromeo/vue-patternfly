@@ -363,11 +363,10 @@ describe('DataListCheck', () => {
     expect(input.element.checked).toBe(false);
   });
 
-  // BUG: DataListCheck.vue:2 uses the unregistered 'pass-through' string as component, so otherControls
-  // still renders an (unknown) wrapper element carrying the item-control class
-  it.fails('does not render the item control wrapper with otherControls', () => {
+  it('does not render the item control wrapper with otherControls', () => {
     const wrapper = mount(PfDataListCheck, { props: { otherControls: true } });
     expect(wrapper.find(`.${styles.dataListItemControl}`).exists()).toBe(false);
+    expect(wrapper.find(`.${styles.dataListCheck} input`).exists()).toBe(true);
   });
 });
 
