@@ -112,9 +112,7 @@ describe('DataList', () => {
     expect(wrapper.emitted('update:selected')?.[1]).toEqual([['a', 'b']]);
   });
 
-  // BUG: DataListItem.vue:16 tests the `datalist.multipleSelection` ComputedRef object instead of its value,
-  // so selection inputs are always checkboxes, even for single selection
-  it.fails('renders radio inputs for single selection', () => {
+  it('renders radio inputs for single selection', () => {
     const wrapper = mount(PfDataList, { props: { selectionInputName: 'pick' }, slots: { default: items(['a']) } });
     expect(wrapper.find('li input').attributes('type')).toBe('radio');
   });
