@@ -29,6 +29,7 @@
         type="checkbox"
         :class="styles.checkInput"
         :checked="modelValue === null ? undefined : modelValue"
+        :indeterminate.prop="value === null"
         :disabled="disabled"
         :required="required"
         @change="onChange"
@@ -46,7 +47,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, watch, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef, useId } from 'vue';
+import { computed, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef, useId } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
@@ -100,15 +101,6 @@ defineSlots<{
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const input = useTemplateRef('inputRef');
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
-
-watch(value, () => {
-  if (!input.value) {
-    return;
-  }
-  input.value.indeterminate = value.value === null;
-}, {
-  immediate: true,
-});
 
 function onChange(e: Event) {
   emit('change', e);

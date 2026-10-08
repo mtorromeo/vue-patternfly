@@ -86,9 +86,7 @@ describe('Checkbox', () => {
     expect(input.element.checked).toBe(true);
   });
 
-  // The `immediate` watcher runs during setup, before the input template ref is set, so a checkbox
-  // mounted with a null model is not indeterminate until the model changes.
-  it.fails('is indeterminate when mounted with a null model', () => {
+  it('is indeterminate when mounted with a null model', () => {
     const wrapper = mount(PfCheckbox, { props: { modelValue: null } });
     expect(wrapper.find<HTMLInputElement>('input').element.indeterminate).toBe(true);
   });
