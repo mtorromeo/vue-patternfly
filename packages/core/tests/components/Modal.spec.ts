@@ -113,13 +113,22 @@ describe('Modal', () => {
     wrapper.unmount();
   });
 
-  // Suspected bug: the dialog has no accessible name. PatternFly sets aria-labelledby on the
-  // modal box pointing to the title element when a title is provided.
-  it.fails('labels the dialog with its title via aria-labelledby', () => {
+  it('labels the dialog with its title via aria-labelledby', () => {
     const wrapper = mountModal({ title: 'My modal' });
     const labelledby = dialog()!.getAttribute('aria-labelledby');
     expect(labelledby).toBeTruthy();
     expect(document.getElementById(labelledby!)!.textContent).toContain('My modal');
+    wrapper.unmount();
+  });
+
+  it('keeps an explicit aria-labelledby or aria-label', () => {
+    let wrapper = mountModal({ title: 'My modal', 'aria-labelledby': 'external' } as ModalProps);
+    expect(dialog()!.getAttribute('aria-labelledby')).toBe('external');
+    wrapper.unmount();
+
+    wrapper = mountModal({ title: 'My modal', 'aria-label': 'Named' } as ModalProps);
+    expect(dialog()!.getAttribute('aria-labelledby')).toBeNull();
+    expect(dialog()!.getAttribute('aria-label')).toBe('Named');
     wrapper.unmount();
   });
 

@@ -16,6 +16,7 @@
           :is="component"
           v-bind="{...ouiaProps, ...$attrs}"
           role="dialog"
+          :aria-labelledby="$attrs['aria-labelledby'] ?? (title && !$slots.header && !$attrs['aria-label'] ? titleId : undefined)"
           :aria-describedby="ariaDescribedby || (noBodyWrapper ? null : descriptorId)"
           aria-modal="true"
           :class="[
@@ -41,6 +42,7 @@
             <slot name="header">
               <component :is="titleOverflowing ? PfTooltip : PassThrough" v-if="title">
                 <h1
+                  :id="titleId"
                   ref="titleRef"
                   :class="[styles.modalBoxTitle, {
                     [styles.modifiers.icon]: titleIconVariant,
@@ -94,7 +96,7 @@ import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/bac
 import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
 
-import { capitalize, computed, watch, onMounted, onBeforeUnmount, useTemplateRef } from 'vue';
+import { capitalize, computed, watch, onMounted, onBeforeUnmount, useTemplateRef, useId } from 'vue';
 import type { Component, HTMLAttributes } from 'vue';
 import PfModalHeader from './ModalHeader.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
@@ -177,6 +179,7 @@ defineSlots<{
 // inject: ['open'],
 const titleEl = useTemplateRef('titleRef');
 const titleOverflowing = useElementOverflow(titleEl);
+const titleId = useId();
 
 const teleportTarget = computed(() => {
   if (typeof props.appendTo === 'function') {
