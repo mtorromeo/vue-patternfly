@@ -104,7 +104,7 @@ defineSlots<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const disabled = inject(TextInputGroupDisabledKey, false);
+const disabled = inject(TextInputGroupDisabledKey, undefined);
 const input = useTemplateRef('inputRef');
 
 const { validated } = toRefs(props);

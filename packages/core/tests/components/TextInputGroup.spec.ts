@@ -55,9 +55,7 @@ describe('TextInputGroup', () => {
     expect(wrapper.find(`input.${styles.textInputGroupTextInput}`).attributes('disabled')).toBeDefined();
   });
 
-  // BUG: `disabled` is provided as a plain value (provide(TextInputGroupDisabledKey, props.disabled)), so
-  // TextInputGroupMain does not react to later changes (src/components/TextInputGroup/TextInputGroup.vue:43).
-  it.fails('updates the inner input when disabled changes', async () => {
+  it('updates the inner input when disabled changes', async () => {
     const wrapper = mount(PfTextInputGroup, { slots: { default: () => h(PfTextInputGroupMain) } });
     expect(wrapper.find('input').attributes('disabled')).toBeUndefined();
 

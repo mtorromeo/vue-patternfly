@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-export const TextInputGroupDisabledKey = Symbol('TextInputGroupDisabledKey') as InjectionKey<boolean | undefined>;
+export const TextInputGroupDisabledKey = Symbol('TextInputGroupDisabledKey') as InjectionKey<Readonly<Ref<boolean | undefined>>>;
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Adds disabled styling and a disabled context value which text input group main hooks into for the input itself */
@@ -27,7 +27,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
 import type { HTMLAttributes } from 'vue';
-import { type InjectionKey, provide } from 'vue';
+import { computed, type InjectionKey, provide, type Ref } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -41,5 +41,5 @@ defineSlots<{
   default: (props?: Record<never, never>) => any;
 }>();
 
-provide(TextInputGroupDisabledKey, props.disabled);
+provide(TextInputGroupDisabledKey, computed(() => props.disabled));
 </script>
