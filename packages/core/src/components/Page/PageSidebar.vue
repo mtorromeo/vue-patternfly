@@ -8,9 +8,9 @@
     }]"
   >
     <div :class="styles.pageSidebarMain">
-      <div :class="styles.pageSidebarBody">
+      <auto-wrap :component="PfPageSidebarBody">
         <slot />
-      </div>
+      </auto-wrap>
     </div>
   </div>
 </template>
@@ -34,6 +34,8 @@ import { computed, type ComputedRef, inject, type InjectionKey, provide, type HT
 import { PageManagedSidebarKey, PageSidebarOpenKey, PageSidebarsKey } from './Page.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { useChildrenTracker } from '../../use';
+import AutoWrap from '../../helpers/AutoWrap.vue';
+import PfPageSidebarBody from './PageSidebarBody.vue';
 
 defineOptions({
   name: 'PfPageSidebar',

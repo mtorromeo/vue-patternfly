@@ -235,6 +235,14 @@ describe('PageSidebar', () => {
     expect(wrapper.find(`.${styles.pageSidebarMain} > .${styles.pageSidebarBody}`).text()).toBe('Nav');
   });
 
+  it('does not wrap an explicit sidebar body in another body', () => {
+    const wrapper = mount(PfPageSidebar, { slots: { default: () => h(PfPageSidebarBody, { insets: true }, () => 'Nav') } });
+    const bodies = wrapper.findAll(`.${styles.pageSidebarBody}`);
+    expect(bodies).toHaveLength(1);
+    expect(bodies[0].classes()).toContain(styles.modifiers.pageInsets);
+    expect(bodies[0].text()).toBe('Nav');
+  });
+
   it('is expanded with sidebarOpen and accepts a custom id', () => {
     const wrapper = mount(PfPageSidebar, { props: { sidebarOpen: true, id: 'side' } });
     expect(wrapper.classes()).toContain(styles.modifiers.expanded);
@@ -264,8 +272,7 @@ describe('PageSidebarBody', () => {
     expect(wrapper.classes()).not.toContain(styles.modifiers.pageInsets);
   });
 
-  // BUG: PageSidebarBody.vue:10 wraps the slot in a second element with the same sidebar-body class
-  it.fails('renders a single sidebar body element', () => {
+  it('renders a single sidebar body element', () => {
     const wrapper = mount(PfPageSidebarBody, { slots: { default: () => 'Body' } });
     expect(wrapper.findAll(`.${styles.pageSidebarBody}`)).toHaveLength(1);
   });

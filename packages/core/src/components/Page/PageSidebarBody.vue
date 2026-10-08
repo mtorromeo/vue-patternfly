@@ -7,9 +7,7 @@
       [styles.modifiers.fill]: filled,
     }]"
   >
-    <div :class="styles.pageSidebarBody">
-      <slot />
-    </div>
+    <slot />
   </div>
 </template>
 
