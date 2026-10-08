@@ -34,7 +34,7 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import type { Placement } from '../../helpers/FloatingUi.vue';
 
 defineOptions({
-  name: 'PfNotificationDrawerListItem',
+  name: 'PfNotificationDrawerListItemHeader',
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {

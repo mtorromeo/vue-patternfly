@@ -213,8 +213,7 @@ describe('NotificationDrawerListItemHeader', () => {
     expect(action.element.previousElementSibling?.classList.contains(styles.notificationDrawerListItemHeader)).toBe(true);
   });
 
-  // BUG: NotificationDrawerListItemHeader.vue:53 declares the component name as 'PfNotificationDrawerListItem'
-  it.fails('has its own OUIA component type', () => {
+  it('has its own OUIA component type', () => {
     const wrapper = mount(PfNotificationDrawerListItemHeader, { props: { title: 'T' } });
     expect(wrapper.find(`.${styles.notificationDrawerListItemHeader}`).attributes('data-ouia-component-type'))
       .toBe('PF/NotificationDrawerListItemHeader');
