@@ -80,9 +80,7 @@ describe('Progress', () => {
     expect(wrapper.classes()).not.toContain('true');
   });
 
-  // BUG: with measureLocation 'inside' Progress.vue renders the raw `value` instead of the
-  // label / scaled percentage shown in the other locations
-  it.fails('renders the scaled value inside the bar', () => {
+  it('renders the scaled value inside the bar', () => {
     const wrapper = mount(PfProgress, { props: { value: 3, min: 2, max: 6, measureLocation: 'inside' } });
     expect(wrapper.find(`.${styles.progressIndicator} .${styles.progressMeasure}`).text()).toBe('25%');
   });

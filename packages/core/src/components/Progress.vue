@@ -46,7 +46,7 @@
     >
       <div :class="styles.progressIndicator" :style="{ width: `${scaledValue}%` }">
         <span :class="styles.progressMeasure">
-          <template v-if="measureLocation === 'inside'">{{ value }}%</template>
+          <slot v-if="measureLocation === 'inside'">{{ label || `${scaledValue}%` }}</slot>
         </span>
       </div>
     </div>
