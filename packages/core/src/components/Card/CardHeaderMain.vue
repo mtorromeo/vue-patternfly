@@ -1,10 +1,11 @@
 <template>
-  <div v-bind="(ouiaProps as any)">
+  <div v-bind="(ouiaProps as any)" :class="styles.cardHeaderMain">
     <slot />
   </div>
 </template>
 
 <script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Card/card';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 

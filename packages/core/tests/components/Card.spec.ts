@@ -336,8 +336,7 @@ describe('CardHeaderMain', () => {
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/CardHeaderMain');
   });
 
-  // BUG: CardHeaderMain.vue:2 never applies styles.cardHeaderMain to its root
-  it.fails('applies the header main class', () => {
+  it('applies the header main class', () => {
     const wrapper = mount(PfCardHeaderMain);
     expect(wrapper.classes()).toContain(styles.cardHeaderMain);
   });
