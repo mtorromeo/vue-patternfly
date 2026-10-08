@@ -23,6 +23,7 @@
 
             <div v-if="!!onNextClick && !!onPreviousClick" :class="textInputGroupStyles.textInputGroupGroup">
               <pf-button
+                variant="plain"
                 :disabled="disabled || previousNavigationButtonDisabled"
                 :aria-label="previousNavigationButtonAriaLabel"
                 @click="onPreviousClick"

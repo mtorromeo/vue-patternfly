@@ -112,8 +112,7 @@ describe('SearchInput', () => {
       expect(onNextClick).not.toHaveBeenCalled();
     });
 
-    // BUG: SearchInput.vue renders the "previous" navigation button without variant="plain" (the "next" one has it)
-    it.fails('renders both navigation buttons as plain buttons', () => {
+    it('renders both navigation buttons as plain buttons', () => {
       const wrapper = mount(PfSearchInput, { props: { modelValue: 'q', onPreviousClick: vi.fn(), onNextClick: vi.fn() } });
       expect(button(wrapper, 'Previous').classes()).toContain(buttonStyles.modifiers.plain);
     });
