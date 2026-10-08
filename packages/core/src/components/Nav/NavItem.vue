@@ -194,7 +194,7 @@ function flyoutClick(e: Event) {
   }
   const closestItem = e.target.closest('.pf-m-flyout');
   if (!closestItem) {
-    flyoutVisible.value = !!slots.flyout;
+    flyoutVisible.value = false;
   }
 }
 </script>

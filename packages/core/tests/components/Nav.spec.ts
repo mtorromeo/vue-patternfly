@@ -259,9 +259,7 @@ describe('NavItem', () => {
       expect(document.body.querySelector('.sub')).toBeNull();
     });
 
-    // BUG: NavItem.vue flyoutClick sets `flyoutVisible = !!$slots.flyout` on any click outside a flyout item,
-    // opening the flyout instead of closing it
-    it.fails('closes the flyout when clicking outside', async () => {
+    it('closes the flyout when clicking outside', async () => {
       const wrapper = mountFlyout();
 
       await wrapper.find(`li.${styles.navItem}`).trigger('mouseover');
