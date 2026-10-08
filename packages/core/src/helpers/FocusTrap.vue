@@ -27,28 +27,21 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const target = useTemplateRef('targetRef');
-const { activate, deactivate, pause, unpause } = useFocusTrap(target, {
-  immediate: props.active,
-  ...props.focusTrapOptions,
-});
+const { activate, deactivate, pause, unpause } = useFocusTrap(target, { ...props.focusTrapOptions, immediate: false });
 
-if (props.paused) {
-  pause();
-}
-
-watch(() => props.active, () => {
-  if (props.active) {
+watch([target, () => props.active, () => props.paused], ([el, active, paused]) => {
+  if (!el) {
+    return;
+  }
+  if (active) {
     activate();
+    if (paused) {
+      pause();
+    } else {
+      unpause();
+    }
   } else {
     deactivate();
   }
-});
-
-watch(() => props.paused, () => {
-  if (props.paused) {
-    pause();
-  } else {
-    unpause();
-  }
-});
+}, { flush: 'post' });
 </script>

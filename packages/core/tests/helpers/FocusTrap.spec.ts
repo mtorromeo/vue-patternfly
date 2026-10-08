@@ -34,6 +34,17 @@ describe('FocusTrap', () => {
     expect(document.activeElement).toBe(outside);
   });
 
+  it('does not activate when inactive even with the immediate option', async () => {
+    const onActivate = vi.fn();
+    const onDeactivate = vi.fn();
+    const { outside } = mountTrap({ focusTrapOptions: { ...focusTrapOptions, immediate: true, onActivate, onDeactivate } });
+    await nextTick();
+    await nextTick();
+    expect(document.activeElement).toBe(outside);
+    expect(onActivate).not.toHaveBeenCalled();
+    expect(onDeactivate).not.toHaveBeenCalled();
+  });
+
   it('focuses the first tabbable element when mounted active', async () => {
     mountTrap({ active: true });
     await nextTick();
@@ -51,9 +62,7 @@ describe('FocusTrap', () => {
     await vi.waitFor(() => expect(document.activeElement).toBe(outside));
   });
 
-  // BUG: FocusTrap.vue relies on useFocusTrap creating the trap in a post-flush watcher, so an
-  // `active` change happening before that (same tick as mount) calls activate() on a missing trap and is lost
-  it.fails('activates when active is set right after mounting', async () => {
+  it('activates when active is set right after mounting', async () => {
     const { wrapper } = mountTrap();
     await wrapper.setProps({ active: true });
     await nextTick();
@@ -80,9 +89,7 @@ describe('FocusTrap', () => {
     expect(wrapper.element.contains(document.activeElement)).toBe(true);
   });
 
-  // BUG: FocusTrap.vue:39 calls pause() during setup, before useFocusTrap has created the trap,
-  // so an initial `paused: true` is ignored
-  it.fails('starts paused when mounted with paused', async () => {
+  it('starts paused when mounted with paused', async () => {
     const { outside } = mountTrap({ active: true, paused: true });
     await nextTick();
     outside.focus();
