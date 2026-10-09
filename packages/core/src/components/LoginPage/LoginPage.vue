@@ -66,8 +66,6 @@ interface Props extends /* @vue-ignore */ ComponentProps<typeof PfLogin> {
   brandImgAlt?: string;
   /** Attribute that specifies the URL of the background image for the login page */
   backgroundImgSrc?: string;
-  /** Attribute that specifies the alt text of the background image for the login page */
-  backgroundImgAlt?: string;
   /** Content rendered inside of the text component of the login page */
   textContent?: string;
   /** Adds list variant styles for the footer list component of the login page. The only current value is'inline' */
