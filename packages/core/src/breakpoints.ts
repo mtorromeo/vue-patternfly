@@ -345,11 +345,11 @@ export function classesFromBreakpointProps(props: any, baseNames: string[], styl
   for (const baseName of baseNames) {
     for (const breakpoint of breakpoints) {
       let breakpointSuffix: string = breakpoint;
-      const prop = baseName ? `${baseName}${breakpoint}` : breakpoint.toLowerCase();
+      const prop = baseName ? `${baseName}${breakpoint}` : breakpoint === '2xl' ? 'xl2' : breakpoint.toLowerCase();
       if (!prop) {
         continue;
       }
-      if (baseName && breakpointSuffix.match(/^[0-9]/)) {
+      if (breakpointSuffix.match(/^[0-9]/)) {
         breakpointSuffix = `_${breakpointSuffix}`;
       }
       let value = props[prop] === '' ? true : props[prop];

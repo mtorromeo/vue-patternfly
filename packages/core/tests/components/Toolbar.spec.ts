@@ -418,6 +418,11 @@ describe('ToolbarToggleGroup', () => {
     ]));
   });
 
+  it('applies the 2xl show breakpoint modifier', () => {
+    const wrapper = mount(PfToolbarToggleGroup, { props: { xl2: true } });
+    expect(wrapper.classes()).toContain(styles.modifiers.showOn_2xl);
+  });
+
   it('sets aria-haspopup when expanded on small screens', async () => {
     setWindowWidth(500);
     const wrapper = mount(PfToolbar, {
