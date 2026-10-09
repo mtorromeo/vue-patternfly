@@ -32,7 +32,6 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   expanded?: boolean;
-  noPadding?: boolean;
   ariaLabelledby?: string;
   ariaLabel?: string;
   ariaControls?: string;
