@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-export const HelperTextComponentKey = Symbol('HelperTextComponentKey') as InjectionKey<'div' | 'ul'>;
+export const HelperTextComponentKey = Symbol('HelperTextComponentKey') as InjectionKey<Readonly<Ref<'div' | 'ul'>>>;
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   component?: 'div' | 'ul';
@@ -14,7 +14,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
-import { type InjectionKey, type HTMLAttributes, provide } from 'vue';
+import { type InjectionKey, type HTMLAttributes, type Ref, computed, provide } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -30,5 +30,5 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-provide(HelperTextComponentKey, props.component);
+provide(HelperTextComponentKey, computed(() => props.component));
 </script>

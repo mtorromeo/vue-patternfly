@@ -50,10 +50,10 @@ defineSlots<{
   icon?: (props?: Record<never, never>) => any;
 }>();
 
-const helperTextComponent = inject(HelperTextComponentKey, 'div');
+const helperTextComponent = inject(HelperTextComponentKey, undefined);
 
 const component = computed(() => {
-  return helperTextComponent === 'ul'
+  return helperTextComponent?.value === 'ul'
     ? 'li'
     : 'div';
 });

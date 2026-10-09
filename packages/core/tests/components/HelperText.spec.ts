@@ -23,6 +23,13 @@ describe('HelperText', () => {
     expect(items).toHaveLength(2);
     expect(items.every(i => i.element.tagName === 'LI')).toBe(true);
   });
+
+  it('updates the item elements when component changes', async () => {
+    const wrapper = mount(PfHelperText, { slots: { default: () => h(PfHelperTextItem, () => 'One') } });
+    await wrapper.setProps({ component: 'ul' });
+    expect(wrapper.element.tagName).toBe('UL');
+    expect(wrapper.find(`.${styles.helperTextItem}`).element.tagName).toBe('LI');
+  });
 });
 
 describe('HelperTextItem', () => {
