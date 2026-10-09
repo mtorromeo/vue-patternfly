@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { flushPromises, mount, type VueWrapper } from '@vue/test-utils';
+import { mount, type VueWrapper } from '@vue/test-utils';
 import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 import PfSimpleList from '../../src/components/SimpleList/SimpleList.vue';
@@ -101,7 +101,7 @@ describe('SimpleList', () => {
     expect(wrapper.find<HTMLInputElement>('input').element.value).toBe('');
   });
 
-  it('does not wrap groups in an extra list', async () => {
+  it('does not wrap groups in an extra list', () => {
     const wrapper = mount(PfSimpleList, {
       slots: {
         default: () => [
@@ -110,8 +110,6 @@ describe('SimpleList', () => {
         ],
       },
     });
-    // grouping is detected while rendering the slot, so it takes effect on the next render
-    await flushPromises();
     expect(wrapper.findAll('section')).toHaveLength(2);
     expect(wrapper.element.querySelector(':scope > ul')).toBeNull();
     expect(wrapper.findAll('ul')).toHaveLength(2);

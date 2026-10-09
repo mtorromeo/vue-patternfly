@@ -1,13 +1,7 @@
 <template>
   <div v-bind="ouiaProps" :class="styles.simpleList">
     <input v-if="name" type="hidden" :name="name" :value="typeof value === 'string' ? value : ''" :required="required">
-    <wrap>
-      <default-slot />
-
-      <template v-if="!grouped" #with>
-        <ul class="pf-v6-c-simple-list__list" role="list" :aria-label="ariaLabel" />
-      </template>
-    </wrap>
+    <component :is="fragment(renderList())" />
   </div>
 </template>
 
@@ -27,9 +21,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
 
-import { type Component, type InjectionKey, provide, type HTMLAttributes, ref, type Ref, computed, type WritableComputedRef, watch } from 'vue';
-import { findChildrenVNodes } from '../../util';
-import Wrap from '../../helpers/Wrap.vue';
+import { type Component, type InjectionKey, provide, type HTMLAttributes, ref, type Ref, computed, type WritableComputedRef, watch, h } from 'vue';
+import { findChildrenVNodes, fragment } from '../../util';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 
@@ -66,12 +59,13 @@ watch(() => props.modelValue, (v) => {
   innerValue.value = v ?? null;
 });
 
-const grouped = ref(false);
 provide(SimpleListValueKey, value);
 
-function defaultSlot() {
+function renderList() {
   const children = slots.default ? findChildrenVNodes(slots.default({})) : [];
-  grouped.value = typeof children[0]?.type === 'object' && (children[0].type as Component).name === 'PfSimpleListGroup';
-  return children;
+  if (typeof children[0]?.type === 'object' && (children[0].type as Component).name === 'PfSimpleListGroup') {
+    return children;
+  }
+  return h('ul', { class: 'pf-v6-c-simple-list__list', role: 'list', 'aria-label': props.ariaLabel }, children);
 }
 </script>
