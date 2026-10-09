@@ -61,5 +61,5 @@ defineSlots<{
 }>();
 
 const managedExpandable = computed(() => props.expandable || isDefined(expanded.value));
-const uniqueId = computed(() => `form-field-group-toggle-${useId()}`);
+const uniqueId = `form-field-group-toggle-${useId()}`;
 </script>
