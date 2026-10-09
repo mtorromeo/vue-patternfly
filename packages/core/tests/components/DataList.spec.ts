@@ -395,6 +395,11 @@ describe('DataListToggle', () => {
     expect(button.attributes('aria-labelledby')).toBeUndefined();
     expect(button.attributes('aria-expanded')).toBe('true');
   });
+
+  it('labels the button with a custom aria-labelledby', () => {
+    const wrapper = mount(PfDataListToggle, { props: { id: 'tgl' }, attrs: { 'aria-labelledby': 'row tgl' } });
+    expect(wrapper.find('button').attributes('aria-labelledby')).toBe('row tgl');
+  });
 });
 
 describe('DataListContent', () => {

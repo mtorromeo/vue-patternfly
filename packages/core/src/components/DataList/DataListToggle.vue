@@ -6,7 +6,7 @@
         variant="plain"
         :aria-controls="ariaControls && ariaControls"
         :aria-label="ariaLabel"
-        :aria-labelledby="ariaLabel !== 'Details' ? undefined : id"
+        :aria-labelledby="ariaLabelledby ?? (ariaLabel !== 'Details' ? undefined : id)"
         :aria-expanded="expanded"
         @click="emit('click', $event)"
       >
