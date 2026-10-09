@@ -15,8 +15,6 @@ defineOptions({
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-    /** Flag indicating that the actions have no offset. */
-  noOffset?: boolean;
 }
 
 const props = defineProps<Props>();
