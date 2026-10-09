@@ -195,6 +195,7 @@ describe('SimpleListGroup', () => {
     expect(title.classes()).toContain(styles.simpleListTitle);
     expect(title.classes()).toContain('title-extra');
     expect(title.text()).toBe('Title');
+    expect(title.attributes('aria-hidden')).toBe('true');
 
     const ul = wrapper.find('ul');
     expect(ul.classes()).toContain('list-extra');
