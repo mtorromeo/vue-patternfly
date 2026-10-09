@@ -227,6 +227,13 @@ describe('Page', () => {
 });
 
 describe('PageSidebar', () => {
+  it('does not warn when used outside of a page', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(PfPageSidebar);
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
   it('renders a collapsed sidebar by default', () => {
     const wrapper = mount(PfPageSidebar, { slots: { default: () => 'Nav' } });
     expect(wrapper.classes()).toContain(styles.pageSidebar);

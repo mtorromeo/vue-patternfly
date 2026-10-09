@@ -49,8 +49,8 @@ defineSlots<{
 }>();
 
 useChildrenTracker(PageSidebarsKey);
-const managedSidebarOpen = inject(PageSidebarOpenKey);
-const managedSidebar = inject(PageManagedSidebarKey);
+const managedSidebarOpen = inject(PageSidebarOpenKey, undefined);
+const managedSidebar = inject(PageManagedSidebarKey, undefined);
 
 const sidebarOpen = computed(() => managedSidebar?.value ? !!managedSidebarOpen?.value : props.sidebarOpen);
 provide(SidebarOpenKey, sidebarOpen);
