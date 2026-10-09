@@ -27,6 +27,7 @@
       - The `filled` prop of `pf-data-list-cell` is renamed to `no-fill` with inverted behavior.
       - The `isPlainButtonAction` prop of `pf-data-list-action` is renamed to `plain-button`.
       - The `isValid` prop of `pf-data-list-check` is renamed to `invalid` with inverted behavior.
+      - The `isChecked` and `onChange` props of `pf-data-list-check` are replaced by `v-model:checked`.
       - The `pf-data-list-item-row` and `pf-data-list-item-cells` components are optional and are only required if you need to change their attributes or when you have to control the order of sibling components.
 
       See [common differences from patternfly-react](#/).

@@ -351,15 +351,15 @@ describe('DataListCheck', () => {
     expect(wrapper.attributes('aria-label')).toBeUndefined();
   });
 
-  it('binds the checked state with v-model:expanded', async () => {
-    const wrapper = mountWithModel(PfDataListCheck, 'expanded', { expanded: false });
+  it('binds the checked state with v-model:checked', async () => {
+    const wrapper = mountWithModel(PfDataListCheck, 'checked', { checked: false });
     const input = wrapper.find<HTMLInputElement>('input');
     expect(input.element.checked).toBe(false);
 
     await input.setValue(true);
-    expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
+    expect(wrapper.emitted('update:checked')).toEqual([[true]]);
 
-    await wrapper.setProps({ expanded: false });
+    await wrapper.setProps({ checked: false });
     expect(input.element.checked).toBe(false);
   });
 

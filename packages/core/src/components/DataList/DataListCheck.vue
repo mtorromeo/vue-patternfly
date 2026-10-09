@@ -28,5 +28,5 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, '
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const checked = defineModel<boolean>('expanded', { default: false });
+const checked = defineModel<boolean>('checked', { default: false });
 </script>
