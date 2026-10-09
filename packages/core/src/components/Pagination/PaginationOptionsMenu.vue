@@ -93,6 +93,11 @@ function selectPerPage(perPage: number) {
   while (page > 1 && Math.ceil(props.count / perPage) < page) {
     page--;
   }
+  if (props.lastFullPageShown && props.count / perPage !== page) {
+    while (page > 1 && props.count - perPage * page < 0) {
+      page--;
+    }
+  }
   emit('update:perPage', perPage);
   if (page !== props.page) {
     emit('update:page', page);

@@ -342,6 +342,17 @@ describe('Pagination', () => {
       wrapper.unmount();
     });
 
+    it('moves to the last full page with lastFullPageShown', async () => {
+      const wrapper = mount(PfPagination, { props: { count: 52, page: 3, perPage: 20, lastFullPageShown: true, variant: 'top' }, attachTo: document.body });
+      await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
+      await nextTick();
+
+      document.body.querySelector<HTMLButtonElement>(`[data-action="per-page-50"] .${menuStyles.menuItem}`)!.click();
+      await nextTick();
+      expect(wrapper.emitted('update:page')).toEqual([[1]]);
+      wrapper.unmount();
+    });
+
     it('does not update the page when it stays in range', async () => {
       const wrapper = mount(PfPagination, { props: { count: 52, page: 2, perPage: 10, variant: 'top' }, attachTo: document.body });
       await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
