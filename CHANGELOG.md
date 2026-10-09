@@ -1,6 +1,122 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.12] - 2026-10-09
+
+### Bug Fixes
+
+- Fixed issues with components using custom render functions not being re-evaluated properly on changes
+- *(util)* FindComponentVNode stopped searching at the first fragment
+- *(Button)* Aria-expanded passed as attribute was always overridden by the expanded prop
+- *(Button)* AriaCurrent prop was not applied to the element
+- *(Button)* SpinnerAriaLabel and spinnerAriaLabelledBy props were not passed to the spinner
+- *(Button)* Prevent inoperable events when aria-disabled
+- *(Label)* Disabled was not declared as a prop and had no effect
+- *(LabelGroup)* Overflow label was always rendered, even when all labels fit
+- *(TextInput)* AriaLabel prop was not applied to the input
+- *(Textarea)* Keyup event was never emitted
+- *(Checkbox)* Not indeterminate when mounted with a null model
+- *(PassThrough)* Exposed templateFn was always undefined, so useRef never rendered the stored template
+- *(AccordionItem)* Fallthrough attributes were applied to both the toggle button and the content
+- *(ExpandableSection)* Generate a content id when contentId is not provided, so the toggle always references the content via aria-controls
+- *(Tab)* Tab panels were not labelled by their tab button
+- *(Modal)* Header always used the help layout, even without a help slot
+- *(Modal)* NoBodyWrapper rendered an unknown pass-through element instead of omitting the body wrapper
+- *(Modal)* Dialog was not labelled by its title
+- *(Modal)* Close on Escape key press
+- *(Th)* Scope prop was not applied to the header cell
+- *(Th)* DefaultDirection was ignored when sorting a column for the first time
+- *(Wrap)* Pass the wrapped content as a function slot when the wrapper is a component
+- *(Button)* Unwrap reactive custom components passed via the component prop
+- *(NotificationDrawer)* List item header declared the list item component name
+- *(NotificationDrawer)* Group never called the onExpand callback
+- *(Page)* Sidebar body wrapped its content in a duplicate sidebar body element
+- *(Page)* Toggle button aria-expanded was always false for non hamburger toggles
+- *(Pagination)* Variant had no default, hiding the total items
+- *(Pagination)* Inset modifiers did not update when props changed
+- *(SimpleList)* Hidden input submitted the internal symbol id of items without a value
+- *(SimpleList)* Item button was hidden from assistive technology
+- *(ToggleGroup)* Deselecting from an array selection mutated the model in place without emitting
+- *(Toolbar)* Expandable content clear filters button never called clearAllFilters
+- *(Toolbar)* Toggle group compared the window width in px with the rem lg breakpoint
+- *(Toolbar)* Filter labels slot caused an infinite update loop
+- *(Nav)* Custom ariaLabel was always replaced by 'Local'
+- *(NavList)* Scroll buttons were shown until the first resize even when all items fit
+- *(Nav)* Items outside of a page sidebar were removed from the tab order
+- *(NavItem)* Explicit tabindex was always dropped
+- *(NavItem)* Clicking outside opened the flyout instead of closing it
+- *(SearchInput)* Previous navigation button was not a plain button
+- *(Select)* Select event did not include the selected item id
+- *(Dropdown)* ShouldFocusFirstItemOnOpen never focused the first item
+- *(MenuItem)* ActiveItemId of the menu was ignored
+- *(Menu)* Flyout menus never opened
+- *(Button)* Explicit role attribute was overridden
+- *(Tooltip)* Content prop was not rendered without a content slot
+- *(Tooltip)* Mouse listeners were added instead of removed on unmount
+- *(Tooltip)* EntryDelay and exitDelay were ignored
+- *(Tooltip)* Aria prop never linked the trigger to the tooltip
+- *(Title)* H prop values 'h1'..'h6' rendered an invalid <hh2> element
+- *(AlertActionLink)* OuiaId was ignored and replaced by a generated id
+- *(CloseButton)* OuiaId was ignored and replaced by a generated id
+- *(NotificationBadge)* OuiaId was ignored and replaced by a generated id
+- *(NotificationBadge)* Expanded prop did not set aria-expanded nor the clicked modifier
+- *(Content)* Wrapper class was applied to every element, not only to div
+- *(Progress)* Inside measure location added a 'true' class instead of the inside modifier
+- *(Progress)* Inside measure showed the raw value instead of the label or scaled percentage
+- *(FileUpload)* BrowseButtonClick was emitted twice per click
+- *(FileUpload)* Edits in the text preview did not update the model
+- *(Tabs)* Tab content did not follow changes of the secondary prop
+- *(FocusTrap)* Active and paused changes before the trap was created were lost
+- *(FloatingUi)* Injected teleport destination was ignored unless teleportTo was null
+- *(FloatingUi)* Content was not rendered when disable was set
+- *(Card)* Change event was never emitted when the selection checkbox changed
+- *(CardHeader)* Expandable toggle button did not expose aria-expanded
+- *(CardBody)* Filled defaulted to false, making every body no-fill
+- *(CardHeaderMain)* Header main class was never applied
+- *(BreadcrumbItem)* Link and current classes were never applied to the link
+- *(EmptyStateHeader)* Component was named PfEmptyStateBody
+- *(DataListItem)* Selection inputs were always checkboxes, even for single selection
+- *(DataListItem)* Selectable items could not be selected with the keyboard
+- *(DataListItemRow)* Default toggle did not reflect the expanded state
+- *(DataListAction)* Visibility modifiers did not react to prop changes
+- *(DataListCheck)* OtherControls rendered an unknown pass-through element
+- *(DescriptionListTermHelpTextButton)* Help text button was not focusable
+- *(AutoWrap)* Force did not create the wrapper when there were no children to wrap
+- *(DrawerPanelContent)* Widths prop was never applied
+- *(FormAlert)* Rendered a form element, nesting a form inside the parent form
+- *(FormFieldGroup)* Collapsed uncontrolled toggle had no aria-expanded attribute
+- *(HelperTextItem)* Icon was not hidden from assistive technologies
+- *(JumpLinks)* Toggle was rendered when nonExpandable
+- *(JumpLinksItem)* Item had role="list" instead of its implicit listitem role
+- *(JumpLinksItem)* Nested lists were rendered inside the link
+- *(TextInputGroup)* Inner input did not react to disabled changes
+- *(PageSidebarBody)* No-fill modifier was applied by default
+- *(Menu)* ActiveItemId changes after mount were ignored
+- *(DataListCheck)* Checked state was bound to a model named expanded
+- *(FormFieldGroup)* Toggle id was generated during render instead of setup
+- *(DrawerPanelContent)* Splitter handle was not hidden from assistive technologies
+- *(MenuItem)* Icons were not hidden from assistive technologies
+- *(NavItem)* Flyout toggle icon was not hidden from assistive technologies
+- *(SimpleListGroup)* Title was not hidden from assistive technologies
+- *(LabelGroup)* Close icon was not hidden from assistive technologies
+- *(Popover)* Trigger click listener was never removed
+- *(CardExpandableContent)* NoOffset prop was declared but never used
+- *(DataListToggle)* NoPadding prop was declared but never used
+- *(LoginPage)* BackgroundImgAlt prop was declared but never used
+- *(PageSidebar)* Theme prop was declared but never used
+- *(DataListToggle)* AriaLabelledby prop was ignored
+- *(Pagination)* Page was not updated when the selected perPage left it out of range
+- *(Pagination)* LastFullPageShown was ignored
+- *(PageToggleButton)* Warned about missing injections outside of a page
+- *(PageSidebar)* Warned about missing injections outside of a page
+- *(PageToggleButton)* Exported an unused duplicate of SidebarOpenKey
+- *(PageSidebar)* SidebarOpen defaulted to false, collapsing unmanaged sidebars
+- *(HelperText)* Items did not follow changes of the component prop
+- *(ToolbarToggleGroup)* Xl2 breakpoint prop was ignored
+- *(SimpleList)* Groups were wrapped in an extra list until the second render
+- *(Title)* Heading level applied the PatternFly 5 size instead of the hN modifier
+- *(Toolbar)* Story pagination widget id repeated the variant suffix
+
 ## [6.0.0-beta.11] - 2026-09-08
 
 ### Bug Fixes
