@@ -41,8 +41,8 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const managedSidebarOpen = inject(PageSidebarOpenKey);
-const managedSidebar = inject(PageManagedSidebarKey);
+const managedSidebarOpen = inject(PageSidebarOpenKey, undefined);
+const managedSidebar = inject(PageManagedSidebarKey, undefined);
 
 const sidebarOpen = computed({
   get: () => Boolean(managedSidebar?.value ? managedSidebarOpen?.value : props.sidebarOpen),

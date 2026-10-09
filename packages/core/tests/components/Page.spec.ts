@@ -286,6 +286,13 @@ describe('PageSidebarBody', () => {
 });
 
 describe('PageToggleButton', () => {
+  it('does not warn when used outside of a page', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(PfPageToggleButton);
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
   it('renders a plain button with an accessible label', () => {
     const wrapper = mount(PfPageToggleButton, { slots: { default: () => h('i', { class: 'icon' }) } });
     const button = wrapper.find('button');
