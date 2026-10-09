@@ -23,8 +23,6 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
   /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
   sidebarOpen?: boolean;
-  /** Indicates the color scheme of the sidebar */
-  theme?: 'light' | 'dark';
 }
 </script>
 
@@ -43,7 +41,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   id: 'page-sidebar',
-  theme: 'dark',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
