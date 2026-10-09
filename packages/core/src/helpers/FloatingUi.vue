@@ -34,10 +34,9 @@ interface Props {
 </script>
 
 <script lang="ts" setup>
-import { flip as uiFlip, autoPlacement, size, type Middleware, type Placement as UIPlacement, type Strategy, offset as uiOffset, type OffsetOptions } from '@floating-ui/core';
+import { flip as uiFlip, autoPlacement, size, type Middleware, type Placement as UIPlacement, type Strategy, offset as uiOffset, type OffsetOptions, type ReferenceElement } from '@floating-ui/dom';
 import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement, type InjectionKey, inject, type MaybeRef, toValue, watch } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
-import type { ReferenceElement } from '@floating-ui/dom';
 
 defineOptions({
   name: 'PfFloatingUi',

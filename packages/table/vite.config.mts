@@ -13,6 +13,7 @@ export default defineConfig({
     },
     rolldownOptions: {
       external: id => id === 'vue'
+        || id.startsWith('@vueuse/')
         || id.startsWith('@vue-patternfly/'),
       output: {
         exports: 'named',

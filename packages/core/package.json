@@ -33,14 +33,13 @@
     "prepack": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@floating-ui/core": "^1.7.5",
     "@floating-ui/dom": "^1.8.0",
-    "@patternfly/patternfly": "^6.6.1",
-    "@patternfly/react-styles": "^6.6.1",
-    "@patternfly/react-tokens": "^6.6.1",
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
+    "@patternfly/patternfly": "^6.6.1",
+    "@patternfly/react-styles": "^6.6.1",
+    "@patternfly/react-tokens": "^6.6.1",
     "@types/node": "^26.6.4",
     "@types/web-bluetooth": "^0.0.21",
     "@vitejs/plugin-vue": "^6.0.9",
@@ -63,10 +62,17 @@
     "vue-tsc": "^3.3.12"
   },
   "peerDependencies": {
-    "@vueuse/core": "^13 || ^14",
-    "@vueuse/integrations": "^13 || ^14",
-    "@vueuse/shared": "^13 || ^14",
-    "focus-trap": "*"
+    "@patternfly/patternfly": "^6",
+    "@vueuse/core": "^13 || ^14 || ^15",
+    "@vueuse/integrations": "^13 || ^14 || ^15",
+    "@vueuse/shared": "^13 || ^14 || ^15",
+    "focus-trap": "^7 || ^8",
+    "vue": "^3.5.0",
+    "vue-router": "^4 || ^5"
   },
-  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
+  "peerDependenciesMeta": {
+    "vue-router": {
+      "optional": true
+    }
+  }
 }

@@ -14,6 +14,7 @@ export default defineConfig({
     rolldownOptions: {
       external: id => ['vue', 'focus-trap'].includes(id)
         || id.startsWith('@vueuse/')
+        || id.startsWith('@floating-ui/')
         || id.startsWith('@vue-patternfly/'),
       output: {
         exports: 'named',

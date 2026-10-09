@@ -74,7 +74,7 @@ import PfCloseButton from './CloseButton.vue';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
 import PassThrough from '../helpers/PassThrough.vue';
-import { offset, autoPlacement, type Placement, hide, flip as uiFlip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/core';
+import { offset, autoPlacement, type Placement, hide, flip as uiFlip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/dom';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import type { ComponentProps } from 'vue-component-type-helpers';
 

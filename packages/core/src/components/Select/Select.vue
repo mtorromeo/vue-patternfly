@@ -36,7 +36,7 @@ import { nextTick, computed, type RendererElement, useTemplateRef } from 'vue';
 import { useHtmlElementFromVNodes } from '../../use';
 import { useEventListener } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import type { Placement } from '@floating-ui/core';
+import type { Placement } from '@floating-ui/dom';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({

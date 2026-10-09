@@ -42,7 +42,7 @@ import PfTooltipContent from './TooltipContent.vue';
 import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useHtmlElementFromVNodes } from '../../use';
-import type { Placement as UIPlacement } from '@floating-ui/core';
+import type { Placement as UIPlacement } from '@floating-ui/dom';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
