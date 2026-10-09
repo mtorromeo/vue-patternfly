@@ -3,7 +3,7 @@
     v-bind="ouiaProps"
     :class="[styles.pageSidebarBody, {
       [styles.modifiers.pageInsets]: insets,
-      [styles.modifiers.noFill]: !filled,
+      [styles.modifiers.noFill]: filled === false,
       [styles.modifiers.fill]: filled,
     }]"
   >
@@ -29,7 +29,9 @@ defineOptions({
   name: 'PfPageSidebarBody',
 });
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  filled: undefined,
+});
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 defineSlots<{

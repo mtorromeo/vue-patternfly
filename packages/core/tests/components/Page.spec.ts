@@ -266,10 +266,17 @@ describe('PageSidebarBody', () => {
     expect(wrapper.text()).toBe('Body');
   });
 
-  it('applies no-fill when not filled', () => {
+  it('applies no fill modifiers by default', () => {
     const wrapper = mount(PfPageSidebarBody);
-    expect(wrapper.classes()).toContain(styles.modifiers.noFill);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.fill);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.noFill);
     expect(wrapper.classes()).not.toContain(styles.modifiers.pageInsets);
+  });
+
+  it('applies no-fill when filled is false', () => {
+    const wrapper = mount(PfPageSidebarBody, { props: { filled: false } });
+    expect(wrapper.classes()).toContain(styles.modifiers.noFill);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.fill);
   });
 
   it('renders a single sidebar body element', () => {
