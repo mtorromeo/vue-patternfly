@@ -36,7 +36,7 @@ export type MenuProvide = {
   favoriteList: Ref<ComponentExposed<typeof PfMenuList> | null>;
   selected?: Ref<MenuItemId | MenuItemId[] | null>;
   // drilldownItemPath: MenuItemId[];
-  activeItemId?: MenuItemId;
+  activeItemId: () => MenuItemId | undefined;
   state: MenuState;
   flyout: Ref<ComponentInternalInstance | null>;
   onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: any) => void;
@@ -164,7 +164,7 @@ provide(MenuInjectionKey, {
   favoriteList,
   selected,
   // drilldownItemPath: $props.drilldownItemPath,
-  activeItemId: props.activeItemId,
+  activeItemId: () => props.activeItemId,
   state,
   flyout,
   onActionClick: props.onActionClick,

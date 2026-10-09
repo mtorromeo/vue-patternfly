@@ -128,6 +128,14 @@ describe('Menu', () => {
       expect(itemButtons(wrapper)[0]!.attributes('aria-current')).toBeUndefined();
       expect(itemButtons(wrapper)[1]!.attributes('aria-current')).toBe('true');
     });
+
+    it('follows changes of activeItemId', async () => {
+      const wrapper = mount(PfMenu, { props: { activeItemId: 'a' }, slots: { default: items('a', 'b') } });
+      await wrapper.setProps({ activeItemId: 'b' });
+
+      expect(itemButtons(wrapper)[0]!.attributes('aria-current')).toBeUndefined();
+      expect(itemButtons(wrapper)[1]!.attributes('aria-current')).toBe('true');
+    });
   });
 
   describe('keyboard navigation', () => {

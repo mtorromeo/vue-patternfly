@@ -250,8 +250,8 @@ const ariaCurrent = computed(() => {
     } else {
       return null;
     }
-  } else if (isDefined(itemId.value) && isDefined(menu?.activeItemId)) {
-    return itemId.value === menu?.activeItemId || null;
+  } else if (isDefined(itemId.value) && isDefined(menu?.activeItemId())) {
+    return itemId.value === menu?.activeItemId() || null;
   }
   return null;
 });
