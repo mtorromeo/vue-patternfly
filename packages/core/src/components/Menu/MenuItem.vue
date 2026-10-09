@@ -37,7 +37,7 @@
       >
         <span :class="styles.menuItemMain">
           <span v-if="direction === 'up'" :class="styles.menuItemToggleIcon">
-            <angle-left-icon aria-hidden />
+            <angle-left-icon aria-hidden="true" />
           </span>
           <span v-if="$slots.icon" :class="styles.menuItemIcon">
             <slot name="icon" />
@@ -58,13 +58,13 @@
             </slot>
           </span>
           <span v-if="externalLink" :class="styles.menuItemExternalIcon">
-            <up-right-from-square-icon aria-hidden />
+            <up-right-from-square-icon aria-hidden="true" />
           </span>
           <span v-if="$slots['flyout-menu'] && direction === 'down'" :class="styles.menuItemToggleIcon">
-            <angle-right-icon aria-hidden />
+            <angle-right-icon aria-hidden="true" />
           </span>
           <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
-            <check-icon aria-hidden />
+            <check-icon aria-hidden="true" />
           </span>
         </span>
         <span v-if="($slots.description || description) && direction !== 'up'" :class="styles.menuItemDescription">

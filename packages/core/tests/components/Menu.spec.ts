@@ -383,6 +383,13 @@ describe('MenuItem', () => {
     expect(menu.find(`.${styles.menuItemExternalIcon} svg`).exists()).toBe(true);
   });
 
+  it('hides the item icons from assistive technologies', () => {
+    const external = mountItem({ externalLink: true }).menu;
+    expect(external.find(`.${styles.menuItemExternalIcon} svg`).attributes('aria-hidden')).toBe('true');
+    const back = mountItem({ direction: 'up' }).menu;
+    expect(back.find(`.${styles.menuItemToggleIcon} svg`).attributes('aria-hidden')).toBe('true');
+  });
+
   it('renders the description slot', () => {
     const { menu } = mountItem({}, { default: () => 'Item', description: () => 'Slot desc' });
     expect(menu.find(`.${styles.menuItemDescription}`).text()).toBe('Slot desc');
