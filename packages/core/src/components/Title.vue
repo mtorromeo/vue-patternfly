@@ -9,15 +9,6 @@ import styles from '@patternfly/react-styles/css/components/Title/title';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import { computed, type HTMLAttributes } from 'vue';
 
-const headingLevelSizeMap: Record<number, keyof typeof styles.modifiers> = {
-  [1]: '2xl',
-  [2]: 'xl',
-  [3]: 'lg',
-  [4]: 'md',
-  [5]: 'md',
-  [6]: 'md',
-};
-
 defineOptions({
   name: 'PfTitle',
 });
@@ -41,8 +32,5 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 const level = computed(() => Number(String(props.h).replace(/^h/, '')));
 
-const hModifier = computed(() => {
-  const size = headingLevelSizeMap[level.value];
-  return size ? styles.modifiers[size] : undefined;
-});
+const hModifier = computed(() => styles.modifiers[`h${level.value}` as keyof typeof styles.modifiers]);
 </script>

@@ -300,20 +300,20 @@ describe('Spinner', () => {
 });
 
 describe('Title', () => {
-  it('renders an h1 with the 2xl size by default', () => {
+  it('renders an h1 with the h1 modifier by default', () => {
     const wrapper = mount(PfTitle, { slots: { default: () => 'Heading' } });
     expect(wrapper.element.tagName).toBe('H1');
     expect(wrapper.classes()).toContain(titleStyles.title);
-    expect(wrapper.classes()).toContain(titleStyles.modifiers['2xl']);
+    expect(wrapper.classes()).toContain(titleStyles.modifiers.h1);
     expect(wrapper.text()).toBe('Heading');
   });
 
   it.each([
-    [2, 'xl'],
-    ['3', 'lg'],
-    [4, 'md'],
-    [6, 'md'],
-  ] as const)('maps heading level %s to the %s size', (level, size) => {
+    [2, 'h2'],
+    ['3', 'h3'],
+    [4, 'h4'],
+    [6, 'h6'],
+  ] as const)('maps heading level %s to the %s modifier', (level, size) => {
     const wrapper = mount(PfTitle, { props: { h: level } });
     expect(wrapper.element.tagName).toBe(`H${level}`);
     expect(wrapper.classes()).toContain(titleStyles.modifiers[size]);
@@ -323,12 +323,12 @@ describe('Title', () => {
     const wrapper = mount(PfTitle, { props: { h: 3, size: '4xl' } });
     expect(wrapper.element.tagName).toBe('H3');
     expect(wrapper.classes()).toContain(titleStyles.modifiers['4xl']);
-    expect(wrapper.classes()).not.toContain(titleStyles.modifiers.lg);
+    expect(wrapper.classes()).not.toContain(titleStyles.modifiers.h3);
   });
 
   it('accepts the h1..h6 string form of the heading level', () => {
     const wrapper = mount(PfTitle, { props: { h: 'h2' } });
     expect(wrapper.element.tagName).toBe('H2');
-    expect(wrapper.classes()).toContain(titleStyles.modifiers.xl);
+    expect(wrapper.classes()).toContain(titleStyles.modifiers.h2);
   });
 });
