@@ -148,11 +148,9 @@ defineEmits<{
 const dialog = useTemplateRef('dialogRef');
 const { element: referenceElement, findReference } = useHtmlElementFromVNodes();
 
-watch(referenceElement, (el) => {
-  el?.addEventListener('click', (e: Event) => {
-    e.stopPropagation();
-    visible.value = !visible.value;
-  });
+watch(referenceElement, (el, oldEl) => {
+  oldEl?.removeEventListener('click', onTriggerClick);
+  el?.addEventListener('click', onTriggerClick);
 });
 
 const floatingMiddleware = computed(() => [
@@ -184,7 +182,13 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', onDocumentClick as (e: MouseEvent) => void);
   document.removeEventListener('keydown', onEscPress, { capture: true });
+  referenceElement.value?.removeEventListener('click', onTriggerClick);
 });
+
+function onTriggerClick(event: Event) {
+  event.stopPropagation();
+  visible.value = !visible.value;
+}
 
 function onDocumentClick(event: PointerEvent) {
   if (props.noHideOnOutsideClick || !visible.value) {

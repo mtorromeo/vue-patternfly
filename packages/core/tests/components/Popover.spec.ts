@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { enableAutoUnmount, flushPromises, mount, type VueWrapper } from '@vue/test-utils';
-import { h } from 'vue';
+import { h, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
 import PfPopover from '../../src/components/Popover.vue';
 
@@ -130,6 +130,20 @@ describe('Popover', () => {
     await flushPromises();
     expect(wrapper.emitted('update:open')).toEqual([[true], [false]]);
     expect(dialog()).toBeNull();
+  });
+
+  it('stops listening to clicks on a replaced trigger', async () => {
+    const second = ref(false);
+    const wrapper = await mountPopover({}, {
+      default: () => second.value ? h('button', { key: 'second' }, 'Second') : h('button', { key: 'first', class: 'trigger' }, 'Trigger'),
+    });
+    const first = trigger();
+    second.value = true;
+    await flushPromises();
+
+    first.click();
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toBeUndefined();
   });
 
   it('closes with the close button', async () => {
