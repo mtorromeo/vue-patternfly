@@ -425,7 +425,7 @@
             </pf-dropdown>
           </pf-toolbar-item>
           <pf-toolbar-item variant="pagination" align="end">
-            <pf-pagination v-model:page="page" v-model:per-page="perPage" :count="37" widget-id="pagination-options-menu-top" />
+            <pf-pagination v-model:page="page" v-model:per-page="perPage" :count="37" widget-id="pagination-options-menu" />
           </pf-toolbar-item>
         </pf-toolbar-content>
       </pf-toolbar>
