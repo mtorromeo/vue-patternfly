@@ -1,0 +1,1 @@
+import{N as e,at as t,c as n,h as r,k as i}from"./runtime-core.esm-bundler-DZwyVwFG.js";var a=new URL(`pf-background-QLrFvAJG.svg`,import.meta.url).href,o=r({__name:`BackgroundImage.iframe`,setup(r){return(r,o)=>{let s=e(`pf-background-image`);return i(),n(s,{src:t(a)},null,8,[`src`])}}});export{o as default};
