@@ -41,6 +41,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   id: 'page-sidebar',
+  sidebarOpen: true,
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 

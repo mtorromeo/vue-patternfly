@@ -234,10 +234,11 @@ describe('PageSidebar', () => {
     warn.mockRestore();
   });
 
-  it('renders a collapsed sidebar by default', () => {
+  it('renders an expanded sidebar by default', () => {
     const wrapper = mount(PfPageSidebar, { slots: { default: () => 'Nav' } });
     expect(wrapper.classes()).toContain(styles.pageSidebar);
-    expect(wrapper.classes()).toContain(styles.modifiers.collapsed);
+    expect(wrapper.classes()).toContain(styles.modifiers.expanded);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.collapsed);
     expect(wrapper.attributes('id')).toBe('page-sidebar');
     expect(wrapper.find(`.${styles.pageSidebarMain} > .${styles.pageSidebarBody}`).text()).toBe('Nav');
   });
