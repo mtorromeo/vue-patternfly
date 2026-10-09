@@ -203,6 +203,7 @@ describe('DrawerPanelContent', () => {
       expect(splitter.attributes('aria-valuemin')).toBe('0');
       expect(splitter.attributes('aria-valuemax')).toBe('100');
       expect(splitter.attributes('aria-valuenow')).toBe('0');
+      expect(splitter.find(`.${styles.drawerSplitterHandle}`).attributes('aria-hidden')).toBe('true');
       expect(splitter.attributes('aria-controls')).toBe('panel');
       expect(splitter.find(`.${styles.drawerSplitterHandle}`).exists()).toBe(true);
       expect(panel.find(`.${styles.drawerPanelMain}`).text()).toBe('Panel');

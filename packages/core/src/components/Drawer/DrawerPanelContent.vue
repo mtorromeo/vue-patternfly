@@ -34,7 +34,7 @@
         @keydown="handleKeys"
         @touchstart="handleTouchStart"
       >
-        <div :class="styles.drawerSplitterHandle" aria-hidden />
+        <div :class="styles.drawerSplitterHandle" aria-hidden="true" />
       </div>
       <div :class="styles.drawerPanelMain">
         <slot />
