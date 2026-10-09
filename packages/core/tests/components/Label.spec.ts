@@ -239,7 +239,7 @@ describe('LabelGroup', () => {
     expect(button.classes()).toContain(buttonStyles.modifiers.plain);
     expect(button.classes()).toContain(buttonStyles.modifiers.small);
     expect(button.attributes('aria-label')).toBe('Close chip group');
-    expect(button.find(`.${buttonStyles.buttonIcon} svg`).exists()).toBe(true);
+    expect(button.find(`.${buttonStyles.buttonIcon} svg`).attributes('aria-hidden')).toBe('true');
 
     await button.trigger('click');
     expect(wrapper.emitted('click')).toHaveLength(1);
