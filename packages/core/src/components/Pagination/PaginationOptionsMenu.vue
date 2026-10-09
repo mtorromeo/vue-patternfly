@@ -22,7 +22,7 @@
             :data-action="`per-page-${o.value}`"
             :selected="perPage === o.value"
             component="button"
-            @click="emit('update:perPage', o.value)"
+            @click="selectPerPage(o.value)"
           >
             {{ o.title }}
             {{ ` ${perPageSuffix}` }}
@@ -81,11 +81,23 @@ defineSlots<{
 
 const emit = defineEmits<{
   (name: 'update:perPage', value: number): void;
+  (name: 'update:page', value: number): void;
 }>();
 
 const open = ref(false);
 const el = useTemplateRef('elRef');
 const toggle = useTemplateRef('toggleRef');
+
+function selectPerPage(perPage: number) {
+  let page = props.page;
+  while (page > 1 && Math.ceil(props.count / perPage) < page) {
+    page--;
+  }
+  emit('update:perPage', perPage);
+  if (page !== props.page) {
+    emit('update:page', page);
+  }
+}
 
 function onSelect() {
   open.value = !open.value;

@@ -330,6 +330,30 @@ describe('Pagination', () => {
       wrapper.unmount();
     });
 
+    it('updates the page when the selected perPage leaves it out of range', async () => {
+      const wrapper = mount(PfPagination, { props: { count: 52, page: 6, perPage: 10, variant: 'top' }, attachTo: document.body });
+      await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
+      await nextTick();
+
+      document.body.querySelector<HTMLButtonElement>(`[data-action="per-page-50"] .${menuStyles.menuItem}`)!.click();
+      await nextTick();
+      expect(wrapper.emitted('update:perPage')).toEqual([[50]]);
+      expect(wrapper.emitted('update:page')).toEqual([[2]]);
+      wrapper.unmount();
+    });
+
+    it('does not update the page when it stays in range', async () => {
+      const wrapper = mount(PfPagination, { props: { count: 52, page: 2, perPage: 10, variant: 'top' }, attachTo: document.body });
+      await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
+      await nextTick();
+
+      document.body.querySelector<HTMLButtonElement>(`[data-action="per-page-20"] .${menuStyles.menuItem}`)!.click();
+      await nextTick();
+      expect(wrapper.emitted('update:perPage')).toEqual([[20]]);
+      expect(wrapper.emitted('update:page')).toBeUndefined();
+      wrapper.unmount();
+    });
+
     it('keeps the last page in range when perPage grows', () => {
       const wrapper = mount(PfPagination, { props: { count: 52, page: 6, perPage: 50, variant: 'top' } });
       expect(pageInput(wrapper).element.value).toBe('2');

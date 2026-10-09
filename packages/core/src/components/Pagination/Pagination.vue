@@ -37,6 +37,7 @@
       :page="constrainedPage"
       :per-page="perPage"
       @update:per-page="emit('update:perPage', $event)"
+      @update:page="emit('update:page', $event)"
     />
     <pf-pagination-navigation
       :pages-title="titlePage"
