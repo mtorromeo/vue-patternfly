@@ -1,4 +1,4 @@
-import babel from "@babel/core";
+import { transformAsync } from "@babel/core";
 import { glob } from "glob";
 import fs from "fs-extra";
 import path from "path";
@@ -47,7 +47,7 @@ export default ${jsName};
 `.trim();
 
 async function esm2cjs(dest, code) {
-  const cjs = await babel.transformAsync(code, {
+  const cjs = await transformAsync(code, {
     plugins: ["@babel/plugin-transform-modules-commonjs"],
   });
   await fs.outputFile(dest, cjs.code);
