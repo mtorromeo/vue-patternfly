@@ -5,8 +5,6 @@
 </template>
 
 <script lang="ts">
-export const SidebarOpenKey = Symbol("SidebarOpenKey") as InjectionKey<ComputedRef<boolean> | boolean>;
-
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, "variant" | "expanded" | "aria-label" | "aria-expanded" | "onClick" | "ouiaId" | "ouiaSafe"> {
   /** Sidebar id */
   id?: string;
@@ -18,7 +16,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 </script>
 
 <script lang="ts" setup>
-import { computed, type ComputedRef, inject, type InjectionKey } from "vue";
+import { computed, inject } from "vue";
 import { PageManagedSidebarKey, PageSidebarOpenKey } from "./Page.vue";
 import PfButton from "../Button.vue";
 import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
