@@ -1,5 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
+  "agentGuidance": false,
   "tasks": {
     "clean": {
       "cache": false,
@@ -32,6 +33,9 @@
       ]
     },
     "lint": {
+      "dependsOn": [
+        "^build"
+      ],
       "outputs": []
     }
   }
