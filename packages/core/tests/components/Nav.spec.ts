@@ -233,7 +233,7 @@ describe('NavItem', () => {
       const item = wrapper.find(`li.${styles.navItem}`);
 
       expect(item.classes()).toContain(styles.modifiers.flyout || 'pf-m-flyout');
-      expect(item.find(`button.${styles.navLink} .${styles.navToggle} svg`).exists()).toBe(true);
+      expect(item.find(`button.${styles.navLink} .${styles.navToggle} svg`).attributes('aria-hidden')).toBe('true');
       expect(document.body.querySelector('.sub')).toBeNull();
     });
 

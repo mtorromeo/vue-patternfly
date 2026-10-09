@@ -30,7 +30,7 @@
       </span>
       <span v-if="$slots.flyout" :class="styles.navToggle">
         <span :class="styles.navToggleIcon">
-          <pf-angle-right-icon aria-hidden />
+          <pf-angle-right-icon aria-hidden="true" />
         </span>
       </span>
     </component>
