@@ -1,6 +1,15 @@
 {
   "name": "@vue-patternfly/icons",
   "version": "6.0.0-beta.1",
+  "homepage": "https://mtorromeo.github.io/vue-patternfly/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtorromeo/vue-patternfly.git",
+    "directory": "packages/icons"
+  },
+  "bugs": {
+    "url": "https://github.com/mtorromeo/vue-patternfly/issues"
+  },
   "exports": {
     ".": {
       "types": "./dist/esm/index.d.ts",
