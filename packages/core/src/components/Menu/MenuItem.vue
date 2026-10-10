@@ -92,12 +92,7 @@
 </template>
 
 <script lang="ts">
-export type MenuItemProvide = {
-  disabled: boolean;
-  itemId: ComputedRef<MenuItemId | null | undefined>;
-};
-
-export const MenuItemInjectionKey = Symbol('MenuItemInjectionKey') as InjectionKey<MenuItemProvide>;
+export { MenuItemInjectionKey, type MenuItemProvide } from './common';
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'onMouseover' | 'onClick'> {
   name?: string;
@@ -146,8 +141,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'rol
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, getCurrentInstance, inject, provide, ref, type ComputedRef, type InjectionKey, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useId, useTemplateRef, onMounted, nextTick, watch } from 'vue';
-import { MenuInjectionKey, MenuItemsKey, type MenuItemId } from './Menu.vue';
+import { computed, getCurrentInstance, inject, provide, ref, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useId, useTemplateRef, onMounted, nextTick, watch } from 'vue';
+import { MenuInjectionKey, MenuItemInjectionKey, MenuItemsKey } from './common';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';

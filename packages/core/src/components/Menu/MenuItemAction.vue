@@ -25,8 +25,7 @@
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import { inject } from 'vue';
 import PfButton from '../Button.vue';
-import { MenuInjectionKey } from './Menu.vue';
-import { MenuItemInjectionKey } from './MenuItem.vue';
+import { MenuInjectionKey, MenuItemInjectionKey } from './common';
 import StarIcon from '@vue-patternfly/icons/star-icon';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';

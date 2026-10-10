@@ -31,39 +31,9 @@
 </template>
 
 <script lang="ts">
-export type MenuProvide = {
-  parentMenu: MenuProvide | undefined;
-  favoriteList: Ref<ComponentExposed<typeof PfMenuList> | null>;
-  selected?: Ref<MenuItemId | MenuItemId[] | null>;
-  // drilldownItemPath: MenuItemId[];
-  activeItemId: () => MenuItemId | undefined;
-  state: MenuState;
-  flyout: Ref<ComponentInternalInstance | null>;
-  onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: any) => void;
-  onSelect?: (event: Event, itemId: MenuItemId | null | undefined) => void;
-  // onDrillIn?: (fromItemId: MenuItemId, toItemId: MenuItemId, itemId: MenuItemId) => void;
-  // onDrillOut?: (toItemId: MenuItemId, itemId: MenuItemId) => void;
-};
+import type { MenuItemId } from './common';
 
-export type MenuItemTrack = {
-  element: Readonly<Ref<HTMLLIElement | null>>;
-  disabled: ComputedRef<boolean>;
-  focused: Ref<boolean>;
-  favorited: ModelRef<boolean | undefined>;
-  focus: () => void;
-}
-
-export const MenuItemsKey = Symbol("MenuItemsKey") as ChildrenTrackerInjectionKey<MenuItemTrack>;
-export const MenuInjectionKey = Symbol('MenuInjectionKey') as InjectionKey<MenuProvide>;
-
-export interface MenuState {
-  // ouiaStateId: string;
-  transitionMoveTarget: HTMLElement | null;
-  // flyoutRef: React.Ref<HTMLLIElement> | null;
-  disableHover: boolean;
-}
-
-export type MenuItemId = string | number | symbol;
+export { MenuInjectionKey, MenuItemsKey, type MenuItemId, type MenuItemTrack, type MenuProvide, type MenuState } from './common';
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   /** @beta Indicates if menu contains a flyout menu */
@@ -99,8 +69,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSel
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, shallowRef, computed, type ComponentInternalInstance, type InjectionKey, type Ref, type HTMLAttributes, useTemplateRef, type ComputedRef, type ModelRef } from 'vue';
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
+import { inject, provide, reactive, shallowRef, computed, type ComponentInternalInstance, type Ref, type HTMLAttributes, useTemplateRef } from 'vue';
+import { provideChildrenTracker } from '../../use';
+import { MenuInjectionKey, MenuItemsKey, type MenuState } from './common';
 import { isDefined } from '@vueuse/shared';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDivider from '../Divider.vue';
