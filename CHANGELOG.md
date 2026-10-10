@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.13] - 2026-10-10
+
+### Bug Fixes
+
+- *(Menu)* Menu items were not registered in the built package
+- Removed the remaining import cycles between parent and child components
+
 ## [6.0.0-beta.12] - 2026-10-09
 
 ### Bug Fixes
