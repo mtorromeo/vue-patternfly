@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { computed, inject, type HTMLAttributes } from "vue";
-import { DataListItemKey } from './DataListItem.vue';
+import { DataListItemKey } from './common';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({

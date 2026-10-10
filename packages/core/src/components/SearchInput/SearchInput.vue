@@ -127,26 +127,7 @@
 </template>
 
 <script lang="ts">
-/** Properties for adding search attributes to an advanced search input. These properties must
- * be passed in as an object within an array to the search input component's attribute properrty.
- */
-export interface SearchAttribute {
-  /** The search attribute's value to be provided in the search input's query string.
-   * It should have no spaces and be unique for every attribute.
-   */
-  attr: string;
-  /** The search attribute's display name. It is used to label the field in the advanced
-   * search menu.
-   */
-  display: string;
-}
-
-export type SearchInputProvide = {
-  $el: Readonly<Ref<HTMLDivElement | null>>;
-  input: Ref<ComponentExposed<typeof PfTextInputGroupMain> | null>;
-}
-
-export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;
+export { SearchInputKey, type SearchAttribute, type SearchInputProvide } from './common';
 
 interface Props extends OUIAProps {
   /** Flag indicating if search input is disabled. */
@@ -229,13 +210,14 @@ interface Props extends OUIAProps {
 
 <script lang="ts" setup>
 import textInputGroupStyles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { type InjectionKey, nextTick, provide, type Ref, type RendererElement, getCurrentInstance, useTemplateRef } from 'vue';
+import { nextTick, provide, type RendererElement, getCurrentInstance, useTemplateRef } from 'vue';
 import { useChildrenTracker } from '../../use';
 import PfInputGroup from '../InputGroup/InputGroup.vue';
 import PfTextInputGroup from '../TextInputGroup/TextInputGroup.vue';
 import PfTextInputGroupMain from '../TextInputGroup/TextInputGroupMain.vue';
 import PfTextInputGroupUtilities from '../TextInputGroup/TextInputGroupUtilities.vue';
 import PfAdvancedSearchMenu from './AdvancedSearchMenu.vue';
+import { SearchInputKey, type SearchAttribute } from './common';
 import PfBadge from '../Badge.vue';
 import PfButton from '../Button.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
@@ -248,7 +230,6 @@ import AngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
 import ArrowRightIcon from '@vue-patternfly/icons/arrow-right-icon';
 import { FormInputsKey } from '../Form/common';
-import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfSearchInput',

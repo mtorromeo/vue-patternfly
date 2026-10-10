@@ -51,8 +51,7 @@ import cssPanelMdFlexBasis from '@patternfly/react-tokens/dist/esm/c_drawer__pan
 import cssPanelMdFlexBasisMin from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_min';
 import cssPanelMdFlexBasisMax from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_max';
 import { computed, inject, type Ref, ref, type HTMLAttributes, useTemplateRef, useId } from 'vue';
-import { DrawerContentRefKey } from './DrawerContent.vue';
-import { DrawerKey } from './common';
+import { DrawerContentRefKey, DrawerKey } from './common';
 import { resolveOverridableComponent } from '../../helpers';
 import { isDefined } from '@vueuse/shared';
 import { ucfirst } from '../../util';

@@ -22,10 +22,7 @@
 </template>
 
 <script lang="ts">
-export const DataListItemKey = Symbol("DataListItemKey") as InjectionKey<{
-  expanded: Ref<boolean>;
-  expandable: ComputedRef<boolean>;
-}>;
+export { DataListItemKey } from "./common";
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, "tabindex" | "aria-selected" | "onClick"> {
   selected?: boolean;
@@ -41,11 +38,12 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, "tab
 <script lang="ts" setup>
 import styles from "@patternfly/react-styles/css/components/DataList/data-list";
 import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
-import { computed, type ComputedRef, getCurrentInstance, inject, type InjectionKey, provide, ref, type LiHTMLAttributes, type Ref, toValue } from "vue";
+import { computed, getCurrentInstance, inject, provide, ref, type LiHTMLAttributes, toValue } from "vue";
 import { DataListKey } from "./DataList.vue";
 import AutoWrap from "../../helpers/AutoWrap.vue";
 import PfDataListItemRow from "./DataListItemRow.vue";
 import PfDataListContent from "./DataListContent.vue";
+import { DataListItemKey } from "./common";
 
 defineOptions({
   name: "PfDataListItem",

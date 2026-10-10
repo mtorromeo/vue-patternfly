@@ -44,7 +44,7 @@
 
 <script lang="ts" setup>
 import { computed, inject, type Ref, ref, useId } from 'vue';
-import { type SearchAttribute, SearchInputKey } from './SearchInput.vue';
+import { type SearchAttribute, SearchInputKey } from './common';
 import { useOUIAProps } from '../../helpers/ouia';
 import PfTextInput from '../TextInput.vue';
 import PfButton from '../Button.vue';

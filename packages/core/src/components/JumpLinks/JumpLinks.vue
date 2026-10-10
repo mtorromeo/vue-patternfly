@@ -46,13 +46,7 @@
 </template>
 
 <script lang="ts">
-export const JumpLinksKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<ComponentExposed<typeof PfJumpLinksItem>>;
-export const JumpLinkInjectionKey = Symbol('JumpLinkInjectionKey') as InjectionKey<{
-  offset: number;
-  scrollPosition: Ref<number>;
-  currentTargetPosition: Ref<number | undefined>;
-  scrollableHTMLElement: ComputedRefWithControl<HTMLElement | undefined>;
-}>;
+export { JumpLinkInjectionKey, JumpLinksKey } from './common';
 
 interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Whether to center children. */
@@ -75,14 +69,14 @@ interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import { classesFromBreakpointProps, type ExpandableBreakpointProps } from '../../breakpoints';
-import { provide, nextTick, ref, type Ref, computed, watch, onMounted, onUnmounted, toValue, type HTMLAttributes, type MaybeRef, type InjectionKey } from 'vue';
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
-import { computedWithControl, type ComputedRefWithControl, type MaybeComputedElementRef } from '@vueuse/core';
+import { provide, nextTick, ref, type Ref, computed, watch, onMounted, onUnmounted, toValue, type HTMLAttributes, type MaybeRef } from 'vue';
+import { provideChildrenTracker } from '../../use';
+import { computedWithControl, type MaybeComputedElementRef } from '@vueuse/core';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfJumpLinksItem from './JumpLinksItem.vue';
+import { JumpLinkInjectionKey, JumpLinksKey } from './common';
 import PfButton from '../Button.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfJumpLinks',

@@ -14,7 +14,7 @@ import PfJumpLinksList from './JumpLinksList.vue';
 import PfButton from '../Button.vue';
 import { type MaybeComputedElementRef } from '@vueuse/core';
 import { h, inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';
-import { JumpLinkInjectionKey, JumpLinksKey } from './JumpLinks.vue';
+import { JumpLinkInjectionKey, JumpLinksKey } from './common';
 import { useChildrenTracker } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { findChildrenVNodes, fragment } from '../../util';

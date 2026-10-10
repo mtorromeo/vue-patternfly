@@ -26,7 +26,7 @@ import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
 import PfDataListToggle from './DataListToggle.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
-import { DataListItemKey } from './DataListItem.vue';
+import { DataListItemKey } from './common';
 
 defineOptions({
   name: 'PfDataListItemRow',

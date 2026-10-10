@@ -18,8 +18,7 @@
 </template>
 
 <script lang="ts">
-export type DrawerContentRef = Readonly<Ref<HTMLDivElement | ComponentExposed<typeof AutoWrap> | null>>;
-export const DrawerContentRefKey = Symbol('DrawerContentRefKey') as InjectionKey<DrawerContentRef>;
+export { DrawerContentRefKey, type DrawerContentRef } from './common';
 
 interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
   /** Color variant of the background of the drawer panel */
@@ -29,11 +28,12 @@ interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { type InjectionKey, provide, type Ref, useTemplateRef } from 'vue';
-import type { ComponentExposed, ComponentProps } from 'vue-component-type-helpers';
+import { provide, useTemplateRef } from 'vue';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDrawerMain from './DrawerMain.vue';
 import PfDrawerPanelContent from './DrawerPanelContent.vue';
+import { DrawerContentRefKey } from './common';
 import { useOUIAProps } from '../../helpers/ouia';
 
 defineOptions({
