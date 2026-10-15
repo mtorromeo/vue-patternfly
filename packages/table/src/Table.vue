@@ -1,6 +1,7 @@
 <template>
   <define-table>
     <table
+      ref="tableRef"
       v-bind="{...ouiaProps, ...$attrs}"
       :role="treeTable ? 'treegrid' : role"
       :class="[styles.table, treeTable ? treeGrid : grid, {
@@ -35,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { computed, type TableHTMLAttributes } from "vue";
+import { computed, useTemplateRef, type TableHTMLAttributes } from "vue";
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import stylesGrid from '@patternfly/react-styles/css/components/Table/table-grid';
@@ -109,4 +110,10 @@ const rows = provideChildrenTracker(TableTrKey);
 const hasSelectableRows = computed(() => rows.some(row => row.selectable));
 
 const [ DefineTable, ReuseTable ] = createReusableTemplate();
+
+const table = useTemplateRef('tableRef');
+
+defineExpose({
+  table,
+});
 </script>

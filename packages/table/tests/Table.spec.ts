@@ -426,4 +426,15 @@ describe('Td', () => {
     expect(tr.classes()).toContain(styles.modifiers.selected);
     expect(tr.attributes('aria-label')).toBe('Row selected');
   });
+
+  it.each([
+    ['default', ''],
+    ['sticky header', 'sticky-header'],
+    ['sticky header with horizontal scroll', 'sticky-header horizontal-scroll'],
+  ])('exposes the table element (%s)', (_, attrs) => {
+    const wrapper = mountTemplate(`<pf-table ${attrs}><pf-tbody><pf-tr><pf-td>A</pf-td></pf-tr></pf-tbody></pf-table>`);
+    const table = wrapper.findComponent(PfTable).vm.table;
+    expect(table).toBeInstanceOf(HTMLTableElement);
+    expect(table).toBe(wrapper.get('table').element);
+  });
 });
