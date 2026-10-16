@@ -1,42 +1,50 @@
 <template>
-  <component v-bind="ouiaProps" :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))">
-    <button
-      v-bind="$attrs"
-      type="button"
-      :class="[
-        styles.accordionToggle, {
-          [styles.modifiers.expanded]: expanded,
-        },
-      ]"
-      :aria-expanded="expanded"
-      @click="handleClick($event as PointerEvent)"
-    >
-      <span v-if="accordion?.togglePosition === 'start'" :class="styles.accordionToggleIcon">
-        <pf-angle-down-icon />
-      </span>
-      <span :class="styles.accordionToggleText">
-        <slot name="toggle">{{ title }}</slot>
-      </span>
-      <span v-if="accordion?.togglePosition === 'end'" :class="styles.accordionToggleIcon">
-        <pf-angle-down-icon />
-      </span>
-    </button>
-  </component>
-
-  <component
-    :is="contentComponent || (accordion?.dl ? 'dd' : 'div')"
+  <div
     :class="[
-      styles.accordionExpandableContent, {
-        [styles.modifiers.fixed]: fixed,
+      styles.accordionItem, {
         [styles.modifiers.expanded]: expanded,
       },
     ]"
-    :hidden="!expanded"
   >
-    <div :class="styles.accordionExpandableContentBody">
-      <slot />
-    </div>
-  </component>
+    <component v-bind="ouiaProps" :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))">
+      <button
+        v-bind="$attrs"
+        type="button"
+        :class="[
+          styles.accordionToggle, {
+            [styles.modifiers.expanded]: expanded,
+          },
+        ]"
+        :aria-expanded="expanded"
+        @click="handleClick($event as PointerEvent)"
+      >
+        <span v-if="accordion?.togglePosition === 'start'" :class="styles.accordionToggleIcon">
+          <pf-angle-down-icon />
+        </span>
+        <span :class="styles.accordionToggleText">
+          <slot name="toggle">{{ title }}</slot>
+        </span>
+        <span v-if="accordion?.togglePosition === 'end'" :class="styles.accordionToggleIcon">
+          <pf-angle-down-icon />
+        </span>
+      </button>
+    </component>
+
+    <component
+      :is="contentComponent || (accordion?.dl ? 'dd' : 'div')"
+      :class="[
+        styles.accordionExpandableContent, {
+          [styles.modifiers.fixed]: fixed,
+          [styles.modifiers.expanded]: expanded,
+        },
+      ]"
+      :hidden="!expanded"
+    >
+      <div :class="styles.accordionExpandableContentBody">
+        <slot />
+      </div>
+    </component>
+  </div>
 </template>
 
 <script lang="ts" setup>

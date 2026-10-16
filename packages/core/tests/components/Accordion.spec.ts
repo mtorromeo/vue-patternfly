@@ -114,11 +114,14 @@ describe('AccordionItem', () => {
     const content = wrapper.get(`.${styles.accordionExpandableContent}`);
     expect(content.attributes('hidden')).toBeUndefined();
     expect(content.classes()).toContain(styles.modifiers.expanded);
+    // PF6 shows the expandable content only inside an expanded accordion item
+    expect(wrapper.get(`.${styles.accordionItem}`).classes()).toContain(styles.modifiers.expanded);
 
     await button.trigger('click');
     expect(wrapper.emitted('update:expanded')).toEqual([[true], [false]]);
     expect(button.attributes('aria-expanded')).toBe('false');
     expect(wrapper.get(`.${styles.accordionExpandableContent}`).attributes('hidden')).toBeDefined();
+    expect(wrapper.get(`.${styles.accordionItem}`).classes()).not.toContain(styles.modifiers.expanded);
   });
 
   it('reflects the expanded prop', async () => {
