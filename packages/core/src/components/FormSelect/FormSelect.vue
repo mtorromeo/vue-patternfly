@@ -38,7 +38,9 @@
 <script lang="ts">
 export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<ComponentExposed<typeof PfFormSelectOption>>;
 
-interface Props<M extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
+interface Props<M extends boolean = false, V extends string = string> extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
+  /** Selected value, or array of selected values when multiple is set. */
+  modelValue?: V | V[] | null;
   multiple?: M;
   disabled?: boolean;
 
@@ -52,13 +54,13 @@ interface Props<M extends boolean = false> extends OUIAProps, /* @vue-ignore */ 
 }
 </script>
 
-<script lang="ts" setup generic="M extends boolean = false">
+<script lang="ts" setup generic="M extends boolean = false, V extends string = string">
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { provideChildrenTracker, type ChildrenTrackerInjectionKey, useChildrenTracker } from '../../use';
 import type PfFormSelectOption from './FormSelectOption.vue';
 import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import { computed, type SelectHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
+import { computed, type SelectHTMLAttributes, getCurrentInstance, useModel, useTemplateRef } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { FormInputsKey } from '../Form/common';
 import type { ComponentExposed } from 'vue-component-type-helpers';
@@ -68,14 +70,14 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = defineProps<Props<M>>();
+const props = defineProps<Props<M, V>>();
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-const value = defineModel<string | string[] | null>();
-
 defineEmits<{
-  (name: 'update:modelValue', value: M extends false ? (M extends undefined ? string : string[]) : string[]): void;
+  (name: 'update:modelValue', value: M extends true ? V[] : V): void;
 }>();
+
+const value = useModel(props, 'modelValue');
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
