@@ -1,6 +1,39 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.15] - 2026-10-19
+
+### Bug Fixes
+
+- *(Spinner)* Always default aria-label to Contents
+- *(JumpLinks)* Mark the last item current at the bottom of the scroll container
+- *(Tabs)* Honor hash-linked nav tabs
+- *(ToolbarFilter)* Clear the filter count on unmount
+- *(Button)* Wrap the text in a button text container
+- *(MenuToggle)* [**breaking**] Render the plain toggle content as text
+
+### Documentation
+
+- Add examples of the PatternFly 6.7 features
+- *(Page)* Lay out the docked navigation with a docked masthead
+- *(Page)* Demonstrate the docked overlay like patternfly-react
+
+### Features
+
+- *(Page,Nav,Button,MenuToggle)* [**breaking**] Align docked nav props with PatternFly 6.7
+- *(MenuToggle)* Add aria-haspopup prop defaulting to menu
+- *(Modal,Backdrop)* Add animation support
+- *(FormGroup)* Add actionGroup to contain form action buttons
+- *(Drawer)* Add viewport variant and close button props
+- *(NavExpandable)* Add expandableIcon for docked nav sections
+- *(Page)* Add PageHeader, PageFooter, plain and footer slot
+- *(Toolbar)* Add container query support and flex grow
+- *(Table)* Add Tfoot and sticky footer
+- *(core)* [**breaking**] Require @patternfly/patternfly 6.7
+- *(NavExpandable)* Add an icon slot
+- *(Masthead)* Add the docked variant
+- *(Toolbar)* Add the vertical orientation
+
 ## [6.0.0-beta.14] - 2026-10-19
 
 ### Bug Fixes
@@ -9,6 +42,10 @@ All notable changes to this project will be documented in this file.
 - *(FormSelect)* Type the v-model update with the emitted value
 - *(ToggleGroup)* Type the v-model update with the emitted value
 - *(Select)* Type the selected v-model update with the emitted value
+
+### Documentation
+
+- Fix type errors in the docs app
 
 ### Features
 
@@ -218,6 +255,10 @@ All notable changes to this project will be documented in this file.
 ### Features
 
 - *(InputGroup)* Add plain input group text variant
+
+### Refactor
+
+- [**breaking**] Updated build to use vite 8 and dropped cjs/iife bundles
 
 ## [6.0.0-beta.7] - 2025-11-26
 
@@ -637,6 +678,7 @@ All notable changes to this project will be documented in this file.
 ### Documentation
 
 - Added spinner examples
+- Fixed build
 - Fixed links to patternfly design guidelines
 
 ### Features
@@ -690,6 +732,7 @@ All notable changes to this project will be documented in this file.
 - *(Menu)* Allowed omission of some components
 - *(Menu)* Implemented favorites
 - *(TeleportCopy)* Implemented utility component teleport-copy
+- *(core)* Added bundle builds core.global.js and core.umd.js
 
 ### Refactor
 
@@ -732,6 +775,7 @@ All notable changes to this project will be documented in this file.
 - *(Form)* Allowed pf-form-field-group and pf-form-group to use fieldset as the container tag
 - *(Switch)* Added off-value prop to assign a value to use when the switch is in the off state
 - *(Tabs)* Converted to vue-setup-sfc
+- Changed the build to export each module separately to allow to import individual components, functions or types
 - *(Icons)* Changed package to have simpler imports of single icons
 
 ## [0.1.0-beta.9] - 2023-06-05
@@ -818,9 +862,11 @@ All notable changes to this project will be documented in this file.
 - *(TextInput)* Fixed validation of auto-validate prop
 - Removed underperforming GenerateId component
 - Replaced every ref<T> instance with var:Ref<T> improving type exports
+- Remove preserveValueImports for commonjs builds
 - Fixed type imports in docs
 - *(Tooltip, Popover, FloatinUI)* Fixed recursive reactive dependency that caused loop in render functions
 - Block use of typescript 4.9 until supported by vue-tsc
+- Fixed build script execution order and form group exported symbol
 - *(Popover)* Events correctly attached to the reference element
 - *(Checkbox)* Assigned div as default container component of checkbox
 - *(BackgroundImage)* Applied default filter
@@ -945,6 +991,7 @@ All notable changes to this project will be documented in this file.
 ### Documentation
 
 - Layout examples using skeleton as items' component
+- Migrated storybook builder to vite
 
 ### Features
 
@@ -988,6 +1035,7 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
+- *(Icons)* Updated vue peer-dependency and added prepublish build script
 - *(core)* Correctly resolve children vnodes with nested fragments
 
 ### Features
@@ -1023,6 +1071,7 @@ All notable changes to this project will be documented in this file.
 
 - Documented stylesheet inclusion
 - Fixed css import path
+- Fixed build issue with latest vueuse + webpack
 
 ### Features
 
