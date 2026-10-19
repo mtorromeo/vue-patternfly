@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mount, type VueWrapper } from '@vue/test-utils';
-import { h, nextTick } from 'vue';
+import { h, nextTick, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import dividerStyles from '@patternfly/react-styles/css/components/Divider/divider';
 import labelStyles from '@patternfly/react-styles/css/components/Label/label';
@@ -284,6 +284,24 @@ describe('Toolbar', () => {
       await nextTick();
       expect(wrapper.find('.status-input').exists()).toBe(false);
       expect(labelGroupContent(wrapper).findAll(`.${labelStyles.label}`)).toHaveLength(2);
+    });
+
+    it('stops counting the filters of an unmounted filter', async () => {
+      const show = ref(true);
+      const wrapper = mount(PfToolbar, {
+        slots: {
+          default: () => h(PfToolbarContent, () => h(PfToolbarToggleGroup, () => show.value
+            ? h(PfToolbarFilter, { category: 'Status', labels: ['New'] }, () => h('input'))
+            : null)),
+        },
+      });
+      await nextTick();
+      expect(labelGroupContent(wrapper).classes()).not.toContain(styles.modifiers.hidden);
+
+      show.value = false;
+      await nextTick();
+      await nextTick();
+      expect(labelGroupContent(wrapper).classes()).toContain(styles.modifiers.hidden);
     });
 
     it('does not count filters without labels', async () => {

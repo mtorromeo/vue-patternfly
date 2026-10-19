@@ -31,7 +31,7 @@ import PfLabel from '../Label/Label.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 import { ToolbarLabelGroupContentRefKey, ToolbarExpandedKey, ToolbarUpdateNumberFiltersKey } from './Toolbar.vue';
 import { ToolbarContentLabelContainerRefKey } from './ToolbarContent.vue';
-import { inject, ref, onMounted, onUpdated, computed } from 'vue';
+import { inject, ref, onMounted, onUpdated, onUnmounted, computed } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { provideChildrenTracker } from '../../use';
 import { LabelKey } from '../Label/common';
@@ -92,6 +92,12 @@ onMounted(() => {
 onUpdated(() => {
   if (props.category) {
     updateNumberFilters?.(props.category, slotLabels.length || props.labels.length);
+  }
+});
+
+onUnmounted(() => {
+  if (props.category) {
+    updateNumberFilters?.(props.category, 0);
   }
 });
 
