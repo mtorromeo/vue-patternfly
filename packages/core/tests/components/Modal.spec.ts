@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { defineComponent, nextTick, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
@@ -41,7 +41,7 @@ describe('Modal', () => {
   });
 
   it('opens and closes following the open prop', async () => {
-    const wrapper = mountModal({ open: false });
+    const wrapper = mountModal({ open: false, noAnimations: true });
     expect(dialog()).toBeNull();
 
     await wrapper.setProps({ open: true });
@@ -77,7 +77,7 @@ describe('Modal', () => {
     const wrapper = mount(defineComponent({
       components: { PfModal },
       setup: () => ({ open }),
-      template: `<pf-modal v-model:open="open" title="Title">Body</pf-modal>`,
+      template: `<pf-modal v-model:open="open" title="Title" no-animations>Body</pf-modal>`,
     }), { attachTo: document.body });
 
     dialog()!.querySelector<HTMLButtonElement>(`.${styles.modalBoxClose} button`)!.click();
@@ -85,6 +85,82 @@ describe('Modal', () => {
     expect(open.value).toBe(false);
     expect(dialog()).toBeNull();
     wrapper.unmount();
+  });
+
+  describe('animations', () => {
+    const backdrop = () => document.body.querySelector<HTMLElement>(`.${backdropStyles.backdrop}`);
+
+    it('applies the animation modifiers by default', () => {
+      const wrapper = mountModal();
+      expect(backdrop()!.classList).toContain(backdropStyles.modifiers.animate);
+      expect(backdrop()!.classList).toContain(backdropStyles.modifiers.show);
+      expect(dialog()!.classList).toContain(styles.modifiers.animate);
+      expect(dialog()!.classList).toContain(styles.modifiers.open);
+      expect(backdrop()!.hasAttribute('aria-hidden')).toBe(false);
+      wrapper.unmount();
+    });
+
+    it('does not apply the animation modifiers when disabled', () => {
+      const wrapper = mountModal({ noAnimations: true });
+      expect(backdrop()!.classList).not.toContain(backdropStyles.modifiers.animate);
+      expect(backdrop()!.classList).not.toContain(backdropStyles.modifiers.show);
+      expect(dialog()!.classList).not.toContain(styles.modifiers.animate);
+      expect(dialog()!.classList).not.toContain(styles.modifiers.open);
+      wrapper.unmount();
+    });
+
+    it('keeps the modal mounted until the backdrop transition ends', async () => {
+      const wrapper = mountModal();
+      await wrapper.setProps({ open: false });
+
+      expect(dialog()).not.toBeNull();
+      expect(backdrop()!.classList).not.toContain(backdropStyles.modifiers.show);
+      expect(dialog()!.classList).not.toContain(styles.modifiers.open);
+      expect(backdrop()!.getAttribute('aria-hidden')).toBe('true');
+      expect(backdrop()!.hasAttribute('hidden')).toBe(false);
+      expect(document.body.classList.contains(backdropStyles.backdropOpen)).toBe(false);
+
+      // transitions bubbling from the content do not unmount the modal
+      dialog()!.dispatchEvent(new Event('transitionend', { bubbles: true }));
+      await nextTick();
+      expect(dialog()).not.toBeNull();
+
+      backdrop()!.dispatchEvent(new Event('transitionend'));
+      await nextTick();
+      expect(dialog()).toBeNull();
+      wrapper.unmount();
+    });
+
+    it('unmounts after a fallback delay when no transition ends', async () => {
+      vi.useFakeTimers();
+      try {
+        const wrapper = mountModal();
+        await wrapper.setProps({ open: false });
+        expect(dialog()).not.toBeNull();
+
+        await vi.advanceTimersByTimeAsync(300);
+        expect(dialog()).toBeNull();
+        wrapper.unmount();
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it('stays open when reopened during the exit transition', async () => {
+      vi.useFakeTimers();
+      try {
+        const wrapper = mountModal();
+        await wrapper.setProps({ open: false });
+        await wrapper.setProps({ open: true });
+
+        await vi.advanceTimersByTimeAsync(300);
+        expect(dialog()).not.toBeNull();
+        expect(dialog()!.classList).toContain(styles.modifiers.open);
+        wrapper.unmount();
+      } finally {
+        vi.useRealTimers();
+      }
+    });
   });
 
   it('hides the close button with noClose', () => {

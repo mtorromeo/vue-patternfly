@@ -1,9 +1,15 @@
 <template>
   <teleport :to="teleportTarget">
-    <pf-backdrop v-if="open">
+    <pf-backdrop
+      v-if="rendered"
+      :no-animations="noAnimations"
+      :hidden="!open"
+      :aria-hidden="!noAnimations && !open ? true : undefined"
+      @transitionend="onBackdropTransitionEnd"
+    >
       <pf-focus-trap
         :class="bullsEyeStyles.bullseye"
-        :active="!disableFocusTrap"
+        :active="!disableFocusTrap && (noAnimations || open)"
         :focus-trap-options="{
           clickOutsideDeactivates: true,
           tabbableOptions: { displayCheck: 'none' },
@@ -23,6 +29,8 @@
             styles.modalBox,
             titleIconVariant && titleIconVariant !== 'default' && styles.modifiers[titleIconVariant],
             {
+              [styles.modifiers.animate]: !noAnimations,
+              [styles.modifiers.open]: !noAnimations && open,
               [styles.modifiers.alignTop]: position === 'top',
               [styles.modifiers.lg]: variant === 'large',
               [styles.modifiers.sm]: variant === 'small',
@@ -96,7 +104,7 @@ import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/bac
 import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
 import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
 
-import { capitalize, computed, watch, onMounted, onBeforeUnmount, useTemplateRef, useId } from 'vue';
+import { capitalize, computed, ref, watch, onMounted, onBeforeUnmount, useTemplateRef, useId } from 'vue';
 import type { Component, HTMLAttributes } from 'vue';
 import PfModalHeader from './ModalHeader.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
@@ -117,6 +125,8 @@ defineOptions({
   name: 'PfModal',
   inheritAttrs: false,
 });
+
+const transitionEndFallbackDelay = 300;
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
   /** Flag to show the modal */
@@ -155,6 +165,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'
   /** Id of the ModalBoxBody */
   descriptorId?: string;
   component?: string | Component;
+  /** Flag to disable animations. */
+  noAnimations?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -199,6 +211,36 @@ const label = computed(() => {
   return props.titleLabel;
 });
 
+// Keeps the modal in the DOM while the close animation runs: with animations enabled it is
+// unmounted once the backdrop's transition ends instead of as soon as open becomes false.
+const rendered = ref(props.open);
+let transitionEndFallback: ReturnType<typeof setTimeout> | undefined;
+
+function clearTransitionEndFallback() {
+  clearTimeout(transitionEndFallback);
+  transitionEndFallback = undefined;
+}
+
+watch(() => [props.open, props.noAnimations], () => {
+  clearTransitionEndFallback();
+  if (props.open) {
+    rendered.value = true;
+  } else if (props.noAnimations) {
+    rendered.value = false;
+  } else if (rendered.value) {
+    // Ensure the modal is removed if CSS transitions are disabled or transitionend does not fire.
+    transitionEndFallback = setTimeout(() => rendered.value = false, transitionEndFallbackDelay);
+  }
+});
+
+function onBackdropTransitionEnd(e: TransitionEvent) {
+  // Only unmount once the backdrop's own transition finishes, not one bubbled from its children
+  if (!props.open && e.target === e.currentTarget) {
+    clearTransitionEndFallback();
+    rendered.value = false;
+  }
+}
+
 watch(() => props.open, () => {
   if (props.open) {
     teleportTarget.value.classList.add(backdropStyles.backdropOpen);
@@ -222,6 +264,7 @@ useEventListener('keydown', (e: KeyboardEvent) => {
 });
 
 onBeforeUnmount(() => {
+  clearTransitionEndFallback();
   teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
 });
 </script>

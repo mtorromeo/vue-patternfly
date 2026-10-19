@@ -62,6 +62,26 @@ describe('Backdrop', () => {
     expect(wrapper.classes()).toContain(backdropStyles.backdrop);
     expect(wrapper.find('p').text()).toBe('content');
   });
+
+  it('applies the animation modifiers by default', () => {
+    const wrapper = mount(PfBackdrop);
+    expect(wrapper.classes()).toContain(backdropStyles.modifiers.animate);
+    expect(wrapper.classes()).toContain(backdropStyles.modifiers.show);
+  });
+
+  it('drops the show modifier while hidden', () => {
+    const wrapper = mount(PfBackdrop, { props: { hidden: true } });
+    expect(wrapper.classes()).toContain(backdropStyles.modifiers.animate);
+    // the native hidden attribute would skip the exit transition
+    expect(wrapper.attributes('hidden')).toBeUndefined();
+    expect(wrapper.classes()).not.toContain(backdropStyles.modifiers.show);
+  });
+
+  it('does not animate when animations are disabled', () => {
+    const wrapper = mount(PfBackdrop, { props: { noAnimations: true } });
+    expect(wrapper.classes()).not.toContain(backdropStyles.modifiers.animate);
+    expect(wrapper.classes()).not.toContain(backdropStyles.modifiers.show);
+  });
 });
 
 describe('BackgroundImage', () => {
