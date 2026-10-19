@@ -171,6 +171,8 @@ function scrollSpy() {
   }
 
   scrollPosition.value = Math.ceil(scrollableElement.scrollTop + props.offset);
+  // The last section may not have enough content to scroll past it, so it becomes current at the bottom
+  const isAtBottom = Math.ceil(scrollableElement.scrollTop + scrollableElement.clientHeight) >= scrollableElement.scrollHeight;
 
   nextTick(() => {
     const passedLinksPositions = links
@@ -178,7 +180,7 @@ function scrollSpy() {
         const el = link.$.exposed?.target.value as typeof link.target;
         return el?.offsetTop ?? null;
       })
-      .filter(n => n !== null && n < scrollPosition.value)
+      .filter(n => n !== null && (isAtBottom || n < scrollPosition.value))
       .sort((a, b) => (a ?? -1) - (b ?? -1)) as number[];
     currentTargetPosition.value = passedLinksPositions.length > 0 ? passedLinksPositions[passedLinksPositions.length - 1] : undefined;
   });

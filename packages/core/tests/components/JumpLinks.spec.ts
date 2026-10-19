@@ -11,9 +11,11 @@ function setOffsetTop(el: HTMLElement, top: number) {
 }
 
 /** Creates a scrollable container with sections at the given offsets */
-function createScrollable(offsets: number[]) {
+function createScrollable(offsets: number[], { clientHeight = 300, scrollHeight = 10000 } = {}) {
   const scrollable = document.createElement('div');
   scrollable.id = 'scrollable';
+  Object.defineProperty(scrollable, 'clientHeight', { configurable: true, get: () => clientHeight });
+  Object.defineProperty(scrollable, 'scrollHeight', { configurable: true, get: () => scrollHeight });
   const sections = offsets.map((top, i) => {
     const section = document.createElement('h2');
     section.id = `section-${i}`;
@@ -181,6 +183,29 @@ describe('JumpLinks', () => {
 
     await scrollTo(scrollable, 450);
     expect(wrapper.findAll(`.${styles.jumpLinksItem}`)[1].classes()).toContain(styles.modifiers.current);
+    wrapper.unmount();
+  });
+
+  it('marks the last section as current at the bottom of the scrollable element', async () => {
+    const { scrollable } = createScrollable([0, 500, 1000], { clientHeight: 400, scrollHeight: 1200 });
+    const wrapper = mount(PfJumpLinks, {
+      props: { scrollableElement: scrollable, offset: 0 },
+      slots: {
+        default: () => [
+          h(PfJumpLinksItem, { node: '#section-0' }, () => 'Zero'),
+          h(PfJumpLinksItem, { node: '#section-1' }, () => 'One'),
+          h(PfJumpLinksItem, { node: '#section-2' }, () => 'Two'),
+        ],
+      },
+      attachTo: document.body,
+    });
+    await nextTick();
+
+    // the last section starts at 1000 but the container cannot scroll past 800
+    await scrollTo(scrollable, 800);
+    const items = wrapper.findAll(`.${styles.jumpLinksItem}`);
+    expect(items[2].classes()).toContain(styles.modifiers.current);
+    expect(items[1].classes()).not.toContain(styles.modifiers.current);
     wrapper.unmount();
   });
 
