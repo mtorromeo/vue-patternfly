@@ -44,7 +44,9 @@
         <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" :aria-label="spinnerAriaLabel" :aria-labelledby="spinnerAriaLabelledBy" />
       </span>
 
-      <slot v-if="iconPosition === 'end'" />
+      <span v-if="iconPosition === 'end' && $slots.default" :class="styles.buttonText">
+        <slot />
+      </span>
       <span v-if="$slots.icon || favorite || settings || hamburger" :class="[styles.buttonIcon, { [styles.modifiers.start]: iconPosition === 'start', [styles.modifiers.end]: iconPosition === 'end' }]">
         <template v-if="favorite">
           <span :class="styles.buttonIconFavorite">
@@ -63,7 +65,9 @@
         </svg>
         <slot v-else name="icon" />
       </span>
-      <slot v-if="iconPosition !== 'end'" />
+      <span v-if="iconPosition !== 'end' && $slots.default" :class="styles.buttonText">
+        <slot />
+      </span>
 
       <span v-if="$slots.badge" :class="[styles.buttonCount, badgeClass]">
         <slot name="badge" />

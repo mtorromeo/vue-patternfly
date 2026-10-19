@@ -233,6 +233,20 @@ describe('Button', () => {
       expect(wrapper.html({ raw: true }).indexOf('my-icon')).toBeGreaterThan(wrapper.html({ raw: true }).indexOf('Text'));
     });
 
+    it('wraps the text in a text container in both icon positions', () => {
+      for (const iconPosition of ['start', 'end'] as const) {
+        const wrapper = mount(PfButton, { props: { iconPosition }, slots: { default: 'Text', icon: '<i class="my-icon"></i>' } });
+        const text = wrapper.findAll(`.${styles.buttonText}`);
+        expect(text).toHaveLength(1);
+        expect(text[0]!.text()).toBe('Text');
+      }
+    });
+
+    it('does not render the text container without text', () => {
+      const wrapper = mount(PfButton, { slots: { icon: '<i class="my-icon"></i>' } });
+      expect(wrapper.find(`.${styles.buttonText}`).exists()).toBe(false);
+    });
+
     it('does not render the icon container without an icon', () => {
       const wrapper = mount(PfButton, { slots: { default: 'Text' } });
       expect(wrapper.find(`.${styles.buttonIcon}`).exists()).toBe(false);
