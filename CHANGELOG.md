@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-beta.14] - 2026-10-19
+
+### Bug Fixes
+
+- *(AccordionItem)* Wrap toggle and content in an accordion item element
+- *(FormSelect)* Type the v-model update with the emitted value
+- *(ToggleGroup)* Type the v-model update with the emitted value
+- *(Select)* Type the selected v-model update with the emitted value
+
+### Features
+
+- *(Table)* Expose the underlying table element
+
 ## [6.0.0-beta.13] - 2026-10-10
 
 ### Bug Fixes
