@@ -212,7 +212,7 @@ describe('Button', () => {
       const wrapper = mount(PfButton, { props: { loading: true, spinnerAriaLabelledBy: 'label-id' } });
       const spinner = wrapper.find('[role="progressbar"]');
       expect(spinner.attributes('aria-labelledby')).toBe('label-id');
-      expect(spinner.attributes('aria-label')).toBeUndefined();
+      expect(spinner.attributes('aria-label')).toBe('Contents');
     });
   });
 

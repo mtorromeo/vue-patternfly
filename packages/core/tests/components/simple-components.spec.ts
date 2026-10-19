@@ -295,7 +295,8 @@ describe('Spinner', () => {
 
     const labelledBy = mount(PfSpinner, { props: { ariaLabelledby: 'lbl' } });
     expect(labelledBy.attributes('aria-labelledby')).toBe('lbl');
-    expect(labelledBy.attributes('aria-label')).toBeUndefined();
+    // 6.7: the default aria-label is kept alongside aria-labelledby
+    expect(labelledBy.attributes('aria-label')).toBe('Contents');
   });
 });
 

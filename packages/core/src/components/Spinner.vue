@@ -11,7 +11,7 @@
       [cssDiameter.name]: diameter,
     } : undefined"
     :aria-valuetext="ariaValueText"
-    :aria-label="!ariaLabel && !ariaLabelledby ? 'Contents' : ariaLabel"
+    :aria-label="ariaLabel"
     :aria-labelledby="ariaLabelledby"
   >
     <circle :class="styles.spinnerPath" cx="50" cy="50" r="45" fill="none" />
@@ -30,7 +30,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'role' 
   inline?: boolean;
   /** Accessible label to describe what is loading */
   ariaLabel?: string;
-  /** Id of element which describes what is being loaded */
+  /** ID of the element(s) that provide an accessible name for the spinner. */
   ariaLabelledby?: string;
 }
 </script>
@@ -48,6 +48,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   size: 'xl',
   ariaValueText: 'Loading...',
+  ariaLabel: 'Contents',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 </script>
