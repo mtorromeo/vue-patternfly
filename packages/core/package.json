@@ -46,9 +46,9 @@
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
-    "@patternfly/patternfly": "^6.6.1",
-    "@patternfly/react-styles": "^6.6.1",
-    "@patternfly/react-tokens": "^6.6.1",
+    "@patternfly/patternfly": "^6.7.0",
+    "@patternfly/react-styles": "^6.7.0",
+    "@patternfly/react-tokens": "^6.7.0",
     "@types/node": "^26.6.4",
     "@types/web-bluetooth": "^0.0.21",
     "@vitejs/plugin-vue": "^6.0.9",

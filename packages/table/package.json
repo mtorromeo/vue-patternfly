@@ -45,7 +45,7 @@
     "@vue-patternfly/icons": "workspace:^"
   },
   "devDependencies": {
-    "@patternfly/react-styles": "^6.6.1",
+    "@patternfly/react-styles": "^6.7.0",
     "@types/node": "^26.6.4",
     "@vitejs/plugin-vue": "^6.0.9",
     "@vue-patternfly/core": "workspace:^",

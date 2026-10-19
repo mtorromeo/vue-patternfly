@@ -49,13 +49,13 @@ describe('Nav', () => {
     expect(wrapper.attributes('aria-label')).toBe('Local');
   });
 
-  it('applies docked and text expanded modifiers', () => {
-    const wrapper = mount(PfNav, { props: { variant: 'docked', textExpanded: true } });
+  it('applies docked and expanded modifiers', () => {
+    const wrapper = mount(PfNav, { props: { variant: 'docked', expanded: true } });
     expect(wrapper.classes()).toContain(styles.modifiers.docked);
-    expect(wrapper.classes()).toContain(styles.modifiers.textExpanded);
+    expect(wrapper.classes()).toContain(styles.modifiers.expanded);
 
-    const notDocked = mount(PfNav, { props: { textExpanded: true } });
-    expect(notDocked.classes()).not.toContain(styles.modifiers.textExpanded);
+    const notDocked = mount(PfNav, { props: { expanded: true } });
+    expect(notDocked.classes()).not.toContain(styles.modifiers.expanded);
   });
 
   it('uses a custom aria-label', () => {

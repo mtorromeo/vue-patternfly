@@ -61,6 +61,16 @@ describe('Button', () => {
     ]));
   });
 
+  it('applies the expanded modifier only to docked buttons', async () => {
+    const wrapper = mount(PfButton, { props: { docked: true, expanded: true } });
+    expect(btn(wrapper).classes()).toContain(styles.modifiers.docked);
+    expect(btn(wrapper).classes()).toContain(styles.modifiers.expanded);
+
+    await wrapper.setProps({ docked: false });
+    expect(btn(wrapper).classes()).not.toContain(styles.modifiers.expanded);
+    expect(btn(wrapper).attributes('aria-expanded')).toBe('true');
+  });
+
   it('applies variant-specific modifiers only to the right variants', async () => {
     const wrapper = mount(PfButton, { props: { variant: 'link', inline: true, danger: true, noPadding: true } });
     expect(btn(wrapper).classes()).toContain(styles.modifiers.inline);

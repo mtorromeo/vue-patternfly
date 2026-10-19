@@ -31,7 +31,7 @@
           [styles.modifiers[hamburgerVariant as NonNullable<typeof hamburgerVariant>]]: hamburger && hamburgerVariant,
           [styles.modifiers.circle]: circle,
           [styles.modifiers.docked]: docked,
-          [styles.modifiers.textExpanded]: textExpanded,
+          [styles.modifiers.expanded]: docked && expanded,
         },
       ]"
       :tabindex="tabIdx"
@@ -137,7 +137,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
   danger?: boolean;
   /** Class name for the badge container */
   badgeClass?: string;
-  /** Flag indicating whether content the button controls is expanded or not. Required when hamburger is true. */
+  /** Flag indicating whether content the button controls is expanded or not. Required when hamburger is true. Applies additional expanded styling when docked is true. */
   expanded?: boolean;
   /** Flag indicating the button is a settings button. This will override the icon property. */
   settings?: boolean;
@@ -149,8 +149,6 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
   circle?: boolean;
   /** Flag indicating the button is a docked variant button. For use in docked navigation. */
   docked?: boolean;
-  /** Flag indicating the docked button should display text. Only applies when isDocked is true. */
-  textExpanded?: boolean;
 
   // router-link attributes
   /** Route Location the link should navigate to when clicked on. */

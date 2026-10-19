@@ -8,7 +8,7 @@
         [styles.modifiers.subnav]: variant === 'horizontal-subnav',
         [styles.modifiers.scrollable]: scrollable,
         [styles.modifiers.docked]: variant === 'docked',
-        [styles.modifiers.textExpanded]: variant === 'docked' && textExpanded,
+        [styles.modifiers.expanded]: variant === 'docked' && expanded,
       },
     ]"
     :aria-label="ariaLabel || (variant === 'horizontal-subnav' ? 'Local' : 'Global')"
@@ -29,7 +29,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, "onSel
   variant?: "default" | "horizontal" | "horizontal-subnav" | "docked";
   ariaLabel?: string;
   /** Flag indicating the docked nav should display text. Only applies when variant is docked. */
-  textExpanded?: boolean;
+  expanded?: boolean;
 }
 </script>
 

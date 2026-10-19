@@ -31,7 +31,7 @@
         styles.pageDock,
         {
           [styles.modifiers.expanded]: dockExpanded,
-          [styles.modifiers.textExpanded]: dockTextExpanded,
+          [styles.modifiers.overlay]: dockOverlay,
         },
       ]"
     >
@@ -93,10 +93,10 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   contentFilled?: boolean;
   /** Indicates the layout variant */
   variant?: "default" | "docked";
-  /** Flag indicating the docked nav is expanded on mobile. Only applies when variant is docked. */
+  /** Flag indicating the docked nav is expanded. Only applies when variant is docked. */
   dockExpanded?: boolean;
-  /** Flag indicating the docked nav should display text on desktop. Only applies when variant is docked, and will handle setting isTextExpanded on individual isDocked components. */
-  dockTextExpanded?: boolean;
+  /** Flag indicating the docked nav should expand as an overlay instead of the default inline. */
+  dockOverlay?: boolean;
 }
 </script>
 

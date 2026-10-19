@@ -106,13 +106,13 @@ describe('Page', () => {
 
     it('renders the docked variant with the dock content', () => {
       const wrapper = mount(PfPage, {
-        props: { variant: 'docked', dockExpanded: true, dockTextExpanded: true },
+        props: { variant: 'docked', dockExpanded: true, dockOverlay: true },
         slots: { 'dock-content': () => h('nav', { class: 'dock-nav' }) },
       });
       expect(pageRoot(wrapper).classes()).toContain(styles.modifiers.docked);
       const dock = wrapper.find(`.${styles.pageDock}`);
       expect(dock.classes()).toContain(styles.modifiers.expanded);
-      expect(dock.classes()).toContain(styles.modifiers.textExpanded);
+      expect(dock.classes()).toContain(styles.modifiers.overlay);
       expect(dock.find(`.${styles.pageDockMain} .dock-nav`).exists()).toBe(true);
     });
 
