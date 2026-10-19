@@ -4,6 +4,7 @@
     ref="toolbarRef"
     :class="[styles.toolbar, breakpointClasses, {
       [styles.modifiers.container]: container,
+      [styles.modifiers.vertical]: vertical,
       [styles.modifiers.fullHeight]: fullHeight,
       [styles.modifiers.static]: static,
       [styles.modifiers.sticky]: sticky,
@@ -57,6 +58,8 @@ interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLA
   noPadding?: boolean;
   /** Flag indicating if the toolbar is a container for CSS container queries */
   container?: boolean;
+  /** Flag indicating the toolbar has a vertical orientation */
+  vertical?: boolean;
 }
 </script>
 

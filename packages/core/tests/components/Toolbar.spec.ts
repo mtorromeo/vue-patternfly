@@ -105,6 +105,10 @@ describe('Toolbar', () => {
     expect(content.attributes('hidden')).toBeDefined();
   });
 
+  it('applies the vertical modifier', () => {
+    expect(mount(PfToolbar, { props: { vertical: true } }).classes()).toContain(styles.modifiers.vertical);
+  });
+
   it('applies the container modifier', () => {
     expect(mount(PfToolbar, { props: { container: true } }).classes()).toContain(styles.modifiers.container);
   });
