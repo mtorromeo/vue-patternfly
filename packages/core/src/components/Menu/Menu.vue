@@ -35,7 +35,9 @@ import type { MenuItemId } from './common';
 
 export { MenuInjectionKey, MenuItemsKey, type MenuItemId, type MenuItemTrack, type MenuProvide, type MenuState } from './common';
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
+interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
+  /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
+  selected?: T | null;
   /** @beta Indicates if menu contains a flyout menu */
   containsFlyout?: boolean;
   /** @beta Indicating that the menu should have nav flyout styling */
@@ -67,9 +69,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSel
 }
 </script>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends MenuItemId | MenuItemId[] = MenuItemId | MenuItemId[]">
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, shallowRef, computed, type ComponentInternalInstance, type Ref, type HTMLAttributes, useTemplateRef } from 'vue';
+import { inject, provide, reactive, shallowRef, computed, type ComponentInternalInstance, type Ref, type HTMLAttributes, useModel, useTemplateRef } from 'vue';
 import { provideChildrenTracker } from '../../use';
 import { MenuInjectionKey, MenuItemsKey, type MenuState } from './common';
 import { isDefined } from '@vueuse/shared';
@@ -90,17 +92,15 @@ defineOptions({
   name: 'PfMenu',
 });
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props<T>>(), {
+  selected: null,
   // drilldownItemPath: () => [],
   favoritesLabel: 'Favorites',
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
-/** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
-const selected = defineModel<MenuItemId | MenuItemId[] | null>('selected', { default: null });
-
 defineSlots<{
-  default: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
 }>();
 
 const emit = defineEmits<{
@@ -108,7 +108,11 @@ const emit = defineEmits<{
   (name: 'searchInputChange', event: Event, value: string): void;
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
   (name: 'select', event: Event, itemId: MenuItemId | null | undefined): void;
+  // Deselecting the selected item of a single select menu emits null
+  (name: 'update:selected', value: T extends unknown[] ? T : T | null): void;
 }>();
+
+const selected = useModel(props, 'selected') as Ref<MenuItemId | MenuItemId[] | null>;
 
 // const instance = getCurrentInstance();
 

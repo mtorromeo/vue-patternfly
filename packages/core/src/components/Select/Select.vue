@@ -19,6 +19,7 @@
     <pf-menu
       ref="menuRef"
       v-bind="$attrs"
+      v-model:selected="selected"
       :style="{'--pf-v6-c-menu--MinWidth': minWidth}"
       @select="handleSelect"
     >
@@ -27,24 +28,16 @@
   </floating-ui>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import PfMenu, { type MenuItemId } from '../Menu/Menu.vue';
-import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
-import PassThrough from '../../helpers/PassThrough.vue';
-import FloatingUi from '../../helpers/FloatingUi.vue';
-import { nextTick, computed, type RendererElement, useTemplateRef } from 'vue';
-import { useHtmlElementFromVNodes } from '../../use';
-import { useEventListener } from '@vueuse/core';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { OUIAProps } from '../../helpers/ouia';
+import type { RendererElement } from 'vue';
 import type { Placement } from '@floating-ui/dom';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
-defineOptions({
-  name: 'PfSelect',
-  inheritAttrs: false,
-});
-
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'ouiaId' | 'ouiaSafe'> {
+interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'ouiaId' | 'ouiaSafe' | 'selected' | 'onUpdate:selected'> {
+  /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
+  selected?: T | null;
   /** Minimum width of the select menu */
   minWidth?: string;
   /** z-index of the select menu */
@@ -72,9 +65,24 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
   /** Label for the menu toggle */
   label?: string;
 }
+</script>
 
-const props = withDefaults(defineProps<Props>(), {
-  selected: undefined,
+<script lang="ts" setup generic="T extends MenuItemId | MenuItemId[] = MenuItemId | MenuItemId[]">
+import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
+import PassThrough from '../../helpers/PassThrough.vue';
+import FloatingUi from '../../helpers/FloatingUi.vue';
+import { nextTick, computed, useModel, useTemplateRef } from 'vue';
+import { useHtmlElementFromVNodes } from '../../use';
+import { useEventListener } from '@vueuse/core';
+import { useOUIAProps } from '../../helpers/ouia';
+
+defineOptions({
+  name: 'PfSelect',
+  inheritAttrs: false,
+});
+
+const props = withDefaults(defineProps<Props<T>>(), {
+  selected: null,
   placement: 'bottom',
   label: 'Select a value',
   closeOnKeys: () => ['Escape', 'Tab'],
@@ -85,16 +93,20 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 const open = defineModel<boolean>('open', { default: false });
 
 defineSlots<{
-  default: (props?: Record<never, never>) => any;
-  toggle: (props?: Record<never, never>) => any;
-  icon: (props?: Record<never, never>) => any;
-  label: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => any;
+  toggle?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => any;
+  label?: (props?: Record<never, never>) => any;
 }>();
 
 const emit = defineEmits<{
   /** Callback for updating when item selection changes. You can also specify onClick on the MenuItem. */
   (name: 'select', event: Event, itemId?: MenuItemId | null | undefined): void;
+  // Deselecting the selected item of a single select emits null
+  (name: 'update:selected', value: T extends unknown[] ? T : T | null): void;
 }>();
+
+const selected = useModel(props, 'selected');
 
 const placement = computed((): Placement => {
   if (props.placement !== 'top' && props.placement !== 'bottom') {

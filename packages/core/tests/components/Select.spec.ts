@@ -190,6 +190,20 @@ describe('Select', () => {
     wrapper.unmount();
   });
 
+  it('keeps the selection without a selected model and emits null on deselect', async () => {
+    const wrapper = await mountSelect({ open: true });
+
+    options()[1]!.click();
+    await flushPromises();
+    expect(options()[1]!.classList.contains(styles.modifiers.selected)).toBe(true);
+
+    options()[1]!.click();
+    await flushPromises();
+    expect(options()[1]!.classList.contains(styles.modifiers.selected)).toBe(false);
+    expect(wrapper.emitted('update:selected')).toEqual([['two'], [null]]);
+    wrapper.unmount();
+  });
+
   it('emits select with the selected item id', async () => {
     const wrapper = await mountSelect({ open: true });
 

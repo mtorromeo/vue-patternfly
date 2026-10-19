@@ -53,9 +53,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 </script>
 
 <script lang="ts" setup>
-import { h, mergeProps, type VNode, computed, watch, nextTick, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef, type Reactive } from 'vue';
+import { h, mergeProps, type VNode, computed, watch, nextTick, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef } from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
-import PfMenu, { type MenuItemId, type MenuItemTrack } from '../Menu/Menu.vue';
+import PfMenu, { type MenuItemId } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import FloatingUi, { type Placement } from '../../helpers/FloatingUi.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
@@ -152,7 +152,7 @@ function onKeydown(e: KeyboardEvent) {
   }
 
   if (!['Escape', 'Tab'].includes(e.key)) {
-    menu.value?.$.exposed?.handleKeyboard(e);
+    menu.value?.handleKeyboard(e);
     return;
   }
 
@@ -177,7 +177,7 @@ const handleClick = (event: PointerEvent) => {
 watch(open, (isOpen) => {
   if (isOpen && props.shouldFocusFirstItemOnOpen) {
     nextTick(() => {
-      const items = menu.value?.$.exposed?.items as Reactive<MenuItemTrack[]> | null | undefined;
+      const items = menu.value?.items;
       items?.find(i => !i.disabled)?.focus();
     });
   }
