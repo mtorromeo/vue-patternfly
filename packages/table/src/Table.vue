@@ -8,6 +8,9 @@
         [styles.modifiers.compact]: compact,
         [styles.modifiers.noBorderRows]: noBorders,
         [styles.modifiers.stickyHeader]: stickyHeader,
+        [styles.modifiers.stickyFooter]: stickyFooter,
+        [styles.modifiers.stickyFooterBase]: stickyFooterBase,
+        [styles.modifiers.stickyFooterStuck]: stickyFooterStuck,
         [stylesTreeView.modifiers.treeView]: treeTable,
         [styles.modifiers.striped]: striped,
         [styles.modifiers.expandable]: expandable,
@@ -26,7 +29,7 @@
     </table>
   </define-table>
 
-  <div v-if="stickyHeader" :class="scrollStyles.scrollOuterWrapper">
+  <div v-if="stickyHeader || stickyFooter" :class="scrollStyles.scrollOuterWrapper">
     <div v-if="horizontalScroll" :class="scrollStyles.scrollInnerWrapper">
       <reuse-table />
     </div>
@@ -56,6 +59,12 @@ interface Props extends OUIAProps, /* @vue-ignore */ TableHTMLAttributes {
   gridBreakPoint?: '' | 'grid' | 'grid-md' | 'grid-lg' | 'grid-xl' | 'grid-2xl';
   /** If set to true, the table header sticks to the top of its container */
   stickyHeader?: boolean;
+  /** If set to true, the table footer sticks to the bottom of its container */
+  stickyFooter?: boolean;
+  /** Flag indicating the table footer should have sticky positioning to the bottom of its scroll container. */
+  stickyFooterBase?: boolean;
+  /** Flag indicating the table footer should have stuck styling, when the footer is not at the bottom of the scroll container. */
+  stickyFooterStuck?: boolean;
   /** Flag indicating table is a tree table */
   treeTable?: boolean;
   /** Flag indicating this table is nested within another table */

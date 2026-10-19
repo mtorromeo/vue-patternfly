@@ -11,6 +11,7 @@ import PfTbody from '../src/Tbody.vue';
 import PfTr from '../src/Tr.vue';
 import PfTh from '../src/Th.vue';
 import PfTd from '../src/Td.vue';
+import PfTfoot from '../src/Tfoot.vue';
 
 const components = { PfTable, PfThead, PfTbody, PfTr, PfTh, PfTd };
 
@@ -118,6 +119,17 @@ describe('Table', () => {
     expect(plain.find(`.${scrollStyles.scrollOuterWrapper}`).exists()).toBe(false);
   });
 
+  it('applies the sticky footer modifiers inside a scroll container', () => {
+    const wrapper = mount(PfTable, { props: { stickyFooter: true, stickyFooterBase: true, stickyFooterStuck: true } });
+    const table = wrapper.get(`.${scrollStyles.scrollOuterWrapper} table`);
+    expect(table.classes()).toEqual(expect.arrayContaining([
+      styles.modifiers.stickyFooter,
+      styles.modifiers.stickyFooterBase,
+      styles.modifiers.stickyFooterStuck,
+    ]));
+    expect(table.classes()).not.toContain(styles.modifiers.stickyHeader);
+  });
+
   it('renders the selectable rows caption only while a row is selectable', async () => {
     const selectable = ref(true);
     const wrapper = mountTemplate(`
@@ -145,6 +157,16 @@ describe('Thead', () => {
     const wrapper = mount(PfThead, { props: { noWrap: true, nestedHeader: true } });
     expect(wrapper.classes()).toContain(styles.modifiers.nowrap);
     expect(wrapper.classes()).toContain(styles.modifiers.nestedColumnHeader);
+  });
+});
+
+describe('Tfoot', () => {
+  it('renders a tfoot with the table footer class', () => {
+    const wrapper = mount(PfTfoot, { slots: { default: '<tr><td>Total</td></tr>' } });
+    expect(wrapper.element.tagName).toBe('TFOOT');
+    expect(wrapper.classes()).toContain(styles.tableTfoot);
+    expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/Tfoot');
+    expect(wrapper.text()).toBe('Total');
   });
 });
 

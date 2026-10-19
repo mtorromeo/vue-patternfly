@@ -6,6 +6,7 @@
       <component-info name="PfTable" />
       <component-info name="PfThead" />
       <component-info name="PfTbody" />
+      <component-info name="PfTfoot" />
       <component-info name="PfTr" />
       <component-info name="PfTh" />
       <component-info name="PfTd" />

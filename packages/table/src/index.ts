@@ -3,6 +3,7 @@ import type { App } from 'vue';
 import PfTable from './Table.vue';
 import PfTbody from './Tbody.vue';
 import PfTd from './Td.vue';
+import PfTfoot from './Tfoot.vue';
 import PfTh from './Th.vue';
 import PfThead from './Thead.vue';
 import PfTr from './Tr.vue';
@@ -11,6 +12,7 @@ export {
   PfTable,
   PfTbody,
   PfTd,
+  PfTfoot,
   PfTh,
   PfThead,
   PfTr,
@@ -20,6 +22,7 @@ export function install(app: App) {
   app.component('PfTable', PfTable);
   app.component('PfTbody', PfTbody);
   app.component('PfTd', PfTd);
+  app.component('PfTfoot', PfTfoot);
   app.component('PfTh', PfTh);
   app.component('PfThead', PfThead);
   app.component('PfTr', PfTr);
@@ -34,6 +37,7 @@ declare module 'vue' {
     PfTable: typeof PfTable;
     PfTbody: typeof PfTbody;
     PfTd: typeof PfTd;
+    PfTfoot: typeof PfTfoot;
     PfTh: typeof PfTh;
     PfThead: typeof PfThead;
     PfTr: typeof PfTr;
