@@ -71,7 +71,7 @@
     "vue-tsc": "^3.3.12"
   },
   "peerDependencies": {
-    "@patternfly/patternfly": "^6",
+    "@patternfly/patternfly": "^6.7.0",
     "@vueuse/core": "^13 || ^14 || ^15",
     "@vueuse/integrations": "^13 || ^14 || ^15",
     "@vueuse/shared": "^13 || ^14 || ^15",
