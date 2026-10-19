@@ -7,6 +7,7 @@ export type DrawerProvide = {
   expanded: ComputedRef<boolean>;
   display: Ref<boolean>;
   inline: ComputedRef<boolean>;
+  viewport: ComputedRef<boolean>;
   position: ComputedRef<'start' | 'end' | 'bottom'>;
 }
 

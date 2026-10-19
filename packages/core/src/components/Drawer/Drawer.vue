@@ -5,6 +5,7 @@
     :class="[styles.drawer, {
       [styles.modifiers.expanded]: expandedClass,
       [styles.modifiers.inline]: inline,
+      [styles.modifiers.viewport]: viewport,
       [styles.modifiers.static]: static,
       [styles.modifiers.panelLeft]: position === 'start',
       [styles.modifiers.panelBottom]: position === 'bottom',
@@ -35,6 +36,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   expanded?: boolean;
   /** Indicates if the content element and panel element are displayed side by side. */
   inline?: boolean;
+  /** Positions the drawer as fixed to fill the viewport. Place the drawer after Page as a sibling. */
+  viewport?: boolean;
   /** Indicates if the drawer will always show both content and panel. */
   static?: boolean;
   /** Position of the drawer panel */
@@ -60,6 +63,7 @@ provide(DrawerKey, {
   expanded: isOpen,
   display,
   inline: computed(() => props.inline),
+  viewport: computed(() => props.viewport),
   position: computed(() => props.position),
 });
 

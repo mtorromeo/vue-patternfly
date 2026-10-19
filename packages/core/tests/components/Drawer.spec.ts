@@ -57,6 +57,11 @@ describe('Drawer', () => {
     expect(bottom.classes()).not.toContain(styles.modifiers.panelLeft);
   });
 
+  it('applies the viewport modifier', () => {
+    expect(mountDrawer({ viewport: true }).classes()).toContain(styles.modifiers.viewport);
+    expect(mountDrawer().classes()).not.toContain(styles.modifiers.viewport);
+  });
+
   it('shows the panel when initially expanded', () => {
     const wrapper = mountDrawer({ expanded: true });
 
@@ -236,6 +241,22 @@ describe('DrawerPanelContent', () => {
       expect(panelContent.emitted('resize')?.[0]).toEqual([190, 'panel']);
     });
 
+    it.each([
+      [false, '30'],
+      [true, '65'],
+    ])('measures the splitter position against the drawer when viewport is %s', async (viewport, valueNow) => {
+      const wrapper = mountDrawer({ expanded: true, viewport }, { resizable: true });
+      const rect = (left: number, right: number) => ({ left, right, top: 0, bottom: 0, width: right - left } as DOMRect);
+      vi.spyOn(wrapper.element, 'getBoundingClientRect').mockReturnValue(rect(0, 2000));
+      vi.spyOn(wrapper.find(`.${styles.drawerContent}`).element, 'getBoundingClientRect').mockReturnValue(rect(0, 1000));
+      vi.spyOn(wrapper.find(`.${styles.drawerPanel}`).element, 'getBoundingClientRect').mockReturnValue(rect(700, 1000));
+      const splitter = wrapper.find(`.${styles.drawerSplitter}`);
+      vi.spyOn(splitter.element, 'getBoundingClientRect').mockReturnValue(rect(700, 704));
+
+      await splitter.trigger('keydown', { key: 'ArrowLeft' });
+      expect(splitter.attributes('aria-valuenow')).toBe(valueNow);
+    });
+
     it('inverts horizontal arrows when the panel is at the start', async () => {
       const wrapper = mountDrawer({ expanded: true, position: 'start' }, { resizable: true });
       const panel = wrapper.find(`.${styles.drawerPanel}`);
@@ -302,6 +323,21 @@ describe('DrawerCloseButton', () => {
 
     await button.trigger('click');
     expect(wrapper.emitted('close')).toHaveLength(1);
+  });
+
+  it('passes buttonProps to the close button without overriding the close handler', async () => {
+    const onClick = vi.fn();
+    const wrapper = mount(PfDrawerCloseButton, {
+      props: { buttonProps: { id: 'close-btn', 'aria-label': 'Dismiss', onClick } as Record<string, unknown> },
+    });
+
+    const button = wrapper.find('button');
+    expect(button.attributes('id')).toBe('close-btn');
+    expect(button.attributes('aria-label')).toBe('Dismiss');
+
+    await button.trigger('click');
+    expect(wrapper.emitted('close')).toHaveLength(1);
+    expect(onClick).not.toHaveBeenCalled();
   });
 });
 

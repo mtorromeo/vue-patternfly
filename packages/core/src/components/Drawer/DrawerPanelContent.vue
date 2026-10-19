@@ -113,7 +113,7 @@ if (!drawerProvide) {
   throw new Error('DrawerPanelContent can only be used inside Drawer components');
 }
 
-const { el: drawerRef, position, expanded, display, inline } = drawerProvide;
+const { el: drawerRef, position, expanded, display, inline, viewport } = drawerProvide;
 const drawerContentRef = inject(DrawerContentRefKey);
 const splitter = useTemplateRef('splitterRef');
 
@@ -139,11 +139,13 @@ function calcValueNow() {
   let drawerSize;
 
   const drawerContentEl = resolveOverridableComponent(drawerContentRef?.value);
+  // a viewport drawer is sized by the drawer itself, otherwise by its content
+  const sizeEl = viewport.value ? (drawerRef.value ?? drawerContentEl) : (drawerContentEl ?? drawerRef.value);
 
   const paR = panel.value?.getBoundingClientRect() ?? { left: 0, right: 0 };
   const spR = splitter.value?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
   const drR = drawerRef.value?.getBoundingClientRect() ?? { left: 0, right: 0 };
-  const dCR = drawerContentEl?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
+  const dCR = sizeEl?.getBoundingClientRect() ?? { left: 0, right: 0, top: 0, bottom: 0 };
 
   if (inline.value && position.value === 'end') {
     splitterPos = paR.right - spR.left;
