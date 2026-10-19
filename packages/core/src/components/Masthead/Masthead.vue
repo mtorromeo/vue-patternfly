@@ -3,6 +3,7 @@
     v-bind="ouiaProps"
     :class="[
       styles.masthead,
+      { [styles.modifiers.docked]: variant === 'docked' },
       classesFromBreakpointProps($props, ['inset', 'display'], styles),
     ]"
   >
@@ -28,6 +29,8 @@ interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLA
   displayLg?: 'inline' | 'stack';
   displayXl?: 'inline' | 'stack';
   display2xl?: 'inline' | 'stack';
+  /** Indicates the variant of the masthead. Use docked for the content of the dock of a docked page. */
+  variant?: 'default' | 'docked';
 }
 
 const props = withDefaults(defineProps<Props>(), {

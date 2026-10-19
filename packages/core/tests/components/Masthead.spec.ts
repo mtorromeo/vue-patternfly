@@ -11,6 +11,11 @@ import PfMastheadMain from '../../src/components/Masthead/MastheadMain.vue';
 import PfMastheadToggle from '../../src/components/Masthead/MastheadToggle.vue';
 
 describe('Masthead', () => {
+  it('applies the docked modifier', () => {
+    expect(mount(PfMasthead, { props: { variant: 'docked' } }).classes()).toContain(styles.modifiers.docked);
+    expect(mount(PfMasthead).classes()).not.toContain(styles.modifiers.docked);
+  });
+
   it('renders an inline header by default', () => {
     const wrapper = mount(PfMasthead, {
       slots: {
