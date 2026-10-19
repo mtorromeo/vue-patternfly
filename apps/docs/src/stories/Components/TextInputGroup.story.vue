@@ -51,9 +51,9 @@
           <template v-if="!chips.length" #icon>
             <magnifying-glass-icon />
           </template>
-          <pf-chip-group>
-            <pf-chip v-for="(chip, index) in chips" :key="index" @click="chips.splice(index, 1)">{{ chip }}</pf-chip>
-          </pf-chip-group>
+          <pf-label-group>
+            <pf-label v-for="(chip, index) in chips" :key="chip" variant="outline" @close="chips.splice(index, 1)">{{ chip }}</pf-label>
+          </pf-label-group>
         </pf-text-input-group-main>
         <pf-text-input-group-utilities v-if="!!inputValue2">
           <pf-button variant="plain" aria-label="Clear button and input" @click="inputValue2 = ''">

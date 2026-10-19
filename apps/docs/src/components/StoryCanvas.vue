@@ -16,7 +16,7 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div style="position: relative">
       <div v-if="src" class="source-link">
-        <pf-button :href="`https://github.com/mtorromeo/vue-patternfly/blob/main/apps/docs/src/${storySrc}`" variant="link" title="Full source code" target="_blank">
+        <pf-button :href="sourceUrl" variant="link" title="Full source code" target="_blank">
           <template #icon>
             <github-icon />
           </template>
@@ -107,6 +107,9 @@ if (storySrc) {
     })();
   }
 }
+
+// Built here: a `//` inside a bound template literal breaks vue-tsc's generated code
+const sourceUrl =`https://github.com/mtorromeo/vue-patternfly/blob/main/apps/docs/src/${storySrc}`;
 
 const router = useRouter();
 const iframeRoute = storySrc?.endsWith('.iframe.vue') ? router.getRoutes().find(r => r.meta.sourcePath === `./${storySrc}`) : undefined;

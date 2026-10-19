@@ -210,7 +210,7 @@ watch(darkTheme, (value) => {
   }
 });
 
-const contrastTheme: Ref<string | null> = ref(document.documentElement.classList.contains("pf-v6-theme-glass") ? "Glass" : document.documentElement.classList.contains("pf-v6-theme-high-contrast") ? "High contrast" : "Default");
+const contrastTheme: Ref<string | undefined> = ref(document.documentElement.classList.contains("pf-v6-theme-glass") ? "Glass" : document.documentElement.classList.contains("pf-v6-theme-high-contrast") ? "High contrast" : "Default");
 watch(contrastTheme, (value) => {
   if (value === "Glass") {
     document.documentElement.classList.add("pf-v6-theme-glass");

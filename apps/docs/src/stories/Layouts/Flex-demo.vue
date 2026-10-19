@@ -256,7 +256,7 @@ interface FlexItem {
   fullWidth: boolean;
   grow: boolean;
   shrink: boolean;
-  order: string;
+  order: FlexItemProps["order"];
   text: string;
 }
 
