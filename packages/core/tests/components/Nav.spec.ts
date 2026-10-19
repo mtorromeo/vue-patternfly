@@ -292,6 +292,16 @@ describe('NavExpandable', () => {
     expect(section.find(`ul.${styles.navList}`).attributes('role')).toBe('list');
   });
 
+  it('renders the expandable icon before the title', () => {
+    const wrapper = mount(PfNavExpandable, { props: { title: 'Section', expandableIcon: true } });
+    const children = toggle(wrapper).findAll(':scope > span');
+    expect(children[0].classes()).toContain(styles.navLinkExpandableIcon);
+    expect(children[0].find('svg').exists()).toBe(true);
+    expect(children[1].classes()).toContain(styles.navLinkText);
+
+    expect(mount(PfNavExpandable, { props: { title: 'Section' } }).find(`.${styles.navLinkExpandableIcon}`).exists()).toBe(false);
+  });
+
   it('renders the title slot', () => {
     const wrapper = mount(PfNavExpandable, { slots: { title: () => h('b', 'Bold') } });
     expect(toggle(wrapper).find('b').text()).toBe('Bold');

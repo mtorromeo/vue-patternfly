@@ -17,7 +17,10 @@
       @click.prevent
       @mousedown.prevent
     >
-      <span :class="`${styles.nav}__link-text`">
+      <span v-if="expandableIcon" :class="styles.navLinkExpandableIcon">
+        <pf-ellipsis-icon />
+      </span>
+      <span :class="styles.navLinkText">
         <slot name="title">{{ title }}</slot>
       </span>
       <span :class="styles.navToggle">
@@ -45,6 +48,7 @@ import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
+import PfEllipsisIcon from '@vue-patternfly/icons/ellipsis-icon';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
 import { ref, computed, type LiHTMLAttributes, useTemplateRef, inject, useId } from 'vue';
 
@@ -60,6 +64,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onC
   active?: boolean;
   managed?: boolean;
   expanded?: boolean;
+  /** Adds an expandable icon to indicate the section is expandable */
+  expandableIcon?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
