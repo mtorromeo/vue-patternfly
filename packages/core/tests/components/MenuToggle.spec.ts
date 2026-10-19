@@ -54,6 +54,26 @@ describe('MenuToggle', () => {
     });
   });
 
+  describe('aria-haspopup', () => {
+    it('defaults to menu', () => {
+      const wrapper = mount(PfMenuToggle, { slots: { default: () => 'Toggle' } });
+      expect(root(wrapper).attributes('aria-haspopup')).toBe('menu');
+    });
+
+    it.each([
+      ['listbox', 'listbox'],
+      [true, 'true'],
+    ] as const)('renders %s', (ariaHaspopup, expected) => {
+      const wrapper = mount(PfMenuToggle, { props: { ariaHaspopup }, slots: { default: () => 'Toggle' } });
+      expect(root(wrapper).attributes('aria-haspopup')).toBe(expected);
+    });
+
+    it('accepts the attribute form', () => {
+      const wrapper = mount(PfMenuToggle, { attrs: { 'aria-haspopup': 'listbox' }, slots: { default: () => 'Toggle' } });
+      expect(root(wrapper).attributes('aria-haspopup')).toBe('listbox');
+    });
+  });
+
   describe('expanded', () => {
     it('reflects the expanded state with aria-expanded and the expanded modifier', () => {
       const collapsed = mount(PfMenuToggle, { slots: { default: () => 'Toggle' } });
@@ -170,6 +190,13 @@ describe('MenuToggle', () => {
       expect(button.attributes('aria-label')).toBe('Menu toggle');
       expect(button.attributes('aria-expanded')).toBe('false');
       expect(button.find(`.${styles.menuToggleControls}`).exists()).toBe(true);
+    });
+
+    it('sets aria-haspopup on the toggle button instead of the container', () => {
+      const wrapper = mountTypeahead({ ariaHaspopup: 'listbox' });
+
+      expect(root(wrapper).attributes('aria-haspopup')).toBeUndefined();
+      expect(wrapper.find(`button.${styles.menuToggleButton}`).attributes('aria-haspopup')).toBe('listbox');
     });
 
     // 4f3a0e6a

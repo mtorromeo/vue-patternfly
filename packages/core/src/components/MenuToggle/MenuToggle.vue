@@ -42,6 +42,7 @@
     ]"
     :type="typeahead || isSplitButton ? undefined : 'button'"
     :aria-expanded="typeahead || isSplitButton ? undefined : expanded"
+    :aria-haspopup="typeahead || isSplitButton ? undefined : ariaHaspopup"
     :disabled="typeahead || isSplitButton ? undefined : disabled"
     @click="typeahead || isSplitButton ? undefined : (expanded = !expanded)"
   >
@@ -73,6 +74,7 @@
         :class="[styles.menuToggleButton, { [styles.modifiers.text]: isSplitButton && $slots.default }]"
         :disabled="disabled"
         :aria-expanded="expanded"
+        :aria-haspopup="ariaHaspopup"
         aria-label="Menu toggle"
         @click="expanded = !expanded"
       >
@@ -105,7 +107,7 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, "type" | "aria-expanded" | "placeholder" | "onClick"> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, "type" | "aria-expanded" | "aria-haspopup" | "placeholder" | "onClick"> {
   /** Flag indicating the toggle is disabled */
   disabled?: boolean;
   /** Flag indicating the toggle is full height */
@@ -128,9 +130,13 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 
   circle?: boolean;
   /** Flag indicating the menu toggle is a docked variant. For use in docked navigation. */
   docked?: boolean;
+  /** Indicates what type of popup will be triggered by the menu toggle. A value of true is the same as a value of "menu". */
+  ariaHaspopup?: "menu" | "listbox" | "true" | "false" | boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  ariaHaspopup: "menu",
+});
 
 /** Flag indicating the toggle has expanded styling */
 const expanded = defineModel<boolean>("expanded", { default: false });
