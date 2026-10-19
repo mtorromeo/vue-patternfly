@@ -359,13 +359,106 @@
         <pf-page-section> Main section </pf-page-section>
       </pf-page>
     </story-canvas>
+
+    <story-canvas title="Docked navigation">
+      <template #intro>
+        <pre v-md>
+          With the `docked` variant, the content of the `dock-content` slot is rendered in a vertical dock, while the `masthead` slot is only rendered at mobile viewports. The docked components (`pf-nav`, `pf-button` and `pf-menu-toggle`) only display their text when the dock is expanded.
+
+          Set `dock-expanded` to expand the dock inline, and `dock-overlay` to expand it as an overlay on top of the page content instead.
+        </pre>
+      </template>
+
+      <pf-switch v-model:checked="dockExpanded" label="Dock expanded" /><br /><br />
+      <pf-switch v-model:checked="dockOverlay" label="Dock overlay" /><br /><br />
+
+      <pf-page variant="docked" :dock-expanded="dockExpanded" :dock-overlay="dockOverlay" style="height: 500px">
+        <template #masthead>
+          <pf-masthead>
+            <pf-masthead-main>
+              <pf-masthead-toggle>
+                <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="dockExpanded = !dockExpanded" />
+              </pf-masthead-toggle>
+              <pf-masthead-brand href="#">Logo</pf-masthead-brand>
+            </pf-masthead-main>
+          </pf-masthead>
+        </template>
+
+        <template #dock-content>
+          <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="dockExpanded = !dockExpanded" />
+
+          <pf-nav variant="docked" :expanded="dockExpanded" aria-label="Docked global">
+            <pf-nav-list>
+              <pf-nav-item active>
+                <template #icon><cubes-icon /></template>
+                System panel
+              </pf-nav-item>
+              <pf-nav-expandable title="Folder" expandable-icon>
+                <pf-nav-item>
+                  <template #icon><file-icon /></template>
+                  Subnav link 1
+                </pf-nav-item>
+              </pf-nav-expandable>
+              <pf-nav-item>
+                <template #icon><cloud-icon /></template>
+                Authentication
+              </pf-nav-item>
+              <pf-nav-item>
+                <template #icon><code-icon /></template>
+                Network services
+              </pf-nav-item>
+            </pf-nav-list>
+          </pf-nav>
+
+          <pf-menu-toggle variant="plain" docked aria-label="Applications">
+            <template #icon><table-cells-large-icon /></template>
+            Applications
+          </pf-menu-toggle>
+          <pf-button variant="plain" docked settings :expanded="dockExpanded" aria-label="Settings">Settings</pf-button>
+        </template>
+
+        <pf-page-section>Main section</pf-page-section>
+      </pf-page>
+    </story-canvas>
+
+    <story-canvas title="Custom header and footer">
+      <template #intro>
+        <pre v-md>
+          `pf-page-header` can be passed to the `masthead` slot as an alternative to `pf-masthead`, to wrap custom header content. Use `pf-page-footer` in the `footer` slot to render a footer below the main content.
+
+          The `plain` property renders the page without the content area background and overflow scroll.
+        </pre>
+      </template>
+
+      <pf-switch v-model:checked="plain" label="Plain" /><br /><br />
+
+      <pf-page :plain="plain" style="height: 300px">
+        <template #masthead>
+          <pf-page-header>Custom header content</pf-page-header>
+        </template>
+
+        <pf-page-section>Main section</pf-page-section>
+
+        <template #footer>
+          <pf-page-footer>Custom footer content</pf-page-footer>
+        </template>
+      </pf-page>
+    </story-canvas>
   </doc-page>
 </template>
 
 <script lang="ts" setup>
 import BellIcon from "@vue-patternfly/icons/bell-icon";
+import CloudIcon from "@vue-patternfly/icons/cloud-icon";
+import CodeIcon from "@vue-patternfly/icons/code-icon";
+import CubesIcon from "@vue-patternfly/icons/cubes-icon";
+import FileIcon from "@vue-patternfly/icons/file-icon";
 import MagnifyingGlassIcon from "@vue-patternfly/icons/magnifying-glass-icon";
+import TableCellsLargeIcon from "@vue-patternfly/icons/table-cells-large-icon";
 import { ref } from "vue";
 
 const expanded = ref(false);
+const dockExpanded = ref(false);
+const dockOverlay = ref(false);
+const plain = ref(false);
 </script>

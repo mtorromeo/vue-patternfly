@@ -30,10 +30,11 @@
     <pf-switch v-model:checked="contentPadding" label="Content padding" /><br /><br />
     <pf-switch v-model:checked="showSection" label="Show additional section above content" /><br /><br />
     <pf-switch v-model:checked="resizable" label="Resizable" /><br /><br />
+    <pf-switch v-model:checked="viewport" label="Viewport (fixed to fill the viewport, first example only)" /><br /><br />
     <pf-button :aria-expanded="expanded" @click="expanded = !expanded">Toggle drawer</pf-button>
 
     <story-canvas>
-      <pf-drawer :expanded="expanded" :position="position" :inline="inline" :style="{ height: position === 'bottom' ? '500px' : undefined }">
+      <pf-drawer :expanded="expanded" :position="position" :inline="inline" :viewport="viewport" :style="{ height: position === 'bottom' ? '500px' : undefined }">
         <pf-drawer-section v-if="showSection">drawer-section</pf-drawer-section>
         <pf-drawer-content>
           <pf-drawer-content-body :padding="contentPadding">
@@ -93,4 +94,5 @@ const inline = ref(false);
 const contentPadding = ref(true);
 const showSection = ref(false);
 const resizable = ref(false);
+const viewport = ref(false);
 </script>

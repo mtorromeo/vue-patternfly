@@ -17,9 +17,15 @@
     </template>
 
     <story-canvas title="Default">
+      <template #intro>
+        <pre v-md>
+          Use the `flex-grow` properties (also available per breakpoint, e.g. `flex-grow-md`) on toolbar items and groups to let them consume the available space, like the search input below.
+        </pre>
+      </template>
+
       <pf-toolbar>
         <pf-toolbar-content>
-          <pf-toolbar-item>
+          <pf-toolbar-item flex-grow>
             <pf-input-group>
               <pf-text-input type="search" aria-label="search input example" />
               <pf-button variant="control" aria-label="search button for search input">
@@ -171,46 +177,56 @@
     </story-canvas>
 
     <story-canvas title="Component managed toggle groups">
-      <pf-toolbar class="pf-m-toggle-group-container">
-        <pf-toolbar-content>
-          <pf-toolbar-toggle-group xl>
-            <template #icon>
-              <filter-icon />
-            </template>
+      <template #intro>
+        <pre v-md>
+          With the `container` property the toolbar becomes a container for CSS container queries, so its responsive behavior follows the width of the toolbar instead of the viewport. Resize the box below to see the toggle group collapse.
+        </pre>
+      </template>
 
-            <pf-toolbar-item>
-              <pf-input-group>
-                <pf-text-input type="search" aria-label="search input example" />
-                <pf-button variant="control" aria-label="search button for search input">
-                  <template #icon>
-                    <magnifying-glass-icon />
-                  </template>
-                </pf-button>
-              </pf-input-group>
-            </pf-toolbar-item>
+      <pf-switch v-model:checked="toolbarContainer" label="Container" /><br /><br />
 
-            <pf-toolbar-group variant="filter-group">
-              <pf-toolbar-item>
-                <pf-select>
-                  <pf-select-option value="Filter 1" />
-                  <pf-select-option value="A" />
-                  <pf-select-option value="B" />
-                  <pf-select-option value="C" />
-                </pf-select>
-              </pf-toolbar-item>
+      <div style="resize: horizontal; overflow: auto; max-width: 100%; border: 1px dashed var(--pf-t--global--border--color--default)">
+        <pf-toolbar class="pf-m-toggle-group-container" :container="toolbarContainer">
+          <pf-toolbar-content>
+            <pf-toolbar-toggle-group xl>
+              <template #icon>
+                <filter-icon />
+              </template>
 
               <pf-toolbar-item>
-                <pf-select>
-                  <pf-select-option value="Filter 2" />
-                  <pf-select-option value="1" />
-                  <pf-select-option value="2" />
-                  <pf-select-option value="3" />
-                </pf-select>
+                <pf-input-group>
+                  <pf-text-input type="search" aria-label="search input example" />
+                  <pf-button variant="control" aria-label="search button for search input">
+                    <template #icon>
+                      <magnifying-glass-icon />
+                    </template>
+                  </pf-button>
+                </pf-input-group>
               </pf-toolbar-item>
-            </pf-toolbar-group>
-          </pf-toolbar-toggle-group>
-        </pf-toolbar-content>
-      </pf-toolbar>
+
+              <pf-toolbar-group variant="filter-group">
+                <pf-toolbar-item>
+                  <pf-select>
+                    <pf-select-option value="Filter 1" />
+                    <pf-select-option value="A" />
+                    <pf-select-option value="B" />
+                    <pf-select-option value="C" />
+                  </pf-select>
+                </pf-toolbar-item>
+
+                <pf-toolbar-item>
+                  <pf-select>
+                    <pf-select-option value="Filter 2" />
+                    <pf-select-option value="1" />
+                    <pf-select-option value="2" />
+                    <pf-select-option value="3" />
+                  </pf-select>
+                </pf-toolbar-item>
+              </pf-toolbar-group>
+            </pf-toolbar-toggle-group>
+          </pf-toolbar-content>
+        </pf-toolbar>
+      </div>
     </story-canvas>
 
     <story-canvas title="Consumer managed toggle groups">
@@ -442,6 +458,7 @@ import RotateIcon from "@vue-patternfly/icons/rotate-icon";
 
 import { reactive, ref } from "vue";
 
+const toolbarContainer = ref(true);
 const expanded1 = ref(false);
 const expanded2 = ref(false);
 const selectExpanded1 = ref(false);

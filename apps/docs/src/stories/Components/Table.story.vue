@@ -83,6 +83,36 @@
         </pf-tbody>
       </pf-table>
     </story-canvas>
+
+    <story-canvas title="Sticky footer">
+      <template #intro>
+        <pre v-md>
+          A `pf-tfoot` renders the table footer. With `sticky-footer` it sticks to the bottom of the scroll container.
+        </pre>
+      </template>
+
+      <div style="height: 400px">
+        <pf-table aria-label="Sticky footer table" sticky-footer horizontal-scroll>
+          <pf-thead>
+            <pf-tr>
+              <pf-th>Item</pf-th>
+              <pf-th>Value</pf-th>
+            </pf-tr>
+          </pf-thead>
+          <pf-tbody>
+            <pf-tr v-for="row in 12" :key="row">
+              <pf-td data-label="Item">Item {{ row }}</pf-td>
+              <pf-td data-label="Value">Value {{ row }}</pf-td>
+            </pf-tr>
+          </pf-tbody>
+          <pf-tfoot>
+            <pf-tr>
+              <pf-td colspan="2">Total: 12 items</pf-td>
+            </pf-tr>
+          </pf-tfoot>
+        </pf-table>
+      </div>
+    </story-canvas>
   </doc-page>
 </template>
 

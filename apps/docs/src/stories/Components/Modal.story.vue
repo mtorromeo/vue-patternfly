@@ -8,8 +8,15 @@
     </template>
 
     <story-canvas title="Default">
+      <template #intro>
+        <pre v-md>
+          Modals are animated when opening and closing. Set `no-animations` to disable the animations.
+        </pre>
+      </template>
+
+      <pf-switch v-model:checked="animations" label="Animations" /><br /><br />
       <pf-button @click="open1 = !open1">Toggle Modal</pf-button>
-      <pf-modal v-model:open="open1" title="Simple modal header">
+      <pf-modal v-model:open="open1" title="Simple modal header" :no-animations="!animations">
         {{ sample_content }}
       </pf-modal>
     </story-canvas>
@@ -56,6 +63,7 @@
 import HelpIcon from "@vue-patternfly/icons/help-icon";
 import { ref } from "vue";
 
+const animations = ref(true);
 const open1 = ref(false);
 const open2 = ref(false);
 const open3 = ref(false);
