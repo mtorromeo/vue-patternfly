@@ -25,7 +25,7 @@
 
 <script lang="ts" setup>
 import PfDivider from '../Divider.vue';
-import { breakpoints, classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type WidthBreakpointProps, type GapBreakpointProps, type ColumnGapBreakpointProps, type RowGapBreakpointProps, type RowWrapBreakpointProps } from '../../breakpoints';
+import { breakpoints, classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type WidthBreakpointProps, type GapBreakpointProps, type ColumnGapBreakpointProps, type RowGapBreakpointProps, type RowWrapBreakpointProps, type FlexGrowBreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import cssWidth from '@patternfly/react-tokens/dist/esm/c_toolbar__item_Width';
@@ -36,7 +36,7 @@ defineOptions({
   name: 'PfToolbarItem',
 });
 
-interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, WidthBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
+interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, WidthBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, FlexGrowBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
   /** A type modifier which modifies spacing specifically depending on the type of item */
   variant?: 'pagination' | 'label' | 'label-group' | 'separator' | 'expand-all';
   /** Vertical alignment of children */
@@ -63,7 +63,7 @@ defineSlots<{
 const breakpointClasses = computed(() => {
   return [
     ...classesFromBreakpointProps(props, ['visibility', 'rowWrap'], styles, { short: true }),
-    ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap'], styles),
+    ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap', 'flexGrow'], styles),
   ];
 });
 

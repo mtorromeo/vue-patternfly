@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mount, type VueWrapper } from '@vue/test-utils';
 import { h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
@@ -34,7 +34,33 @@ function setWindowWidth(width: number) {
 
 afterEach(() => {
   setWindowWidth(1024);
+  vi.unstubAllGlobals();
 });
+
+/** Replaces ResizeObserver so tests can resize observed elements */
+function stubResizeObserver() {
+  const observers: { callback: ResizeObserverCallback; targets: Element[] }[] = [];
+  vi.stubGlobal('ResizeObserver', class {
+    private entry: { callback: ResizeObserverCallback; targets: Element[] };
+    constructor(callback: ResizeObserverCallback) {
+      this.entry = { callback, targets: [] };
+      observers.push(this.entry);
+    }
+    observe(target: Element) { this.entry.targets.push(target); }
+    unobserve() {}
+    disconnect() { this.entry.targets = []; }
+  });
+
+  return async function resize(target: Element, width: number) {
+    for (const { callback, targets } of observers) {
+      if (targets.includes(target)) {
+        callback([{ target, contentRect: { width, height: 50 }, contentBoxSize: [{ inlineSize: width, blockSize: 50 }] } as unknown as ResizeObserverEntry], {} as ResizeObserver);
+      }
+    }
+    await nextTick();
+    await nextTick();
+  };
+}
 
 const expandableContent = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.toolbarExpandableContent}`);
 const labelGroupContent = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.toolbar} > .${styles.toolbarContent}:last-child`);
@@ -77,6 +103,10 @@ describe('Toolbar', () => {
     const content = labelGroupContent(wrapper);
     expect(content.classes()).toContain(styles.modifiers.hidden);
     expect(content.attributes('hidden')).toBeDefined();
+  });
+
+  it('applies the container modifier', () => {
+    expect(mount(PfToolbar, { props: { container: true } }).classes()).toContain(styles.modifiers.container);
   });
 
   it('applies modifiers', () => {
@@ -167,6 +197,23 @@ describe('Toolbar', () => {
       setWindowWidth(1300);
       await nextTick();
       await nextTick();
+      expect(expandableContent(wrapper).classes()).not.toContain(styles.modifiers.expanded);
+    });
+
+    it('collapses a container toolbar when its own breakpoint changes, not on window resize', async () => {
+      const resize = stubResizeObserver();
+      const wrapper = mountToggleToolbar({ container: true });
+      await resize(wrapper.element, globalBreakpoints.lg + 10);
+      await toggleButton(wrapper).trigger('click');
+      expect(expandableContent(wrapper).classes()).toContain(styles.modifiers.expanded);
+
+      setWindowWidth(1300);
+      await nextTick();
+      await nextTick();
+      await resize(wrapper.element, globalBreakpoints.lg + 50);
+      expect(expandableContent(wrapper).classes()).toContain(styles.modifiers.expanded);
+
+      await resize(wrapper.element, globalBreakpoints.md - 10);
       expect(expandableContent(wrapper).classes()).not.toContain(styles.modifiers.expanded);
     });
 
@@ -347,6 +394,15 @@ describe('ToolbarGroup', () => {
       styles.modifiers.nowrap,
     ]));
   });
+
+  it('applies the flex grow breakpoint modifiers', () => {
+    const wrapper = mount(PfToolbarGroup, { props: { flexGrow: true, flexGrowMd: true, flexGrow2xl: true } });
+    expect(wrapper.classes()).toEqual(expect.arrayContaining([
+      styles.modifiers.flexGrow,
+      styles.modifiers.flexGrowOnMd,
+      styles.modifiers.flexGrowOn_2xl,
+    ]));
+  });
 });
 
 describe('ToolbarItem', () => {
@@ -393,6 +449,13 @@ describe('ToolbarItem', () => {
     ]));
   });
 
+  it('applies the flex grow and sm visibility breakpoint modifiers', () => {
+    const wrapper = mount(PfToolbarItem, { props: { flexGrowLg: true, visibilitySm: 'visible' } });
+    expect(wrapper.classes()).toContain(styles.modifiers.flexGrowOnLg);
+    expect(wrapper.classes()).toContain(styles.modifiers.visibleOnSm);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.flexGrow);
+  });
+
   it('sets the width css variables', () => {
     const wrapper = mount(PfToolbarItem, { props: { width: '100px', widthLg: '200px' } });
     const style = (wrapper.element as HTMLElement).style;
@@ -429,6 +492,20 @@ describe('ToolbarToggleGroup', () => {
       props: { expanded: true },
       slots: { default: () => h(PfToolbarContent, () => h(PfToolbarToggleGroup)) },
     });
+    expect(toggleButton(wrapper).attributes('aria-haspopup')).toBe('true');
+  });
+
+  it('uses the width of a container toolbar to decide whether the content is a popup', async () => {
+    const resize = stubResizeObserver();
+    setWindowWidth(1300);
+    const wrapper = mount(PfToolbar, {
+      props: { expanded: true, container: true },
+      slots: { default: () => h(PfToolbarContent, () => h(PfToolbarToggleGroup)) },
+    });
+    await resize(wrapper.element, globalBreakpoints.lg + 10);
+    expect(toggleButton(wrapper).attributes('aria-haspopup')).toBe('false');
+
+    await resize(wrapper.element, 500);
     expect(toggleButton(wrapper).attributes('aria-haspopup')).toBe('true');
   });
 });

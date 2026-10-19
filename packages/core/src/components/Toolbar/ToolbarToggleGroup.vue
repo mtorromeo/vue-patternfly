@@ -28,7 +28,7 @@ import { globalBreakpoints } from './common';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
 import { computed, inject } from 'vue';
-import { ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
+import { ToolbarContainerWidthKey, ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
 import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
 import type { Props as ToolbarGroupProps } from './ToolbarGroup.vue';
 import { useOUIAProps } from '../../helpers/ouia';
@@ -52,6 +52,7 @@ const { width: windowWidth } = useWindowSize();
 const expanded = inject(ToolbarExpandedKey);
 const toggleExpanded = inject(ToolbarToggleExpandedKey);
 const expandableRef = inject(ToolbarContentExpandableRefKey);
+const containerWidth = inject(ToolbarContainerWidthKey, undefined);
 
 const breakpointClasses = computed(() => {
   return [
@@ -66,6 +67,6 @@ const variantClass = computed(() => {
 });
 
 const isContentPopup = computed(() => {
-  return windowWidth.value < globalBreakpoints.lg;
+  return (containerWidth?.value ?? windowWidth.value) < globalBreakpoints.lg;
 });
 </script>

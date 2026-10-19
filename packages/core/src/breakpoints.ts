@@ -106,6 +106,15 @@ export type GrowBreakpointProps = {
   grow2xl?: boolean;
 }
 
+export type FlexGrowBreakpointProps = {
+  flexGrow?: boolean;
+  flexGrowSm?: boolean;
+  flexGrowMd?: boolean;
+  flexGrowLg?: boolean;
+  flexGrowXl?: boolean;
+  flexGrow2xl?: boolean;
+}
+
 export type ShrinkBreakpointProps = {
   shrink?: boolean;
   shrinkSm?: boolean;

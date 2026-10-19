@@ -1,7 +1,9 @@
 <template>
   <div
     v-bind="ouiaProps"
+    ref="toolbarRef"
     :class="[styles.toolbar, breakpointClasses, {
+      [styles.modifiers.container]: container,
       [styles.modifiers.fullHeight]: fullHeight,
       [styles.modifiers.static]: static,
       [styles.modifiers.sticky]: sticky,
@@ -33,6 +35,8 @@ export const ToolbarUpdateNumberFiltersKey = Symbol('ToolbarUpdateNumberFiltersK
 export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<Ref<boolean>>;
 export const ToolbarLabelGroupContentRefKey = Symbol('ToolbarLabelGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
+/** Width of the toolbar when it is a container for CSS container queries, undefined otherwise */
+export const ToolbarContainerWidthKey = Symbol('ToolbarContainerWidthKey') as InjectionKey<ComputedRef<number | undefined>>;
 
 interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Text to display in the clear all filters button */
@@ -51,13 +55,16 @@ interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLA
   colorVariant?: 'default' | 'no-background' | 'primary' | 'secondary';
   /** Flag indicating the toolbar padding is removed */
   noPadding?: boolean;
+  /** Flag indicating if the toolbar is a container for CSS container queries */
+  container?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
-import { provide, ref, computed, watch, onBeforeUnmount, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes } from 'vue';
+import { provide, ref, computed, watch, onBeforeUnmount, useTemplateRef, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes } from 'vue';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
-import { useWindowSize } from '@vueuse/core';
+import { useElementSize, useWindowSize } from '@vueuse/core';
+import { getBreakpoint } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarLabelGroupContent from './ToolbarLabelGroupContent.vue';
 import { globalBreakpoints } from './common';
@@ -106,6 +113,11 @@ const labelGroupContent: Ref<HTMLDivElement | null> = ref(null);
 provide(ToolbarLabelGroupContentRefKey, labelGroupContent);
 
 const { width: windowWidth } = useWindowSize();
+const toolbarRef = useTemplateRef('toolbarRef');
+const { width: toolbarWidth } = useElementSize(toolbarRef);
+const containerWidth = computed(() => props.container && toolbarWidth.value ? toolbarWidth.value : undefined);
+provide(ToolbarContainerWidthKey, containerWidth);
+const containerBreakpoint = computed(() => containerWidth.value ? getBreakpoint(containerWidth.value) : undefined);
 
 const filterInfo: Ref<Record<string, number>> = ref({});
 const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));
@@ -122,7 +134,14 @@ provide(ToolbarClearAllFiltersKey, clearAllFilters);
 provide(ToolbarUpdateNumberFiltersKey, updateNumberFilters);
 
 watch(windowWidth, () => {
-  if (toggleManaged.value) {
+  if (toggleManaged.value && !props.container) {
+    closeExpandableContent();
+  }
+});
+
+// a container toolbar closes its expandable content when its own breakpoint changes
+watch(containerBreakpoint, (breakpoint, oldBreakpoint) => {
+  if (toggleManaged.value && breakpoint && oldBreakpoint) {
     closeExpandableContent();
   }
 });

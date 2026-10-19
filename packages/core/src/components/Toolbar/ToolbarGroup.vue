@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, FlexGrowBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** A type modifier which modifies spacing specifically depending on the type of group */
   variant?: 'filter-group' | 'action-group' | 'action-group-inline' | 'action-group-plain' | 'label-group';
   /** Vertical alignment of children */
@@ -30,7 +30,7 @@ export interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakp
 </script>
 
 <script lang="ts" setup>
-import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type GapBreakpointProps, type ColumnGapBreakpointProps, type RowGapBreakpointProps, type RowWrapBreakpointProps } from '../../breakpoints';
+import { classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type GapBreakpointProps, type ColumnGapBreakpointProps, type RowGapBreakpointProps, type RowWrapBreakpointProps, type FlexGrowBreakpointProps } from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { computed, onMounted, type HTMLAttributes, useTemplateRef } from 'vue';
@@ -57,7 +57,7 @@ const el = useTemplateRef('elRef');
 const breakpointClasses = computed(() => {
   return [
     ...classesFromBreakpointProps(props, ['visibility', 'rowWrap'], styles, { short: true }),
-    ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap'], styles),
+    ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap', 'flexGrow'], styles),
   ];
 });
 
