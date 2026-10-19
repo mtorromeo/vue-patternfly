@@ -134,14 +134,25 @@ describe('MenuToggle', () => {
       expect(root(wrapper).attributes('aria-label')).toBe('Actions');
     });
 
-    it('renders the default slot in place of the ellipsis icon', () => {
+    it('renders the default slot as text in place of the ellipsis icon', () => {
       const wrapper = mount(PfMenuToggle, {
         props: { variant: 'plain' },
-        slots: { default: () => h('i', { class: 'custom-content' }) },
+        slots: { default: () => 'Applications' },
       });
 
-      expect(wrapper.find('.custom-content').exists()).toBe(true);
+      expect(wrapper.find(`.${styles.menuToggleText}`).text()).toBe('Applications');
       expect(wrapper.find(`.${styles.menuToggleIcon}`).exists()).toBe(false);
+      expect(wrapper.find(`.${styles.menuToggleControls}`).exists()).toBe(false);
+    });
+
+    it('renders the icon and the text', () => {
+      const wrapper = mount(PfMenuToggle, {
+        props: { variant: 'plain', docked: true },
+        slots: { icon: () => h('i', { class: 'my-icon' }), default: () => 'Applications' },
+      });
+
+      expect(wrapper.find(`.${styles.menuToggleIcon} .my-icon`).exists()).toBe(true);
+      expect(wrapper.find(`.${styles.menuToggleText}`).text()).toBe('Applications');
     });
 
     it('renders only the icon slot when given an icon', () => {

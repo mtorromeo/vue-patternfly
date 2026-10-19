@@ -51,11 +51,9 @@
       <slot v-else name="icon" />
     </span>
 
-    <slot v-if="!isSplitButton && variant === 'plain' && ((!settings && !$slots.icon && !$slots.badge) || $slots.default)">
-      <span v-if="!settings && !$slots.icon && !$slots.badge" :class="styles.menuToggleIcon">
-        <ellipsis-vertical-icon />
-      </span>
-    </slot>
+    <span v-if="!isSplitButton && variant === 'plain' && !settings && !$slots.icon && !$slots.badge && !$slots.default" :class="styles.menuToggleIcon">
+      <ellipsis-vertical-icon />
+    </span>
 
     <template v-else>
       <span v-if="!isSplitButton && !typeahead && $slots.default" :class="styles.menuToggleText">
