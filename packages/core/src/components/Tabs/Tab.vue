@@ -113,6 +113,8 @@ useChildrenTracker(TabsKey, {
   key,
   el,
   overflowing,
+  href: () => props.href,
+  disabled: () => !!(props.disabled || props.ariaDisabled),
 });
 
 const activeKey = tabs?.activeKey;
@@ -146,6 +148,12 @@ watchEffect(() => {
 });
 
 function handleClick(event: PointerEvent) {
+  if (event.currentTarget instanceof HTMLAnchorElement && event.currentTarget.hasAttribute('href')) {
+    event.preventDefault();
+    if (toValue(tabs?.nav)) {
+      window.history.pushState(null, '', event.currentTarget.href);
+    }
+  }
   if (activeKey) {
     activeKey.value = key.value;
   }

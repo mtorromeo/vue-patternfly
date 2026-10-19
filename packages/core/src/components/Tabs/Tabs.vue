@@ -137,7 +137,7 @@ interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointPro
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
 import { classesFromBreakpointProps, type ExpandableBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { isElementInView } from '../../util';
-import { watch, watchEffect, nextTick, onMounted, provide, computed, type Ref, ref, type HTMLAttributes, useTemplateRef, useId } from 'vue';
+import { watch, watchEffect, nextTick, onMounted, provide, computed, type Ref, ref, type HTMLAttributes, useTemplateRef, useId, toValue } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { isDefined, useEventListener } from '@vueuse/core';
 import { provideChildrenTracker } from '../../use';
@@ -166,11 +166,17 @@ const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
 /** The index of the active tab */
 const activeKey = defineModel<TabKey>('activeKey');
+// Nav tabs linked to the current location hash are initially active, until a tab is selected
+const hashActiveKey: Ref<TabKey | undefined> = ref();
 const localActiveKey = computed({
-  get: () => activeKey.value ?? props.defaultActiveKey,
+  get: () => hashActiveKey.value ?? activeKey.value ?? props.defaultActiveKey,
   set: (value) => {
+    hashActiveKey.value = undefined;
     activeKey.value = value;
   },
+});
+watch(activeKey, () => {
+  hashActiveKey.value = undefined;
 });
 
 /** Flag to indicate if the vertical tabs are expanded */
@@ -189,6 +195,7 @@ const tabs = provideChildrenTracker(TabsKey);
 
 provide(TabsProvideKey, {
   secondary: () => props.secondary,
+  nav: () => props.component === 'nav',
   activeKey: localActiveKey,
   idSuffix: () => props.id,
   tabOverflowRef,
@@ -207,6 +214,18 @@ if (!props.vertical) {
   useEventListener('resize', handleScrollButtons, false);
 }
 
+let hashPending = props.component === 'nav' && !!window.location.hash;
+watchEffect(() => {
+  if (!hashPending || !tabs.length) {
+    return;
+  }
+  hashPending = false;
+  const tab = tabs.find(tab => !toValue(tab.disabled) && getHashFromHref(toValue(tab.href)) === window.location.hash);
+  if (tab) {
+    hashActiveKey.value = tab.key;
+  }
+});
+
 watchEffect(() => {
   if ((!isDefined(localActiveKey.value) || !tabs.find(tab => (tab.key) === localActiveKey.value)) && tabs.length) {
     localActiveKey.value = tabs[0]?.key;
@@ -218,6 +237,11 @@ watch(tabs, handleScrollButtons, { immediate: true });
 onMounted(() => {
   nextTick(handleScrollButtons);
 });
+
+function getHashFromHref(href?: string) {
+  const hashIndex = href?.indexOf('#') ?? -1;
+  return href && hashIndex >= 0 ? href.slice(hashIndex) : undefined;
+}
 
 function countOverflowingElements() {
   if (!tabListRef.value || !tabs[0]?.el) {

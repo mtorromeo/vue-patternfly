@@ -5,6 +5,7 @@ import type { ComponentExposed } from 'vue-component-type-helpers';
 
 export type TabsProvide = {
   secondary: MaybeRefOrGetter<boolean>;
+  nav: MaybeRefOrGetter<boolean>;
   activeKey: WritableComputedRef<TabKey | undefined>;
   idSuffix: MaybeRefOrGetter<string>;
   tabOverflowRef: Ref<ComponentExposed<typeof PfMenuList> | undefined>;
@@ -17,6 +18,8 @@ export type TabData = {
   key: ComputedRef<TabKey>;
   el: Ref<HTMLLIElement | undefined>;
   overflowing: Ref<boolean>;
+  href: MaybeRefOrGetter<string | undefined>;
+  disabled: MaybeRefOrGetter<boolean>;
 }
 
 export type TabKey = number | string | symbol;

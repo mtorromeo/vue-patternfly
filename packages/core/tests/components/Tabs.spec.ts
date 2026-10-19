@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushPromises, mount, type VueWrapper } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
@@ -11,7 +11,7 @@ import PfTabTitleIcon from '../../src/components/Tabs/TabTitleIcon.vue';
 import PfTabTitleText from '../../src/components/Tabs/TabTitleText.vue';
 import { TabsProvideKey, type TabKey, type TabsProvide } from '../../src/components/Tabs/common';
 
-type TabDef = { key?: string | number; title: string; content: string; disabled?: boolean };
+type TabDef = { key?: string | number; title: string; content: string; disabled?: boolean; href?: string };
 
 const defaultTabs: TabDef[] = [
   { key: 'users', title: 'Users', content: 'Users content' },
@@ -27,6 +27,7 @@ async function mountTabs(tabsProps: Record<string, unknown> = {}, tabs: TabDef[]
           ...(tab.key !== undefined ? { key: tab.key } : {}),
           title: tab.title,
           disabled: tab.disabled,
+          href: tab.href,
         }, () => tab.content)),
       });
     },
@@ -223,6 +224,65 @@ describe('Tabs', () => {
       expect(visiblePanels(wrapper).map(p => p.text())).toEqual(['Containers content']);
       await tabButtons(wrapper)[0]!.trigger('click');
       expect(visiblePanels(wrapper).map(p => p.text())).toEqual(['Users content']);
+    });
+  });
+
+  describe('hash-linked nav tabs', () => {
+    const linkedTabs: TabDef[] = defaultTabs.map(tab => ({ ...tab, href: `/page#${tab.key}` }));
+
+    afterEach(() => {
+      window.history.replaceState(null, '', '/');
+    });
+
+    it('activates the nav tab matching the location hash', async () => {
+      window.history.replaceState(null, '', '/page#database');
+      const wrapper = await mountTabs({ component: 'nav' }, linkedTabs);
+
+      expect(tabButtons(wrapper).map(b => b.attributes('aria-selected'))).toEqual(['false', 'false', 'true']);
+      expect(visiblePanels(wrapper).map(p => p.text())).toEqual(['Database content']);
+    });
+
+    it('overrides activeKey and defaultActiveKey until a tab is selected', async () => {
+      window.history.replaceState(null, '', '/page#database');
+      const controlled = await mountTabs({ component: 'nav', activeKey: 'users' }, linkedTabs);
+      expect(tabButtons(controlled).map(b => b.attributes('aria-selected'))).toEqual(['false', 'false', 'true']);
+
+      const uncontrolled = await mountTabs({ component: 'nav', defaultActiveKey: 'users' }, linkedTabs);
+      expect(tabButtons(uncontrolled).map(b => b.attributes('aria-selected'))).toEqual(['false', 'false', 'true']);
+
+      await tabButtons(uncontrolled)[1]!.trigger('click');
+      expect(tabButtons(uncontrolled).map(b => b.attributes('aria-selected'))).toEqual(['false', 'true', 'false']);
+    });
+
+    it('ignores the hash for disabled tabs and non-nav tabs', async () => {
+      window.history.replaceState(null, '', '/page#database');
+      const disabled = await mountTabs({ component: 'nav' }, linkedTabs.map(tab => ({ ...tab, disabled: tab.key === 'database' })));
+      expect(tabButtons(disabled).map(b => b.attributes('aria-selected'))).toEqual(['true', 'false', 'false']);
+
+      const notNav = await mountTabs({}, linkedTabs);
+      expect(tabButtons(notNav).map(b => b.attributes('aria-selected'))).toEqual(['true', 'false', 'false']);
+    });
+
+    it('pushes the tab href to the history when a nav tab is selected', async () => {
+      const wrapper = await mountTabs({ component: 'nav' }, linkedTabs);
+      const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+
+      tabButtons(wrapper)[1]!.element.dispatchEvent(event);
+      await nextTick();
+      expect(event.defaultPrevented).toBe(true);
+      expect(window.location.hash).toBe('#containers');
+      expect(tabButtons(wrapper).map(b => b.attributes('aria-selected'))).toEqual(['false', 'true', 'false']);
+    });
+
+    it('prevents link navigation without touching the history for non-nav tabs', async () => {
+      const pushState = vi.spyOn(window.history, 'pushState');
+      const wrapper = await mountTabs({}, linkedTabs);
+      const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+
+      tabButtons(wrapper)[1]!.element.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(true);
+      expect(pushState).not.toHaveBeenCalled();
+      pushState.mockRestore();
     });
   });
 
