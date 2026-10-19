@@ -385,37 +385,56 @@
         </template>
 
         <template #dock-content>
-          <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="dockExpanded = !dockExpanded" />
-
-          <pf-nav variant="docked" :expanded="dockExpanded" aria-label="Docked global">
-            <pf-nav-list>
-              <pf-nav-item active>
-                <template #icon><cubes-icon /></template>
-                System panel
-              </pf-nav-item>
-              <pf-nav-expandable title="Folder" expandable-icon>
-                <template #icon><folder-icon /></template>
-                <pf-nav-item>
-                  <template #icon><file-icon /></template>
-                  Subnav link 1
-                </pf-nav-item>
-              </pf-nav-expandable>
-              <pf-nav-item>
-                <template #icon><cloud-icon /></template>
-                Authentication
-              </pf-nav-item>
-              <pf-nav-item>
-                <template #icon><code-icon /></template>
-                Network services
-              </pf-nav-item>
-            </pf-nav-list>
-          </pf-nav>
-
-          <pf-menu-toggle variant="plain" docked aria-label="Applications">
-            <template #icon><table-cells-large-icon /></template>
-            Applications
-          </pf-menu-toggle>
-          <pf-button variant="plain" docked settings :expanded="dockExpanded" aria-label="Settings">Settings</pf-button>
+          <pf-masthead variant="docked">
+            <pf-masthead-main>
+              <pf-masthead-toggle>
+                <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="dockExpanded = !dockExpanded" />
+              </pf-masthead-toggle>
+            </pf-masthead-main>
+            <pf-divider />
+            <pf-masthead-content>
+              <pf-toolbar vertical>
+                <pf-toolbar-content>
+                  <pf-toolbar-item>
+                    <pf-nav variant="docked" :expanded="dockExpanded" aria-label="Docked global">
+                      <pf-nav-list>
+                        <pf-nav-item active>
+                          <template #icon><cubes-icon /></template>
+                          System panel
+                        </pf-nav-item>
+                        <pf-nav-expandable title="Folder" expandable-icon>
+                          <template #icon><folder-icon /></template>
+                          <pf-nav-item>
+                            <template #icon><file-icon /></template>
+                            Subnav link 1
+                          </pf-nav-item>
+                        </pf-nav-expandable>
+                        <pf-nav-item>
+                          <template #icon><cloud-icon /></template>
+                          Authentication
+                        </pf-nav-item>
+                        <pf-nav-item>
+                          <template #icon><code-icon /></template>
+                          Network services
+                        </pf-nav-item>
+                      </pf-nav-list>
+                    </pf-nav>
+                  </pf-toolbar-item>
+                  <pf-toolbar-group variant="action-group-plain" align="end" gap="none" gap-md="md">
+                    <pf-toolbar-item>
+                      <pf-menu-toggle variant="plain" docked aria-label="Applications">
+                        <template #icon><table-cells-large-icon /></template>
+                        Applications
+                      </pf-menu-toggle>
+                    </pf-toolbar-item>
+                    <pf-toolbar-item>
+                      <pf-button variant="plain" docked settings aria-label="Settings">Settings</pf-button>
+                    </pf-toolbar-item>
+                  </pf-toolbar-group>
+                </pf-toolbar-content>
+              </pf-toolbar>
+            </pf-masthead-content>
+          </pf-masthead>
         </template>
 
         <pf-page-section>Main section</pf-page-section>
