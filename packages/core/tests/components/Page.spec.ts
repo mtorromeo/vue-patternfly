@@ -7,7 +7,9 @@ import drawerStyles from '@patternfly/react-styles/css/components/Drawer/drawer'
 import { globalHeightBreakpoints, globalWidthBreakpoints } from '../../src/constants';
 import PfPage from '../../src/components/Page/Page.vue';
 import PfPageBreadcrumb from '../../src/components/Page/PageBreadcrumb.vue';
+import PfPageFooter from '../../src/components/Page/PageFooter.vue';
 import PfPageGroup from '../../src/components/Page/PageGroup.vue';
+import PfPageHeader from '../../src/components/Page/PageHeader.vue';
 import PfPageSection from '../../src/components/Page/PageSection.vue';
 import PfPageSidebar from '../../src/components/Page/PageSidebar.vue';
 import PfPageSidebarBody from '../../src/components/Page/PageSidebarBody.vue';
@@ -132,6 +134,28 @@ describe('Page', () => {
       expect(drawer.classes()).toContain(drawerStyles.modifiers.expanded);
       expect(drawer.find(`.${drawerStyles.drawerContent} .${styles.pageMain}`).text()).toBe('Content');
       expect(drawer.find(`.${drawerStyles.drawerPanel} .drawer-content`).exists()).toBe(true);
+    });
+
+    it('applies the plain modifier', () => {
+      expect(pageRoot(mount(PfPage, { props: { plain: true } })).classes()).toContain(styles.modifiers.plain);
+      expect(pageRoot(mount(PfPage)).classes()).not.toContain(styles.modifiers.plain);
+    });
+
+    it('renders the footer after the main container', () => {
+      const wrapper = mount(PfPage, {
+        slots: {
+          masthead: () => h(PfPageHeader, () => 'Header'),
+          default: () => 'Content',
+          footer: () => h(PfPageFooter, () => 'Footer'),
+        },
+      });
+      const children = [...pageRoot(wrapper).element.children].map(c => c.className.split(' ')[0]);
+      expect(children).toEqual([styles.pageHeader, styles.pageMainContainer, styles.pageFooter]);
+    });
+
+    it('exposes the main element', () => {
+      const wrapper = mount(PfPage, { slots: { default: () => 'Content' } });
+      expect(wrapper.vm.main).toBe(wrapper.find(`.${styles.pageMain}`).element);
     });
   });
 
@@ -504,5 +528,31 @@ describe('PageBreadcrumb', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.limitWidth);
     expect(wrapper.find(`.${styles.pageMainBody}`).text()).toBe('Crumbs');
     expect((wrapper.element as HTMLElement).style.getPropertyValue('--pf-v6-c-page--section--m-limit-width--MaxWidth')).toBe('300px');
+  });
+});
+
+describe('PageHeader', () => {
+  it('renders a header element with the page header class', () => {
+    const wrapper = mount(PfPageHeader, { slots: { default: () => 'Custom header' } });
+    expect(wrapper.element.tagName).toBe('HEADER');
+    expect(wrapper.classes()).toContain(styles.pageHeader);
+    expect(wrapper.text()).toBe('Custom header');
+  });
+
+  it('renders a custom component', () => {
+    expect(mount(PfPageHeader, { props: { component: 'div' } }).element.tagName).toBe('DIV');
+  });
+});
+
+describe('PageFooter', () => {
+  it('renders a footer element with the page footer class', () => {
+    const wrapper = mount(PfPageFooter, { slots: { default: () => 'Custom footer' } });
+    expect(wrapper.element.tagName).toBe('FOOTER');
+    expect(wrapper.classes()).toContain(styles.pageFooter);
+    expect(wrapper.text()).toBe('Custom footer');
+  });
+
+  it('renders a custom component', () => {
+    expect(mount(PfPageFooter, { props: { component: 'div' } }).element.tagName).toBe('DIV');
   });
 });

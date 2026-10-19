@@ -1,7 +1,7 @@
 <template>
   <define-main-container>
     <div :class="[styles.pageMainContainer, { [styles.modifiers.fill]: contentFilled }]">
-      <component :is="mainComponent" :id="mainContainerId" :role="role" :class="styles.pageMain" :tabindex="mainTabIndex" :aria-label="mainAriaLabel" @click="mainClick" @touchstart.passive="mainClick">
+      <component :is="mainComponent" :id="mainContainerId" ref="mainRef" :role="role" :class="styles.pageMain" :tabindex="mainTabIndex" :aria-label="mainAriaLabel" @click="mainClick" @touchstart.passive="mainClick">
         <slot />
       </component>
     </div>
@@ -18,6 +18,7 @@
         [`pf-m-height-breakpoint-${getVerticalBreakpoint(height)}`]: height,
         [styles.modifiers.docked]: variant === 'docked',
         [styles.modifiers.noSidebar]: sidebars.length === 0,
+        [styles.modifiers.plain]: plain,
       },
     ]"
   >
@@ -57,6 +58,8 @@
     </div>
 
     <main-container v-else />
+
+    <slot name="footer" />
   </div>
 </template>
 
@@ -97,6 +100,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   dockExpanded?: boolean;
   /** Flag indicating the docked nav should expand as an overlay instead of the default inline. */
   dockOverlay?: boolean;
+  /** Flag indicating the page should render without the content area background and overflow scroll. */
+  plain?: boolean;
 }
 </script>
 
@@ -132,12 +137,16 @@ defineSlots<{
   drawer?: (props?: Record<never, never>) => any;
   "skip-to-content"?: (props?: Record<never, never>) => any;
   "dock-content"?: (props?: Record<never, never>) => any;
+  /** The horizontal masthead content (e.g. PfMasthead or PfPageHeader). When using the docked variant, this content will only render at mobile viewports. */
   masthead?: (props?: Record<never, never>) => any;
   sidebar?: (props?: Record<never, never>) => any;
+  /** Content rendered inside the page footer, e.g. PfPageFooter */
+  footer?: (props?: Record<never, never>) => any;
 }>();
 
 const [DefineMainContainer, MainContainer] = createReusableTemplate();
 const pageRef = useTemplateRef("page");
+const mainRef = useTemplateRef<HTMLElement>("mainRef");
 const { width, height } = useElementSize(pageRef);
 const sidebars = provideChildrenTracker(PageSidebarsKey);
 
@@ -186,5 +195,7 @@ function mainClick() {
 
 defineExpose({
   navToggle,
+  /** The main section of the page */
+  main: mainRef,
 });
 </script>

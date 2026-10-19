@@ -5,7 +5,9 @@
     <template #apidocs>
       <component-info name="PfPage" />
       <component-info name="PfPageBreadcrumb" />
+      <component-info name="PfPageFooter" />
       <component-info name="PfPageGroup" />
+      <component-info name="PfPageHeader" />
       <component-info name="PfPageSection" />
       <component-info name="PfPageSidebar" />
       <component-info name="PfPageSidebarBody" />
