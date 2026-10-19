@@ -394,6 +394,7 @@
                 System panel
               </pf-nav-item>
               <pf-nav-expandable title="Folder" expandable-icon>
+                <template #icon><folder-icon /></template>
                 <pf-nav-item>
                   <template #icon><file-icon /></template>
                   Subnav link 1
@@ -453,6 +454,7 @@ import CloudIcon from "@vue-patternfly/icons/cloud-icon";
 import CodeIcon from "@vue-patternfly/icons/code-icon";
 import CubesIcon from "@vue-patternfly/icons/cubes-icon";
 import FileIcon from "@vue-patternfly/icons/file-icon";
+import FolderIcon from "@vue-patternfly/icons/folder-icon";
 import MagnifyingGlassIcon from "@vue-patternfly/icons/magnifying-glass-icon";
 import TableCellsLargeIcon from "@vue-patternfly/icons/table-cells-large-icon";
 import { ref } from "vue";

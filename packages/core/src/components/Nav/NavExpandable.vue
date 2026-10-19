@@ -17,6 +17,9 @@
       @click.prevent
       @mousedown.prevent
     >
+      <span v-if="$slots.icon" :class="styles.navLinkIcon">
+        <slot name="icon" />
+      </span>
       <span v-if="expandableIcon" :class="styles.navLinkExpandableIcon">
         <pf-ellipsis-icon />
       </span>
@@ -80,6 +83,8 @@ const emit = defineEmits<{
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   title?: (props?: Record<never, never>) => any;
+  /** Icon rendered before the title */
+  icon?: (props?: Record<never, never>) => any;
 }>();
 
 const expandable = useTemplateRef('expandableRef');

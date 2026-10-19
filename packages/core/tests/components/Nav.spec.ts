@@ -302,6 +302,20 @@ describe('NavExpandable', () => {
     expect(mount(PfNavExpandable, { props: { title: 'Section' } }).find(`.${styles.navLinkExpandableIcon}`).exists()).toBe(false);
   });
 
+  it('renders the icon slot before the expandable icon and the title', () => {
+    const wrapper = mount(PfNavExpandable, {
+      props: { title: 'Section', expandableIcon: true },
+      slots: { icon: () => h('i', { class: 'my-icon' }) },
+    });
+    const children = toggle(wrapper).findAll(':scope > span');
+    expect(children[0].classes()).toContain(styles.navLinkIcon);
+    expect(children[0].find('.my-icon').exists()).toBe(true);
+    expect(children[1].classes()).toContain(styles.navLinkExpandableIcon);
+    expect(children[2].classes()).toContain(styles.navLinkText);
+
+    expect(mount(PfNavExpandable, { props: { title: 'Section' } }).find(`.${styles.navLinkIcon}`).exists()).toBe(false);
+  });
+
   it('renders the title slot', () => {
     const wrapper = mount(PfNavExpandable, { slots: { title: () => h('b', 'Bold') } });
     expect(toggle(wrapper).find('b').text()).toBe('Bold');
