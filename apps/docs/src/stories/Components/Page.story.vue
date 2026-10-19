@@ -365,80 +365,83 @@
         <pre v-md>
           With the `docked` variant, the content of the `dock-content` slot is rendered in a vertical dock, while the `masthead` slot is only rendered at mobile viewports. The docked components (`pf-nav`, `pf-button` and `pf-menu-toggle`) only display their text when the dock is expanded.
 
-          Set `dock-expanded` to expand the dock inline, and `dock-overlay` to expand it as an overlay on top of the page content instead.
+          Set `dock-expanded` to expand the dock inline, pushing the page content aside.
+
+          With `dock-overlay` the expanded dock is instead positioned on top of the page content, like it always is at mobile viewports; while not expanded, an overlay dock is hidden. In this example the overlay is used when a nav group is opened from the collapsed dock: try expanding "Folder" while the dock is collapsed. Selecting an item, pressing Escape or clicking outside the dock closes the overlay.
+
+          The dock is fixed to the viewport, so the page in this example uses `transform` to keep it inside the example frame.
         </pre>
       </template>
 
-      <pf-switch v-model:checked="dockExpanded" label="Dock expanded" /><br /><br />
-      <pf-switch v-model:checked="dockOverlay" label="Dock overlay" /><br /><br />
+      <div ref="dockedPage">
+        <pf-page variant="docked" :dock-expanded="dockExpanded" :dock-overlay="dockOverlay" style="height: 500px; transform: translateZ(0)">
+          <template #masthead>
+            <pf-masthead>
+              <pf-masthead-main>
+                <pf-masthead-toggle>
+                  <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="toggleDock" />
+                </pf-masthead-toggle>
+                <pf-masthead-brand href="#">Logo</pf-masthead-brand>
+              </pf-masthead-main>
+            </pf-masthead>
+          </template>
 
-      <pf-page variant="docked" :dock-expanded="dockExpanded" :dock-overlay="dockOverlay" style="height: 500px">
-        <template #masthead>
-          <pf-masthead>
-            <pf-masthead-main>
-              <pf-masthead-toggle>
-                <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="dockExpanded = !dockExpanded" />
-              </pf-masthead-toggle>
-              <pf-masthead-brand href="#">Logo</pf-masthead-brand>
-            </pf-masthead-main>
-          </pf-masthead>
-        </template>
-
-        <template #dock-content>
-          <pf-masthead variant="docked">
-            <pf-masthead-main>
-              <pf-masthead-toggle>
-                <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="dockExpanded = !dockExpanded" />
-              </pf-masthead-toggle>
-            </pf-masthead-main>
-            <pf-divider />
-            <pf-masthead-content>
-              <pf-toolbar vertical>
-                <pf-toolbar-content>
-                  <pf-toolbar-item>
-                    <pf-nav variant="docked" :expanded="dockExpanded" aria-label="Docked global">
-                      <pf-nav-list>
-                        <pf-nav-item active>
-                          <template #icon><cubes-icon /></template>
-                          System panel
-                        </pf-nav-item>
-                        <pf-nav-expandable title="Folder" expandable-icon>
-                          <template #icon><folder-icon /></template>
-                          <pf-nav-item>
-                            <template #icon><file-icon /></template>
-                            Subnav link 1
+          <template #dock-content>
+            <pf-masthead variant="docked">
+              <pf-masthead-main>
+                <pf-masthead-toggle>
+                  <pf-button variant="plain" hamburger :expanded="dockExpanded" aria-label="Global navigation" @click="toggleDock" />
+                </pf-masthead-toggle>
+              </pf-masthead-main>
+              <pf-divider />
+              <pf-masthead-content>
+                <pf-toolbar vertical>
+                  <pf-toolbar-content>
+                    <pf-toolbar-item>
+                      <pf-nav variant="docked" :expanded="dockExpanded" aria-label="Docked global" @select="onDockSelect">
+                        <pf-nav-list>
+                          <pf-nav-item active>
+                            <template #icon><cubes-icon /></template>
+                            System panel
                           </pf-nav-item>
-                        </pf-nav-expandable>
-                        <pf-nav-item>
-                          <template #icon><cloud-icon /></template>
-                          Authentication
-                        </pf-nav-item>
-                        <pf-nav-item>
-                          <template #icon><code-icon /></template>
-                          Network services
-                        </pf-nav-item>
-                      </pf-nav-list>
-                    </pf-nav>
-                  </pf-toolbar-item>
-                  <pf-toolbar-group variant="action-group-plain" align="end" gap="none" gap-md="md">
-                    <pf-toolbar-item>
-                      <pf-menu-toggle variant="plain" docked aria-label="Applications">
-                        <template #icon><table-cells-large-icon /></template>
-                        Applications
-                      </pf-menu-toggle>
+                          <pf-nav-expandable title="Folder" expandable-icon :expanded="folderExpanded" @update:expanded="toggleFolder">
+                            <template #icon><folder-icon /></template>
+                            <pf-nav-item>
+                              <template #icon><file-icon /></template>
+                              Subnav link 1
+                            </pf-nav-item>
+                          </pf-nav-expandable>
+                          <pf-nav-item>
+                            <template #icon><cloud-icon /></template>
+                            Authentication
+                          </pf-nav-item>
+                          <pf-nav-item>
+                            <template #icon><code-icon /></template>
+                            Network services
+                          </pf-nav-item>
+                        </pf-nav-list>
+                      </pf-nav>
                     </pf-toolbar-item>
-                    <pf-toolbar-item>
-                      <pf-button variant="plain" docked settings aria-label="Settings">Settings</pf-button>
-                    </pf-toolbar-item>
-                  </pf-toolbar-group>
-                </pf-toolbar-content>
-              </pf-toolbar>
-            </pf-masthead-content>
-          </pf-masthead>
-        </template>
+                    <pf-toolbar-group variant="action-group-plain" align="end" gap="none" gap-md="md">
+                      <pf-toolbar-item>
+                        <pf-menu-toggle variant="plain" docked aria-label="Applications">
+                          <template #icon><table-cells-large-icon /></template>
+                          Applications
+                        </pf-menu-toggle>
+                      </pf-toolbar-item>
+                      <pf-toolbar-item>
+                        <pf-button variant="plain" docked settings aria-label="Settings">Settings</pf-button>
+                      </pf-toolbar-item>
+                    </pf-toolbar-group>
+                  </pf-toolbar-content>
+                </pf-toolbar>
+              </pf-masthead-content>
+            </pf-masthead>
+          </template>
 
-        <pf-page-section>Main section</pf-page-section>
-      </pf-page>
+          <pf-page-section>Main section</pf-page-section>
+        </pf-page>
+      </div>
     </story-canvas>
 
     <story-canvas title="Custom header and footer">
@@ -476,10 +479,57 @@ import FileIcon from "@vue-patternfly/icons/file-icon";
 import FolderIcon from "@vue-patternfly/icons/folder-icon";
 import MagnifyingGlassIcon from "@vue-patternfly/icons/magnifying-glass-icon";
 import TableCellsLargeIcon from "@vue-patternfly/icons/table-cells-large-icon";
-import { ref } from "vue";
+import { onKeyStroke, onClickOutside } from "@vueuse/core";
+import { computed, ref, useTemplateRef } from "vue";
 
 const expanded = ref(false);
+const plain = ref(false);
+
 const dockExpanded = ref(false);
 const dockOverlay = ref(false);
-const plain = ref(false);
+const folderExpanded = ref(false);
+const dockedPage = useTemplateRef<HTMLElement>("dockedPage");
+const dock = computed(() => dockedPage.value?.querySelector<HTMLElement>(".pf-v6-c-page__dock"));
+
+function closeDock() {
+  dockExpanded.value = false;
+  dockOverlay.value = false;
+}
+
+function toggleDock() {
+  if (dockExpanded.value) {
+    closeDock();
+  } else {
+    dockExpanded.value = true;
+  }
+}
+
+function toggleFolder(value: boolean) {
+  // opening a group from the collapsed dock expands it as an overlay
+  if (!dockExpanded.value) {
+    folderExpanded.value = true;
+    dockOverlay.value = true;
+    dockExpanded.value = true;
+  } else {
+    folderExpanded.value = value;
+  }
+}
+
+function onDockSelect() {
+  if (dockOverlay.value) {
+    closeDock();
+  }
+}
+
+onKeyStroke("Escape", () => {
+  if (dockOverlay.value) {
+    closeDock();
+  }
+});
+
+onClickOutside(dock, () => {
+  if (dockOverlay.value) {
+    closeDock();
+  }
+});
 </script>
