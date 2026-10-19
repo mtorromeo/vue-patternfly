@@ -28,14 +28,22 @@
 
           <slot />
 
-          <pf-action-group>
-            <pf-button variant="primary" type="submit" :disabled="!value" @click.prevent="onSearch">
-              {{ submitSearchButtonLabel }}
-            </pf-button>
-            <pf-button v-if="onClear" variant="link" type="reset" @click="onClear">
-              {{ resetButtonLabel }}
-            </pf-button>
-          </pf-action-group>
+          <pf-form-group action-group>
+            <pf-action-list>
+              <pf-action-list-group>
+                <pf-action-list-item>
+                  <pf-button variant="primary" type="submit" :disabled="!value" @click.prevent="onSearch">
+                    {{ submitSearchButtonLabel }}
+                  </pf-button>
+                </pf-action-list-item>
+                <pf-action-list-item v-if="onClear">
+                  <pf-button variant="link" type="reset" @click="onClear">
+                    {{ resetButtonLabel }}
+                  </pf-button>
+                </pf-action-list-item>
+              </pf-action-list-group>
+            </pf-action-list>
+          </pf-form-group>
         </pf-form>
       </pf-panel-main-body>
     </pf-panel-main>
@@ -53,7 +61,9 @@ import PfPanelMain from '../Panel/PanelMain.vue';
 import PfPanelMainBody from '../Panel/PanelMainBody.vue';
 import PfForm from '../Form/Form.vue';
 import PfFormGroup from '../Form/FormGroup.vue';
-import PfActionGroup from '../Form/ActionGroup.vue';
+import PfActionList from '../ActionList/ActionList.vue';
+import PfActionListGroup from '../ActionList/ActionListGroup.vue';
+import PfActionListItem from '../ActionList/ActionListItem.vue';
 import { useEventListener } from '@vueuse/core';
 import type { ComponentExposed, ComponentProps } from 'vue-component-type-helpers';
 

@@ -13,6 +13,7 @@ import styles from '@patternfly/react-styles/css/components/Form/form';
 import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
+/** @deprecated use PfActionList, PfActionListGroup and PfActionListItem in a PfFormGroup with actionGroup instead. */
 defineOptions({
   name: 'PfActionGroup',
 });

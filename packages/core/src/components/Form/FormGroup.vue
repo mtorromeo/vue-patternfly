@@ -1,5 +1,5 @@
 <template>
-  <component v-bind="ouiaProps" :is="fieldset ? 'fieldset' : 'div'" :class="styles.formGroup">
+  <component v-bind="ouiaProps" :is="fieldset ? 'fieldset' : 'div'" :class="[styles.formGroup, { [styles.modifiers.action]: actionGroup }]">
     <div
       v-if="label || $slots.label"
       :class="[styles.formGroupLabel, {
@@ -104,6 +104,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
 
   /** Removes top spacer from label. */
   noPaddingTop?: boolean;
+
+  /** Sets the FormGroup action modifier. Used to contain form action buttons. */
+  actionGroup?: boolean;
 
   /** Helper text regarding the field. */
   helperText?: string;

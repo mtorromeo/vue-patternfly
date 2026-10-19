@@ -6,6 +6,8 @@ import inputGroupStyles from '@patternfly/react-styles/css/components/InputGroup
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import badgeStyles from '@patternfly/react-styles/css/components/Badge/badge';
 import panelStyles from '@patternfly/react-styles/css/components/Panel/panel';
+import formStyles from '@patternfly/react-styles/css/components/Form/form';
+import actionListStyles from '@patternfly/react-styles/css/components/ActionList/action-list';
 import PfSearchInput from '../../src/components/SearchInput/SearchInput.vue';
 import PfAdvancedSearchMenu from '../../src/components/SearchInput/AdvancedSearchMenu.vue';
 
@@ -348,6 +350,15 @@ describe('AdvancedSearchMenu', () => {
 
     expect(wrapper.find('button[type="submit"]').text()).toBe('Go');
     expect(wrapper.find('button[type="reset"]').text()).toBe('Clear');
+  });
+
+  it('renders the buttons in an action list inside an action form group', () => {
+    const wrapper = mount(PfAdvancedSearchMenu, {
+      props: { searchMenuOpen: true, modelValue: 'x', onClear: vi.fn() },
+    });
+
+    const items = wrapper.findAll(`.${formStyles.formGroup}.${formStyles.modifiers.action} .${actionListStyles.actionList} .${actionListStyles.actionListGroup} .${actionListStyles.actionList}__item`);
+    expect(items.map(i => i.find('button').attributes('type'))).toEqual(['submit', 'reset']);
   });
 
   it('omits the reset button without onClear and disables submit without a value', () => {

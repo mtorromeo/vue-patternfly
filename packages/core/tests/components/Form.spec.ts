@@ -72,6 +72,17 @@ describe('FormAlert', () => {
 });
 
 describe('FormGroup', () => {
+  it('applies the action modifier for action groups', () => {
+    const wrapper = mount(PfFormGroup, {
+      props: { actionGroup: true },
+      slots: { default: () => h('button', 'Submit') },
+    });
+
+    expect(wrapper.classes()).toContain(styles.modifiers.action);
+    expect(wrapper.find(`.${styles.formGroupControl} button`).text()).toBe('Submit');
+    expect(mount(PfFormGroup).classes()).not.toContain(styles.modifiers.action);
+  });
+
   it('renders the group with a label linked to the field', () => {
     const wrapper = mount(PfFormGroup, {
       props: { label: 'Name', fieldId: 'name' },
