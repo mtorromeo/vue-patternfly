@@ -1,10 +1,13 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.menuItemAction, {
-      'pf-m-favorite': isDefined(favorited),
-      [styles.modifiers.favorited]: favorited,
-    }]"
+    :class="[
+      styles.menuItemAction,
+      {
+        'pf-m-favorite': isDefined(favorited),
+        [styles.modifiers.favorited]: favorited,
+      },
+    ]"
   >
     <pf-button
       v-bind="$attrs"
@@ -36,7 +39,10 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick' | 'tabindex' | 'ouiaId' | 'ouiaSafe'> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick' | 'tabindex' | 'ouiaId' | 'ouiaSafe'> {
   /** The action icon to use */
   icon?: 'favorites';
   /** Flag indicating if the item is favorited */
@@ -50,7 +56,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 const props = withDefaults(defineProps<Props>(), {
   favorited: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<Record<never, never>>();
 

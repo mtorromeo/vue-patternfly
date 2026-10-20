@@ -2,10 +2,7 @@
   <component
     v-bind="ouiaProps"
     :is="component"
-    :class="[
-      styles.helperTextItem,
-      variant === 'default' ? null : styles.modifiers[variant],
-    ]"
+    :class="[styles.helperTextItem, variant === 'default' ? null : styles.modifiers[variant]]"
   >
     <span v-if="variant !== 'default' || $slots.icon" :class="styles.helperTextItemIcon" aria-hidden="true">
       <slot name="icon">
@@ -43,7 +40,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -53,8 +50,6 @@ defineSlots<{
 const helperTextComponent = inject(HelperTextComponentKey, undefined);
 
 const component = computed(() => {
-  return helperTextComponent?.value === 'ul'
-    ? 'li'
-    : 'div';
+  return helperTextComponent?.value === 'ul' ? 'li' : 'div';
 });
 </script>

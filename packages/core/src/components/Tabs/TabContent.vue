@@ -1,9 +1,12 @@
 <template>
   <section
     v-bind="ouiaProps"
-    :class="[styles.tabContent, {
-      [styles.modifiers.secondary]: secondary,
-    }]"
+    :class="[
+      styles.tabContent,
+      {
+        [styles.modifiers.secondary]: secondary,
+      },
+    ]"
     role="tabpanel"
     :hidden="hidden || undefined"
     tabindex="0"
@@ -26,7 +29,7 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

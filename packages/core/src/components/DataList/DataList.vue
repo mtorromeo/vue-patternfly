@@ -3,7 +3,8 @@
     v-bind="ouiaProps"
     :class="[
       styles.dataList,
-      gridBreackpointClass, {
+      gridBreackpointClass,
+      {
         [styles.modifiers.compact]: compact,
         [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,
         [styles.modifiers.dragOver]: dragging,
@@ -17,12 +18,12 @@
 <script lang="ts">
 export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
   emit: (event: 'update:selected', item: string | number | symbol | (string | number | symbol)[] | undefined) => void;
-  selectable: Ref<boolean>,
-  expandable: ComputedRef<boolean | undefined>,
-  inputName: ComputedRef<string | undefined>,
-  inputValue: ComputedRef<string | undefined>,
-  itemSelection: Ref<string | number | symbol | (string | number | symbol)[] | undefined>,
-  multipleSelection: ComputedRef<boolean>,
+  selectable: Ref<boolean>;
+  expandable: ComputedRef<boolean | undefined>;
+  inputName: ComputedRef<string | undefined>;
+  inputValue: ComputedRef<string | undefined>;
+  itemSelection: Ref<string | number | symbol | (string | number | symbol)[] | undefined>;
+  multipleSelection: ComputedRef<boolean>;
 }>;
 
 export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
@@ -51,7 +52,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type HTMLAttributes } from "vue";
+import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type HTMLAttributes } from 'vue';
 
 const gridBreakpointClasses = {
   none: stylesGrid.modifiers.gridNone,
@@ -71,8 +72,10 @@ const props = withDefaults(defineProps<Props>(), {
   gridBreakpoint: 'md',
   expandable: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
+// untyped: the only event is update:selected, already declared by defineModel
+// oxlint-disable-next-line vue/valid-define-emits
 const emit = defineEmits();
 
 defineSlots<{
@@ -82,7 +85,9 @@ defineSlots<{
 /** Array for multiple selection, single value for single selection, undefined to disable selection */
 const selected = defineModel<string | number | symbol | (string | number | symbol)[]>('selected');
 
-const selectable = computed(() => !!props['onUpdate:selected'] || selected.value !== undefined || !!props.selectionInputName);
+const selectable = computed(
+  () => !!props['onUpdate:selected'] || selected.value !== undefined || !!props.selectionInputName,
+);
 
 provide(DataListKey, {
   emit,

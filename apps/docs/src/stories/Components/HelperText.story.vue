@@ -1,6 +1,8 @@
 <template>
   <doc-page title="Helper Text">
-    <template #description><b>Helper text</b> is an on-screen field guideline that helps provide context regarding field inputs.</template>
+    <template #description
+      ><b>Helper text</b> is an on-screen field guideline that helps provide context regarding field inputs.</template
+    >
 
     <template #apidocs>
       <component-info name="PfHelperText" />
@@ -59,8 +61,8 @@
 </template>
 
 <script lang="ts" setup>
-import InfoIcon from "@vue-patternfly/icons/info-icon";
-import QuestionIcon from "@vue-patternfly/icons/question-icon";
-import ExclamationIcon from "@vue-patternfly/icons/exclamation-icon";
-import XmarkIcon from "@vue-patternfly/icons/xmark-icon";
+import InfoIcon from '@vue-patternfly/icons/info-icon';
+import QuestionIcon from '@vue-patternfly/icons/question-icon';
+import ExclamationIcon from '@vue-patternfly/icons/exclamation-icon';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 </script>

@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Menu toggle">
-    <template #description>The <b>menu toggle</b> component pairs with the menu OR the panel component to create more customizable dropdown and select implementations. Using a menu toggle with a menu enables you to create custom component configurations not supported by the standard dropdown or select components.</template>
+    <template #description
+      >The <b>menu toggle</b> component pairs with the menu OR the panel component to create more customizable dropdown
+      and select implementations. Using a menu toggle with a menu enables you to create custom component configurations
+      not supported by the standard dropdown or select components.</template
+    >
 
     <template #apidocs>
       <component-info name="PfMenuToggle" />
@@ -53,9 +57,7 @@
         Icon
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle variant="primary" settings>
-        Settings
-      </pf-menu-toggle>
+      <pf-menu-toggle variant="primary" settings> Settings </pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle variant="primary" expanded>Expanded</pf-menu-toggle>
       {{ ' ' }}
@@ -72,9 +74,7 @@
         Icon
       </pf-menu-toggle>
       {{ ' ' }}
-      <pf-menu-toggle variant="secondary" settings>
-        Settings
-      </pf-menu-toggle>
+      <pf-menu-toggle variant="secondary" settings> Settings </pf-menu-toggle>
       {{ ' ' }}
       <pf-menu-toggle variant="secondary" expanded>Expanded</pf-menu-toggle>
       {{ ' ' }}
@@ -285,7 +285,7 @@
     </story-canvas>
 
     <story-canvas title="Full height">
-      <div style="height:80px">
+      <div style="height: 80px">
         <pf-menu-toggle full-height>Full height</pf-menu-toggle>
       </div>
     </story-canvas>
@@ -312,17 +312,21 @@
 
     <story-canvas title="Status toggle">
       <pf-menu-toggle status="success">Success</pf-menu-toggle>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-menu-toggle status="warning">Warning</pf-menu-toggle>
       <pf-helper-text>
-        <pf-helper-text-item variant="warning">Warning text that provides context about the menu toggle</pf-helper-text-item>
+        <pf-helper-text-item variant="warning"
+          >Warning text that provides context about the menu toggle</pf-helper-text-item
+        >
       </pf-helper-text>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-menu-toggle status="danger">Danger</pf-menu-toggle>
       <pf-helper-text>
-        <pf-helper-text-item variant="error">Danger text that provides context about the menu toggle</pf-helper-text-item>
+        <pf-helper-text-item variant="error"
+          >Danger text that provides context about the menu toggle</pf-helper-text-item
+        >
       </pf-helper-text>
     </story-canvas>
 

@@ -4,14 +4,7 @@
     "rootDir": "src",
     "outDir": "dist/esm",
     "composite": true,
-    "rootDirs": [
-      "src",
-      "src/icons",
-      "dist/js/icons"
-    ]
+    "rootDirs": ["src", "src/icons", "dist/js/icons"]
   },
-  "include": [
-    "./src/*",
-    "./src/**/*"
-  ]
+  "include": ["./src/*", "./src/**/*"]
 }

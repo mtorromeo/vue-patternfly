@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="(ouiaProps as any)" :class="styles.cardHeaderMain">
+  <div v-bind="ouiaProps as any" :class="styles.cardHeaderMain">
     <slot />
   </div>
 </template>
@@ -16,7 +16,7 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

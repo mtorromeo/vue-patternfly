@@ -16,11 +16,16 @@
     <component :is="tooltip ? PfTooltip : PassThrough" :position="tooltipPosition">
       <div
         :id="`${id}-description`"
-        :class="[styles.progressDescription, {
-          [styles.modifiers.truncate]: titleTruncated,
-        }]"
+        :class="[
+          styles.progressDescription,
+          {
+            [styles.modifiers.truncate]: titleTruncated,
+          },
+        ]"
         @mouseenter="checkTooltip($event as PointerEvent)"
-      >{{ title }}</div>
+      >
+        {{ title }}
+      </div>
       <template v-if="tooltip" #content>{{ tooltip }}</template>
     </component>
 
@@ -95,7 +100,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Text description of current progress value to display instead of percentage. */
   label?: string;
 
-  titleTruncated?: boolean,
+  titleTruncated?: boolean;
 
   /** Position of the tooltip which is displayed if title is truncated */
   tooltipPosition?: 'auto' | 'top' | 'bottom' | 'left' | 'right';
@@ -125,7 +130,7 @@ const props = withDefaults(defineProps<Props>(), {
   tooltipPosition: 'top',
   id: () => useId(),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

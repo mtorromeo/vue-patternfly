@@ -5,7 +5,10 @@ import Wrap from '../../src/helpers/Wrap.vue';
 
 const Box = defineComponent({
   props: { color: String },
-  setup: (props, { slots }) => () => h('section', { 'data-color': props.color }, slots.default?.()),
+  setup:
+    (props, { slots }) =>
+    () =>
+      h('section', { 'data-color': props.color }, slots.default?.()),
 });
 
 describe('Wrap', () => {
@@ -15,19 +18,27 @@ describe('Wrap', () => {
   });
 
   it('wraps the content with the element in the with slot', () => {
-    const wrapper = mount(() => h('div', [h(Wrap, null, {
-      default: () => [h('span', 'content')],
-      with: () => [createCommentVNode('c'), h('p', { class: 'wrapper' })],
-    })]));
+    const wrapper = mount(() =>
+      h('div', [
+        h(Wrap, null, {
+          default: () => [h('span', 'content')],
+          with: () => [createCommentVNode('c'), h('p', { class: 'wrapper' })],
+        }),
+      ]),
+    );
     expect(wrapper.html({ raw: true })).toBe('<div><p class="wrapper"><span>content</span></p></div>');
   });
 
   it('wraps the content with a component, keeping its props', () => {
     const warn = vi.spyOn(console, 'warn');
-    const wrapper = mount(() => h('div', [h(Wrap, null, {
-      default: () => [h('span', 'content')],
-      with: () => [h(Box, { color: 'red' })],
-    })]));
+    const wrapper = mount(() =>
+      h('div', [
+        h(Wrap, null, {
+          default: () => [h('span', 'content')],
+          with: () => [h(Box, { color: 'red' })],
+        }),
+      ]),
+    );
     expect(wrapper.find('section').attributes('data-color')).toBe('red');
     expect(wrapper.find('section > span').text()).toBe('content');
     expect(warn).not.toHaveBeenCalled();
@@ -35,10 +46,18 @@ describe('Wrap', () => {
 
   it('does not wrap when disabled', async () => {
     const disabled = ref(true);
-    const wrapper = mount(() => h('div', [h(Wrap, { disabled: disabled.value }, {
-      default: () => [h('span', 'content')],
-      with: () => [h('p')],
-    })]));
+    const wrapper = mount(() =>
+      h('div', [
+        h(
+          Wrap,
+          { disabled: disabled.value },
+          {
+            default: () => [h('span', 'content')],
+            with: () => [h('p')],
+          },
+        ),
+      ]),
+    );
     expect(wrapper.find('p').exists()).toBe(false);
     expect(wrapper.find('span').exists()).toBe(true);
 
@@ -49,9 +68,13 @@ describe('Wrap', () => {
 
   it('throws when the with slot contains more than one node', () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {});
-    expect(() => mount(() => h(Wrap, null, {
-      default: () => [h('span')],
-      with: () => [h('p'), h('p')],
-    }))).toThrow(/single child node/);
+    expect(() =>
+      mount(() =>
+        h(Wrap, null, {
+          default: () => [h('span')],
+          with: () => [h('p'), h('p')],
+        }),
+      ),
+    ).toThrow(/single child node/);
   });
 });

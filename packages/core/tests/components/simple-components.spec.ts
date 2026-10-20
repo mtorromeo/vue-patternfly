@@ -187,7 +187,9 @@ describe('Divider', () => {
   });
 
   it('applies vertical, inset and orientation modifiers', () => {
-    const wrapper = mount(PfDivider, { props: { component: 'div', vertical: true, inset: 'md', insetLg: '2xl', orientationMd: 'horizontal' } });
+    const wrapper = mount(PfDivider, {
+      props: { component: 'div', vertical: true, inset: 'md', insetLg: '2xl', orientationMd: 'horizontal' },
+    });
     expect(wrapper.classes()).toContain(dividerStyles.modifiers.vertical);
     expect(wrapper.classes()).toContain(dividerStyles.modifiers.insetMd);
     expect(wrapper.classes()).toContain(dividerStyles.modifiers.inset_2xlOnLg);
@@ -204,7 +206,7 @@ describe('FormControlIcon', () => {
     expect(wrapper.find('i.custom').exists()).toBe(true);
   });
 
-  it.each(['success', 'warning', 'error'] as const)('renders a default icon for the %s status', (status) => {
+  it.each(['success', 'warning', 'error'] as const)('renders a default icon for the %s status', status => {
     const wrapper = mount(PfFormControlIcon, { props: { status } });
     expect(wrapper.classes()).toContain(formControlStyles.modifiers.status);
     expect(wrapper.find('svg').exists()).toBe(true);
@@ -226,7 +228,9 @@ describe('Icon', () => {
   });
 
   it('applies size, inline and content modifiers', () => {
-    const wrapper = mount(PfIcon, { props: { size: 'lg', iconSize: 'sm', status: 'danger', inline: true, shouldMirrorRTL: true } });
+    const wrapper = mount(PfIcon, {
+      props: { size: 'lg', iconSize: 'sm', status: 'danger', inline: true, shouldMirrorRTL: true },
+    });
     expect(wrapper.classes()).toContain(iconStyles.modifiers.lg);
     expect(wrapper.classes()).toContain(iconStyles.modifiers.inline);
     const content = wrapper.find(`.${iconStyles.iconContent}`);
@@ -249,7 +253,10 @@ describe('Icon', () => {
     const labelled = mount(PfIcon, { props: { inProgress: true, defaultProgressArialabel: 'Working' } });
     expect(labelled.find('svg').attributes('aria-label')).toBe('Working');
 
-    const custom = mount(PfIcon, { props: { inProgress: true }, slots: { 'progress-icon': () => h('i', { class: 'progress' }) } });
+    const custom = mount(PfIcon, {
+      props: { inProgress: true },
+      slots: { 'progress-icon': () => h('i', { class: 'progress' }) },
+    });
     expect(custom.find(`.${iconStyles.iconProgress} i.progress`).exists()).toBe(true);
     expect(custom.find(`.${spinnerStyles.spinner}`).exists()).toBe(false);
   });

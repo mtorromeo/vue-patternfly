@@ -1,8 +1,9 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="styles.backgroundImage" :style="{
-      [cssBackgroundImage.name]: `url(${src})`
+    :class="styles.backgroundImage"
+    :style="{
+      [cssBackgroundImage.name]: `url(${src})`,
     }"
   />
 </template>
@@ -23,5 +24,5 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>

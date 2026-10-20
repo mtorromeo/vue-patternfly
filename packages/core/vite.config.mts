@@ -12,10 +12,11 @@ export default defineConfig({
       formats: ['es'],
     },
     rolldownOptions: {
-      external: id => ['vue', 'focus-trap'].includes(id)
-        || id.startsWith('@vueuse/')
-        || id.startsWith('@floating-ui/')
-        || id.startsWith('@vue-patternfly/'),
+      external: id =>
+        ['vue', 'focus-trap'].includes(id) ||
+        id.startsWith('@vueuse/') ||
+        id.startsWith('@floating-ui/') ||
+        id.startsWith('@vue-patternfly/'),
       output: {
         exports: 'named',
         preserveModules: true,
@@ -26,7 +27,7 @@ export default defineConfig({
   plugins: [
     {
       name: 'ignore-css-imports',
-      load: id => /\.css$/.test(id) ? '' : null,
+      load: id => (id.endsWith('.css') ? '' : null),
     },
     inlineVueScriptModules(),
     vue(),

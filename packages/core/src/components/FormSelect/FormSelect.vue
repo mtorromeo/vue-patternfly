@@ -2,7 +2,8 @@
   <span
     v-bind="ouiaProps"
     :class="[
-      styles.formControl, {
+      styles.formControl,
+      {
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.placeholder]: selectedPlaceholder,
         [styles.modifiers.success]: validated === 'success',
@@ -11,10 +12,13 @@
       },
     ]"
     :style="{
-      '--pf-v6-c-form-control--PaddingInlineEnd': (multiple !== false && multiple !== undefined) ? 'var(--pf-v6-c-form-control__select--PaddingInlineEnd)' : undefined,
-      '--pf-v6-c-form-control__utilities--Gap': (multiple !== false && multiple !== undefined) ? '0px' : undefined,
-      '--pf-v6-c-form-control--ColumnGap': (multiple !== false && multiple !== undefined) ? '0px' : undefined,
-      '--pf-v6-c-form-control--m-icon--icon--spacer': (multiple !== false && multiple !== undefined) ? '0px' : undefined,
+      '--pf-v6-c-form-control--PaddingInlineEnd':
+        multiple !== false && multiple !== undefined
+          ? 'var(--pf-v6-c-form-control__select--PaddingInlineEnd)'
+          : undefined,
+      '--pf-v6-c-form-control__utilities--Gap': multiple !== false && multiple !== undefined ? '0px' : undefined,
+      '--pf-v6-c-form-control--ColumnGap': multiple !== false && multiple !== undefined ? '0px' : undefined,
+      '--pf-v6-c-form-control--m-icon--icon--spacer': multiple !== false && multiple !== undefined ? '0px' : undefined,
     }"
   >
     <select
@@ -27,7 +31,7 @@
       <slot />
     </select>
     <span :class="styles.formControlUtilities">
-      <pf-form-control-icon v-if="hasStatusIcon" :status="(validated as 'success' | 'error' | 'warning')" />
+      <pf-form-control-icon v-if="hasStatusIcon" :status="validated as 'success' | 'error' | 'warning'" />
       <span v-if="!(multiple !== false && multiple !== undefined)" :class="styles.formControlToggleIcon">
         <caret-down-icon />
       </span>
@@ -36,9 +40,12 @@
 </template>
 
 <script lang="ts">
-export const FormSelectOptionsKey = Symbol("FormSelectOptionsKey") as ChildrenTrackerInjectionKey<ComponentExposed<typeof PfFormSelectOption>>;
+export const FormSelectOptionsKey = Symbol('FormSelectOptionsKey') as ChildrenTrackerInjectionKey<
+  ComponentExposed<typeof PfFormSelectOption>
+>;
 
-interface Props<M extends boolean = false, V extends string = string> extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
+interface Props<M extends boolean = false, V extends string = string>
+  extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
   /** Selected value, or array of selected values when multiple is set. */
   modelValue?: V | V[] | null;
   multiple?: M;
@@ -71,7 +78,7 @@ defineOptions({
 });
 
 const props = defineProps<Props<M, V>>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineEmits<{
   (name: 'update:modelValue', value: M extends true ? V[] : V): void;

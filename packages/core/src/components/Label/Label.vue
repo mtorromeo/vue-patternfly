@@ -3,14 +3,20 @@
     v-bind="ouiaProps"
     :is="overflow || variant === 'add' ? 'button' : 'span'"
     :type="overflow || variant === 'add' ? 'button' : undefined"
-    :class="[styles.label, colorStyles[color], status ? styles.modifiers[status] : null, {
-      [styles.modifiers.filled]: variant === 'filled',
-      [styles.modifiers.outline]: outline || variant === 'outline',
-      [styles.modifiers.compact]: compact,
-      [styles.modifiers.overflow]: overflow,
-      [styles.modifiers.add]: variant === 'add',
-      [styles.modifiers.disabled]: disabled,
-    }]">
+    :class="[
+      styles.label,
+      colorStyles[color],
+      status ? styles.modifiers[status] : null,
+      {
+        [styles.modifiers.filled]: variant === 'filled',
+        [styles.modifiers.outline]: outline || variant === 'outline',
+        [styles.modifiers.compact]: compact,
+        [styles.modifiers.overflow]: overflow,
+        [styles.modifiers.add]: variant === 'add',
+        [styles.modifiers.disabled]: disabled,
+      },
+    ]"
+  >
     <pf-tooltip :position="tooltipPosition">
       <component
         :is="contentComponent"
@@ -21,7 +27,9 @@
         :disabled="contentComponent === 'button' && isClickableDisabled ? true : undefined"
         :tabindex="contentComponent === 'a' && isClickableDisabled ? -1 : undefined"
         :aria-disabled="contentComponent === 'a' && isClickableDisabled ? true : undefined"
-        @click="(event: PointerEvent) => (contentComponent === 'a' && disabled) ? event.preventDefault() : onClick?.(event)"
+        @click="
+          (event: PointerEvent) => (contentComponent === 'a' && disabled ? event.preventDefault() : onClick?.(event))
+        "
       >
         <span v-if="$slots.icon || status" :class="styles.labelIcon">
           <slot name="icon">
@@ -33,7 +41,11 @@
           </slot>
         </span>
 
-        <span ref="textRef" :class="styles.labelText" :style="textMaxWidth ? {[cssTextMaxWidth.name]: textMaxWidth} : undefined">
+        <span
+          ref="textRef"
+          :class="styles.labelText"
+          :style="textMaxWidth ? { [cssTextMaxWidth.name]: textMaxWidth } : undefined"
+        >
           <slot />
         </span>
       </component>
@@ -44,7 +56,13 @@
     </pf-tooltip>
     <span v-if="onClose || $slots.actions" :class="styles.labelActions">
       <slot name="actions">
-        <pf-button variant="plain" no-padding :aria-label="closeBtnAriaLabel" :disabled="isClickableDisabled ? true : undefined" @click="onClose">
+        <pf-button
+          variant="plain"
+          no-padding
+          :aria-label="closeBtnAriaLabel"
+          :disabled="isClickableDisabled ? true : undefined"
+          @click="onClose"
+        >
           <template #icon>
             <xmark-icon />
           </template>
@@ -90,7 +108,7 @@ defineOptions({
 
 interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
   /** The color of the label outline/fill */
-  color?: 'blue' | 'teal' | 'green' | 'orange' | 'purple' | 'red' | 'orangered' | 'grey' | 'yellow',
+  color?: 'blue' | 'teal' | 'green' | 'orange' | 'purple' | 'red' | 'orangered' | 'grey' | 'yellow';
   /** Variant of the label. */
   variant?: 'outline' | 'filled' | 'add';
   /** Status of the label with a respective icon and color. Overrides the color set by the color property. */
@@ -124,7 +142,7 @@ const props = withDefaults(defineProps<Props>(), {
   tooltipPosition: 'top',
   closeBtnAriaLabel: 'Close',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => VNode[];
@@ -136,7 +154,9 @@ useChildrenTracker(LabelKey);
 
 const text = useTemplateRef('textRef');
 const textOverflowing = useElementOverflow(text);
-const isClickable = computed(() => (props.onClick && !props.overflow && props.variant !== 'add') || props.href || props.to);
+const isClickable = computed(
+  () => (props.onClick && !props.overflow && props.variant !== 'add') || props.href || props.to,
+);
 const isClickableDisabled = computed(() => (props.href || props.to || props.onClick) && props.disabled);
 
 const contentComponent = computed(() => {

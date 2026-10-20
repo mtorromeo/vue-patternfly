@@ -8,15 +8,7 @@ import PfTh from './Th.vue';
 import PfThead from './Thead.vue';
 import PfTr from './Tr.vue';
 
-export {
-  PfTable,
-  PfTbody,
-  PfTd,
-  PfTfoot,
-  PfTh,
-  PfThead,
-  PfTr,
-};
+export { PfTable, PfTbody, PfTd, PfTfoot, PfTh, PfThead, PfTr };
 
 export function install(app: App) {
   app.component('PfTable', PfTable);

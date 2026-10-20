@@ -14,7 +14,12 @@ import { SidebarOpenKey } from '../../src/components/Page/PageSidebar.vue';
 
 enableAutoUnmount(afterEach);
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -101,7 +106,10 @@ describe('NavList', () => {
   it('hides the scroll buttons of a horizontal nav once all items are in view', async () => {
     const wrapper = mount(PfNav, {
       props: { variant: 'horizontal' },
-      slots: { default: () => h(PfNavList, { backScrollAriaLabel: 'Back', forwardScrollAriaLabel: 'Forward' }, () => h('li', 'Item')) },
+      slots: {
+        default: () =>
+          h(PfNavList, { backScrollAriaLabel: 'Back', forwardScrollAriaLabel: 'Forward' }, () => h('li', 'Item')),
+      },
       attachTo: document.body,
     });
 
@@ -146,7 +154,11 @@ describe('NavItemSeparator', () => {
 });
 
 describe('NavItem', () => {
-  function mountItem(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = { default: () => 'Item' }, sidebarOpen = true) {
+  function mountItem(
+    props: Record<string, unknown> = {},
+    slots: Record<string, () => unknown> = { default: () => 'Item' },
+    sidebarOpen = true,
+  ) {
     return mount(PfNavItem, { props, slots, global: { provide: { [SidebarOpenKey as symbol]: sidebarOpen } } });
   }
 
@@ -218,10 +230,17 @@ describe('NavItem', () => {
     function mountFlyout() {
       return mount(PfNav, {
         slots: {
-          default: () => h(PfNavList, () => h(PfNavItem, {}, {
-            default: () => 'Parent',
-            flyout: () => h('ul', [h('li', [h('button', { class: 'sub' }, 'Sub')])]),
-          })),
+          default: () =>
+            h(PfNavList, () =>
+              h(
+                PfNavItem,
+                {},
+                {
+                  default: () => 'Parent',
+                  flyout: () => h('ul', [h('li', [h('button', { class: 'sub' }, 'Sub')])]),
+                },
+              ),
+            ),
         },
         global: { provide: { [SidebarOpenKey as symbol]: true } },
         attachTo: document.body,
@@ -299,7 +318,11 @@ describe('NavExpandable', () => {
     expect(children[0].find('svg').exists()).toBe(true);
     expect(children[1].classes()).toContain(styles.navLinkText);
 
-    expect(mount(PfNavExpandable, { props: { title: 'Section' } }).find(`.${styles.navLinkExpandableIcon}`).exists()).toBe(false);
+    expect(
+      mount(PfNavExpandable, { props: { title: 'Section' } })
+        .find(`.${styles.navLinkExpandableIcon}`)
+        .exists(),
+    ).toBe(false);
   });
 
   it('renders the icon slot before the expandable icon and the title', () => {
@@ -313,7 +336,11 @@ describe('NavExpandable', () => {
     expect(children[1].classes()).toContain(styles.navLinkExpandableIcon);
     expect(children[2].classes()).toContain(styles.navLinkText);
 
-    expect(mount(PfNavExpandable, { props: { title: 'Section' } }).find(`.${styles.navLinkIcon}`).exists()).toBe(false);
+    expect(
+      mount(PfNavExpandable, { props: { title: 'Section' } })
+        .find(`.${styles.navLinkIcon}`)
+        .exists(),
+    ).toBe(false);
   });
 
   it('renders the title slot', () => {

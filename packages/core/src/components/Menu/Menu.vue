@@ -2,14 +2,17 @@
   <div
     v-bind="ouiaProps"
     ref="elRef"
-    :class="[styles.menu, {
-      [styles.modifiers.plain]: plain,
-      [styles.modifiers.scrollable]: scrollable,
-      [styles.modifiers.flyout]: containsFlyout,
-      'pf-m-nav': navFlyout,
-    // [styles.modifiers.drilldown]: containsDrilldown,
-    // [styles.modifiers.drilledIn]: effectiveMenuDrilledIn,
-    }]"
+    :class="[
+      styles.menu,
+      {
+        [styles.modifiers.plain]: plain,
+        [styles.modifiers.scrollable]: scrollable,
+        [styles.modifiers.flyout]: containsFlyout,
+        'pf-m-nav': navFlyout,
+        // [styles.modifiers.drilldown]: containsDrilldown,
+        // [styles.modifiers.drilledIn]: effectiveMenuDrilledIn,
+      },
+    ]"
     @keydown="handleKeyboard"
   >
     <template v-if="favoriteCount">
@@ -33,7 +36,14 @@
 <script lang="ts">
 import type { MenuItemId } from './common';
 
-export { MenuInjectionKey, MenuItemsKey, type MenuItemId, type MenuItemTrack, type MenuProvide, type MenuState } from './common';
+export {
+  MenuInjectionKey,
+  MenuItemsKey,
+  type MenuItemId,
+  type MenuItemTrack,
+  type MenuProvide,
+  type MenuState,
+} from './common';
 
 interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
@@ -71,7 +81,18 @@ interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'on
 
 <script lang="ts" setup generic="T extends MenuItemId | MenuItemId[] = MenuItemId | MenuItemId[]">
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { inject, provide, reactive, shallowRef, computed, type ComponentInternalInstance, type Ref, type HTMLAttributes, useModel, useTemplateRef } from 'vue';
+import {
+  inject,
+  provide,
+  reactive,
+  shallowRef,
+  computed,
+  type ComponentInternalInstance,
+  type Ref,
+  type HTMLAttributes,
+  useModel,
+  useTemplateRef,
+} from 'vue';
 import { provideChildrenTracker } from '../../use';
 import { MenuInjectionKey, MenuItemsKey, type MenuState } from './common';
 import { isDefined } from '@vueuse/shared';
@@ -97,7 +118,7 @@ const props = withDefaults(defineProps<Props<T>>(), {
   // drilldownItemPath: () => [],
   favoritesLabel: 'Favorites',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -174,21 +195,24 @@ function handleKeyboard(event: KeyboardEvent) {
     return;
   }
 
-  const focusable = items.filter((item) => !item.disabled);
+  const focusable = items.filter(item => !item.disabled);
   if (!focusable.length) {
     return;
   }
 
-  let focused = focusable.findIndex((item) => item.focused);
+  let focused = focusable.findIndex(item => item.focused);
   if (focused < 0) {
-    focused = focusable.findIndex((item) => event.target instanceof Node && item.element?.contains(event.target));
+    focused = focusable.findIndex(item => event.target instanceof Node && item.element?.contains(event.target));
   }
 
   for (const item of items) {
     item.focused = false;
   }
 
-  const nextFocused = ((focused < 0 && event.key === 'ArrowUp' ? focusable.length : focused + focusable.length) + (event.key === 'ArrowDown' ? 1 : -1)) % focusable.length;
+  const nextFocused =
+    ((focused < 0 && event.key === 'ArrowUp' ? focusable.length : focused + focusable.length) +
+      (event.key === 'ArrowDown' ? 1 : -1)) %
+    focusable.length;
   const nextFocusedItem = focusable[nextFocused];
   if (nextFocusedItem) {
     nextFocusedItem?.focus();

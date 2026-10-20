@@ -19,7 +19,7 @@
   >
     <div
       ref="tooltipElementRef"
-      v-bind="{...ouiaProps, ...$attrs}"
+      v-bind="{ ...ouiaProps, ...$attrs }"
       :id="tooltipId"
       :class="[styles.tooltip, positionModifiers[placement]]"
       :style="{ maxWidth }"
@@ -35,7 +35,17 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tooltip/tooltip';
-import { ref, watch, computed, onMounted, onUnmounted, type HTMLAttributes, type RendererElement, useTemplateRef, useId } from 'vue';
+import {
+  ref,
+  watch,
+  computed,
+  onMounted,
+  onUnmounted,
+  type HTMLAttributes,
+  type RendererElement,
+  useTemplateRef,
+  useId,
+} from 'vue';
 
 import PfTooltipArrow from './TooltipArrow.vue';
 import PfTooltipContent from './TooltipContent.vue';
@@ -60,7 +70,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'
   /** A combination of the strings 'mouseenter', 'focus' and 'click' */
   trigger?: string;
   /** Flag to indicate that the text content is left aligned */
-  leftAligned?: boolean,
+  leftAligned?: boolean;
   /** Delay in ms before the tooltip appears */
   entryDelay?: number;
   /** Delay in ms before the tooltip disappears, Avoid passing in a value of "0", as users should
@@ -104,7 +114,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const safe = ref(!props.animationDuration);
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: computed(() => safe.value && props.ouiaSafe)});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: computed(() => safe.value && props.ouiaSafe) });
 
 /** value for visibility when trigger is 'manual' */
 const visible = defineModel<boolean>('visible', { default: false });
@@ -155,17 +165,21 @@ watch(referenceElement, (el, oldEl) => {
 });
 
 let ariaApplied: [Element, string] | undefined;
-watch([referenceElement, () => props.aria, tooltipId, visible], ([el, aria, id, isVisible]) => {
-  if (ariaApplied) {
-    ariaApplied[0].removeAttribute(ariaApplied[1]);
-    ariaApplied = undefined;
-  }
-  const attr = `aria-${aria}`;
-  if (el && isVisible && aria !== 'none' && !el.hasAttribute(attr)) {
-    el.setAttribute(attr, id);
-    ariaApplied = [el, attr];
-  }
-}, { immediate: true });
+watch(
+  [referenceElement, () => props.aria, tooltipId, visible],
+  ([el, aria, id, isVisible]) => {
+    if (ariaApplied) {
+      ariaApplied[0].removeAttribute(ariaApplied[1]);
+      ariaApplied = undefined;
+    }
+    const attr = `aria-${aria}`;
+    if (el && isVisible && aria !== 'none' && !el.hasAttribute(attr)) {
+      el.setAttribute(attr, id);
+      ariaApplied = [el, attr];
+    }
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   document.addEventListener('click', handleClick as (e: MouseEvent) => void);

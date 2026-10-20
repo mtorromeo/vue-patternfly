@@ -1,10 +1,13 @@
 <template>
   <thead
     v-bind="ouiaProps"
-    :class="[styles.tableThead, {
-      [styles.modifiers.nowrap]: noWrap,
-      [styles.modifiers.nestedColumnHeader]: nestedHeader,
-    }]"
+    :class="[
+      styles.tableThead,
+      {
+        [styles.modifiers.nowrap]: noWrap,
+        [styles.modifiers.nestedColumnHeader]: nestedHeader,
+      },
+    ]"
   >
     <slot />
   </thead>
@@ -25,7 +28,7 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>
 
 <script lang="ts">
-import type { HTMLAttributes } from "vue";
+import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 

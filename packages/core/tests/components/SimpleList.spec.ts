@@ -6,7 +6,12 @@ import PfSimpleList from '../../src/components/SimpleList/SimpleList.vue';
 import PfSimpleListItem from '../../src/components/SimpleList/SimpleListItem.vue';
 import PfSimpleListGroup from '../../src/components/SimpleList/SimpleListGroup.vue';
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -24,9 +29,10 @@ const items = () => [
 ];
 
 const itemButtons = (wrapper: VueWrapper<any>) => wrapper.findAll(`.${styles.simpleListItemLink}`);
-const currentIndexes = (wrapper: VueWrapper<any>) => itemButtons(wrapper)
-  .map((b, i) => (b.classes().includes(styles.modifiers.current) ? i : -1))
-  .filter(i => i >= 0);
+const currentIndexes = (wrapper: VueWrapper<any>) =>
+  itemButtons(wrapper)
+    .map((b, i) => (b.classes().includes(styles.modifiers.current) ? i : -1))
+    .filter(i => i >= 0);
 
 describe('SimpleList', () => {
   it('renders the items inside a list', () => {

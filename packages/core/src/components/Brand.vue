@@ -1,9 +1,14 @@
 <template>
-  <picture v-if="$slots.default" v-bind="{...ouiaProps as any, ...$attrs}" :class="[styles.brand, styles.modifiers.picture]" :style="pictureStyle">
+  <picture
+    v-if="$slots.default"
+    v-bind="{ ...(ouiaProps as any), ...$attrs }"
+    :class="[styles.brand, styles.modifiers.picture]"
+    :style="pictureStyle"
+  >
     <slot />
-    <img :src="src" :alt="alt">
+    <img :src="src" :alt="alt" />
   </picture>
-  <img v-else v-bind="{...ouiaProps, ...$attrs}" :class="styles.brand" :src="src" :alt="alt">
+  <img v-else v-bind="{ ...ouiaProps, ...$attrs }" :class="styles.brand" :src="src" :alt="alt" />
 </template>
 
 <script lang="ts" setup>
@@ -19,13 +24,18 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, WidthBreakpointProps, HeightBreakpointProps, /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height' | 'src' | 'alt'> {
+interface Props
+  extends
+    OUIAProps,
+    WidthBreakpointProps,
+    HeightBreakpointProps,
+    /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height' | 'src' | 'alt'> {
   src: string;
   alt?: string;
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

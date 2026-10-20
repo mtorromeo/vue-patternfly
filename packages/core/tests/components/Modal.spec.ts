@@ -74,11 +74,14 @@ describe('Modal', () => {
 
   it('closes when bound with v-model:open', async () => {
     const open = ref(true);
-    const wrapper = mount(defineComponent({
-      components: { PfModal },
-      setup: () => ({ open }),
-      template: `<pf-modal v-model:open="open" title="Title" no-animations>Body</pf-modal>`,
-    }), { attachTo: document.body });
+    const wrapper = mount(
+      defineComponent({
+        components: { PfModal },
+        setup: () => ({ open }),
+        template: '<pf-modal v-model:open="open" title="Title" no-animations>Body</pf-modal>',
+      }),
+      { attachTo: document.body },
+    );
 
     dialog()!.querySelector<HTMLButtonElement>(`.${styles.modalBoxClose} button`)!.click();
     await nextTick();
@@ -239,10 +242,13 @@ describe('Modal', () => {
   });
 
   it('wires aria-describedby to the description slot when provided', () => {
-    const wrapper = mountModal({ title: 'T', descriptorId: 'modal-desc' }, {
-      default: 'Body',
-      description: 'A description',
-    });
+    const wrapper = mountModal(
+      { title: 'T', descriptorId: 'modal-desc' },
+      {
+        default: 'Body',
+        description: 'A description',
+      },
+    );
     const el = dialog()!;
     const description = el.querySelector('#modal-desc')!;
     expect(el.getAttribute('aria-describedby')).toBe('modal-desc');
@@ -289,12 +295,15 @@ describe('Modal', () => {
   });
 
   it('renders header, footer and help slots', () => {
-    const wrapper = mountModal({}, {
-      default: 'Body',
-      header: '<h2 class="custom-header">Custom</h2>',
-      footer: '<button class="ok">OK</button>',
-      help: '<span class="help">?</span>',
-    });
+    const wrapper = mountModal(
+      {},
+      {
+        default: 'Body',
+        header: '<h2 class="custom-header">Custom</h2>',
+        footer: '<button class="ok">OK</button>',
+        help: '<span class="help">?</span>',
+      },
+    );
     const el = dialog()!;
     const header = el.querySelector(`.${styles.modalBoxHeader}`)!;
     expect(header.classList.contains(styles.modifiers.help)).toBe(true);

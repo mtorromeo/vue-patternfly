@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Simple List">
-    <template #description>A <b>simple list</b> provides a list of selectable items that can be shown within a page. Each item is described by a text label. The list may be divided into logical sections by introducing group headers.</template>
+    <template #description
+      >A <b>simple list</b> provides a list of selectable items that can be shown within a page. Each item is described
+      by a text label. The list may be divided into logical sections by introducing group headers.</template
+    >
 
     <template #apidocs>
       <component-info name="PfSimpleList" />

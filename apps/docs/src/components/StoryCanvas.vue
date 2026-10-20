@@ -5,9 +5,17 @@
 
   <section class="story-canvas">
     <div class="canvas" :class="{ dark }">
-      <div class="inner-canvas" v-bind="$attrs" :style="{ 'max-width': maxWidth, 'height': iframeRoute?.name && !$slots.default ? height ?? '450px' : height }">
+      <div
+        class="inner-canvas"
+        v-bind="$attrs"
+        :style="{ 'max-width': maxWidth, height: iframeRoute?.name && !$slots.default ? (height ?? '450px') : height }"
+      >
         <slot>
-          <iframe v-if="iframeRoute?.name" :style="{ width: '800px', height: '100%' }" :src="$router.resolve({name: iframeRoute.name}).href" />
+          <iframe
+            v-if="iframeRoute?.name"
+            :style="{ width: '800px', height: '100%' }"
+            :src="$router.resolve({ name: iframeRoute.name }).href"
+          />
           <component :is="ExampleComponent" v-else-if="ExampleComponent" />
         </slot>
       </div>
@@ -102,19 +110,21 @@ if (storySrc) {
   const matches = /\.\/([^/]+)\.vue/.exec(storySrc);
   if (matches) {
     storySrc = `stories/Components/${matches[1]}.vue`;
-    (async() => {
+    (async () => {
       ExampleComponent.value = (await import(`../stories/Components/${matches[1]}.vue`))['default'];
     })();
   }
 }
 
 // Built here: a `//` inside a bound template literal breaks vue-tsc's generated code
-const sourceUrl =`https://github.com/mtorromeo/vue-patternfly/blob/main/apps/docs/src/${storySrc}`;
+const sourceUrl = `https://github.com/mtorromeo/vue-patternfly/blob/main/apps/docs/src/${storySrc}`;
 
 const router = useRouter();
-const iframeRoute = storySrc?.endsWith('.iframe.vue') ? router.getRoutes().find(r => r.meta.sourcePath === `./${storySrc}`) : undefined;
+const iframeRoute = storySrc?.endsWith('.iframe.vue')
+  ? router.getRoutes().find(r => r.meta.sourcePath === `./${storySrc}`)
+  : undefined;
 
-const highlighted = computedAsync(async() => {
+const highlighted = computedAsync(async () => {
   if (!props.source) {
     return '';
   }
@@ -126,6 +136,9 @@ const highlighted = computedAsync(async() => {
     });
   }
 
-  return highlighter.codeToHtml(props.source.replaceAll('\\n', '\n').trim(), { lang: props.src ? 'vue' : 'vue-html', theme: 'nord' });
+  return highlighter.codeToHtml(props.source.replaceAll('\\n', '\n').trim(), {
+    lang: props.src ? 'vue' : 'vue-html',
+    theme: 'nord',
+  });
 });
 </script>

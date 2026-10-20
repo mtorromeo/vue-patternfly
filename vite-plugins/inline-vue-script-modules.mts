@@ -32,10 +32,7 @@ export function inlineVueScriptModules(): Plugin {
         // Replace the wrapper (which just re-exports the virtual module) with
         // the actual compiled component code, with all virtual import specifiers
         // rewritten to .vue.js wrappers, and then drop the virtual module file.
-        wrapper.code = chunk.code.replace(
-          /\.vue\?vue&[a-z&=]+\.js\b/g,
-          '.vue.js',
-        );
+        wrapper.code = chunk.code.replace(/\.vue\?vue&[a-z&=]+\.js\b/g, '.vue.js');
         delete bundle[name];
       }
     },

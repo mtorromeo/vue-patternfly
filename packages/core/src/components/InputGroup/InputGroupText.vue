@@ -17,7 +17,8 @@ defineOptions({
   name: 'PfInputGroupText',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfInputGroupItem>, 'box' | 'ouiaId' | 'ouiaSafe'> {
+interface Props
+  extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfInputGroupItem>, 'box' | 'ouiaId' | 'ouiaSafe'> {
   /** Component that wraps the input group text. */
   component?: string | Component;
 }
@@ -25,7 +26,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 const props = withDefaults(defineProps<Props>(), {
   component: 'span',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

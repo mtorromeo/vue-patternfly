@@ -19,13 +19,16 @@
   </define-toggle>
 
   <div
-    v-bind="{...ouiaProps, ...$attrs}"
-    :class="[styles.expandableSection, {
-      [styles.modifiers.expanded]: expanded,
-      [styles.modifiers.truncate]: truncate,
-      [styles.modifiers.displayLg]: large,
-      [styles.modifiers.limitWidth]: widthLimited,
-    }]"
+    v-bind="{ ...ouiaProps, ...$attrs }"
+    :class="[
+      styles.expandableSection,
+      {
+        [styles.modifiers.expanded]: expanded,
+        [styles.modifiers.truncate]: truncate,
+        [styles.modifiers.displayLg]: large,
+        [styles.modifiers.limitWidth]: widthLimited,
+      },
+    ]"
   >
     <toggle v-if="!truncate" />
     <div
@@ -35,7 +38,7 @@
       :hidden="!truncate && !expanded"
       role="region"
       :style="{
-        [lineClamp.name]: truncate && truncate > 0 ? truncate : undefined
+        [lineClamp.name]: truncate && truncate > 0 ? truncate : undefined,
       }"
     >
       <slot />
@@ -84,8 +87,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   truncate?: number;
 }
 
-const props = defineProps<Props>()
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const props = defineProps<Props>();
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const generatedContentId = useId();
 const effectiveContentId = computed(() => props.contentId ?? generatedContentId);
 
@@ -119,7 +122,8 @@ function checkToggleVisibility() {
     return;
   }
   const maxLines = props.truncate || parseInt(lineClamp.value);
-  const totalLines = expandableContentRef.value.scrollHeight / parseInt(getComputedStyle(expandableContentRef.value).lineHeight);
+  const totalLines =
+    expandableContentRef.value.scrollHeight / parseInt(getComputedStyle(expandableContentRef.value).lineHeight);
   hasToggle.value = totalLines > maxLines;
 }
 </script>

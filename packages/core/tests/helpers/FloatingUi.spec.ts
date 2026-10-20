@@ -16,7 +16,10 @@ function createReference() {
   return reference;
 }
 
-function floating(props: Record<string, unknown> = {}, slot = (_: any) => [h('div', { class: 'floating' }, 'content')]) {
+function floating(
+  props: Record<string, unknown> = {},
+  slot = (_: any) => [h('div', { class: 'floating' }, 'content')],
+) {
   return h('div', { class: 'host' }, [h(FloatingUi, { reference: '#reference', ...props }, { default: slot })]);
 }
 
@@ -96,7 +99,9 @@ describe('FloatingUi', () => {
     const slot = vi.fn((ui: any) => [h('div', { class: 'floating', 'data-placement': ui.placement }, 'content')]);
     mount(() => floating({ placement: 'right' }, slot), { attachTo: document.body });
     await vi.waitFor(() => expect(findFloating()!.dataset.placement).toBe('right'));
-    expect(slot).toHaveBeenLastCalledWith(expect.objectContaining({ x: expect.any(Number), y: expect.any(Number), strategy: 'absolute' }));
+    expect(slot).toHaveBeenLastCalledWith(
+      expect.objectContaining({ x: expect.any(Number), y: expect.any(Number), strategy: 'absolute' }),
+    );
   });
 
   it('sets the width constraints', async () => {
@@ -109,7 +114,17 @@ describe('FloatingUi', () => {
 
   it('uses the trigger width for the min width by default', async () => {
     const reference = createReference();
-    reference.getBoundingClientRect = () => ({ x: 0, y: 0, top: 0, left: 0, right: 150, bottom: 20, width: 150, height: 20, toJSON: () => ({}) });
+    reference.getBoundingClientRect = () => ({
+      x: 0,
+      y: 0,
+      top: 0,
+      left: 0,
+      right: 150,
+      bottom: 20,
+      width: 150,
+      height: 20,
+      toJSON: () => ({}),
+    });
     mount(() => floating(), { attachTo: document.body });
     await vi.waitFor(() => expect(findFloating()!.style.minWidth).toBe('150px'));
   });

@@ -10,7 +10,12 @@ type DropdownProps = InstanceType<typeof PfDropdown>['$props'];
 
 enableAutoUnmount(afterEach);
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -26,7 +31,10 @@ const defaultItems = () => [
   h(PfDropdownItem, { value: 'b' }, () => 'Action B'),
 ];
 
-async function mountDropdown(props: DropdownProps & Record<string, unknown> = {}, slots: Record<string, () => unknown> = { default: defaultItems }) {
+async function mountDropdown(
+  props: DropdownProps & Record<string, unknown> = {},
+  slots: Record<string, () => unknown> = { default: defaultItems },
+) {
   const wrapper = mountWithModel(PfDropdown, 'open', { text: 'Actions', ...props }, { slots, attachTo: document.body });
   await flushPromises();
   return wrapper;
@@ -152,9 +160,12 @@ describe('Dropdown', () => {
   });
 
   it('does not close when clicking inside the menu', async () => {
-    const wrapper = await mountDropdown({ open: true }, {
-      default: () => [h('div', { class: 'inside' }, 'Inside'), ...defaultItems()],
-    });
+    const wrapper = await mountDropdown(
+      { open: true },
+      {
+        default: () => [h('div', { class: 'inside' }, 'Inside'), ...defaultItems()],
+      },
+    );
 
     document.body.querySelector<HTMLElement>('.inside')!.click();
     await flushPromises();
@@ -162,7 +173,7 @@ describe('Dropdown', () => {
     wrapper.unmount();
   });
 
-  it.each(['Escape', 'Tab'])('closes on %s and focuses the toggle', async (key) => {
+  it.each(['Escape', 'Tab'])('closes on %s and focuses the toggle', async key => {
     const wrapper = await mountDropdown({ open: true });
 
     menuItems()[0]!.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
@@ -195,12 +206,15 @@ describe('Dropdown', () => {
   });
 
   it('skips disabled items when focusing the first item on open', async () => {
-    const wrapper = await mountDropdown({ shouldFocusFirstItemOnOpen: true }, {
-      default: () => [
-        h(PfDropdownItem, { value: 'a', disabled: true }, () => 'Action A'),
-        h(PfDropdownItem, { value: 'b' }, () => 'Action B'),
-      ],
-    });
+    const wrapper = await mountDropdown(
+      { shouldFocusFirstItemOnOpen: true },
+      {
+        default: () => [
+          h(PfDropdownItem, { value: 'a', disabled: true }, () => 'Action A'),
+          h(PfDropdownItem, { value: 'b' }, () => 'Action B'),
+        ],
+      },
+    );
 
     toggle().click();
     await flushPromises();
@@ -223,10 +237,13 @@ describe('Dropdown', () => {
   });
 
   it('uses a custom toggle slot and binds the toggle props to it', async () => {
-    const wrapper = await mountDropdown({}, {
-      toggle: () => [h('button', { class: 'custom-toggle' }, 'Custom')],
-      default: defaultItems,
-    });
+    const wrapper = await mountDropdown(
+      {},
+      {
+        toggle: () => [h('button', { class: 'custom-toggle' }, 'Custom')],
+        default: defaultItems,
+      },
+    );
 
     const custom = document.body.querySelector<HTMLButtonElement>('.custom-toggle')!;
     expect(custom.id).toMatch(/^pf-dropdown-toggle-id-\d+$/);

@@ -41,13 +41,24 @@
       @click="onClick($event, (routerCtx as RouterLinkContext | undefined)?.navigate)"
     >
       <span v-if="loading" :class="styles.buttonProgress">
-        <pf-spinner size="md" :aria-valuetext="spinnerAriaValueText" :aria-label="spinnerAriaLabel" :aria-labelledby="spinnerAriaLabelledBy" />
+        <pf-spinner
+          size="md"
+          :aria-valuetext="spinnerAriaValueText"
+          :aria-label="spinnerAriaLabel"
+          :aria-labelledby="spinnerAriaLabelledBy"
+        />
       </span>
 
       <span v-if="iconPosition === 'end' && $slots.default" :class="styles.buttonText">
         <slot />
       </span>
-      <span v-if="$slots.icon || favorite || settings || hamburger" :class="[styles.buttonIcon, { [styles.modifiers.start]: iconPosition === 'start', [styles.modifiers.end]: iconPosition === 'end' }]">
+      <span
+        v-if="$slots.icon || favorite || settings || hamburger"
+        :class="[
+          styles.buttonIcon,
+          { [styles.modifiers.start]: iconPosition === 'start', [styles.modifiers.end]: iconPosition === 'end' },
+        ]"
+      >
         <template v-if="favorite">
           <span :class="styles.buttonIconFavorite">
             <outlined-star-icon />
@@ -57,7 +68,13 @@
           </span>
         </template>
         <gear-icon v-else-if="settings" />
-        <svg v-else-if="hamburger" viewBox="0 0 10 10" :class="[styles.buttonHamburgerIcon, 'pf-v6-svg']" width="1em" height="1em">
+        <svg
+          v-else-if="hamburger"
+          viewBox="0 0 10 10"
+          :class="[styles.buttonHamburgerIcon, 'pf-v6-svg']"
+          width="1em"
+          height="1em"
+        >
           <path :class="styles.buttonHamburgerIconTop" d="M1,1 L9,1"></path>
           <path :class="styles.buttonHamburgerIconMiddle" d="M1,5 L9,5"></path>
           <path :class="styles.buttonHamburgerIconArrow" d="M1,5 L1,5 L1,5"></path>
@@ -77,26 +94,39 @@
 </template>
 
 <script lang="ts" setup>
-import styles from "@patternfly/react-styles/css/components/Button/button";
-import PfSpinner from "./Spinner.vue";
-import PassThrough from "../helpers/PassThrough.vue";
-import type { RouteLocationRaw, useLink } from "vue-router";
-import { useOUIAProps, type OUIAProps } from "../helpers/ouia";
-import { type Component, type UnwrapRef, computed, type AnchorHTMLAttributes, type ButtonHTMLAttributes, useTemplateRef, type ComponentPublicInstance, toRaw } from "vue";
-import { isDefined } from "@vueuse/shared";
-import { ucfirst } from "../util";
-import GearIcon from "@vue-patternfly/icons/gear-icon";
-import StarIcon from "@vue-patternfly/icons/star-icon";
-import OutlinedStarIcon from "@vue-patternfly/icons/outlined-star-icon";
+import styles from '@patternfly/react-styles/css/components/Button/button';
+import PfSpinner from './Spinner.vue';
+import PassThrough from '../helpers/PassThrough.vue';
+import type { RouteLocationRaw, useLink } from 'vue-router';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import {
+  type Component,
+  type UnwrapRef,
+  computed,
+  type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+  useTemplateRef,
+  type ComponentPublicInstance,
+  toRaw,
+} from 'vue';
+import { isDefined } from '@vueuse/shared';
+import { ucfirst } from '../util';
+import GearIcon from '@vue-patternfly/icons/gear-icon';
+import StarIcon from '@vue-patternfly/icons/star-icon';
+import OutlinedStarIcon from '@vue-patternfly/icons/outlined-star-icon';
 
 type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
 defineOptions({
-  name: "PfButton",
+  name: 'PfButton',
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, "onClick">, /* @vue-ignore */ Omit<ButtonHTMLAttributes, "onClick" | "aria-pressed" | "role"> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onClick'>,
+    /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
   /** Sets the base component to render. defaults to button */
   component?: string | Component;
   /** Adds block styling to button */
@@ -122,15 +152,15 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
   /** Flag indicating whether the button is favorited or not, only when favorite is true. */
   favorited?: boolean;
   /** Sets button type */
-  type?: "button" | "submit" | "reset";
+  type?: 'button' | 'submit' | 'reset';
   /** Adds button variant styles */
-  variant?: "primary" | "secondary" | "tertiary" | "danger" | "warning" | "link" | "plain" | "control" | "stateful";
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'warning' | 'link' | 'plain' | 'control' | 'stateful';
   /** Sets state of the stateful button variant. Default is "unread" */
-  state?: "read" | "unread" | "attention";
+  state?: 'read' | 'unread' | 'attention';
   /** Applies no padding on a plain button variant. Use when plain button is placed inline with text */
   noPadding?: boolean;
   /** Sets position of the link icon */
-  iconPosition?: "start" | "end";
+  iconPosition?: 'start' | 'end';
   /** Sets the button tabindex. */
   tabindex?: number;
   /** Adds small styling to the button */
@@ -148,7 +178,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
   /** Flag indicating the button is a hamburger button. This will override the icon property. */
   hamburger?: boolean;
   /** Adjusts and animates the hamburger icon to indicate what will happen upon clicking the button. */
-  hamburgerVariant?: "expand" | "collapse";
+  hamburgerVariant?: 'expand' | 'collapse';
   /** Flag indicating the button is a circle button. Intended for buttons that only contain an icon.. */
   circle?: boolean;
   /** Flag indicating the button is a docked variant button. For use in docked navigation. */
@@ -164,16 +194,16 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: "button",
-  variant: "primary",
-  iconPosition: "start",
-  component: "auto",
+  type: 'button',
+  variant: 'primary',
+  iconPosition: 'start',
+  component: 'auto',
   loading: undefined,
   expanded: undefined,
 });
 
 const emit = defineEmits<{
-  (name: "click", e: PointerEvent): void;
+  (name: 'click', e: PointerEvent): void;
 }>();
 
 defineSlots<{
@@ -182,15 +212,15 @@ defineSlots<{
   badge?: (props?: Record<never, never>) => any;
 }>();
 
-const el = useTemplateRef<HTMLElement | ComponentPublicInstance>("elRef");
+const el = useTemplateRef<HTMLElement | ComponentPublicInstance>('elRef');
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant });
 
 const buttonComponent = computed(() => {
-  if (props.component !== "auto") {
+  if (props.component !== 'auto') {
     // the component could have been made reactive by the parent (e.g. if stored in a reactive state)
     return toRaw(props.component);
   }
-  return props.href || props.to ? "a" : "button";
+  return props.href || props.to ? 'a' : 'button';
 });
 
 const effectiveDisabled = computed(() => {
@@ -202,32 +232,32 @@ const tabIdx = computed(() => {
     return props.tabindex;
   }
   if (props.disabled) {
-    return props.component === "button" ? null : -1;
+    return props.component === 'button' ? null : -1;
   }
-  if (!props.ariaDisabled && props.component === "span") {
+  if (!props.ariaDisabled && props.component === 'span') {
     return 0;
   }
   return null;
 });
 
-const preventedEvents = computed(() => props.ariaDisabled ? (props.inoperableEvents ?? ["click", "keypress"]) : []);
+const preventedEvents = computed(() => (props.ariaDisabled ? (props.inoperableEvents ?? ['click', 'keypress']) : []));
 
-const inoperableListeners = computed(() => Object.fromEntries(
-  preventedEvents.value
-    .filter(name => name !== "click")
-    .map(name => [name, (e: Event) => e.preventDefault()]),
-));
+const inoperableListeners = computed(() =>
+  Object.fromEntries(
+    preventedEvents.value.filter(name => name !== 'click').map(name => [name, (e: Event) => e.preventDefault()]),
+  ),
+);
 
 function omitInoperableListeners(attrs: Record<string, unknown>) {
   if (!preventedEvents.value.length) {
     return attrs;
   }
-  const listeners = preventedEvents.value.map(name => `on${ucfirst(name)}`);
-  return Object.fromEntries(Object.entries(attrs).filter(([key]) => !listeners.includes(key)));
+  const listeners = new Set(preventedEvents.value.map(name => `on${ucfirst(name)}`));
+  return Object.fromEntries(Object.entries(attrs).filter(([key]) => !listeners.has(key)));
 }
 
-function onClick(e: PointerEvent, navigate: RouterLinkContext["navigate"] | undefined) {
-  if (effectiveDisabled.value || preventedEvents.value.includes("click")) {
+function onClick(e: PointerEvent, navigate: RouterLinkContext['navigate'] | undefined) {
+  if (effectiveDisabled.value || preventedEvents.value.includes('click')) {
     e.preventDefault();
     return;
   }
@@ -237,7 +267,7 @@ function onClick(e: PointerEvent, navigate: RouterLinkContext["navigate"] | unde
     return;
   }
 
-  emit("click", e);
+  emit('click', e);
 }
 
 defineExpose({

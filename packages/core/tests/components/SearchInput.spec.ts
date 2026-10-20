@@ -13,7 +13,12 @@ import PfAdvancedSearchMenu from '../../src/components/SearchInput/AdvancedSearc
 
 enableAutoUnmount(afterEach);
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -115,7 +120,9 @@ describe('SearchInput', () => {
     });
 
     it('renders both navigation buttons as plain buttons', () => {
-      const wrapper = mount(PfSearchInput, { props: { modelValue: 'q', onPreviousClick: vi.fn(), onNextClick: vi.fn() } });
+      const wrapper = mount(PfSearchInput, {
+        props: { modelValue: 'q', onPreviousClick: vi.fn(), onNextClick: vi.fn() },
+      });
       expect(button(wrapper, 'Previous').classes()).toContain(buttonStyles.modifiers.plain);
     });
   });
@@ -173,12 +180,17 @@ describe('SearchInput', () => {
 
     it('expands, clears the value and focuses the input', async () => {
       const onClear = vi.fn();
-      const wrapper = mountWithModel(PfSearchInput, 'expanded', {
-        expandable: true,
-        expandButtonAriaLabel: 'Expand',
-        modelValue: 'old',
-        onClear,
-      }, { attachTo: document.body });
+      const wrapper = mountWithModel(
+        PfSearchInput,
+        'expanded',
+        {
+          expandable: true,
+          expandButtonAriaLabel: 'Expand',
+          modelValue: 'old',
+          onClear,
+        },
+        { attachTo: document.body },
+      );
 
       await button(wrapper, 'Expand').trigger('click');
       await flushPromises();
@@ -192,11 +204,16 @@ describe('SearchInput', () => {
     });
 
     it('collapses and focuses the expand button', async () => {
-      const wrapper = mountWithModel(PfSearchInput, 'expanded', {
-        expandable: true,
-        expandButtonAriaLabel: 'Expand',
-        expanded: true,
-      }, { attachTo: document.body });
+      const wrapper = mountWithModel(
+        PfSearchInput,
+        'expanded',
+        {
+          expandable: true,
+          expandButtonAriaLabel: 'Expand',
+          expanded: true,
+        },
+        { attachTo: document.body },
+      );
 
       await button(wrapper, 'Expand').trigger('click');
       await flushPromises();
@@ -209,12 +226,17 @@ describe('SearchInput', () => {
     const attributes = [{ attr: 'username', display: 'Username' }, 'firstname'];
 
     function mountAdvanced(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = {}) {
-      return mountWithModel(PfSearchInput, 'advancedSearchOpen', {
-        attributes,
-        advancedSearchDelimiter: ':',
-        appendTo: 'inline',
-        ...props,
-      }, { slots, attachTo: document.body });
+      return mountWithModel(
+        PfSearchInput,
+        'advancedSearchOpen',
+        {
+          attributes,
+          advancedSearchDelimiter: ':',
+          appendTo: 'inline',
+          ...props,
+        },
+        { slots, attachTo: document.body },
+      );
     }
 
     function panel() {
@@ -311,10 +333,13 @@ describe('SearchInput', () => {
     });
 
     it('renders the words-attr-label and form-additional-items slots', async () => {
-      mountAdvanced({ advancedSearchOpen: true }, {
-        'words-attr-label': () => 'Contains',
-        'form-additional-items': () => h('div', { class: 'extra' }),
-      });
+      mountAdvanced(
+        { advancedSearchOpen: true },
+        {
+          'words-attr-label': () => 'Contains',
+          'form-additional-items': () => h('div', { class: 'extra' }),
+        },
+      );
       await flushPromises();
 
       expect(panel()!.textContent).toContain('Contains');
@@ -345,7 +370,13 @@ describe('AdvancedSearchMenu', () => {
 
   it('uses the submit and reset labels', () => {
     const wrapper = mount(PfAdvancedSearchMenu, {
-      props: { searchMenuOpen: true, modelValue: 'x', submitSearchButtonLabel: 'Go', resetButtonLabel: 'Clear', onClear: vi.fn() },
+      props: {
+        searchMenuOpen: true,
+        modelValue: 'x',
+        submitSearchButtonLabel: 'Go',
+        resetButtonLabel: 'Clear',
+        onClear: vi.fn(),
+      },
     });
 
     expect(wrapper.find('button[type="submit"]').text()).toBe('Go');
@@ -357,7 +388,9 @@ describe('AdvancedSearchMenu', () => {
       props: { searchMenuOpen: true, modelValue: 'x', onClear: vi.fn() },
     });
 
-    const items = wrapper.findAll(`.${formStyles.formGroup}.${formStyles.modifiers.action} .${actionListStyles.actionList} .${actionListStyles.actionListGroup} .${actionListStyles.actionList}__item`);
+    const items = wrapper.findAll(
+      `.${formStyles.formGroup}.${formStyles.modifiers.action} .${actionListStyles.actionList} .${actionListStyles.actionListGroup} .${actionListStyles.actionList}__item`,
+    );
     expect(items.map(i => i.find('button').attributes('type'))).toEqual(['submit', 'reset']);
   });
 

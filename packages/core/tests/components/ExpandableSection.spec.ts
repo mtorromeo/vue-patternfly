@@ -65,11 +65,14 @@ describe('ExpandableSection', () => {
 
   it('supports v-model:expanded', async () => {
     const expanded = ref(false);
-    const wrapper = mount(defineComponent({
-      components: { PfExpandableSection },
-      setup: () => ({ expanded }),
-      template: `<pf-expandable-section v-model:expanded="expanded" toggle-text="Toggle">Body</pf-expandable-section>`,
-    }));
+    const wrapper = mount(
+      defineComponent({
+        components: { PfExpandableSection },
+        setup: () => ({ expanded }),
+        template:
+          '<pf-expandable-section v-model:expanded="expanded" toggle-text="Toggle">Body</pf-expandable-section>',
+      }),
+    );
 
     await wrapper.get('button').trigger('click');
     expect(expanded.value).toBe(true);

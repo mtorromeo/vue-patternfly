@@ -1,15 +1,16 @@
 <template>
   <svg
     v-bind="ouiaProps"
-    :class="[
-      styles.spinner,
-      inline ? [styles.modifiers.inline] : styles.modifiers[size],
-    ]"
+    :class="[styles.spinner, inline ? [styles.modifiers.inline] : styles.modifiers[size]]"
     role="progressbar"
     viewBox="0 0 100 100"
-    :style="diameter ? {
-      [cssDiameter.name]: diameter,
-    } : undefined"
+    :style="
+      diameter
+        ? {
+            [cssDiameter.name]: diameter,
+          }
+        : undefined
+    "
     :aria-valuetext="ariaValueText"
     :aria-label="ariaLabel"
     :aria-labelledby="ariaLabelledby"
@@ -50,5 +51,5 @@ const props = withDefaults(defineProps<Props>(), {
   ariaValueText: 'Loading...',
   ariaLabel: 'Contents',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>

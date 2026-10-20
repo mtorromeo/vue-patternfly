@@ -1,7 +1,17 @@
 <template>
   <define-main-container>
     <div :class="[styles.pageMainContainer, { [styles.modifiers.fill]: contentFilled }]">
-      <component :is="mainComponent" :id="mainContainerId" ref="mainRef" :role="role" :class="styles.pageMain" :tabindex="mainTabIndex" :aria-label="mainAriaLabel" @click="mainClick" @touchstart.passive="mainClick">
+      <component
+        :is="mainComponent"
+        :id="mainContainerId"
+        ref="mainRef"
+        :role="role"
+        :class="styles.pageMain"
+        :tabindex="mainTabIndex"
+        :aria-label="mainAriaLabel"
+        @click="mainClick"
+        @touchstart.passive="mainClick"
+      >
         <slot />
       </component>
     </div>
@@ -64,9 +74,9 @@
 </template>
 
 <script lang="ts">
-export const PageManagedSidebarKey = Symbol("PageManagedSidebarKey") as InjectionKey<Ref<boolean>>;
-export const PageSidebarOpenKey = Symbol("PageSidebarOpenKey") as InjectionKey<WritableComputedRef<boolean>>;
-export const PageSidebarsKey = Symbol("PageSidebarsKey") as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
+export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
+export const PageSidebarOpenKey = Symbol('PageSidebarOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
+export const PageSidebarsKey = Symbol('PageSidebarsKey') as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the value for role on the <main> element */
@@ -91,11 +101,11 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag indicating Notification drawer in expanded */
   drawerExpanded?: boolean;
   /** HTML component used as main component of the page. Defaults to 'main', only pass in 'div' if another 'main' element already exists. */
-  mainComponent?: "main" | "div";
+  mainComponent?: 'main' | 'div';
   /** Enables children to fill the available vertical space. Child page sections or groups that should fill should be passed the isFilled property. */
   contentFilled?: boolean;
   /** Indicates the layout variant */
-  variant?: "default" | "docked";
+  variant?: 'default' | 'docked';
   /** Flag indicating the docked nav is expanded. Only applies when variant is docked. */
   dockExpanded?: boolean;
   /** Flag indicating the docked nav should expand as an overlay instead of the default inline. */
@@ -106,37 +116,48 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 </script>
 
 <script lang="ts" setup>
-import styles from "@patternfly/react-styles/css/components/Page/page";
-import { globalWidthBreakpoints } from "../../constants";
-import { createReusableTemplate, useElementSize, useWindowSize } from "@vueuse/core";
-import { ref, provide, computed, watch, type Ref, type InjectionKey, type WritableComputedRef, type HTMLAttributes, useTemplateRef, type ComponentPublicInstance } from "vue";
-import PfDrawer from "../Drawer/Drawer.vue";
-import PfDrawerContent from "../Drawer/DrawerContent.vue";
-import PfDrawerPanelContent from "../Drawer/DrawerPanelContent.vue";
-import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
-import { getBreakpoint, getVerticalBreakpoint } from "../../util";
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from "../../use";
+import styles from '@patternfly/react-styles/css/components/Page/page';
+import { globalWidthBreakpoints } from '../../constants';
+import { createReusableTemplate, useElementSize, useWindowSize } from '@vueuse/core';
+import {
+  ref,
+  provide,
+  computed,
+  watch,
+  type Ref,
+  type InjectionKey,
+  type WritableComputedRef,
+  type HTMLAttributes,
+  useTemplateRef,
+  type ComponentPublicInstance,
+} from 'vue';
+import PfDrawer from '../Drawer/Drawer.vue';
+import PfDrawerContent from '../Drawer/DrawerContent.vue';
+import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { getBreakpoint, getVerticalBreakpoint } from '../../util';
+import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
 
 defineOptions({
-  name: "PfPage",
+  name: 'PfPage',
   inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<Props>(), {
   defaultManagedSidebarOpen: true,
-  mainComponent: "main",
+  mainComponent: 'main',
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: "pageResize", v: { mobileView: boolean; windowSize: number }): void;
+  (name: 'pageResize', v: { mobileView: boolean; windowSize: number }): void;
 }>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
   drawer?: (props?: Record<never, never>) => any;
-  "skip-to-content"?: (props?: Record<never, never>) => any;
-  "dock-content"?: (props?: Record<never, never>) => any;
+  'skip-to-content'?: (props?: Record<never, never>) => any;
+  'dock-content'?: (props?: Record<never, never>) => any;
   /** The horizontal masthead content (e.g. PfMasthead or PfPageHeader). When using the docked variant, this content will only render at mobile viewports. */
   masthead?: (props?: Record<never, never>) => any;
   sidebar?: (props?: Record<never, never>) => any;
@@ -145,8 +166,8 @@ defineSlots<{
 }>();
 
 const [DefineMainContainer, MainContainer] = createReusableTemplate();
-const pageRef = useTemplateRef("page");
-const mainRef = useTemplateRef<HTMLElement>("mainRef");
+const pageRef = useTemplateRef('page');
+const mainRef = useTemplateRef<HTMLElement>('mainRef');
 const { width, height } = useElementSize(pageRef);
 const sidebars = provideChildrenTracker(PageSidebarsKey);
 
@@ -176,9 +197,9 @@ const { width: windowWidth } = useWindowSize();
 
 watch(
   windowWidth,
-  (width) => {
+  width => {
     mobileView.value = width < globalWidthBreakpoints.xl;
-    emit("pageResize", { mobileView: mobileView.value, windowSize: width });
+    emit('pageResize', { mobileView: mobileView.value, windowSize: width });
   },
   { immediate: true },
 );

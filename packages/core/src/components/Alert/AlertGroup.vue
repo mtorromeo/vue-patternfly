@@ -1,6 +1,6 @@
 <template>
   <teleport :disabled="!toast" :to="appendTo">
-    <pf-alert-group-inline v-bind="{...ouiaProps, ...$attrs}" :toast="toast">
+    <pf-alert-group-inline v-bind="{ ...ouiaProps, ...$attrs }" :toast="toast">
       <slot />
     </pf-alert-group-inline>
   </teleport>
@@ -27,7 +27,7 @@ interface Props extends /* @vue-ignore */ ComponentProps<typeof PfAlertGroupInli
 const props = withDefaults(defineProps<Props>(), {
   appendTo: 'body',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -77,7 +77,9 @@ describe('OverflowMenuContent', () => {
 
   it('is hidden below the breakpoint unless persistent', () => {
     expect(mount(PfOverflowMenuContent, provideBelow(true)).find('div').exists()).toBe(false);
-    expect(mount(PfOverflowMenuContent, { props: { persistent: true }, ...provideBelow(true) }).classes()).toContain(styles.overflowMenuContent);
+    expect(mount(PfOverflowMenuContent, { props: { persistent: true }, ...provideBelow(true) }).classes()).toContain(
+      styles.overflowMenuContent,
+    );
   });
 });
 
@@ -88,7 +90,9 @@ describe('OverflowMenuControl', () => {
 
   it('is shown below the breakpoint or with additionalOptions', () => {
     expect(mount(PfOverflowMenuControl, provideBelow(true)).classes()).toContain(styles.overflowMenuControl);
-    expect(mount(PfOverflowMenuControl, { props: { additionalOptions: true } }).classes()).toContain(styles.overflowMenuControl);
+    expect(mount(PfOverflowMenuControl, { props: { additionalOptions: true } }).classes()).toContain(
+      styles.overflowMenuControl,
+    );
   });
 });
 
@@ -104,7 +108,9 @@ describe('OverflowMenuGroup', () => {
 
   it('is hidden below the breakpoint unless persistent', () => {
     expect(mount(PfOverflowMenuGroup, provideBelow(true)).find('div').exists()).toBe(false);
-    expect(mount(PfOverflowMenuGroup, { props: { persistent: true }, ...provideBelow(true) }).classes()).toContain(styles.overflowMenuGroup);
+    expect(mount(PfOverflowMenuGroup, { props: { persistent: true }, ...provideBelow(true) }).classes()).toContain(
+      styles.overflowMenuGroup,
+    );
   });
 });
 
@@ -117,7 +123,9 @@ describe('OverflowMenuItem', () => {
 
   it('is hidden below the breakpoint unless persistent', () => {
     expect(mount(PfOverflowMenuItem, provideBelow(true)).find('div').exists()).toBe(false);
-    expect(mount(PfOverflowMenuItem, { props: { persistent: true }, ...provideBelow(true) }).classes()).toContain(styles.overflowMenuItem);
+    expect(mount(PfOverflowMenuItem, { props: { persistent: true }, ...provideBelow(true) }).classes()).toContain(
+      styles.overflowMenuItem,
+    );
   });
 });
 

@@ -1,6 +1,6 @@
 <template>
   <div :class="styles.cardTitle">
-    <component :id="titleId" v-bind="{...ouiaProps, ...$attrs}" :is="component" :class="styles.cardTitleText">
+    <component :id="titleId" v-bind="{ ...ouiaProps, ...$attrs }" :is="component" :class="styles.cardTitleText">
       <slot />
     </component>
     <div v-if="$slots.subtitle" :id="subtitleId" :class="styles.cardSubtitle">
@@ -28,7 +28,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   component: 'div',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -36,6 +36,6 @@ defineSlots<{
 }>();
 
 const card = inject(CardKey, undefined);
-const titleId = computed(() => card?.cardId.value ? `${card.cardId.value}-title` : undefined);
-const subtitleId = computed(() => card?.cardId.value ? `${card.cardId.value}-subtitle` : undefined);
+const titleId = computed(() => (card?.cardId.value ? `${card.cardId.value}-title` : undefined));
+const subtitleId = computed(() => (card?.cardId.value ? `${card.cardId.value}-subtitle` : undefined));
 </script>

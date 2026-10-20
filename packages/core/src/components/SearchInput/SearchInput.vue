@@ -1,6 +1,8 @@
 <template>
   <component v-bind="ouiaProps" :is="attributes.length > 0 ? 'div' : PassThrough" ref="elRef">
-    <component :is="(!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable) ? PfInputGroup : PassThrough">
+    <component
+      :is="!!onSearch || attributes.length > 0 || !!onToggleAdvancedSearch || expandable ? PfInputGroup : PassThrough"
+    >
       <template v-if="!expandable || expanded">
         <pf-text-input-group :disabled="disabled">
           <pf-text-input-group-main
@@ -18,7 +20,9 @@
             </template>
           </pf-text-input-group-main>
 
-          <pf-text-input-group-utilities v-if="value && (resultsCount || (!!onNextClick && !!onPreviousClick) || (!!onClear && !expandable))">
+          <pf-text-input-group-utilities
+            v-if="value && (resultsCount || (!!onNextClick && !!onPreviousClick) || (!!onClear && !expandable))"
+          >
             <pf-badge v-if="resultsCount" read>{{ resultsCount }}</pf-badge>
 
             <div v-if="!!onNextClick && !!onPreviousClick" :class="textInputGroupStyles.textInputGroupGroup">
@@ -61,7 +65,7 @@
 
         <pf-button
           v-if="attributes.length > 0 || !!onToggleAdvancedSearch"
-          :class="{'pf-m-expanded': advancedSearchOpen}"
+          :class="{ 'pf-m-expanded': advancedSearchOpen }"
           variant="control"
           :disabled="disabled"
           :aria-label="openMenuButtonAriaLabel"
@@ -77,7 +81,7 @@
           v-if="!!onSearch"
           type="submit"
           variant="control"
-          :disabled="disabled|| !value"
+          :disabled="disabled || !value"
           :aria-label="submitSearchButtonLabel"
           @click="onSearchHandler"
         >
@@ -200,11 +204,7 @@ interface Props extends OUIAProps {
   /** A callback for when the open advanced search button is clicked. */
   onToggleAdvancedSearch?: (event: Event, isOpen?: boolean) => void;
   /** A callback for when the search button is clicked. */
-  onSearch?: (
-    value: string,
-    event: Event,
-    attrValueMap: { [key: string]: string }
-  ) => void,
+  onSearch?: (value: string, event: Event, attrValueMap: { [key: string]: string }) => void;
 }
 </script>
 
@@ -242,14 +242,14 @@ const props = withDefaults(defineProps<Props>(), {
   resetButtonLabel: 'Reset',
   openMenuButtonAriaLabel: 'Open advanced search',
   previousNavigationButtonAriaLabel: 'Previous',
-  previousNavigationButtonDisabled :false,
+  previousNavigationButtonDisabled: false,
   nextNavigationButtonDisabled: false,
   nextNavigationButtonAriaLabel: 'Next',
   submitSearchButtonLabel: 'Search',
   disabled: false,
   type: 'text',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Value of the search input. */
 const value = defineModel<string>({ default: '' });

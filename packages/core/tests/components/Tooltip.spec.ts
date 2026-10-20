@@ -11,7 +11,12 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -23,14 +28,19 @@ function mountWithModel<C>(component: C, model: string, props: Record<string, un
 }
 
 async function mountTooltip(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = {}) {
-  const wrapper = mountWithModel(PfTooltip, 'visible', { animationDuration: 0, entryDelay: 0, exitDelay: 0, ...props }, {
-    slots: {
-      default: () => h('button', { class: 'trigger' }, 'Trigger'),
-      content: () => 'Tooltip text',
-      ...slots,
+  const wrapper = mountWithModel(
+    PfTooltip,
+    'visible',
+    { animationDuration: 0, entryDelay: 0, exitDelay: 0, ...props },
+    {
+      slots: {
+        default: () => h('button', { class: 'trigger' }, 'Trigger'),
+        content: () => 'Tooltip text',
+        ...slots,
+      },
+      attachTo: document.body,
     },
-    attachTo: document.body,
-  });
+  );
   await flushPromises();
   return wrapper;
 }
@@ -71,7 +81,9 @@ describe('Tooltip', () => {
     await mountTooltip({ visible: true, leftAligned: true, maxWidth: '200px', 'data-test': 'tip' });
 
     const el = tooltip()!;
-    expect(el.querySelector(`.${styles.tooltipContent}`)!.classList.contains(styles.modifiers.textAlignLeft)).toBe(true);
+    expect(el.querySelector(`.${styles.tooltipContent}`)!.classList.contains(styles.modifiers.textAlignLeft)).toBe(
+      true,
+    );
     expect(el.style.maxWidth).toBe('200px');
     expect(el.getAttribute('data-test')).toBe('tip');
   });

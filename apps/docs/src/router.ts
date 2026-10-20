@@ -8,8 +8,8 @@ type StoryPage = {
   title: string;
 };
 
-const pathToTitle = (path: string) => path.replace(/\B[A-Z]/g, m => " " + m.toLowerCase());
-const pathToDashed = (path: string) => path.replace(/[A-Z]/g, m => "-" + m.toLowerCase()).replaceAll(/^-+|-+$/g, '');
+const pathToTitle = (path: string) => path.replace(/\B[A-Z]/g, m => ' ' + m.toLowerCase());
+const pathToDashed = (path: string) => path.replace(/[A-Z]/g, m => '-' + m.toLowerCase()).replaceAll(/^-+|-+$/g, '');
 
 export const stories: Record<string, StoryPage[]> = {
   Overview: [],

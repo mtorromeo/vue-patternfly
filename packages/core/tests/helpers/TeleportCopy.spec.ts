@@ -13,7 +13,9 @@ describe('TeleportCopy', () => {
     target.id = 'target';
     document.body.appendChild(target);
 
-    const wrapper = mount(() => h('div', { class: 'host' }, [h(TeleportCopy, { to: '#target' }, { default: slot })]), { attachTo: document.body });
+    const wrapper = mount(() => h('div', { class: 'host' }, [h(TeleportCopy, { to: '#target' }, { default: slot })]), {
+      attachTo: document.body,
+    });
     expect(wrapper.find('.original').exists()).toBe(true);
     expect(wrapper.find('.copy').exists()).toBe(false);
     expect(target.querySelector('.copy')?.textContent).toBe('content');
@@ -33,10 +35,14 @@ describe('TeleportCopy', () => {
     document.body.appendChild(target);
     const disabled = ref(true);
 
-    const wrapper = mount(() => h('div', [
-      h(TeleportCopy, { to: '#target', disabled: disabled.value }, { default: slot }),
-      h(TeleportCopy, { to: null }, { default: slot }),
-    ]), { attachTo: document.body });
+    const wrapper = mount(
+      () =>
+        h('div', [
+          h(TeleportCopy, { to: '#target', disabled: disabled.value }, { default: slot }),
+          h(TeleportCopy, { to: null }, { default: slot }),
+        ]),
+      { attachTo: document.body },
+    );
     expect(wrapper.findAll('.original')).toHaveLength(2);
     expect(document.querySelectorAll('.copy')).toHaveLength(0);
 

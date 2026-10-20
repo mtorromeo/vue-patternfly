@@ -39,7 +39,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
@@ -71,12 +71,11 @@ const height = computed(() => {
       parseFloat(rootMenuListStyles.getPropertyValue('padding-bottom').replace(/px/g, '')) +
       (rootMenuList.value.parentMenu?.el.value
         ? parseFloat(
-          getComputedStyle(rootMenuList.value.parentMenu?.el.value)
-            .getPropertyValue('border-bottom-width')
-            .replace(/px/g, ''),
-        )
-        : 0)
-      ;
+            getComputedStyle(rootMenuList.value.parentMenu?.el.value)
+              .getPropertyValue('border-bottom-width')
+              .replace(/px/g, ''),
+          )
+        : 0);
     clientHeight = clientHeight + rootMenuListPaddingOffset;
   }
 

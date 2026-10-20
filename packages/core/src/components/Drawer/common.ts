@@ -1,6 +1,6 @@
-import type { ComputedRef, InjectionKey, Ref } from "vue";
-import type { ComponentExposed } from "vue-component-type-helpers";
-import type AutoWrap from "../../helpers/AutoWrap.vue";
+import type { ComputedRef, InjectionKey, Ref } from 'vue';
+import type { ComponentExposed } from 'vue-component-type-helpers';
+import type AutoWrap from '../../helpers/AutoWrap.vue';
 
 export type DrawerProvide = {
   el: Readonly<Ref<HTMLDivElement | null>>;
@@ -9,7 +9,7 @@ export type DrawerProvide = {
   inline: ComputedRef<boolean>;
   viewport: ComputedRef<boolean>;
   position: ComputedRef<'start' | 'end' | 'bottom'>;
-}
+};
 
 export const DrawerKey = Symbol('DrawerKey') as InjectionKey<DrawerProvide>;
 

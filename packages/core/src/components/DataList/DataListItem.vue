@@ -14,7 +14,16 @@
     @click="handleClick($event as PointerEvent)"
     @keydown="handleKeydown"
   >
-    <input v-if="isSelectable" :name="name" :value="value" class="pf-v6-screen-reader" :type="datalist?.multipleSelection.value ? 'checkbox' : 'radio'" tabindex="-1" :checked="managedSelected" @change="select" />
+    <input
+      v-if="isSelectable"
+      :name="name"
+      :value="value"
+      class="pf-v6-screen-reader"
+      :type="datalist?.multipleSelection.value ? 'checkbox' : 'radio'"
+      tabindex="-1"
+      :checked="managedSelected"
+      @change="select"
+    />
     <auto-wrap :component="PfDataListItemRow" :exclude="PfDataListContent">
       <slot />
     </auto-wrap>
@@ -22,9 +31,9 @@
 </template>
 
 <script lang="ts">
-export { DataListItemKey } from "./common";
+export { DataListItemKey } from './common';
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, "tabindex" | "aria-selected" | "onClick"> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'tabindex' | 'aria-selected' | 'onClick'> {
   selected?: boolean;
   /** Name of the item inputs (radio or checkbox) when item selection is enabled */
   selectionInputName?: string;
@@ -36,17 +45,17 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, "tab
 </script>
 
 <script lang="ts" setup>
-import styles from "@patternfly/react-styles/css/components/DataList/data-list";
-import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
-import { computed, getCurrentInstance, inject, provide, ref, type LiHTMLAttributes, toValue } from "vue";
-import { DataListKey } from "./DataList.vue";
-import AutoWrap from "../../helpers/AutoWrap.vue";
-import PfDataListItemRow from "./DataListItemRow.vue";
-import PfDataListContent from "./DataListContent.vue";
-import { DataListItemKey } from "./common";
+import styles from '@patternfly/react-styles/css/components/DataList/data-list';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { computed, getCurrentInstance, inject, provide, ref, type LiHTMLAttributes, toValue } from 'vue';
+import { DataListKey } from './DataList.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
+import PfDataListItemRow from './DataListItemRow.vue';
+import PfDataListContent from './DataListContent.vue';
+import { DataListItemKey } from './common';
 
 defineOptions({
-  name: "PfDataListItem",
+  name: 'PfDataListItem',
 });
 
 const props = withDefaults(defineProps<Props>(), {
@@ -56,11 +65,11 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag to show if the expanded content of the pf-data-list-item is visible */
-const expanded = defineModel<boolean>("expanded", { default: false });
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 const emit = defineEmits<{
-  (name: "click", e: PointerEvent): void;
-  (name: "update:selected", s: boolean): void;
+  (name: 'click', e: PointerEvent): void;
+  (name: 'update:selected', s: boolean): void;
 }>();
 
 defineSlots<{
@@ -120,13 +129,13 @@ const managedSelected = (() => {
             itemSelection = s ? value : undefined;
           }
 
-          datalist.emit(`update:selected`, itemSelection);
+          datalist.emit('update:selected', itemSelection);
         } else {
           innerSelected.value = s;
         }
       }
 
-      emit(`update:selected`, s);
+      emit('update:selected', s);
     },
   });
 })();
@@ -151,7 +160,7 @@ function handleKeydown(event: KeyboardEvent) {
   if (event.target !== event.currentTarget || !isSelectable.value) {
     return;
   }
-  if (event.key === "Enter" || event.key === " ") {
+  if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault();
     select();
   }
@@ -159,6 +168,6 @@ function handleKeydown(event: KeyboardEvent) {
 
 function handleClick(event: PointerEvent) {
   select();
-  emit("click", event);
+  emit('click', event);
 }
 </script>

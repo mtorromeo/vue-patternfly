@@ -5,15 +5,10 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "module": "es2020",
-    "types": [
-      "vite/client"
-    ]
+    "types": ["vite/client"]
   },
   "vueCompilerOptions": {
     "strictTemplates": true
   },
-  "include": [
-    "./src/*",
-    "./src/**/*"
-  ]
+  "include": ["./src/*", "./src/**/*"]
 }

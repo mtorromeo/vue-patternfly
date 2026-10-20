@@ -1,11 +1,14 @@
 <template>
   <img
     v-bind="ouiaProps"
-    :class="[styles.avatar, {
-      [styles.modifiers.bordered]: bordered,
-      [styles.modifiers[size as NonNullable<typeof size>]]: size,
-    }]"
-  >
+    :class="[
+      styles.avatar,
+      {
+        [styles.modifiers.bordered]: bordered,
+        [styles.modifiers[size as NonNullable<typeof size>]]: size,
+      },
+    ]"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -26,5 +29,5 @@ interface Props extends OUIAProps, /* @vue-ignore */ ImgHTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>

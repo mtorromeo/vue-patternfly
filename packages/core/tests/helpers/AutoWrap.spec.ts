@@ -5,7 +5,13 @@ import AutoWrap from '../../src/helpers/AutoWrap.vue';
 import { isOverridableWrapper, resolveOverridableComponent } from '../../src/helpers';
 
 const Item = defineComponent({ name: 'Item', render: () => h('i', 'item') });
-const Group = defineComponent({ name: 'Group', setup: (_, { slots, attrs }) => () => h('section', attrs, slots.default?.()) });
+const Group = defineComponent({
+  name: 'Group',
+  setup:
+    (_, { slots, attrs }) =>
+    () =>
+      h('section', attrs, slots.default?.()),
+});
 
 function render(props: Record<string, unknown>, children: () => (VNode | null)[]) {
   return mount(() => h('div', [h(AutoWrap, props, { default: children })]));
@@ -59,20 +65,22 @@ describe('AutoWrap', () => {
   });
 
   it('applies multiple wrapping groups in order', () => {
-    const wrapper = render({
-      options: [
-        { component: 'li', each: true },
-        { component: 'ul' },
-      ],
-    }, () => [h('span'), h('span')]);
+    const wrapper = render(
+      {
+        options: [{ component: 'li', each: true }, { component: 'ul' }],
+      },
+      () => [h('span'), h('span')],
+    );
     expect(wrapper.html({ raw: true })).toBe('<div><ul><li><span></span></li><li><span></span></li></ul></div>');
   });
 
   it('exposes the wrapping element and is resolved by resolveOverridableComponent', async () => {
     const autoWrap = ref();
-    mount(defineComponent({
-      setup: () => () => h('div', [h(AutoWrap, { component: 'ul', ref: autoWrap }, () => [h('li')])]),
-    }));
+    mount(
+      defineComponent({
+        setup: () => () => h('div', [h(AutoWrap, { component: 'ul', ref: autoWrap }, () => [h('li')])]),
+      }),
+    );
     await nextTick();
 
     expect(isOverridableWrapper(autoWrap.value)).toBe(true);

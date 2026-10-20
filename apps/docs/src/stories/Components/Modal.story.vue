@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Modal">
-    <template #description>A <b>modal</b> displays important information to a user without requiring them to navigate to a new page.</template>
+    <template #description
+      >A <b>modal</b> displays important information to a user without requiring them to navigate to a new
+      page.</template
+    >
 
     <template #apidocs>
       <component-info name="PfModal" />
@@ -26,15 +29,12 @@
       <pf-modal v-model:open="open2" title="Simple modal header">
         {{ sample_content }}
         <template #description>
-          A description is used when you want to provide more info about the modal than the title is able to describe. The content in the description is static and will not scroll with the rest of the modal body.
+          A description is used when you want to provide more info about the modal than the title is able to describe.
+          The content in the description is static and will not scroll with the rest of the modal body.
         </template>
         <template #footer>
-          <pf-button variant="primary" @click="open2 = !open2">
-            Confirm
-          </pf-button>
-          <pf-button variant="link" @click="open2 = !open2">
-            Cancel
-          </pf-button>
+          <pf-button variant="primary" @click="open2 = !open2"> Confirm </pf-button>
+          <pf-button variant="link" @click="open2 = !open2"> Cancel </pf-button>
         </template>
       </pf-modal>
     </story-canvas>
@@ -49,8 +49,7 @@
               <help-icon />
             </pf-button>
             <template #content>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla
-              turpis.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.
             </template>
           </pf-tooltip>
         </template>
@@ -60,14 +59,15 @@
 </template>
 
 <script lang="ts" setup>
-import HelpIcon from "@vue-patternfly/icons/help-icon";
-import { ref } from "vue";
+import HelpIcon from '@vue-patternfly/icons/help-icon';
+import { ref } from 'vue';
 
 const animations = ref(true);
 const open1 = ref(false);
 const open2 = ref(false);
 const open3 = ref(false);
-const sample_content = ref(`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+const sample_content =
+  ref(`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
     magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
     pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id

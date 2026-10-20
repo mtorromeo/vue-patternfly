@@ -23,15 +23,18 @@ describe('Alert', () => {
       expect(wrapper.find(`.${styles.alertTitle}`).element.tagName).toBe('H2');
     });
 
-    it.each(['success', 'danger', 'warning', 'info', 'custom'] as const)('applies the %s variant modifier and renders its icon', (variant) => {
-      const wrapper = mount(PfAlert, { props: { title: 'Title', variant } });
+    it.each(['success', 'danger', 'warning', 'info', 'custom'] as const)(
+      'applies the %s variant modifier and renders its icon',
+      variant => {
+        const wrapper = mount(PfAlert, { props: { title: 'Title', variant } });
 
-      expect(wrapper.classes()).toContain(styles.alert);
-      expect(wrapper.classes()).toContain(styles.modifiers[variant]);
-      const icon = wrapper.find(`.${styles.alertIcon}`);
-      expect(icon.exists()).toBe(true);
-      expect(icon.find('svg').exists()).toBe(true);
-    });
+        expect(wrapper.classes()).toContain(styles.alert);
+        expect(wrapper.classes()).toContain(styles.modifiers[variant]);
+        const icon = wrapper.find(`.${styles.alertIcon}`);
+        expect(icon.exists()).toBe(true);
+        expect(icon.find('svg').exists()).toBe(true);
+      },
+    );
 
     it('defaults to the custom variant', () => {
       const wrapper = mount(PfAlert, { props: { title: 'Title' } });
@@ -290,7 +293,11 @@ describe('AlertActionLink', () => {
 
   it('forwards button props, attributes and listeners', async () => {
     const onClick = vi.fn();
-    const wrapper = mount(PfAlertActionLink, { props: { href: '#details' }, attrs: { onClick, id: 'action' }, slots: { default: () => 'Details' } });
+    const wrapper = mount(PfAlertActionLink, {
+      props: { href: '#details' },
+      attrs: { onClick, id: 'action' },
+      slots: { default: () => 'Details' },
+    });
     const link = wrapper.find('a');
     expect(link.attributes('href')).toBe('#details');
     expect(link.attributes('id')).toBe('action');
@@ -311,7 +318,9 @@ describe('AlertActionLink', () => {
   it('renders inside the alert action group', () => {
     const wrapper = mount(PfAlert, {
       props: { title: 'Title' },
-      slots: { 'action-links': () => [h(PfAlertActionLink, null, () => 'One'), h(PfAlertActionLink, null, () => 'Two')] },
+      slots: {
+        'action-links': () => [h(PfAlertActionLink, null, () => 'One'), h(PfAlertActionLink, null, () => 'Two')],
+      },
     });
     const links = wrapper.findAll(`.${styles.alertActionGroup} button`);
     expect(links.map(l => l.text())).toEqual(['One', 'Two']);

@@ -21,5 +21,5 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>

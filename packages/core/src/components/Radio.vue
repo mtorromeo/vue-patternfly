@@ -2,9 +2,13 @@
   <component
     v-bind="ouiaProps"
     :is="component"
-    :class="[styles.radio, $attrs.class, {
-      [styles.modifiers.standalone]: !wrapWithLabel && !(label || $slots.label),
-    }]"
+    :class="[
+      styles.radio,
+      $attrs.class,
+      {
+        [styles.modifiers.standalone]: !wrapWithLabel && !(label || $slots.label),
+      },
+    ]"
     :for="wrapWithLabel ? id : undefined"
   >
     <sort>
@@ -12,9 +16,12 @@
         <component
           :is="wrapWithLabel ? 'span' : 'label'"
           v-if="label || $slots.label"
-          :class="[styles.radioLabel, {
-            [styles.modifiers.disabled]: disabled,
-          }]"
+          :class="[
+            styles.radioLabel,
+            {
+              [styles.modifiers.disabled]: disabled,
+            },
+          ]"
           :for="wrapWithLabel ? undefined : id"
         >
           <slot name="label">{{ label }}</slot>
@@ -24,14 +31,14 @@
       <input
         :id="id"
         ref="inputRef"
-        v-bind="{...$attrs, class: undefined}"
+        v-bind="{ ...$attrs, class: undefined }"
         type="radio"
         :class="[styles.radioInput, inputClass]"
         :disabled="disabled"
         :checked="checked"
-        :aria-label="(label || $slots.label) ? undefined : ariaLabel"
+        :aria-label="label || $slots.label ? undefined : ariaLabel"
         @change="emit('change', $event)"
-      >
+      />
     </sort>
 
     <span v-if="description || $slots.description" :class="styles.radioDescription">
@@ -49,7 +56,15 @@ import styles from '@patternfly/react-styles/css/components/Radio/radio';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
-import { computed, type InputHTMLAttributes, type Component, getCurrentInstance, useTemplateRef, useId, type HTMLAttributes } from 'vue';
+import {
+  computed,
+  type InputHTMLAttributes,
+  type Component,
+  getCurrentInstance,
+  useTemplateRef,
+  useId,
+  type HTMLAttributes,
+} from 'vue';
 import { useChildrenTracker } from '../use';
 import { FormInputsKey } from './Form/common';
 
@@ -96,7 +111,7 @@ const emit = defineEmits<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const wrapWithLabel = computed(() => props.component === 'label');
 const input = useTemplateRef('inputRef');
 

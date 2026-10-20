@@ -50,7 +50,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag indicate if the form field group is expanded. Modifies the card to be expandable. */
 const expanded = defineModel<boolean | undefined>('expanded', { default: undefined });

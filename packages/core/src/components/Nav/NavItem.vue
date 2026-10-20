@@ -2,19 +2,26 @@
   <component
     :is="component"
     ref="elRef"
-    :class="[styles.navItem, itemClass, {
-      [(styles.modifiers.flyout || 'pf-m-flyout')]: $slots.flyout,
-    }]"
-    v-bind="{...ouiaProps, ...itemAttrs}"
+    :class="[
+      styles.navItem,
+      itemClass,
+      {
+        [styles.modifiers.flyout || 'pf-m-flyout']: $slots.flyout,
+      },
+    ]"
+    v-bind="{ ...ouiaProps, ...itemAttrs }"
     @keydown="handleFlyout"
     @mouseover="flyoutVisible = !!$slots.flyout"
   >
     <component
       :is="linkTag"
-      :class="[styles.navLink, {
-        [styles.modifiers.current]: active,
-        [styles.modifiers.hover]: isHovered,
-      }]"
+      :class="[
+        styles.navLink,
+        {
+          [styles.modifiers.current]: active,
+          [styles.modifiers.hover]: isHovered,
+        },
+      ]"
       :aria-current="active ? 'page' : null"
       :to="to"
       :active-class="to ? styles.modifiers.current : null"
@@ -44,7 +51,18 @@
 </template>
 
 <script lang="ts" setup>
-import { watchEffect, inject, type Ref, ref, computed, onMounted, onBeforeUnmount, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useTemplateRef } from 'vue';
+import {
+  watchEffect,
+  inject,
+  type Ref,
+  ref,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+  type ButtonHTMLAttributes,
+  type AnchorHTMLAttributes,
+  useTemplateRef,
+} from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { isDefined, useElementHover } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
@@ -60,7 +78,11 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' |'onClick' | 'aria-current'> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'onSelect' | 'onClick' | 'aria-current'>,
+    /* @vue-ignore */ Omit<AnchorHTMLAttributes, 'onSelect' | 'onClick' | 'aria-current'> {
   component?: string;
   linkComponent?: string;
   groupId?: string;
@@ -76,7 +98,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 
 const props = withDefaults(defineProps<Props>(), {
   component: 'li',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'showflyout'): void;
@@ -101,7 +123,7 @@ const linkTag = computed(() => {
   if (props.linkComponent) {
     return props.linkComponent;
   }
-  return props.linkComponent ?? (slots.flyout ? 'button' : (props.to === undefined ? 'a' : 'router-link'));
+  return props.linkComponent ?? (slots.flyout ? 'button' : props.to === undefined ? 'a' : 'router-link');
 });
 
 const flyoutVisible = computed({
@@ -125,9 +147,11 @@ watchEffect(() => {
   if (flyoutVisible.value) {
     const flyoutMenu = flyoutTarget.value.nextElementSibling;
     const ul = flyoutMenu?.getElementsByTagName('UL')[0];
-    const flyoutItems = ul ? Array.from(ul.children).filter(
-      el => !(el.classList.contains('pf-m-disabled') || el.classList.contains(dividerStyles.divider)),
-    ) : [];
+    const flyoutItems = ul
+      ? Array.from(ul.children).filter(
+          el => !(el.classList.contains('pf-m-disabled') || el.classList.contains(dividerStyles.divider)),
+        )
+      : [];
     const child = flyoutItems.length ? flyoutItems[0]?.firstElementChild : null;
     if (child instanceof HTMLElement) {
       child.focus();

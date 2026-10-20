@@ -1,4 +1,4 @@
-import { type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 declare module 'vue' {
   export interface AllowedComponentProps {
@@ -13,10 +13,10 @@ declare module 'vue' {
     'aria-pressed'?: HTMLAttributes['aria-pressed'];
     'aria-valuetext'?: HTMLAttributes['aria-valuetext'];
     'aria-valid'?: HTMLAttributes['aria-valid'];
-    'hidden'?: HTMLAttributes['hidden'];
-    'id'?: HTMLAttributes['id'];
-    'role'?: HTMLAttributes['role'];
-    'tabindex'?: HTMLAttributes['tabindex'];
+    hidden?: HTMLAttributes['hidden'];
+    id?: HTMLAttributes['id'];
+    role?: HTMLAttributes['role'];
+    tabindex?: HTMLAttributes['tabindex'];
   }
 }
 

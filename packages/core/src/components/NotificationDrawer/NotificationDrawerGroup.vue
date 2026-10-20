@@ -1,7 +1,12 @@
 <template>
   <section v-bind="ouiaProps" :class="[styles.notificationDrawerGroup, { [styles.modifiers.expanded]: expanded }]">
     <component :is="headingLevel">
-      <button :class="styles.notificationDrawerGroupToggle" :aria-expanded="expanded" @click="toggle" @keydown="onKeydown">
+      <button
+        :class="styles.notificationDrawerGroupToggle"
+        :aria-expanded="expanded"
+        @click="toggle"
+        @keydown="onKeydown"
+      >
         <pf-tooltip :position="tooltipPosition">
           <template v-if="textOverflowing" #content>{{ title }}</template>
 
@@ -66,7 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
   truncateTitle: 0,
   headingLevel: 'h1',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /**  Adds styling to the group to indicate expanded state */
 const expanded = defineModel<boolean>('expanded', { default: false });

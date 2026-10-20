@@ -113,7 +113,9 @@ describe('Table', () => {
     expect(outer.get('table').classes()).toContain(styles.modifiers.stickyHeader);
 
     const scroll = mount(PfTable, { props: { stickyHeader: true, horizontalScroll: true } });
-    expect(scroll.find(`.${scrollStyles.scrollOuterWrapper} > .${scrollStyles.scrollInnerWrapper} > table`).exists()).toBe(true);
+    expect(
+      scroll.find(`.${scrollStyles.scrollOuterWrapper} > .${scrollStyles.scrollInnerWrapper} > table`).exists(),
+    ).toBe(true);
 
     const plain = mount(PfTable);
     expect(plain.find(`.${scrollStyles.scrollOuterWrapper}`).exists()).toBe(false);
@@ -122,24 +124,29 @@ describe('Table', () => {
   it('applies the sticky footer modifiers inside a scroll container', () => {
     const wrapper = mount(PfTable, { props: { stickyFooter: true, stickyFooterBase: true, stickyFooterStuck: true } });
     const table = wrapper.get(`.${scrollStyles.scrollOuterWrapper} table`);
-    expect(table.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.stickyFooter,
-      styles.modifiers.stickyFooterBase,
-      styles.modifiers.stickyFooterStuck,
-    ]));
+    expect(table.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.stickyFooter,
+        styles.modifiers.stickyFooterBase,
+        styles.modifiers.stickyFooterStuck,
+      ]),
+    );
     expect(table.classes()).not.toContain(styles.modifiers.stickyHeader);
   });
 
   it('renders the selectable rows caption only while a row is selectable', async () => {
     const selectable = ref(true);
-    const wrapper = mountTemplate(`
+    const wrapper = mountTemplate(
+      `
       <pf-table selectable-row-caption-text="Pick rows">
         <pf-tbody>
           <pf-tr :selectable="selectable"><pf-td>a</pf-td></pf-tr>
           <pf-tr><pf-td>b</pf-td></pf-tr>
         </pf-tbody>
       </pf-table>
-    `, () => ({ selectable }));
+    `,
+      () => ({ selectable }),
+    );
     await nextTick();
 
     const caption = wrapper.get('caption');
@@ -344,9 +351,12 @@ describe('Th', () => {
 
     it('works with v-model:direction', async () => {
       const direction = ref<'asc' | 'desc'>('asc');
-      const wrapper = mountTemplate(`
+      const wrapper = mountTemplate(
+        `
         <pf-th sortable sorted v-model:direction="direction">Name</pf-th>
-      `, () => ({ direction }));
+      `,
+        () => ({ direction }),
+      );
       await wrapper.get('button').trigger('click');
       expect(direction.value).toBe('desc');
       expect(wrapper.get('th').attributes('aria-sort')).toBe('descending');
@@ -431,7 +441,8 @@ describe('Td', () => {
 
   it('supports v-model:selected for row selection', async () => {
     const selected = ref(false);
-    const wrapper = mountTemplate(`
+    const wrapper = mountTemplate(
+      `
       <pf-table>
         <pf-tbody>
           <pf-tr selectable :selected="selected">
@@ -440,7 +451,9 @@ describe('Td', () => {
           </pf-tr>
         </pf-tbody>
       </pf-table>
-    `, () => ({ selected }));
+    `,
+      () => ({ selected }),
+    );
 
     await wrapper.get('input').setValue(true);
     expect(selected.value).toBe(true);

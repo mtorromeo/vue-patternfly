@@ -25,7 +25,7 @@ interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'r
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

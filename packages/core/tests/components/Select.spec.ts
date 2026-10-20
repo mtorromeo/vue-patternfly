@@ -8,7 +8,12 @@ import { PfSelectOption } from '../../src/components/Select';
 
 enableAutoUnmount(afterEach);
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -24,7 +29,10 @@ const defaultOptions = () => [
   h(PfSelectOption, { value: 'two' }, () => 'Two'),
 ];
 
-async function mountSelect(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = { default: defaultOptions }) {
+async function mountSelect(
+  props: Record<string, unknown> = {},
+  slots: Record<string, () => unknown> = { default: defaultOptions },
+) {
   const wrapper = mountWithModel(PfSelect, 'open', props, { slots, attachTo: document.body });
   await flushPromises();
   return wrapper;
@@ -62,11 +70,14 @@ describe('Select', () => {
     expect(toggle().textContent).toContain('Pick one');
     wrapper.unmount();
 
-    wrapper = await mountSelect({}, {
-      default: defaultOptions,
-      label: () => h('b', 'Bold'),
-      icon: () => h('i', { class: 'my-icon' }),
-    });
+    wrapper = await mountSelect(
+      {},
+      {
+        default: defaultOptions,
+        label: () => h('b', 'Bold'),
+        icon: () => h('i', { class: 'my-icon' }),
+      },
+    );
     expect(toggle().querySelector(`.${toggleStyles.menuToggleText} b`)!.textContent).toBe('Bold');
     expect(toggle().querySelector(`.${toggleStyles.menuToggleIcon} .my-icon`)).not.toBeNull();
     wrapper.unmount();
@@ -121,9 +132,12 @@ describe('Select', () => {
   });
 
   it('closes when clicking outside but not when clicking inside the menu', async () => {
-    const wrapper = await mountSelect({ open: true }, {
-      default: () => [h('div', { class: 'inside' }), ...defaultOptions()],
-    });
+    const wrapper = await mountSelect(
+      { open: true },
+      {
+        default: () => [h('div', { class: 'inside' }), ...defaultOptions()],
+      },
+    );
 
     document.body.querySelector<HTMLElement>('.inside')!.click();
     await flushPromises();
@@ -136,7 +150,7 @@ describe('Select', () => {
     wrapper.unmount();
   });
 
-  it.each(['Escape', 'Tab'])('closes on %s and focuses the toggle', async (key) => {
+  it.each(['Escape', 'Tab'])('closes on %s and focuses the toggle', async key => {
     const wrapper = await mountSelect({ open: true });
 
     keydown(options()[0]!, key);
@@ -223,10 +237,13 @@ describe('Select', () => {
   });
 
   it('uses a custom toggle slot', async () => {
-    const wrapper = await mountSelect({}, {
-      default: defaultOptions,
-      toggle: () => h('button', { class: 'custom-toggle' }, 'Custom'),
-    });
+    const wrapper = await mountSelect(
+      {},
+      {
+        default: defaultOptions,
+        toggle: () => h('button', { class: 'custom-toggle' }, 'Custom'),
+      },
+    );
 
     expect(document.body.querySelector('.custom-toggle')).not.toBeNull();
     expect(document.body.querySelector(`.${toggleStyles.menuToggle}`)).toBeNull();

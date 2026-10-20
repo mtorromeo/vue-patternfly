@@ -1,11 +1,14 @@
 <template>
   <div
-    v-bind="{...ouiaProps, ...$attrs}"
-    :class="[styles.banner, {
-      [styles.modifiers.sticky]: sticky,
-      [styles.modifiers.pill]: pill,
-      [styles.modifiers[variant as NonNullable<typeof variant>]]: variant,
-    }]"
+    v-bind="{ ...ouiaProps, ...$attrs }"
+    :class="[
+      styles.banner,
+      {
+        [styles.modifiers.sticky]: sticky,
+        [styles.modifiers.pill]: pill,
+        [styles.modifiers[variant as NonNullable<typeof variant>]]: variant,
+      },
+    ]"
   >
     <span v-if="screenReaderText || $slots['screen-reader-text']" class="pf-v6-screen-reader">
       <slot name="screen-reader-text">
@@ -41,7 +44,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const variant = computed(() => props.status || props.color);
 

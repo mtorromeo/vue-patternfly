@@ -95,7 +95,7 @@ describe('Progress', () => {
     expect(mount(PfProgress, { props: { size: 'lg' } }).classes()).toContain(styles.modifiers.lg);
   });
 
-  it.each(['success', 'warning', 'danger'] as const)('applies the %s variant with a status icon', (variant) => {
+  it.each(['success', 'warning', 'danger'] as const)('applies the %s variant with a status icon', variant => {
     const wrapper = mount(PfProgress, { props: { variant } });
     expect(wrapper.classes()).toContain(styles.modifiers[variant]);
     expect(wrapper.find(`.${styles.progressStatusIcon} svg`).exists()).toBe(true);

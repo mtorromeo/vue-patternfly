@@ -1,9 +1,12 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.toolbarContent, {
-      [styles.modifiers.hidden]: numberOfFilters === 0 || expanded,
-    }]"
+    :class="[
+      styles.toolbarContent,
+      {
+        [styles.modifiers.hidden]: numberOfFilters === 0 || expanded,
+      },
+    ]"
     :hidden="numberOfFilters === 0 || expanded"
   >
     <pf-toolbar-group
@@ -13,7 +16,10 @@
       @mounted="emit('mounted', $event)"
     />
 
-    <pf-toolbar-group v-if="showNumberOfFilters || showDefaultClearFilter || $slots.default" variant="action-group-inline">
+    <pf-toolbar-group
+      v-if="showNumberOfFilters || showDefaultClearFilter || $slots.default"
+      variant="action-group-inline"
+    >
       <pf-toolbar-item v-if="showNumberOfFilters">{{ numberOfFilters }} filters applied</pf-toolbar-item>
       <pf-toolbar-item v-if="showDefaultClearFilter">
         <pf-button variant="link" inline @click="emit('clearAllFilters')">
@@ -43,8 +49,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidde
   clearFiltersButtonText?: string;
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
   numberOfFilters?: number;
-  expanded?: boolean,
-  showClearFiltersButton?: boolean,
+  expanded?: boolean;
+  showClearFiltersButton?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -52,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
   collapseListedFiltersBreakpoint: 'lg',
   numberOfFilters: 0,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'clearAllFilters'): void;

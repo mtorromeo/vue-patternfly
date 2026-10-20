@@ -1,13 +1,16 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.emptyState, {
-      [styles.modifiers.xs]: variant === 'xs',
-      [styles.modifiers.sm]: variant === 'small',
-      [styles.modifiers.lg]: variant === 'large',
-      [styles.modifiers.xl]: variant === 'xl',
-      [styles.modifiers.fullHeight]: fullHeight,
-    }]"
+    :class="[
+      styles.emptyState,
+      {
+        [styles.modifiers.xs]: variant === 'xs',
+        [styles.modifiers.sm]: variant === 'small',
+        [styles.modifiers.lg]: variant === 'large',
+        [styles.modifiers.xl]: variant === 'xl',
+        [styles.modifiers.fullHeight]: fullHeight,
+      },
+    ]"
   >
     <div :class="styles.emptyStateContent">
       <slot />
@@ -33,7 +36,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

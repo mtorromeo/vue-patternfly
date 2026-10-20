@@ -62,7 +62,11 @@ export interface Navigatable {
   enterTriggersArrowDown?: boolean;
 }
 
-export function keyNavigation<N extends Component & Navigatable, C extends Component & Disableable & Focusable, T extends C[] | C[][]>(itemsRef: T | Ref<T>): (this: N, e: KeyboardEvent, itemEl?: HTMLElement) => void {
+export function keyNavigation<
+  N extends Component & Navigatable,
+  C extends Component & Disableable & Focusable,
+  T extends C[] | C[][],
+>(itemsRef: T | Ref<T>): (this: N, e: KeyboardEvent, itemEl?: HTMLElement) => void {
   const enabledItems = () => {
     const items = unref(itemsRef);
     const isMultiDimensional = items.length && Array.isArray(items[0]);
@@ -70,10 +74,9 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
     if (isMultiDimensional) {
       const components = items as C[][];
       return components.map(innerItems => innerItems.filter(item => !item.disabled));
-    } else {
-      const components = items as C[];
-      return components.filter(item => !item.disabled);
     }
+    const components = items as C[];
+    return components.filter(item => !item.disabled);
   };
 
   const navigate = (index: number, innerIndex: number, position: 'up' | 'down' | 'left' | 'right') => {
@@ -113,9 +116,7 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
       }
     }
 
-    if (!items[nextIndex] ||
-      (Array.isArray(items[nextIndex]) && !(items[nextIndex] as C[])[nextInnerIndex])
-    ) {
+    if (!items[nextIndex] || (Array.isArray(items[nextIndex]) && !(items[nextIndex] as C[])[nextInnerIndex])) {
       navigate(nextIndex, nextInnerIndex, position);
       return;
     }
@@ -130,7 +131,7 @@ export function keyNavigation<N extends Component & Navigatable, C extends Compo
     }
   };
 
-  const onKeydown = function(this: N, e: KeyboardEvent, itemEl?: HTMLElement) {
+  const onKeydown = function (this: N, e: KeyboardEvent, itemEl?: HTMLElement) {
     if (!itemEl) {
       itemEl = this.focusElement();
     }
@@ -232,8 +233,9 @@ export function useElementOverflow(element: Ref<HTMLElement | null>): Ref<boolea
       return;
     }
 
-    overflowing.value = (element.value.scrollWidth > element.value.clientWidth) ||
-      (element.value?.scrollHeight > element.value?.clientHeight);
+    overflowing.value =
+      element.value.scrollWidth > element.value.clientWidth ||
+      element.value?.scrollHeight > element.value?.clientHeight;
   };
 
   tryOnMounted(testElementOverflow);

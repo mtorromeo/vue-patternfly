@@ -1,5 +1,12 @@
 <template>
-  <pf-button v-bind="ouiaProps" :variant="variant === 'plain' ? 'plain' : 'stateful'" :state="variant === 'plain' ? undefined : variant" :expanded="expanded" :class="{ [styles.modifiers.clicked]: expanded, [styles.modifiers.notify]: animating }" @animationend="handleAnimationEnd">
+  <pf-button
+    v-bind="ouiaProps"
+    :variant="variant === 'plain' ? 'plain' : 'stateful'"
+    :state="variant === 'plain' ? undefined : variant"
+    :expanded="expanded"
+    :class="{ [styles.modifiers.clicked]: expanded, [styles.modifiers.notify]: animating }"
+    @animationend="handleAnimationEnd"
+  >
     <template #icon>
       <slot name="icon">
         <attention-bell-icon v-if="variant === 'attention'" />
@@ -12,22 +19,23 @@
 </template>
 
 <script lang="ts" setup>
-import styles from "@patternfly/react-styles/css/components/Button/button";
-import BellIcon from "@vue-patternfly/icons/bell-icon";
-import AttentionBellIcon from "@vue-patternfly/icons/attention-bell-icon";
-import type { ComponentProps } from "vue-component-type-helpers";
-import PfButton from "./Button.vue";
-import { useOUIAProps, type OUIAProps } from "../helpers/ouia";
-import { ref } from "vue";
-import { watch } from "vue";
+import styles from '@patternfly/react-styles/css/components/Button/button';
+import BellIcon from '@vue-patternfly/icons/bell-icon';
+import AttentionBellIcon from '@vue-patternfly/icons/attention-bell-icon';
+import type { ComponentProps } from 'vue-component-type-helpers';
+import PfButton from './Button.vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import { ref } from 'vue';
+import { watch } from 'vue';
 
 defineOptions({
-  name: "PfNotificationBadge",
+  name: 'PfNotificationBadge',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, "variant" | "ouiaId" | "ouiaSafe"> {
+interface Props
+  extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'ouiaId' | 'ouiaSafe'> {
   /** Determines the variant of the notification badge */
-  variant?: "read" | "unread" | "attention" | "plain";
+  variant?: 'read' | 'unread' | 'attention' | 'plain';
 
   /** A number displayed in the badge alongside the icon */
   count?: number;
@@ -44,7 +52,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: "read",
+  variant: 'read',
   count: 0,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
@@ -57,7 +65,7 @@ defineSlots<{
 const animating = ref(false);
 watch(
   () => props.shouldNotify,
-  (newValue) => {
+  newValue => {
     if (newValue) {
       animating.value = true;
     }

@@ -13,10 +13,7 @@ describe('AlertGroupInline', () => {
   it('renders a list with every alert wrapped in its own list item', () => {
     const wrapper = mount(PfAlertGroupInline, {
       slots: {
-        default: () => [
-          h(PfAlert, { title: 'One' }),
-          h(PfAlert, { title: 'Two' }),
-        ],
+        default: () => [h(PfAlert, { title: 'One' }), h(PfAlert, { title: 'Two' })],
       },
     });
 
@@ -34,9 +31,10 @@ describe('AlertGroupInline', () => {
     const Host = defineComponent({
       setup() {
         const alerts = ['A', 'B', 'C'];
-        return () => h(PfAlertGroupInline, null, {
-          default: () => alerts.map(title => h(PfAlert, { key: title, title })),
-        });
+        return () =>
+          h(PfAlertGroupInline, null, {
+            default: () => alerts.map(title => h(PfAlert, { key: title, title })),
+          });
       },
     });
     const wrapper = mount(Host);
@@ -146,12 +144,13 @@ describe('AlertGroup keeps existing alerts mounted (e0930b67)', () => {
       onMounted(() => {
         mountCounts[props.alertKey] = (mountCounts[props.alertKey] ?? 0) + 1;
       });
-      return () => h(PfAlert, {
-        title: props.title,
-        timeout: props.timeout,
-        'data-key': props.alertKey,
-        onTimeout: () => emit('timeout', props.alertKey),
-      });
+      return () =>
+        h(PfAlert, {
+          title: props.title,
+          timeout: props.timeout,
+          'data-key': props.alertKey,
+          onTimeout: () => emit('timeout', props.alertKey),
+        });
     },
   });
 
@@ -161,18 +160,26 @@ describe('AlertGroup keeps existing alerts mounted (e0930b67)', () => {
 
     const Host = defineComponent({
       setup() {
-        return () => h(PfAlertGroup, { toast }, {
-          default: () => alerts.value.map(alert => h(TrackedAlert, {
-            key: alert.key,
-            alertKey: alert.key,
-            title: alert.title,
-            timeout: alert.timeout,
-            onTimeout: (key: number) => {
-              timedOut.push(key);
-              alerts.value = alerts.value.filter(a => a.key !== key);
+        return () =>
+          h(
+            PfAlertGroup,
+            { toast },
+            {
+              default: () =>
+                alerts.value.map(alert =>
+                  h(TrackedAlert, {
+                    key: alert.key,
+                    alertKey: alert.key,
+                    title: alert.title,
+                    timeout: alert.timeout,
+                    onTimeout: (key: number) => {
+                      timedOut.push(key);
+                      alerts.value = alerts.value.filter(a => a.key !== key);
+                    },
+                  }),
+                ),
             },
-          })),
-        });
+          );
       },
     });
 
@@ -230,9 +237,7 @@ describe('AlertGroup keeps existing alerts mounted (e0930b67)', () => {
   });
 
   it('keeps the timeout of existing alerts running when alerts are added', async () => {
-    const { wrapper, alerts, timedOut, alertEl } = mountGroup([
-      { key: 1, title: 'First', timeout: 1000 },
-    ]);
+    const { wrapper, alerts, timedOut, alertEl } = mountGroup([{ key: 1, title: 'First', timeout: 1000 }]);
 
     await vi.advanceTimersByTimeAsync(600);
     alerts.value = [{ key: 2, title: 'Second', timeout: 1000 }, ...alerts.value];

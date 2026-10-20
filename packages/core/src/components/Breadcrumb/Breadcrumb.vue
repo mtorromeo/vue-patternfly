@@ -23,18 +23,17 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   ariaLabel: 'Breadcrumb',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const slotWithDividers = ()=>
-  findChildrenVNodes(slots.default?.({}))
-    .map((n, index) => {
-      if (n.props) {
-        n.props.showDivider = index > 0;
-      }
-      return n;
-    });
+const slotWithDividers = () =>
+  findChildrenVNodes(slots.default?.({})).map((n, index) => {
+    if (n.props) {
+      n.props.showDivider = index > 0;
+    }
+    return n;
+  });
 </script>

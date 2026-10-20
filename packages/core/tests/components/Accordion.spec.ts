@@ -7,11 +7,13 @@ import PfAccordion from '../../src/components/Accordion/Accordion.vue';
 import PfAccordionItem from '../../src/components/Accordion/AccordionItem.vue';
 
 function mountAccordion(template: string, setup: () => Record<string, unknown> = () => ({})) {
-  return mount(defineComponent({
-    components: { PfAccordion, PfAccordionItem },
-    setup,
-    template,
-  }));
+  return mount(
+    defineComponent({
+      components: { PfAccordion, PfAccordionItem },
+      setup,
+      template,
+    }),
+  );
 }
 
 describe('Accordion', () => {
@@ -135,12 +137,15 @@ describe('AccordionItem', () => {
     // The accordion does not implement single-expand behaviour itself: each item has its own state.
     const first = ref(false);
     const second = ref(false);
-    const wrapper = mountAccordion(`
+    const wrapper = mountAccordion(
+      `
       <pf-accordion>
         <pf-accordion-item v-model:expanded="first" title="One">One</pf-accordion-item>
         <pf-accordion-item v-model:expanded="second" title="Two">Two</pf-accordion-item>
       </pf-accordion>
-    `, () => ({ first, second }));
+    `,
+      () => ({ first, second }),
+    );
 
     const buttons = wrapper.findAll('button');
     await buttons[0].trigger('click');
@@ -153,7 +158,8 @@ describe('AccordionItem', () => {
 
   it('can implement single-expand behaviour through controlled state', async () => {
     const active = ref<string | null>(null);
-    const wrapper = mountAccordion(`
+    const wrapper = mountAccordion(
+      `
       <pf-accordion>
         <pf-accordion-item
           v-for="id in ['a', 'b']"
@@ -163,7 +169,9 @@ describe('AccordionItem', () => {
           @update:expanded="active = $event ? id : null"
         >{{ id }}</pf-accordion-item>
       </pf-accordion>
-    `, () => ({ active }));
+    `,
+      () => ({ active }),
+    );
 
     const buttons = wrapper.findAll('button');
     await buttons[0].trigger('click');

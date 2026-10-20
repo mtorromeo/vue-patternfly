@@ -24,11 +24,7 @@ describe('Hint', () => {
   it('composes title, body and footer', () => {
     const wrapper = mount(PfHint, {
       slots: {
-        default: () => [
-          h(PfHintTitle, () => 'Title'),
-          h(PfHintBody, () => 'Body'),
-          h(PfHintFooter, () => 'Footer'),
-        ],
+        default: () => [h(PfHintTitle, () => 'Title'), h(PfHintBody, () => 'Body'), h(PfHintFooter, () => 'Footer')],
       },
     });
     expect(wrapper.find(`.${styles.hintTitle}`).text()).toBe('Title');

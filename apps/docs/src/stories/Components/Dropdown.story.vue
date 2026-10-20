@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Dropdown">
-    <template #description>A <b>dropdown</b> presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location. See select component guidelines for more information about making one or more selections from a list of items in a value list.</template>
+    <template #description
+      >A <b>dropdown</b> presents a menu of actions or links in a constrained space that will trigger a process or
+      navigate to a new location. See select component guidelines for more information about making one or more
+      selections from a list of items in a value list.</template
+    >
 
     <template #apidocs>
       <component-info name="PfDropdown" />
@@ -12,20 +16,12 @@
     <story-canvas title="Basic">
       <pf-dropdown v-model:open="open1" text="Dropdown" should-focus-first-item-on-open>
         <pf-dropdown-item @click="onClick">Link</pf-dropdown-item>
-        <pf-dropdown-item component="button" @click="onClick">
-          Action
-        </pf-dropdown-item>
-        <pf-dropdown-item disabled @click="onClick">
-          Disabled Link
-        </pf-dropdown-item>
-        <pf-dropdown-item disabled component="button" @click="onClick">
-          Disabled Action
-        </pf-dropdown-item>
+        <pf-dropdown-item component="button" @click="onClick"> Action </pf-dropdown-item>
+        <pf-dropdown-item disabled @click="onClick"> Disabled Link </pf-dropdown-item>
+        <pf-dropdown-item disabled component="button" @click="onClick"> Disabled Action </pf-dropdown-item>
         <pf-divider />
         <pf-dropdown-item @click="onClick">Separated Link</pf-dropdown-item>
-        <pf-dropdown-item component="button" @click="onClick">
-          Separated Action
-        </pf-dropdown-item>
+        <pf-dropdown-item component="button" @click="onClick"> Separated Action </pf-dropdown-item>
       </pf-dropdown>
     </story-canvas>
 
@@ -117,27 +113,19 @@
       <pf-dropdown v-model:open="open9" text="Dropdown">
         <pf-dropdown-group>
           <pf-dropdown-item>Link</pf-dropdown-item>
-          <pf-dropdown-item component="button">
-            Action
-          </pf-dropdown-item>
+          <pf-dropdown-item component="button"> Action </pf-dropdown-item>
         </pf-dropdown-group>
         <pf-divider component="li" />
         <pf-dropdown-group>
           <template #label>Group 2</template>
-          <pf-dropdown-item>
-            Group 2 Link
-          </pf-dropdown-item>
-          <pf-dropdown-item component="button">
-            Group 2 Action
-          </pf-dropdown-item>
+          <pf-dropdown-item> Group 2 Link </pf-dropdown-item>
+          <pf-dropdown-item component="button"> Group 2 Action </pf-dropdown-item>
         </pf-dropdown-group>
         <pf-divider component="li" />
         <pf-dropdown-group>
           <template #label>Group 3</template>
           <pf-dropdown-item>Group 3 Link</pf-dropdown-item>
-          <pf-dropdown-item component="button">
-            Group 3 Action Action
-          </pf-dropdown-item>
+          <pf-dropdown-item component="button"> Group 3 Action Action </pf-dropdown-item>
         </pf-dropdown-group>
       </pf-dropdown>
     </story-canvas>
@@ -156,9 +144,7 @@
           </template>
           Action
         </pf-dropdown-item>
-        <pf-dropdown-item disabled description="Disabled link description">
-          Disabled Link
-        </pf-dropdown-item>
+        <pf-dropdown-item disabled description="Disabled link description"> Disabled Link </pf-dropdown-item>
         <pf-dropdown-item disabled component="button" description="This is a description">
           Disabled Action
         </pf-dropdown-item>
@@ -168,20 +154,12 @@
     <story-canvas title="Menu teleported in body">
       <pf-dropdown text="Dropdown" append-to="body">
         <pf-dropdown-item>Link</pf-dropdown-item>
-        <pf-dropdown-item component="button">
-          Action
-        </pf-dropdown-item>
-        <pf-dropdown-item disabled>
-          Disabled Link
-        </pf-dropdown-item>
-        <pf-dropdown-item disabled component="button">
-          Disabled Action
-        </pf-dropdown-item>
+        <pf-dropdown-item component="button"> Action </pf-dropdown-item>
+        <pf-dropdown-item disabled> Disabled Link </pf-dropdown-item>
+        <pf-dropdown-item disabled component="button"> Disabled Action </pf-dropdown-item>
         <pf-divider />
         <pf-dropdown-item>Separated Link</pf-dropdown-item>
-        <pf-dropdown-item component="button">
-          Separated Action
-        </pf-dropdown-item>
+        <pf-dropdown-item component="button"> Separated Action </pf-dropdown-item>
       </pf-dropdown>
     </story-canvas>
   </doc-page>
@@ -191,7 +169,7 @@
 import BellIcon from '@vue-patternfly/icons/bell-icon';
 import CubesIcon from '@vue-patternfly/icons/cubes-icon';
 import TableCellsIcon from '@vue-patternfly/icons/table-cells-icon';
-import { ref } from "vue";
+import { ref } from 'vue';
 import { useAlertsStore } from '../../store/alerts';
 
 const alerts = useAlertsStore();

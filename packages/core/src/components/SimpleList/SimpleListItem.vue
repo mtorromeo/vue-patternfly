@@ -3,9 +3,13 @@
     <component
       :is="component"
       v-bind="componentAttrs"
-      :class="[styles.simpleListItemLink, componentClass, {
-        [styles.modifiers.current]: current,
-      }]"
+      :class="[
+        styles.simpleListItemLink,
+        componentClass,
+        {
+          [styles.modifiers.current]: current,
+        },
+      ]"
       :type="component === 'button' ? type : undefined"
       :href="component === 'a' ? href : undefined"
       :tabindex="component === 'a' ? 0 : undefined"
@@ -54,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'button',
   type: 'button',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'click', e: PointerEvent): void;

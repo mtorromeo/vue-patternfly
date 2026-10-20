@@ -8,7 +8,11 @@
     <pf-tooltip :position="tooltipPosition">
       <template v-if="textOverflowing" #content>{{ title }}</template>
 
-      <component :is="headingLevel" ref="textRef" :class="[styles.notificationDrawerListItemHeaderTitle, { [styles.modifiers.truncate]: truncateTitle }]">
+      <component
+        :is="headingLevel"
+        ref="textRef"
+        :class="[styles.notificationDrawerListItemHeaderTitle, { [styles.modifiers.truncate]: truncateTitle }]"
+      >
         <span v-if="srTitle" class="pf-v6-screen-reader">{{ srTitle }}</span>
         {{ title }}
       </component>
@@ -57,7 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
   truncateTitle: 0,
   headingLevel: 'h2',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -1,11 +1,7 @@
 <template>
   <component v-bind="ouiaProps" :is="otherControls ? PassThrough : 'div'" :class="styles.dataListItemControl">
     <div :class="styles.dataListCheck">
-      <input
-        v-bind="$attrs"
-        v-model="checked"
-        type="checkbox"
-      >
+      <input v-bind="$attrs" v-model="checked" type="checkbox" />
     </div>
   </component>
 </template>
@@ -26,7 +22,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, '
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const checked = defineModel<boolean>('checked', { default: false });
 </script>

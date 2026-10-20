@@ -1,10 +1,7 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[
-      styles.toolbarContent,
-      classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
-    ]"
+    :class="[styles.toolbarContent, classesFromBreakpointProps(props, ['visibility'], styles, { short: true })]"
   >
     <div
       :class="[
@@ -14,7 +11,7 @@
           [styles.modifiers.alignItemsCenter]: alignItems === 'center',
           [styles.modifiers.alignItemsStart]: alignItems === 'start',
           [styles.modifiers.alignItemsBaseline]: alignItems === 'baseline',
-        }
+        },
       ]"
     >
       <slot />
@@ -35,8 +32,12 @@
 </template>
 
 <script lang="ts">
-export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
-export const ToolbarContentLabelContainerRefKey = Symbol('ToolbarContentLabelContainerRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<
+  Ref<HTMLDivElement | null>
+>;
+export const ToolbarContentLabelContainerRefKey = Symbol('ToolbarContentLabelContainerRefKey') as InjectionKey<
+  Ref<HTMLDivElement | null>
+>;
 
 interface Props extends OUIAProps, VisibilityBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Vertical alignment of children */
@@ -46,7 +47,11 @@ interface Props extends OUIAProps, VisibilityBreakpointProps, RowWrapBreakpointP
 
 <script lang="ts" setup>
 import { ref, provide, onBeforeUnmount, type InjectionKey, type Ref, type HTMLAttributes, inject } from 'vue';
-import { classesFromBreakpointProps, type RowWrapBreakpointProps, type VisibilityBreakpointProps } from '../../breakpoints';
+import {
+  classesFromBreakpointProps,
+  type RowWrapBreakpointProps,
+  type VisibilityBreakpointProps,
+} from '../../breakpoints';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
@@ -58,7 +63,7 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

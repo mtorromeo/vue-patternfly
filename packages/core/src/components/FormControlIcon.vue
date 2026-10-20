@@ -1,9 +1,12 @@
 <template>
   <span
     v-bind="ouiaProps"
-    :class="[styles.formControlIcon, {
-      [styles.modifiers.status]: status,
-    }]"
+    :class="[
+      styles.formControlIcon,
+      {
+        [styles.modifiers.status]: status,
+      },
+    ]"
   >
     <slot>
       <circle-check-icon v-if="status === 'success'" />
@@ -18,12 +21,12 @@ import styles from '@patternfly/react-styles/css/components/FormControl/form-con
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
-import { type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
   name: 'PfFormControlIcon',
-});// expands object types one level deep
+}); // expands object types one level deep
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** The status icon to render. */
@@ -31,7 +34,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

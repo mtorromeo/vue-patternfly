@@ -36,7 +36,7 @@ interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLA
 const props = withDefaults(defineProps<Props>(), {
   display: 'inline',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

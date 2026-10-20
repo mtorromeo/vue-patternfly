@@ -7,27 +7,17 @@ body {
   --pf-v6-global--primary-color--100: var(--pf-v6-global--active-color--100);
   --pf-v6-global--primary-color--200: #003513;
 
-  --pf-v6-global--primary-color--light-100: var(
-    --pf-v6-global--active-color--300
-  );
-  --pf-v6-global--primary-color--dark-100: var(
-    --pf-v6-global--primary-color--100
-  );
+  --pf-v6-global--primary-color--light-100: var(--pf-v6-global--active-color--300);
+  --pf-v6-global--primary-color--dark-100: var(--pf-v6-global--primary-color--100);
 
   --pf-v6-global--link--Color: var(--pf-v6-global--primary-color--100);
   --pf-v6-global--link--Color--hover: var(--pf-v6-global--primary-color--200);
 
   --pf-v6-global--link--Color--dark: var(--pf-v6-global--primary-color--100);
-  --pf-v6-global--link--Color--dark--hover: var(
-    --pf-v6-global--primary-color--200
-  );
+  --pf-v6-global--link--Color--dark--hover: var(--pf-v6-global--primary-color--200);
 
-  --pf-v6-global--link--Color--light: var(
-    --pf-v6-global--primary-color--light-100
-  );
-  --pf-v6-global--link--Color--light--hover: var(
-    --pf-v6-global--active-color--400
-  );
+  --pf-v6-global--link--Color--light: var(--pf-v6-global--primary-color--light-100);
+  --pf-v6-global--link--Color--light--hover: var(--pf-v6-global--active-color--400);
 }
 
 #app {

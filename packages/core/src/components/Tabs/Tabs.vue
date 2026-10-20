@@ -19,7 +19,7 @@
         [styles.modifiers.noBorderBottom]: noBorderBottom,
         [styles.modifiers.secondary]: secondary,
         [styles.modifiers.overflow]: overflowHorizontal && overflowingTabCount > 0,
-      }
+      },
     ]"
   >
     <div :class="styles.tabsScrollButton">
@@ -36,12 +36,7 @@
       </pf-button>
     </div>
 
-    <ul
-      ref="tabList"
-      role="tablist"
-      :class="styles.tabsList"
-      @scroll.passive="handleScrollButtons"
-    >
+    <ul ref="tabList" role="tablist" :class="styles.tabsList" @scroll.passive="handleScrollButtons">
       <slot />
 
       <li
@@ -53,15 +48,13 @@
         <button
           ref="overflowTabRef"
           type="button"
-          :class="[styles.tabsLink, {[styles.modifiers.expanded]: (expanded ?? defaultExpanded)}]"
+          :class="[styles.tabsLink, { [styles.modifiers.expanded]: expanded ?? defaultExpanded }]"
           aria-haspopup="menu"
           :aria-expanded="expanded ?? defaultExpanded"
           role="tab"
           @click="expanded = !expanded"
         >
-          <pf-tab-title-text>
-            More ({{ overflowingTabCount }})
-          </pf-tab-title-text>
+          <pf-tab-title-text> More ({{ overflowingTabCount }}) </pf-tab-title-text>
           <span :class="styles.tabsLinkToggleIcon">
             <pf-angle-down-icon />
           </span>
@@ -135,9 +128,26 @@ interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointPro
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
-import { classesFromBreakpointProps, type ExpandableBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
+import {
+  classesFromBreakpointProps,
+  type ExpandableBreakpointProps,
+  type InsetBreakpointProps,
+} from '../../breakpoints';
 import { isElementInView } from '../../util';
-import { watch, watchEffect, nextTick, onMounted, provide, computed, type Ref, ref, type HTMLAttributes, useTemplateRef, useId, toValue } from 'vue';
+import {
+  watch,
+  watchEffect,
+  nextTick,
+  onMounted,
+  provide,
+  computed,
+  type Ref,
+  ref,
+  type HTMLAttributes,
+  useTemplateRef,
+  useId,
+  toValue,
+} from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { isDefined, useEventListener } from '@vueuse/core';
 import { provideChildrenTracker } from '../../use';
@@ -162,7 +172,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'div',
   id: () => useId(),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** The index of the active tab */
 const activeKey = defineModel<TabKey>('activeKey');
@@ -170,7 +180,7 @@ const activeKey = defineModel<TabKey>('activeKey');
 const hashActiveKey: Ref<TabKey | undefined> = ref();
 const localActiveKey = computed({
   get: () => hashActiveKey.value ?? activeKey.value ?? props.defaultActiveKey,
-  set: (value) => {
+  set: value => {
     hashActiveKey.value = undefined;
     activeKey.value = value;
   },
@@ -227,7 +237,7 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
-  if ((!isDefined(localActiveKey.value) || !tabs.find(tab => (tab.key) === localActiveKey.value)) && tabs.length) {
+  if ((!isDefined(localActiveKey.value) || !tabs.find(tab => tab.key === localActiveKey.value)) && tabs.length) {
     localActiveKey.value = tabs[0]?.key;
   }
 });
@@ -265,7 +275,12 @@ function countOverflowingElements() {
   }
 
   nextTick(() => {
-    if (tabListRef.value && tabMoreRef.value && tabs.length > 0 && !isElementInView(tabListRef.value, tabMoreRef.value, false)) {
+    if (
+      tabListRef.value &&
+      tabMoreRef.value &&
+      tabs.length > 0 &&
+      !isElementInView(tabListRef.value, tabMoreRef.value, false)
+    ) {
       for (let i = tabs.length - 1; i >= 0; i--) {
         const tab = tabs[i];
         if (tab && !tab.overflowing) {

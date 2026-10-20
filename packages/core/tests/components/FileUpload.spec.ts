@@ -8,7 +8,12 @@ import spinnerStyles from '@patternfly/react-styles/css/components/Spinner/spinn
 import PfFileUpload from '../../src/components/FileUpload.vue';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
-function mountWithModels<C>(component: C, models: string[], props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModels<C>(
+  component: C,
+  models: string[],
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const listeners: Record<string, (v: unknown) => void> = {};
   for (const model of models) {
     listeners[`onUpdate:${model}`] = (v: unknown) => wrapper.setProps({ [model]: v });
@@ -100,7 +105,9 @@ describe('FileUpload', () => {
   });
 
   it('keeps the preview editable with allowEditingUploadedText', () => {
-    const wrapper = mount(PfFileUpload, { props: { filename: 'a.txt', modelValue: 'hello', allowEditingUploadedText: true } });
+    const wrapper = mount(PfFileUpload, {
+      props: { filename: 'a.txt', modelValue: 'hello', allowEditingUploadedText: true },
+    });
     expect(wrapper.find('textarea').attributes('readonly')).toBeUndefined();
   });
 
@@ -125,19 +132,28 @@ describe('FileUpload', () => {
   });
 
   it('hides the default preview and renders the default slot', () => {
-    const wrapper = mount(PfFileUpload, { props: { hideDefaultPreview: true }, slots: { default: () => h('p', { class: 'preview' }, 'custom') } });
+    const wrapper = mount(PfFileUpload, {
+      props: { hideDefaultPreview: true },
+      slots: { default: () => h('p', { class: 'preview' }, 'custom') },
+    });
     expect(wrapper.find('textarea').exists()).toBe(false);
     expect(wrapper.find('p.preview').text()).toBe('custom');
   });
 
   it('does not render the text preview for non text types', () => {
-    expect(mount(PfFileUpload, { props: { type: 'dataURL' } }).find('textarea').exists()).toBe(false);
+    expect(
+      mount(PfFileUpload, { props: { type: 'dataURL' } })
+        .find('textarea')
+        .exists(),
+    ).toBe(false);
   });
 
   it('applies drag hover and validation states', () => {
     const wrapper = mount(PfFileUpload, { props: { dragActive: true, validated: 'error' } });
     expect(wrapper.classes()).toContain(styles.modifiers.dragHover);
-    expect(wrapper.find(`.${formControlStyles.formControl}:has(textarea)`).classes()).toContain(formControlStyles.modifiers.error);
+    expect(wrapper.find(`.${formControlStyles.formControl}:has(textarea)`).classes()).toContain(
+      formControlStyles.modifiers.error,
+    );
   });
 
   it('shows a spinner while loading', () => {
@@ -190,7 +206,9 @@ describe('FileUpload', () => {
     await nextTick();
     const file = new File(['dropped'], 'drop.txt', { type: 'text/plain' });
     const event = new Event('drop', { bubbles: true, cancelable: true });
-    Object.defineProperty(event, 'dataTransfer', { value: { items: [{ type: 'text/plain' }], files: [file], dropEffect: 'none' } });
+    Object.defineProperty(event, 'dataTransfer', {
+      value: { items: [{ type: 'text/plain' }], files: [file], dropEffect: 'none' },
+    });
     wrapper.find('input:not([type="file"])').element.dispatchEvent(event);
 
     await vi.waitFor(() => expect(wrapper.emitted('update:modelValue')).toBeTruthy());
@@ -200,7 +218,10 @@ describe('FileUpload', () => {
   });
 
   it('clears the file', async () => {
-    const wrapper = mountWithModels(PfFileUpload, ['modelValue', 'filename'], { modelValue: 'hello', filename: 'a.txt' });
+    const wrapper = mountWithModels(PfFileUpload, ['modelValue', 'filename'], {
+      modelValue: 'hello',
+      filename: 'a.txt',
+    });
     await buttons(wrapper).clear.trigger('click');
 
     expect(wrapper.emitted('clearButtonClick')).toHaveLength(1);

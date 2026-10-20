@@ -1,11 +1,14 @@
 <template>
   <ol
     v-bind="ouiaProps"
-    :class="[styles.progressStepper, {
-      [styles.modifiers.center]: centerAligned,
-      [styles.modifiers.vertical]: vertical,
-      [styles.modifiers.compact]: compact,
-    }]"
+    :class="[
+      styles.progressStepper,
+      {
+        [styles.modifiers.center]: centerAligned,
+        [styles.modifiers.vertical]: vertical,
+        [styles.modifiers.compact]: compact,
+      },
+    ]"
     role="list"
   >
     <slot />
@@ -29,13 +32,12 @@ import styles from '@patternfly/react-styles/css/components/ProgressStepper/prog
 import type { OlHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
-
 defineOptions({
   name: 'PfProgressStepper',
 });
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

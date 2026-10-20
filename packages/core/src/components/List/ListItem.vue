@@ -1,5 +1,5 @@
 <template>
-  <li v-bind="ouiaProps" :class="{[styles.listItem]: $slots.icon}">
+  <li v-bind="ouiaProps" :class="{ [styles.listItem]: $slots.icon }">
     <span v-if="$slots.icon" :class="styles.listItemIcon">
       <slot name="icon" />
     </span>
@@ -16,11 +16,10 @@ defineOptions({
   name: 'PfListItem',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
-}
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

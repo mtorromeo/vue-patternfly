@@ -2,10 +2,13 @@
   <component
     v-bind="ouiaProps"
     :is="component"
-    :class="[styles.form, {
-      [styles.modifiers.horizontal]: horizontal,
-      [styles.modifiers.limitWidth]: widthLimited || maxWidth,
-    }]"
+    :class="[
+      styles.form,
+      {
+        [styles.modifiers.horizontal]: horizontal,
+        [styles.modifiers.limitWidth]: widthLimited || maxWidth,
+      },
+    ]"
     :style="{ [cssMaxWidth.name]: maxWidth }"
   >
     <slot />
@@ -37,7 +40,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ FormHTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   component: 'form',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const elements = provideChildrenTracker(FormInputsKey);
 

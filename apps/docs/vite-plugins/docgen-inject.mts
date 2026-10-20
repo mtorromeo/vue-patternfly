@@ -1,8 +1,8 @@
 import { createFilter } from 'vite';
 import type { FilterPattern, Plugin as VitePlugin } from 'vite';
-import { ComponentDoc, parseMulti } from 'vue-docgen-api';
-import fs from 'fs/promises';
-import { dirname } from 'path';
+import { type ComponentDoc, parseMulti } from 'vue-docgen-api';
+import fs from 'node:fs/promises';
+import { dirname } from 'node:path';
 
 export type VueDocgenInjectPluginOptions = {
   /**
@@ -18,12 +18,10 @@ export type VueDocgenInjectPluginOptions = {
    * @default undefined
    */
   exclude?: FilterPattern;
-}
+};
 
 async function replaceAsync(string: string, regexp: RegExp, replacerFunction: (...args: string[]) => Promise<string>) {
-  const replacements = await Promise.all(
-    Array.from(string.matchAll(regexp),
-               match => replacerFunction(...match)));
+  const replacements = await Promise.all(Array.from(string.matchAll(regexp), match => replacerFunction(...match)));
   let i = 0;
   return string.replace(regexp, () => replacements[i++]);
 }
@@ -38,11 +36,10 @@ class ParseError extends Error {
 }
 
 async function parseAllDocs(docs: Record<string, ComponentDoc>) {
-  const parseQ = [
-    '../../packages/core/src/components/index.ts',
-    '../../packages/core/src/layouts/index.ts',
-  ];
+  const parseQ = ['../../packages/core/src/components/index.ts', '../../packages/core/src/layouts/index.ts'];
 
+  // iterate over a copy: the loop appends the indexes it finds to parseQ
+  // oxlint-disable-next-line unicorn/no-useless-spread
   for (const index of [...parseQ]) {
     const indexSource = await fs.readFile(index, { encoding: 'utf-8' });
     const includes = indexSource.matchAll(/^export \* from ['"]\.\/(.*)['"];?$/gm);
@@ -61,13 +58,15 @@ async function parseAllDocs(docs: Record<string, ComponentDoc>) {
     '../../packages/table/src/Tr.vue',
   );
 
-  const results = await Promise.allSettled(parseQ.map(async f => {
-    try {
-      return await parseMulti(f);
-    } catch (e) {
-      throw new ParseError(f, e as string);
-    }
-  }));
+  const results = await Promise.allSettled(
+    parseQ.map(async f => {
+      try {
+        return await parseMulti(f);
+      } catch (e) {
+        throw new ParseError(f, e as string);
+      }
+    }),
+  );
 
   for (const components of results) {
     if (components.status === 'rejected') {
@@ -87,7 +86,7 @@ export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): Vit
   const componentInfoRegex = /<component-info((?:\s+:?[a-z]+[a-z-]*="[^"]+")+)([^>]*?)>/g;
   const pageNameRegex = /<doc-page\b/g;
 
-  let componentDocs: Record<string, ComponentDoc> = {};
+  const componentDocs: Record<string, ComponentDoc> = {};
 
   return {
     name: 'vue-component-docs',
@@ -99,7 +98,7 @@ export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): Vit
       }
 
       if (filter(id)) {
-        code = await replaceAsync(code, componentInfoRegex, async(matched, propsMatched: string, args: string) => {
+        code = await replaceAsync(code, componentInfoRegex, async (matched, propsMatched: string, args: string) => {
           const props: {
             name: string;
             fallthrough: string[];
@@ -107,7 +106,7 @@ export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): Vit
           } = {
             name: '',
             fallthrough: [],
-            ['no-fallthrough']: [],
+            'no-fallthrough': [],
           };
 
           for (const propsStr of propsMatched.split(/\s+/).filter(s => s.trim() !== '')) {
@@ -121,7 +120,7 @@ export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): Vit
             }
           }
 
-          let componentInfo = componentDocs[props.name];
+          const componentInfo = componentDocs[props.name];
 
           if (!componentInfo) {
             console.warn(`No component named ${props.name} found`);
@@ -140,13 +139,19 @@ export function vueDocgenInject(options: VueDocgenInjectPluginOptions = {}): Vit
             }
 
             for (const prop of fallthroughInfo.props ?? []) {
-              if (!props['no-fallthrough'].includes(prop.name) && !componentInfo.props.find(p => p.name === prop.name)) {
+              if (
+                !props['no-fallthrough'].includes(prop.name) &&
+                !componentInfo.props.find(p => p.name === prop.name)
+              ) {
                 componentInfo.props.push(prop);
               }
             }
 
             for (const event of fallthroughInfo.events ?? []) {
-              if (!props['no-fallthrough'].includes(event.name) && !componentInfo.events.find(e => e.name === event.name)) {
+              if (
+                !props['no-fallthrough'].includes(event.name) &&
+                !componentInfo.events.find(e => e.name === event.name)
+              ) {
                 componentInfo.events.push(event);
               }
             }

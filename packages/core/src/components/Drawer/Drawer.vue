@@ -2,14 +2,17 @@
   <div
     v-bind="ouiaProps"
     ref="elRef"
-    :class="[styles.drawer, {
-      [styles.modifiers.expanded]: expandedClass,
-      [styles.modifiers.inline]: inline,
-      [styles.modifiers.viewport]: viewport,
-      [styles.modifiers.static]: static,
-      [styles.modifiers.panelLeft]: position === 'start',
-      [styles.modifiers.panelBottom]: position === 'bottom',
-    }]"
+    :class="[
+      styles.drawer,
+      {
+        [styles.modifiers.expanded]: expandedClass,
+        [styles.modifiers.inline]: inline,
+        [styles.modifiers.viewport]: viewport,
+        [styles.modifiers.static]: static,
+        [styles.modifiers.panelLeft]: position === 'start',
+        [styles.modifiers.panelBottom]: position === 'bottom',
+      },
+    ]"
     @animationend="display = isOpen"
   >
     <auto-wrap :component="PfDrawerContent" :exclude="PfDrawerSection">
@@ -47,7 +50,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   position: 'end',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

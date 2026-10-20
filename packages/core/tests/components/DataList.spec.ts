@@ -15,7 +15,12 @@ import PfDataListItemRow from '../../src/components/DataList/DataListItemRow.vue
 import PfDataListToggle from '../../src/components/DataList/DataListToggle.vue';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -67,9 +72,14 @@ describe('DataList', () => {
   });
 
   it('supports single selection with v-model:selected using item keys', async () => {
-    const wrapper = mountWithModel(PfDataList, 'selected', { selected: undefined, selectionInputName: 'pick' }, {
-      slots: { default: items(['a', 'b']) },
-    });
+    const wrapper = mountWithModel(
+      PfDataList,
+      'selected',
+      { selected: undefined, selectionInputName: 'pick' },
+      {
+        slots: { default: items(['a', 'b']) },
+      },
+    );
 
     const lis = wrapper.findAll('li');
     for (const li of lis) {
@@ -118,9 +128,14 @@ describe('DataList', () => {
   });
 
   it('updates item selection state with multiple v-model:selected', async () => {
-    const wrapper = mountWithModel(PfDataList, 'selected', { selected: [], selectionMultiple: true }, {
-      slots: { default: items(['a', 'b']) },
-    });
+    const wrapper = mountWithModel(
+      PfDataList,
+      'selected',
+      { selected: [], selectionMultiple: true },
+      {
+        slots: { default: items(['a', 'b']) },
+      },
+    );
 
     const lis = wrapper.findAll('li');
     await lis[0]!.trigger('click');
@@ -133,7 +148,10 @@ describe('DataList', () => {
   });
 
   it('reflects externally set selection', async () => {
-    const wrapper = mount(PfDataList, { props: { selected: ['b'], selectionMultiple: true }, slots: { default: items(['a', 'b']) } });
+    const wrapper = mount(PfDataList, {
+      props: { selected: ['b'], selectionMultiple: true },
+      slots: { default: items(['a', 'b']) },
+    });
 
     const lis = wrapper.findAll('li');
     expect(lis[0]!.classes()).not.toContain(styles.modifiers.selected);
@@ -161,10 +179,8 @@ describe('DataList', () => {
     const wrapper = mount(PfDataList, {
       props: { expandable: true },
       slots: {
-        default: () => h(PfDataListItem, () => [
-          h(PfDataListCell, () => 'Cell'),
-          h(PfDataListContent, () => 'Details'),
-        ]),
+        default: () =>
+          h(PfDataListItem, () => [h(PfDataListCell, () => 'Cell'), h(PfDataListContent, () => 'Details')]),
       },
     });
 
@@ -193,14 +209,19 @@ describe('DataListItem', () => {
     expect(wrapper.element.tagName).toBe('LI');
     expect(wrapper.classes()).toContain(styles.dataListItem);
     const row = wrapper.find(`.${styles.dataListItemRow}`);
-    expect(row.findAll(`.${styles.dataListItemContent} > .${styles.dataListCell}`).map(c => c.text())).toEqual(['One', 'Two']);
+    expect(row.findAll(`.${styles.dataListItemContent} > .${styles.dataListCell}`).map(c => c.text())).toEqual([
+      'One',
+      'Two',
+    ]);
     expect(row.find('section').exists()).toBe(false);
     expect(wrapper.find(`li > section.${styles.dataListExpandableContent}`).exists()).toBe(true);
   });
 
   it('does not double wrap an explicit row', () => {
     const wrapper = mount(PfDataListItem, {
-      slots: { default: () => h(PfDataListItemRow, () => h(PfDataListItemCells, () => h(PfDataListCell, () => 'Cell'))) },
+      slots: {
+        default: () => h(PfDataListItemRow, () => h(PfDataListItemCells, () => h(PfDataListCell, () => 'Cell'))),
+      },
     });
 
     expect(wrapper.findAll(`.${styles.dataListItemRow}`)).toHaveLength(1);
@@ -208,7 +229,11 @@ describe('DataListItem', () => {
   });
 
   it('is standalone selectable with v-model:selected', async () => {
-    const wrapper = mountWithModel(PfDataListItem, 'selected', { selected: false, selectionInputName: 'n', selectionInputValue: 'v' });
+    const wrapper = mountWithModel(PfDataListItem, 'selected', {
+      selected: false,
+      selectionInputName: 'n',
+      selectionInputValue: 'v',
+    });
 
     expect(wrapper.attributes('tabindex')).toBe('0');
     expect(wrapper.classes()).toContain(styles.modifiers.clickable);
@@ -232,9 +257,14 @@ describe('DataListItem', () => {
   });
 
   it('toggles v-model:expanded through the row toggle', async () => {
-    const wrapper = mountWithModel(PfDataListItem, 'expanded', { expanded: false, expandable: true }, {
-      slots: { default: () => [h(PfDataListCell, () => 'Cell'), h(PfDataListContent, () => 'Details')] },
-    });
+    const wrapper = mountWithModel(
+      PfDataListItem,
+      'expanded',
+      { expanded: false, expandable: true },
+      {
+        slots: { default: () => [h(PfDataListCell, () => 'Cell'), h(PfDataListContent, () => 'Details')] },
+      },
+    );
 
     expect(wrapper.classes()).not.toContain(styles.modifiers.expanded);
     await wrapper.find(`.${styles.dataListToggle} button`).trigger('click');
@@ -288,7 +318,10 @@ describe('DataListItemRow', () => {
   });
 
   it('reflects the expanded state on the default toggle', () => {
-    const wrapper = mount(PfDataListItem, { props: { expandable: true, expanded: true }, slots: { default: () => h(PfDataListItemRow) } });
+    const wrapper = mount(PfDataListItem, {
+      props: { expandable: true, expanded: true },
+      slots: { default: () => h(PfDataListItemRow) },
+    });
     expect(wrapper.find(`.${styles.dataListToggle} button`).attributes('aria-expanded')).toBe('true');
   });
 });
@@ -309,7 +342,9 @@ describe('DataListCell', () => {
   });
 
   it('applies modifiers', () => {
-    const wrapper = mount(PfDataListCell, { props: { noFill: true, alignRight: true, icon: true, wrapModifier: 'nowrap', width: 3 } });
+    const wrapper = mount(PfDataListCell, {
+      props: { noFill: true, alignRight: true, icon: true, wrapModifier: 'nowrap', width: 3 },
+    });
 
     for (const modifier of ['noFill', 'alignRight', 'icon', 'nowrap', 'flex_3'] as const) {
       expect(wrapper.classes()).toContain(styles.modifiers[modifier]);
@@ -324,7 +359,10 @@ describe('DataListCell', () => {
 
 describe('DataListAction', () => {
   it('renders the action class and visibility modifiers', () => {
-    const wrapper = mount(PfDataListAction, { props: { visibility: 'hidden', visibilityMd: 'visible' }, slots: { default: () => 'Act' } });
+    const wrapper = mount(PfDataListAction, {
+      props: { visibility: 'hidden', visibilityMd: 'visible' },
+      slots: { default: () => 'Act' },
+    });
 
     expect(wrapper.classes()).toContain(styles.dataListItemAction);
     expect(wrapper.classes()).toContain(styles.modifiers.hidden);

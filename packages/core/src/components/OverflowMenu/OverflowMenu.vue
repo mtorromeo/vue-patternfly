@@ -5,7 +5,9 @@
 </template>
 
 <script lang="ts">
-export const OverflowMenuIsBelowBreakpointKey = Symbol('OverflowMenuIsBelowBreakpointKey') as InjectionKey<Ref<boolean> | boolean>;
+export const OverflowMenuIsBelowBreakpointKey = Symbol('OverflowMenuIsBelowBreakpointKey') as InjectionKey<
+  Ref<boolean> | boolean
+>;
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   breakpoint: keyof typeof globalWidthBreakpoints;
@@ -24,7 +26,7 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -35,7 +37,11 @@ provide(OverflowMenuIsBelowBreakpointKey, isBelowBreakpoint);
 
 const { width: windowWidth } = useWindowSize();
 
-watch(windowWidth, (width) => {
-  isBelowBreakpoint.value = width < globalWidthBreakpoints[props.breakpoint];
-}, { immediate: true });
+watch(
+  windowWidth,
+  width => {
+    isBelowBreakpoint.value = width < globalWidthBreakpoints[props.breakpoint];
+  },
+  { immediate: true },
+);
 </script>

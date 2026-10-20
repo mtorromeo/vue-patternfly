@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Masthead">
-    <template #description>A <b>masthead</b> contains global properties such as logotype, navigation and settings in an organized fashion and it is accessible from all parts of the application. All pages should share a common masthead.</template>
+    <template #description
+      >A <b>masthead</b> contains global properties such as logotype, navigation and settings in an organized fashion
+      and it is accessible from all parts of the application. All pages should share a common masthead.</template
+    >
 
     <template #apidocs>
       <component-info name="PfMasthead" />

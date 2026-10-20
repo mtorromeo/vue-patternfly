@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Empty State">
-    <template #description>An <b>empty state</b> is a screen that is not yet populated with data or information. Empty states typically contain a short message and next steps for the user.</template>
+    <template #description
+      >An <b>empty state</b> is a screen that is not yet populated with data or information. Empty states typically
+      contain a short message and next steps for the user.</template
+    >
 
     <template #apidocs>
       <component-info name="PfEmptyState" />
@@ -19,7 +22,8 @@
           </template>
         </pf-empty-state-header>
         <pf-empty-state-body>
-          This represents an the empty state pattern in Patternfly 6. Hopefully it's simple enough to use but flexible enough to meet a variety of needs.
+          This represents an the empty state pattern in Patternfly 6. Hopefully it's simple enough to use but flexible
+          enough to meet a variety of needs.
         </pf-empty-state-body>
         <pf-empty-state-footer>
           <pf-empty-state-actions>
@@ -77,7 +81,8 @@
           </template>
         </pf-empty-state-header>
         <pf-empty-state-body>
-          This represents the empty state pattern in PatternFly with a custom icon color. Hopefully it's simple enough to use but flexible enough to meet a variety of needs
+          This represents the empty state pattern in PatternFly with a custom icon color. Hopefully it's simple enough
+          to use but flexible enough to meet a variety of needs
         </pf-empty-state-body>
       </pf-empty-state>
     </story-canvas>
@@ -85,7 +90,7 @@
 </template>
 
 <script lang="ts" setup>
-import CubesIcon from "@vue-patternfly/icons/cubes-icon";
-import CheckIcon from "@vue-patternfly/icons/check-icon";
-import MagnifyingGlassIcon from "@vue-patternfly/icons/magnifying-glass-icon";
+import CubesIcon from '@vue-patternfly/icons/cubes-icon';
+import CheckIcon from '@vue-patternfly/icons/check-icon';
+import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
 </script>

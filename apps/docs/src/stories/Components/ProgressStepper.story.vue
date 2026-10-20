@@ -1,6 +1,9 @@
 <template>
   <doc-page title="ProgressStepper">
-    <template #description>Progress steppers have default icons associated with the variant property, and may be overriden and customized using the icon slot.</template>
+    <template #description
+      >Progress steppers have default icons associated with the variant property, and may be overriden and customized
+      using the icon slot.</template
+    >
 
     <template #apidocs>
       <component-info name="PfProgressStepper" />
@@ -21,8 +24,12 @@
 
     <story-canvas title="With description">
       <pf-progress-stepper>
-        <pf-progress-step variant="success" description="This is the first thing to happen">First step</pf-progress-step>
-        <pf-progress-step variant="info" description="This is the second thing to happen" current>Second step</pf-progress-step>
+        <pf-progress-step variant="success" description="This is the first thing to happen"
+          >First step</pf-progress-step
+        >
+        <pf-progress-step variant="info" description="This is the second thing to happen" current
+          >Second step</pf-progress-step
+        >
         <pf-progress-step variant="pending" description="This is the last thing to happen">Third step</pf-progress-step>
       </pf-progress-stepper>
     </story-canvas>
@@ -30,11 +37,15 @@
     <story-canvas title="With alignment">
       <pf-checkbox v-model="vertical" label="Vertical alignment" />
       <pf-checkbox v-model="centerAligned" label="Center alignment" />
-      <br>
+      <br />
 
       <pf-progress-stepper :vertical="vertical" :center-aligned="centerAligned">
-        <pf-progress-step variant="success" description="This is the first thing to happen">First step</pf-progress-step>
-        <pf-progress-step variant="info" description="This is the second thing to happen" current>Second step</pf-progress-step>
+        <pf-progress-step variant="success" description="This is the first thing to happen"
+          >First step</pf-progress-step
+        >
+        <pf-progress-step variant="info" description="This is the second thing to happen" current
+          >Second step</pf-progress-step
+        >
         <pf-progress-step variant="pending" description="This is the last thing to happen">Third step</pf-progress-step>
       </pf-progress-stepper>
     </story-canvas>
@@ -97,9 +108,7 @@
           </pf-popover>
         </pf-progress-step>
 
-        <pf-progress-step variant="pending">
-          Fourth step
-        </pf-progress-step>
+        <pf-progress-step variant="pending"> Fourth step </pf-progress-step>
       </pf-progress-stepper>
     </story-canvas>
   </doc-page>

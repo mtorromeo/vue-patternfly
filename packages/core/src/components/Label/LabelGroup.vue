@@ -65,23 +65,23 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, useTemplateRef, type HTMLAttributes } from "vue";
-import styles from "@patternfly/react-styles/css/components/Label/label-group";
-import XmarkIcon from "@vue-patternfly/icons/xmark-icon";
-import PfLabel from "./Label.vue";
-import PfButton from "../Button.vue";
-import PfTooltip from "../Tooltip/Tooltip.vue";
-import { fillTemplate } from "../../util";
-import { useElementOverflow } from "../../use";
-import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
-import type { Placement } from "../../helpers/FloatingUi.vue";
-import PassThrough from "../../helpers/PassThrough.vue";
+import { ref, useTemplateRef, type HTMLAttributes } from 'vue';
+import styles from '@patternfly/react-styles/css/components/Label/label-group';
+import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
+import PfLabel from './Label.vue';
+import PfButton from '../Button.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
+import { fillTemplate } from '../../util';
+import { useElementOverflow } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { Placement } from '../../helpers/FloatingUi.vue';
+import PassThrough from '../../helpers/PassThrough.vue';
 
 defineOptions({
-  name: "PfLabelGroup",
+  name: 'PfLabelGroup',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, "onClick"> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
   id?: string;
   /** Flag for having the label group default to expanded */
   defaultOpen?: boolean;
@@ -115,31 +115,31 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, "onCli
 
 const props = withDefaults(defineProps<Props>(), {
   numLabels: 3,
-  tooltipPosition: "top",
-  closeBtnAriaLabel: "Close chip group",
-  ariaLabel: "Chip group category",
-  expandedText: "Show Less",
-  collapsedText: "${remaining} more",
+  tooltipPosition: 'top',
+  closeBtnAriaLabel: 'Close chip group',
+  ariaLabel: 'Chip group category',
+  expandedText: 'Show Less',
+  collapsedText: '${remaining} more',
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: "click", e: PointerEvent): void;
-  (name: "overflowChipClick", e: PointerEvent): void;
+  (name: 'click', e: PointerEvent): void;
+  (name: 'overflowChipClick', e: PointerEvent): void;
 }>();
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
-  "add-label-control"?: (props?: Record<never, never>) => any;
+  'add-label-control'?: (props?: Record<never, never>) => any;
 }>();
 
-const label = useTemplateRef("labelRef");
+const label = useTemplateRef('labelRef');
 const labelOverflowing = useElementOverflow(label);
 const open = ref(props.defaultOpen);
 
 function overflowChipClick(e: PointerEvent) {
   toggleCollapse();
-  emit("overflowChipClick", e);
+  emit('overflowChipClick', e);
 }
 
 function toggleCollapse() {

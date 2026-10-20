@@ -18,28 +18,20 @@
       <pf-content>
         <pf-content component="h3">Visited link example</pf-content>
         <pf-content component="p">
-          <pf-content component="a" href="#">
-            Visited link
-          </pf-content>
+          <pf-content component="a" href="#"> Visited link </pf-content>
         </pf-content>
       </pf-content>
-      <br>
+      <br />
       <pf-content visited>
         <pf-content component="h3">Visited content example</pf-content>
         <pf-content component="p">
-          <pf-content component="a" href="#">
-            content link 1
-          </pf-content>
+          <pf-content component="a" href="#"> content link 1 </pf-content>
         </pf-content>
         <pf-content component="p">
-          <pf-content component="a" href="#">
-            content link 2
-          </pf-content>
+          <pf-content component="a" href="#"> content link 2 </pf-content>
         </pf-content>
         <pf-content component="p">
-          <pf-content component="a" href="#">
-            content link 3
-          </pf-content>
+          <pf-content component="a" href="#"> content link 3 </pf-content>
         </pf-content>
       </pf-content>
     </story-canvas>

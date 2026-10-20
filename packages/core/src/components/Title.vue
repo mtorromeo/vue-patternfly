@@ -1,5 +1,9 @@
 <template>
-  <component :is="`h${level}`" v-bind="ouiaProps" :class="[styles.title, size && size in styles.modifiers ? styles.modifiers[size] : hModifier]">
+  <component
+    :is="`h${level}`"
+    v-bind="ouiaProps"
+    :class="[styles.title, size && size in styles.modifiers ? styles.modifiers[size] : hModifier]"
+  >
     <slot />
   </component>
 </template>
@@ -28,7 +32,7 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const level = computed(() => Number(String(props.h).replace(/^h/, '')));
 

@@ -16,12 +16,16 @@
   >
     <pf-focus-trap
       ref="dialogRef"
-      v-bind="{...ouiaProps, ...$attrs}"
+      v-bind="{ ...ouiaProps, ...$attrs }"
       :active="focusTrap && visible"
-      :class="[styles.popover, (styles.modifiers as any)[placement], {
-        [styles.modifiers.noPadding]: noPadding,
-        [styles.modifiers.widthAuto]: autoWidth,
-      }]"
+      :class="[
+        styles.popover,
+        (styles.modifiers as any)[placement],
+        {
+          [styles.modifiers.noPadding]: noPadding,
+          [styles.modifiers.widthAuto]: autoWidth,
+        },
+      ]"
       role="dialog"
       aria-modal="true"
       :aria-label="$slots.header ? undefined : ariaLabel"
@@ -37,11 +41,7 @@
     >
       <div :class="styles.popoverArrow" />
       <div :class="styles.popoverContent">
-        <pf-close-button
-          v-if="showClose"
-          :aria-label="closeBtnAriaLabel"
-          @click.prevent="visible = false"
-        />
+        <pf-close-button v-if="showClose" :aria-label="closeBtnAriaLabel" @click.prevent="visible = false" />
 
         <pf-title v-if="$slots.header" :id="`popover-${uniqueId}-header`" :h="6" size="md">
           <slot name="header" />
@@ -51,11 +51,7 @@
           <slot name="body" />
         </div>
 
-        <footer
-          v-if="$slots.footer"
-          :id="`popover-${uniqueId}-footer`"
-          :class="styles.popoverFooter"
-        >
+        <footer v-if="$slots.footer" :id="`popover-${uniqueId}-footer`" :class="styles.popoverFooter">
           <slot name="footer" />
         </footer>
       </div>
@@ -74,7 +70,15 @@ import PfCloseButton from './CloseButton.vue';
 import PfTitle from './Title.vue';
 import FloatingUi from '../helpers/FloatingUi.vue';
 import PassThrough from '../helpers/PassThrough.vue';
-import { offset, autoPlacement, type Placement, hide, flip as uiFlip, type FlipOptions, type AutoPlacementOptions } from '@floating-ui/dom';
+import {
+  offset,
+  autoPlacement,
+  type Placement,
+  hide,
+  flip as uiFlip,
+  type FlipOptions,
+  type AutoPlacementOptions,
+} from '@floating-ui/dom';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
@@ -83,7 +87,13 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfFocusTrap>, 'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby' | 'ouiaId' | 'ouiaSafe'> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<
+      ComponentProps<typeof PfFocusTrap>,
+      'active' | 'role' | 'aria-modal' | 'aria-labelledby' | 'aria-describedby' | 'ouiaId' | 'ouiaSafe'
+    > {
   /** Whether to trap focus in the popover */
   focusTrap?: boolean;
   /** Element or selector where to render the floating menu */
@@ -102,7 +112,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
   flipOptions?: FlipOptions;
   placementOptions?: AutoPlacementOptions;
   /** Hides the popover when a click occurs outside (only works if isVisible is not controlled by the user) */
-  noHideOnOutsideClick?: boolean,
+  noHideOnOutsideClick?: boolean;
   /**
    * Popover position.
    * Notice: it will change the position if there is not enough space for the starting position.
@@ -129,7 +139,7 @@ const props = withDefaults(defineProps<Props>(), {
   distance: 25,
   open: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const visible = defineModel<boolean>('open', { default: false });
 
@@ -154,9 +164,7 @@ watch(referenceElement, (el, oldEl) => {
 });
 
 const floatingMiddleware = computed(() => [
-  props.flip
-    ? uiFlip(props.flipOptions)
-    : autoPlacement(props.placementOptions),
+  props.flip ? uiFlip(props.flipOptions) : autoPlacement(props.placementOptions),
   offset(props.distance),
   hide(),
   hide({

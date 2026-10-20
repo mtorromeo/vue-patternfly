@@ -50,7 +50,7 @@ const focusedItemIndex: Ref<number | undefined> = ref();
 const activeItem: Ref<string | undefined> = ref();
 const selected: Ref<string | undefined> = ref();
 
-type OptionItem = { value: string; label: string; };
+type OptionItem = { value: string; label: string };
 
 const allOptions: OptionItem[] = [
   { value: 'Alabama', label: 'Alabama' },

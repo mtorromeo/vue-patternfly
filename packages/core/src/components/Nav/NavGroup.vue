@@ -24,7 +24,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-
 const props = withDefaults(defineProps<Props>(), {
   id: () => useId(),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

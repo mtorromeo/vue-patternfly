@@ -1,11 +1,14 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.panel, {
-      [styles.modifiers.raised]: variant === 'raised',
-      [styles.modifiers.bordered]: variant === 'bordered',
-      [styles.modifiers.scrollable]: scrollable,
-    }]"
+    :class="[
+      styles.panel,
+      {
+        [styles.modifiers.raised]: variant === 'raised',
+        [styles.modifiers.bordered]: variant === 'bordered',
+        [styles.modifiers.scrollable]: scrollable,
+      },
+    ]"
   >
     <slot />
   </div>
@@ -28,7 +31,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

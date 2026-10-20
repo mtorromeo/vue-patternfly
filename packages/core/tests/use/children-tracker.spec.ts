@@ -1,7 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { defineComponent, h, nextTick, ref, type ComponentPublicInstance, type Reactive } from 'vue';
 import { mount } from '@vue/test-utils';
-import { provideChildrenTracker, useChildrenTracker, type ChildrenTrackerInjectionKey } from '../../src/use/children-tracker';
+import {
+  provideChildrenTracker,
+  useChildrenTracker,
+  type ChildrenTrackerInjectionKey,
+} from '../../src/use/children-tracker';
 
 const InstanceKey = Symbol('instance') as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
 const ItemKey = Symbol('item') as ChildrenTrackerInjectionKey<string>;
@@ -65,7 +69,7 @@ describe('children tracker', () => {
 
   it('empties the list when the parent unmounts the children', async () => {
     const show = ref(true);
-    const { items } = mountParent(InstanceKey, () => show.value ? [h(Child), h(Child)] : []);
+    const { items } = mountParent(InstanceKey, () => (show.value ? [h(Child), h(Child)] : []));
     expect(items()).toHaveLength(2);
     show.value = false;
     await nextTick();
@@ -92,12 +96,14 @@ describe('children tracker', () => {
 
   it('returns null when there is no provider', () => {
     let tracker: unknown = 'unset';
-    mount(defineComponent({
-      setup() {
-        tracker = useChildrenTracker(InstanceKey);
-        return () => h('div');
-      },
-    }));
+    mount(
+      defineComponent({
+        setup() {
+          tracker = useChildrenTracker(InstanceKey);
+          return () => h('div');
+        },
+      }),
+    );
     expect(tracker).toBeNull();
   });
 

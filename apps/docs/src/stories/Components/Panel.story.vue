@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Panel">
-    <template #description>The <b>panel</b> component is a container that supports flexible content layouts. It can be used to house other components such as fields, forms, videos, buttons, and more. The panel should not be confused with the drawer component, which allows you to surface information via a collapsable container.</template>
+    <template #description
+      >The <b>panel</b> component is a container that supports flexible content layouts. It can be used to house other
+      components such as fields, forms, videos, buttons, and more. The panel should not be confused with the drawer
+      component, which allows you to surface information via a collapsable container.</template
+    >
 
     <template #apidocs>
       <component-info name="PfPanel" />
@@ -79,47 +83,47 @@
         <pf-panel-main>
           <pf-panel-main-body>
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
           </pf-panel-main-body>
         </pf-panel-main>
@@ -133,47 +137,47 @@
         <pf-panel-main>
           <pf-panel-main-body>
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
-            <br>
-            <br>
+            <br />
+            <br />
             Main content
           </pf-panel-main-body>
         </pf-panel-main>

@@ -2,22 +2,27 @@
   <pf-divider v-if="variant == 'separator'" v-bind="$attrs" orientation="vertical" />
   <div
     v-else
-    :class="[styles.toolbarItem, breakpointClasses, variantClass, {
-      [styles.modifiers.pagination]: variant == 'pagination',
-      [styles.modifiers.label]: variant == 'label',
-      [styles.modifiers.labelGroup]: variant == 'label-group',
-      [styles.modifiers.expanded]: allExpanded,
-      [styles.modifiers.overflowContainer]: overflowContainer,
-      [styles.modifiers.alignItemsStart]: alignItems === 'start',
-      [styles.modifiers.alignItemsCenter]: alignItems === 'center',
-      [styles.modifiers.alignItemsBaseline]: alignItems === 'baseline',
-      [styles.modifiers.alignSelfStart]: alignSelf === 'start',
-      [styles.modifiers.alignSelfCenter]: alignSelf === 'center',
-      [styles.modifiers.alignSelfBaseline]: alignSelf === 'baseline',
-    }]"
+    :class="[
+      styles.toolbarItem,
+      breakpointClasses,
+      variantClass,
+      {
+        [styles.modifiers.pagination]: variant == 'pagination',
+        [styles.modifiers.label]: variant == 'label',
+        [styles.modifiers.labelGroup]: variant == 'label-group',
+        [styles.modifiers.expanded]: allExpanded,
+        [styles.modifiers.overflowContainer]: overflowContainer,
+        [styles.modifiers.alignItemsStart]: alignItems === 'start',
+        [styles.modifiers.alignItemsCenter]: alignItems === 'center',
+        [styles.modifiers.alignItemsBaseline]: alignItems === 'baseline',
+        [styles.modifiers.alignSelfStart]: alignSelf === 'start',
+        [styles.modifiers.alignSelfCenter]: alignSelf === 'center',
+        [styles.modifiers.alignSelfBaseline]: alignSelf === 'baseline',
+      },
+    ]"
     :style="breakpointWidths"
     :aria-hidden="variant == 'label'"
-    v-bind="{...ouiaProps, ...$attrs}"
+    v-bind="{ ...ouiaProps, ...$attrs }"
   >
     <slot />
   </div>
@@ -25,7 +30,18 @@
 
 <script lang="ts" setup>
 import PfDivider from '../Divider.vue';
-import { breakpoints, classesFromBreakpointProps, type AlignBreakpointProps, type VisibilityBreakpointProps, type WidthBreakpointProps, type GapBreakpointProps, type ColumnGapBreakpointProps, type RowGapBreakpointProps, type RowWrapBreakpointProps, type FlexGrowBreakpointProps } from '../../breakpoints';
+import {
+  breakpoints,
+  classesFromBreakpointProps,
+  type AlignBreakpointProps,
+  type VisibilityBreakpointProps,
+  type WidthBreakpointProps,
+  type GapBreakpointProps,
+  type ColumnGapBreakpointProps,
+  type RowGapBreakpointProps,
+  type RowWrapBreakpointProps,
+  type FlexGrowBreakpointProps,
+} from '../../breakpoints';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import cssWidth from '@patternfly/react-tokens/dist/esm/c_toolbar__item_Width';
@@ -36,7 +52,18 @@ defineOptions({
   name: 'PfToolbarItem',
 });
 
-interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointProps, WidthBreakpointProps, GapBreakpointProps, ColumnGapBreakpointProps, RowGapBreakpointProps, RowWrapBreakpointProps, FlexGrowBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
+interface Props
+  extends
+    OUIAProps,
+    VisibilityBreakpointProps,
+    AlignBreakpointProps,
+    WidthBreakpointProps,
+    GapBreakpointProps,
+    ColumnGapBreakpointProps,
+    RowGapBreakpointProps,
+    RowWrapBreakpointProps,
+    FlexGrowBreakpointProps,
+    /* @vue-ignore */ Omit<HTMLAttributes, 'aria-hidden'> {
   /** A type modifier which modifies spacing specifically depending on the type of item */
   variant?: 'pagination' | 'label' | 'label-group' | 'separator' | 'expand-all';
   /** Vertical alignment of children */
@@ -50,7 +77,7 @@ interface Props extends OUIAProps, VisibilityBreakpointProps, AlignBreakpointPro
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineEmits<{
   (name: 'clearAllFilters'): void;

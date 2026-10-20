@@ -19,10 +19,9 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>
 
 <script lang="ts">
-import type { HTMLAttributes } from "vue";
+import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-}
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {}
 </script>

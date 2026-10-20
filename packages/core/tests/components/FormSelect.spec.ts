@@ -7,7 +7,12 @@ import PfFormSelectOption from '../../src/components/FormSelect/FormSelectOption
 import PfForm from '../../src/components/Form/Form.vue';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -53,11 +58,14 @@ describe('FormSelect', () => {
     expect(wrapper.find('select').attributes('disabled')).toBeDefined();
   });
 
-  it.each(['success', 'warning', 'error'] as const)('applies the %s validation modifier with a status icon', (validated) => {
-    const wrapper = mount(PfFormSelect, { props: { validated } });
-    expect(wrapper.classes()).toContain(styles.modifiers[validated]);
-    expect(wrapper.find(`.${styles.formControlIcon}.${styles.modifiers.status} svg`).exists()).toBe(true);
-  });
+  it.each(['success', 'warning', 'error'] as const)(
+    'applies the %s validation modifier with a status icon',
+    validated => {
+      const wrapper = mount(PfFormSelect, { props: { validated } });
+      expect(wrapper.classes()).toContain(styles.modifiers[validated]);
+      expect(wrapper.find(`.${styles.formControlIcon}.${styles.modifiers.status} svg`).exists()).toBe(true);
+    },
+  );
 
   it('renders no status icon in the default validation state', () => {
     const wrapper = mount(PfFormSelect, { props: { validated: 'default' } });

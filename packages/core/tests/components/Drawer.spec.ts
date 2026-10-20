@@ -23,10 +23,11 @@ function mountDrawer(drawerProps: Record<string, unknown> = {}, panelProps: Reco
   return mount(PfDrawer, {
     props: drawerProps,
     slots: {
-      default: () => h(PfDrawerContent, null, {
-        default: () => h(PfDrawerContentBody, () => 'Main content'),
-        content: () => h(PfDrawerPanelContent, panelProps, () => h(PfDrawerHead, () => 'Panel')),
-      }),
+      default: () =>
+        h(PfDrawerContent, null, {
+          default: () => h(PfDrawerContentBody, () => 'Main content'),
+          content: () => h(PfDrawerPanelContent, panelProps, () => h(PfDrawerHead, () => 'Panel')),
+        }),
     },
   });
 }
@@ -155,14 +156,17 @@ describe('DrawerPanelContent', () => {
   });
 
   it('applies modifiers, id and size variables', () => {
-    const wrapper = mountDrawer({ expanded: true }, {
-      id: 'panel',
-      noBorder: true,
-      colorVariant: 'secondary',
-      defaultSize: '300px',
-      minSize: '100px',
-      maxSize: '600px',
-    });
+    const wrapper = mountDrawer(
+      { expanded: true },
+      {
+        id: 'panel',
+        noBorder: true,
+        colorVariant: 'secondary',
+        defaultSize: '300px',
+        minSize: '100px',
+        maxSize: '600px',
+      },
+    );
 
     const panel = wrapper.find(`.${styles.drawerPanel}`);
     expect(panel.attributes('id')).toBe('panel');
@@ -195,7 +199,10 @@ describe('DrawerPanelContent', () => {
 
   describe('resizable', () => {
     it('renders an accessible vertical splitter', () => {
-      const wrapper = mountDrawer({ expanded: true }, { id: 'panel', resizable: true, resizeAriaLabel: 'Resize panel' });
+      const wrapper = mountDrawer(
+        { expanded: true },
+        { id: 'panel', resizable: true, resizeAriaLabel: 'Resize panel' },
+      );
 
       const panel = wrapper.find(`.${styles.drawerPanel}`);
       expect(panel.classes()).toContain(styles.modifiers.resizable);
@@ -246,10 +253,15 @@ describe('DrawerPanelContent', () => {
       [true, '65'],
     ])('measures the splitter position against the drawer when viewport is %s', async (viewport, valueNow) => {
       const wrapper = mountDrawer({ expanded: true, viewport }, { resizable: true });
-      const rect = (left: number, right: number) => ({ left, right, top: 0, bottom: 0, width: right - left } as DOMRect);
+      const rect = (left: number, right: number) =>
+        ({ left, right, top: 0, bottom: 0, width: right - left }) as DOMRect;
       vi.spyOn(wrapper.element, 'getBoundingClientRect').mockReturnValue(rect(0, 2000));
-      vi.spyOn(wrapper.find(`.${styles.drawerContent}`).element, 'getBoundingClientRect').mockReturnValue(rect(0, 1000));
-      vi.spyOn(wrapper.find(`.${styles.drawerPanel}`).element, 'getBoundingClientRect').mockReturnValue(rect(700, 1000));
+      vi.spyOn(wrapper.find(`.${styles.drawerContent}`).element, 'getBoundingClientRect').mockReturnValue(
+        rect(0, 1000),
+      );
+      vi.spyOn(wrapper.find(`.${styles.drawerPanel}`).element, 'getBoundingClientRect').mockReturnValue(
+        rect(700, 1000),
+      );
       const splitter = wrapper.find(`.${styles.drawerSplitter}`);
       vi.spyOn(splitter.element, 'getBoundingClientRect').mockReturnValue(rect(700, 704));
 
@@ -270,7 +282,11 @@ describe('DrawerPanelContent', () => {
       const wrapper = mountDrawer({ expanded: true }, { id: 'panel', resizable: true });
       const panelContent = wrapper.findComponent(PfDrawerPanelContent);
       const panel = wrapper.find(`.${styles.drawerPanel}`);
-      vi.spyOn(panel.element, 'getBoundingClientRect').mockReturnValue({ left: 500, right: 800, width: 300 } as DOMRect);
+      vi.spyOn(panel.element, 'getBoundingClientRect').mockReturnValue({
+        left: 500,
+        right: 800,
+        width: 300,
+      } as DOMRect);
 
       await wrapper.find(`.${styles.drawerSplitter}`).trigger('mousedown');
       expect(wrapper.classes()).toContain(styles.modifiers.resizing);

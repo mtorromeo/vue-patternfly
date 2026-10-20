@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Label">
-    <template #description>The <b>label</b> component allows users to add specific element captions for user clarity and convenience.</template>
+    <template #description
+      >The <b>label</b> component allows users to add specific element captions for user clarity and
+      convenience.</template
+    >
 
     <template #apidocs>
       <component-info name="PfLabel" />
@@ -8,13 +11,11 @@
 
     <story-canvas title="Filled labels">
       <pf-title h="4">Non-status:</pf-title>
-      <br>
+      <br />
 
       <pf-label>Grey</pf-label>
       <pf-label>
-        <template #icon>
-          <circle-info-icon />
-        </template>Grey icon
+        <template #icon> <circle-info-icon /> </template>Grey icon
       </pf-label>
       <pf-label @close="alert">Grey removeable</pf-label>
       <pf-label @close="alert">
@@ -31,8 +32,8 @@
         </template>
         Grey label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label color="blue">Blue</pf-label>
       <pf-label color="blue">
         <template #icon>
@@ -55,8 +56,8 @@
         </template>
         Blue label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label color="green">Green</pf-label>
       <pf-label color="green">
         <template #icon>
@@ -79,8 +80,8 @@
         </template>
         Green label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label color="orange">Orange</pf-label>
       <pf-label color="orange">
         <template #icon>
@@ -103,8 +104,8 @@
         </template>
         Orange label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label color="red">Red</pf-label>
       <pf-label color="red">
         <template #icon>
@@ -127,8 +128,8 @@
         </template>
         Red label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label color="purple">Purple</pf-label>
       <pf-label color="purple">
         <template #icon>
@@ -151,8 +152,8 @@
         </template>
         Purple label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label color="teal">Teal</pf-label>
       <pf-label color="teal">
         <template #icon>
@@ -175,8 +176,8 @@
         </template>
         Teal label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label color="yellow">Yellow</pf-label>
       <pf-label color="yellow">
         <template #icon>
@@ -199,11 +200,11 @@
         </template>
         Yellow label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-title h="4">Status:</pf-title>
-      <br>
+      <br />
 
       <pf-label status="success">Success</pf-label>
       <pf-label status="success" @close="alert">Success removeable</pf-label>
@@ -212,8 +213,8 @@
       <pf-label status="success" text-max-width="16ch" @close="alert">
         Success label with text that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-label status="warning">Warning</pf-label>
       <pf-label status="warning" @close="alert">Warning removeable</pf-label>
@@ -222,47 +223,39 @@
       <pf-label status="warning" text-max-width="16ch" @close="alert">
         Warning label with text that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-label status="danger">Danger</pf-label>
       <pf-label status="danger" @close="alert">Danger removeable</pf-label>
       <pf-label status="danger" href="#filled">Danger link</pf-label>
       <pf-label status="danger" href="#filled" @close="alert">Danger link removeable</pf-label>
-      <pf-label status="danger" text-max-width="16ch" @close="alert">
-        Danger label with text that overflows
-      </pf-label>
-      <br>
-      <br>
+      <pf-label status="danger" text-max-width="16ch" @close="alert"> Danger label with text that overflows </pf-label>
+      <br />
+      <br />
 
       <pf-label status="info">Info</pf-label>
       <pf-label status="info" @close="alert">Info removeable</pf-label>
       <pf-label status="info" href="#filled">Info link</pf-label>
       <pf-label status="info" href="#filled" @close="alert">Info link removeable</pf-label>
-      <pf-label status="info" text-max-width="16ch" @close="alert">
-        Info label with text that overflows
-      </pf-label>
-      <br>
-      <br>
+      <pf-label status="info" text-max-width="16ch" @close="alert"> Info label with text that overflows </pf-label>
+      <br />
+      <br />
 
       <pf-label status="custom">Custom</pf-label>
       <pf-label status="custom" @close="alert">Custom removeable</pf-label>
       <pf-label status="custom" href="#filled">Custom link</pf-label>
       <pf-label status="custom" href="#filled" @close="alert">Custom link removeable</pf-label>
-      <pf-label status="custom" text-max-width="16ch" @close="alert">
-        Custom label with text that overflows
-      </pf-label>
+      <pf-label status="custom" text-max-width="16ch" @close="alert"> Custom label with text that overflows </pf-label>
     </story-canvas>
 
     <story-canvas title="Outline labels">
       <pf-title h="4">Non-status:</pf-title>
-      <br>
+      <br />
 
       <pf-label outline>Grey</pf-label>
       <pf-label outline>
-        <template #icon>
-          <circle-info-icon />
-        </template>Grey icon
+        <template #icon> <circle-info-icon /> </template>Grey icon
       </pf-label>
       <pf-label outline @close="alert">Grey removeable</pf-label>
       <pf-label outline @close="alert">
@@ -279,8 +272,8 @@
         </template>
         Grey label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label outline color="blue">Blue</pf-label>
       <pf-label outline color="blue">
         <template #icon>
@@ -303,8 +296,8 @@
         </template>
         Blue label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label outline color="green">Green</pf-label>
       <pf-label outline color="green">
         <template #icon>
@@ -327,8 +320,8 @@
         </template>
         Green label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label outline color="orange">Orange</pf-label>
       <pf-label outline color="orange">
         <template #icon>
@@ -351,8 +344,8 @@
         </template>
         Orange label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label outline color="red">Red</pf-label>
       <pf-label outline color="red">
         <template #icon>
@@ -375,8 +368,8 @@
         </template>
         Red label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label outline color="purple">Purple</pf-label>
       <pf-label outline color="purple">
         <template #icon>
@@ -399,8 +392,8 @@
         </template>
         Purple label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label outline color="teal">Teal</pf-label>
       <pf-label outline color="teal">
         <template #icon>
@@ -423,8 +416,8 @@
         </template>
         Teal label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
       <pf-label outline color="yellow">Yellow</pf-label>
       <pf-label outline color="yellow">
         <template #icon>
@@ -447,11 +440,11 @@
         </template>
         Yellow label with icon that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-title h="4">Status:</pf-title>
-      <br>
+      <br />
 
       <pf-label outline status="success">Success</pf-label>
       <pf-label outline status="success" @close="alert">Success removeable</pf-label>
@@ -460,8 +453,8 @@
       <pf-label outline status="success" text-max-width="16ch" @close="alert">
         Success label with text that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-label outline status="warning">Warning</pf-label>
       <pf-label outline status="warning" @close="alert">Warning removeable</pf-label>
@@ -470,8 +463,8 @@
       <pf-label outline status="warning" text-max-width="16ch" @close="alert">
         Warning label with text that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-label outline status="danger">Danger</pf-label>
       <pf-label outline status="danger" @close="alert">Danger removeable</pf-label>
@@ -480,8 +473,8 @@
       <pf-label outline status="danger" text-max-width="16ch" @close="alert">
         Danger label with text that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-label outline status="info">Info</pf-label>
       <pf-label outline status="info" @close="alert">Info removeable</pf-label>
@@ -490,8 +483,8 @@
       <pf-label outline status="info" text-max-width="16ch" @close="alert">
         Info label with text that overflows
       </pf-label>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <pf-label outline status="custom">Custom</pf-label>
       <pf-label outline status="custom" @close="alert">Custom removeable</pf-label>
@@ -505,9 +498,7 @@
     <story-canvas title="Compact labels">
       <pf-label compact>Compact</pf-label>
       <pf-label compact>
-        <template #icon>
-          <circle-info-icon />
-        </template>Compact icon
+        <template #icon> <circle-info-icon /> </template>Compact icon
       </pf-label>
       <pf-label compact @close="alert">Compact removeable</pf-label>
       <pf-label compact @close="alert">
@@ -532,12 +523,24 @@
 
     <story-canvas title="Label group with overflow">
       <pf-label-group>
-        <pf-label><template #icon><circle-info-icon /></template> Label 1</pf-label>
-        <pf-label color="blue"><template #icon><circle-info-icon /></template> Label 2</pf-label>
-        <pf-label color="green"><template #icon><circle-info-icon /></template> Label 3</pf-label>
-        <pf-label color="yellow"><template #icon><circle-info-icon /></template> Label 4</pf-label>
-        <pf-label color="red"><template #icon><circle-info-icon /></template> Label 5</pf-label>
-        <pf-label color="purple"><template #icon><circle-info-icon /></template> Label 6</pf-label>
+        <pf-label
+          ><template #icon><circle-info-icon /></template> Label 1</pf-label
+        >
+        <pf-label color="blue"
+          ><template #icon><circle-info-icon /></template> Label 2</pf-label
+        >
+        <pf-label color="green"
+          ><template #icon><circle-info-icon /></template> Label 3</pf-label
+        >
+        <pf-label color="yellow"
+          ><template #icon><circle-info-icon /></template> Label 4</pf-label
+        >
+        <pf-label color="red"
+          ><template #icon><circle-info-icon /></template> Label 5</pf-label
+        >
+        <pf-label color="purple"
+          ><template #icon><circle-info-icon /></template> Label 6</pf-label
+        >
       </pf-label-group>
     </story-canvas>
   </doc-page>

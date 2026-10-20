@@ -24,7 +24,7 @@ export enum ValidatedOptions {
   success = 'success',
   error = 'error',
   warning = 'warning',
-  default = 'default'
+  default = 'default',
 }
 
 export const KeyTypes = {
@@ -35,7 +35,7 @@ export const KeyTypes = {
   ArrowUp: 'ArrowUp',
   ArrowDown: 'ArrowDown',
   ArrowLeft: 'ArrowLeft',
-  ArrowRight: 'ArrowRight'
+  ArrowRight: 'ArrowRight',
 };
 
 export const globalWidthBreakpoints = {
@@ -43,7 +43,7 @@ export const globalWidthBreakpoints = {
   md: parseInt(globalBreakpointMd.value) * 16,
   lg: parseInt(globalBreakpointLg.value) * 16,
   xl: parseInt(globalBreakpointXl.value) * 16,
-  '2xl': parseInt(globalBreakpoint2xl.value) * 16
+  '2xl': parseInt(globalBreakpoint2xl.value) * 16,
 };
 
 export const globalHeightBreakpoints = {
@@ -51,7 +51,7 @@ export const globalHeightBreakpoints = {
   md: parseInt(globalHeightBreakpointMd.value) * 16,
   lg: parseInt(globalHeightBreakpointLg.value) * 16,
   xl: parseInt(globalHeightBreakpointXl.value) * 16,
-  '2xl': parseInt(globalHeightBreakpoint2xl.value) * 16
+  '2xl': parseInt(globalHeightBreakpoint2xl.value) * 16,
 };
 
 export const statusIcons = {
@@ -59,5 +59,5 @@ export const statusIcons = {
   danger: CircleExclamationIcon,
   warning: TriangleExclamationIcon,
   info: CircleInfoIcon,
-  custom: BellIcon
+  custom: BellIcon,
 };

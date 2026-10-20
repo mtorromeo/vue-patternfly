@@ -1,6 +1,8 @@
 <template>
   <doc-page title="Badge">
-    <template #description>A <b>badge</b> is used to annotate other information like a label or an object name.</template>
+    <template #description
+      >A <b>badge</b> is used to annotate other information like a label or an object name.</template
+    >
 
     <template #apidocs>
       <component-info name="PfBadge" />

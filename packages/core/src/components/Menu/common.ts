@@ -32,13 +32,13 @@ export type MenuItemTrack = {
   focused: Ref<boolean>;
   favorited: ModelRef<boolean | undefined>;
   focus: () => void;
-}
+};
 
 export type MenuItemProvide = {
   disabled: boolean;
   itemId: ComputedRef<MenuItemId | null | undefined>;
 };
 
-export const MenuItemsKey = Symbol("MenuItemsKey") as ChildrenTrackerInjectionKey<MenuItemTrack>;
+export const MenuItemsKey = Symbol('MenuItemsKey') as ChildrenTrackerInjectionKey<MenuItemTrack>;
 export const MenuInjectionKey = Symbol('MenuInjectionKey') as InjectionKey<MenuProvide>;
 export const MenuItemInjectionKey = Symbol('MenuItemInjectionKey') as InjectionKey<MenuItemProvide>;

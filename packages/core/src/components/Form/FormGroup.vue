@@ -1,16 +1,20 @@
 <template>
-  <component v-bind="ouiaProps" :is="fieldset ? 'fieldset' : 'div'" :class="[styles.formGroup, { [styles.modifiers.action]: actionGroup }]">
+  <component
+    v-bind="ouiaProps"
+    :is="fieldset ? 'fieldset' : 'div'"
+    :class="[styles.formGroup, { [styles.modifiers.action]: actionGroup }]"
+  >
     <div
       v-if="label || $slots.label"
-      :class="[styles.formGroupLabel, {
-        [styles.modifiers.info]: labelInfo || $slots['label-info'],
-        [styles.modifiers.noPaddingTop]: noPaddingTop,
-      }]"
+      :class="[
+        styles.formGroupLabel,
+        {
+          [styles.modifiers.info]: labelInfo || $slots['label-info'],
+          [styles.modifiers.noPaddingTop]: noPaddingTop,
+        },
+      ]"
     >
-      <component
-        :is="(labelInfo || $slots['label-info']) ? 'div' : PassThrough"
-        :class="styles.formGroupLabelMain"
-      >
+      <component :is="labelInfo || $slots['label-info'] ? 'div' : PassThrough" :class="styles.formGroupLabelMain">
         <label :class="styles.formLabel" :for="fieldId">
           <span :class="styles.formLabelText">
             <slot name="label">{{ label }}</slot>
@@ -27,15 +31,23 @@
     </div>
 
     <div
-      :class="[styles.formGroupControl, {
-        [styles.modifiers.inline]: inline,
-        [styles.modifiers.stack]: stack,
-      }]"
+      :class="[
+        styles.formGroupControl,
+        {
+          [styles.modifiers.inline]: inline,
+          [styles.modifiers.stack]: stack,
+        },
+      ]"
     >
       <slot v-if="!helperTextBeforeField" />
 
       <pf-form-helper-text
-        v-if="(internalValidated === 'error' && helperTextInvalid || $slots['helper-text-invalid']) || (helperText || $slots['helper-text'])"
+        v-if="
+          (internalValidated === 'error' && helperTextInvalid) ||
+          $slots['helper-text-invalid'] ||
+          helperText ||
+          $slots['helper-text']
+        "
         :id="`${fieldId}-helper`"
       >
         <pf-helper-text v-if="(helperTextInvalid || $slots['helper-text-invalid']) && internalValidated === 'error'">
@@ -81,7 +93,7 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
   fieldset?: boolean;
 
-    /** Label text before the field. */
+  /** Label text before the field. */
   label?: string;
 
   /** Additional label information displayed after the label. */
@@ -127,7 +139,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   helperTextVariant: 'default',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

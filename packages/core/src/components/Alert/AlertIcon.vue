@@ -38,7 +38,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   variant: 'custom',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

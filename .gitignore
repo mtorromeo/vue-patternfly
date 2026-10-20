@@ -1,7 +1,8 @@
 .*
 *.code-workspace
 !.git*
-!.eslint*
+!.oxlintrc.json
+!.oxfmtrc.json
 !.editorconfig
 !.vscode
 *.log

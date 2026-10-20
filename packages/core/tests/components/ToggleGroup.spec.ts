@@ -5,7 +5,12 @@ import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-g
 import PfToggleGroup from '../../src/components/ToggleGroup/ToggleGroup.vue';
 import PfToggleGroupItem from '../../src/components/ToggleGroup/ToggleGroupItem.vue';
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -22,7 +27,8 @@ const items = () => [
   h(PfToggleGroupItem, { text: 'Three' }),
 ];
 
-const pressed = (wrapper: VueWrapper<any>) => wrapper.findAll('button').map(b => b.attributes('aria-pressed') === 'true');
+const pressed = (wrapper: VueWrapper<any>) =>
+  wrapper.findAll('button').map(b => b.attributes('aria-pressed') === 'true');
 
 describe('ToggleGroup', () => {
   it('renders a group', () => {
@@ -47,7 +53,9 @@ describe('ToggleGroup', () => {
   it('lets an item override the group disabled state', () => {
     const wrapper = mount(PfToggleGroup, {
       props: { disabled: true },
-      slots: { default: () => [h(PfToggleGroupItem, { text: 'A', disabled: false }), h(PfToggleGroupItem, { text: 'B' })] },
+      slots: {
+        default: () => [h(PfToggleGroupItem, { text: 'A', disabled: false }), h(PfToggleGroupItem, { text: 'B' })],
+      },
     });
     const [a, b] = wrapper.findAll('button');
     expect(a!.attributes('disabled')).toBeUndefined();
@@ -101,9 +109,14 @@ describe('ToggleGroup', () => {
   });
 
   it('ignores items without a value nor text', async () => {
-    const wrapper = mountWithModel(PfToggleGroup, 'modelValue', { modelValue: null }, {
-      slots: { default: () => h(PfToggleGroupItem, { ariaLabel: 'Icon only' }) },
-    });
+    const wrapper = mountWithModel(
+      PfToggleGroup,
+      'modelValue',
+      { modelValue: null },
+      {
+        slots: { default: () => h(PfToggleGroupItem, { ariaLabel: 'Icon only' }) },
+      },
+    );
     await wrapper.find('button').trigger('click');
     expect(wrapper.emitted('update:modelValue')).toBeUndefined();
     expect(pressed(wrapper)).toEqual([false]);
@@ -169,9 +182,19 @@ describe('ToggleGroupItem', () => {
   });
 
   it('lets the selected prop override the group selection', async () => {
-    const wrapper = mountWithModel(PfToggleGroup, 'modelValue', { modelValue: 'A' }, {
-      slots: { default: () => [h(PfToggleGroupItem, { text: 'A', selected: false }), h(PfToggleGroupItem, { text: 'B', selected: true })] },
-    });
+    const wrapper = mountWithModel(
+      PfToggleGroup,
+      'modelValue',
+      { modelValue: 'A' },
+      {
+        slots: {
+          default: () => [
+            h(PfToggleGroupItem, { text: 'A', selected: false }),
+            h(PfToggleGroupItem, { text: 'B', selected: true }),
+          ],
+        },
+      },
+    );
     expect(pressed(wrapper)).toEqual([false, true]);
     await wrapper.findAll('button')[0]!.trigger('click');
     expect(wrapper.emitted('update:modelValue')).toBeUndefined();

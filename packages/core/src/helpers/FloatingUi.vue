@@ -5,9 +5,11 @@
 </template>
 
 <script lang="ts">
-export type Placement = UIPlacement |'auto';
+export type Placement = UIPlacement | 'auto';
 
-export const FloatingElementTeleportKey = Symbol('FloatingElementTeleportKey') as InjectionKey<MaybeRef<string | RendererElement | null | undefined>>;
+export const FloatingElementTeleportKey = Symbol('FloatingElementTeleportKey') as InjectionKey<
+  MaybeRef<string | RendererElement | null | undefined>
+>;
 
 interface Props {
   reference: string | ReferenceElement | undefined | null;
@@ -16,7 +18,7 @@ interface Props {
   flip?: boolean;
   zIndex?: number;
   middleware?: Middleware[];
-  strategy?: Strategy,
+  strategy?: Strategy;
   offset?: OffsetOptions;
   /** True to make the floating element invisible */
   hidden?: boolean;
@@ -34,8 +36,31 @@ interface Props {
 </script>
 
 <script lang="ts" setup>
-import { flip as uiFlip, autoPlacement, size, type Middleware, type Placement as UIPlacement, type Strategy, offset as uiOffset, type OffsetOptions, type ReferenceElement } from '@floating-ui/dom';
-import { cloneVNode, computed, ref, withDirectives, type Ref, type VNode, type RendererElement, type InjectionKey, inject, type MaybeRef, toValue, watch } from 'vue';
+import {
+  flip as uiFlip,
+  autoPlacement,
+  size,
+  type Middleware,
+  type Placement as UIPlacement,
+  type Strategy,
+  offset as uiOffset,
+  type OffsetOptions,
+  type ReferenceElement,
+} from '@floating-ui/dom';
+import {
+  cloneVNode,
+  computed,
+  ref,
+  withDirectives,
+  type Ref,
+  type VNode,
+  type RendererElement,
+  type InjectionKey,
+  inject,
+  type MaybeRef,
+  toValue,
+  watch,
+} from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
 
 defineOptions({
@@ -63,31 +88,32 @@ const slots = defineSlots<{
 }>();
 
 const injectedParent = inject(FloatingElementTeleportKey, undefined);
-const parent = computed(() => props.teleportTo === undefined
-  ? toValue(injectedParent) ?? 'body'
-  : props.teleportTo ?? toValue(injectedParent));
+const parent = computed(() =>
+  props.teleportTo === undefined ? (toValue(injectedParent) ?? 'body') : (props.teleportTo ?? toValue(injectedParent)),
+);
 
 const internalHidden = ref(props.hidden);
 const opacity = ref(props.hidden ? 0 : 1);
 const isVisible = ref(false);
 
-watch(() => props.hidden, (hidden) => {
-  if (hidden) {
-    opacity.value = 0;
-    if (!isVisible.value) {
-      internalHidden.value = true;
+watch(
+  () => props.hidden,
+  hidden => {
+    if (hidden) {
+      opacity.value = 0;
+      if (!isVisible.value) {
+        internalHidden.value = true;
+      }
+    } else if (internalHidden.value) {
+      internalHidden.value = false;
+    } else {
+      opacity.value = 1;
     }
-  } else if (internalHidden.value) {
-    internalHidden.value = false;
-  } else {
-    opacity.value = 1;
-  }
-});
+  },
+);
 
 const referenceElement = computed<ReferenceElement | undefined>(() => {
-  const reference = typeof props.reference === 'string'
-    ? document.querySelector(props.reference)
-    : props.reference;
+  const reference = typeof props.reference === 'string' ? document.querySelector(props.reference) : props.reference;
   return typeof reference?.getBoundingClientRect !== 'undefined' ? reference : undefined;
 });
 
@@ -105,21 +131,25 @@ const floatingOptions = computed<FloatingOptions>(() => {
   }
 
   if (props.width !== 'auto' || props.minWidth !== 'auto' || props.maxWidth !== 'auto') {
-    middleware.push(size({
-      apply({rects}) {
-        if (htmlElement.value) {
-          if (props.width !== 'auto') {
-            htmlElement.value.style.width = props.width === 'trigger' ? `${rects.reference.width}px` : props.width;
+    middleware.push(
+      size({
+        apply({ rects }) {
+          if (htmlElement.value) {
+            if (props.width !== 'auto') {
+              htmlElement.value.style.width = props.width === 'trigger' ? `${rects.reference.width}px` : props.width;
+            }
+            if (props.minWidth !== 'auto') {
+              htmlElement.value.style.minWidth =
+                props.minWidth === 'trigger' ? `${rects.reference.width}px` : props.minWidth;
+            }
+            if (props.maxWidth !== 'auto') {
+              htmlElement.value.style.maxWidth =
+                props.maxWidth === 'trigger' ? `${rects.reference.width}px` : props.maxWidth;
+            }
           }
-          if (props.minWidth !== 'auto') {
-            htmlElement.value.style.minWidth = props.minWidth === 'trigger' ? `${rects.reference.width}px` : props.minWidth;
-          }
-          if (props.maxWidth !== 'auto') {
-            htmlElement.value.style.maxWidth = props.maxWidth === 'trigger' ? `${rects.reference.width}px` : props.maxWidth;
-          }
-        }
-      },
-    }));
+        },
+      }),
+    );
   }
 
   if (props.offset) {
@@ -159,34 +189,35 @@ function floatingElement() {
     opacity.value = 1;
   };
 
-  return withDirectives(cloneVNode(children[0], {
-    style: {
-      position: ui.strategy,
-      top: 0,
-      left: 0,
-      opacity: opacity.value,
-      transform: `translate3d(${Math.round(ui.x)}px,${Math.round(ui.y)}px,0)`,
-      transition: `opacity ${props.animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
-      zIndex: props.zIndex,
-    },
-    onTransitionstart: (e: TransitionEvent) => {
-      if (e.propertyName === 'opacity' && opacity.value > 0) {
-        isVisible.value = true;
-      }
-    },
-    onTransitionend: (e: TransitionEvent) => {
-      if (e.propertyName === 'opacity') {
-        if (!opacity.value) {
-          internalHidden.value = true;
-          isVisible.value = false;
-          emit('hidden');
-        } else {
-          emit('shown');
+  return withDirectives(
+    cloneVNode(children[0], {
+      style: {
+        position: ui.strategy,
+        top: 0,
+        left: 0,
+        opacity: opacity.value,
+        transform: `translate3d(${Math.round(ui.x)}px,${Math.round(ui.y)}px,0)`,
+        transition: `opacity ${props.animationDuration}ms cubic-bezier(.54, 1.5, .38, 1.11)`,
+        zIndex: props.zIndex,
+      },
+      onTransitionstart: (e: TransitionEvent) => {
+        if (e.propertyName === 'opacity' && opacity.value > 0) {
+          isVisible.value = true;
         }
-      }
-    },
-  }), [
-    [{mounted: onElementMounted}],
-  ]);
+      },
+      onTransitionend: (e: TransitionEvent) => {
+        if (e.propertyName === 'opacity') {
+          if (!opacity.value) {
+            internalHidden.value = true;
+            isVisible.value = false;
+            emit('hidden');
+          } else {
+            emit('shown');
+          }
+        }
+      },
+    }),
+    [[{ mounted: onElementMounted }]],
+  );
 }
 </script>

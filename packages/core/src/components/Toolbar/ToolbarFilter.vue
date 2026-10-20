@@ -3,7 +3,12 @@
     <slot />
   </pf-toolbar-item>
   <teleport v-if="mounted && teleportTarget" :to="teleportTarget">
-    <pf-toolbar-item v-if="$slots.labels || labels.length" v-show="slotLabels.length || labels.length" v-bind="ouiaProps" variant="label-group">
+    <pf-toolbar-item
+      v-if="$slots.labels || labels.length"
+      v-show="slotLabels.length || labels.length"
+      v-bind="ouiaProps"
+      variant="label-group"
+    >
       <pf-label-group
         :key="category"
         :category="category"
@@ -18,7 +23,8 @@
             :key="labelKey(label)"
             variant="outline"
             @close="emit('deleteLabel', category, labelKey(label))"
-          >{{ labelLabel(label) }}</pf-label>
+            >{{ labelLabel(label) }}</pf-label
+          >
         </slot>
       </pf-label-group>
     </pf-toolbar-item>
@@ -37,10 +43,12 @@ import { provideChildrenTracker } from '../../use';
 import { LabelKey } from '../Label/common';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
-export type FilterLabel = {
-  key: string;
-  label: string;
-} | string;
+export type FilterLabel =
+  | {
+      key: string;
+      label: string;
+    }
+  | string;
 
 defineOptions({
   name: 'PfToolbarFilter',
@@ -61,7 +69,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 const props = withDefaults(defineProps<Props>(), {
   labels: (): FilterLabel[] => [],
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'deleteLabel', category: string | undefined, labelKey: string): void;
@@ -80,7 +88,7 @@ const labelGroupContentRef = inject(ToolbarLabelGroupContentRefKey);
 const mounted = ref(false);
 
 const slotLabels = provideChildrenTracker(LabelKey);
-const teleportTarget = computed(() => expanded?.value ? labelContainerRef?.value : labelGroupContentRef?.value);
+const teleportTarget = computed(() => (expanded?.value ? labelContainerRef?.value : labelGroupContentRef?.value));
 
 onMounted(() => {
   if (props.category) {

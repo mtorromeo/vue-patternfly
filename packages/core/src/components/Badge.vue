@@ -1,11 +1,15 @@
 <template>
   <span
     v-bind="ouiaProps"
-    :class="[styles.badge, {
-      [styles.modifiers.read]: read,
-      [styles.modifiers.unread]: !read,
-      [styles.modifiers.disabled]: disabled,
-    }]">
+    :class="[
+      styles.badge,
+      {
+        [styles.modifiers.read]: read,
+        [styles.modifiers.unread]: !read,
+        [styles.modifiers.disabled]: disabled,
+      },
+    ]"
+  >
     <slot />
   </span>
 </template>
@@ -27,7 +31,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

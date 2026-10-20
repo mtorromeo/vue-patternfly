@@ -6,9 +6,5 @@ import { vueDocgenInject } from './vite-plugins/docgen-inject.mts';
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-  plugins: [
-    vueDocgenInject(),
-    vueCanvasPlugin(),
-    vue(),
-  ],
+  plugins: [vueDocgenInject(), vueCanvasPlugin(), vue()],
 });

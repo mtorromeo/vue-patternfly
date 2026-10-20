@@ -202,11 +202,7 @@
         <pf-menu-content>
           <pf-menu-group label="Actions" label-heading-level="h3">
             <pf-menu-list>
-              <pf-menu-item
-                key="item1"
-                :selected="selected.includes('item1')"
-                description="This is a description"
-              >
+              <pf-menu-item key="item1" :selected="selected.includes('item1')" description="This is a description">
                 Item 1
                 <template #actions>
                   <pf-menu-item-action action-id="code">
@@ -229,10 +225,7 @@
                 </template>
               </pf-menu-item>
 
-              <pf-menu-item
-                key="item3"
-                :selected="selected.includes('item3')"
-              >
+              <pf-menu-item key="item3" :selected="selected.includes('item3')">
                 Item 3
                 <template #actions>
                   <pf-menu-item-action action-id="copy">
@@ -241,11 +234,7 @@
                 </template>
               </pf-menu-item>
 
-              <pf-menu-item
-                key="item4"
-                :selected="selected.includes('item4')"
-                description="This is a description"
-              >
+              <pf-menu-item key="item4" :selected="selected.includes('item4')" description="This is a description">
                 Item 4
                 <template #actions>
                   <pf-menu-item-action action-id="expand">
@@ -277,27 +266,27 @@ type Option = {
   favorite: boolean;
   disabled?: boolean;
   description?: string;
-}
+};
 
 const options = reactive({
   Status: [
     {
-      value: "Running",
+      value: 'Running',
       favorite: false,
-      description: "This is a description.",
+      description: 'This is a description.',
     },
-    { value: "Stopped", favorite: false },
-    { value: "Down", favorite: false, disabled: true },
-    { value: "Degraded", favorite: false },
-    { value: "Needs maintenance", favorite: false },
+    { value: 'Stopped', favorite: false },
+    { value: 'Down', favorite: false, disabled: true },
+    { value: 'Degraded', favorite: false },
+    { value: 'Needs maintenance', favorite: false },
   ] as Option[],
-  "Vendor names": [
-    { value: "Dell", favorite: false },
-    { value: "Samsung", favorite: true },
+  'Vendor names': [
+    { value: 'Dell', favorite: false },
+    { value: 'Samsung', favorite: true },
     {
-      value: "Hewlett-Packard",
+      value: 'Hewlett-Packard',
       favorite: true,
-      description: "This is a description.",
+      description: 'This is a description.',
     },
   ] as Option[],
 });

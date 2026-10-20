@@ -66,7 +66,11 @@ describe('Breadcrumb', () => {
 
 describe('BreadcrumbItem', () => {
   it('renders an anchor when href is set', () => {
-    const wrapper = mount(PfBreadcrumbItem, { props: { href: '#home' }, attrs: { target: '_blank' }, slots: { default: () => 'Home' } });
+    const wrapper = mount(PfBreadcrumbItem, {
+      props: { href: '#home' },
+      attrs: { target: '_blank' },
+      slots: { default: () => 'Home' },
+    });
 
     expect(wrapper.element.tagName).toBe('LI');
     expect(wrapper.classes()).toContain(styles.breadcrumbItem);
@@ -103,7 +107,10 @@ describe('BreadcrumbItem', () => {
   });
 
   it('renders a dropdown container', () => {
-    const wrapper = mount(PfBreadcrumbItem, { props: { dropdown: true, href: '#ignored' }, slots: { default: () => 'Menu' } });
+    const wrapper = mount(PfBreadcrumbItem, {
+      props: { dropdown: true, href: '#ignored' },
+      slots: { default: () => 'Menu' },
+    });
 
     const dropdown = wrapper.find(`.${styles.breadcrumbDropdown}`);
     expect(dropdown.element.tagName).toBe('SPAN');

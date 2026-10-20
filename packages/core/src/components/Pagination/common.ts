@@ -1,6 +1,6 @@
 export interface PerPageOption {
-  title: string,
-  value: number,
+  title: string;
+  value: number;
 }
 
 export const defaultPerPageOptions: PerPageOption[] = [

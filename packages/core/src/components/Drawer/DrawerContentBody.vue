@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="ouiaProps" :class="[styles.drawerBody, {[styles.modifiers.padding]: padding}]">
+  <div v-bind="ouiaProps" :class="[styles.drawerBody, { [styles.modifiers.padding]: padding }]">
     <slot />
   </div>
 </template>
@@ -19,7 +19,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

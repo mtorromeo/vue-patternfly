@@ -1,10 +1,13 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.expandableSection, {
-      [styles.modifiers.expanded]: expanded,
-      [styles.modifiers.truncate]: truncate,
-    }]"
+    :class="[
+      styles.expandableSection,
+      {
+        [styles.modifiers.expanded]: expanded,
+        [styles.modifiers.truncate]: truncate,
+      },
+    ]"
   >
     <div :class="`${styles.expandableSection}__toggle`">
       <pf-button
@@ -16,9 +19,12 @@
       >
         <span
           v-if="!truncate"
-          :class="[styles.expandableSectionToggleIcon, {
-            [styles.modifiers.expandTop]: expanded && direction === 'up',
-          }]"
+          :class="[
+            styles.expandableSectionToggleIcon,
+            {
+              [styles.modifiers.expandTop]: expanded && direction === 'up',
+            },
+          ]"
         >
           <pf-angle-down-icon />
         </span>
@@ -53,7 +59,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   direction: 'down',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag to indicate if the content is expanded */
 const expanded = defineModel<boolean>('expanded', { default: false });

@@ -1,11 +1,25 @@
 <template>
-  <pf-button v-bind="ouiaProps" :id="id" variant="plain" :hamburger="hamburger" :expanded="sidebarOpen" aria-label="Side navigation toggle" @click="sidebarOpen = !sidebarOpen">
+  <pf-button
+    v-bind="ouiaProps"
+    :id="id"
+    variant="plain"
+    :hamburger="hamburger"
+    :expanded="sidebarOpen"
+    aria-label="Side navigation toggle"
+    @click="sidebarOpen = !sidebarOpen"
+  >
     <slot />
   </pf-button>
 </template>
 
 <script lang="ts">
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, "variant" | "expanded" | "aria-label" | "aria-expanded" | "onClick" | "ouiaId" | "ouiaSafe"> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<
+      ComponentProps<typeof PfButton>,
+      'variant' | 'expanded' | 'aria-label' | 'aria-expanded' | 'onClick' | 'ouiaId' | 'ouiaSafe'
+    > {
   /** Sidebar id */
   id?: string;
   /** Programmatically manage if the side nav is shown, if managedSidebar is set to true in the PfPage component, this prop is managed */
@@ -16,23 +30,23 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 </script>
 
 <script lang="ts" setup>
-import { computed, inject } from "vue";
-import { PageManagedSidebarKey, PageSidebarOpenKey } from "./Page.vue";
-import PfButton from "../Button.vue";
-import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
-import type { ComponentProps } from "vue-component-type-helpers";
+import { computed, inject } from 'vue';
+import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
+import PfButton from '../Button.vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
-  name: "PfPageToggleButton",
+  name: 'PfPageToggleButton',
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  id: "nav-toggle",
+  id: 'nav-toggle',
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: "update:sidebarOpen", value: boolean): void;
+  (name: 'update:sidebarOpen', value: boolean): void;
 }>();
 
 defineSlots<{
@@ -48,7 +62,7 @@ const sidebarOpen = computed({
     if (managedSidebar?.value && managedSidebarOpen) {
       managedSidebarOpen.value = value;
     } else {
-      emit("update:sidebarOpen", value);
+      emit('update:sidebarOpen', value);
     }
   },
 });

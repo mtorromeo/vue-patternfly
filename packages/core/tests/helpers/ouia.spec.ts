@@ -5,13 +5,15 @@ import { useOUIAProps, useOUIAId, getDefaultOUIAId } from '../../src/helpers/oui
 
 function mountWithOuia(name: string, options: Parameters<typeof useOUIAProps>[0] = {}) {
   let ouia!: ReturnType<typeof useOUIAProps>;
-  const wrapper = mount(defineComponent({
-    name,
-    setup() {
-      ouia = useOUIAProps(options);
-      return () => h('div', ouia);
-    },
-  }));
+  const wrapper = mount(
+    defineComponent({
+      name,
+      setup() {
+        ouia = useOUIAProps(options);
+        return () => h('div', ouia);
+      },
+    }),
+  );
   return { wrapper, ouia };
 }
 

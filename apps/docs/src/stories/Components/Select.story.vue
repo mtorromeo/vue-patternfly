@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Select">
-    <template #description>A <b>select list</b> enables users to select one or more items from a list. Use a select list when options are dynamic or variable.</template>
+    <template #description
+      >A <b>select list</b> enables users to select one or more items from a list. Use a select list when options are
+      dynamic or variable.</template
+    >
 
     <template #apidocs>
       <component-info name="PfSelect" />
@@ -23,9 +26,7 @@
       <pf-checkbox v-model="disabled" label="Disabled" />
 
       <pf-select :disabled="disabled">
-        <pf-select-option disabled>
-          Please Choose
-        </pf-select-option>
+        <pf-select-option disabled> Please Choose </pf-select-option>
         <pf-select-option value="Mr" />
         <pf-select-option value="Miss" />
         <pf-select-option value="Mrs" />
@@ -142,27 +143,27 @@ type Option = {
   favorite: boolean;
   disabled?: boolean;
   description?: string;
-}
+};
 
 const options = reactive({
   Status: [
     {
-      value: "Running",
+      value: 'Running',
       favorite: false,
-      description: "This is a description.",
+      description: 'This is a description.',
     },
-    { value: "Stopped", favorite: false },
-    { value: "Down", favorite: false, disabled: true },
-    { value: "Degraded", favorite: false },
-    { value: "Needs maintenance", favorite: false },
+    { value: 'Stopped', favorite: false },
+    { value: 'Down', favorite: false, disabled: true },
+    { value: 'Degraded', favorite: false },
+    { value: 'Needs maintenance', favorite: false },
   ] as Option[],
-  "Vendor names": [
-    { value: "Dell", favorite: false },
-    { value: "Samsung", favorite: false },
+  'Vendor names': [
+    { value: 'Dell', favorite: false },
+    { value: 'Samsung', favorite: false },
     {
-      value: "Hewlett-Packard",
+      value: 'Hewlett-Packard',
       favorite: false,
-      description: "This is a description.",
+      description: 'This is a description.',
     },
   ] as Option[],
 });

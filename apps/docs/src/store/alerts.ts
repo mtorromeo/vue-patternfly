@@ -12,7 +12,7 @@ interface Notification {
   variant?: AlertProps['variant'] | undefined;
 }
 
-type RegisteredNotification = Notification & { id: number; };
+type RegisteredNotification = Notification & { id: number };
 
 export const useAlertsStore = defineStore('alerts', {
   state() {
@@ -20,13 +20,10 @@ export const useAlertsStore = defineStore('alerts', {
   },
 
   actions: {
-    add({
-      title,
-      text = undefined,
-      variant = undefined,
-    }: Notification = {
-      title: '',
-    },
+    add(
+      { title, text = undefined, variant = undefined }: Notification = {
+        title: '',
+      },
     ) {
       const messageObj: RegisteredNotification = {
         id: ++globalId,
@@ -38,7 +35,7 @@ export const useAlertsStore = defineStore('alerts', {
       this.notifications.push(messageObj);
     },
 
-    update({ id, ...data }: Partial<Notification> & { id: number; }) {
+    update({ id, ...data }: Partial<Notification> & { id: number }) {
       const index = this.notifications.findIndex(m => m.id == id);
       if (typeof index !== 'undefined') {
         Object.assign(this.notifications[index], data);

@@ -38,7 +38,7 @@ function render() {
     }
 
     if (wrapperNode.length > 1) {
-      throw new Error("Wrap's \"with\" slot can only contain a single child node");
+      throw new Error('Wrap\'s "with" slot can only contain a single child node');
     }
 
     const wrapperType = wrapperNode[0].type;

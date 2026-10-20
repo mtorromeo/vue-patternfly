@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="{...ouiaProps as any, ...$attrs}" :class="styles.notificationDrawerListItemDescription">
+  <div v-bind="{ ...(ouiaProps as any), ...$attrs }" :class="styles.notificationDrawerListItemDescription">
     <slot />
   </div>
   <div v-if="timestamp || $slots.timestamp" :class="styles.notificationDrawerListItemTimestamp">
@@ -22,7 +22,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

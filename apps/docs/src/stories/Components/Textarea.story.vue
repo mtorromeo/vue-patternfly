@@ -1,6 +1,8 @@
 <template>
   <doc-page title="Textarea">
-    <template #description>A <b>text area</b> component is used for entering a paragraph of text that is longer than one line.</template>
+    <template #description
+      >A <b>text area</b> component is used for entering a paragraph of text that is longer than one line.</template
+    >
 
     <template #apidocs>
       <component-info name="PfTextarea" />
@@ -35,7 +37,11 @@
       <div style="margin-bottom: 12px">
         <pf-checkbox v-model="plain" label="Plain read only variant" />
       </div>
-      <pf-textarea aria-label="read only text area example" model-value="read only text area example" :readonly-variant="plain ? 'plain' : 'default'" />
+      <pf-textarea
+        aria-label="read only text area example"
+        model-value="read only text area example"
+        :readonly-variant="plain ? 'plain' : 'default'"
+      />
     </story-canvas>
 
     <story-canvas title="Auto resizing">

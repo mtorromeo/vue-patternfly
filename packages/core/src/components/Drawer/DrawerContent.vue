@@ -5,10 +5,13 @@
       force
       component="div"
       :exclude="PfDrawerPanelContent"
-      :class="[styles.drawerContent, {
-        [styles.modifiers.primary]: colorVariant === 'primary',
-        [styles.modifiers.secondary]: colorVariant === 'secondary',
-      }]"
+      :class="[
+        styles.drawerContent,
+        {
+          [styles.modifiers.primary]: colorVariant === 'primary',
+          [styles.modifiers.secondary]: colorVariant === 'secondary',
+        },
+      ]"
     >
       <slot />
     </auto-wrap>
@@ -43,7 +46,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   colorVariant: 'default',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

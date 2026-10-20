@@ -17,7 +17,7 @@ describe('Panel', () => {
     expect(wrapper.text()).toBe('Content');
   });
 
-  it.each(['raised', 'bordered'] as const)('applies the %s variant modifier', (variant) => {
+  it.each(['raised', 'bordered'] as const)('applies the %s variant modifier', variant => {
     const wrapper = mount(PfPanel, { props: { variant } });
     expect(wrapper.classes()).toContain(styles.modifiers[variant]);
   });

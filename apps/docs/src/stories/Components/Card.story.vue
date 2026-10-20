@@ -19,7 +19,12 @@
   </define-kebab>
 
   <doc-page title="Card">
-    <template #description>A <b>card</b> is a square or rectangular container that can contain any kind of content. Cards symbolize units of information, and each one acts as an entry point for users to access more details. For example, in dashboards and catalog views, cards function as a preview of a detailed page. Cards may also be used in data displays like card views, or for positioning content on a page.</template>
+    <template #description
+      >A <b>card</b> is a square or rectangular container that can contain any kind of content. Cards symbolize units of
+      information, and each one acts as an entry point for users to access more details. For example, in dashboards and
+      catalog views, cards function as a preview of a detailed page. Cards may also be used in data displays like card
+      views, or for positioning content on a page.</template
+    >
 
     <template #apidocs>
       <component-info name="PfCard" />
@@ -139,7 +144,12 @@
         <pf-checkbox v-for="(_, mod) in modifiers" :key="mod" v-model="modifiers[mod]" :label="mod" />
       </div>
       <div style="height: 15rem">
-        <pf-card :compact="modifiers.compact" :large="modifiers.large" :full-height="modifiers.fullHeight" :plain="modifiers.plain">
+        <pf-card
+          :compact="modifiers.compact"
+          :large="modifiers.large"
+          :full-height="modifiers.fullHeight"
+          :plain="modifiers.plain"
+        >
           <pf-card-title>Title</pf-card-title>
           <pf-card-body>Body</pf-card-body>
           <pf-card-footer>Footer</pf-card-footer>
@@ -326,7 +336,9 @@
           <pf-card-header actions-no-offset>
             <pf-card-title>{{ card.title }}</pf-card-title>
           </pf-card-header>
-          <pf-card-body>{{ card.disabled ? 'This card is selectable but disabled.' : 'This card is selectable.' }}</pf-card-body>
+          <pf-card-body>{{
+            card.disabled ? 'This card is selectable but disabled.' : 'This card is selectable.'
+          }}</pf-card-body>
         </pf-card>
       </pf-gallery>
     </story-canvas>
@@ -355,7 +367,9 @@
           <pf-card-header actions-no-offset>
             <pf-card-title>{{ card.title }}</pf-card-title>
           </pf-card-header>
-          <pf-card-body>{{ card.disabled ? 'This card is single selectable but disabled.' : 'This card is single selectable.' }}</pf-card-body>
+          <pf-card-body>{{
+            card.disabled ? 'This card is single selectable but disabled.' : 'This card is single selectable.'
+          }}</pf-card-body>
         </pf-card>
       </pf-gallery>
     </story-canvas>
@@ -467,7 +481,9 @@
         >
           <pf-card-header actions-no-offset>
             <pf-card-title>
-              <pf-button disabled variant="link" inline component="a" href="https://www.patternfly.org/">Third card</pf-button>
+              <pf-button disabled variant="link" inline component="a" href="https://www.patternfly.org/"
+                >Third card</pf-button
+              >
             </pf-card-title>
           </pf-card-header>
           <pf-card-body>This card is clickable and selectable, but disabled.</pf-card-body>
@@ -490,7 +506,11 @@
       <pf-card id="expandable-card" v-model:expanded="expanded">
         <pf-card-header
           :toggle-right-aligned="toggleRightAligned"
-          :toggle-button-attrs="{ id: 'toggle-button1', 'aria-label': 'Details', 'aria-labelledby': 'expandable-card-title toggle-button1' }"
+          :toggle-button-attrs="{
+            id: 'toggle-button1',
+            'aria-label': 'Details',
+            'aria-labelledby': 'expandable-card-title toggle-button1',
+          }"
         >
           <template #actions>
             <kebab label="Card expandable example kebab toggle" />
@@ -518,7 +538,7 @@
             <kebab label="Card expandable with icon example kebab toggle" />
             <pf-checkbox aria-label="card checkbox example" />
           </template>
-          <img :src="PfIconLogo" alt="PatternFly logo" width="27px">
+          <img :src="PfIconLogo" alt="PatternFly logo" width="27px" />
         </pf-card-header>
         <pf-card-expandable-content>
           <pf-card-body>Body</pf-card-body>

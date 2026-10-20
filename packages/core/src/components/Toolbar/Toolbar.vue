@@ -2,17 +2,21 @@
   <div
     v-bind="ouiaProps"
     ref="toolbarRef"
-    :class="[styles.toolbar, breakpointClasses, {
-      [styles.modifiers.container]: container,
-      [styles.modifiers.vertical]: vertical,
-      [styles.modifiers.fullHeight]: fullHeight,
-      [styles.modifiers.static]: static,
-      [styles.modifiers.sticky]: sticky,
-      [styles.modifiers.primary]: colorVariant === 'primary',
-      [styles.modifiers.secondary]: colorVariant === 'secondary',
-      [styles.modifiers.noBackground]: colorVariant === 'no-background',
-      [styles.modifiers.noPadding]: noPadding,
-    }]"
+    :class="[
+      styles.toolbar,
+      breakpointClasses,
+      {
+        [styles.modifiers.container]: container,
+        [styles.modifiers.vertical]: vertical,
+        [styles.modifiers.fullHeight]: fullHeight,
+        [styles.modifiers.static]: static,
+        [styles.modifiers.sticky]: sticky,
+        [styles.modifiers.primary]: colorVariant === 'primary',
+        [styles.modifiers.secondary]: colorVariant === 'secondary',
+        [styles.modifiers.noBackground]: colorVariant === 'no-background',
+        [styles.modifiers.noPadding]: noPadding,
+      },
+    ]"
   >
     <slot />
     <pf-toolbar-label-group-content
@@ -30,14 +34,22 @@
 <script lang="ts">
 export const ToolbarToggleExpandedKey = Symbol('ToolbarToggleExpandedKey') as InjectionKey<() => void>;
 export const ToolbarClearFilterButtonTextKey = Symbol('ToolbarClearFilterButtonTextKey') as InjectionKey<string>;
-export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersButtonKey') as InjectionKey<ComputedRef<boolean>>;
+export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersButtonKey') as InjectionKey<
+  ComputedRef<boolean>
+>;
 export const ToolbarClearAllFiltersKey = Symbol('ToolbarClearAllFiltersKey') as InjectionKey<() => void>;
-export const ToolbarUpdateNumberFiltersKey = Symbol('ToolbarUpdateNumberFiltersKey') as InjectionKey<(category: string, numberOfFilters: number) => void>;
+export const ToolbarUpdateNumberFiltersKey = Symbol('ToolbarUpdateNumberFiltersKey') as InjectionKey<
+  (category: string, numberOfFilters: number) => void
+>;
 export const ToolbarExpandedKey = Symbol('ToolbarExpandedKey') as InjectionKey<Ref<boolean>>;
-export const ToolbarLabelGroupContentRefKey = Symbol('ToolbarLabelGroupContentRefKey') as InjectionKey<Ref<HTMLDivElement | null>>;
+export const ToolbarLabelGroupContentRefKey = Symbol('ToolbarLabelGroupContentRefKey') as InjectionKey<
+  Ref<HTMLDivElement | null>
+>;
 export const ToolbarNumberOfFiltersKey = Symbol('ToolbarNumberOfFiltersKey') as InjectionKey<ComputedRef<number>>;
 /** Width of the toolbar when it is a container for CSS container queries, undefined otherwise */
-export const ToolbarContainerWidthKey = Symbol('ToolbarContainerWidthKey') as InjectionKey<ComputedRef<number | undefined>>;
+export const ToolbarContainerWidthKey = Symbol('ToolbarContainerWidthKey') as InjectionKey<
+  ComputedRef<number | undefined>
+>;
 
 interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Text to display in the clear all filters button */
@@ -64,7 +76,18 @@ interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLA
 </script>
 
 <script lang="ts" setup>
-import { provide, ref, computed, watch, onBeforeUnmount, useTemplateRef, type InjectionKey, type Ref, type ComputedRef, type HTMLAttributes } from 'vue';
+import {
+  provide,
+  ref,
+  computed,
+  watch,
+  onBeforeUnmount,
+  useTemplateRef,
+  type InjectionKey,
+  type Ref,
+  type ComputedRef,
+  type HTMLAttributes,
+} from 'vue';
 import { classesFromBreakpointProps, type InsetBreakpointProps } from '../../breakpoints';
 import { useElementSize, useWindowSize } from '@vueuse/core';
 import { getBreakpoint } from '../../util';
@@ -83,7 +106,7 @@ const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
   colorVariant: 'default',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'update:expanded', value: boolean): void;
@@ -118,9 +141,9 @@ provide(ToolbarLabelGroupContentRefKey, labelGroupContent);
 const { width: windowWidth } = useWindowSize();
 const toolbarRef = useTemplateRef('toolbarRef');
 const { width: toolbarWidth } = useElementSize(toolbarRef);
-const containerWidth = computed(() => props.container && toolbarWidth.value ? toolbarWidth.value : undefined);
+const containerWidth = computed(() => (props.container && toolbarWidth.value ? toolbarWidth.value : undefined));
 provide(ToolbarContainerWidthKey, containerWidth);
-const containerBreakpoint = computed(() => containerWidth.value ? getBreakpoint(containerWidth.value) : undefined);
+const containerBreakpoint = computed(() => (containerWidth.value ? getBreakpoint(containerWidth.value) : undefined));
 
 const filterInfo: Ref<Record<string, number>> = ref({});
 const numberOfFilters = computed(() => Object.values(filterInfo.value).reduce((acc, cur) => acc + cur, 0));

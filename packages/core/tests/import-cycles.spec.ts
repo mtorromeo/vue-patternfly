@@ -5,16 +5,28 @@ import { describe, it, expect } from 'vitest';
 // default export undefined forever (e.g. Menu.vue <-> MenuItem.vue left PfMenuItem unregistered).
 // Injection keys shared between a parent and its children belong in a common.ts module instead.
 
-const sources = import.meta.glob<string>(['../src/**/*.{vue,ts}', '!../src/**/*.d.ts'], { query: '?raw', import: 'default', eager: true });
+const sources = import.meta.glob<string>(['../src/**/*.{vue,ts}', '!../src/**/*.d.ts'], {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
 
-const importRe = /^\s*(?:import|export)\s+(type\s+)?([^;]*?)\s+from\s+['"](\.[^'"]+)['"]|^\s*import\s+['"](\.[^'"]+)['"]/gm;
+const importRe =
+  /^\s*(?:import|export)\s+(type\s+)?([^;]*?)\s+from\s+['"](\.[^'"]+)['"]|^\s*import\s+['"](\.[^'"]+)['"]/gm;
 
 function isTypeOnly(typeKeyword: string | undefined, specifiers: string) {
   if (typeKeyword) {
     return true;
   }
   const named = specifiers.match(/^\{([\s\S]*)\}$/);
-  return !!named && named[1].split(',').map(s => s.trim()).filter(Boolean).every(s => s.startsWith('type '));
+  return (
+    !!named &&
+    named[1]
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean)
+      .every(s => s.startsWith('type '))
+  );
 }
 
 function resolvePath(from: string, specifier: string) {

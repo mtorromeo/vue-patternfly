@@ -10,11 +10,14 @@
   </define-header-toggle>
 
   <div
-    v-bind="{...ouiaProps, ...$attrs}"
-    :class="[styles.cardHeader, {
-      [styles.modifiers.toggleRight]: toggleRightAligned,
-      [styles.modifiers.wrap]: wrap,
-    }]"
+    v-bind="{ ...ouiaProps, ...$attrs }"
+    :class="[
+      styles.cardHeader,
+      {
+        [styles.modifiers.toggleRight]: toggleRightAligned,
+        [styles.modifiers.wrap]: wrap,
+      },
+    ]"
   >
     <header-toggle v-if="!toggleRightAligned" />
 
@@ -90,7 +93,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   toggleRightAligned?: boolean;
 
   /** Additional props for expandable toggle button */
-  toggleButtonAttrs?: ComponentProps<typeof PfButton>,
+  toggleButtonAttrs?: ComponentProps<typeof PfButton>;
 
   /** Flag indicating that header wrapping is enabled */
   wrap?: boolean;
@@ -102,7 +105,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   toggleButtonAttrs: () => ({}),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -123,7 +126,9 @@ const inputId = computed(() => (action.value?.attrs.id as string | undefined) ??
 
 if (slots.actions && card && card.clickable.value !== card.selectable.value) {
   // eslint-disable-next-line no-console
-  console.error(`Card: ${card.clickable.value ? 'Clickable' : 'Selectable'} only cards should not contain any other actions. If you wish to include additional actions, use a clickable and selectable card.`);
+  console.error(
+    `Card: ${card.clickable.value ? 'Clickable' : 'Selectable'} only cards should not contain any other actions. If you wish to include additional actions, use a clickable and selectable card.`,
+  );
 }
 
 function onCheckboxUpdate(value: boolean) {

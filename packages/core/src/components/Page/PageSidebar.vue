@@ -2,10 +2,13 @@
   <div
     v-bind="ouiaProps"
     :id="id"
-    :class="[styles.pageSidebar, {
-      [styles.modifiers.expanded]: sidebarOpen,
-      [styles.modifiers.collapsed]: !sidebarOpen,
-    }]"
+    :class="[
+      styles.pageSidebar,
+      {
+        [styles.modifiers.expanded]: sidebarOpen,
+        [styles.modifiers.collapsed]: !sidebarOpen,
+      },
+    ]"
   >
     <div :class="styles.pageSidebarMain">
       <auto-wrap :component="PfPageSidebarBody">
@@ -43,7 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
   id: 'page-sidebar',
   sidebarOpen: true,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -53,6 +56,6 @@ useChildrenTracker(PageSidebarsKey);
 const managedSidebarOpen = inject(PageSidebarOpenKey, undefined);
 const managedSidebar = inject(PageManagedSidebarKey, undefined);
 
-const sidebarOpen = computed(() => managedSidebar?.value ? !!managedSidebarOpen?.value : props.sidebarOpen);
+const sidebarOpen = computed(() => (managedSidebar?.value ? !!managedSidebarOpen?.value : props.sidebarOpen));
 provide(SidebarOpenKey, sidebarOpen);
 </script>

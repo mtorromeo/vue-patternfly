@@ -37,11 +37,10 @@ defineOptions({
   name: 'PfToolbarToggleGroup',
 });
 
-interface Props extends ToolbarGroupProps, BreakpointProps {
-}
+interface Props extends ToolbarGroupProps, BreakpointProps {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

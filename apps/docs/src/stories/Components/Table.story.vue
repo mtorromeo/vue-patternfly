@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Table">
-    <template #description>A <b>table</b> is used to display large data sets that can be easily laid out in a simple grid with column headers.</template>
+    <template #description
+      >A <b>table</b> is used to display large data sets that can be easily laid out in a simple grid with column
+      headers.</template
+    >
 
     <template #apidocs>
       <component-info name="PfTable" />
@@ -24,12 +27,20 @@
 
     <story-canvas title="Basic">
       <pf-toggle-group>
-        <pf-toggle-group-item :selected="tableVariant === 'default'" @update:selected="tableVariant = 'default'">Default</pf-toggle-group-item>
-        <pf-toggle-group-item :selected="tableVariant === 'compact'" @update:selected="tableVariant = 'compact'">Compact</pf-toggle-group-item>
-        <pf-toggle-group-item :selected="tableVariant === 'compactBorderless'" @update:selected="tableVariant = 'compactBorderless'">Compact borderless</pf-toggle-group-item>
+        <pf-toggle-group-item :selected="tableVariant === 'default'" @update:selected="tableVariant = 'default'"
+          >Default</pf-toggle-group-item
+        >
+        <pf-toggle-group-item :selected="tableVariant === 'compact'" @update:selected="tableVariant = 'compact'"
+          >Compact</pf-toggle-group-item
+        >
+        <pf-toggle-group-item
+          :selected="tableVariant === 'compactBorderless'"
+          @update:selected="tableVariant = 'compactBorderless'"
+          >Compact borderless</pf-toggle-group-item
+        >
       </pf-toggle-group>
 
-      <br>
+      <br />
 
       <pf-table
         aria-label="Simple table"
@@ -131,7 +142,14 @@ interface Repository {
 const repositories: Repository[] = reactive([
   { selected: false, name: 'one', branches: 'two', prs: 'three', workspaces: 'four', lastCommit: 'five' },
   { selected: false, name: 'one - 2', branches: null, prs: null, workspaces: 'four - 2', lastCommit: 'five - 2' },
-  { selected: false, name: 'one - 3', branches: 'two - 3', prs: 'three - 3', workspaces: 'four - 3', lastCommit: 'five - 3' },
+  {
+    selected: false,
+    name: 'one - 3',
+    branches: 'two - 3',
+    prs: 'three - 3',
+    workspaces: 'four - 3',
+    lastCommit: 'five - 3',
+  },
 ]);
 
 const columnNames = {

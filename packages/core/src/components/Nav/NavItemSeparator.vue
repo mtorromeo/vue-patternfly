@@ -11,9 +11,8 @@ defineOptions({
   name: 'PfNavItemSeparator',
 });
 
-interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfDivider>, 'component'> {
-}
+interface Props extends /* @vue-ignore */ Omit<ComponentProps<typeof PfDivider>, 'component'> {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>

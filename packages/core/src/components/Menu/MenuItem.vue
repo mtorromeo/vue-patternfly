@@ -1,30 +1,37 @@
 <template>
-  <teleport-copy v-slot="{ copy }" :disabled="!menu?.favoriteList.value?.$el || !favorited" :to="menu?.favoriteList.value?.$el">
+  <teleport-copy
+    v-slot="{ copy }"
+    :disabled="!menu?.favoriteList.value?.$el || !favorited"
+    :to="menu?.favoriteList.value?.$el"
+  >
     <li
       ref="elRef"
-      v-bind="{...ouiaProps, ...$attrs}"
-      :class="[styles.menuListItem, {
-        [styles.modifiers.disabled]: disabled,
-        [styles.modifiers.currentPath]: effectiveOnPath,
-        [styles.modifiers.load]: loadButton,
-        [styles.modifiers.loading]: loading,
-        [styles.modifiers.focus]: isFocused,
-        [styles.modifiers.danger]: danger,
-      }]"
+      v-bind="{ ...ouiaProps, ...$attrs }"
+      :class="[
+        styles.menuListItem,
+        {
+          [styles.modifiers.disabled]: disabled,
+          [styles.modifiers.currentPath]: effectiveOnPath,
+          [styles.modifiers.load]: loadButton,
+          [styles.modifiers.loading]: loading,
+          [styles.modifiers.focus]: isFocused,
+          [styles.modifiers.danger]: danger,
+        },
+      ]"
       :role="check ? 'menuitem' : 'none'"
       @mouseover="onMouseOver"
     >
-      <input v-if="!copy && name" type="hidden" :name="name" :value="value">
+      <input v-if="!copy && name" type="hidden" :name="name" :value="value" />
 
       <component
         :is="component"
         ref="menuItemRef"
         v-bind="componentAttrs"
         tabindex="-1"
-        :class="[styles.menuItem, {[styles.modifiers.selected]: effectiveSelected && !check}]"
+        :class="[styles.menuItem, { [styles.modifiers.selected]: effectiveSelected && !check }]"
         :aria-current="ariaCurrent"
         :disabled="(disabled && !check && component !== 'a') || undefined"
-        :role="(!$slots['flyout-menu'] && !check) ? 'menuitem' : undefined"
+        :role="!$slots['flyout-menu'] && !check ? 'menuitem' : undefined"
         :for="copy || check ? undefined : randomId"
         :href="component === 'a' ? to : undefined"
         :aria-disabled="component === 'a' && disabled ? disabled : undefined"
@@ -113,7 +120,35 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'rol
   /** Component used to render the menu item */
   component?: string;
   /** Additional attrs added to the link component */
-  componentAttrs?: Omit<ButtonHTMLAttributes, 'href' | 'aria-current' | 'disabled' | 'role' | 'for' | 'aria-disabled' | 'aria-expanded' | 'type' | 'download' | 'onClick'> | Omit<AnchorHTMLAttributes, 'href' | 'aria-current' | 'disabled' | 'role' | 'for' | 'aria-disabled' | 'aria-expanded' | 'type' | 'download' | 'onClick' | 'target' | 'referrerpolicy'>;
+  componentAttrs?:
+    | Omit<
+        ButtonHTMLAttributes,
+        | 'href'
+        | 'aria-current'
+        | 'disabled'
+        | 'role'
+        | 'for'
+        | 'aria-disabled'
+        | 'aria-expanded'
+        | 'type'
+        | 'download'
+        | 'onClick'
+      >
+    | Omit<
+        AnchorHTMLAttributes,
+        | 'href'
+        | 'aria-current'
+        | 'disabled'
+        | 'role'
+        | 'for'
+        | 'aria-disabled'
+        | 'aria-expanded'
+        | 'type'
+        | 'download'
+        | 'onClick'
+        | 'target'
+        | 'referrerpolicy'
+      >;
   /** Render item as disabled option */
   disabled?: boolean;
   /** Description of the menu item */
@@ -141,7 +176,22 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'rol
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
-import { computed, getCurrentInstance, inject, provide, ref, type Ref, type LiHTMLAttributes, type ButtonHTMLAttributes, type AnchorHTMLAttributes, useId, useTemplateRef, onMounted, nextTick, watch } from 'vue';
+import {
+  computed,
+  getCurrentInstance,
+  inject,
+  provide,
+  ref,
+  type Ref,
+  type LiHTMLAttributes,
+  type ButtonHTMLAttributes,
+  type AnchorHTMLAttributes,
+  useId,
+  useTemplateRef,
+  onMounted,
+  nextTick,
+  watch,
+} from 'vue';
 import { MenuInjectionKey, MenuItemInjectionKey, MenuItemsKey } from './common';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
@@ -164,7 +214,7 @@ const props = withDefaults(defineProps<Props>(), {
   active: undefined,
   selected: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag indicating if the item is favorited */
 const favorited = defineModel<boolean | undefined>('favorited', { default: undefined });
@@ -187,7 +237,7 @@ const $slots = defineSlots<{
 
 const instance = getCurrentInstance();
 
-const itemId = computed(() => props.value === undefined ? instance?.vnode.key : props.value);
+const itemId = computed(() => (props.value === undefined ? instance?.vnode.key : props.value));
 const el = useTemplateRef('elRef');
 const menuItem = useTemplateRef<HTMLElement>('menuItemRef');
 const isFocused = ref(props.focused);
@@ -201,9 +251,12 @@ useChildrenTracker(MenuItemsKey, {
   focus,
 });
 
-watch(() => props.focused, (value) => {
-  isFocused.value = value;
-});
+watch(
+  () => props.focused,
+  value => {
+    isFocused.value = value;
+  },
+);
 
 provide(MenuItemInjectionKey, {
   disabled: props.disabled,
@@ -229,22 +282,25 @@ const component = computed(() => {
   return props.component;
 });
 
-const effectiveOnPath = computed(() => props.onPath/*  || (itemId.value && menu?.drilldownItemPath?.includes(itemId.value)) */);
+const effectiveOnPath = computed(
+  () => props.onPath /*  || (itemId.value && menu?.drilldownItemPath?.includes(itemId.value)) */,
+);
 
 const effectiveSelected = computed(() => {
   if (isDefined(props.selected)) {
     return props.selected;
   }
-  return menu?.selected?.value && Array.isArray(menu.selected.value) ? menu.selected.value.includes(props.value as any) : menu?.selected?.value === props.value;
+  return menu?.selected?.value && Array.isArray(menu.selected.value)
+    ? menu.selected.value.includes(props.value as any)
+    : menu?.selected?.value === props.value;
 });
 
 const ariaCurrent = computed(() => {
   if (isDefined(props.active)) {
     if (props.active) {
       return 'page';
-    } else {
-      return null;
     }
+    return null;
   } else if (isDefined(itemId.value) && isDefined(menu?.activeItemId())) {
     return itemId.value === menu?.activeItemId() || null;
   }

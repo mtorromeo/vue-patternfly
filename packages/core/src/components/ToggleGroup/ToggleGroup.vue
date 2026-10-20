@@ -5,7 +5,9 @@
 </template>
 
 <script lang="ts">
-export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as InjectionKey<ComputedRef<boolean | undefined>>;
+export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as InjectionKey<
+  ComputedRef<boolean | undefined>
+>;
 export const ToggleGroupSelectionKey = Symbol('ToggleGroupSelectionKey') as InjectionKey<Ref<unknown>>;
 
 interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {
@@ -30,7 +32,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props<T>>(), {
   modelValue: null,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineEmits<{
   // Deselecting the only selected item of a single selection emits undefined
@@ -43,7 +45,10 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-provide(ToggleGroupDisabledKey, computed(() => props.disabled));
+provide(
+  ToggleGroupDisabledKey,
+  computed(() => props.disabled),
+);
 
 provide(ToggleGroupSelectionKey, value);
 </script>

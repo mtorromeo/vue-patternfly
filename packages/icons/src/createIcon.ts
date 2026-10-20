@@ -1,4 +1,4 @@
-import { defineComponent, h, type SVGAttributes, type ExtractPublicPropTypes } from "vue";
+import { defineComponent, h, type SVGAttributes, type ExtractPublicPropTypes } from 'vue';
 
 export interface SVGPathObject {
   d: string;
@@ -31,29 +31,29 @@ export function createIcon({ name, xOffset = 0, yOffset = 0, width, height, svgP
     render() {
       const id = `icon-title-${currentId++}`;
 
-      const viewBox = [xOffset, yOffset, width, height].join(" ");
+      const viewBox = [xOffset, yOffset, width, height].join(' ');
 
       const children = [];
       if (this.title) {
-        children.push(h("title", { id }, this.title));
+        children.push(h('title', { id }, this.title));
       }
       if (Array.isArray(svgPathData)) {
-        children.push(...svgPathData.map((props, index) => h("path", { ...props, key: `${props.d}-${index}` })));
+        children.push(...svgPathData.map((props, index) => h('path', { ...props, key: `${props.d}-${index}` })));
       } else {
-        children.push(h("path", { d: svgPathData }));
+        children.push(h('path', { d: svgPathData }));
       }
 
       return h(
-        "svg",
+        'svg',
         {
-          class: ["pf-v6-svg", svgClass],
-          fill: "currentColor",
+          class: ['pf-v6-svg', svgClass],
+          fill: 'currentColor',
           viewBox,
-          "aria-labelled-by": this.title ? id : undefined,
-          "aria-hidden": this.title ? undefined : true,
-          role: "img",
-          width: "1em",
-          height: "1em",
+          'aria-labelled-by': this.title ? id : undefined,
+          'aria-hidden': this.title ? undefined : true,
+          role: 'img',
+          width: '1em',
+          height: '1em',
         },
         children,
       );

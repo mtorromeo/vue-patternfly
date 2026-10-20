@@ -15,7 +15,12 @@ import PfPageSidebar from '../../src/components/Page/PageSidebar.vue';
 import PfPageSidebarBody from '../../src/components/Page/PageSidebarBody.vue';
 import PfPageToggleButton from '../../src/components/Page/PageToggleButton.vue';
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -73,7 +78,14 @@ describe('Page', () => {
 
     it('applies main element attributes', () => {
       const wrapper = mount(PfPage, {
-        props: { mainComponent: 'div', mainContainerId: 'main-id', role: 'main', mainTabIndex: -1, mainAriaLabel: 'Main content', contentFilled: true },
+        props: {
+          mainComponent: 'div',
+          mainContainerId: 'main-id',
+          role: 'main',
+          mainTabIndex: -1,
+          mainAriaLabel: 'Main content',
+          contentFilled: true,
+        },
       });
       expect(wrapper.find(`.${styles.pageMainContainer}`).classes()).toContain(styles.modifiers.fill);
       const main = wrapper.find(`.${styles.pageMain}`);
@@ -173,14 +185,21 @@ describe('Page', () => {
     it('applies breakpoint classes from the observed element size', async () => {
       const width = globalWidthBreakpoints.lg + 10;
       const height = globalHeightBreakpoints.md + 10;
-      vi.stubGlobal('ResizeObserver', class {
-        constructor(private cb: ResizeObserverCallback) {}
-        observe() {
-          this.cb([{ contentBoxSize: [{ inlineSize: width, blockSize: height }] } as unknown as ResizeObserverEntry], this as unknown as ResizeObserver);
-        }
-        unobserve() {}
-        disconnect() {}
-      });
+      vi.stubGlobal(
+        'ResizeObserver',
+        class {
+          constructor(private cb: ResizeObserverCallback) {}
+          observe() {
+            this.cb(
+              [{ contentBoxSize: [{ inlineSize: width, blockSize: height }] } as unknown as ResizeObserverEntry],
+              this as unknown as ResizeObserver,
+            );
+          }
+
+          unobserve() {}
+          disconnect() {}
+        },
+      );
       const wrapper = mount(PfPage);
       await nextTick();
       const root = pageRoot(wrapper);
@@ -268,7 +287,9 @@ describe('PageSidebar', () => {
   });
 
   it('does not wrap an explicit sidebar body in another body', () => {
-    const wrapper = mount(PfPageSidebar, { slots: { default: () => h(PfPageSidebarBody, { insets: true }, () => 'Nav') } });
+    const wrapper = mount(PfPageSidebar, {
+      slots: { default: () => h(PfPageSidebarBody, { insets: true }, () => 'Nav') },
+    });
     const bodies = wrapper.findAll(`.${styles.pageSidebarBody}`);
     expect(bodies).toHaveLength(1);
     expect(bodies[0].classes()).toContain(styles.modifiers.pageInsets);
@@ -290,7 +311,10 @@ describe('PageSidebar', () => {
 
 describe('PageSidebarBody', () => {
   it('renders the sidebar body with modifiers', () => {
-    const wrapper = mount(PfPageSidebarBody, { props: { insets: true, filled: true }, slots: { default: () => 'Body' } });
+    const wrapper = mount(PfPageSidebarBody, {
+      props: { insets: true, filled: true },
+      slots: { default: () => 'Body' },
+    });
     expect(wrapper.classes()).toContain(styles.pageSidebarBody);
     expect(wrapper.classes()).toContain(styles.modifiers.pageInsets);
     expect(wrapper.classes()).toContain(styles.modifiers.fill);
@@ -411,13 +435,15 @@ describe('PageSection', () => {
     const wrapper = mount(PfPageSection, {
       props: { variant: 'secondary', filled: true, shadowTop: true, shadowBottom: true, overflowScroll: true },
     });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.secondary,
-      styles.modifiers.fill,
-      styles.modifiers.shadowTop,
-      styles.modifiers.shadowBottom,
-      styles.modifiers.overflowScroll,
-    ]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.secondary,
+        styles.modifiers.fill,
+        styles.modifiers.shadowTop,
+        styles.modifiers.shadowBottom,
+        styles.modifiers.overflowScroll,
+      ]),
+    );
     expect(wrapper.attributes('tabindex')).toBe('0');
   });
 
@@ -427,17 +453,24 @@ describe('PageSection', () => {
   });
 
   it('applies padding and sticky breakpoint modifiers', () => {
-    const wrapper = mount(PfPageSection, { props: { padding: 'no-padding', paddingMd: 'padding', sticky: 'top', stickyLg: 'bottom' } });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.noPadding,
-      styles.modifiers.paddingOnMd,
-      styles.modifiers.stickyTop,
-      styles.modifiers.stickyBottomOnLgHeight,
-    ]));
+    const wrapper = mount(PfPageSection, {
+      props: { padding: 'no-padding', paddingMd: 'padding', sticky: 'top', stickyLg: 'bottom' },
+    });
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.noPadding,
+        styles.modifiers.paddingOnMd,
+        styles.modifiers.stickyTop,
+        styles.modifiers.stickyBottomOnLgHeight,
+      ]),
+    );
   });
 
   it('wraps the content in a body when width limited', () => {
-    const wrapper = mount(PfPageSection, { props: { widthLimited: true, centerAligned: true }, slots: { default: () => 'Content' } });
+    const wrapper = mount(PfPageSection, {
+      props: { widthLimited: true, centerAligned: true },
+      slots: { default: () => 'Content' },
+    });
     expect(wrapper.classes()).toContain(styles.modifiers.limitWidth);
     expect(wrapper.classes()).toContain(styles.modifiers.alignCenter);
     expect(wrapper.find(`.${styles.pageMainBody}`).text()).toBe('Content');
@@ -446,13 +479,18 @@ describe('PageSection', () => {
   it('sets the max width variable and limits the width', () => {
     const wrapper = mount(PfPageSection, { props: { maxWidth: '500px' } });
     expect(wrapper.classes()).toContain(styles.modifiers.limitWidth);
-    expect((wrapper.element as HTMLElement).style.getPropertyValue('--pf-v6-c-page--section--m-limit-width--MaxWidth')).toBe('500px');
+    expect(
+      (wrapper.element as HTMLElement).style.getPropertyValue('--pf-v6-c-page--section--m-limit-width--MaxWidth'),
+    ).toBe('500px');
   });
 
   it('does not center align without width limit or for subnav', () => {
-    expect(mount(PfPageSection, { props: { centerAligned: true } }).classes()).not.toContain(styles.modifiers.alignCenter);
-    expect(mount(PfPageSection, { props: { centerAligned: true, widthLimited: true, type: 'subnav' } }).classes())
-      .not.toContain(styles.modifiers.alignCenter);
+    expect(mount(PfPageSection, { props: { centerAligned: true } }).classes()).not.toContain(
+      styles.modifiers.alignCenter,
+    );
+    expect(
+      mount(PfPageSection, { props: { centerAligned: true, widthLimited: true, type: 'subnav' } }).classes(),
+    ).not.toContain(styles.modifiers.alignCenter);
   });
 });
 
@@ -468,14 +506,18 @@ describe('PageGroup', () => {
   });
 
   it('applies fill, plain and shadow modifiers', () => {
-    const wrapper = mount(PfPageGroup, { props: { filled: true, plain: true, noPlainOnGlass: true, shadowTop: true, shadowBottom: true } });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.fill,
-      styles.modifiers.plain,
-      styles.modifiers.noPlainOnGlass,
-      styles.modifiers.shadowTop,
-      styles.modifiers.shadowBottom,
-    ]));
+    const wrapper = mount(PfPageGroup, {
+      props: { filled: true, plain: true, noPlainOnGlass: true, shadowTop: true, shadowBottom: true },
+    });
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.fill,
+        styles.modifiers.plain,
+        styles.modifiers.noPlainOnGlass,
+        styles.modifiers.shadowTop,
+        styles.modifiers.shadowBottom,
+      ]),
+    );
     expect(wrapper.classes()).not.toContain(styles.modifiers.noFill);
   });
 
@@ -513,13 +555,17 @@ describe('PageBreadcrumb', () => {
   });
 
   it('applies shadow, overflow and sticky modifiers', () => {
-    const wrapper = mount(PfPageBreadcrumb, { props: { shadowTop: true, shadowBottom: true, overflowScroll: true, sticky: 'top' } });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.shadowTop,
-      styles.modifiers.shadowBottom,
-      styles.modifiers.overflowScroll,
-      styles.modifiers.stickyTop,
-    ]));
+    const wrapper = mount(PfPageBreadcrumb, {
+      props: { shadowTop: true, shadowBottom: true, overflowScroll: true, sticky: 'top' },
+    });
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.shadowTop,
+        styles.modifiers.shadowBottom,
+        styles.modifiers.overflowScroll,
+        styles.modifiers.stickyTop,
+      ]),
+    );
     expect(wrapper.attributes('tabindex')).toBe('0');
   });
 
@@ -527,7 +573,9 @@ describe('PageBreadcrumb', () => {
     const wrapper = mount(PfPageBreadcrumb, { props: { maxWidth: '300px' }, slots: { default: () => 'Crumbs' } });
     expect(wrapper.classes()).toContain(styles.modifiers.limitWidth);
     expect(wrapper.find(`.${styles.pageMainBody}`).text()).toBe('Crumbs');
-    expect((wrapper.element as HTMLElement).style.getPropertyValue('--pf-v6-c-page--section--m-limit-width--MaxWidth')).toBe('300px');
+    expect(
+      (wrapper.element as HTMLElement).style.getPropertyValue('--pf-v6-c-page--section--m-limit-width--MaxWidth'),
+    ).toBe('300px');
   });
 });
 

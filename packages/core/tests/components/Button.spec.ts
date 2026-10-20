@@ -45,20 +45,25 @@ describe('Button', () => {
     expect(btn(wrapper).attributes('type')).toBe('submit');
   });
 
-  it.each(['secondary', 'tertiary', 'danger', 'warning', 'link', 'plain', 'control'] as const)('applies the %s variant class', (variant) => {
-    const wrapper = mount(PfButton, { props: { variant } });
-    expect(btn(wrapper).classes()).toContain(styles.modifiers[variant]);
-    expect(btn(wrapper).classes()).not.toContain(styles.modifiers.primary);
-  });
+  it.each(['secondary', 'tertiary', 'danger', 'warning', 'link', 'plain', 'control'] as const)(
+    'applies the %s variant class',
+    variant => {
+      const wrapper = mount(PfButton, { props: { variant } });
+      expect(btn(wrapper).classes()).toContain(styles.modifiers[variant]);
+      expect(btn(wrapper).classes()).not.toContain(styles.modifiers.primary);
+    },
+  );
 
   it('applies the generic modifiers', () => {
     const wrapper = mount(PfButton, { props: { block: true, small: true, large: true, circle: true } });
-    expect(btn(wrapper).classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.block,
-      styles.modifiers.small,
-      styles.modifiers.displayLg,
-      styles.modifiers.circle,
-    ]));
+    expect(btn(wrapper).classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.block,
+        styles.modifiers.small,
+        styles.modifiers.displayLg,
+        styles.modifiers.circle,
+      ]),
+    );
   });
 
   it('applies the expanded modifier only to docked buttons', async () => {
@@ -139,7 +144,10 @@ describe('Button', () => {
 
     it('only prevents the configured inoperable events', async () => {
       const onKeypress = vi.fn();
-      const wrapper = mount(PfButton, { props: { ariaDisabled: true, inoperableEvents: ['keypress'] }, attrs: { onKeypress } });
+      const wrapper = mount(PfButton, {
+        props: { ariaDisabled: true, inoperableEvents: ['keypress'] },
+        attrs: { onKeypress },
+      });
       await btn(wrapper).trigger('click');
       expect(wrapper.emitted('click')).toHaveLength(1);
       await btn(wrapper).trigger('keypress');
@@ -166,7 +174,12 @@ describe('Button', () => {
 
     it('renders a custom component', () => {
       const warn = vi.spyOn(console, 'warn');
-      const Custom = defineComponent({ setup: (_, { slots }) => () => h('div', { class: 'custom' }, slots.default?.()) });
+      const Custom = defineComponent({
+        setup:
+          (_, { slots }) =>
+          () =>
+            h('div', { class: 'custom' }, slots.default?.()),
+      });
       const wrapper = mount(PfButton, { props: { component: Custom }, slots: { default: 'text' } });
       expect(wrapper.find('div.custom').text()).toBe('text');
       expect(wrapper.find('div.custom').classes()).toContain(styles.button);
@@ -186,7 +199,9 @@ describe('Button', () => {
       expect(spinner.exists()).toBe(true);
       expect(spinner.classes()).toContain(spinnerStyles.spinner);
       expect(spinner.attributes('aria-valuetext')).toBe('Loading...');
-      expect(btn(wrapper).classes()).toEqual(expect.arrayContaining([styles.modifiers.progress, styles.modifiers.inProgress]));
+      expect(btn(wrapper).classes()).toEqual(
+        expect.arrayContaining([styles.modifiers.progress, styles.modifiers.inProgress]),
+      );
       expect(btn(wrapper).attributes('disabled')).toBeDefined();
     });
 
@@ -226,16 +241,24 @@ describe('Button', () => {
     });
 
     it('renders the icon after the text with iconPosition end', () => {
-      const wrapper = mount(PfButton, { props: { iconPosition: 'end' }, slots: { default: 'Text', icon: '<i class="my-icon"></i>' } });
+      const wrapper = mount(PfButton, {
+        props: { iconPosition: 'end' },
+        slots: { default: 'Text', icon: '<i class="my-icon"></i>' },
+      });
       const icon = wrapper.find(`.${styles.buttonIcon}`);
       expect(icon.classes()).toContain(styles.modifiers.end);
       expect(icon.classes()).not.toContain(styles.modifiers.start);
-      expect(wrapper.html({ raw: true }).indexOf('my-icon')).toBeGreaterThan(wrapper.html({ raw: true }).indexOf('Text'));
+      expect(wrapper.html({ raw: true }).indexOf('my-icon')).toBeGreaterThan(
+        wrapper.html({ raw: true }).indexOf('Text'),
+      );
     });
 
     it('wraps the text in a text container in both icon positions', () => {
       for (const iconPosition of ['start', 'end'] as const) {
-        const wrapper = mount(PfButton, { props: { iconPosition }, slots: { default: 'Text', icon: '<i class="my-icon"></i>' } });
+        const wrapper = mount(PfButton, {
+          props: { iconPosition },
+          slots: { default: 'Text', icon: '<i class="my-icon"></i>' },
+        });
         const text = wrapper.findAll(`.${styles.buttonText}`);
         expect(text).toHaveLength(1);
         expect(text[0]!.text()).toBe('Text');
@@ -265,7 +288,9 @@ describe('Button', () => {
       expect(wrapper.find(`.${styles.buttonIcon} svg`).exists()).toBe(true);
 
       await wrapper.setProps({ settings: false, hamburger: true, hamburgerVariant: 'expand', expanded: false });
-      expect(btn(wrapper).classes()).toEqual(expect.arrayContaining([styles.modifiers.hamburger, styles.modifiers.expand]));
+      expect(btn(wrapper).classes()).toEqual(
+        expect.arrayContaining([styles.modifiers.hamburger, styles.modifiers.expand]),
+      );
       expect(wrapper.find(`.${styles.buttonHamburgerIcon}`).exists()).toBe(true);
       expect(btn(wrapper).attributes('aria-expanded')).toBe('false');
     });

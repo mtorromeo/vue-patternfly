@@ -28,11 +28,23 @@
         width-sm="60px"
         width-md="220px"
       >
-        <source media="(min-width: 1200px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-xl.svg">
-        <source media="(min-width: 992px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-lg.svg">
-        <source media="(min-width: 768px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-md.svg">
-        <source media="(min-width: 576px)" srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-sm.svg">
-        <source srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo.svg">
+        <source
+          media="(min-width: 1200px)"
+          srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-xl.svg"
+        />
+        <source
+          media="(min-width: 992px)"
+          srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-lg.svg"
+        />
+        <source
+          media="(min-width: 768px)"
+          srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-md.svg"
+        />
+        <source
+          media="(min-width: 576px)"
+          srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo-on-sm.svg"
+        />
+        <source srcset="https://www.patternfly.org/assets/images/pf-c-brand__logo.svg" />
       </pf-brand>
     </story-canvas>
   </doc-page>

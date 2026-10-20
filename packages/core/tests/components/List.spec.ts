@@ -7,7 +7,9 @@ import PfListItem from '../../src/components/List/ListItem.vue';
 
 describe('List', () => {
   it('renders an unordered list by default', () => {
-    const wrapper = mount(PfList, { slots: { default: () => [h(PfListItem, () => 'One'), h(PfListItem, () => 'Two')] } });
+    const wrapper = mount(PfList, {
+      slots: { default: () => [h(PfListItem, () => 'One'), h(PfListItem, () => 'Two')] },
+    });
 
     expect(wrapper.element.tagName).toBe('UL');
     expect(wrapper.classes()).toEqual([styles.list]);

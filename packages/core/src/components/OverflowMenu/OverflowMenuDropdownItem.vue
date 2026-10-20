@@ -1,5 +1,10 @@
 <template>
-  <pf-dropdown-item v-if="isBelowBreakpoint || !shared" v-bind="ouiaProps" :class="styles.overflowMenuControl" component="button">
+  <pf-dropdown-item
+    v-if="isBelowBreakpoint || !shared"
+    v-bind="ouiaProps"
+    :class="styles.overflowMenuControl"
+    component="button"
+  >
     <slot />
   </pf-dropdown-item>
 </template>
@@ -16,12 +21,15 @@ defineOptions({
   name: 'PfOverflowMenuDropdownItem',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfDropdownItem>, 'component' | 'ouiaId' | 'ouiaSafe'> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<ComponentProps<typeof PfDropdownItem>, 'component' | 'ouiaId' | 'ouiaSafe'> {
   shared?: boolean;
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

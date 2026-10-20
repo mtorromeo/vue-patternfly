@@ -1,8 +1,14 @@
 <template>
-  <div v-bind="ouiaProps" :class="[styles.drawerSection, {
-    [styles.modifiers.noBackground]: colorVariant === 'no-background',
-    [styles.modifiers.secondary]: colorVariant === 'secondary',
-  }]">
+  <div
+    v-bind="ouiaProps"
+    :class="[
+      styles.drawerSection,
+      {
+        [styles.modifiers.noBackground]: colorVariant === 'no-background',
+        [styles.modifiers.secondary]: colorVariant === 'secondary',
+      },
+    ]"
+  >
     <slot />
   </div>
 </template>
@@ -24,7 +30,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   colorVariant: 'default',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

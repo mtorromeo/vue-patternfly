@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<Props<T>>(), {
   selected: undefined,
   disabled: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'click', e: PointerEvent): void;

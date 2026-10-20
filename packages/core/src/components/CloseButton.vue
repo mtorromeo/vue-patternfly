@@ -16,9 +16,11 @@ defineOptions({
   name: 'PfCloseButton',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'aria-label' | 'ouiaId' | 'ouiaSafe'> {
-}
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'variant' | 'aria-label' | 'ouiaId' | 'ouiaSafe'> {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>

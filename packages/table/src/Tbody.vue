@@ -2,11 +2,14 @@
   <tbody
     v-bind="ouiaProps"
     role="rowgroup"
-    :class="[styles.tableTbody, {
-      [styles.modifiers.striped]: oddStriped,
-      [styles.modifiers.stripedEven]: evenStriped,
-      [styles.modifiers.expanded]: expanded,
-    }]"
+    :class="[
+      styles.tableTbody,
+      {
+        [styles.modifiers.striped]: oddStriped,
+        [styles.modifiers.stripedEven]: evenStriped,
+        [styles.modifiers.expanded]: expanded,
+      },
+    ]"
   >
     <slot />
   </tbody>
@@ -27,7 +30,7 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>
 
 <script lang="ts">
-import type { HTMLAttributes } from "vue";
+import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 

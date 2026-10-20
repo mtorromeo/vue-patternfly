@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Banner">
-    <template #description>A <b>banner</b> is a 1-line, full color, full width container that can be used to communicate short snippets of information to users. Banners are un-intrusive and non-dismissible.</template>
+    <template #description
+      >A <b>banner</b> is a 1-line, full color, full width container that can be used to communicate short snippets of
+      information to users. Banners are un-intrusive and non-dismissible.</template
+    >
 
     <template #apidocs>
       <component-info name="PfBanner" />
@@ -8,21 +11,21 @@
 
     <story-canvas title="Basic">
       <pf-banner>Default banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="red">Red banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="orangered">Orangered banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="orange">Orange banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="yellow">Yellow banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="green">Green banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="teal">Teal banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="blue">Blue banner</pf-banner>
-      <br>
+      <br />
       <pf-banner color="purple">Purple banner</pf-banner>
     </story-canvas>
 
@@ -35,7 +38,7 @@
           <pf-flex-item>Success banner</pf-flex-item>
         </pf-flex>
       </pf-banner>
-      <br>
+      <br />
       <pf-banner status="warning" screen-reader-text="Warning banner">
         <pf-flex space-items="sm">
           <pf-flex-item>
@@ -44,7 +47,7 @@
           <pf-flex-item>Warning banner</pf-flex-item>
         </pf-flex>
       </pf-banner>
-      <br>
+      <br />
       <pf-banner status="danger" screen-reader-text="Danger banner">
         <pf-flex space-items="sm">
           <pf-flex-item>
@@ -53,7 +56,7 @@
           <pf-flex-item>Danger banner</pf-flex-item>
         </pf-flex>
       </pf-banner>
-      <br>
+      <br />
       <pf-banner status="info" screen-reader-text="Info banner">
         <pf-flex space-items="sm">
           <pf-flex-item>
@@ -62,7 +65,7 @@
           <pf-flex-item>Info banner</pf-flex-item>
         </pf-flex>
       </pf-banner>
-      <br>
+      <br />
       <pf-banner status="custom" screen-reader-text="Custom banner">
         <pf-flex space-items="sm">
           <pf-flex-item>
@@ -75,21 +78,21 @@
 
     <story-canvas title="Pill">
       <pf-banner pill>Default banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="red">Red banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="orangered">Orangered banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="orange">Orange banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="yellow">Yellow banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="green">Green banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="teal">Teal banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="blue">Blue banner</pf-banner>
-      <br>
+      <br />
       <pf-banner pill color="purple">Purple banner</pf-banner>
     </story-canvas>
   </doc-page>

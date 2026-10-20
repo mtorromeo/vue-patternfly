@@ -1,12 +1,12 @@
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 /** @type {string} */
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @param {string} index */
-function *findComponentExports(index) {
+function* findComponentExports(index) {
   for (const match of index.matchAll(/^export { default as (.*) } from /gm)) {
     yield match[1];
   }
@@ -31,7 +31,9 @@ function extractComponentsFromDist(distDir) {
 
   for (const match of index.matchAll(/^export \* from '(.*)'/gm)) {
     /** @type {string} */
-    const groupIndex = fs.readFileSync(path.join(__dirname, '../dist/', distDir, match[1], 'index.d.ts'), { encoding: 'utf-8' });
+    const groupIndex = fs.readFileSync(path.join(__dirname, '../dist/', distDir, match[1], 'index.d.ts'), {
+      encoding: 'utf-8',
+    });
     for (const name of findComponentExports(groupIndex)) {
       out += strComponentType(distDir, name);
     }

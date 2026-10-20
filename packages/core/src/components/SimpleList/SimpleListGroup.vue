@@ -24,14 +24,14 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   id?: string;
 
   /** Title of the SimpleList group */
-  title?: string,
+  title?: string;
 
   /** Additional classes added to the SimpleList group title */
   titleClass?: string | string[] | Record<string, string>;
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

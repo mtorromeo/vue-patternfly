@@ -2,17 +2,21 @@
   <component
     :is="component"
     :id="id"
-    v-bind="{...ouiaProps, ...$attrs}"
-    :class="[styles.card, ...selectableModifiers, {
-      [styles.modifiers.compact]: compact,
-      [styles.modifiers.expanded]: expanded,
-      [styles.modifiers.displayLg]: large && !compact,
-      [styles.modifiers.fullHeight]: fullHeight,
-      [styles.modifiers.plain]: plain,
-      [styles.modifiers.glass]: glass,
-      [styles.modifiers.secondary]: variant === 'secondary',
-      [styles.modifiers.disabled]: disabled,
-    }]"
+    v-bind="{ ...ouiaProps, ...$attrs }"
+    :class="[
+      styles.card,
+      ...selectableModifiers,
+      {
+        [styles.modifiers.compact]: compact,
+        [styles.modifiers.expanded]: expanded,
+        [styles.modifiers.displayLg]: large && !compact,
+        [styles.modifiers.fullHeight]: fullHeight,
+        [styles.modifiers.plain]: plain,
+        [styles.modifiers.glass]: glass,
+        [styles.modifiers.secondary]: variant === 'secondary',
+        [styles.modifiers.disabled]: disabled,
+      },
+    ]"
     @click="onCardClick"
   >
     <slot />
@@ -100,7 +104,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'div',
   selectableAttrs: () => ({}),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag indicating if a card is expanded. Modifies the card to be expandable. */
 const expanded = defineModel<boolean | undefined>('expanded', { default: undefined });
@@ -124,9 +128,15 @@ if (props.compact && props.large) {
 const clickable = computed(() => props.clickable || !!props.onClick || isDefined(props.to));
 const hasInput = computed(() => !!props.selectableInput || !!props.name);
 
-if ((hasInput.value || (clickable.value && !props.selectable)) && !props.selectableAttrs['aria-label'] && !props.selectableAttrs['aria-labelledby']) {
+if (
+  (hasInput.value || (clickable.value && !props.selectable)) &&
+  !props.selectableAttrs['aria-label'] &&
+  !props.selectableAttrs['aria-labelledby']
+) {
   // eslint-disable-next-line no-console
-  console.error(`Card: ${hasInput.value ? 'Cards with a selectable input' : 'Clickable-only cards'} must have either the aria-label or aria-labelledby attribute passed in selectableAttrs in order to provide an accessible name to the clickable element.`);
+  console.error(
+    `Card: ${hasInput.value ? 'Cards with a selectable input' : 'Clickable-only cards'} must have either the aria-label or aria-labelledby attribute passed in selectableAttrs in order to provide an accessible name to the clickable element.`,
+  );
 }
 
 provide(CardKey, {
@@ -154,7 +164,7 @@ provide(CardKey, {
 });
 
 // Radios don't notify the inputs they uncheck, so the cards of a group deselect each other
-const radioGroup = computed(() => props.selectableSingle && props.name ? props.name : undefined);
+const radioGroup = computed(() => (props.selectableSingle && props.name ? props.name : undefined));
 function leaveRadioGroup(name: string | undefined) {
   const group = name ? cardRadioGroups.get(name) : undefined;
   group?.delete(selected);
@@ -162,14 +172,18 @@ function leaveRadioGroup(name: string | undefined) {
     cardRadioGroups.delete(name);
   }
 }
-watch(radioGroup, (name, oldName) => {
-  leaveRadioGroup(oldName);
-  if (name) {
-    cardRadioGroups.set(name, (cardRadioGroups.get(name) ?? new Set()).add(selected));
-  }
-}, { immediate: true });
+watch(
+  radioGroup,
+  (name, oldName) => {
+    leaveRadioGroup(oldName);
+    if (name) {
+      cardRadioGroups.set(name, (cardRadioGroups.get(name) ?? new Set()).add(selected));
+    }
+  },
+  { immediate: true },
+);
 onScopeDispose(() => leaveRadioGroup(radioGroup.value));
-watch(selected, (value) => {
+watch(selected, value => {
   if (value && radioGroup.value) {
     for (const other of cardRadioGroups.get(radioGroup.value) ?? []) {
       if (other !== selected) {

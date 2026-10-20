@@ -1,4 +1,4 @@
-import type { App } from "vue";
+import type { App } from 'vue';
 import type { AriaAttributes } from 'vue';
 import DocPage from './components/DocPage.vue';
 import ComponentInfo from './components/ComponentInfo.vue';
@@ -24,8 +24,7 @@ declare module 'vue' {
     vMd: boolean;
   }
 
-  export interface AllowedComponentProps extends AriaAttributes {
-  }
+  export interface AllowedComponentProps extends AriaAttributes {}
 }
 
 export default { install };

@@ -14,7 +14,7 @@
         [styles.modifiers.fillColumns]: fillColumns,
         [styles.modifiers.displayLg]: displaySize === 'lg',
         [styles.modifiers.display_2xl]: displaySize === '2xl',
-      }
+      },
     ]"
     :style="{
       [cssTermWidth.name]: termWidth,
@@ -31,15 +31,29 @@ import styles from '@patternfly/react-styles/css/components/DescriptionList/desc
 import cssGridTemplateColumnsMin from '@patternfly/react-tokens/dist/esm/c_description_list_GridTemplateColumns_min';
 import cssTermWidth from '@patternfly/react-tokens/dist/esm/c_description_list__term_width';
 import cssHorizontalTermWidth from '@patternfly/react-tokens/dist/esm/c_description_list_m_horizontal__term_width';
-import { type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { classesFromBreakpointProps, cssVarsFromBreakpointProps, type AutoFitMinBreakpointProps, type ColumnsBreakpointProps, type HorizontalTermWidthBreakpointProps, type OrientationBreakpointProps } from '../../breakpoints';
+import {
+  classesFromBreakpointProps,
+  cssVarsFromBreakpointProps,
+  type AutoFitMinBreakpointProps,
+  type ColumnsBreakpointProps,
+  type HorizontalTermWidthBreakpointProps,
+  type OrientationBreakpointProps,
+} from '../../breakpoints';
 
 defineOptions({
   name: 'PfDescriptionList',
 });
 
-interface Props extends OUIAProps, ColumnsBreakpointProps, OrientationBreakpointProps, AutoFitMinBreakpointProps, HorizontalTermWidthBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props
+  extends
+    OUIAProps,
+    ColumnsBreakpointProps,
+    OrientationBreakpointProps,
+    AutoFitMinBreakpointProps,
+    HorizontalTermWidthBreakpointProps,
+    /* @vue-ignore */ HTMLAttributes {
   /** Sets the description list to auto fit. */
   autoFit?: boolean;
   /** Sets the description list component term and description pair to a horizontal layout. */
@@ -63,7 +77,7 @@ interface Props extends OUIAProps, ColumnsBreakpointProps, OrientationBreakpoint
 const props = withDefaults(defineProps<Props>(), {
   displaySize: 'default',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Alert">
-    <template #description>An <b>alert</b> is a notification that provides brief information to the user without blocking their workflow.</template>
+    <template #description
+      >An <b>alert</b> is a notification that provides brief information to the user without blocking their
+      workflow.</template
+    >
 
     <template #apidocs>
       <component-info name="PfAlert" />
@@ -37,12 +40,7 @@
     </story-canvas>
 
     <story-canvas title="Inline variations">
-      <pf-alert
-        inline
-        variant="success"
-        title="Success alert title"
-        @close="alert('Clicked the close button')"
-      >
+      <pf-alert inline variant="success" title="Success alert title" @close="alert('Clicked the close button')">
         <template #action-links>
           <pf-alert-action-link @click="alert('Clicked on View details')">View details</pf-alert-action-link>
           <pf-alert-action-link @click="alert('Clicked on Ignore')">Ignore</pf-alert-action-link>
@@ -60,8 +58,7 @@
         @close="alert('Clicked the close button')"
       >
         This Alert uses the recommended
-        <code>live-region</code> prop to automatically sets ARIA attributes and CSS
-        classes.
+        <code>live-region</code> prop to automatically sets ARIA attributes and CSS classes.
       </pf-alert>
 
       <pf-alert
@@ -73,8 +70,7 @@
         @close="alert('Clicked the close button')"
       >
         You can alternatively omit the
-        <code>live-region</code> prop to specify ARIA attributes and CSS manually on
-        the containing element.
+        <code>live-region</code> prop to specify ARIA attributes and CSS manually on the containing element.
       </pf-alert>
     </story-canvas>
 
@@ -82,36 +78,42 @@
       <pf-input-group style="margin-bottom: 16px">
         <pf-button
           variant="secondary"
-          @click="alerts.push({
-            title: 'Single Success Alert',
-            variant: 'success',
-            liveRegion: true,
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts.push({
+              title: 'Single Success Alert',
+              variant: 'success',
+              liveRegion: true,
+              key: getUniqueId(),
+            })
+          "
         >
           Add Single Success Alert
         </pf-button>
         <pf-button
           variant="secondary"
-          @click="alerts.push({
-            title: 'Single Info Alert',
-            variant: 'info',
-            liveRegion: true,
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts.push({
+              title: 'Single Info Alert',
+              variant: 'info',
+              liveRegion: true,
+              key: getUniqueId(),
+            })
+          "
         >
           Add Single Info Alert
         </pf-button>
         <pf-button
           variant="secondary"
-          @click="alerts.push({
-            title: 'Single Danger Alert',
-            variant: 'danger',
-            ariaLive: 'assertive',
-            ariaRelevant: 'additions text',
-            ariaAtomic: 'false',
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts.push({
+              title: 'Single Danger Alert',
+              variant: 'danger',
+              ariaLive: 'assertive',
+              ariaRelevant: 'additions text',
+              ariaAtomic: 'false',
+              key: getUniqueId(),
+            })
+          "
         >
           Add Single Danger Alert
         </pf-button>
@@ -146,23 +148,15 @@
 
     <story-canvas title="Alert timeout">
       <pf-input-group style="margin-bottom: 16px">
-        <pf-button
-          variant="secondary"
-          :disabled="showTimeoutAlerts"
-          @click="showTimeoutAlerts = !showTimeoutAlerts"
-        >
+        <pf-button variant="secondary" :disabled="showTimeoutAlerts" @click="showTimeoutAlerts = !showTimeoutAlerts">
           <template v-if="showTimeoutAlerts">0 alerts to show</template>
           <template v-else>Show 2 alerts</template>
         </pf-button>
       </pf-input-group>
 
       <template v-if="showTimeoutAlerts">
-        <pf-alert title="Default timeout Alert" timeout>
-          This alert will dismiss after 8 seconds
-        </pf-alert>
-        <pf-alert title="Custom timeout Alert" :timeout="16000">
-          This alert will dismiss after 16 seconds
-        </pf-alert>
+        <pf-alert title="Default timeout Alert" timeout> This alert will dismiss after 8 seconds </pf-alert>
+        <pf-alert title="Custom timeout Alert" :timeout="16000"> This alert will dismiss after 16 seconds </pf-alert>
       </template>
     </story-canvas>
 
@@ -205,31 +199,37 @@
       <pf-input-group>
         <pf-button
           variant="secondary"
-          @click="alerts3.push({
-            title: 'Toast Success Alert',
-            variant: 'success',
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts3.push({
+              title: 'Toast Success Alert',
+              variant: 'success',
+              key: getUniqueId(),
+            })
+          "
         >
           Add Toast Success Alert
         </pf-button>
         <pf-button
           variant="secondary"
-          @click="alerts3.push({
-            title: 'Toast Info Alert',
-            variant: 'info',
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts3.push({
+              title: 'Toast Info Alert',
+              variant: 'info',
+              key: getUniqueId(),
+            })
+          "
         >
           Add Toast Info Alert
         </pf-button>
         <pf-button
           variant="secondary"
-          @click="alerts3.push({
-            title: 'Toast Danger Alert',
-            variant: 'danger',
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts3.push({
+              title: 'Toast Danger Alert',
+              variant: 'danger',
+              key: getUniqueId(),
+            })
+          "
         >
           Add Toast Danger Alert
         </pf-button>
@@ -251,31 +251,37 @@
       <pf-input-group>
         <pf-button
           variant="secondary"
-          @click="alerts2.push({
-            title: 'Toast Success Alert',
-            variant: 'success',
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts2.push({
+              title: 'Toast Success Alert',
+              variant: 'success',
+              key: getUniqueId(),
+            })
+          "
         >
           Add Toast Success Alert
         </pf-button>
         <pf-button
           variant="secondary"
-          @click="alerts2.push({
-            title: 'Toast Info Alert',
-            variant: 'info',
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts2.push({
+              title: 'Toast Info Alert',
+              variant: 'info',
+              key: getUniqueId(),
+            })
+          "
         >
           Add Toast Info Alert
         </pf-button>
         <pf-button
           variant="secondary"
-          @click="alerts2.push({
-            title: 'Toast Danger Alert',
-            variant: 'danger',
-            key: getUniqueId(),
-          })"
+          @click="
+            alerts2.push({
+              title: 'Toast Danger Alert',
+              variant: 'danger',
+              key: getUniqueId(),
+            })
+          "
         >
           Add Toast Danger Alert
         </pf-button>
@@ -313,7 +319,7 @@ import LaptopIcon from '@vue-patternfly/icons/laptop-icon';
 
 type AlertData = {
   title: string;
-  variant: ComponentProps<(typeof PfAlert)>['variant'];
+  variant: ComponentProps<typeof PfAlert>['variant'];
   liveRegion?: boolean;
   key: number;
   ariaLive?: HTMLAttributes['aria-live'];
@@ -321,7 +327,7 @@ type AlertData = {
   ariaAtomic?: HTMLAttributes['aria-atomic'];
 };
 
-const sample_text = ref("Alert text");
+const sample_text = ref('Alert text');
 
 const alerts: AlertData[] = reactive([]);
 const alerts2: AlertData[] = reactive([]);

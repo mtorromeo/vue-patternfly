@@ -1,18 +1,12 @@
 <template>
-  <component
-    :is="to ? 'router-link' : PassThrough"
-    v-slot="routerCtx"
-    :to="to"
-    :replace="replace"
-    custom
-  >
+  <component :is="to ? 'router-link' : PassThrough" v-slot="routerCtx" :to="to" :replace="replace" custom>
     <component
-      v-bind="{...ouiaProps, ...$attrs}"
+      v-bind="{ ...ouiaProps, ...$attrs }"
       :is="component"
       :class="styles.mastheadBrand"
       :tabindex="component === 'a' ? 0 : undefined"
-      :href="(routerCtx as RouterLinkContext|undefined)?.href ?? href"
-      @click="(routerCtx as RouterLinkContext|undefined)?.navigate"
+      :href="(routerCtx as RouterLinkContext | undefined)?.href ?? href"
+      @click="(routerCtx as RouterLinkContext | undefined)?.navigate"
     >
       <slot />
     </component>
@@ -41,7 +35,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

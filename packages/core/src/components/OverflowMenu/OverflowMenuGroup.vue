@@ -3,7 +3,8 @@
     v-if="!isBelowBreakpoint || persistent"
     v-bind="ouiaProps"
     :class="[
-      styles.overflowMenuGroup, {
+      styles.overflowMenuGroup,
+      {
         [styles.modifiers.buttonGroup]: type === 'button',
         [styles.modifiers.iconButtonGroup]: type === 'icon',
       },
@@ -29,7 +30,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

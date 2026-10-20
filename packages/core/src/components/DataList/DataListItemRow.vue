@@ -2,7 +2,8 @@
   <div
     v-bind="ouiaProps"
     :class="[
-      styles.dataListItemRow, {
+      styles.dataListItemRow,
+      {
         [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,
       },
     ]"
@@ -20,7 +21,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { inject, type HTMLAttributes } from "vue";
+import { inject, type HTMLAttributes } from 'vue';
 import type { DataListWrapModifier } from './DataList.vue';
 import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
@@ -33,11 +34,11 @@ defineOptions({
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  wrapModifier?: DataListWrapModifier
+  wrapModifier?: DataListWrapModifier;
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

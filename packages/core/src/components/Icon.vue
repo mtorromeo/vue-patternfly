@@ -1,15 +1,24 @@
 <template>
   <span
     v-bind="ouiaProps"
-    :class="[styles.icon, size && styles.modifiers[size], {
-      [styles.modifiers.inline]: inline,
-      [styles.modifiers.inProgress]: inProgress,
-    }]"
+    :class="[
+      styles.icon,
+      size && styles.modifiers[size],
+      {
+        [styles.modifiers.inline]: inline,
+        [styles.modifiers.inProgress]: inProgress,
+      },
+    ]"
   >
     <span
-      :class="[styles.iconContent, iconSize && styles.modifiers[iconSize], status && styles.modifiers[status], {
-        'pf-v6-m-mirror-inline-rtl': shouldMirrorRTL,
-      }]"
+      :class="[
+        styles.iconContent,
+        iconSize && styles.modifiers[iconSize],
+        status && styles.modifiers[status],
+        {
+          'pf-v6-m-mirror-inline-rtl': shouldMirrorRTL,
+        },
+      ]"
     >
       <slot />
     </span>
@@ -55,7 +64,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 const props = withDefaults(defineProps<Props>(), {
   defaultProgressArialabel: 'Loading...',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -1,14 +1,14 @@
-import { transformAsync } from "@babel/core";
-import { glob } from "glob";
-import fs from "fs-extra";
-import path from "path";
-import generateIcons from "./generateIcons.mjs";
+import { transformAsync } from '@babel/core';
+import { glob } from 'glob';
+import fs from 'fs-extra';
+import path from 'node:path';
+import generateIcons from './generateIcons.mjs';
 
-const srcDir = "./src";
-const outDir = "./dist";
+const srcDir = './src';
+const outDir = './dist';
 
-const removeSnake = (s) => s.toUpperCase().replace(/[-_]/, "");
-const toCamel = (s) => `${s[0].toUpperCase()}${s.substr(1).replace(/([-_][a-z0-9])/gi, removeSnake)}`;
+const removeSnake = s => s.toUpperCase().replace(/[-_]/, '');
+const toCamel = s => `${s[0].toUpperCase()}${s.substr(1).replace(/([-_][a-z0-9])/gi, removeSnake)}`;
 
 const compileIcon = (jsName, icon) =>
   `
@@ -48,18 +48,18 @@ export default ${jsName};
 
 async function esm2cjs(dest, code) {
   const cjs = await transformAsync(code, {
-    plugins: ["@babel/plugin-transform-modules-commonjs"],
+    plugins: ['@babel/plugin-transform-modules-commonjs'],
   });
   await fs.outputFile(dest, cjs.code);
 }
 
 (async function (icons) {
-  await fs.copy(srcDir, path.join(outDir, "esm"), {
-    filter: (src) => !src.endsWith(".ts"),
+  await fs.copy(srcDir, path.join(outDir, 'esm'), {
+    filter: src => !src.endsWith('.ts'),
   });
-  for (const js of glob.sync(path.join(srcDir, "**/*.js"))) {
+  for (const js of glob.sync(path.join(srcDir, '**/*.js'))) {
     const relFilename = js.slice(srcDir.length);
-    const dest = path.join(outDir, "js", relFilename);
+    const dest = path.join(outDir, 'js', relFilename);
     (async () => {
       const code = await fs.readFile(js);
       await esm2cjs(dest, code);
@@ -70,36 +70,36 @@ async function esm2cjs(dest, code) {
   for (const [iconName, icon] of Object.entries(icons)) {
     const fname = `${iconName}-icon`;
     const jsName = `${toCamel(iconName)}Icon`
-      .replace(/^0/, "Zero")
-      .replace(/^1/, "One")
-      .replace(/^2/, "Two")
-      .replace(/^3/, "Three")
-      .replace(/^4/, "Four")
-      .replace(/^5/, "Five")
-      .replace(/^6/, "Six")
-      .replace(/^7/, "Seven")
-      .replace(/^8/, "Eight")
-      .replace(/^9/, "Nine");
+      .replace(/^0/, 'Zero')
+      .replace(/^1/, 'One')
+      .replace(/^2/, 'Two')
+      .replace(/^3/, 'Three')
+      .replace(/^4/, 'Four')
+      .replace(/^5/, 'Five')
+      .replace(/^6/, 'Six')
+      .replace(/^7/, 'Seven')
+      .replace(/^8/, 'Eight')
+      .replace(/^9/, 'Nine');
     const esmIcon = compileIcon(jsName, icon);
     const dtsIcon = compileDTSIcon(jsName, icon);
     (async () => {
-      await fs.outputFile(path.join(outDir, "esm/icons", `${fname}.js`), esmIcon);
-      await fs.outputFile(path.join(outDir, "esm/icons", `${fname}.d.ts`), dtsIcon);
-      await esm2cjs(path.join(outDir, "js/icons", `${fname}.js`), esmIcon);
-      await fs.outputFile(path.join(outDir, "js/icons", `${fname}.d.ts`), dtsIcon);
+      await fs.outputFile(path.join(outDir, 'esm/icons', `${fname}.js`), esmIcon);
+      await fs.outputFile(path.join(outDir, 'esm/icons', `${fname}.d.ts`), dtsIcon);
+      await esm2cjs(path.join(outDir, 'js/icons', `${fname}.js`), esmIcon);
+      await fs.outputFile(path.join(outDir, 'js/icons', `${fname}.d.ts`), dtsIcon);
     })();
     index.push(fname);
   }
 
   const esmIndexString = index
     .sort()
-    .map((file) => `export * from './${file}';`)
-    .join("\n");
-  await fs.outputFile(path.join(outDir, "esm", "icons/index.js"), esmIndexString);
-  await fs.outputFile(path.join(outDir, "esm", "icons/index.d.ts"), esmIndexString);
-  await esm2cjs(path.join(outDir, "js/icons/index.js"), esmIndexString);
-  await fs.outputFile(path.join(outDir, "js", "icons/index.d.ts"), esmIndexString);
+    .map(file => `export * from './${file}';`)
+    .join('\n');
+  await fs.outputFile(path.join(outDir, 'esm', 'icons/index.js'), esmIndexString);
+  await fs.outputFile(path.join(outDir, 'esm', 'icons/index.d.ts'), esmIndexString);
+  await esm2cjs(path.join(outDir, 'js/icons/index.js'), esmIndexString);
+  await fs.outputFile(path.join(outDir, 'js', 'icons/index.d.ts'), esmIndexString);
 
   // eslint-disable-next-line no-console
-  console.log("Wrote", (index.length + 3) * 4, " files.");
+  console.log('Wrote', (index.length + 3) * 4, ' files.');
 })(generateIcons());

@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Avatar">
-    <template #description>An <b>avatar</b> is a visual used to represent a user. It may contain an image or a placeholder graphic.</template>
+    <template #description
+      >An <b>avatar</b> is a visual used to represent a user. It may contain an image or a placeholder
+      graphic.</template
+    >
 
     <template #apidocs>
       <component-info name="PfAvatar" />

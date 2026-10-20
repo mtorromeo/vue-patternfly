@@ -2,7 +2,8 @@
   <span
     v-bind="ouiaProps"
     :class="[
-      styles.formControl, {
+      styles.formControl,
+      {
         [styles.modifiers.readonly]: !!readOnlyVariant,
         [styles.modifiers.plain]: readOnlyVariant === 'plain',
         [styles.modifiers.success]: effectiveValidated === 'success',
@@ -28,18 +29,22 @@
       @blur="onBlur"
       @invalid="onInvalid"
       @keyup="onKeyUp"
-    >
+    />
     <span v-if="$slots.icon || hasStatusIcon" :class="styles.formControlUtilities">
       <pf-form-control-icon v-if="$slots.icon">
         <slot name="icon" />
       </pf-form-control-icon>
-      <pf-form-control-icon v-if="hasStatusIcon" :status="(effectiveValidated as 'success' | 'error' | 'warning')" />
+      <pf-form-control-icon v-if="hasStatusIcon" :status="effectiveValidated as 'success' | 'error' | 'warning'" />
     </span>
   </span>
 </template>
 
 <script lang="ts">
-interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid' | 'autocomplete'>, /* @vue-ignore */ OverriddenInputAttributes {
+interface Props<T extends InputType, N extends boolean>
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid' | 'autocomplete'>,
+    /* @vue-ignore */ OverriddenInputAttributes {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
@@ -98,7 +103,7 @@ defineEmits<{
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
-  (name: 'update:modelValue', value: N extends true ? number : (T extends 'number' ? number : string)): void;
+  (name: 'update:modelValue', value: N extends true ? number : T extends 'number' ? number : string): void;
   (name: 'update:validated', value: InputValidateState): void;
 }>();
 
@@ -106,10 +111,12 @@ defineSlots<{
   icon?: (props?: Record<never, never>) => any;
 }>();
 
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const input = useTemplateRef('inputRef');
-const hasStatusIcon = computed(() => !props.noStatusIcon && ['success', 'error', 'warning'].includes(effectiveValidated.value));
+const hasStatusIcon = computed(
+  () => !props.noStatusIcon && ['success', 'error', 'warning'].includes(effectiveValidated.value),
+);
 
 const { validated } = toRefs(props);
 const {
@@ -124,7 +131,7 @@ const {
 } = useInputValidation({
   inputElement: input,
   autoValidate: props.autoValidate,
-  validated: validated,
+  validated,
   type: () => props.type ?? 'text',
 });
 

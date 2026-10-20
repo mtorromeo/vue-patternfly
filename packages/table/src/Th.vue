@@ -1,12 +1,12 @@
 <template>
   <define-select-checkbox>
     <label v-if="isDefined(selected)">
-      <input :checked="selected" type="checkbox" @change="handleSelect($event as InputEvent)">
+      <input :checked="selected" type="checkbox" @change="handleSelect($event as InputEvent)" />
     </label>
   </define-select-checkbox>
 
   <component
-    v-bind="{...ouiaProps, ...$attrs}"
+    v-bind="{ ...ouiaProps, ...$attrs }"
     :is="component"
     role="columnheader"
     :scope="scope"
@@ -14,7 +14,8 @@
       styles.tableTh,
       width && [styles.modifiers[`width_${width}`]],
       modifier && styles.modifiers[modifier],
-      breakpointClasses, {
+      breakpointClasses,
+      {
         [styles.tableSort]: sortable,
         [styles.modifiers.selected]: sortable && sorted,
         [styles.tableSubhead]: subheader,
@@ -23,13 +24,17 @@
         [scrollStyles.tableStickyCell]: sticky,
         [scrollStyles.modifiers.borderRight]: rightBorder,
         [scrollStyles.modifiers.borderLeft]: leftBorder,
-      }
+      },
     ]"
-    :style="sticky ? {
-      '--pf-v6-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
-      '--pf-v6-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
-      '--pf-v6-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
-    } : undefined"
+    :style="
+      sticky
+        ? {
+            '--pf-v6-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
+            '--pf-v6-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
+            '--pf-v6-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
+          }
+        : undefined
+    "
     :data-label="dataLabel"
     :aria-sort="sortable ? (sorted ? `${direction}ending` : 'none') : undefined"
   >
@@ -111,9 +116,9 @@ function handleSelect(event: InputEvent) {
 </script>
 
 <script lang="ts">
-import type { Component, ThHTMLAttributes } from "vue";
+import type { Component, ThHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
-import { classesFromBreakpointProps } from "@vue-patternfly/core/breakpoints";
+import { classesFromBreakpointProps } from '@vue-patternfly/core/breakpoints';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import scrollStyles from '@patternfly/react-styles/css/components/Table/table-scrollable';
 

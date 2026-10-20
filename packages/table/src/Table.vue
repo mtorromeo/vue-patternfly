@@ -2,26 +2,32 @@
   <define-table>
     <table
       ref="tableRef"
-      v-bind="{...ouiaProps, ...$attrs}"
+      v-bind="{ ...ouiaProps, ...$attrs }"
       :role="treeTable ? 'treegrid' : role"
-      :class="[styles.table, treeTable ? treeGrid : grid, {
-        [styles.modifiers.compact]: compact,
-        [styles.modifiers.noBorderRows]: noBorders,
-        [styles.modifiers.stickyHeader]: stickyHeader,
-        [styles.modifiers.stickyFooter]: stickyFooter,
-        [styles.modifiers.stickyFooterBase]: stickyFooterBase,
-        [styles.modifiers.stickyFooterStuck]: stickyFooterStuck,
-        [stylesTreeView.modifiers.treeView]: treeTable,
-        [styles.modifiers.striped]: striped,
-        [styles.modifiers.expandable]: expandable,
-        'pf-m-nested': nested,
-      }]"
+      :class="[
+        styles.table,
+        treeTable ? treeGrid : grid,
+        {
+          [styles.modifiers.compact]: compact,
+          [styles.modifiers.noBorderRows]: noBorders,
+          [styles.modifiers.stickyHeader]: stickyHeader,
+          [styles.modifiers.stickyFooter]: stickyFooter,
+          [styles.modifiers.stickyFooterBase]: stickyFooterBase,
+          [styles.modifiers.stickyFooterStuck]: stickyFooterStuck,
+          [stylesTreeView.modifiers.treeView]: treeTable,
+          [styles.modifiers.striped]: striped,
+          [styles.modifiers.expandable]: expandable,
+          'pf-m-nested': nested,
+        },
+      ]"
     >
       <caption v-if="hasSelectableRows">
-        {{ selectableRowCaptionText }}
+        {{
+          selectableRowCaptionText
+        }}
         <div class="pf-v6-screen-reader">
-          This table has selectable rows. It can be navigated by row using tab, and each row can be selected using
-          space or enter.
+          This table has selectable rows. It can be navigated by row using tab, and each row can be selected using space
+          or enter.
         </div>
       </caption>
 
@@ -39,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { computed, useTemplateRef, type TableHTMLAttributes } from "vue";
+import { computed, useTemplateRef, type TableHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import stylesGrid from '@patternfly/react-styles/css/components/Table/table-grid';
@@ -80,7 +86,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ TableHTMLAttributes {
   /** A valid WAI-ARIA role to be applied to the table element */
   role?: string;
   /** Flag indicating this table can be scrolled horizontally */
-  horizontalScroll?: boolean,
+  horizontalScroll?: boolean;
 }
 </script>
 
@@ -102,7 +108,12 @@ defineSlots<{
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const grid =
   stylesGrid.modifiers?.[
-    toCamelCase(props.gridBreakPoint || '').replace(/-?2xl/, '_2xl') as 'grid' | 'gridMd' | 'gridLg' | 'gridXl' | 'grid_2xl'
+    toCamelCase(props.gridBreakPoint || '').replace(/-?2xl/, '_2xl') as
+      | 'grid'
+      | 'gridMd'
+      | 'gridLg'
+      | 'gridXl'
+      | 'grid_2xl'
   ];
 const breakPointPrefix = `treeView${props.gridBreakPoint.charAt(0).toUpperCase() + props.gridBreakPoint.slice(1)}`;
 const treeGrid =
@@ -118,7 +129,7 @@ const treeGrid =
 const rows = provideChildrenTracker(TableTrKey);
 const hasSelectableRows = computed(() => rows.some(row => row.selectable));
 
-const [ DefineTable, ReuseTable ] = createReusableTemplate();
+const [DefineTable, ReuseTable] = createReusableTemplate();
 
 const table = useTemplateRef('tableRef');
 

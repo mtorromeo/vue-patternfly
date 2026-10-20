@@ -6,19 +6,11 @@
     "declarationMap": true,
     "rootDir": "src",
     "outDir": "dist",
-    "types": [
-      "vite/client"
-    ]
+    "types": ["vite/client"]
   },
   "vueCompilerOptions": {
     "strictTemplates": true,
-    "dataAttributes": [
-      "data-popper-*",
-      "data-action"
-    ]
+    "dataAttributes": ["data-popper-*", "data-action"]
   },
-  "include": [
-    "src/*",
-    "src/**/*"
-  ]
+  "include": ["src/*", "src/**/*"]
 }

@@ -1,6 +1,8 @@
 <template>
   <doc-page title="List">
-    <template #description>A <b>list</b> component embeds a formatted list (bulleted or numbered list) into page content.</template>
+    <template #description
+      >A <b>list</b> component embeds a formatted list (bulleted or numbered list) into page content.</template
+    >
 
     <template #apidocs>
       <component-info name="PfList" />
@@ -53,17 +55,29 @@
 
     <story-canvas title="With icons">
       <pf-list plain>
-        <pf-list-item><template #icon><book-open-icon /></template> First</pf-list-item>
-        <pf-list-item><template #icon><key-icon /></template> Second</pf-list-item>
-        <pf-list-item><template #icon><desktop-icon /></template> Third</pf-list-item>
+        <pf-list-item
+          ><template #icon><book-open-icon /></template> First</pf-list-item
+        >
+        <pf-list-item
+          ><template #icon><key-icon /></template> Second</pf-list-item
+        >
+        <pf-list-item
+          ><template #icon><desktop-icon /></template> Third</pf-list-item
+        >
       </pf-list>
     </story-canvas>
 
     <story-canvas title="With large icons">
       <pf-list plain icon-size="large">
-        <pf-list-item><template #icon><book-open-icon /></template> First</pf-list-item>
-        <pf-list-item><template #icon><key-icon /></template> Second</pf-list-item>
-        <pf-list-item><template #icon><desktop-icon /></template> Third</pf-list-item>
+        <pf-list-item
+          ><template #icon><book-open-icon /></template> First</pf-list-item
+        >
+        <pf-list-item
+          ><template #icon><key-icon /></template> Second</pf-list-item
+        >
+        <pf-list-item
+          ><template #icon><desktop-icon /></template> Third</pf-list-item
+        >
       </pf-list>
     </story-canvas>
   </doc-page>

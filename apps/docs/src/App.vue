@@ -29,25 +29,21 @@
                       <pf-menu-group label="Theme">
                         <pf-menu-input>
                           <pf-toggle-group :model-value="feltTheme" @update:model-value="feltTheme = Boolean($event)">
-                            <pf-toggle-group-item :value="false">
-                              Default
-                            </pf-toggle-group-item>
-                            <pf-toggle-group-item :value="true">
-                              Project Felt
-                            </pf-toggle-group-item>
+                            <pf-toggle-group-item :value="false"> Default </pf-toggle-group-item>
+                            <pf-toggle-group-item :value="true"> Project Felt </pf-toggle-group-item>
                           </pf-toggle-group>
                         </pf-menu-input>
                       </pf-menu-group>
                       <pf-divider />
                       <pf-menu-group label="Color scheme">
                         <pf-menu-input>
-                          <pf-toggle-group :model-value="darkTheme" @update:model-value="darkTheme = Boolean($event)" aria-label="Dark mode toggle">
-                            <pf-toggle-group-item :value="false">
-                              Light
-                            </pf-toggle-group-item>
-                            <pf-toggle-group-item :value="true">
-                              Dark
-                            </pf-toggle-group-item>
+                          <pf-toggle-group
+                            :model-value="darkTheme"
+                            @update:model-value="darkTheme = Boolean($event)"
+                            aria-label="Dark mode toggle"
+                          >
+                            <pf-toggle-group-item :value="false"> Light </pf-toggle-group-item>
+                            <pf-toggle-group-item :value="true"> Dark </pf-toggle-group-item>
                           </pf-toggle-group>
                         </pf-menu-input>
                       </pf-menu-group>
@@ -55,15 +51,9 @@
                       <pf-menu-group label="Contrast mode">
                         <pf-menu-input>
                           <pf-toggle-group v-model="contrastTheme">
-                            <pf-toggle-group-item value="Default">
-                              Default
-                            </pf-toggle-group-item>
-                            <pf-toggle-group-item value="High contrast">
-                              High contrast
-                            </pf-toggle-group-item>
-                            <pf-toggle-group-item value="Glass">
-                              Glass
-                            </pf-toggle-group-item>
+                            <pf-toggle-group-item value="Default"> Default </pf-toggle-group-item>
+                            <pf-toggle-group-item value="High contrast"> High contrast </pf-toggle-group-item>
+                            <pf-toggle-group-item value="Glass"> Glass </pf-toggle-group-item>
                           </pf-toggle-group>
                         </pf-menu-input>
                       </pf-menu-group>
@@ -77,7 +67,9 @@
                       <pf-menu-toggle> VuePatternfly v6 </pf-menu-toggle>
                     </template>
 
-                    <pf-dropdown-item to="https://mtorromeo.github.io/vue-patternfly/v5/">VuePatternFly v5</pf-dropdown-item>
+                    <pf-dropdown-item to="https://mtorromeo.github.io/vue-patternfly/v5/"
+                      >VuePatternFly v5</pf-dropdown-item
+                    >
                   </pf-dropdown>
                 </pf-toolbar-item>
               </pf-toolbar-group>
@@ -91,7 +83,9 @@
       <pf-page-sidebar sidebar-open>
         <pf-nav>
           <pf-nav-group v-for="(categoryStories, category) of stories" :key="category" :title="category">
-            <pf-nav-item v-for="story of categoryStories" :key="story.route" :to="{ name: story.route }">{{ story.title }}</pf-nav-item>
+            <pf-nav-item v-for="story of categoryStories" :key="story.route" :to="{ name: story.route }">{{
+              story.title
+            }}</pf-nav-item>
           </pf-nav-group>
         </pf-nav>
       </pf-page-sidebar>
@@ -100,7 +94,14 @@
     <router-view />
 
     <pf-alert-group toast live-region :overflow-message="overflowMessage" @overflow-click="expandAlerts">
-      <pf-alert v-for="a of alerts.notifications.slice(0, maxDisplayed > 0 ? maxDisplayed : alerts.notifications.length)" :key="a.id" :variant="a.variant" :title="a.title" live-region @close="alerts.delete(a.id)">
+      <pf-alert
+        v-for="a of alerts.notifications.slice(0, maxDisplayed > 0 ? maxDisplayed : alerts.notifications.length)"
+        :key="a.id"
+        :variant="a.variant"
+        :title="a.title"
+        live-region
+        @close="alerts.delete(a.id)"
+      >
         <template v-if="a.text" #default>
           <p>{{ a.text }}</p>
         </template>
@@ -171,56 +172,62 @@
 </style>
 
 <script lang="ts" setup>
-import { computed, ref, watch, type Ref } from "vue";
-import { stories } from "./router";
-import { useAlertsStore } from "./store/alerts";
-import PfLogo from "@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg?raw";
-import SunIcon from "@vue-patternfly/icons/sun-icon";
-import MoonIcon from "@vue-patternfly/icons/moon-icon";
+import { computed, ref, watch, type Ref } from 'vue';
+import { stories } from './router';
+import { useAlertsStore } from './store/alerts';
+import PfLogo from '@patternfly/patternfly/assets/images/PF-HorizontalLogo-Color.svg?raw';
+import SunIcon from '@vue-patternfly/icons/sun-icon';
+import MoonIcon from '@vue-patternfly/icons/moon-icon';
 
 const alerts = useAlertsStore();
 const maxDisplayed = ref(5);
 
 const overflowMessage = computed(() => {
   if (maxDisplayed.value <= 0) {
-    return "";
+    return '';
   }
   const overflow = alerts.notifications.length - maxDisplayed.value;
   if (overflow > 0) {
     return `View ${overflow} more alerts`;
   }
-  return "";
+  return '';
 });
 
-const feltTheme = ref(document.documentElement.classList.contains("pf-v6-theme-felt"));
-watch(feltTheme, (value) => {
+const feltTheme = ref(document.documentElement.classList.contains('pf-v6-theme-felt'));
+watch(feltTheme, value => {
   if (value) {
-    document.documentElement.classList.add("pf-v6-theme-felt");
+    document.documentElement.classList.add('pf-v6-theme-felt');
   } else {
-    document.documentElement.classList.remove("pf-v6-theme-felt");
+    document.documentElement.classList.remove('pf-v6-theme-felt');
   }
 });
 
-const darkTheme = ref(document.documentElement.classList.contains("pf-v6-theme-dark"));
-watch(darkTheme, (value) => {
+const darkTheme = ref(document.documentElement.classList.contains('pf-v6-theme-dark'));
+watch(darkTheme, value => {
   if (value) {
-    document.documentElement.classList.add("pf-v6-theme-dark");
+    document.documentElement.classList.add('pf-v6-theme-dark');
   } else {
-    document.documentElement.classList.remove("pf-v6-theme-dark");
+    document.documentElement.classList.remove('pf-v6-theme-dark');
   }
 });
 
-const contrastTheme: Ref<string | undefined> = ref(document.documentElement.classList.contains("pf-v6-theme-glass") ? "Glass" : document.documentElement.classList.contains("pf-v6-theme-high-contrast") ? "High contrast" : "Default");
-watch(contrastTheme, (value) => {
-  if (value === "Glass") {
-    document.documentElement.classList.add("pf-v6-theme-glass");
-    document.documentElement.classList.remove("pf-v6-theme-high-contrast");
-  } else if (value === "High contrast") {
-    document.documentElement.classList.add("pf-v6-theme-high-contrast");
-    document.documentElement.classList.remove("pf-v6-theme-glass");
+const contrastTheme: Ref<string | undefined> = ref(
+  document.documentElement.classList.contains('pf-v6-theme-glass')
+    ? 'Glass'
+    : document.documentElement.classList.contains('pf-v6-theme-high-contrast')
+      ? 'High contrast'
+      : 'Default',
+);
+watch(contrastTheme, value => {
+  if (value === 'Glass') {
+    document.documentElement.classList.add('pf-v6-theme-glass');
+    document.documentElement.classList.remove('pf-v6-theme-high-contrast');
+  } else if (value === 'High contrast') {
+    document.documentElement.classList.add('pf-v6-theme-high-contrast');
+    document.documentElement.classList.remove('pf-v6-theme-glass');
   } else {
-    document.documentElement.classList.remove("pf-v6-theme-glass");
-    document.documentElement.classList.remove("pf-v6-theme-high-contrast");
+    document.documentElement.classList.remove('pf-v6-theme-glass');
+    document.documentElement.classList.remove('pf-v6-theme-high-contrast');
   }
 });
 
@@ -230,7 +237,7 @@ function expandAlerts() {
 
 watch(
   () => alerts.notifications.length,
-  (l) => {
+  l => {
     if (l <= 5) {
       maxDisplayed.value = 5;
     }

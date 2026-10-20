@@ -5,12 +5,13 @@
     ref="elRef"
     :class="[
       styles.alert,
-      styles.modifiers[variant], {
+      styles.modifiers[variant],
+      {
         [styles.modifiers.inline]: inline,
         [styles.modifiers.plain]: plain,
         [styles.modifiers.expandable]: expandable,
         [styles.modifiers.expanded]: expanded,
-      }
+      },
     ]"
     :aria-live="liveRegion ? 'polite' : undefined"
     :aria-atomic="liveRegion ? 'false' : undefined"
@@ -42,9 +43,12 @@
       <component
         :is="component"
         ref="title"
-        :class="[styles.alertTitle, {
-          [styles.modifiers.truncate]: truncateTitle,
-        }]"
+        :class="[
+          styles.alertTitle,
+          {
+            [styles.modifiers.truncate]: truncateTitle,
+          },
+        ]"
         :style="truncateTitle ? `${maxLines.name}: ${truncateTitle}` : null"
         :tabindex="tooltipVisible ? '0' : null"
       >
@@ -79,7 +83,17 @@ import PfCloseButton from '../CloseButton.vue';
 import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { ref, watch, type HTMLAttributes, onBeforeUnmount, onMounted, computed, type Component, useTemplateRef, type ComponentPublicInstance } from 'vue';
+import {
+  ref,
+  watch,
+  type HTMLAttributes,
+  onBeforeUnmount,
+  onMounted,
+  computed,
+  type Component,
+  useTemplateRef,
+  type ComponentPublicInstance,
+} from 'vue';
 import { useElementSize } from '@vueuse/core';
 import type { Placement } from '../../helpers/FloatingUi.vue';
 
@@ -133,7 +147,7 @@ const props = withDefaults(defineProps<Props>(), {
   tooltipPosition: 'auto',
   component: 'h4',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant });
 
 /** Flag indicating that the alert is expanded */
 const expanded = defineModel<boolean>('expanded', { default: false });
@@ -162,15 +176,19 @@ const containsFocus = ref(false);
 const el = useTemplateRef('elRef');
 
 const variantLabel = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)} alert:`);
-const dismissed = computed(() => timedOut.value && timedOutAnimation.value && !isMouseOver.value && !containsFocus.value);
+const dismissed = computed(
+  () => timedOut.value && timedOutAnimation.value && !isMouseOver.value && !containsFocus.value,
+);
 
-
-watch(() => [width.value, height.value], () => {
-  if (!(titleRef.value instanceof HTMLElement) || !props.truncateTitle) {
-    return false;
-  }
-  tooltipVisible.value = titleRef.value.offsetHeight < titleRef.value.scrollHeight;
-});
+watch(
+  () => [width.value, height.value],
+  () => {
+    if (!(titleRef.value instanceof HTMLElement) || !props.truncateTitle) {
+      return false;
+    }
+    tooltipVisible.value = titleRef.value.offsetHeight < titleRef.value.scrollHeight;
+  },
+);
 
 watch(dismissed, () => {
   if (dismissed.value) {
@@ -185,14 +203,17 @@ onMounted(() => {
 
   document.addEventListener('focus', onDocumentFocus, true);
 
-  watch(() => [containsFocus.value, isMouseOver.value], () => {
-    if (!containsFocus.value && !isMouseOver.value) {
-      animationTimer = setTimeout(() => (timedOutAnimation.value = true), props.timeoutAnimation);
-    } else {
-      clearTimeout(animationTimer);
-      timedOutAnimation.value = false;
-    }
-  });
+  watch(
+    () => [containsFocus.value, isMouseOver.value],
+    () => {
+      if (!containsFocus.value && !isMouseOver.value) {
+        animationTimer = setTimeout(() => (timedOutAnimation.value = true), props.timeoutAnimation);
+      } else {
+        clearTimeout(animationTimer);
+        timedOutAnimation.value = false;
+      }
+    },
+  );
 });
 
 onBeforeUnmount(() => {

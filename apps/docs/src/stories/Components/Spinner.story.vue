@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Spinner">
-    <template #description>A <b>spinner</b> is used to indicate to users that an action is in progress. For actions that may take a long time, use a [progress bar](#/stories/components/progress) instead.</template>
+    <template #description
+      >A <b>spinner</b> is used to indicate to users that an action is in progress. For actions that may take a long
+      time, use a [progress bar](#/stories/components/progress) instead.</template
+    >
 
     <template #apidocs>
       <component-info name="PfSpinner" />
@@ -31,17 +34,15 @@
           Heading
           <pf-spinner inline aria-label="Spinner in a heading" />
         </h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit Sed hendrerit nisi in cursus maximus.
-        </p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit Sed hendrerit nisi in cursus maximus.</p>
         <h2>
           Second level
           <pf-spinner inline aria-label="spinner in a subheading" />
         </h2>
         <p>
           Curabitur accumsan turpis pharetra blandit. Quisque condimentum maximus mi,
-          <pf-spinner inline aria-label="Spinner in a paragraph" /> sit amet commodo arcu rutrum id. Proin pretium urna vel
-          cursus venenatis. Suspendisse potenti.
+          <pf-spinner inline aria-label="Spinner in a paragraph" /> sit amet commodo arcu rutrum id. Proin pretium urna
+          vel cursus venenatis. Suspendisse potenti.
         </p>
         <small>
           Sometimes you need small text

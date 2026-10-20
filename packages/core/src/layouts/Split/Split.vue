@@ -1,10 +1,13 @@
 <template>
   <component
     :is="component"
-    :class="[styles.split, {
-      [styles.modifiers.gutter]: gutter,
-      [styles.modifiers.wrap]: wrappable,
-    }]"
+    :class="[
+      styles.split,
+      {
+        [styles.modifiers.gutter]: gutter,
+        [styles.modifiers.wrap]: wrappable,
+      },
+    ]"
   >
     <slot />
   </component>

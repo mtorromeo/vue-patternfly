@@ -47,7 +47,9 @@ describe('ProgressStep', () => {
     expect(wrapper.classes()).toContain(styles.progressStepperStep);
     expect(wrapper.classes()).not.toContain(styles.modifiers.current);
     expect(wrapper.attributes('aria-current')).toBeUndefined();
-    expect(wrapper.find(`.${styles.progressStepperStepConnector} > .${styles.progressStepperStepIcon}`).exists()).toBe(true);
+    expect(wrapper.find(`.${styles.progressStepperStepConnector} > .${styles.progressStepperStepIcon}`).exists()).toBe(
+      true,
+    );
     const title = wrapper.find(`.${styles.progressStepperStepMain} > .${styles.progressStepperStepTitle}`);
     expect(title.element.tagName).toBe('DIV');
     expect(title.text()).toBe('Title');
@@ -60,7 +62,7 @@ describe('ProgressStep', () => {
     expect(wrapper.attributes('aria-current')).toBe('step');
   });
 
-  it.each(['success', 'info', 'warning', 'danger'] as const)('applies the %s modifier and renders an icon', (variant) => {
+  it.each(['success', 'info', 'warning', 'danger'] as const)('applies the %s modifier and renders an icon', variant => {
     const wrapper = mount(PfProgressStep, { props: { variant } });
     expect(wrapper.classes()).toContain(styles.modifiers[variant]);
     expect(wrapper.find(`.${styles.progressStepperStepIcon} svg`).exists()).toBe(true);

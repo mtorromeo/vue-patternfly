@@ -1,9 +1,14 @@
 <template>
   <div
-    v-bind="ouiaProps" :class="[styles.fileUpload, {
-      [styles.modifiers.dragHover]: dragActive,
-      [styles.modifiers.loading]: loading,
-    }]">
+    v-bind="ouiaProps"
+    :class="[
+      styles.fileUpload,
+      {
+        [styles.modifiers.dragHover]: dragActive,
+        [styles.modifiers.loading]: loading,
+      },
+    ]"
+  >
     <div :class="styles.fileUploadFileSelect">
       <pf-input-group>
         <pf-input-group-item fill>
@@ -29,7 +34,15 @@
             :disabled="disabled"
             @click="$emit('browseButtonClick', $event)"
           >
-            <input type="file" :accept="props.dataTypes?.join(',')" :name="name" :required="required" style="display: none" @click.stop @change="setFile(($event.target as HTMLInputElement | undefined)?.files?.[0] ?? null)">
+            <input
+              type="file"
+              :accept="props.dataTypes?.join(',')"
+              :name="name"
+              :required="required"
+              style="display: none"
+              @click.stop
+              @change="setFile(($event.target as HTMLInputElement | undefined)?.files?.[0] ?? null)"
+            />
             {{ browseButtonText }}
           </pf-button>
         </pf-input-group-item>
@@ -145,7 +158,7 @@ const props = withDefaults(defineProps<Props>(), {
   clearButtonDisabled: undefined,
   id: () => useId(),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Value of the file's contents (string if text file, ArrayBuffer object otherwise). */
 const value = defineModel<string | ArrayBuffer | null>({ default: null });
@@ -184,20 +197,22 @@ useDropZone(() => filenameInput.value?.input, {
 });
 
 function readFile(fileHandle: File) {
-  return new Promise((resolve: (value: string | ArrayBuffer | null) => void, reject: (reason: DOMException | string | null) => void) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(reader.error);
-    if (props.type === 'text') {
-      reader.readAsText(fileHandle);
-    } else if (props.type === 'dataURL') {
-      reader.readAsDataURL(fileHandle);
-    } else if (props.type === 'arrayBuffer') {
-      reader.readAsArrayBuffer(fileHandle);
-    } else {
-      reject('unknown type');
-    }
-  });
+  return new Promise(
+    (resolve: (value: string | ArrayBuffer | null) => void, reject: (reason: DOMException | string | null) => void) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      if (props.type === 'text') {
+        reader.readAsText(fileHandle);
+      } else if (props.type === 'dataURL') {
+        reader.readAsDataURL(fileHandle);
+      } else if (props.type === 'arrayBuffer') {
+        reader.readAsArrayBuffer(fileHandle);
+      } else {
+        reject('unknown type');
+      }
+    },
+  );
 }
 
 async function setFile(file: File | null) {

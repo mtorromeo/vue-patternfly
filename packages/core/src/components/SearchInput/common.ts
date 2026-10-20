@@ -19,6 +19,6 @@ export interface SearchAttribute {
 export type SearchInputProvide = {
   $el: Readonly<Ref<HTMLDivElement | null>>;
   input: Ref<ComponentExposed<typeof PfTextInputGroupMain> | null>;
-}
+};
 
 export const SearchInputKey = Symbol('SearchInputKey') as InjectionKey<SearchInputProvide>;

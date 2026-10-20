@@ -3,9 +3,7 @@
     v-bind="ouiaProps"
     :class="[
       styles.pageMainGroup,
-      ...classesFromBreakpointProps($props, [
-        'sticky',
-      ], styles, { vertical: true }),
+      ...classesFromBreakpointProps($props, ['sticky'], styles, { vertical: true }),
       {
         [styles.modifiers.stickyTopBase]: stickyBase === 'top',
         [styles.modifiers.stickyBottomBase]: stickyBase === 'bottom',
@@ -18,7 +16,7 @@
         [styles.modifiers.overflowScroll]: overflowScroll,
         [styles.modifiers.plain]: plain,
         [styles.modifiers.noPlainOnGlass]: noPlainOnGlass,
-      }
+      },
     ]"
     :tabindex="overflowScroll ? 0 : undefined"
     :role="overflowScroll ? 'region' : undefined"
@@ -57,7 +55,7 @@ interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

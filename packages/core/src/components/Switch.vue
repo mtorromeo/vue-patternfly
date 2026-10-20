@@ -1,9 +1,13 @@
 <template>
   <label
-    v-bind="{...ouiaProps, ...labelAttrs}"
-    :class="[styles.switch, $attrs.class, {
-      [styles.modifiers.reverse]: reversed,
-    }]"
+    v-bind="{ ...ouiaProps, ...labelAttrs }"
+    :class="[
+      styles.switch,
+      $attrs.class,
+      {
+        [styles.modifiers.reverse]: reversed,
+      },
+    ]"
   >
     <input
       v-bind="$attrs"
@@ -14,14 +18,14 @@
       role="switch"
       :checked="checked"
       @change="checked = ($event.currentTarget as HTMLInputElement).checked"
-    >
+    />
     <input
       v-if="name && isDefined(offValue) && !checked"
       :name="name"
       type="hidden"
       :value="offValue"
       :disabled="disabled"
-    >
+    />
 
     <template v-if="label">
       <span :class="styles.switchToggle">
@@ -70,7 +74,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, '
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const checked = defineModel<boolean>('checked', { default: false });
 

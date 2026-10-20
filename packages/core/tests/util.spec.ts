@@ -167,7 +167,7 @@ describe('walkChildrenVNodes', () => {
     const comment = createCommentVNode('x');
     const nodes = [h('a'), comment, h(Fragment, [h('b')])];
     const visited: string[] = [];
-    const result = walkChildrenVNodes(nodes, (n) => {
+    const result = walkChildrenVNodes(nodes, n => {
       visited.push(n.type as string);
       return h('span', { 'data-original': n.type as string });
     });
@@ -248,7 +248,7 @@ describe('isRawSlots', () => {
 describe('isElementInView', () => {
   function el(left: number, right: number) {
     const e = document.createElement('div');
-    e.getBoundingClientRect = () => ({ left, right } as DOMRect);
+    e.getBoundingClientRect = () => ({ left, right }) as DOMRect;
     return e;
   }
 

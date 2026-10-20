@@ -51,7 +51,10 @@
       <slot v-else name="icon" />
     </span>
 
-    <span v-if="!isSplitButton && variant === 'plain' && !settings && !$slots.icon && !$slots.badge && !$slots.default" :class="styles.menuToggleIcon">
+    <span
+      v-if="!isSplitButton && variant === 'plain' && !settings && !$slots.icon && !$slots.badge && !$slots.default"
+      :class="styles.menuToggleIcon"
+    >
       <ellipsis-vertical-icon />
     </span>
 
@@ -88,24 +91,30 @@
 </template>
 
 <script lang="ts" setup>
-import styles from "@patternfly/react-styles/css/components/MenuToggle/menu-toggle";
-import { computed, type ButtonHTMLAttributes, useTemplateRef } from "vue";
-import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
-import { createReusableTemplate } from "@vueuse/core";
+import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
+import { computed, type ButtonHTMLAttributes, useTemplateRef } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { createReusableTemplate } from '@vueuse/core';
 
-import CaretDownIcon from "@vue-patternfly/icons/caret-down-icon";
-import CircleCheckIcon from "@vue-patternfly/icons/circle-check-icon";
-import CircleExclamationIcon from "@vue-patternfly/icons/circle-exclamation-icon";
-import TriangleExclamationIcon from "@vue-patternfly/icons/triangle-exclamation-icon";
-import EllipsisVerticalIcon from "@vue-patternfly/icons/ellipsis-vertical-icon";
-import GearIcon from "@vue-patternfly/icons/gear-icon";
+import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
+import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
+import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';
+import GearIcon from '@vue-patternfly/icons/gear-icon';
 
 defineOptions({
-  name: "PfMenuToggle",
+  name: 'PfMenuToggle',
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, "type" | "aria-expanded" | "aria-haspopup" | "placeholder" | "onClick"> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<
+      ButtonHTMLAttributes,
+      'type' | 'aria-expanded' | 'aria-haspopup' | 'placeholder' | 'onClick'
+    > {
   /** Flag indicating the toggle is disabled */
   disabled?: boolean;
   /** Flag indicating the toggle is full height */
@@ -119,9 +128,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 
   /** Flag indicating whether the toggle is a settings toggle. This will override the icon property */
   settings?: boolean;
   /** Variant styles of the menu toggle */
-  variant?: "default" | "plain" | "primary" | "plainText" | "secondary" | "typeahead";
+  variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
   /** Status styles of the menu toggle */
-  status?: "success" | "warning" | "danger";
+  status?: 'success' | 'warning' | 'danger';
   /** Smaller size of the menu toggle */
   small?: boolean;
   /** Flag indicating the toggle has circular styling. Can only be applied to plain toggles. */
@@ -129,28 +138,28 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 
   /** Flag indicating the menu toggle is a docked variant. For use in docked navigation. */
   docked?: boolean;
   /** Indicates what type of popup will be triggered by the menu toggle. A value of true is the same as a value of "menu". */
-  ariaHaspopup?: "menu" | "listbox" | "true" | "false" | boolean;
+  ariaHaspopup?: 'menu' | 'listbox' | 'true' | 'false' | boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  ariaHaspopup: "menu",
+  ariaHaspopup: 'menu',
 });
 
 /** Flag indicating the toggle has expanded styling */
-const expanded = defineModel<boolean>("expanded", { default: false });
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
   icon?: (props?: Record<never, never>) => any;
-  "status-icon"?: (props?: Record<never, never>) => any;
+  'status-icon'?: (props?: Record<never, never>) => any;
   badge?: (props?: Record<never, never>) => any;
-  "split-buttons"?: (props?: Record<never, never>) => any;
+  'split-buttons'?: (props?: Record<never, never>) => any;
 }>();
 
-const typeahead = computed(() => props.variant === "typeahead");
-const isSplitButton = computed(() => !typeahead.value && !!slots["split-buttons"]);
+const typeahead = computed(() => props.variant === 'typeahead');
+const isSplitButton = computed(() => !typeahead.value && !!slots['split-buttons']);
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
-const el = useTemplateRef<HTMLDivElement | HTMLButtonElement>("elRef");
+const el = useTemplateRef<HTMLDivElement | HTMLButtonElement>('elRef');
 
 const [DefineToggleControls, ToggleControls] = createReusableTemplate();
 

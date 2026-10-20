@@ -3,11 +3,15 @@
     v-bind="ouiaProps"
     :is="component"
     :type="component === 'ol' ? type : undefined"
-    :class="[styles.list, variant && styles.modifiers[variant], {
-      [styles.modifiers.bordered]: bordered,
-      [styles.modifiers.plain]: plain,
-      [styles.modifiers.iconLg]: iconSize === 'large',
-    }]"
+    :class="[
+      styles.list,
+      variant && styles.modifiers[variant],
+      {
+        [styles.modifiers.bordered]: bordered,
+        [styles.modifiers.plain]: plain,
+        [styles.modifiers.iconLg]: iconSize === 'large',
+      },
+    ]"
   >
     <slot />
   </component>
@@ -43,7 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: '1',
   component: 'ul',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

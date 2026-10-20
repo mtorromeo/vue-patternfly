@@ -44,9 +44,15 @@ describe('Content', () => {
   });
 
   it('applies plain only to lists', () => {
-    expect(mount(PfContent, { props: { component: 'ul', plainList: true } }).classes()).toContain(styles.modifiers.plain);
-    expect(mount(PfContent, { props: { component: 'dl', plainList: true } }).classes()).toContain(styles.modifiers.plain);
-    expect(mount(PfContent, { props: { component: 'p', plainList: true } }).classes()).not.toContain(styles.modifiers.plain);
+    expect(mount(PfContent, { props: { component: 'ul', plainList: true } }).classes()).toContain(
+      styles.modifiers.plain,
+    );
+    expect(mount(PfContent, { props: { component: 'dl', plainList: true } }).classes()).toContain(
+      styles.modifiers.plain,
+    );
+    expect(mount(PfContent, { props: { component: 'p', plainList: true } }).classes()).not.toContain(
+      styles.modifiers.plain,
+    );
   });
 
   it('applies visited and editorial modifiers', () => {
@@ -56,7 +62,11 @@ describe('Content', () => {
   });
 
   it('forwards element attributes', () => {
-    const wrapper = mount(PfContent, { props: { component: 'a' }, attrs: { href: '#here' }, slots: { default: () => 'Link' } });
+    const wrapper = mount(PfContent, {
+      props: { component: 'a' },
+      attrs: { href: '#here' },
+      slots: { default: () => 'Link' },
+    });
     expect(wrapper.attributes('href')).toBe('#here');
     expect(wrapper.text()).toBe('Link');
   });

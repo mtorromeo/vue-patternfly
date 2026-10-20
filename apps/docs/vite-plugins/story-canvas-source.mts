@@ -1,14 +1,14 @@
 import { createFilter, type FilterPattern } from '@rollup/pluginutils';
 import type { Plugin as VitePlugin } from 'vite';
-import { dedent } from "ts-dedent";
-import { parse, HTMLElement, Node } from 'node-html-parser';
+import { dedent } from 'ts-dedent';
+import { parse, HTMLElement, type Node } from 'node-html-parser';
 import Markdown from 'markdown-it';
 import markdownItClass from '@toycode/markdown-it-class';
 // eslint-disable-next-line vue/prefer-import-from-vue
 import { escapeHtml } from '@vue/shared';
 import { createHighlighter } from 'shiki';
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 export const PLUGIN_NAME = 'vue-canvas-source';
 
@@ -26,7 +26,7 @@ export type VueCanvasPluginOptions = {
    * @default undefined
    */
   exclude?: FilterPattern;
-}
+};
 
 const DEFAULT_INCLUDE_RE = /(?:\.story|-demo).vue$/;
 
@@ -55,13 +55,14 @@ async function addSourceToStoryCanvas(el: HTMLElement, id: string) {
   const matches = el.rawAttrs.match(/(?:^|\s)src="([^"]+)"/);
   if (matches) {
     sourcePath = path.resolve(path.dirname(id), matches[1]);
-    source = await fs.readFile(sourcePath, {encoding: 'utf-8'});
+    source = await fs.readFile(sourcePath, { encoding: 'utf-8' });
   }
 
   if (!source) {
     source = el.childNodes
       .filter(node => !(node instanceof HTMLElement) || node.rawTagName !== 'template')
-      .map(node => fixAttrsNewLine(fixSelfClosingTag(node.toString()))).join('');
+      .map(node => fixAttrsNewLine(fixSelfClosingTag(node.toString())))
+      .join('');
   }
 
   el.rawAttrs += ` source="${escapeHtml(dedent(source.trim()))}"`;
@@ -69,7 +70,7 @@ async function addSourceToStoryCanvas(el: HTMLElement, id: string) {
 }
 
 function replaceMarkdown(md: Markdown, el: HTMLElement) {
-  const mdDiv = new HTMLElement('div', { class: 'markdown pf-v6-c-content' }, '', undefined, [0,0]);
+  const mdDiv = new HTMLElement('div', { class: 'markdown pf-v6-c-content' }, '', undefined, [0, 0]);
   mdDiv.innerHTML = md.render(dedent(el.innerText.replace(/&lt;/g, '<').replace(/&gt;/g, '>')));
   el.parentNode.exchangeChild(el, mdDiv);
 }
@@ -77,7 +78,7 @@ function replaceMarkdown(md: Markdown, el: HTMLElement) {
 export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugin {
   const filter = createFilter(options.include ?? DEFAULT_INCLUDE_RE, options.exclude);
 
-  const mdPromise = (async() => {
+  const mdPromise = (async () => {
     const highlighter = await createHighlighter({
       themes: ['nord'],
       langs: ['vue', 'vue-html'],
@@ -117,7 +118,7 @@ export function vueCanvasPlugin(options: VueCanvasPluginOptions = {}): VitePlugi
       const md = await mdPromise;
       const html = parse(code);
 
-      await traverse(html.childNodes, async(el) => {
+      await traverse(html.childNodes, async el => {
         if (el instanceof HTMLElement) {
           if (el.rawTagName === 'story-canvas') {
             const dep = await addSourceToStoryCanvas(el, id);

@@ -15,19 +15,11 @@
     </story-canvas>
 
     <story-canvas title="Disabled">
-      <pf-text-input
-        disabled
-        model-value="disabled text input example"
-        aria-label="disabled text input example"
-      />
+      <pf-text-input disabled model-value="disabled text input example" aria-label="disabled text input example" />
     </story-canvas>
 
     <story-canvas title="Read only">
-      <pf-text-input
-        readonly
-        model-value="read only text input example"
-        aria-label="read only text input example"
-      />
+      <pf-text-input readonly model-value="read only text input example" aria-label="read only text input example" />
     </story-canvas>
 
     <story-canvas title="Validation">
@@ -38,7 +30,7 @@
         aria-label="does not validate"
         :auto-validate="false"
       />
-      <br>
+      <br />
       <pf-text-input
         required
         pattern="[0-9a-f]*"
@@ -46,7 +38,7 @@
         aria-label="validates on enter/submit"
         auto-validate
       />
-      <br>
+      <br />
       <pf-text-input
         required
         pattern="[0-9a-f]*"
@@ -54,7 +46,7 @@
         aria-label="validates on blur"
         auto-validate="blur"
       />
-      <br>
+      <br />
       <pf-text-input
         v-model="text2"
         required
@@ -63,7 +55,7 @@
         aria-label="validates on change"
         auto-validate="change"
       />
-      <br>
+      <br />
       <pf-text-input
         required
         pattern="[0-9a-f]*"
@@ -71,7 +63,7 @@
         aria-label="validates on input"
         auto-validate="input"
       />
-      <br>
+      <br />
       <pf-text-input
         required
         pattern="[0-9a-f]*"
@@ -83,7 +75,10 @@
     </story-canvas>
 
     <story-canvas title="Truncated on left">
-      <pf-text-input start-truncated model-value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+      <pf-text-input
+        start-truncated
+        model-value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      />
     </story-canvas>
 
     <story-canvas title="Select all">
@@ -105,7 +100,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from "vue";
+import { ref, type Ref } from 'vue';
 import ClockIcon from '@vue-patternfly/icons/clock-icon';
 
 const text1: Ref<string | null> = ref(null);

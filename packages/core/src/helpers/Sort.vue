@@ -10,7 +10,7 @@
  */
 
 import type { VNode } from 'vue';
-import { fragment, vnodeTypeIsComponent } from "../util";
+import { fragment, vnodeTypeIsComponent } from '../util';
 
 defineOptions({
   inheritAttrs: false,
@@ -30,13 +30,11 @@ function render() {
   const children = slots.default({});
 
   children.sort((a, b) => {
-    const aWeight = (vnodeTypeIsComponent(a.type) && (a.type.name || a.type.__name) === 'SortBy') ? (a.props?.weight ?? 0) : 0;
-    const bWeight = (vnodeTypeIsComponent(b.type) && (b.type.name || b.type.__name) === 'SortBy') ? (b.props?.weight ?? 0) : 0;
-    return (aWeight === bWeight
-      ? 0
-      : aWeight > bWeight
-        ? 1
-        : -1) * (props.reverse ? -1 : 1);
+    const aWeight =
+      vnodeTypeIsComponent(a.type) && (a.type.name || a.type.__name) === 'SortBy' ? (a.props?.weight ?? 0) : 0;
+    const bWeight =
+      vnodeTypeIsComponent(b.type) && (b.type.name || b.type.__name) === 'SortBy' ? (b.props?.weight ?? 0) : 0;
+    return (aWeight === bWeight ? 0 : aWeight > bWeight ? 1 : -1) * (props.reverse ? -1 : 1);
   });
 
   return children;

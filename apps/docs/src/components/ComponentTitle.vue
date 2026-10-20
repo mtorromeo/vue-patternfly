@@ -14,8 +14,9 @@ interface Props extends /* @vue-ignore */ ComponentProps<typeof PfTitle> {
 
 const props = defineProps<Props>();
 
-const kebabName = computed(() =>
-  props.name.charAt(0).toLowerCase() +
-  props.name.substring(1).replace(/([A-Z])/g, (s: string) => `-${s.toLowerCase()}`),
+const kebabName = computed(
+  () =>
+    props.name.charAt(0).toLowerCase() +
+    props.name.substring(1).replace(/([A-Z])/g, (s: string) => `-${s.toLowerCase()}`),
 );
 </script>

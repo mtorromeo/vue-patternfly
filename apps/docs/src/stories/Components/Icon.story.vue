@@ -1,7 +1,10 @@
 <template>
   <doc-page title="Icon">
     <component-title name="pf-icon" />
-    <template #description>An <b>icon</b> component is a container that allows for icons of varying dimensions, as well as spinners, to seamlessly replace each other without shifting surrounding content.</template>
+    <template #description
+      >An <b>icon</b> component is a container that allows for icons of varying dimensions, as well as spinners, to
+      seamlessly replace each other without shifting surrounding content.</template
+    >
 
     <template #apidocs>
       <component-info name="PfIcon" />
@@ -94,9 +97,7 @@
             <CirclePlusIcon />
           </pf-icon>
         </h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit Sed hendrerit nisi in cursus maximus.
-        </p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit Sed hendrerit nisi in cursus maximus.</p>
         <h2>
           Second level
           <pf-icon inline>
@@ -151,11 +152,7 @@
       </template>
 
       <div style="margin-bottom: 12px">
-        <pf-checkbox
-          v-model="inProgress"
-          label="Toggle in progress state"
-          aria-label="Set icon progress state"
-        />
+        <pf-checkbox v-model="inProgress" label="Toggle in progress state" aria-label="Set icon progress state" />
       </div>
 
       <pf-icon :in-progress="inProgress">
@@ -165,11 +162,7 @@
 
     <story-canvas title="Custom in progress icon">
       <div style="margin-bottom: 12px">
-        <pf-checkbox
-          v-model="inProgress2"
-          label="Toggle in progress state"
-          aria-label="Set icon progress state"
-        />
+        <pf-checkbox v-model="inProgress2" label="Toggle in progress state" aria-label="Set icon progress state" />
       </div>
 
       <pf-icon :in-progress="inProgress2">

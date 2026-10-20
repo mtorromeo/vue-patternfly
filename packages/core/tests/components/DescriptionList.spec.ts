@@ -16,10 +16,11 @@ describe('DescriptionList', () => {
   it('renders a dl without modifiers by default', () => {
     const wrapper = mount(PfDescriptionList, {
       slots: {
-        default: () => h(PfDescriptionListGroup, () => [
-          h(PfDescriptionListTerm, () => 'Name'),
-          h(PfDescriptionListDescription, () => 'Example'),
-        ]),
+        default: () =>
+          h(PfDescriptionListGroup, () => [
+            h(PfDescriptionListTerm, () => 'Name'),
+            h(PfDescriptionListDescription, () => 'Example'),
+          ]),
       },
     });
 
@@ -33,10 +34,24 @@ describe('DescriptionList', () => {
 
   it('applies boolean modifiers', () => {
     const wrapper = mount(PfDescriptionList, {
-      props: { horizontal: true, autoColumnWidths: true, autoFit: true, inlineGrid: true, compact: true, fillColumns: true },
+      props: {
+        horizontal: true,
+        autoColumnWidths: true,
+        autoFit: true,
+        inlineGrid: true,
+        compact: true,
+        fillColumns: true,
+      },
     });
 
-    for (const modifier of ['horizontal', 'autoColumnWidths', 'autoFit', 'inlineGrid', 'compact', 'fillColumns'] as const) {
+    for (const modifier of [
+      'horizontal',
+      'autoColumnWidths',
+      'autoFit',
+      'inlineGrid',
+      'compact',
+      'fillColumns',
+    ] as const) {
       expect(wrapper.classes()).toContain(styles.modifiers[modifier]);
     }
   });
@@ -57,7 +72,13 @@ describe('DescriptionList', () => {
 
   it('applies responsive columns and orientation modifiers', () => {
     const wrapper = mount(PfDescriptionList, {
-      props: { columns: '1Col', columnsMd: '2Col', columns2xl: '3Col', orientation: 'vertical', orientationLg: 'horizontal' },
+      props: {
+        columns: '1Col',
+        columnsMd: '2Col',
+        columns2xl: '3Col',
+        orientation: 'vertical',
+        orientationLg: 'horizontal',
+      },
     });
 
     expect(wrapper.classes()).toContain(styles.modifiers['1Col']);
@@ -69,7 +90,13 @@ describe('DescriptionList', () => {
 
   it('sets term width and responsive css variables', () => {
     const wrapper = mount(PfDescriptionList, {
-      props: { termWidth: '10ch', autoFitMin: '100px', autoFitMinMd: '200px', horizontalTermWidth: '12ch', horizontalTermWidthXl: '15ch' },
+      props: {
+        termWidth: '10ch',
+        autoFitMin: '100px',
+        autoFitMinMd: '200px',
+        horizontalTermWidth: '12ch',
+        horizontalTermWidthXl: '15ch',
+      },
     });
 
     const style = (wrapper.element as HTMLElement).style;
@@ -109,7 +136,9 @@ describe('DescriptionListTerm', () => {
   });
 
   it('renders the icon slot', () => {
-    const wrapper = mount(PfDescriptionListTerm, { slots: { icon: () => h('i', { class: 'my-icon' }), default: () => 'Term' } });
+    const wrapper = mount(PfDescriptionListTerm, {
+      slots: { icon: () => h('i', { class: 'my-icon' }), default: () => 'Term' },
+    });
     expect(wrapper.find(`.${styles.descriptionListTermIcon} .my-icon`).exists()).toBe(true);
   });
 });
@@ -148,7 +177,7 @@ describe('DescriptionListTermHelpTextButton', () => {
     expect(wrapper.text()).toBe('Help');
   });
 
-  it.each(['Enter', ' '])('clicks itself when pressing %j', async (key) => {
+  it.each(['Enter', ' '])('clicks itself when pressing %j', async key => {
     const onClick = vi.fn();
     const wrapper = mount(PfDescriptionListTermHelpTextButton, { attrs: { onClick } });
 
@@ -160,7 +189,10 @@ describe('DescriptionListTermHelpTextButton', () => {
 
   it('ignores other keys and events from children', async () => {
     const onClick = vi.fn();
-    const wrapper = mount(PfDescriptionListTermHelpTextButton, { attrs: { onClick }, slots: { default: () => h('b', 'child') } });
+    const wrapper = mount(PfDescriptionListTermHelpTextButton, {
+      attrs: { onClick },
+      slots: { default: () => h('b', 'child') },
+    });
 
     await wrapper.trigger('keydown', { key: 'a' });
     await wrapper.find('b').trigger('keydown', { key: 'Enter' });

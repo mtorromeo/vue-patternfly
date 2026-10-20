@@ -1,6 +1,10 @@
 <template>
   <doc-page title="Overflow Menu">
-    <template #description>An <b>overflow menu</b> groups a set of actions in a responsive horizontal list to help declutter an interface. Actions can be set to persist or collapse into a kebab as the viewpoint shrinks. Overflow menus are useful in toolbars or other places where a group of actions is required.</template>
+    <template #description
+      >An <b>overflow menu</b> groups a set of actions in a responsive horizontal list to help declutter an interface.
+      Actions can be set to persist or collapse into a kebab as the viewpoint shrinks. Overflow menus are useful in
+      toolbars or other places where a group of actions is required.</template
+    >
 
     <template #apidocs>
       <component-info name="PfOverflowMenu" />
@@ -92,9 +96,9 @@
 
 <script lang="ts" setup>
 import AlignLeftIcon from '@vue-patternfly/icons/align-left-icon';
-import AlignCenterIcon from "@vue-patternfly/icons/align-center-icon";
-import AlignRightIcon from "@vue-patternfly/icons/align-right-icon";
-import { ref } from "vue";
+import AlignCenterIcon from '@vue-patternfly/icons/align-center-icon';
+import AlignRightIcon from '@vue-patternfly/icons/align-right-icon';
+import { ref } from 'vue';
 
 const open = ref(false);
 </script>

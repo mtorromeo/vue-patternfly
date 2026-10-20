@@ -1,11 +1,16 @@
 <template>
   <component
     v-bind="ouiaProps"
-    :is="dl ? 'dl' : 'div'" :class="[styles.accordion, {
-      [styles.modifiers.bordered]: bordered,
-      [styles.modifiers.displayLg]: large,
-      [styles.modifiers.toggleStart]: togglePosition === 'start',
-    }]">
+    :is="dl ? 'dl' : 'div'"
+    :class="[
+      styles.accordion,
+      {
+        [styles.modifiers.bordered]: bordered,
+        [styles.modifiers.displayLg]: large,
+        [styles.modifiers.toggleStart]: togglePosition === 'start',
+      },
+    ]"
+  >
     <slot />
   </component>
 </template>
@@ -48,7 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
   level: 3,
   togglePosition: 'end',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 provide(AccordionKey, {
   dl: props.dl,

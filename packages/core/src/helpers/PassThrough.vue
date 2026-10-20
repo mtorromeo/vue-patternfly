@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import { type ComponentPublicInstance, type Slot, type VNode } from "vue";
-import { findChildrenVNodes, fragment } from "../util";
+import type { ComponentPublicInstance, Slot, VNode } from 'vue';
+import { findChildrenVNodes, fragment } from '../util';
 
 defineOptions({
   inheritAttrs: false,
@@ -12,9 +12,13 @@ defineOptions({
 
 interface Props {
   alter?: (v: VNode[]) => VNode[];
-  useRef?: ComponentPublicInstance<object, object, {
-    templateFn?: Slot,
-  }>;
+  useRef?: ComponentPublicInstance<
+    object,
+    object,
+    {
+      templateFn?: Slot;
+    }
+  >;
   template?: boolean;
 }
 
@@ -64,7 +68,7 @@ function render() {
 
 defineExpose({
   get templateFn(): Slot | undefined {
-    return props.template ? slots.default as Slot | undefined : undefined;
+    return props.template ? (slots.default as Slot | undefined) : undefined;
   },
 });
 </script>

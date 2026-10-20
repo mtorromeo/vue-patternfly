@@ -33,9 +33,7 @@
         v-model="userInputPage"
         :aria-label="currPageAriaLabel"
         type="number"
-        :disabled="
-          disabled || (page === firstPage && page === lastPage) || page === 0
-        "
+        :disabled="disabled || (page === firstPage && page === lastPage) || page === 0"
         :auto-validate="false"
         :min="lastPage <= 0 && firstPage <= 0 ? 0 : 1"
         :max="lastPage"
@@ -130,7 +128,7 @@ const props = withDefaults(defineProps<Props>(), {
   currPageAriaLabel: 'Current page',
   paginationAriaLabel: 'Pagination',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -146,7 +144,11 @@ const emit = defineEmits<{
 
 const userInputPage: Ref<string | number> = ref(props.page);
 
-watch(() => props.page, (v: number) => (userInputPage.value = v), { immediate: true });
+watch(
+  () => props.page,
+  (v: number) => (userInputPage.value = v),
+  { immediate: true },
+);
 
 function handleNewPage(newPage: number) {
   const startIdx = (newPage - 1) * props.perPage;
@@ -164,17 +166,7 @@ function parseInteger(input: string | number, lastPage: number) {
 }
 
 function onKeydown(e: KeyboardEvent) {
-  const allowedKeys = [
-    'Tab',
-    'Backspace',
-    'Delete',
-    'ArrowLeft',
-    'ArrowRight',
-    'Home',
-    'End',
-    'ArrowUp',
-    'ArrowDown',
-  ];
+  const allowedKeys = ['Tab', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'ArrowUp', 'ArrowDown'];
   if (e.key === 'Enter') {
     const inputPage = parseInteger(userInputPage.value, props.lastPage);
     handleNewPage(isNaN(inputPage) ? props.page : inputPage);

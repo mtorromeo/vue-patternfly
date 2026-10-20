@@ -136,16 +136,11 @@ const props = withDefaults(defineProps<Props>(), {
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'options-menu',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
-  total?: (props?: {
-    firstIndex: number;
-    lastIndex: number;
-    count: number;
-    titleItems?: string;
-  }) => any;
+  total?: (props?: { firstIndex: number; lastIndex: number; count: number; titleItems?: string }) => any;
 }>();
 
 const emit = defineEmits<{
@@ -160,18 +155,14 @@ const emit = defineEmits<{
 const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['inset'], styles));
 
 const firstIndex = computed(() => {
-  return props.count <= 0
-    ? 0
-    : (constrainedPage.value - 1) * props.perPage + 1;
+  return props.count <= 0 ? 0 : (constrainedPage.value - 1) * props.perPage + 1;
 });
 
 const lastIndex = computed(() => {
   if (props.count <= 0) {
     return 0;
   }
-  return constrainedPage.value === lastPage.value
-    ? props.count
-    : constrainedPage.value * props.perPage;
+  return constrainedPage.value === lastPage.value ? props.count : constrainedPage.value * props.perPage;
 });
 
 const lastPage = computed(() => {
@@ -179,15 +170,11 @@ const lastPage = computed(() => {
 });
 
 const effectiveItemsStart = computed(() => {
-  return isDefined(props.offset)
-    ? props.offset + 1
-    : props.itemsStart;
+  return isDefined(props.offset) ? props.offset + 1 : props.itemsStart;
 });
 
 const effectiveItemsEnd = computed(() => {
-  return isDefined(props.offset)
-    ? props.offset + props.perPage
-    : props.itemsEnd;
+  return isDefined(props.offset) ? props.offset + props.perPage : props.itemsEnd;
 });
 
 const constrainedPage = computed(() => {

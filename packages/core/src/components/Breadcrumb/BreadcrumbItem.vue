@@ -1,5 +1,5 @@
 <template>
-  <li v-bind="{...ouiaProps, ...liAttrs}" :class="styles.breadcrumbItem">
+  <li v-bind="{ ...ouiaProps, ...liAttrs }" :class="styles.breadcrumbItem">
     <span v-if="showDivider" :class="styles.breadcrumbItemDivider">
       <pf-angle-right-icon />
     </span>
@@ -45,7 +45,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<AnchorHTMLAttributes, 
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

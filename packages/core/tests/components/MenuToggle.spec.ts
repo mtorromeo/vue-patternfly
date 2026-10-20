@@ -37,7 +37,7 @@ describe('MenuToggle', () => {
       expect(wrapper.find(`.${styles.menuToggleCount}`).text()).toBe('4');
     });
 
-    it.each(['success', 'warning', 'danger'] as const)('applies the %s status modifier and icon', (status) => {
+    it.each(['success', 'warning', 'danger'] as const)('applies the %s status modifier and icon', status => {
       const wrapper = mount(PfMenuToggle, { props: { status }, slots: { default: () => 'Status' } });
 
       expect(root(wrapper).classes()).toContain(styles.modifiers[status]);
@@ -69,7 +69,10 @@ describe('MenuToggle', () => {
     });
 
     it('accepts the attribute form', () => {
-      const wrapper = mount(PfMenuToggle, { attrs: { 'aria-haspopup': 'listbox' }, slots: { default: () => 'Toggle' } });
+      const wrapper = mount(PfMenuToggle, {
+        attrs: { 'aria-haspopup': 'listbox' },
+        slots: { default: () => 'Toggle' },
+      });
       expect(root(wrapper).attributes('aria-haspopup')).toBe('listbox');
     });
   });
@@ -175,10 +178,13 @@ describe('MenuToggle', () => {
       expect(root(wrapper).classes()).toContain(styles.modifiers.circle);
     });
 
-    it.each(['default', 'primary', 'secondary', 'plainText', 'typeahead'] as const)('does not apply the circle modifier to the %s variant', (variant) => {
-      const wrapper = mount(PfMenuToggle, { props: { variant, circle: true }, slots: { default: () => 'Text' } });
-      expect(root(wrapper).classes()).not.toContain(styles.modifiers.circle);
-    });
+    it.each(['default', 'primary', 'secondary', 'plainText', 'typeahead'] as const)(
+      'does not apply the circle modifier to the %s variant',
+      variant => {
+        const wrapper = mount(PfMenuToggle, { props: { variant, circle: true }, slots: { default: () => 'Text' } });
+        expect(root(wrapper).classes()).not.toContain(styles.modifiers.circle);
+      },
+    );
   });
 
   describe('typeahead variant', () => {
@@ -274,13 +280,15 @@ describe('MenuToggle', () => {
       slots: { default: () => 'Text' },
     });
 
-    expect(root(wrapper).classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.fullWidth,
-      styles.modifiers.fullHeight,
-      styles.modifiers.small,
-      styles.modifiers.form,
-      styles.modifiers.placeholder,
-    ]));
+    expect(root(wrapper).classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.fullWidth,
+        styles.modifiers.fullHeight,
+        styles.modifiers.small,
+        styles.modifiers.form,
+        styles.modifiers.placeholder,
+      ]),
+    );
   });
 
   it('renders the gear icon for settings toggles', () => {
@@ -321,7 +329,11 @@ describe('MenuToggleAction', () => {
   });
 
   it('works inside a split button toggle', () => {
-    const wrapper = mount(PfMenuToggle, { slots: { 'split-buttons': () => h(PfMenuToggleAction, { class: 'action', 'aria-label': 'Action' }, () => 'Action') } });
+    const wrapper = mount(PfMenuToggle, {
+      slots: {
+        'split-buttons': () => h(PfMenuToggleAction, { class: 'action', 'aria-label': 'Action' }, () => 'Action'),
+      },
+    });
     expect(root(wrapper).classes()).toContain(styles.modifiers.splitButton);
     const action = wrapper.find('button.action');
     expect(action.classes()).toContain(styles.menuToggleButton);
@@ -375,7 +387,9 @@ describe('MenuToggleCheckbox', () => {
   });
 
   it('renders inside a split button toggle', () => {
-    const wrapper = mount(PfMenuToggle, { slots: { 'split-buttons': () => h(PfMenuToggleCheckbox, { 'aria-label': 'Select' }) } });
+    const wrapper = mount(PfMenuToggle, {
+      slots: { 'split-buttons': () => h(PfMenuToggleCheckbox, { 'aria-label': 'Select' }) },
+    });
     expect(root(wrapper).classes()).toContain(styles.modifiers.splitButton);
     expect(wrapper.find(`.${checkStyles.check} input[type="checkbox"]`).exists()).toBe(true);
   });

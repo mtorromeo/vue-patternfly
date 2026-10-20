@@ -43,7 +43,7 @@
           <pf-form-select-option value="other" label="Other" />
         </optgroup>
       </pf-form-select>
-      <br>
+      <br />
       <p>Value: {{ JSON.stringify(value) }}</p>
     </story-canvas>
 
@@ -58,7 +58,7 @@
         <pf-form-select-option value="yellow" label="Yellow" />
         <pf-form-select-option value="purple" label="Purple" disabled />
       </pf-form-select>
-      <br>
+      <br />
       <p>Values: {{ JSON.stringify(values) }}</p>
     </story-canvas>
   </doc-page>

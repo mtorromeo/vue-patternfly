@@ -33,7 +33,7 @@ const restButtonProps = computed(() => {
   const { onClick, ...rest } = (props.buttonProps ?? {}) as ComponentProps<typeof PfButton> & { onClick?: unknown };
   return rest;
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   /** A callback for when the close button is clicked  */

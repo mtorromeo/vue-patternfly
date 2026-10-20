@@ -23,7 +23,13 @@ describe('EmptyState', () => {
 
   it('does not apply size modifiers by default', () => {
     const wrapper = mount(PfEmptyState);
-    for (const modifier of [styles.modifiers.xs, styles.modifiers.sm, styles.modifiers.lg, styles.modifiers.xl, styles.modifiers.fullHeight]) {
+    for (const modifier of [
+      styles.modifiers.xs,
+      styles.modifiers.sm,
+      styles.modifiers.lg,
+      styles.modifiers.xl,
+      styles.modifiers.fullHeight,
+    ]) {
       expect(wrapper.classes()).not.toContain(modifier);
     }
   });
@@ -114,7 +120,9 @@ describe('EmptyStateHeader', () => {
 
 describe('EmptyStateIcon', () => {
   it('renders children hidden from assistive technologies', () => {
-    const wrapper = mount(PfEmptyStateIcon, { slots: { default: () => [h('svg', { class: 'a' }), h('svg', { class: 'b' })] } });
+    const wrapper = mount(PfEmptyStateIcon, {
+      slots: { default: () => [h('svg', { class: 'a' }), h('svg', { class: 'b' })] },
+    });
 
     expect(wrapper.classes()).toContain(styles.emptyStateIcon);
     expect(wrapper.find('.a').attributes('aria-hidden')).toBe('true');
@@ -122,7 +130,9 @@ describe('EmptyStateIcon', () => {
   });
 
   it('lets children override aria-hidden', () => {
-    const wrapper = mount(PfEmptyStateIcon, { slots: { default: () => h('svg', { class: 'a', 'aria-hidden': 'false' }) } });
+    const wrapper = mount(PfEmptyStateIcon, {
+      slots: { default: () => h('svg', { class: 'a', 'aria-hidden': 'false' }) },
+    });
     expect(wrapper.find('.a').attributes('aria-hidden')).toBe('false');
   });
 

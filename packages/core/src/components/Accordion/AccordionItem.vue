@@ -1,17 +1,25 @@
 <template>
   <div
     :class="[
-      styles.accordionItem, {
+      styles.accordionItem,
+      {
         [styles.modifiers.expanded]: expanded,
       },
     ]"
   >
-    <component v-bind="ouiaProps" :is="toggleComponent || (accordion?.dl ? 'dt' : (typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`))">
+    <component
+      v-bind="ouiaProps"
+      :is="
+        toggleComponent ||
+        (accordion?.dl ? 'dt' : typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`)
+      "
+    >
       <button
         v-bind="$attrs"
         type="button"
         :class="[
-          styles.accordionToggle, {
+          styles.accordionToggle,
+          {
             [styles.modifiers.expanded]: expanded,
           },
         ]"
@@ -33,7 +41,8 @@
     <component
       :is="contentComponent || (accordion?.dl ? 'dd' : 'div')"
       :class="[
-        styles.accordionExpandableContent, {
+        styles.accordionExpandableContent,
+        {
           [styles.modifiers.fixed]: fixed,
           [styles.modifiers.expanded]: expanded,
         },
@@ -67,7 +76,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const expanded = defineModel<boolean>('expanded', { default: false });
 

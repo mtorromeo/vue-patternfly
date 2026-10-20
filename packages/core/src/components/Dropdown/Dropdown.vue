@@ -3,7 +3,14 @@
     <component :is="fragment(renderToggles())" />
   </pass-through>
 
-  <floating-ui :teleport-to="appendTo" flip :reference="toggleElementRef" :placement="placement" :z-index="zIndex" :hidden="!open">
+  <floating-ui
+    :teleport-to="appendTo"
+    flip
+    :reference="toggleElementRef"
+    :placement="placement"
+    :z-index="zIndex"
+    :hidden="!open"
+  >
     <pf-menu
       ref="menuRef"
       v-bind="$attrs"
@@ -53,7 +60,18 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 </script>
 
 <script lang="ts" setup>
-import { h, mergeProps, type VNode, computed, watch, nextTick, onMounted, onBeforeUnmount, type RendererElement, useTemplateRef } from 'vue';
+import {
+  h,
+  mergeProps,
+  type VNode,
+  computed,
+  watch,
+  nextTick,
+  onMounted,
+  onBeforeUnmount,
+  type RendererElement,
+  useTemplateRef,
+} from 'vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenu, { type MenuItemId } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
@@ -77,7 +95,7 @@ const props = withDefaults(defineProps<Props>(), {
   zIndex: 9999,
   placement: 'bottom',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag to indicate if menu is opened.*/
 const open = defineModel<boolean>('open', { default: false });
@@ -134,12 +152,19 @@ function renderToggles() {
     }
     children.push(...toggles);
   } else {
-    const toggle = h(PfMenuToggle, mergeProps({
-      splitButton: props.splitButton,
-      variant: props.variant,
-    }, toggleProps), {
-      default: () => props.text,
-    });
+    const toggle = h(
+      PfMenuToggle,
+      mergeProps(
+        {
+          splitButton: props.splitButton,
+          variant: props.variant,
+        },
+        toggleProps,
+      ),
+      {
+        default: () => props.text,
+      },
+    );
     children.push(toggle);
   }
 
@@ -174,7 +199,7 @@ const handleClick = (event: PointerEvent) => {
   }
 };
 
-watch(open, (isOpen) => {
+watch(open, isOpen => {
   if (isOpen && props.shouldFocusFirstItemOnOpen) {
     nextTick(() => {
       const items = menu.value?.items;

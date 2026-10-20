@@ -3,15 +3,13 @@
     v-bind="ouiaProps"
     :class="[
       styles.pageMainBreadcrumb,
-      ...classesFromBreakpointProps($props, [
-        'sticky',
-      ], styles, { vertical: true }),
+      ...classesFromBreakpointProps($props, ['sticky'], styles, { vertical: true }),
       {
         [styles.modifiers.limitWidth]: isWidthLimited,
         [styles.modifiers.shadowTop]: shadowTop,
         [styles.modifiers.shadowBottom]: shadowBottom,
         [styles.modifiers.overflowScroll]: overflowScroll,
-      }
+      },
     ]"
     :style="{
       '--pf-v6-c-page--section--m-limit-width--MaxWidth': maxWidth,
@@ -50,7 +48,7 @@ interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

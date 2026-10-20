@@ -1,6 +1,6 @@
 import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref, WritableComputedRef } from 'vue';
 import type { ChildrenTrackerInjectionKey } from '../../use';
-import PfMenuList from '../Menu/MenuList.vue';
+import type PfMenuList from '../Menu/MenuList.vue';
 import type { ComponentExposed } from 'vue-component-type-helpers';
 
 export type TabsProvide = {
@@ -10,7 +10,7 @@ export type TabsProvide = {
   idSuffix: MaybeRefOrGetter<string>;
   tabOverflowRef: Ref<ComponentExposed<typeof PfMenuList> | undefined>;
   contentTargetRef: Ref<HTMLElement | undefined>;
-}
+};
 
 export const TabsProvideKey = Symbol('TabsProvide') as InjectionKey<TabsProvide>;
 
@@ -20,8 +20,8 @@ export type TabData = {
   overflowing: Ref<boolean>;
   href: MaybeRefOrGetter<string | undefined>;
   disabled: MaybeRefOrGetter<boolean>;
-}
+};
 
 export type TabKey = number | string | symbol;
 
-export const TabsKey = Symbol("TabsKey") as ChildrenTrackerInjectionKey<TabData>;
+export const TabsKey = Symbol('TabsKey') as ChildrenTrackerInjectionKey<TabData>;

@@ -269,7 +269,10 @@
       <pf-description-list fill-columns columns="2Col" columns-lg="3Col">
         <pf-description-list-group>
           <pf-description-list-term>Name</pf-description-list-term>
-          <pf-description-list-description>This is a long description that should wrap to multiple lines in a multi-column layout.</pf-description-list-description>
+          <pf-description-list-description
+            >This is a long description that should wrap to multiple lines in a multi-column
+            layout.</pf-description-list-description
+          >
         </pf-description-list-group>
         <pf-description-list-group>
           <pf-description-list-term>Namespace</pf-description-list-term>
@@ -466,10 +469,10 @@
 .preview-placeholder {
   display: block;
   width: 100%;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   color: #004e8a;
   background-color: #def3ff;
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 }
 </style>

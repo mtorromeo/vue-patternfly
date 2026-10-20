@@ -2,9 +2,13 @@
   <component
     v-bind="ouiaProps"
     :is="component ?? (wrapWithLabel ? 'label' : 'div')"
-    :class="[styles.check, $attrs.class, {
-      [styles.modifiers.standalone]: !labelWrapped && !(label || $slots.label),
-    }]"
+    :class="[
+      styles.check,
+      $attrs.class,
+      {
+        [styles.modifiers.standalone]: !labelWrapped && !(label || $slots.label),
+      },
+    ]"
     :for="labelWrapped ? id : undefined"
   >
     <sort>
@@ -12,9 +16,12 @@
         <component
           :is="wrapWithLabel ? 'span' : 'label'"
           v-if="label || $slots.label"
-          :class="[styles.checkLabel, {
-            [styles.modifiers.disabled]: disabled,
-          }]"
+          :class="[
+            styles.checkLabel,
+            {
+              [styles.modifiers.disabled]: disabled,
+            },
+          ]"
           :for="wrapWithLabel ? undefined : id"
         >
           <slot name="label">{{ label }}</slot>
@@ -25,7 +32,7 @@
       <input
         :id="id"
         ref="inputRef"
-        v-bind="{...$attrs, class: undefined}"
+        v-bind="{ ...$attrs, class: undefined }"
         type="checkbox"
         :class="[styles.checkInput, inputClass]"
         :checked="modelValue === null ? undefined : modelValue"
@@ -33,7 +40,7 @@
         :disabled="disabled"
         :required="required"
         @change="onChange"
-      >
+      />
     </sort>
 
     <span v-if="description || $slots.description" :class="styles.checkDescription">
@@ -47,7 +54,15 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef, useId, type HTMLAttributes } from 'vue';
+import {
+  computed,
+  type Component,
+  type InputHTMLAttributes,
+  getCurrentInstance,
+  useTemplateRef,
+  useId,
+  type HTMLAttributes,
+} from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
@@ -59,7 +74,8 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked' | 'autocomplete'> {
+interface Props
+  extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked' | 'autocomplete'> {
   component?: string | Component;
   /** Additional classes added to the input. */
   inputClass?: HTMLAttributes['class'];
@@ -84,7 +100,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, '
 const props = withDefaults(defineProps<Props>(), {
   id: () => useId(),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag to show if the checkbox is checked. */
 const value = defineModel<boolean | null>({ default: false });

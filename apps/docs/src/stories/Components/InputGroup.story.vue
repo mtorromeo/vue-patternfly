@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Input Group">
-    <template #description>An <b>input group</b> groups multiple related controls or inputs together so they appear as one control.</template>
+    <template #description
+      >An <b>input group</b> groups multiple related controls or inputs together so they appear as one
+      control.</template
+    >
 
     <template #apidocs>
       <component-info name="PfInputGroup" />
@@ -60,6 +63,6 @@
 </template>
 
 <script lang="ts" setup>
-import AtIcon from "@vue-patternfly/icons/at-icon";
-import MagnifyingGlassIcon from "@vue-patternfly/icons/magnifying-glass-icon";
+import AtIcon from '@vue-patternfly/icons/at-icon';
+import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
 </script>

@@ -20,9 +20,11 @@
       >
         <component
           :is="component"
-          v-bind="{...ouiaProps, ...$attrs}"
+          v-bind="{ ...ouiaProps, ...$attrs }"
           role="dialog"
-          :aria-labelledby="$attrs['aria-labelledby'] ?? (title && !$slots.header && !$attrs['aria-label'] ? titleId : undefined)"
+          :aria-labelledby="
+            $attrs['aria-labelledby'] ?? (title && !$slots.header && !$attrs['aria-label'] ? titleId : undefined)
+          "
           :aria-describedby="ariaDescribedby || (noBodyWrapper ? null : descriptorId)"
           aria-modal="true"
           :class="[
@@ -35,10 +37,15 @@
               [styles.modifiers.lg]: variant === 'large',
               [styles.modifiers.sm]: variant === 'small',
               [styles.modifiers.md]: variant === 'medium',
-            }]"
+            },
+          ]"
           :style="{
             '--pf-v6-c-modal-box--Width': width ? (typeof width !== 'number' ? width : `${width}px`) : undefined,
-            '--pf-v6-c-modal-box--MaxWidth': maxWidth ? (typeof maxWidth !== 'number' ? maxWidth : `${maxWidth}px`) : undefined,
+            '--pf-v6-c-modal-box--MaxWidth': maxWidth
+              ? typeof maxWidth !== 'number'
+                ? maxWidth
+                : `${maxWidth}px`
+              : undefined,
             [topSpacer.name]: positionOffset,
           }"
         >
@@ -52,9 +59,12 @@
                 <h1
                   :id="titleId"
                   ref="titleRef"
-                  :class="[styles.modalBoxTitle, {
-                    [styles.modifiers.icon]: titleIconVariant,
-                  }]"
+                  :class="[
+                    styles.modalBoxTitle,
+                    {
+                      [styles.modifiers.icon]: titleIconVariant,
+                    },
+                  ]"
                 >
                   <span v-if="titleIconVariant" :class="styles.modalBoxTitleIcon">
                     <circle-check-icon v-if="titleIconVariant === 'success'" />
@@ -130,13 +140,13 @@ const transitionEndFallbackDelay = 300;
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
   /** Flag to show the modal */
-  open?: boolean,
+  open?: boolean;
   /** Flag to remove the close button in the header area of the modal */
-  noClose?: boolean,
+  noClose?: boolean;
   /** Flag indicating if modal content should be placed in a modal box body wrapper */
-  noBodyWrapper?: boolean,
+  noBodyWrapper?: boolean;
   /** Flag to disable focus trap */
-  disableFocusTrap?: boolean,
+  disableFocusTrap?: boolean;
   /** The element to focus when the modal opens. By default the first
    * focusable element will receive focus.
    */
@@ -174,7 +184,7 @@ const props = withDefaults(defineProps<Props>(), {
   position: 'default',
   component: 'div',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'update:open', value: boolean): void;
@@ -221,17 +231,20 @@ function clearTransitionEndFallback() {
   transitionEndFallback = undefined;
 }
 
-watch(() => [props.open, props.noAnimations], () => {
-  clearTransitionEndFallback();
-  if (props.open) {
-    rendered.value = true;
-  } else if (props.noAnimations) {
-    rendered.value = false;
-  } else if (rendered.value) {
-    // Ensure the modal is removed if CSS transitions are disabled or transitionend does not fire.
-    transitionEndFallback = setTimeout(() => rendered.value = false, transitionEndFallbackDelay);
-  }
-});
+watch(
+  () => [props.open, props.noAnimations],
+  () => {
+    clearTransitionEndFallback();
+    if (props.open) {
+      rendered.value = true;
+    } else if (props.noAnimations) {
+      rendered.value = false;
+    } else if (rendered.value) {
+      // Ensure the modal is removed if CSS transitions are disabled or transitionend does not fire.
+      transitionEndFallback = setTimeout(() => (rendered.value = false), transitionEndFallbackDelay);
+    }
+  },
+);
 
 function onBackdropTransitionEnd(e: TransitionEvent) {
   // Only unmount once the backdrop's own transition finishes, not one bubbled from its children
@@ -241,13 +254,16 @@ function onBackdropTransitionEnd(e: TransitionEvent) {
   }
 }
 
-watch(() => props.open, () => {
-  if (props.open) {
-    teleportTarget.value.classList.add(backdropStyles.backdropOpen);
-  } else {
-    teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
-  }
-});
+watch(
+  () => props.open,
+  () => {
+    if (props.open) {
+      teleportTarget.value.classList.add(backdropStyles.backdropOpen);
+    } else {
+      teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
+    }
+  },
+);
 
 onMounted(() => {
   if (props.open) {

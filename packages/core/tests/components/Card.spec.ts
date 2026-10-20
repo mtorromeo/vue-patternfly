@@ -15,7 +15,12 @@ import PfCardHeaderMain from '../../src/components/Card/CardHeaderMain.vue';
 import PfCardTitle from '../../src/components/Card/CardTitle.vue';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -108,9 +113,14 @@ describe('Card', () => {
   });
 
   it('renders a selection checkbox in the header bound to v-model:selected', async () => {
-    const wrapper = mountWithModel(PfCard, 'selected', { selected: false, selectable: true, selectableInput: 'visible', name: 'card-check' }, {
-      slots: { default: () => h(PfCardHeader, () => 'Header') },
-    });
+    const wrapper = mountWithModel(
+      PfCard,
+      'selected',
+      { selected: false, selectable: true, selectableInput: 'visible', name: 'card-check' },
+      {
+        slots: { default: () => h(PfCardHeader, () => 'Header') },
+      },
+    );
 
     const input = wrapper.find<HTMLInputElement>(`.${styles.cardSelectableActions} input[type="checkbox"]`);
     expect(input.exists()).toBe(true);
@@ -149,7 +159,10 @@ describe('Card', () => {
   });
 
   it('lays out the selection checkbox as a standalone check with a label covering the card', () => {
-    const wrapper = mount(PfCard, { props: { selectable: true, selectableInput: 'visible', name: 'n' }, slots: { default: () => h(PfCardHeader) } });
+    const wrapper = mount(PfCard, {
+      props: { selectable: true, selectableInput: 'visible', name: 'n' },
+      slots: { default: () => h(PfCardHeader) },
+    });
 
     const check = wrapper.find(`.${styles.cardSelectableActions} > .${checkStyles.check}`);
     expect(check.classes()).toContain(checkStyles.modifiers.standalone);
@@ -159,9 +172,14 @@ describe('Card', () => {
   });
 
   it('renders a radio when selectableSingle is set and selects the card on change', async () => {
-    const wrapper = mountWithModel(PfCard, 'selected', { selected: false, selectable: true, selectableInput: 'visible', selectableSingle: true, name: 'group' }, {
-      slots: { default: () => h(PfCardHeader) },
-    });
+    const wrapper = mountWithModel(
+      PfCard,
+      'selected',
+      { selected: false, selectable: true, selectableInput: 'visible', selectableSingle: true, name: 'group' },
+      {
+        slots: { default: () => h(PfCardHeader) },
+      },
+    );
 
     const radio = wrapper.find(`.${styles.cardSelectableActions} > .${radioStyles.radio}`);
     expect(radio.classes()).toContain(radioStyles.modifiers.standalone);
@@ -180,13 +198,25 @@ describe('Card', () => {
     const selected = reactive([true, false, false]);
     const names = ['group', 'group', 'other'];
     const wrapper = mount({
-      render: () => h('div', names.map((name, i) => h(PfCard, {
-        selectable: true,
-        selectableSingle: true,
-        name,
-        selected: selected[i],
-        'onUpdate:selected': (v: boolean) => { selected[i] = v; },
-      }, () => h(PfCardHeader)))),
+      render: () =>
+        h(
+          'div',
+          names.map((name, i) =>
+            h(
+              PfCard,
+              {
+                selectable: true,
+                selectableSingle: true,
+                name,
+                selected: selected[i],
+                'onUpdate:selected': (v: boolean) => {
+                  selected[i] = v;
+                },
+              },
+              () => h(PfCardHeader),
+            ),
+          ),
+        ),
     });
 
     const inputs = wrapper.findAll<HTMLInputElement>('input[type="radio"]');
@@ -232,7 +262,10 @@ describe('Card', () => {
   });
 
   it('renders a link for a clickable-only card with to', async () => {
-    const wrapper = mount(PfCard, { props: { to: '#target', external: true }, slots: { default: () => h(PfCardHeader) } });
+    const wrapper = mount(PfCard, {
+      props: { to: '#target', external: true },
+      slots: { default: () => h(PfCardHeader) },
+    });
 
     expect(wrapper.classes()).toContain(styles.modifiers.clickable);
     const link = wrapper.find(`.${styles.cardSelectableActions} a.pf-v6-c-card__clickable-action`);
@@ -253,7 +286,10 @@ describe('Card', () => {
   });
 
   it('does not render a clickable action on clickable and selectable cards', () => {
-    const wrapper = mount(PfCard, { props: { clickable: true, selectable: true }, slots: { default: () => h(PfCardHeader) } });
+    const wrapper = mount(PfCard, {
+      props: { clickable: true, selectable: true },
+      slots: { default: () => h(PfCardHeader) },
+    });
     expect(wrapper.find('.pf-v6-c-card__clickable-action').exists()).toBe(false);
   });
 
@@ -333,7 +369,9 @@ describe('Card', () => {
     it('forwards toggleButtonAttrs to the toggle button', () => {
       const wrapper = mount(PfCard, {
         props: { expanded: false },
-        slots: { default: () => h(PfCardHeader, { toggleButtonAttrs: { 'aria-label': 'Details', id: 'toggle' } as any }) },
+        slots: {
+          default: () => h(PfCardHeader, { toggleButtonAttrs: { 'aria-label': 'Details', id: 'toggle' } as any }),
+        },
       });
 
       const toggle = wrapper.find(`.${styles.cardHeaderToggle} button`);
@@ -352,7 +390,9 @@ describe('CardHeader', () => {
   it('wraps the content in the header main and renders the actions slot first', async () => {
     const card = mount(PfCard, {
       props: { name: 'n' },
-      slots: { default: () => h(PfCardHeader, null, { default: () => 'Title', actions: () => h('button', { class: 'act' }) }) },
+      slots: {
+        default: () => h(PfCardHeader, null, { default: () => 'Title', actions: () => h('button', { class: 'act' }) }),
+      },
     });
 
     const children = Array.from(card.find(`.${styles.cardHeader}`).element.children);
@@ -362,7 +402,9 @@ describe('CardHeader', () => {
     expect(Array.from(actions.element.children).map(c => c.className)).toEqual(['act', styles.cardSelectableActions]);
     expect(card.find(`.${styles.cardHeaderMain}`).text()).toBe('Title');
 
-    const noOffset = mount(PfCard, { slots: { default: () => h(PfCardHeader, { actionsNoOffset: true }, { actions: () => 'Act' }) } });
+    const noOffset = mount(PfCard, {
+      slots: { default: () => h(PfCardHeader, { actionsNoOffset: true }, { actions: () => 'Act' }) },
+    });
     expect(noOffset.find(`.${styles.cardActions}`).classes()).toContain(styles.modifiers.noOffset);
   });
 
@@ -420,7 +462,10 @@ describe('CardTitle', () => {
   });
 
   it('renders a custom component and a subtitle', () => {
-    const wrapper = mount(PfCardTitle, { props: { component: 'h2' }, slots: { default: () => 'Title', subtitle: () => 'Sub' } });
+    const wrapper = mount(PfCardTitle, {
+      props: { component: 'h2' },
+      slots: { default: () => 'Title', subtitle: () => 'Sub' },
+    });
 
     expect(wrapper.find(`.${styles.cardTitleText}`).element.tagName).toBe('H2');
     expect(wrapper.find(`.${styles.cardSubtitle}`).text()).toBe('Sub');
@@ -501,7 +546,10 @@ describe('CardExpandableContent', () => {
   });
 
   it('is rendered inside an expanded card', () => {
-    const wrapper = mount(PfCard, { props: { expanded: true }, slots: { default: () => h(PfCardExpandableContent, () => 'Content') } });
+    const wrapper = mount(PfCard, {
+      props: { expanded: true },
+      slots: { default: () => h(PfCardExpandableContent, () => 'Content') },
+    });
     expect(wrapper.find(`.${styles.cardExpandableContent}`).text()).toBe('Content');
   });
 });

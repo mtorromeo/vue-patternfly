@@ -1,9 +1,12 @@
 <template>
   <ul
     v-bind="ouiaProps"
-    :class="[styles.alertGroup, {
-      [styles.modifiers.toast]: toast,
-    }]"
+    :class="[
+      styles.alertGroup,
+      {
+        [styles.modifiers.toast]: toast,
+      },
+    ]"
     :aria-live="liveRegion ? 'polite' : undefined"
     :aria-atomic="liveRegion ? false : undefined"
   >
@@ -25,7 +28,7 @@ import { findChildrenVNodes, fragment } from '../../util';
 
 defineOptions({
   name: 'PfAlertGroupInline',
-});// expands object types one level deep
+}); // expands object types one level deep
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
   toast?: boolean;
@@ -34,7 +37,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'overflowClick', e: PointerEvent): void;

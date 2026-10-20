@@ -1,10 +1,13 @@
 <template>
   <li
     v-bind="ouiaProps"
-    :class="[styles.navItem, {
-      [styles.modifiers.expanded]: realExpanded,
-      [styles.modifiers.current]: active,
-    }]"
+    :class="[
+      styles.navItem,
+      {
+        [styles.modifiers.expanded]: realExpanded,
+        [styles.modifiers.current]: active,
+      },
+    ]"
     @click="handleToggle"
   >
     <button
@@ -74,7 +77,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onC
 const props = withDefaults(defineProps<Props>(), {
   id: () => useId(),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'update:expanded', value: boolean, groupId: string | number | undefined): void;

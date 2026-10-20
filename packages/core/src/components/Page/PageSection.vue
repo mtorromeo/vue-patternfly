@@ -3,12 +3,8 @@
     v-bind="ouiaProps"
     :is="component"
     :class="[
-      ...classesFromBreakpointProps($props, [
-        'padding',
-      ], styles, { short: true }),
-      ...classesFromBreakpointProps($props, [
-        'sticky',
-      ], styles, { vertical: true }),
+      ...classesFromBreakpointProps($props, ['padding'], styles, { short: true }),
+      ...classesFromBreakpointProps($props, ['sticky'], styles, { vertical: true }),
       variantTypes[type],
       {
         [styles.modifiers.secondary]: variant === 'secondary',
@@ -19,7 +15,7 @@
         [styles.modifiers.shadowTop]: shadowTop,
         [styles.modifiers.shadowBottom]: shadowBottom,
         [styles.modifiers.overflowScroll]: overflowScroll,
-      }
+      },
     ]"
     :style="{
       '--pf-v6-c-page--section--m-limit-width--MaxWidth': maxWidth,
@@ -52,7 +48,8 @@ defineOptions({
   name: 'PfPageSection',
 });
 
-interface Props extends OUIAProps, PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
+interface Props
+  extends OUIAProps, PaddingBreakpointProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Section background color variant */
   variant?: 'default' | 'secondary';
   /** Section type variant */
@@ -81,7 +78,7 @@ const props = withDefaults(defineProps<Props>(), {
   filled: undefined,
   component: 'section' as any,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

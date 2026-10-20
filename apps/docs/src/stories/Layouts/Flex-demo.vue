@@ -1,7 +1,8 @@
 <template>
   <story-canvas title="Interactive Flex Demo">
     <template #intro>
-      <pre v-md>An interactive demo of the Flex and FlexItem components. Use the controls below to explore how different properties affect the layout.</pre>
+      <pre v-md>
+An interactive demo of the Flex and FlexItem components. Use the controls below to explore how different properties affect the layout.</pre>
       <pf-tabs>
         <pf-tab title="Container properties">
           <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
@@ -240,36 +241,36 @@ pre {
 </style>
 
 <script lang="ts" setup>
-import { ref, reactive, watch, type Ref } from "vue";
-import type PfFlex from "@vue-patternfly/core/layouts/Flex/Flex.vue";
-import type PfFlexItem from "@vue-patternfly/core/layouts/Flex/FlexItem.vue";
+import { ref, reactive, watch, type Ref } from 'vue';
+import type PfFlex from '@vue-patternfly/core/layouts/Flex/Flex.vue';
+import type PfFlexItem from '@vue-patternfly/core/layouts/Flex/FlexItem.vue';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
 type FlexProps = ComponentProps<typeof PfFlex>;
 type FlexItemProps = ComponentProps<typeof PfFlexItem>;
 
 interface FlexItem {
-  align: FlexProps["align"];
-  alignSelf: FlexItemProps["alignSelf"];
-  flex: FlexItemProps["flex"];
-  spacer: FlexItemProps["spacer"];
+  align: FlexProps['align'];
+  alignSelf: FlexItemProps['alignSelf'];
+  flex: FlexItemProps['flex'];
+  spacer: FlexItemProps['spacer'];
   fullWidth: boolean;
   grow: boolean;
   shrink: boolean;
-  order: FlexItemProps["order"];
+  order: FlexItemProps['order'];
   text: string;
 }
 
-const alignContent: Ref<FlexProps["alignContent"]> = ref();
-const alignItems: Ref<FlexProps["alignItems"]> = ref();
-const columnGap: Ref<FlexProps["columnGap"]> = ref();
-const direction: Ref<FlexProps["direction"]> = ref();
-const display: Ref<FlexProps["display"]> = ref();
-const flexWrap: Ref<FlexProps["flexWrap"]> = ref();
-const gap: Ref<FlexProps["gap"]> = ref();
-const justifyContent: Ref<FlexProps["justifyContent"]> = ref();
-const rowGap: Ref<FlexProps["rowGap"]> = ref();
-const spaceItems: Ref<FlexProps["spaceItems"]> = ref();
+const alignContent: Ref<FlexProps['alignContent']> = ref();
+const alignItems: Ref<FlexProps['alignItems']> = ref();
+const columnGap: Ref<FlexProps['columnGap']> = ref();
+const direction: Ref<FlexProps['direction']> = ref();
+const display: Ref<FlexProps['display']> = ref();
+const flexWrap: Ref<FlexProps['flexWrap']> = ref();
+const gap: Ref<FlexProps['gap']> = ref();
+const justifyContent: Ref<FlexProps['justifyContent']> = ref();
+const rowGap: Ref<FlexProps['rowGap']> = ref();
+const spaceItems: Ref<FlexProps['spaceItems']> = ref();
 
 const itemCount = ref(5);
 
@@ -281,8 +282,8 @@ const defaultItem: FlexItem = {
   flex: undefined,
   spacer: undefined,
   fullWidth: false,
-  order: "",
-  text: "",
+  order: '',
+  text: '',
 };
 
 // Generate flex items based on the itemCount
@@ -310,12 +311,12 @@ watch(
  */
 function generateLoremIpsum(length: number): string {
   if (length <= 0) {
-    return "";
+    return '';
   }
 
   // Standard lorem ipsum text to use as base
   const loremIpsumBase =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
   // If the requested length is shorter than the base text
   if (length <= loremIpsumBase.length) {

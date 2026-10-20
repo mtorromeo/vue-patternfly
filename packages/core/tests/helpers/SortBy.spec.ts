@@ -10,7 +10,9 @@ describe('SortBy', () => {
   });
 
   it('does not forward attributes', () => {
-    const wrapper = mount(() => h('div', [h(SortBy, { weight: 1, class: 'foo', id: 'bar' }, { default: () => [h('span')] })]));
+    const wrapper = mount(() =>
+      h('div', [h(SortBy, { weight: 1, class: 'foo', id: 'bar' }, { default: () => [h('span')] })]),
+    );
     expect(wrapper.find('span').attributes()).toEqual({});
   });
 

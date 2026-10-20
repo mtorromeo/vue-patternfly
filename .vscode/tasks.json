@@ -91,16 +91,13 @@
     {
       "label": "Start dev servers",
       "dependsOrder": "parallel",
-      "dependsOn": [
-        "Start docs dev server",
-        "Watch core"
-      ],
+      "dependsOn": ["Start docs dev server", "Watch core"],
       "group": {
         "kind": "build",
         "isDefault": true,
         // this is the profile name you can use to color/iconise the terminal
         "profile": "npm-server"
-      },
+      }
     }
   ]
 }

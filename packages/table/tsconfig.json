@@ -6,15 +6,10 @@
     "declarationMap": true,
     "rootDir": "src",
     "outDir": "dist",
-    "types": [
-      "vite/client"
-    ]
+    "types": ["vite/client"]
   },
   "vueCompilerOptions": {
     "strictTemplates": true
   },
-  "include": [
-    "src/*",
-    "src/**/*"
-  ]
+  "include": ["src/*", "src/**/*"]
 }

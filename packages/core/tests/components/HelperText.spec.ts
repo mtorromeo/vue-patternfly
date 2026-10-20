@@ -41,7 +41,7 @@ describe('HelperTextItem', () => {
     expect(wrapper.find(`.${styles.helperTextItemText}`).text()).toBe('Help');
   });
 
-  it.each(['warning', 'success', 'error', 'indeterminate'] as const)('applies the %s variant with an icon', (variant) => {
+  it.each(['warning', 'success', 'error', 'indeterminate'] as const)('applies the %s variant with an icon', variant => {
     const wrapper = mount(PfHelperTextItem, { props: { variant } });
     expect(wrapper.classes()).toContain(styles.modifiers[variant]);
     expect(wrapper.find(`.${styles.helperTextItemIcon} svg`).exists()).toBe(true);
@@ -55,7 +55,9 @@ describe('HelperTextItem', () => {
   });
 
   it('renders a custom icon slot', () => {
-    const wrapper = mount(PfHelperTextItem, { slots: { icon: () => h('i', { class: 'my-icon' }), default: () => 'Help' } });
+    const wrapper = mount(PfHelperTextItem, {
+      slots: { icon: () => h('i', { class: 'my-icon' }), default: () => 'Help' },
+    });
     const icon = wrapper.find(`.${styles.helperTextItemIcon}`);
     expect(icon.find('.my-icon').exists()).toBe(true);
     expect(icon.find('svg').exists()).toBe(false);

@@ -20,18 +20,29 @@ const defaultTabs: TabDef[] = [
 ];
 
 async function mountTabs(tabsProps: Record<string, unknown> = {}, tabs: TabDef[] = defaultTabs) {
-  const wrapper = mount(defineComponent({
-    setup() {
-      return () => h(PfTabs, tabsProps, {
-        default: () => tabs.map(tab => h(PfTab, {
-          ...(tab.key !== undefined ? { key: tab.key } : {}),
-          title: tab.title,
-          disabled: tab.disabled,
-          href: tab.href,
-        }, () => tab.content)),
-      });
-    },
-  }), { attachTo: document.body });
+  const wrapper = mount(
+    defineComponent({
+      setup() {
+        return () =>
+          h(PfTabs, tabsProps, {
+            default: () =>
+              tabs.map(tab =>
+                h(
+                  PfTab,
+                  {
+                    ...(tab.key !== undefined ? { key: tab.key } : {}),
+                    title: tab.title,
+                    disabled: tab.disabled,
+                    href: tab.href,
+                  },
+                  () => tab.content,
+                ),
+              ),
+          });
+      },
+    }),
+    { attachTo: document.body },
+  );
   await flushPromises();
   return wrapper;
 }
@@ -45,7 +56,9 @@ function tabPanels(wrapper: VueWrapper) {
 }
 
 function visiblePanels(wrapper: VueWrapper) {
-  return tabPanels(wrapper).filter(panel => (panel.element as HTMLElement).style.display !== 'none' && !panel.attributes('hidden'));
+  return tabPanels(wrapper).filter(
+    panel => (panel.element as HTMLElement).style.display !== 'none' && !panel.attributes('hidden'),
+  );
 }
 
 describe('Tabs', () => {
@@ -110,12 +123,18 @@ describe('Tabs', () => {
     });
 
     it('does not generate colliding ids for two tab sets with the same keys', async () => {
-      const wrapper = mount(defineComponent({
-        setup() {
-          const tabSet = () => h(PfTabs, null, () => defaultTabs.map(tab => h(PfTab, { key: tab.key, title: tab.title }, () => tab.content)));
-          return () => h('div', [tabSet(), tabSet()]);
-        },
-      }), { attachTo: document.body });
+      const wrapper = mount(
+        defineComponent({
+          setup() {
+            const tabSet = () =>
+              h(PfTabs, null, () =>
+                defaultTabs.map(tab => h(PfTab, { key: tab.key, title: tab.title }, () => tab.content)),
+              );
+            return () => h('div', [tabSet(), tabSet()]);
+          },
+        }),
+        { attachTo: document.body },
+      );
       await flushPromises();
 
       const ids = [...tabButtons(wrapper), ...tabPanels(wrapper)].map(e => e.attributes('id'));
@@ -124,7 +143,10 @@ describe('Tabs', () => {
     });
 
     it('uses consistent ids for tabs without an explicit key', async () => {
-      const wrapper = await mountTabs({}, defaultTabs.map(({ key: _key, ...tab }) => tab));
+      const wrapper = await mountTabs(
+        {},
+        defaultTabs.map(({ key: _key, ...tab }) => tab),
+      );
 
       const buttons = tabButtons(wrapper);
       const panels = tabPanels(wrapper);
@@ -188,14 +210,22 @@ describe('Tabs', () => {
 
     it('supports v-model:activeKey', async () => {
       const activeKey = ref<TabKey | undefined>('containers');
-      const wrapper = mount(defineComponent({
-        setup() {
-          return () => h(PfTabs, {
-            activeKey: activeKey.value,
-            'onUpdate:activeKey': (value: TabKey | undefined) => (activeKey.value = value),
-          }, () => defaultTabs.map(tab => h(PfTab, { key: tab.key, title: tab.title }, () => tab.content)));
-        },
-      }), { attachTo: document.body });
+      const wrapper = mount(
+        defineComponent({
+          setup() {
+            return () =>
+              h(
+                PfTabs,
+                {
+                  activeKey: activeKey.value,
+                  'onUpdate:activeKey': (value: TabKey | undefined) => (activeKey.value = value),
+                },
+                () => defaultTabs.map(tab => h(PfTab, { key: tab.key, title: tab.title }, () => tab.content)),
+              );
+          },
+        }),
+        { attachTo: document.body },
+      );
       await flushPromises();
 
       expect(visiblePanels(wrapper).map(p => p.text())).toEqual(['Containers content']);
@@ -219,7 +249,10 @@ describe('Tabs', () => {
     });
 
     it('works with numeric keys', async () => {
-      const wrapper = await mountTabs({ defaultActiveKey: 1 }, defaultTabs.map((tab, i) => ({ ...tab, key: i })));
+      const wrapper = await mountTabs(
+        { defaultActiveKey: 1 },
+        defaultTabs.map((tab, i) => ({ ...tab, key: i })),
+      );
 
       expect(visiblePanels(wrapper).map(p => p.text())).toEqual(['Containers content']);
       await tabButtons(wrapper)[0]!.trigger('click');
@@ -256,7 +289,10 @@ describe('Tabs', () => {
 
     it('ignores the hash for disabled tabs and non-nav tabs', async () => {
       window.history.replaceState(null, '', '/page#database');
-      const disabled = await mountTabs({ component: 'nav' }, linkedTabs.map(tab => ({ ...tab, disabled: tab.key === 'database' })));
+      const disabled = await mountTabs(
+        { component: 'nav' },
+        linkedTabs.map(tab => ({ ...tab, disabled: tab.key === 'database' })),
+      );
       expect(tabButtons(disabled).map(b => b.attributes('aria-selected'))).toEqual(['true', 'false', 'false']);
 
       const notNav = await mountTabs({}, linkedTabs);
@@ -334,7 +370,10 @@ describe('TabButton', () => {
 
 describe('TabContent', () => {
   it('renders an accessible focusable tab panel', () => {
-    const wrapper = mount(PfTabContent, { attrs: { id: 'panel', 'aria-labelledby': 'tab' }, slots: { default: () => 'Panel' } });
+    const wrapper = mount(PfTabContent, {
+      attrs: { id: 'panel', 'aria-labelledby': 'tab' },
+      slots: { default: () => 'Panel' },
+    });
     expect(wrapper.element.tagName).toBe('SECTION');
     expect(wrapper.classes()).toContain(contentStyles.tabContent);
     expect(wrapper.classes()).not.toContain(contentStyles.modifiers.secondary);
@@ -371,9 +410,13 @@ describe('TabContent', () => {
 
   it('follows changes of the Tabs secondary prop', async () => {
     const secondary = ref(false);
-    const wrapper = mount(defineComponent({
-      setup: () => () => h(PfTabs, { secondary: secondary.value }, { default: () => [h(PfTab, { key: 'a', title: 'A' }, () => 'A')] }),
-    }), { attachTo: document.body });
+    const wrapper = mount(
+      defineComponent({
+        setup: () => () =>
+          h(PfTabs, { secondary: secondary.value }, { default: () => [h(PfTab, { key: 'a', title: 'A' }, () => 'A')] }),
+      }),
+      { attachTo: document.body },
+    );
     await flushPromises();
     secondary.value = true;
     await flushPromises();

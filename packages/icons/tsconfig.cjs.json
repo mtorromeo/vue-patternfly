@@ -7,6 +7,6 @@
     "composite": true,
     "preserveValueImports": false,
     "verbatimModuleSyntax": false,
-    "tsBuildInfoFile": "dist/cjs.tsbuildinfo",
-  },
+    "tsBuildInfoFile": "dist/cjs.tsbuildinfo"
+  }
 }

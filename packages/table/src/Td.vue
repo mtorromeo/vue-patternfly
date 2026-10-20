@@ -7,7 +7,8 @@
       styles.tableTd,
       width && [styles.modifiers[`width_${width}`]],
       modifier && styles.modifiers[modifier],
-      breakpointClasses, {
+      breakpointClasses,
+      {
         [styles.tableAction]: actionCell,
         [styles.tableDraggable]: draggable,
         [styles.modifiers.center]: textCenter,
@@ -16,17 +17,21 @@
         [scrollStyles.tableStickyCell]: sticky,
         [scrollStyles.modifiers.borderRight]: rightBorder,
         [scrollStyles.modifiers.borderLeft]: leftBorder,
-      }
+      },
     ]"
-    :style="sticky ? {
-      '--pf-v6-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
-      '--pf-v6-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
-      '--pf-v6-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
-    } : undefined"
+    :style="
+      sticky
+        ? {
+            '--pf-v6-c-table__sticky-cell--MinWidth': stickyMinWidth ? stickyMinWidth : undefined,
+            '--pf-v6-c-table__sticky-cell--Left': stickyLeftOffset ? stickyLeftOffset : 0,
+            '--pf-v6-c-table__sticky-cell--Right': stickyRightOffset ? stickyRightOffset : 0,
+          }
+        : undefined
+    "
     :data-label="($attrs.class as string)?.includes('pf-v6-c-table__tree-view-title-cell') || dataLabel"
   >
     <label v-if="isDefined(selected)">
-      <input :checked="selected" type="checkbox" @change="handleSelect($event as InputEvent)">
+      <input :checked="selected" type="checkbox" @change="handleSelect($event as InputEvent)" />
     </label>
     <slot />
   </component>
@@ -67,12 +72,12 @@ function handleSelect(event: InputEvent) {
 </script>
 
 <script lang="ts">
-import type { Component, TdHTMLAttributes } from "vue";
+import type { Component, TdHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import scrollStyles from '@patternfly/react-styles/css/components/Table/table-scrollable';
-import { classesFromBreakpointProps } from "@vue-patternfly/core/breakpoints";
-import { isDefined } from "@vueuse/core";
+import { classesFromBreakpointProps } from '@vue-patternfly/core/breakpoints';
+import { isDefined } from '@vueuse/core';
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<TdHTMLAttributes, 'draggable' | 'onSelect'> {
   /** Element to render */

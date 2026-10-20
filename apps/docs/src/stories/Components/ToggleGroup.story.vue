@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Toggle group">
-    <template #description>A <b>toggle group</b> is a group of controls that can be used to quickly switch between actions or states.</template>
+    <template #description
+      >A <b>toggle group</b> is a group of controls that can be used to quickly switch between actions or
+      states.</template
+    >
 
     <template #apidocs>
       <component-info name="PfToggleGroup" />

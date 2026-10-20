@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Data list">
-    <template #description>A <b>data list</b> is used to display large data sets when you need a flexible layout or need to include interactive content like charts.</template>
+    <template #description
+      >A <b>data list</b> is used to display large data sets when you need a flexible layout or need to include
+      interactive content like charts.</template
+    >
 
     <template #apidocs>
       <component-info name="PfDataList" />
@@ -80,13 +83,28 @@
         <pf-data-list-item aria-labelledby="check-action-item1">
           <pf-data-list-check aria-labelledby="check-action-item1" name="check-action-check1" />
 
-          <pf-data-list-cell> <span id="check-action-item1">Primary content</span> Dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
-          <pf-data-list-cell> Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
-          <pf-data-list-cell> <span>Tertiary content</span> Dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
-          <pf-data-list-cell> <span>More content</span> Dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
-          <pf-data-list-cell> <span>More content</span> Dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
+          <pf-data-list-cell>
+            <span id="check-action-item1">Primary content</span> Dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod.
+          </pf-data-list-cell>
+          <pf-data-list-cell>
+            Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+          </pf-data-list-cell>
+          <pf-data-list-cell>
+            <span>Tertiary content</span> Dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+          </pf-data-list-cell>
+          <pf-data-list-cell>
+            <span>More content</span> Dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+          </pf-data-list-cell>
+          <pf-data-list-cell>
+            <span>More content</span> Dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+          </pf-data-list-cell>
 
-          <pf-data-list-action id="check-action-action1" aria-labelledby="check-action-item1 check-action-action1" aria-label="Actions">
+          <pf-data-list-action
+            id="check-action-action1"
+            aria-labelledby="check-action-item1 check-action-action1"
+            aria-label="Actions"
+          >
             <pf-dropdown position="right">
               <template #toggle>
                 <pf-menu-toggle variant="plain" />
@@ -102,10 +120,20 @@
         <pf-data-list-item aria-labelledby="check-action-item2">
           <pf-data-list-check aria-labelledby="check-action-item2" name="check-action-check1" />
 
-          <pf-data-list-cell> <span id="check-action-item2">Primary content - Lorem ipsum</span> dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
-          <pf-data-list-cell> Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
+          <pf-data-list-cell>
+            <span id="check-action-item2">Primary content - Lorem ipsum</span> dolor sit amet, consectetur adipisicing
+            elit, sed do eiusmod.
+          </pf-data-list-cell>
+          <pf-data-list-cell>
+            Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+          </pf-data-list-cell>
 
-          <pf-data-list-action id="check-action-action2" aria-labelledby="check-action-item2 check-action-action2" aria-label="Actions" visibility-lg="hidden">
+          <pf-data-list-action
+            id="check-action-action2"
+            aria-labelledby="check-action-item2 check-action-action2"
+            aria-label="Actions"
+            visibility-lg="hidden"
+          >
             <pf-dropdown position="right">
               <template #toggle>
                 <pf-menu-toggle variant="plain" />
@@ -116,7 +144,13 @@
             </pf-dropdown>
           </pf-data-list-action>
 
-          <pf-data-list-action id="check-action-action3" aria-labelledby="check-action-item2 check-action-action3" aria-label="Actions" visibility="hidden" visibility-lg="visible">
+          <pf-data-list-action
+            id="check-action-action3"
+            aria-labelledby="check-action-item2 check-action-action3"
+            aria-label="Actions"
+            visibility="hidden"
+            visibility-lg="visible"
+          >
             <pf-button variant="primary">Primary</pf-button>
             <pf-button variant="secondary">Secondary</pf-button>
           </pf-data-list-action>
@@ -125,10 +159,20 @@
         <pf-data-list-item aria-labelledby="check-action-item3">
           <pf-data-list-check aria-labelledby="check-action-item3" name="check-action-check1" />
 
-          <pf-data-list-cell> <span id="check-action-item3">Primary content - Lorem ipsum</span> dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
-          <pf-data-list-cell> Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod. </pf-data-list-cell>
+          <pf-data-list-cell>
+            <span id="check-action-item3">Primary content - Lorem ipsum</span> dolor sit amet, consectetur adipisicing
+            elit, sed do eiusmod.
+          </pf-data-list-cell>
+          <pf-data-list-cell>
+            Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+          </pf-data-list-cell>
 
-          <pf-data-list-action id="check-action-action3" aria-labelledby="check-action-item3 check-action-action3" aria-label="Actions" visibility-xl="hidden">
+          <pf-data-list-action
+            id="check-action-action3"
+            aria-labelledby="check-action-item3 check-action-action3"
+            aria-label="Actions"
+            visibility-xl="hidden"
+          >
             <pf-dropdown position="right">
               <template #toggle>
                 <pf-menu-toggle variant="plain" />
@@ -141,7 +185,13 @@
             </pf-dropdown>
           </pf-data-list-action>
 
-          <pf-data-list-action id="check-action-action3" aria-labelledby="check-action-item3 check-action-action3" aria-label="Actions" visibility="hidden" visibility-xl="visible">
+          <pf-data-list-action
+            id="check-action-action3"
+            aria-labelledby="check-action-item3 check-action-action3"
+            aria-label="Actions"
+            visibility="hidden"
+            visibility-xl="visible"
+          >
             <pf-button variant="primary">Primary</pf-button>
             <pf-button variant="secondary">Secondary</pf-button>
             <pf-button variant="secondary">Secondary</pf-button>
@@ -159,7 +209,11 @@
           </pf-data-list-cell>
           <pf-data-list-cell>Single actionable Secondary content</pf-data-list-cell>
 
-          <pf-data-list-action id="selectable-action-action1" aria-labelledby="selectable-action-item1 selectable-action-action1" aria-label="Actions">
+          <pf-data-list-action
+            id="selectable-action-action1"
+            aria-labelledby="selectable-action-item1 selectable-action-action1"
+            aria-label="Actions"
+          >
             <pf-dropdown position="right">
               <template #toggle>
                 <pf-menu-toggle variant="plain" />
@@ -177,7 +231,11 @@
           </pf-data-list-cell>
           <pf-data-list-cell>Selectable actions Secondary content</pf-data-list-cell>
 
-          <pf-data-list-action id="selectable-actions-action2" aria-labelledby="selectable-actions-item2 selectable-actions-action2" aria-label="Actions">
+          <pf-data-list-action
+            id="selectable-actions-action2"
+            aria-labelledby="selectable-actions-item2 selectable-actions-action2"
+            aria-label="Actions"
+          >
             <pf-dropdown position="right">
               <template #toggle>
                 <pf-menu-toggle variant="plain" />
@@ -223,7 +281,10 @@
           </pf-data-list-action>
 
           <pf-data-list-content>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
+            </p>
           </pf-data-list-content>
         </pf-data-list-item>
 
@@ -259,7 +320,10 @@
           </pf-data-list-item-row>
 
           <pf-data-list-content>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
+            </p>
           </pf-data-list-content>
         </pf-data-list-item>
 
@@ -309,7 +373,10 @@
           <pf-data-list-cell>
             <div class="preview-placeholder">
               <b>default</b>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.
+              </p>
             </div>
           </pf-data-list-cell>
         </pf-data-list-item>
@@ -369,7 +436,11 @@
             <div class="preview-placeholder">default</div>
           </pf-data-list-cell>
 
-          <pf-data-list-action id="width-ex3-action1" aria-labelledby="width-ex3-item1 width-ex3-action1" aria-label="Actions">
+          <pf-data-list-action
+            id="width-ex3-action1"
+            aria-labelledby="width-ex3-item1 width-ex3-action1"
+            aria-label="Actions"
+          >
             <pf-dropdown position="right">
               <template #toggle>
                 <pf-menu-toggle variant="plain" />
@@ -382,7 +453,10 @@
           </pf-data-list-action>
 
           <pf-data-list-content aria-label="Primary Content Details">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
+            </p>
           </pf-data-list-content>
         </pf-data-list-item>
       </pf-data-list>
@@ -394,7 +468,10 @@
           <pf-data-list-cell wrap-modifier="breakWord">
             <span id="simple-item5">Primary content</span>
           </pf-data-list-cell>
-          <pf-data-list-cell wrap-modifier="truncate"> Really really really really really really really really really really really really really really long description that should be truncated before it ends </pf-data-list-cell>
+          <pf-data-list-cell wrap-modifier="truncate">
+            Really really really really really really really really really really really really really really long
+            description that should be truncated before it ends
+          </pf-data-list-cell>
         </pf-data-list-item>
       </pf-data-list>
     </story-canvas>
@@ -403,7 +480,10 @@
       <pf-data-list aria-label="Simple data list example" grid-breakpoint="sm">
         <pf-data-list-item>
           <pf-data-list-cell> Primary content </pf-data-list-cell>
-          <pf-data-list-cell> Really really really really really really really really really really really really really really long description that should be truncated before it ends </pf-data-list-cell>
+          <pf-data-list-cell>
+            Really really really really really really really really really really really really really really long
+            description that should be truncated before it ends
+          </pf-data-list-cell>
         </pf-data-list-item>
       </pf-data-list>
     </story-canvas>
@@ -425,5 +505,5 @@
 <script lang="ts" setup>
 const log = console.log;
 
-import CodeBranchIcon from "@vue-patternfly/icons/code-branch-icon";
+import CodeBranchIcon from '@vue-patternfly/icons/code-branch-icon';
 </script>

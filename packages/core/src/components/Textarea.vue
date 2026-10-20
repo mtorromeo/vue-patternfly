@@ -2,7 +2,8 @@
   <span
     v-bind="ouiaProps"
     :class="[
-      styles.formControl, {
+      styles.formControl,
+      {
         [styles.modifiers.readonly]: !!readonlyVariant,
         [styles.modifiers.plain]: readonlyVariant === 'plain',
         [styles.modifiers.disabled]: disabled,
@@ -33,13 +34,14 @@
       @keyup="onKeyUp"
     />
     <span v-if="hasStatusIcon" :class="styles.formControlUtilities">
-      <pf-form-control-icon :status="(effectiveValidated as 'success' | 'error' | 'warning')" />
+      <pf-form-control-icon :status="effectiveValidated as 'success' | 'error' | 'warning'" />
     </span>
   </span>
 </template>
 
 <script lang="ts">
-interface Props<N extends boolean = false> extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
+interface Props<N extends boolean = false>
+  extends OUIAProps, /* @vue-ignore */ Omit<TextareaHTMLAttributes, 'value' | 'aria-invalid'> {
   /** Flag to show if the text area is disabled. */
   disabled?: boolean;
 
@@ -116,27 +118,19 @@ defineEmits<{
   (name: 'update:validated', value: 'success' | 'warning' | 'error' | 'default'): void;
 }>();
 
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const input = useTemplateRef('inputRef');
 const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
 
 const { validated } = toRefs(props);
-const {
-  value,
-  effectiveValidated,
-  onBlur,
-  onChange,
-  onInput,
-  onInvalid,
-  onKeyUp,
-  ...inputValidationData
-} = useInputValidation({
-  inputElement: input,
-  autoValidate: props.autoValidate,
-  validated,
-  customCheckValidity: checkValidity,
-});
+const { value, effectiveValidated, onBlur, onChange, onInput, onInvalid, onKeyUp, ...inputValidationData } =
+  useInputValidation({
+    inputElement: input,
+    autoValidate: props.autoValidate,
+    validated,
+    customCheckValidity: checkValidity,
+  });
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 useChildrenTracker(FormGroupInputsKey, effectiveValidated);

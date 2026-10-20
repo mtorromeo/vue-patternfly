@@ -52,12 +52,15 @@ describe('Label', () => {
 
   // 13cd28b9
   describe('status', () => {
-    it.each(['success', 'warning', 'danger', 'info', 'custom'] as const)('applies the %s status modifier and renders an icon', (status) => {
-      const wrapper = mount(PfLabel, { props: { status }, slots: { default: () => 'Status' } });
+    it.each(['success', 'warning', 'danger', 'info', 'custom'] as const)(
+      'applies the %s status modifier and renders an icon',
+      status => {
+        const wrapper = mount(PfLabel, { props: { status }, slots: { default: () => 'Status' } });
 
-      expect(wrapper.classes()).toContain(styles.modifiers[status]);
-      expect(wrapper.find(`.${styles.labelIcon} svg`).exists()).toBe(true);
-    });
+        expect(wrapper.classes()).toContain(styles.modifiers[status]);
+        expect(wrapper.find(`.${styles.labelIcon} svg`).exists()).toBe(true);
+      },
+    );
 
     it('renders a distinct icon for every status', () => {
       const icons = (['success', 'warning', 'danger', 'info', 'custom'] as const).map(status =>
@@ -156,7 +159,10 @@ describe('Label', () => {
   describe('close button', () => {
     it('renders a close button that calls onClose', async () => {
       const onClose = vi.fn();
-      const wrapper = mount(PfLabel, { props: { onClose, closeBtnAriaLabel: 'Remove label' }, slots: { default: () => 'Closable' } });
+      const wrapper = mount(PfLabel, {
+        props: { onClose, closeBtnAriaLabel: 'Remove label' },
+        slots: { default: () => 'Closable' },
+      });
 
       const button = wrapper.find(`.${styles.labelActions} button`);
       expect(button.attributes('aria-label')).toBe('Remove label');
@@ -182,7 +188,8 @@ describe('Label', () => {
 });
 
 describe('LabelGroup', () => {
-  const labels = (count: number) => () => Array.from({ length: count }, (_, i) => h(PfLabel, { key: i }, () => `Label ${i + 1}`));
+  const labels = (count: number) => () =>
+    Array.from({ length: count }, (_, i) => h(PfLabel, { key: i }, () => `Label ${i + 1}`));
 
   it('does not render without labels', () => {
     const wrapper = mount(PfLabelGroup);

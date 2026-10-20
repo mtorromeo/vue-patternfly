@@ -3,13 +3,17 @@
     <pf-panel-main>
       <pf-panel-main-body>
         <pf-form>
-          <pf-form-group v-for="(attribute, index) in normalizedAttributes" :key="`${attribute.attr}_${index}`" :field-id="`${attribute.attr}_${index}`">
+          <pf-form-group
+            v-for="(attribute, index) in normalizedAttributes"
+            :key="`${attribute.attr}_${index}`"
+            :field-id="`${attribute.attr}_${index}`"
+          >
             <template #label>
               <slot :name="`attribute:${attribute.attr}`">{{ attribute.display }}</slot>
             </template>
             <pf-text-input
               :id="`${attribute.attr}_${index}`"
-              :ref="el => index === 0 ? firstAttrRef = el as any : null"
+              :ref="el => (index === 0 ? (firstAttrRef = el as any) : null)"
               v-model="attribute.computed.value"
               type="text"
             />
@@ -19,11 +23,7 @@
             <template #label>
               <slot name="words-attr-label">Has words</slot>
             </template>
-            <pf-text-input
-              :id="hasWordsId"
-              v-model="hasWords"
-              type="text"
-            />
+            <pf-text-input :id="hasWordsId" v-model="hasWords" type="text" />
           </pf-form-group>
 
           <slot />
@@ -95,7 +95,7 @@ const props = withDefaults(defineProps<Props>(), {
   resetButtonLabel: 'Reset',
   submitSearchButtonLabel: 'Search',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Value of the search input. */
 const value = defineModel<string>('modelValue', { default: '' });
@@ -178,11 +178,7 @@ function onDocClick(event: Event) {
 }
 
 function onEscPress(event: KeyboardEvent) {
-  if (
-    props.searchMenuOpen &&
-    event.key === 'Escape' &&
-    searchInput?.$el.value?.contains(event.target as Node)
-  ) {
+  if (props.searchMenuOpen && event.key === 'Escape' && searchInput?.$el.value?.contains(event.target as Node)) {
     emit('toggleAdvancedMenu', event);
     searchInput?.input.value?.focus();
   }

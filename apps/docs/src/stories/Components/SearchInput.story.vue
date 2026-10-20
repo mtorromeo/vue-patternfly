@@ -16,11 +16,7 @@
     </pre>
 
     <story-canvas title="Basic">
-      <pf-search-input
-        v-model="filter"
-        placeholder="Find by name"
-        @clear="filter = ''"
-      />
+      <pf-search-input v-model="filter" placeholder="Find by name" @clear="filter = ''" />
     </story-canvas>
 
     <story-canvas title="Match with result count">
@@ -33,11 +29,7 @@
     </story-canvas>
 
     <story-canvas title="With expandable button">
-      <pf-search-input
-        v-model="filter3"
-        expandable
-        @clear="filter3 = ''"
-      />
+      <pf-search-input v-model="filter3" expandable @clear="filter3 = ''" />
     </story-canvas>
 
     <story-canvas title="Advanced">
@@ -51,11 +43,11 @@
         v-model="filter4"
         :attributes="[
           { attr: 'username', display: 'Username' },
-          { attr: 'firstname', display: 'First name' }
+          { attr: 'firstname', display: 'First name' },
         ]"
         advanced-search-delimiter=":"
         placeholder="Find by name"
-        @search="void(0)"
+        @search="void 0"
         @clear="filter4 = ''"
       />
     </story-canvas>

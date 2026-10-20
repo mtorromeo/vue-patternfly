@@ -3,12 +3,16 @@
     v-bind="ouiaProps"
     :id="id"
     ref="panelRef"
-    :class="[styles.drawerPanel, {
-      [styles.modifiers.resizable]: resizable,
-      [styles.modifiers.noBorder]: noBorder,
-      [styles.modifiers.noBackground]: colorVariant === 'no-background',
-      [styles.modifiers.secondary]: colorVariant === 'secondary',
-    }, widthModifiers]"
+    :class="[
+      styles.drawerPanel,
+      {
+        [styles.modifiers.resizable]: resizable,
+        [styles.modifiers.noBorder]: noBorder,
+        [styles.modifiers.noBackground]: colorVariant === 'no-background',
+        [styles.modifiers.secondary]: colorVariant === 'secondary',
+      },
+      widthModifiers,
+    ]"
     :style="{
       display: display ? 'inherit' : 'none',
       [cssPanelMdFlexBasis.name]: isDefined(panelSize) ? `${panelSize}px` : defaultSize,
@@ -21,7 +25,7 @@
     <template v-if="resizable">
       <div
         ref="splitterRef"
-        :class="[styles.drawerSplitter, {[styles.modifiers.vertical]: position !== 'bottom'}]"
+        :class="[styles.drawerSplitter, { [styles.modifiers.vertical]: position !== 'bottom' }]"
         role="separator"
         tabindex="0"
         :aria-orientation="position === 'bottom' ? 'horizontal' : 'vertical'"
@@ -94,7 +98,7 @@ const props = withDefaults(defineProps<Props>(), {
   resizeAriaLabel: 'Resize',
   id: () => useId(),
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   /** Callback for resize end. */
@@ -123,16 +127,18 @@ let panelRect: DOMRect;
 let setInitialVals = true;
 const separatorValue = ref(0);
 
-const widthModifiers = computed(() => Object.entries(props.widths ?? {}).map(([breakpoint, width]) => {
-  if (!width) {
-    return undefined;
-  }
-  if (breakpoint === 'default') {
-    return styles.modifiers[width];
-  }
-  const suffix = breakpoint === '2xl' ? '_2xl' : ucfirst(breakpoint);
-  return styles.modifiers[`${width}On${suffix}` as keyof typeof styles.modifiers];
-}));
+const widthModifiers = computed(() =>
+  Object.entries(props.widths ?? {}).map(([breakpoint, width]) => {
+    if (!width) {
+      return undefined;
+    }
+    if (breakpoint === 'default') {
+      return styles.modifiers[width];
+    }
+    const suffix = breakpoint === '2xl' ? '_2xl' : ucfirst(breakpoint);
+    return styles.modifiers[`${width}On${suffix}` as keyof typeof styles.modifiers];
+  }),
+);
 
 function calcValueNow() {
   let splitterPos;
@@ -278,7 +284,7 @@ function handleKeys(e: KeyboardEvent) {
   if (key === 'ArrowRight') {
     delta = position.value === 'start' ? props.increment : -props.increment;
   } else if (key === 'ArrowLeft') {
-    delta = position .value === 'start' ? -props.increment : props.increment;
+    delta = position.value === 'start' ? -props.increment : props.increment;
   } else if (key === 'ArrowUp') {
     delta = props.increment;
   } else if (key === 'ArrowDown') {

@@ -2,7 +2,8 @@
   <div
     v-bind="ouiaProps"
     :class="[
-      styles.dataListCell, {
+      styles.dataListCell,
+      {
         [styles.modifiers.noFill]: noFill,
         [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,
         [styles.modifiers.alignRight]: alignRight,
@@ -34,7 +35,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

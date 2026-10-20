@@ -10,10 +10,7 @@ describe('InputGroup', () => {
   it('renders a div with the input group class and its items', () => {
     const wrapper = mount(PfInputGroup, {
       slots: {
-        default: () => [
-          h(PfInputGroupText, () => '@'),
-          h(PfInputGroupItem, { fill: true }, () => h('input')),
-        ],
+        default: () => [h(PfInputGroupText, () => '@'), h(PfInputGroupItem, { fill: true }, () => h('input'))],
       },
     });
     expect(wrapper.element.tagName).toBe('DIV');
@@ -31,7 +28,7 @@ describe('InputGroupItem', () => {
     expect(wrapper.find('input').exists()).toBe(true);
   });
 
-  it.each(['plain', 'fill', 'box', 'disabled'] as const)('applies the %s modifier', (modifier) => {
+  it.each(['plain', 'fill', 'box', 'disabled'] as const)('applies the %s modifier', modifier => {
     const wrapper = mount(PfInputGroupItem, { props: { [modifier]: true } });
     expect(wrapper.classes()).toContain(styles.modifiers[modifier]);
   });

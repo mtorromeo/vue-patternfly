@@ -38,7 +38,9 @@ async function scrollTo(scrollable: HTMLElement, top: number) {
 describe('JumpLinks', () => {
   it('renders a nav with a list', () => {
     const wrapper = mount(PfJumpLinks, {
-      slots: { default: () => [h(PfJumpLinksItem, { href: '#a' }, () => 'A'), h(PfJumpLinksItem, { href: '#b' }, () => 'B')] },
+      slots: {
+        default: () => [h(PfJumpLinksItem, { href: '#a' }, () => 'A'), h(PfJumpLinksItem, { href: '#b' }, () => 'B')],
+      },
     });
 
     expect(wrapper.element.tagName).toBe('NAV');
@@ -71,7 +73,10 @@ describe('JumpLinks', () => {
   });
 
   it('renders an accessible toggle when expandable', () => {
-    const wrapper = mount(PfJumpLinks, { props: { expandable: 'expandable' }, slots: { label: () => 'Jump to section' } });
+    const wrapper = mount(PfJumpLinks, {
+      props: { expandable: 'expandable' },
+      slots: { label: () => 'Jump to section' },
+    });
     const button = wrapper.find(`.${styles.jumpLinksToggle} button`);
     expect(button.attributes('aria-label')).toBe('Toggle jump links');
     expect(button.attributes('aria-expanded')).toBe('false');

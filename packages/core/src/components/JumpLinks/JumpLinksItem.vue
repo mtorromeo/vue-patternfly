@@ -12,7 +12,7 @@
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import PfJumpLinksList from './JumpLinksList.vue';
 import PfButton from '../Button.vue';
-import { type MaybeComputedElementRef } from '@vueuse/core';
+import type { MaybeComputedElementRef } from '@vueuse/core';
 import { h, inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';
 import { JumpLinkInjectionKey, JumpLinksKey } from './common';
 import { useChildrenTracker } from '../../use';
@@ -35,7 +35,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'rol
 const props = withDefaults(defineProps<Props>(), {
   active: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'click', event: PointerEvent): void;
@@ -84,12 +84,20 @@ function renderChildren() {
   const linkChildren = children.filter(c => c.type !== PfJumpLinksList);
 
   return [
-    h('span', { class: styles.jumpLinksLink }, h(PfButton, {
-      variant: 'link',
-      component: 'a',
-      href: props.href,
-      onClick: handleClick,
-    }, () => h('span', { class: styles.jumpLinksLinkText }, linkChildren))),
+    h(
+      'span',
+      { class: styles.jumpLinksLink },
+      h(
+        PfButton,
+        {
+          variant: 'link',
+          component: 'a',
+          href: props.href,
+          onClick: handleClick,
+        },
+        () => h('span', { class: styles.jumpLinksLinkText }, linkChildren),
+      ),
+    ),
     ...sublists,
   ];
 }
@@ -98,7 +106,11 @@ const managedActive = computed(() => {
   if (props.active !== undefined) {
     return props.active;
   }
-  return jumpLinks?.scrollPosition.value && jumpLinks?.currentTargetPosition.value && jumpLinks?.currentTargetPosition.value === target.value?.offsetTop;
+  return (
+    jumpLinks?.scrollPosition.value &&
+    jumpLinks?.currentTargetPosition.value &&
+    jumpLinks?.currentTargetPosition.value === target.value?.offsetTop
+  );
 });
 
 defineExpose({

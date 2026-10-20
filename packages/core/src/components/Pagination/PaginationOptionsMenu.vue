@@ -49,7 +49,11 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, CommonPaginationProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'onSelect' | 'ouiaId' | 'ouiaSafe'> {
+interface Props
+  extends
+    OUIAProps,
+    CommonPaginationProps,
+    /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'onSelect' | 'ouiaId' | 'ouiaSafe'> {
   count?: number;
   firstIndex?: number;
   lastIndex?: number;
@@ -73,7 +77,7 @@ const props = withDefaults(defineProps<Props>(), {
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'pagination-options-menu',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

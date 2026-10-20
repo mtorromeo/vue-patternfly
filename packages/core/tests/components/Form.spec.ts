@@ -47,10 +47,7 @@ describe('Form', () => {
   it('tracks the form inputs it contains', async () => {
     const wrapper = mount(PfForm, {
       slots: {
-        default: () => [
-          h(PfTextInput, { 'aria-label': 'Name' }),
-          h(PfCheckbox, { label: 'Accept' }),
-        ],
+        default: () => [h(PfTextInput, { 'aria-label': 'Name' }), h(PfCheckbox, { label: 'Accept' })],
       },
     });
     await nextTick();
@@ -176,13 +173,18 @@ describe('FormGroup', () => {
     let children = Array.from(after.find(`.${styles.formGroupControl}`).element.children);
     expect(children.map(c => c.tagName)).toEqual(['INPUT', 'DIV']);
 
-    const before = mount(PfFormGroup, { props: { helperText: 'Help', helperTextBeforeField: true }, slots: { default: () => h('input') } });
+    const before = mount(PfFormGroup, {
+      props: { helperText: 'Help', helperTextBeforeField: true },
+      slots: { default: () => h('input') },
+    });
     children = Array.from(before.find(`.${styles.formGroupControl}`).element.children);
     expect(children.map(c => c.tagName)).toEqual(['DIV', 'INPUT']);
   });
 
   it('renders the helper-text slot', () => {
-    const wrapper = mount(PfFormGroup, { slots: { 'helper-text': () => h('span', { class: 'custom-help' }, 'Custom') } });
+    const wrapper = mount(PfFormGroup, {
+      slots: { 'helper-text': () => h('span', { class: 'custom-help' }, 'Custom') },
+    });
     expect(wrapper.find(`.${styles.formHelperText} .custom-help`).text()).toBe('Custom');
   });
 
@@ -299,7 +301,9 @@ describe('FormFieldGroupHeader', () => {
 
     expect(wrapper.classes()).toContain(styles.formFieldGroupHeader);
     expect(wrapper.find(`.${styles.formFieldGroupHeaderMain}`).exists()).toBe(true);
-    expect(wrapper.find(`.${styles.formFieldGroupHeaderTitle} .${styles.formFieldGroupHeaderTitleText}`).text()).toBe('Title');
+    expect(wrapper.find(`.${styles.formFieldGroupHeaderTitle} .${styles.formFieldGroupHeaderTitleText}`).text()).toBe(
+      'Title',
+    );
     expect(wrapper.find(`.${styles.formFieldGroupHeaderDescription}`).text()).toBe('Description');
     expect(wrapper.find(`.${styles.formFieldGroupHeaderActions} button`).text()).toBe('Action');
   });

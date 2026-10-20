@@ -1,11 +1,14 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.pageSidebarBody, {
-      [styles.modifiers.pageInsets]: insets,
-      [styles.modifiers.noFill]: filled === false,
-      [styles.modifiers.fill]: filled,
-    }]"
+    :class="[
+      styles.pageSidebarBody,
+      {
+        [styles.modifiers.pageInsets]: insets,
+        [styles.modifiers.noFill]: filled === false,
+        [styles.modifiers.fill]: filled,
+      },
+    ]"
   >
     <slot />
   </div>
@@ -32,7 +35,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   filled: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

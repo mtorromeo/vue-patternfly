@@ -37,7 +37,9 @@ describe('FocusTrap', () => {
   it('does not activate when inactive even with the immediate option', async () => {
     const onActivate = vi.fn();
     const onDeactivate = vi.fn();
-    const { outside } = mountTrap({ focusTrapOptions: { ...focusTrapOptions, immediate: true, onActivate, onDeactivate } });
+    const { outside } = mountTrap({
+      focusTrapOptions: { ...focusTrapOptions, immediate: true, onActivate, onDeactivate },
+    });
     await nextTick();
     await nextTick();
     expect(document.activeElement).toBe(outside);

@@ -1,16 +1,22 @@
 <template>
-  <component :is="component ?? (href ? 'a' : 'span')" v-bind="ouiaProps" :class="[styles.mastheadLogo, { [styles.modifiers.compact]: compact }]" :href="href" :tabindex="component === 'a' ? 0 : undefined">
+  <component
+    :is="component ?? (href ? 'a' : 'span')"
+    v-bind="ouiaProps"
+    :class="[styles.mastheadLogo, { [styles.modifiers.compact]: compact }]"
+    :href="href"
+    :tabindex="component === 'a' ? 0 : undefined"
+  >
     <slot />
   </component>
 </template>
 
 <script lang="ts" setup>
-import styles from "@patternfly/react-styles/css/components/Masthead/masthead";
-import type { AnchorHTMLAttributes, Component } from "vue";
-import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
+import styles from '@patternfly/react-styles/css/components/Masthead/masthead';
+import type { AnchorHTMLAttributes, Component } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
-  name: "PfMastheadLogo",
+  name: 'PfMastheadLogo',
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {

@@ -1,10 +1,14 @@
 <template>
   <li
     v-bind="ouiaProps"
-    :class="[styles.notificationDrawerListItem, styles.modifiers[variant], {
-      [styles.modifiers.hoverable]: hoverable,
-      [styles.modifiers.read]: read,
-    }]"
+    :class="[
+      styles.notificationDrawerListItem,
+      styles.modifiers[variant],
+      {
+        [styles.modifiers.hoverable]: hoverable,
+        [styles.modifiers.read]: read,
+      },
+    ]"
     :tabindex="tabindex"
   >
     <span class="pf-v6-screen-reader">{{ readStateScreenReaderText }}</span>
@@ -39,7 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
   tabindex: 0,
   hoverable: true,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

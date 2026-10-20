@@ -1,7 +1,7 @@
 <template>
   <pf-background-image v-if="backgroundImgSrc" :src="backgroundImgSrc" />
 
-  <pf-login v-bind="{...ouiaProps, ...$attrs}">
+  <pf-login v-bind="{ ...ouiaProps, ...$attrs }">
     <template #header>
       <pf-login-header>
         <pf-brand v-if="brandImgSrc" :src="brandImgSrc" :alt="brandImgAlt" />
@@ -77,7 +77,7 @@ interface Props extends /* @vue-ignore */ ComponentProps<typeof PfLogin> {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;

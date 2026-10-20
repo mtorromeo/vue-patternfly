@@ -4,20 +4,12 @@
     "allowImportingTsExtensions": null,
     "assumeChangesOnlyAffectDirectDependencies": true,
     "noEmit": false,
-    "lib": [
-      "ES2021",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "importHelpers": true,
     "sourceMap": true,
     "strictNullChecks": true,
     "allowJs": true,
     "noUnusedLocals": true
   },
-  "exclude": [
-    "**/**.test.tsx",
-    "**/**.test.ts",
-    "**/examples/**"
-  ]
+  "exclude": ["**/**.test.tsx", "**/**.test.ts", "**/examples/**"]
 }

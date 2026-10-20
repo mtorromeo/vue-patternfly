@@ -1,5 +1,9 @@
 <template>
-  <div v-bind="ouiaProps" :class="styles.emptyStateIcon" :style="{ [cssIconColor.name]: hasSpinner ? undefined : color }">
+  <div
+    v-bind="ouiaProps"
+    :class="styles.emptyStateIcon"
+    :style="{ [cssIconColor.name]: hasSpinner ? undefined : color }"
+  >
     <render />
   </div>
 </template>
@@ -22,7 +26,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<SVGAttributes, 'size'>
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -44,9 +48,12 @@ function render() {
       ariaHidden = 'false';
       hasSpinner.value = true;
     }
-    vnode.props = mergeProps({
-      'aria-hidden': ariaHidden,
-    }, vnode.props ?? {});
+    vnode.props = mergeProps(
+      {
+        'aria-hidden': ariaHidden,
+      },
+      vnode.props ?? {},
+    );
     return vnode;
   });
 }

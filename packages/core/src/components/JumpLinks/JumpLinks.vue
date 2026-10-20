@@ -3,11 +3,12 @@
     v-bind="ouiaProps"
     :class="[
       styles.jumpLinks,
-      breakpointClasses, {
+      breakpointClasses,
+      {
         [styles.modifiers.center]: centered,
         [styles.modifiers.vertical]: vertical,
         [styles.modifiers.expanded]: expanded,
-      }
+      },
     ]"
   >
     <div :class="styles.jumpLinksMain">
@@ -33,11 +34,7 @@
       </div>
       <ul :class="styles.jumpLinksList" role="list">
         <slot />
-        <pf-jump-links-item
-          v-for="(el, i) in autoLinkElements"
-          :key="`${i}:${el.textContent}`"
-          :node="el"
-        >
+        <pf-jump-links-item v-for="(el, i) in autoLinkElements" :key="`${i}:${el.textContent}`" :node="el">
           {{ el.textContent }}
         </pf-jump-links-item>
       </ul>
@@ -69,7 +66,19 @@ interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import { classesFromBreakpointProps, type ExpandableBreakpointProps } from '../../breakpoints';
-import { provide, nextTick, ref, type Ref, computed, watch, onMounted, onUnmounted, toValue, type HTMLAttributes, type MaybeRef } from 'vue';
+import {
+  provide,
+  nextTick,
+  ref,
+  type Ref,
+  computed,
+  watch,
+  onMounted,
+  onUnmounted,
+  toValue,
+  type HTMLAttributes,
+  type MaybeRef,
+} from 'vue';
 import { provideChildrenTracker } from '../../use';
 import { computedWithControl, type MaybeComputedElementRef } from '@vueuse/core';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
@@ -87,7 +96,7 @@ const props = withDefaults(defineProps<Props>(), {
   alwaysShowLabel: true,
   toggleAriaLabel: 'Toggle jump links',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** On mobile whether or not the JumpLinks starts out expanded */
 const expanded = defineModel<boolean>('expanded', { default: false });
@@ -103,56 +112,70 @@ defineSlots<{
 
 const breakpointClasses = computed(() => classesFromBreakpointProps(props, ['expandable'], styles, { short: true }));
 
-const hasToggle = computed(() => [
-  props.expandable,
-  props.expandableSm,
-  props.expandableMd,
-  props.expandableLg,
-  props.expandableXl,
-  props.expandable2xl,
-].includes('expandable'));
+const hasToggle = computed(() =>
+  [
+    props.expandable,
+    props.expandableSm,
+    props.expandableMd,
+    props.expandableLg,
+    props.expandableXl,
+    props.expandable2xl,
+  ].includes('expandable'),
+);
 
 const links = provideChildrenTracker(JumpLinksKey);
 
-const scrollableHTMLElement = computedWithControl(() => [props.scrollableElement, props.autoLinkFromElements],() => {
-  if (!props.scrollableElement) {
-    return;
-  }
-
-  if (typeof props.scrollableElement === 'string') {
-    const el = document.querySelector(props.scrollableElement);
-    return el instanceof HTMLElement ? el : undefined;
-  }
-
-  return toValue(props.scrollableElement);
-});
-
-const autoLinkElements = computedWithControl(() => [scrollableHTMLElement, props.autoLinkFromElements], () => {
-  const scrollableElement = toValue(scrollableHTMLElement);
-
-  const linkElements: HTMLElement[] = [];
-
-  if (typeof props.autoLinkFromElements === 'string') {
-    if (scrollableElement) {
-      linkElements.push(...[
-        ...scrollableElement.querySelectorAll(props.autoLinkFromElements),
-      ].filter((e: Element) => e instanceof HTMLElement) as HTMLElement[]);
+const scrollableHTMLElement = computedWithControl(
+  () => [props.scrollableElement, props.autoLinkFromElements],
+  () => {
+    if (!props.scrollableElement) {
+      return;
     }
-  } else if (props.autoLinkFromElements) {
-    linkElements.push(...toValue(props.autoLinkFromElements));
-  }
 
-  return linkElements;
-});
+    if (typeof props.scrollableElement === 'string') {
+      const el = document.querySelector(props.scrollableElement);
+      return el instanceof HTMLElement ? el : undefined;
+    }
+
+    return toValue(props.scrollableElement);
+  },
+);
+
+const autoLinkElements = computedWithControl(
+  () => [scrollableHTMLElement, props.autoLinkFromElements],
+  () => {
+    const scrollableElement = toValue(scrollableHTMLElement);
+
+    const linkElements: HTMLElement[] = [];
+
+    if (typeof props.autoLinkFromElements === 'string') {
+      if (scrollableElement) {
+        linkElements.push(
+          ...([...scrollableElement.querySelectorAll(props.autoLinkFromElements)].filter(
+            (e: Element) => e instanceof HTMLElement,
+          ) as HTMLElement[]),
+        );
+      }
+    } else if (props.autoLinkFromElements) {
+      linkElements.push(...toValue(props.autoLinkFromElements));
+    }
+
+    return linkElements;
+  },
+);
 
 onMounted(scrollableHTMLElement.trigger);
 onUnmounted(() => toValue(scrollableHTMLElement)?.removeEventListener('scroll', scrollSpy));
 
-watch(scrollableHTMLElement, (value, oldValue) => {
-  oldValue?.removeEventListener('scroll', scrollSpy);
-  value?.addEventListener('scroll', scrollSpy);
-  nextTick(autoLinkElements.trigger);
-}, { immediate: true });
+watch(
+  scrollableHTMLElement,
+  (value, oldValue) => {
+    oldValue?.removeEventListener('scroll', scrollSpy);
+    value?.addEventListener('scroll', scrollSpy);
+    nextTick(autoLinkElements.trigger);
+  },
+  { immediate: true },
+);
 
 const scrollPosition = ref(0);
 const currentTargetPosition: Ref<number | undefined> = ref();
@@ -172,7 +195,8 @@ function scrollSpy() {
 
   scrollPosition.value = Math.ceil(scrollableElement.scrollTop + props.offset);
   // The last section may not have enough content to scroll past it, so it becomes current at the bottom
-  const isAtBottom = Math.ceil(scrollableElement.scrollTop + scrollableElement.clientHeight) >= scrollableElement.scrollHeight;
+  const isAtBottom =
+    Math.ceil(scrollableElement.scrollTop + scrollableElement.clientHeight) >= scrollableElement.scrollHeight;
 
   nextTick(() => {
     const passedLinksPositions = links
@@ -182,7 +206,8 @@ function scrollSpy() {
       })
       .filter(n => n !== null && (isAtBottom || n < scrollPosition.value))
       .sort((a, b) => (a ?? -1) - (b ?? -1)) as number[];
-    currentTargetPosition.value = passedLinksPositions.length > 0 ? passedLinksPositions[passedLinksPositions.length - 1] : undefined;
+    currentTargetPosition.value =
+      passedLinksPositions.length > 0 ? passedLinksPositions[passedLinksPositions.length - 1] : undefined;
   });
 }
 </script>

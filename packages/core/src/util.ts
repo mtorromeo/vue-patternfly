@@ -1,16 +1,25 @@
 import { isDefined } from '@vueuse/shared';
-import { h, Fragment, Comment, type VNode, type VNodeTypes, isVNode, type VNodeNormalizedChildren, type ComponentPublicInstance, type VNodeArrayChildren, type Component, type ComponentOptionsMixin } from 'vue';
+import {
+  h,
+  Fragment,
+  Comment,
+  type VNode,
+  type VNodeTypes,
+  isVNode,
+  type VNodeNormalizedChildren,
+  type ComponentPublicInstance,
+  type VNodeArrayChildren,
+  type Component,
+  type ComponentOptionsMixin,
+} from 'vue';
 import { globalHeightBreakpoints, globalWidthBreakpoints } from './constants';
 
-const camelize = (s: string) =>
-  s
-    .toUpperCase()
-    .replace('-', '')
-    .replace('_', '');
+const camelize = (s: string) => s.toUpperCase().replace('-', '').replace('_', '');
 
 export const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
-export const isComponentPublicInstance = (v: any): v is ComponentPublicInstance => v && typeof v === 'object' && '$' in v && '$options' in v && '$root' in v && '$el' in v;
+export const isComponentPublicInstance = (v: any): v is ComponentPublicInstance =>
+  v && typeof v === 'object' && '$' in v && '$options' in v && '$root' in v && '$el' in v;
 
 /**
  *
@@ -22,12 +31,11 @@ export function toCamelCase<S extends string>(s: S): ToCamelCase<S> {
 
 export const ucfirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-export type ToCamelCase<S extends string> =
-  S extends `${infer T}_${infer U}` ?
-  `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}` :
-  S extends `${infer T}-${infer U}` ?
-  `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}` :
-  S;
+export type ToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
+  ? `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}`
+  : S extends `${infer T}-${infer U}`
+    ? `${Lowercase<T>}${Capitalize<ToCamelCase<U>>}`
+    : S;
 
 export function debounce<T>(func: (args: T[]) => any, wait: number) {
   let timeout: number;
@@ -62,7 +70,10 @@ export function vnodeTypeIsComponent(vtype: VNodeTypes): vtype is Component & Co
   return vtype !== Fragment && typeof vtype === 'object' && !(vtype as any).type;
 }
 
-export function findFirstChildVNode(vnodes: VNode[] | VNodeNormalizedChildren | undefined, matchFn?: ((vnode: VNode) => boolean) | undefined): VNode | undefined {
+export function findFirstChildVNode(
+  vnodes: VNode[] | VNodeNormalizedChildren | undefined,
+  matchFn?: ((vnode: VNode) => boolean) | undefined,
+): VNode | undefined {
   if (!Array.isArray(vnodes)) {
     return;
   }
@@ -87,8 +98,7 @@ export function findChildrenVNodes(vnodes: VNode[] | VNodeNormalizedChildren | u
 
   return vnodes
     .filter(n => isVNode(n) && n.type !== Comment)
-    .map(n => isVNode(n) && n.type === Fragment ? findChildrenVNodes(n.children) : n)
-    .flat() as VNode[];
+    .flatMap(n => (isVNode(n) && n.type === Fragment ? findChildrenVNodes(n.children) : n)) as VNode[];
 }
 
 /**
@@ -101,7 +111,11 @@ export function fragment(vnodes: VNode | VNodeArrayChildren | null | undefined):
   return h(Fragment, Array.isArray(vnodes) ? vnodes : vnodes ? [vnodes] : []);
 }
 
-export function walkChildrenVNodes<T extends VNode[] | VNodeNormalizedChildren | undefined>(vnodes: T, mapFn: (node: VNode, index: number) => VNode, startIndex?: number): T {
+export function walkChildrenVNodes<T extends VNode[] | VNodeNormalizedChildren | undefined>(
+  vnodes: T,
+  mapFn: (node: VNode, index: number) => VNode,
+  startIndex?: number,
+): T {
   if (!Array.isArray(vnodes)) {
     return vnodes;
   }
@@ -117,7 +131,7 @@ export function walkChildrenVNodes<T extends VNode[] | VNodeNormalizedChildren |
       n.children = walkChildrenVNodes(n.children, mapFn, index + (startIndex ?? 0));
       return n;
     }
-    return mapFn(n,  index+ (startIndex ?? 0));
+    return mapFn(n, index + (startIndex ?? 0));
   }) as T;
 }
 
@@ -237,7 +251,9 @@ export function fillTemplate(templateString: string, templateVars: any) {
   return templateString.replace(/\${(.*?)}/g, (_, match) => templateVars[match] || '');
 }
 
-export function isRawSlots(children: VNodeNormalizedChildren | undefined): children is Exclude<VNodeNormalizedChildren, string | VNodeArrayChildren | null | undefined> {
+export function isRawSlots(
+  children: VNodeNormalizedChildren | undefined,
+): children is Exclude<VNodeNormalizedChildren, string | VNodeArrayChildren | null | undefined> {
   return isDefined(children) && typeof children === 'object' && !Array.isArray(children);
 }
 

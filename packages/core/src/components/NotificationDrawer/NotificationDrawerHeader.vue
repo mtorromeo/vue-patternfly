@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'Notifications',
   unreadText: 'unread',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

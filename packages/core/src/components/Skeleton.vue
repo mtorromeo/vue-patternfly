@@ -1,12 +1,15 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.skeleton, {
-      [fontHeightClassName ?? styles.modifiers.circle]: fontSize,
-      [styles.modifiers.circle]: shape === 'circle',
-      [styles.modifiers.square]: shape === 'square',
-    }]"
-    :style="(sizes as any)"
+    :class="[
+      styles.skeleton,
+      {
+        [fontHeightClassName ?? styles.modifiers.circle]: fontSize,
+        [styles.modifiers.circle]: shape === 'circle',
+        [styles.modifiers.square]: shape === 'square',
+      },
+    ]"
+    :style="sizes as any"
   >
     <span class="pf-v6-screen-reader">{{ screenreaderText }}</span>
   </div>
@@ -40,12 +43,10 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const fontHeightClassName = computed(() => {
-  return props.fontSize
-    ? Object.values(styles.modifiers).find(k => k === `pf-m-text-${props.fontSize}`)
-    : undefined;
+  return props.fontSize ? Object.values(styles.modifiers).find(k => k === `pf-m-text-${props.fontSize}`) : undefined;
 });
 
 const sizes = computed(() => {

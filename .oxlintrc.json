@@ -1,0 +1,68 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "import", "vue", "promise", "node"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "ignorePatterns": ["**/dist/**", "**/coverage/**"],
+  "rules": {
+    "eslint/no-await-in-loop": "off",
+    "eslint/no-shadow": "off",
+    "eslint/no-underscore-dangle": "off",
+    "eslint/no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+    "eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_", "caughtErrors": "none", "ignoreRestSiblings": true }
+    ],
+    "eslint/no-console": ["error", { "allow": ["warn", "error"] }],
+    "eslint/no-var": "error",
+    "eslint/prefer-const": "error",
+    "eslint/no-useless-rename": "error",
+    "eslint/no-return-assign": ["error", "except-parens"],
+    "eslint/object-shorthand": ["error", "properties"],
+    "eslint/no-else-return": ["error", { "allowElseIf": true }],
+    "eslint/no-useless-computed-key": "error",
+    "eslint/no-duplicate-imports": "off",
+    "import/no-duplicates": "off",
+    "import/no-named-as-default": "off",
+    "import/no-self-import": "off",
+    "import/no-unassigned-import": "off",
+    "oxc/no-map-spread": "off",
+    "typescript/consistent-type-imports": [
+      "error",
+      { "fixStyle": "inline-type-imports", "disallowTypeAnnotations": false }
+    ],
+    "typescript/no-import-type-side-effects": "error",
+    "typescript/no-inferrable-types": "error",
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/no-array-reverse": "off",
+    "unicorn/no-array-sort": "off",
+    "unicorn/prefer-add-event-listener": "off",
+    "unicorn/prefer-node-protocol": "error",
+    "unicorn/require-module-specifiers": "off",
+    "vue/return-in-computed-property": ["error", { "treatUndefinedAsUnspecified": false }]
+  },
+  "overrides": [
+    {
+      "files": ["**/tests/**", "**/*.spec.ts"],
+      "plugins": ["vitest"],
+      "rules": {
+        "vitest/require-mock-type-parameters": "off",
+        "vitest/valid-expect": ["error", { "maxArgs": 2 }]
+      }
+    },
+    {
+      "files": ["apps/docs/**", "**/scripts/**", "**/*.config.mts"],
+      "rules": {
+        "eslint/no-console": "off"
+      }
+    }
+  ]
+}

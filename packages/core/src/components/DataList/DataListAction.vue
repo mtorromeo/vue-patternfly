@@ -14,11 +14,10 @@ defineOptions({
   name: 'PfDataListAction',
 });
 
-interface Props extends OUIAProps, VisibilityBreakpointProps, /* @vue-ignore */ HTMLAttributes {
-}
+interface Props extends OUIAProps, VisibilityBreakpointProps, /* @vue-ignore */ HTMLAttributes {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Radio">
-    <template #description>A <b>radio</b> button is used to present the user with mutually exclusive choices. Always present radio buttons in groups of 2 or more.</template>
+    <template #description
+      >A <b>radio</b> button is used to present the user with mutually exclusive choices. Always present radio buttons
+      in groups of 2 or more.</template
+    >
 
     <template #apidocs>
       <component-info name="PfRadio" />
@@ -32,16 +35,8 @@
     </story-canvas>
 
     <story-canvas title="Radio with same name">
-      <pf-radio
-        component="label"
-        name="radio-choice"
-        label="Choice 1"
-      />
-      <pf-radio
-        component="label"
-        name="radio-choice"
-        label="Choice 2"
-      />
+      <pf-radio component="label" name="radio-choice" label="Choice 1" />
+      <pf-radio component="label" name="radio-choice" label="Choice 2" />
     </story-canvas>
 
     <story-canvas title="With description and body">

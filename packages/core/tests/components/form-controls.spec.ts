@@ -12,7 +12,12 @@ import PfTextInput from '../../src/components/TextInput.vue';
 import PfTextarea from '../../src/components/Textarea.vue';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -54,7 +59,10 @@ describe('Checkbox', () => {
   });
 
   it('applies class to the wrapper and inputClass to the input', () => {
-    const wrapper = mount(PfCheckbox, { props: { label: 'Accept', inputClass: 'input-extra' }, attrs: { class: 'wrapper-extra' } });
+    const wrapper = mount(PfCheckbox, {
+      props: { label: 'Accept', inputClass: 'input-extra' },
+      attrs: { class: 'wrapper-extra' },
+    });
     expect(wrapper.classes()).toContain('wrapper-extra');
     expect(wrapper.classes()).not.toContain('input-extra');
     expect(wrapper.find('input').classes()).toEqual([checkStyles.checkInput, 'input-extra']);
@@ -148,7 +156,10 @@ describe('Radio', () => {
   });
 
   it('applies class to the wrapper and inputClass to the input', () => {
-    const wrapper = mount(PfRadio, { props: { label: 'Option', inputClass: 'input-extra' }, attrs: { class: 'wrapper-extra' } });
+    const wrapper = mount(PfRadio, {
+      props: { label: 'Option', inputClass: 'input-extra' },
+      attrs: { class: 'wrapper-extra' },
+    });
     expect(wrapper.classes()).toContain('wrapper-extra');
     expect(wrapper.classes()).not.toContain('input-extra');
     expect(wrapper.find('input').classes()).toEqual([radioStyles.radioInput, 'input-extra']);
@@ -276,7 +287,9 @@ describe('TextInput', () => {
     await wrapper.setProps({ disabled: false, readOnlyVariant: 'plain' });
     expect(wrapper.find('input').attributes('disabled')).toBeUndefined();
     expect(wrapper.find('input').attributes('readonly')).toBeDefined();
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([formControlStyles.modifiers.readonly, formControlStyles.modifiers.plain]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([formControlStyles.modifiers.readonly, formControlStyles.modifiers.plain]),
+    );
   });
 
   it('reflects the validated state with aria-invalid and a status icon', async () => {
@@ -316,7 +329,9 @@ describe('Textarea', () => {
   it('renders a textarea inside a form control', () => {
     const wrapper = mount(PfTextarea, { attrs: { id: 'notes', 'aria-label': 'Notes' } });
     const textarea = wrapper.find('textarea');
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([formControlStyles.formControl, formControlStyles.modifiers.resizeBoth]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([formControlStyles.formControl, formControlStyles.modifiers.resizeBoth]),
+    );
     expect(textarea.attributes('id')).toBe('notes');
     expect(textarea.attributes('aria-label')).toBe('Notes');
     expect(textarea.attributes('aria-invalid')).toBe('false');

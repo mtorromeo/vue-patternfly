@@ -45,31 +45,38 @@
   </teleport>
 
   <teleport v-if="contentTargetRef && !contentRef" :to="contentTargetRef">
-    <pf-tab-content v-if="!mountOnEnter || keepAlive" v-show="key === activeKey" :id="`pf-tab-section-${stringKey}-${toValue(idSuffix)}`" :key="key" :aria-labelledby="`pf-tab-${stringKey}-${toValue(idSuffix)}`" v-bind="$attrs">
+    <pf-tab-content
+      v-if="!mountOnEnter || keepAlive"
+      v-show="key === activeKey"
+      :id="`pf-tab-section-${stringKey}-${toValue(idSuffix)}`"
+      :key="key"
+      :aria-labelledby="`pf-tab-${stringKey}-${toValue(idSuffix)}`"
+      v-bind="$attrs"
+    >
       <slot />
     </pf-tab-content>
   </teleport>
 </template>
 
 <script lang="ts" setup>
-import styles from "@patternfly/react-styles/css/components/Tabs/tabs";
-import { computed, getCurrentInstance, inject, ref, toValue, useId, watch, watchEffect, type Ref } from "vue";
-import { TabsKey, TabsProvideKey } from "./common";
-import PfTabTitleIcon from "./TabTitleIcon.vue";
-import PfTabTitleText from "./TabTitleText.vue";
-import PfTabButton from "./TabButton.vue";
-import PfTabContent from "./TabContent.vue";
-import PfMenuItem from "../Menu/MenuItem.vue";
-import { useChildrenTracker } from "../../use";
-import { useOUIAProps, type OUIAProps } from "../../helpers/ouia";
-import type { ComponentExposed, ComponentProps } from "vue-component-type-helpers";
+import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
+import { computed, getCurrentInstance, inject, ref, toValue, useId, watch, watchEffect, type Ref } from 'vue';
+import { TabsKey, TabsProvideKey } from './common';
+import PfTabTitleIcon from './TabTitleIcon.vue';
+import PfTabTitleText from './TabTitleText.vue';
+import PfTabButton from './TabButton.vue';
+import PfTabContent from './TabContent.vue';
+import PfMenuItem from '../Menu/MenuItem.vue';
+import { useChildrenTracker } from '../../use';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { ComponentExposed, ComponentProps } from 'vue-component-type-helpers';
 
 defineOptions({
-  name: "PfTab",
+  name: 'PfTab',
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfTabContent>, "ouiaId" | "ouiaSafe"> {
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfTabContent>, 'ouiaId' | 'ouiaSafe'> {
   /** Content rendered in the tab title. */
   title?: string;
   /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */
@@ -91,9 +98,9 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: "click", event: PointerEvent): void;
-  (name: "enter"): void;
-  (name: "leave"): void;
+  (name: 'click', event: PointerEvent): void;
+  (name: 'enter'): void;
+  (name: 'leave'): void;
 }>();
 
 defineSlots<{
@@ -122,19 +129,21 @@ const tabOverflowRef = tabs?.tabOverflowRef;
 const contentTargetRef = tabs?.contentTargetRef;
 const idSuffix = tabs?.idSuffix;
 const keepAlive = ref(false);
-const stringKey = computed(() => (typeof key.value === "symbol" ? (key.value.description ?? useId()) : String(key.value)));
+const stringKey = computed(() =>
+  typeof key.value === 'symbol' ? (key.value.description ?? useId()) : String(key.value),
+);
 
 watch(
   [key, activeKey],
   () => {
     if (key.value === activeKey?.value) {
       keepAlive.value = true;
-      emit("enter");
+      emit('enter');
     } else if (keepAlive.value) {
       if (props.unmountOnExit) {
         keepAlive.value = false;
       }
-      emit("leave");
+      emit('leave');
     }
   },
   { immediate: true },
@@ -157,7 +166,7 @@ function handleClick(event: PointerEvent) {
   if (activeKey) {
     activeKey.value = key.value;
   }
-  emit("click", event);
+  emit('click', event);
 }
 
 defineExpose({

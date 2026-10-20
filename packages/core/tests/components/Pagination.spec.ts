@@ -7,7 +7,12 @@ import PfPagination from '../../src/components/Pagination/Pagination.vue';
 import PfPaginationNavigation from '../../src/components/Pagination/PaginationNavigation.vue';
 import PfPaginationOptionsMenu from '../../src/components/Pagination/PaginationOptionsMenu.vue';
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -20,10 +25,14 @@ function mountWithModel<C>(component: C, model: string, props: Record<string, un
 
 type Action = 'first' | 'previous' | 'next' | 'last';
 const navButton = (wrapper: VueWrapper<any>, action: Action) => wrapper.find(`button[data-action="${action}"]`);
-const isDisabled = (wrapper: VueWrapper<any>, action: Action) => navButton(wrapper, action).attributes('disabled') !== undefined;
-const pageInput = (wrapper: VueWrapper<any>) => wrapper.find<HTMLInputElement>(`.${styles.paginationNavPageSelect} input`);
-const totalText = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.paginationTotalItems}`).text().replace(/\s+/g, ' ');
-const toggleText = (wrapper: VueWrapper<any>) => wrapper.find('button[aria-haspopup="listbox"]').text().replace(/\s+/g, ' ');
+const isDisabled = (wrapper: VueWrapper<any>, action: Action) =>
+  navButton(wrapper, action).attributes('disabled') !== undefined;
+const pageInput = (wrapper: VueWrapper<any>) =>
+  wrapper.find<HTMLInputElement>(`.${styles.paginationNavPageSelect} input`);
+const totalText = (wrapper: VueWrapper<any>) =>
+  wrapper.find(`.${styles.paginationTotalItems}`).text().replace(/\s+/g, ' ');
+const toggleText = (wrapper: VueWrapper<any>) =>
+  wrapper.find('button[aria-haspopup="listbox"]').text().replace(/\s+/g, ' ');
 
 describe('Pagination', () => {
   describe('rendering', () => {
@@ -96,7 +105,8 @@ describe('Pagination', () => {
       const wrapper = mount(PfPagination, {
         props: { count: 25, page: 2, variant: 'bottom', titleItems: 'rows' },
         slots: {
-          total: (p: any) => h('span', { class: 'custom' }, `${p.firstIndex}/${p.lastIndex}/${p.count}/${p.titleItems}`),
+          total: (p: any) =>
+            h('span', { class: 'custom' }, `${p.firstIndex}/${p.lastIndex}/${p.count}/${p.titleItems}`),
         },
       });
       expect(wrapper.find(`.${styles.paginationTotalItems} .custom`).text()).toBe('11/20/25/rows');
@@ -298,16 +308,26 @@ describe('Pagination', () => {
 
   describe('per page', () => {
     it('lists the per page options and updates v-model:perPage', async () => {
-      const wrapper = mountWithModel(PfPagination, 'perPage', { count: 52, perPage: 10, variant: 'top' }, { attachTo: document.body });
+      const wrapper = mountWithModel(
+        PfPagination,
+        'perPage',
+        { count: 52, perPage: 10, variant: 'top' },
+        { attachTo: document.body },
+      );
       await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
       await nextTick();
 
       const options = document.body.querySelectorAll<HTMLButtonElement>('[data-action^="per-page-"]');
       expect([...options].map(o => o.textContent!.replace(/\s+/g, ' ').trim())).toEqual([
-        '10 per page', '20 per page', '50 per page', '100 per page',
+        '10 per page',
+        '20 per page',
+        '50 per page',
+        '100 per page',
       ]);
 
-      const option20 = document.body.querySelector<HTMLButtonElement>(`[data-action="per-page-20"] .${menuStyles.menuItem}`)!;
+      const option20 = document.body.querySelector<HTMLButtonElement>(
+        `[data-action="per-page-20"] .${menuStyles.menuItem}`,
+      )!;
       option20.click();
       await nextTick();
       expect(wrapper.emitted('update:perPage')).toEqual([[20]]);
@@ -319,7 +339,16 @@ describe('Pagination', () => {
 
     it('uses custom per page options and suffix', async () => {
       const wrapper = mount(PfPagination, {
-        props: { variant: 'top', count: 52, perPage: 5, perPageOptions: [{ title: 'five', value: 5 }, { title: 'all', value: 100 }], titlePerPageSuffix: 'rows' },
+        props: {
+          variant: 'top',
+          count: 52,
+          perPage: 5,
+          perPageOptions: [
+            { title: 'five', value: 5 },
+            { title: 'all', value: 100 },
+          ],
+          titlePerPageSuffix: 'rows',
+        },
         attachTo: document.body,
       });
       await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
@@ -331,7 +360,10 @@ describe('Pagination', () => {
     });
 
     it('updates the page when the selected perPage leaves it out of range', async () => {
-      const wrapper = mount(PfPagination, { props: { count: 52, page: 6, perPage: 10, variant: 'top' }, attachTo: document.body });
+      const wrapper = mount(PfPagination, {
+        props: { count: 52, page: 6, perPage: 10, variant: 'top' },
+        attachTo: document.body,
+      });
       await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
       await nextTick();
 
@@ -343,7 +375,10 @@ describe('Pagination', () => {
     });
 
     it('moves to the last full page with lastFullPageShown', async () => {
-      const wrapper = mount(PfPagination, { props: { count: 52, page: 3, perPage: 20, lastFullPageShown: true, variant: 'top' }, attachTo: document.body });
+      const wrapper = mount(PfPagination, {
+        props: { count: 52, page: 3, perPage: 20, lastFullPageShown: true, variant: 'top' },
+        attachTo: document.body,
+      });
       await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
       await nextTick();
 
@@ -354,7 +389,10 @@ describe('Pagination', () => {
     });
 
     it('does not update the page when it stays in range', async () => {
-      const wrapper = mount(PfPagination, { props: { count: 52, page: 2, perPage: 10, variant: 'top' }, attachTo: document.body });
+      const wrapper = mount(PfPagination, {
+        props: { count: 52, page: 2, perPage: 10, variant: 'top' },
+        attachTo: document.body,
+      });
       await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
       await nextTick();
 
@@ -396,7 +434,9 @@ describe('PaginationNavigation', () => {
 
 describe('PaginationOptionsMenu', () => {
   it('renders a toggle with the item range', () => {
-    const wrapper = mount(PfPaginationOptionsMenu, { props: { count: 30, firstIndex: 11, lastIndex: 20, itemsTitle: 'items' } });
+    const wrapper = mount(PfPaginationOptionsMenu, {
+      props: { count: 30, firstIndex: 11, lastIndex: 20, itemsTitle: 'items' },
+    });
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/PaginationOptionsMenu');
     const toggle = wrapper.find('button');
     expect(toggle.attributes('id')).toBe('pagination-options-menu-toggle');

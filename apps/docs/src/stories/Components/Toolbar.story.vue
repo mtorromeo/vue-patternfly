@@ -1,8 +1,9 @@
 <template>
   <doc-page title="Toolbar">
     <template #description
-      >A <b>toolbar</b> allows a user to manage and manipulate a data set. Data can be presented in any valid presentation, a table, a list, or a data visualization (chart), for example. The toolbar responsively accommodates controls and
-      displays applied filters in label groups.</template
+      >A <b>toolbar</b> allows a user to manage and manipulate a data set. Data can be presented in any valid
+      presentation, a table, a list, or a data visualization (chart), for example. The toolbar responsively accommodates
+      controls and displays applied filters in label groups.</template
     >
 
     <template #apidocs>
@@ -185,7 +186,14 @@
 
       <pf-switch v-model:checked="toolbarContainer" label="Container" /><br /><br />
 
-      <div style="resize: horizontal; overflow: auto; max-width: 100%; border: 1px dashed var(--pf-t--global--border--color--default)">
+      <div
+        style="
+          resize: horizontal;
+          overflow: auto;
+          max-width: 100%;
+          border: 1px dashed var(--pf-t--global--border--color--default);
+        "
+      >
         <pf-toolbar class="pf-m-toggle-group-container" :container="toolbarContainer">
           <pf-toolbar-content>
             <pf-toolbar-toggle-group xl>
@@ -273,7 +281,12 @@
     </story-canvas>
 
     <story-canvas title="With filters">
-      <pf-toolbar v-model:expanded="expanded2" class="pf-m-toggle-group-container" collapse-listed-filters-breakpoint="xl" @clear-all-filters="onDelete()">
+      <pf-toolbar
+        v-model:expanded="expanded2"
+        class="pf-m-toggle-group-container"
+        collapse-listed-filters-breakpoint="xl"
+        @clear-all-filters="onDelete()"
+      >
         <pf-toolbar-content>
           <pf-toolbar-toggle-group xl>
             <template #icon>
@@ -292,7 +305,12 @@
             </pf-toolbar-item>
 
             <pf-toolbar-group variant="filter-group">
-              <pf-toolbar-filter category="Status" :labels="filters.status" @delete-label="onDelete" @delete-label-group="onDeleteGroup">
+              <pf-toolbar-filter
+                category="Status"
+                :labels="filters.status"
+                @delete-label="onDelete"
+                @delete-label-group="onDeleteGroup"
+              >
                 <pf-toolbar-item>
                   <pf-select>
                     <pf-select-option value="Filter 1" />
@@ -441,7 +459,12 @@
             </pf-dropdown>
           </pf-toolbar-item>
           <pf-toolbar-item variant="pagination" align="end">
-            <pf-pagination v-model:page="page" v-model:per-page="perPage" :count="37" widget-id="pagination-options-menu" />
+            <pf-pagination
+              v-model:page="page"
+              v-model:per-page="perPage"
+              :count="37"
+              widget-id="pagination-options-menu"
+            />
           </pf-toolbar-item>
         </pf-toolbar-content>
       </pf-toolbar>
@@ -450,13 +473,13 @@
 </template>
 
 <script lang="ts" setup>
-import MagnifyingGlassIcon from "@vue-patternfly/icons/magnifying-glass-icon";
-import FilterIcon from "@vue-patternfly/icons/filter-icon";
-import CloneIcon from "@vue-patternfly/icons/clone-icon";
-import PenToSquareIcon from "@vue-patternfly/icons/pen-to-square-icon";
-import RotateIcon from "@vue-patternfly/icons/rotate-icon";
+import MagnifyingGlassIcon from '@vue-patternfly/icons/magnifying-glass-icon';
+import FilterIcon from '@vue-patternfly/icons/filter-icon';
+import CloneIcon from '@vue-patternfly/icons/clone-icon';
+import PenToSquareIcon from '@vue-patternfly/icons/pen-to-square-icon';
+import RotateIcon from '@vue-patternfly/icons/rotate-icon';
 
-import { reactive, ref } from "vue";
+import { reactive, ref } from 'vue';
 
 const toolbarContainer = ref(true);
 const expanded1 = ref(false);
@@ -466,8 +489,8 @@ const selectExpanded2 = ref(false);
 const selectExpanded3 = ref(false);
 const dropdownOpen = ref(false);
 const filters = reactive({
-  risk: ["Low"],
-  status: ["New", "Pending"],
+  risk: ['Low'],
+  status: ['New', 'Pending'],
 });
 
 const kebabIsOpen = ref(false);

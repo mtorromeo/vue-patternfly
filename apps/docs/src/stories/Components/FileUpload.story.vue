@@ -1,7 +1,8 @@
 <template>
   <doc-page title="File Upload">
     <template #description>
-      A <b>simple file upload</b> component allows the users to upload a single file into the browser. This is primarily used for uploading and previewing text files, but other file types will also be accepted.
+      A <b>simple file upload</b> component allows the users to upload a single file into the browser. This is primarily
+      used for uploading and previewing text files, but other file types will also be accepted.
     </template>
 
     <template #apidocs>
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from "vue";
+import { ref, type Ref } from 'vue';
 import UploadIcon from '@vue-patternfly/icons/upload-icon';
 
 const file: Ref<File | null> = ref(null);

@@ -1,11 +1,18 @@
 <template>
   <pass-through @children="findReference">
     <slot name="toggle">
-      <pf-menu-toggle v-bind="ouiaProps" v-model:expanded="open" :disabled="disabled" :variant="variant" :full-height="fullHeight" :full-width="fullWidth">
+      <pf-menu-toggle
+        v-bind="ouiaProps"
+        v-model:expanded="open"
+        :disabled="disabled"
+        :variant="variant"
+        :full-height="fullHeight"
+        :full-width="fullWidth"
+      >
         <template v-if="$slots.icon" #icon>
           <slot name="icon" />
         </template>
-        
+
         <template v-if="$slots.label || label" #default>
           <slot name="label">
             {{ label }}
@@ -15,12 +22,19 @@
     </slot>
   </pass-through>
 
-  <floating-ui :hidden="!open" :teleport-to="appendTo" :reference="toggleRef" :placement="placement" :z-index="zIndex" flip>
+  <floating-ui
+    :hidden="!open"
+    :teleport-to="appendTo"
+    :reference="toggleRef"
+    :placement="placement"
+    :z-index="zIndex"
+    flip
+  >
     <pf-menu
       ref="menuRef"
       v-bind="$attrs"
       v-model:selected="selected"
-      :style="{'--pf-v6-c-menu--MinWidth': minWidth}"
+      :style="{ '--pf-v6-c-menu--MinWidth': minWidth }"
       @select="handleSelect"
     >
       <slot />
@@ -35,7 +49,10 @@ import type { RendererElement } from 'vue';
 import type { Placement } from '@floating-ui/dom';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
-interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'ouiaId' | 'ouiaSafe' | 'selected' | 'onUpdate:selected'> {
+interface Props<T>
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<ComponentProps<typeof PfMenu>, 'ouiaId' | 'ouiaSafe' | 'selected' | 'onUpdate:selected'> {
   /** Single itemId for single select menus, or array of itemIds for multi select. You can also specify isSelected on the MenuItem. */
   selected?: T | null;
   /** Minimum width of the select menu */
@@ -87,7 +104,7 @@ const props = withDefaults(defineProps<Props<T>>(), {
   label: 'Select a value',
   closeOnKeys: () => ['Escape', 'Tab'],
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag to indicate if select is open */
 const open = defineModel<boolean>('open', { default: false });
@@ -118,7 +135,6 @@ const placement = computed((): Placement => {
 const menu = useTemplateRef('menuRef');
 const { element: toggleRef, findReference } = useHtmlElementFromVNodes();
 
-
 const handleMenuKeys = (event: KeyboardEvent) => {
   // Close the menu on tab or escape
   if (
@@ -145,7 +161,11 @@ const handleClick = (event: PointerEvent) => {
   }
 
   // If the event is not on the toggle, close the menu
-  if (open.value && !toggleRef.value?.contains(event.target as Node) && !menu.value?.el?.contains(event.target as Node)) {
+  if (
+    open.value &&
+    !toggleRef.value?.contains(event.target as Node) &&
+    !menu.value?.el?.contains(event.target as Node)
+  ) {
     open.value = false;
   }
 };

@@ -15,7 +15,12 @@ import PfMenuBreadcrumb from '../../src/components/Menu/MenuBreadcrumb.vue';
 import PfDrilldownMenu from '../../src/components/Menu/DrilldownMenu.vue';
 import PfTextInput from '../../src/components/TextInput.vue';
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -47,12 +52,14 @@ describe('Menu', () => {
   it('applies plain, scrollable, flyout and nav modifiers', () => {
     const wrapper = mount(PfMenu, { props: { plain: true, scrollable: true, containsFlyout: true, navFlyout: true } });
 
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.plain,
-      styles.modifiers.scrollable,
-      styles.modifiers.flyout,
-      'pf-m-nav',
-    ]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.plain,
+        styles.modifiers.scrollable,
+        styles.modifiers.flyout,
+        'pf-m-nav',
+      ]),
+    );
   });
 
   it('automatically wraps items in a content and list', () => {
@@ -280,7 +287,10 @@ describe('MenuGroup', () => {
 });
 
 describe('MenuItem', () => {
-  function mountItem(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = { default: () => 'Item' }) {
+  function mountItem(
+    props: Record<string, unknown> = {},
+    slots: Record<string, () => unknown> = { default: () => 'Item' },
+  ) {
     const wrapper = mount(PfMenu, {
       slots: { default: () => h(PfMenuItem, props, slots) },
     });
@@ -308,7 +318,9 @@ describe('MenuItem', () => {
 
   it('throws when used outside of a menu', () => {
     vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    expect(() => mount(PfMenuItem, { slots: { default: () => 'Item' } })).toThrow('MenuItems can only be used inside Menu components');
+    expect(() => mount(PfMenuItem, { slots: { default: () => 'Item' } })).toThrow(
+      'MenuItems can only be used inside Menu components',
+    );
   });
 
   it('renders as a link when given to', () => {
@@ -340,12 +352,14 @@ describe('MenuItem', () => {
   it('applies state modifiers on the list item', () => {
     const { menu } = mountItem({ onPath: true, loadButton: true, loading: true, danger: true });
 
-    expect(menu.find('li').classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.currentPath,
-      styles.modifiers.load,
-      styles.modifiers.loading,
-      styles.modifiers.danger,
-    ]));
+    expect(menu.find('li').classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.currentPath,
+        styles.modifiers.load,
+        styles.modifiers.loading,
+        styles.modifiers.danger,
+      ]),
+    );
     expect(menu.find(`.${styles.menuItem}`).attributes('aria-expanded')).toBe('true');
   });
 
@@ -373,10 +387,13 @@ describe('MenuItem', () => {
   });
 
   it('renders icon, description and external link icon', () => {
-    const { menu } = mountItem({ description: 'Desc', externalLink: true }, {
-      default: () => 'Item',
-      icon: () => h('i', { class: 'my-icon' }),
-    });
+    const { menu } = mountItem(
+      { description: 'Desc', externalLink: true },
+      {
+        default: () => 'Item',
+        icon: () => h('i', { class: 'my-icon' }),
+      },
+    );
 
     expect(menu.find(`.${styles.menuItemIcon} .my-icon`).exists()).toBe(true);
     expect(menu.find(`.${styles.menuItemDescription}`).text()).toBe('Desc');
@@ -438,7 +455,9 @@ describe('MenuItem', () => {
     });
 
     it('selects the item through the checkbox change', async () => {
-      const wrapper = mount(PfMenu, { slots: { default: () => h(PfMenuItem, { check: true, value: 'a' }, () => 'A') } });
+      const wrapper = mount(PfMenu, {
+        slots: { default: () => h(PfMenuItem, { check: true, value: 'a' }, () => 'A') },
+      });
 
       await wrapper.find('input[type="checkbox"]').setValue(true);
       expect(wrapper.emitted('select')).toHaveLength(1);
@@ -459,10 +478,14 @@ describe('MenuItem', () => {
         props: { containsFlyout: true },
         slots: {
           default: () => [
-            h(PfMenuItem, { value: 'parent' }, {
-              default: () => 'Parent',
-              'flyout-menu': () => h('div', { class: 'flyout' }, 'Sub'),
-            }),
+            h(
+              PfMenuItem,
+              { value: 'parent' },
+              {
+                default: () => 'Parent',
+                'flyout-menu': () => h('div', { class: 'flyout' }, 'Sub'),
+              },
+            ),
             h(PfMenuItem, { value: 'other' }, () => 'Other'),
           ],
         },
@@ -511,7 +534,9 @@ describe('MenuItem', () => {
 
   describe('favorited', () => {
     it('renders a favorite action toggling update:favorited', async () => {
-      const wrapper = mount(PfMenu, { slots: { default: () => h(PfMenuItem, { value: 'a', favorited: false }, () => 'A') } });
+      const wrapper = mount(PfMenu, {
+        slots: { default: () => h(PfMenuItem, { value: 'a', favorited: false }, () => 'A') },
+      });
       const item = wrapper.findComponent(PfMenuItem);
       const action = wrapper.find(`.${styles.menuItemAction}`);
 
@@ -565,10 +590,15 @@ describe('MenuItemAction', () => {
     const wrapper = mount(PfMenu, {
       props: { onActionClick },
       slots: {
-        default: () => h(PfMenuItem, { value: 'item-1' }, {
-          default: () => 'Item',
-          actions: () => h(PfMenuItemAction, { actionId: 'act', 'aria-label': 'Do' }),
-        }),
+        default: () =>
+          h(
+            PfMenuItem,
+            { value: 'item-1' },
+            {
+              default: () => 'Item',
+              actions: () => h(PfMenuItemAction, { actionId: 'act', 'aria-label': 'Do' }),
+            },
+          ),
       },
     });
 
@@ -582,10 +612,15 @@ describe('MenuItemAction', () => {
   it('is disabled when the parent item is disabled', () => {
     const wrapper = mount(PfMenu, {
       slots: {
-        default: () => h(PfMenuItem, { value: 'a', disabled: true }, {
-          default: () => 'Item',
-          actions: () => h(PfMenuItemAction, { 'aria-label': 'Do' }),
-        }),
+        default: () =>
+          h(
+            PfMenuItem,
+            { value: 'a', disabled: true },
+            {
+              default: () => 'Item',
+              actions: () => h(PfMenuItemAction, { 'aria-label': 'Do' }),
+            },
+          ),
       },
     });
 

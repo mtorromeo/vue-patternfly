@@ -12,9 +12,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rolldownOptions: {
-      external: id => id === 'vue'
-        || id.startsWith('@vueuse/')
-        || id.startsWith('@vue-patternfly/'),
+      external: id => id === 'vue' || id.startsWith('@vueuse/') || id.startsWith('@vue-patternfly/'),
       output: {
         exports: 'named',
         preserveModules: true,
@@ -22,8 +20,5 @@ export default defineConfig({
       },
     },
   },
-  plugins: [
-    inlineVueScriptModules(),
-    vue(),
-  ],
+  plugins: [inlineVueScriptModules(), vue()],
 });

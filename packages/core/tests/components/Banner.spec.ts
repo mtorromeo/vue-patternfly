@@ -43,7 +43,11 @@ describe('Banner', () => {
   });
 
   it('forwards attributes and OUIA props to the root', () => {
-    const wrapper = mount(PfBanner, { props: { ouiaId: 'b1' }, attrs: { id: 'banner', 'aria-label': 'Info' }, slots: { default: () => 'x' } });
+    const wrapper = mount(PfBanner, {
+      props: { ouiaId: 'b1' },
+      attrs: { id: 'banner', 'aria-label': 'Info' },
+      slots: { default: () => 'x' },
+    });
     expect(wrapper.attributes('id')).toBe('banner');
     expect(wrapper.attributes('aria-label')).toBe('Info');
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/Banner');

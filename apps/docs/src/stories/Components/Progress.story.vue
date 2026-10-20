@@ -1,6 +1,8 @@
 <template>
   <doc-page title="Progress">
-    <template #description>A <b>progress</b> bar informs users about the completion status of an ongoing process or task.</template>
+    <template #description
+      >A <b>progress</b> bar informs users about the completion status of an ongoing process or task.</template
+    >
 
     <template #apidocs>
       <component-info name="PfProgress" />
@@ -67,13 +69,7 @@
     </story-canvas>
 
     <story-canvas title="Progress (step instruction)">
-      <pf-progress
-        :value="2"
-        title="Title"
-        :max="5"
-        label="Step 2: Copying files"
-        value-text="Step 2: Copying files"
-      />
+      <pf-progress :value="2" title="Title" :max="5" label="Step 2: Copying files" value-text="Step 2: Copying files" />
     </story-canvas>
 
     <story-canvas title="Truncate title">

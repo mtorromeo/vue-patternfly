@@ -40,12 +40,13 @@ defineOptions({
   name: 'PfContent',
 });
 
-interface Props extends
-  OUIAProps,
-  /* @vue-ignore */ AnchorHTMLAttributes,
-  /* @vue-ignore */ BlockquoteHTMLAttributes,
-  /* @vue-ignore */ LiHTMLAttributes,
-  /* @vue-ignore */ Omit<OlHTMLAttributes, 'type'> {
+interface Props
+  extends
+    OUIAProps,
+    /* @vue-ignore */ AnchorHTMLAttributes,
+    /* @vue-ignore */ BlockquoteHTMLAttributes,
+    /* @vue-ignore */ LiHTMLAttributes,
+    /* @vue-ignore */ Omit<OlHTMLAttributes, 'type'> {
   /** The content component. If none provided, it will be a 'div' and styling will be applied to all its child components. */
   component?:
     | 'div'
@@ -78,7 +79,7 @@ interface Props extends
 const props = withDefaults(defineProps<Props>(), {
   component: 'div',
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

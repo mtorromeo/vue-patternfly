@@ -17,7 +17,12 @@ import PfToolbarToggleGroup from '../../src/components/Toolbar/ToolbarToggleGrou
 import PfLabel from '../../src/components/Label/Label.vue';
 import { globalBreakpoints } from '../../src/components/Toolbar/common';
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -40,21 +45,38 @@ afterEach(() => {
 /** Replaces ResizeObserver so tests can resize observed elements */
 function stubResizeObserver() {
   const observers: { callback: ResizeObserverCallback; targets: Element[] }[] = [];
-  vi.stubGlobal('ResizeObserver', class {
-    private entry: { callback: ResizeObserverCallback; targets: Element[] };
-    constructor(callback: ResizeObserverCallback) {
-      this.entry = { callback, targets: [] };
-      observers.push(this.entry);
-    }
-    observe(target: Element) { this.entry.targets.push(target); }
-    unobserve() {}
-    disconnect() { this.entry.targets = []; }
-  });
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      private entry: { callback: ResizeObserverCallback; targets: Element[] };
+      constructor(callback: ResizeObserverCallback) {
+        this.entry = { callback, targets: [] };
+        observers.push(this.entry);
+      }
+
+      observe(target: Element) {
+        this.entry.targets.push(target);
+      }
+      unobserve() {}
+      disconnect() {
+        this.entry.targets = [];
+      }
+    },
+  );
 
   return async function resize(target: Element, width: number) {
     for (const { callback, targets } of observers) {
       if (targets.includes(target)) {
-        callback([{ target, contentRect: { width, height: 50 }, contentBoxSize: [{ inlineSize: width, blockSize: 50 }] } as unknown as ResizeObserverEntry], {} as ResizeObserver);
+        callback(
+          [
+            {
+              target,
+              contentRect: { width, height: 50 },
+              contentBoxSize: [{ inlineSize: width, blockSize: 50 }],
+            } as unknown as ResizeObserverEntry,
+          ],
+          {} as ResizeObserver,
+        );
       }
     }
     await nextTick();
@@ -63,7 +85,8 @@ function stubResizeObserver() {
 }
 
 const expandableContent = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.toolbarExpandableContent}`);
-const labelGroupContent = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.toolbar} > .${styles.toolbarContent}:last-child`);
+const labelGroupContent = (wrapper: VueWrapper<any>) =>
+  wrapper.find(`.${styles.toolbar} > .${styles.toolbarContent}:last-child`);
 const toggleButton = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.toolbarToggle} button`);
 
 function mountToggleToolbar(props: Record<string, unknown> = {}, options: Record<string, unknown> = {}) {
@@ -71,10 +94,17 @@ function mountToggleToolbar(props: Record<string, unknown> = {}, options: Record
     props,
     ...options,
     slots: {
-      default: () => h(PfToolbarContent, () => h(PfToolbarToggleGroup, { breakpoint: 'xl' }, {
-        icon: () => h('i', { class: 'filter-icon' }),
-        default: () => h(PfToolbarItem, { class: 'filter-item' }, () => 'Filter'),
-      })),
+      default: () =>
+        h(PfToolbarContent, () =>
+          h(
+            PfToolbarToggleGroup,
+            { breakpoint: 'xl' },
+            {
+              icon: () => h('i', { class: 'filter-icon' }),
+              default: () => h(PfToolbarItem, { class: 'filter-item' }, () => 'Filter'),
+            },
+          ),
+        ),
     },
   });
 }
@@ -83,11 +113,16 @@ function mountFilterToolbar(props: Record<string, unknown> = {}, filterProps: Re
   return mount(PfToolbar, {
     props,
     slots: {
-      default: () => h(PfToolbarContent, () => [
-        h(PfToolbarToggleGroup, () => [
-          h(PfToolbarFilter, { category: 'Status', labels: ['New', { key: 'old', label: 'Old' }], ...filterProps }, () => h('input', { class: 'status-input' })),
+      default: () =>
+        h(PfToolbarContent, () => [
+          h(PfToolbarToggleGroup, () => [
+            h(
+              PfToolbarFilter,
+              { category: 'Status', labels: ['New', { key: 'old', label: 'Old' }], ...filterProps },
+              () => h('input', { class: 'status-input' }),
+            ),
+          ]),
         ]),
-      ]),
     },
   });
 }
@@ -115,12 +150,14 @@ describe('Toolbar', () => {
 
   it('applies modifiers', () => {
     const wrapper = mount(PfToolbar, { props: { fullHeight: true, static: true, sticky: true, noPadding: true } });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.fullHeight,
-      styles.modifiers.static,
-      styles.modifiers.sticky,
-      styles.modifiers.noPadding,
-    ]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.fullHeight,
+        styles.modifiers.static,
+        styles.modifiers.sticky,
+        styles.modifiers.noPadding,
+      ]),
+    );
   });
 
   it.each([
@@ -170,11 +207,16 @@ describe('Toolbar', () => {
     });
 
     it('supports v-model:expanded', async () => {
-      const wrapper = mountWithModel(PfToolbar, 'expanded', { expanded: false }, {
-        slots: {
-          default: () => h(PfToolbarContent, () => h(PfToolbarToggleGroup)),
+      const wrapper = mountWithModel(
+        PfToolbar,
+        'expanded',
+        { expanded: false },
+        {
+          slots: {
+            default: () => h(PfToolbarContent, () => h(PfToolbarToggleGroup)),
+          },
         },
-      });
+      );
       expect(toggleButton(wrapper).attributes('aria-expanded')).toBe('false');
       await toggleButton(wrapper).trigger('click');
       expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
@@ -247,7 +289,9 @@ describe('Toolbar', () => {
     it('renders a clear all filters button that emits clearAllFilters', async () => {
       const wrapper = mountFilterToolbar({ clearFiltersButtonText: 'Reset' });
       await nextTick();
-      const button = labelGroupContent(wrapper).findAll('button').find(b => b.text() === 'Reset');
+      const button = labelGroupContent(wrapper)
+        .findAll('button')
+        .find(b => b.text() === 'Reset');
       expect(button).toBeDefined();
       await button!.trigger('click');
       expect(wrapper.emitted('clearAllFilters')).toHaveLength(1);
@@ -271,9 +315,16 @@ describe('Toolbar', () => {
     it('renders labels from the labels slot', async () => {
       const wrapper = mount(PfToolbar, {
         slots: {
-          default: () => h(PfToolbarContent, () => h(PfToolbarFilter, { category: 'Type' }, {
-            labels: () => [h(PfLabel, () => 'A'), h(PfLabel, () => 'B'), h(PfLabel, () => 'C')],
-          })),
+          default: () =>
+            h(PfToolbarContent, () =>
+              h(
+                PfToolbarFilter,
+                { category: 'Type' },
+                {
+                  labels: () => [h(PfLabel, () => 'A'), h(PfLabel, () => 'B'), h(PfLabel, () => 'C')],
+                },
+              ),
+            ),
         },
       });
       await nextTick();
@@ -294,9 +345,12 @@ describe('Toolbar', () => {
       const show = ref(true);
       const wrapper = mount(PfToolbar, {
         slots: {
-          default: () => h(PfToolbarContent, () => h(PfToolbarToggleGroup, () => show.value
-            ? h(PfToolbarFilter, { category: 'Status', labels: ['New'] }, () => h('input'))
-            : null)),
+          default: () =>
+            h(PfToolbarContent, () =>
+              h(PfToolbarToggleGroup, () =>
+                show.value ? h(PfToolbarFilter, { category: 'Status', labels: ['New'] }, () => h('input')) : null,
+              ),
+            ),
         },
       });
       await nextTick();
@@ -340,14 +394,20 @@ describe('Toolbar', () => {
       expect(content.classes()).toContain(styles.modifiers.hidden);
       expect(content.find(`.${labelGroupStyles.labelGroup}`).exists()).toBe(false);
       expect(expandableContent(wrapper).findAll(`.${labelStyles.label}`)).toHaveLength(2);
-      expect(expandableContent(wrapper).findAll('button').some(b => b.text() === 'Clear all filters')).toBe(true);
+      expect(
+        expandableContent(wrapper)
+          .findAll('button')
+          .some(b => b.text() === 'Clear all filters'),
+      ).toBe(true);
     });
 
     it('emits clearAllFilters from the expandable content clear button', async () => {
       const wrapper = mountFilterToolbar({ expanded: true });
       await nextTick();
       await nextTick();
-      const button = expandableContent(wrapper).findAll('button').find(b => b.text() === 'Clear all filters');
+      const button = expandableContent(wrapper)
+        .findAll('button')
+        .find(b => b.text() === 'Clear all filters');
       await button!.trigger('click');
       expect(wrapper.emitted('clearAllFilters')).toHaveLength(1);
     });
@@ -364,7 +424,9 @@ describe('ToolbarContent', () => {
   });
 
   it('applies alignment, visibility and wrap modifiers', () => {
-    const wrapper = mount(PfToolbarContent, { props: { alignItems: 'center', visibility: 'hidden', visibilityMd: 'hidden', rowWrap: 'wrap' } });
+    const wrapper = mount(PfToolbarContent, {
+      props: { alignItems: 'center', visibility: 'hidden', visibilityMd: 'hidden', rowWrap: 'wrap' },
+    });
     expect(wrapper.classes()).toContain(styles.modifiers.hidden);
     expect(wrapper.classes()).toContain(styles.modifiers.hiddenOnMd);
     const section = wrapper.find(`.${styles.toolbarContentSection}`);
@@ -375,7 +437,10 @@ describe('ToolbarContent', () => {
 
 describe('ToolbarExpandableContent', () => {
   it('renders an expandable content with a group', () => {
-    const wrapper = mount(PfToolbarExpandableContent, { props: { expanded: true }, slots: { default: () => h('span', { class: 'child' }) } });
+    const wrapper = mount(PfToolbarExpandableContent, {
+      props: { expanded: true },
+      slots: { default: () => h('span', { class: 'child' }) },
+    });
     expect(wrapper.classes()).toEqual([styles.toolbarExpandableContent, styles.modifiers.expanded]);
     expect(wrapper.find(`.${styles.toolbarGroup} .child`).exists()).toBe(true);
     expect(wrapper.findAll(`.${styles.toolbarGroup}`)).toHaveLength(1);
@@ -402,28 +467,42 @@ describe('ToolbarGroup', () => {
 
   it('applies alignment and breakpoint modifiers', () => {
     const wrapper = mount(PfToolbarGroup, {
-      props: { alignItems: 'center', alignSelf: 'center', overflowContainer: true, align: 'end', gap: 'md', columnGap: 'md', rowGap: 'lg', visibilityLg: 'hidden', rowWrap: 'nowrap' },
+      props: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        overflowContainer: true,
+        align: 'end',
+        gap: 'md',
+        columnGap: 'md',
+        rowGap: 'lg',
+        visibilityLg: 'hidden',
+        rowWrap: 'nowrap',
+      },
     });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.alignItemsCenter,
-      styles.modifiers.alignSelfCenter,
-      styles.modifiers.overflowContainer,
-      styles.modifiers.alignEnd,
-      styles.modifiers.gapMd,
-      styles.modifiers.columnGapMd,
-      styles.modifiers.rowGapLg,
-      styles.modifiers.hiddenOnLg,
-      styles.modifiers.nowrap,
-    ]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.alignItemsCenter,
+        styles.modifiers.alignSelfCenter,
+        styles.modifiers.overflowContainer,
+        styles.modifiers.alignEnd,
+        styles.modifiers.gapMd,
+        styles.modifiers.columnGapMd,
+        styles.modifiers.rowGapLg,
+        styles.modifiers.hiddenOnLg,
+        styles.modifiers.nowrap,
+      ]),
+    );
   });
 
   it('applies the flex grow breakpoint modifiers', () => {
     const wrapper = mount(PfToolbarGroup, { props: { flexGrow: true, flexGrowMd: true, flexGrow2xl: true } });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.flexGrow,
-      styles.modifiers.flexGrowOnMd,
-      styles.modifiers.flexGrowOn_2xl,
-    ]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.flexGrow,
+        styles.modifiers.flexGrowOnMd,
+        styles.modifiers.flexGrowOn_2xl,
+      ]),
+    );
   });
 });
 
@@ -459,16 +538,26 @@ describe('ToolbarItem', () => {
 
   it('applies expanded, alignment and breakpoint modifiers', () => {
     const wrapper = mount(PfToolbarItem, {
-      props: { variant: 'expand-all', allExpanded: true, alignItems: 'baseline', alignSelf: 'start', overflowContainer: true, gap: 'sm', visibility: 'hidden' },
+      props: {
+        variant: 'expand-all',
+        allExpanded: true,
+        alignItems: 'baseline',
+        alignSelf: 'start',
+        overflowContainer: true,
+        gap: 'sm',
+        visibility: 'hidden',
+      },
     });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.modifiers.expanded,
-      styles.modifiers.alignItemsBaseline,
-      styles.modifiers.alignSelfStart,
-      styles.modifiers.overflowContainer,
-      styles.modifiers.gapSm,
-      styles.modifiers.hidden,
-    ]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.expanded,
+        styles.modifiers.alignItemsBaseline,
+        styles.modifiers.alignSelfStart,
+        styles.modifiers.overflowContainer,
+        styles.modifiers.gapSm,
+        styles.modifiers.hidden,
+      ]),
+    );
   });
 
   it('applies the flex grow and sm visibility breakpoint modifiers', () => {
@@ -495,12 +584,14 @@ describe('ToolbarItem', () => {
 describe('ToolbarToggleGroup', () => {
   it('applies variant and show breakpoint modifiers', () => {
     const wrapper = mount(PfToolbarToggleGroup, { props: { variant: 'filter-group', lg: true } });
-    expect(wrapper.classes()).toEqual(expect.arrayContaining([
-      styles.toolbarGroup,
-      styles.modifiers.toggleGroup,
-      styles.modifiers.filterGroup,
-      styles.modifiers.showOnLg,
-    ]));
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.toolbarGroup,
+        styles.modifiers.toggleGroup,
+        styles.modifiers.filterGroup,
+        styles.modifiers.showOnLg,
+      ]),
+    );
   });
 
   it('applies the 2xl show breakpoint modifier', () => {
@@ -542,7 +633,9 @@ describe('ToolbarLabelGroupContent', () => {
   });
 
   it('shows the clear filters button', async () => {
-    const wrapper = mount(PfToolbarLabelGroupContent, { props: { numberOfFilters: 2, showClearFiltersButton: true, clearFiltersButtonText: 'Clear' } });
+    const wrapper = mount(PfToolbarLabelGroupContent, {
+      props: { numberOfFilters: 2, showClearFiltersButton: true, clearFiltersButtonText: 'Clear' },
+    });
     expect(wrapper.attributes('hidden')).toBeUndefined();
     const group = wrapper.find(`.${styles.modifiers.actionGroupInline}`);
     const button = group.find('button');
@@ -562,7 +655,9 @@ describe('ToolbarLabelGroupContent', () => {
   });
 
   it('is hidden when expanded', () => {
-    const wrapper = mount(PfToolbarLabelGroupContent, { props: { numberOfFilters: 2, expanded: true, showClearFiltersButton: true } });
+    const wrapper = mount(PfToolbarLabelGroupContent, {
+      props: { numberOfFilters: 2, expanded: true, showClearFiltersButton: true },
+    });
     expect(wrapper.classes()).toContain(styles.modifiers.hidden);
     expect(wrapper.find('button').exists()).toBe(false);
   });

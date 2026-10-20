@@ -2,7 +2,8 @@
   <div
     v-bind="ouiaProps"
     :class="[
-      styles.inputGroupItem, {
+      styles.inputGroupItem,
+      {
         [styles.modifiers.plain]: plain,
         [styles.modifiers.fill]: fill,
         [styles.modifiers.box]: box,
@@ -17,7 +18,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
   name: 'PfInputGroupItem',
@@ -35,7 +36,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

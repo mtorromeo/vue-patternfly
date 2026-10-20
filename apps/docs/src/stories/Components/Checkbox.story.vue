@@ -1,6 +1,9 @@
 <template>
   <doc-page title="Checkbox">
-    <template #description>A <b>checkbox</b> is used to select a single item or multiple items, typically to choose elements to perform an action or to reflect a binary setting.</template>
+    <template #description
+      >A <b>checkbox</b> is used to select a single item or multiple items, typically to choose elements to perform an
+      action or to reflect a binary setting.</template
+    >
 
     <template #apidocs>
       <component-info name="PfCheckbox" />

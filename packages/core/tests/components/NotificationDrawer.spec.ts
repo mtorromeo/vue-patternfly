@@ -14,7 +14,12 @@ import PfNotificationDrawerListItem from '../../src/components/NotificationDrawe
 import PfNotificationDrawerListItemBody from '../../src/components/NotificationDrawer/NotificationDrawerListItemBody.vue';
 import PfNotificationDrawerListItemHeader from '../../src/components/NotificationDrawer/NotificationDrawerListItemHeader.vue';
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -39,12 +44,14 @@ describe('NotificationDrawer', () => {
       slots: {
         default: () => [
           h(PfNotificationDrawerHeader, { count: 1 }),
-          h(PfNotificationDrawerBody, () => h(PfNotificationDrawerList, () => [
-            h(PfNotificationDrawerListItem, { variant: 'info' }, () => [
-              h(PfNotificationDrawerListItemHeader, { title: 'Item title' }),
-              h(PfNotificationDrawerListItemBody, { timestamp: '5 minutes ago' }, () => 'Description'),
+          h(PfNotificationDrawerBody, () =>
+            h(PfNotificationDrawerList, () => [
+              h(PfNotificationDrawerListItem, { variant: 'info' }, () => [
+                h(PfNotificationDrawerListItemHeader, { title: 'Item title' }),
+                h(PfNotificationDrawerListItemBody, { timestamp: '5 minutes ago' }, () => 'Description'),
+              ]),
             ]),
-          ])),
+          ),
         ],
       },
     });
@@ -141,7 +148,7 @@ describe('NotificationDrawerListItem', () => {
     expect(wrapper.text()).toBe('Item');
   });
 
-  it.each(['success', 'danger', 'warning', 'info'] as const)('applies the %s variant modifier', (variant) => {
+  it.each(['success', 'danger', 'warning', 'info'] as const)('applies the %s variant modifier', variant => {
     const wrapper = mount(PfNotificationDrawerListItem, { props: { variant } });
     expect(wrapper.classes()).toContain(styles.modifiers[variant]);
     expect(wrapper.classes()).not.toContain(styles.modifiers.custom);
@@ -178,7 +185,8 @@ describe('NotificationDrawerListItemHeader', () => {
   it('renders distinct icons per variant', () => {
     const icons = (['success', 'danger', 'warning', 'info', 'custom'] as const).map(variant =>
       mount(PfNotificationDrawerListItemHeader, { props: { title: 'T', variant } })
-        .find(`.${styles.notificationDrawerListItemHeaderIcon} svg`).html(),
+        .find(`.${styles.notificationDrawerListItemHeaderIcon} svg`)
+        .html(),
     );
     expect(new Set(icons).size).toBe(icons.length);
   });
@@ -210,13 +218,16 @@ describe('NotificationDrawerListItemHeader', () => {
     });
     const action = wrapper.find(`.${styles.notificationDrawerListItemAction}`);
     expect(action.find('button').text()).toBe('Action');
-    expect(action.element.previousElementSibling?.classList.contains(styles.notificationDrawerListItemHeader)).toBe(true);
+    expect(action.element.previousElementSibling?.classList.contains(styles.notificationDrawerListItemHeader)).toBe(
+      true,
+    );
   });
 
   it('has its own OUIA component type', () => {
     const wrapper = mount(PfNotificationDrawerListItemHeader, { props: { title: 'T' } });
-    expect(wrapper.find(`.${styles.notificationDrawerListItemHeader}`).attributes('data-ouia-component-type'))
-      .toBe('PF/NotificationDrawerListItemHeader');
+    expect(wrapper.find(`.${styles.notificationDrawerListItemHeader}`).attributes('data-ouia-component-type')).toBe(
+      'PF/NotificationDrawerListItemHeader',
+    );
   });
 });
 
@@ -276,7 +287,12 @@ describe('NotificationDrawerGroup', () => {
   });
 
   it('toggles v-model:expanded on click', async () => {
-    const wrapper = mountWithModel(PfNotificationDrawerGroup, 'expanded', { count: 1, expanded: false }, { slots: { default: content } });
+    const wrapper = mountWithModel(
+      PfNotificationDrawerGroup,
+      'expanded',
+      { count: 1, expanded: false },
+      { slots: { default: content } },
+    );
     await wrapper.find('button').trigger('click');
     expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
     expect(wrapper.find('.item').exists()).toBe(true);
@@ -291,7 +307,7 @@ describe('NotificationDrawerGroup', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.expanded);
   });
 
-  it.each(['Enter', ' '])('toggles on %j keydown and prevents the default action', async (key) => {
+  it.each(['Enter', ' '])('toggles on %j keydown and prevents the default action', async key => {
     const wrapper = mount(PfNotificationDrawerGroup, { props: { count: 1 } });
     const event = new KeyboardEvent('keydown', { key, cancelable: true });
     wrapper.find('button').element.dispatchEvent(event);

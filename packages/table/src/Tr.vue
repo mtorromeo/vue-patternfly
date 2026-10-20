@@ -1,16 +1,19 @@
 <template>
   <tr
     v-bind="ouiaProps"
-    :class="[styles.tableTr, {
-      [styles.tableExpandableRow]: expanded !== undefined,
-      [styles.modifiers.expanded]: expanded,
-      [inlineStyles.modifiers.inlineEditable]: editable,
-      [styles.modifiers.clickable]: clickable,
-      [styles.modifiers.selected]: selected,
-      [styles.modifiers.striped]: striped,
-      [styles.modifiers.borderRow]: borderRow,
-      [styles.modifiers.firstCellOffsetReset]: resetOffset,
-    }]"
+    :class="[
+      styles.tableTr,
+      {
+        [styles.tableExpandableRow]: expanded !== undefined,
+        [styles.modifiers.expanded]: expanded,
+        [inlineStyles.modifiers.inlineEditable]: editable,
+        [styles.modifiers.clickable]: clickable,
+        [styles.modifiers.selected]: selected,
+        [styles.modifiers.striped]: striped,
+        [styles.modifiers.borderRow]: borderRow,
+        [styles.modifiers.firstCellOffsetReset]: resetOffset,
+      },
+    ]"
     :hidden="isHidden"
     :tabindex="clickable ? 0 : ($attrs.tabindex as any)"
     :aria-label="ariaLabel"
@@ -57,12 +60,12 @@ function onKeyDown(e: KeyboardEvent) {
 </script>
 
 <script lang="ts">
-import { computed, type HTMLAttributes } from "vue";
+import { computed, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import inlineStyles from '@patternfly/react-styles/css/components/InlineEdit/inline-edit';
-import { useChildrenTracker } from "@vue-patternfly/core";
-import { TableTrKey } from "./common";
+import { useChildrenTracker } from '@vue-patternfly/core';
+import { TableTrKey } from './common';
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
   /** Flag indicating the Tr is hidden */

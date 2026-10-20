@@ -1,9 +1,13 @@
 <template>
   <li
     v-bind="ouiaProps"
-    :class="[styles.progressStepperStep, variant ? variantStyle[variant] : undefined, {
-      [styles.modifiers.current]: current,
-    }]"
+    :class="[
+      styles.progressStepperStep,
+      variant ? variantStyle[variant] : undefined,
+      {
+        [styles.modifiers.current]: current,
+      },
+    ]"
     role="listitem"
     :aria-current="current ? 'step' : undefined"
   >
@@ -16,10 +20,7 @@
     </div>
 
     <div :class="styles.progressStepperStepMain">
-      <component
-        :is="popover ? PassThrough : 'div'"
-        :class="styles.progressStepperStepTitle"
-      >
+      <component :is="popover ? PassThrough : 'div'" :class="styles.progressStepperStepTitle">
         <pass-through @children="findReference">
           <slot />
         </pass-through>
@@ -80,7 +81,7 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -88,7 +89,9 @@ defineSlots<{
   description?: (props?: Record<never, never>) => any;
 }>();
 
-const { element: popover, findReference } = useHtmlElementFromVNodes(vnode => vnodeTypeIsComponent(vnode.type) && vnode.type.name === 'PfPopover');
+const { element: popover, findReference } = useHtmlElementFromVNodes(
+  vnode => vnodeTypeIsComponent(vnode.type) && vnode.type.name === 'PfPopover',
+);
 
 watch(popover, () => {
   popover.value?.classList.add(styles.progressStepperStepTitle);

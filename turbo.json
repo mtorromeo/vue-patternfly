@@ -4,38 +4,20 @@
   "tasks": {
     "clean": {
       "cache": false,
-      "dependsOn": [
-        "^clean"
-      ],
+      "dependsOn": ["^clean"],
       "outputs": []
     },
     "build": {
-      "dependsOn": [
-        "clean",
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "dependsOn": ["clean", "^build"],
+      "outputs": ["dist/**"]
     },
     "test": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "coverage/**"
-      ],
-      "inputs": [
-        "src/**/*.vue",
-        "src/**/*.ts",
-        "tests/**/*.ts",
-        "vitest.config.mts"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**/*.vue", "src/**/*.ts", "tests/**/*.ts", "vitest.config.mts"]
     },
     "lint": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": []
     }
   }

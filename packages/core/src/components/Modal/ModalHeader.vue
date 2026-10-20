@@ -1,9 +1,12 @@
 <template>
   <header
     v-bind="ouiaProps"
-    :class="[styles.modalBoxHeader, {
-      [styles.modifiers.help]: $slots.help,
-    }]"
+    :class="[
+      styles.modalBoxHeader,
+      {
+        [styles.modifiers.help]: $slots.help,
+      },
+    ]"
   >
     <slot v-if="!$slots.help" />
 
@@ -30,7 +33,7 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {}
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

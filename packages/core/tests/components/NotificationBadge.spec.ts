@@ -15,7 +15,7 @@ describe('NotificationBadge', () => {
     expect(button.find(`.${styles.buttonIcon} svg`).exists()).toBe(true);
   });
 
-  it.each(['unread', 'attention'] as const)('applies the %s state', (variant) => {
+  it.each(['unread', 'attention'] as const)('applies the %s state', variant => {
     const wrapper = mount(PfNotificationBadge, { props: { variant } });
     expect(wrapper.find('button').classes()).toContain(styles.modifiers.stateful);
     expect(wrapper.find('button').classes()).toContain(styles.modifiers[variant]);
@@ -23,7 +23,9 @@ describe('NotificationBadge', () => {
 
   it('uses a different icon for the attention variant', () => {
     const read = mount(PfNotificationBadge).find(`.${styles.buttonIcon}`).html();
-    const attention = mount(PfNotificationBadge, { props: { variant: 'attention' } }).find(`.${styles.buttonIcon}`).html();
+    const attention = mount(PfNotificationBadge, { props: { variant: 'attention' } })
+      .find(`.${styles.buttonIcon}`)
+      .html();
     expect(attention).not.toBe(read);
   });
 

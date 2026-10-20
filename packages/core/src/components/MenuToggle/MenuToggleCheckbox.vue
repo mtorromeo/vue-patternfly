@@ -2,11 +2,11 @@
   <label v-bind="ouiaProps" :class="[styles.check, { [styles.modifiers.standalone]: !$slots.default }]">
     <input
       v-bind="$attrs"
-      :ref="(el) => el ? (el as HTMLInputElement).indeterminate = checked === null : undefined"
+      :ref="el => (el ? ((el as HTMLInputElement).indeterminate = checked === null) : undefined)"
       :class="styles.checkInput"
       type="checkbox"
       :checked="Boolean(checked)"
-    >
+    />
     <span v-if="$slots.default" :class="styles.checkLabel" aria-hidden="true">
       <slot />
     </span>
@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { type InputHTMLAttributes } from 'vue';
+import type { InputHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -34,5 +34,5 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 </script>

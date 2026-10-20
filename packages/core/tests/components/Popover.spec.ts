@@ -6,7 +6,12 @@ import PfPopover from '../../src/components/Popover.vue';
 
 enableAutoUnmount(afterEach);
 
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -18,14 +23,19 @@ function mountWithModel<C>(component: C, model: string, props: Record<string, un
 }
 
 async function mountPopover(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = {}) {
-  const wrapper = mountWithModel(PfPopover, 'open', { animationDuration: 0, ...props }, {
-    slots: {
-      default: () => h('button', { class: 'trigger' }, 'Trigger'),
-      body: () => 'Popover body',
-      ...slots,
+  const wrapper = mountWithModel(
+    PfPopover,
+    'open',
+    { animationDuration: 0, ...props },
+    {
+      slots: {
+        default: () => h('button', { class: 'trigger' }, 'Trigger'),
+        body: () => 'Popover body',
+        ...slots,
+      },
+      attachTo: document.body,
     },
-    attachTo: document.body,
-  });
+  );
   await flushPromises();
   return wrapper;
 }
@@ -134,9 +144,15 @@ describe('Popover', () => {
 
   it('stops listening to clicks on a replaced trigger', async () => {
     const second = ref(false);
-    const wrapper = await mountPopover({}, {
-      default: () => second.value ? h('button', { key: 'second' }, 'Second') : h('button', { key: 'first', class: 'trigger' }, 'Trigger'),
-    });
+    const wrapper = await mountPopover(
+      {},
+      {
+        default: () =>
+          second.value
+            ? h('button', { key: 'second' }, 'Second')
+            : h('button', { key: 'first', class: 'trigger' }, 'Trigger'),
+      },
+    );
     const first = trigger();
     second.value = true;
     await flushPromises();

@@ -105,7 +105,10 @@ describe('MastheadBrand', () => {
     const Page = defineComponent({ render: () => h('div') });
     const router = createRouter({
       history: createMemoryHistory(),
-      routes: [{ path: '/', component: Page }, { path: '/about', component: Page }],
+      routes: [
+        { path: '/', component: Page },
+        { path: '/about', component: Page },
+      ],
     });
     await router.push('/');
     await router.isReady();

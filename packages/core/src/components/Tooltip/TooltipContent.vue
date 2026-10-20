@@ -1,9 +1,12 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.tooltipContent, {
-      [styles.modifiers.textAlignLeft]: leftAligned,
-    }]"
+    :class="[
+      styles.tooltipContent,
+      {
+        [styles.modifiers.textAlignLeft]: leftAligned,
+      },
+    ]"
   >
     <slot />
   </div>
@@ -23,7 +26,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 }
 
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;

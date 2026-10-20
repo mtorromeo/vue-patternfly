@@ -1,4 +1,4 @@
-import { computed, getCurrentInstance, toValue, type MaybeRef, reactive } from "vue";
+import { computed, getCurrentInstance, toValue, type MaybeRef, reactive } from 'vue';
 
 type OuiaId = number | string;
 
