@@ -1,9 +1,13 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.textInputGroupMain, {
-      [styles.modifiers.icon]: !!$slots.icon,
-    }]"
+    :class="[
+      styles.textInputGroupMain,
+      $attrs.class,
+      {
+        [styles.modifiers.icon]: !!$slots.icon,
+      },
+    ]"
   >
     <slot />
     <span :class="styles.textInputGroupText">
@@ -14,31 +18,40 @@
         disabled
         aria-hidden="true"
         :value="hint"
-      >
+      />
       <span v-if="!!$slots.icon" :class="styles.textInputGroupIcon">
         <slot name="icon" />
       </span>
       <input
         ref="inputRef"
-        v-bind="$attrs"
-        v-model="value"
+        v-bind="{ ...$attrs, class: undefined }"
+        :value="value"
         :type="type ?? 'text'"
-        :aria-invalid="effectiveValidated === 'error'"
-        :class="styles.textInputGroupTextInput"
-        :disabled="disabled || undefined"
+        :aria-label="ariaLabel"
+        :class="[styles.textInputGroupTextInput, inputClass]"
+        :disabled="group?.disabled.value || undefined"
         @change="onChange"
-        @input="onInput($event as InputEvent)"
-        @blur="onBlur"
-        @invalid="onInvalid"
-        @keyup="onKeyUp"
+        @input="onInput"
+        @blur="emit('blur', $event)"
         @focus="emit('focus', $event)"
-      >
+      />
+      <span v-if="statusIcon" :class="[styles.textInputGroupIcon, styles.modifiers.status]">
+        <component :is="statusIcon" />
+      </span>
     </span>
   </div>
 </template>
 
 <script lang="ts">
-export interface Props<T extends InputType, N extends boolean> extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid' | 'autocomplete'>, /* @vue-ignore */ OverriddenInputAttributes {
+export interface Props<T extends InputType, N extends boolean>
+  extends
+    OUIAProps,
+    /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'autocomplete'>,
+    /* @vue-ignore */ OverriddenInputAttributes {
+  /** Accessibility label for the input */
+  ariaLabel?: string;
+  /** Additional classes added to the input. */
+  inputClass?: HTMLAttributes['class'];
   /** Type that the text input accepts. */
   type?: T;
   /** Value of the text input. */
@@ -49,13 +62,6 @@ export interface Props<T extends InputType, N extends boolean> extends OUIAProps
     lazy?: boolean;
   };
 
-  /** Value to indicate if the text input is modified to show that validation state.
-   * If set to success, text input will be modified to indicate valid state.
-   * If set to error, text input will be modified to indicate error state.
-   */
-  validated?: InputValidateState;
-  autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
-
   /** Suggestion that will show up like a placeholder even with text in the input */
   hint?: string;
 }
@@ -63,25 +69,31 @@ export interface Props<T extends InputType, N extends boolean> extends OUIAProps
 
 <script lang="ts" setup generic="T extends InputType = 'text', N extends boolean = false">
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
-import { inject, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
+import {
+  computed,
+  inject,
+  type HTMLAttributes,
+  type InputHTMLAttributes,
+  getCurrentInstance,
+  useModel,
+  useTemplateRef,
+} from 'vue';
 import { useChildrenTracker } from '../../use';
-import { TextInputGroupDisabledKey } from './TextInputGroup.vue';
+import { TextInputGroupKey } from './common';
+import { statusIcons } from '../../constants';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { FormInputsKey } from '../Form/common';
-import { useInputValidation, type InputType, type InputValidateState, type OverriddenInputAttributes } from '../../input';
-import { toRefs } from 'vue';
-
+import type { InputType, OverriddenInputAttributes } from '../../input';
 defineOptions({
   name: 'PfTextInputGroupMain',
   inheritAttrs: false,
 });
 
-
 const props = withDefaults(defineProps<Props<T, N>>(), {
-  autoValidate: true,
+  ariaLabel: 'Type to filter',
   modelValue: undefined,
 });
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   /** Callback for when there is a change in the input field*/
@@ -90,12 +102,10 @@ const emit = defineEmits<{
   (name: 'focus', event: FocusEvent): void;
   /** Callback for when focus is lost on the input field*/
   (name: 'blur', event: FocusEvent): void;
+  /** Callback for every keystroke in the input field */
   (name: 'input', event: Event): void;
-  (name: 'invalid', event: Event): void;
-  (name: 'keyup', event: KeyboardEvent): void;
   /** Callback for when the model value changes */
-  (name: 'update:modelValue', value: N extends true ? number : (T extends 'number' ? number : string)): void;
-  (name: 'update:validated', value: InputValidateState): void;
+  (name: 'update:modelValue', value: N extends true ? number : T extends 'number' ? number : string): void;
 }>();
 
 defineSlots<{
@@ -104,28 +114,42 @@ defineSlots<{
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const disabled = inject(TextInputGroupDisabledKey, undefined);
+const group = inject(TextInputGroupKey, undefined);
 const input = useTemplateRef('inputRef');
 
-const { validated } = toRefs(props);
-const {
-  value,
-  effectiveValidated,
-  onBlur,
-  onChange,
-  onInput,
-  onInvalid,
-  onKeyUp,
-  ...inputValidationData
-} = useInputValidation({
-  inputElement: input,
-  autoValidate: props.autoValidate,
-  validated: validated,
-  type: () => props.type ?? 'text',
+const statusIcon = computed(() => {
+  switch (group?.validated.value) {
+    case 'success':
+      return statusIcons.success;
+    case 'warning':
+      return statusIcons.warning;
+    case 'error':
+      return statusIcons.danger;
+    default:
+      return undefined;
+  }
 });
 
+const [value, modifiers] = useModel(props as { modelValue?: string | number | null }, 'modelValue', {
+  // number inputs emit numbers even without the number modifier
+  set: v => (props.type === 'number' ? Number(v) : v) as any,
+});
+
+function onInput(event: Event) {
+  emit('input', event);
+  if (!modifiers.lazy) {
+    value.value = (event.target as HTMLInputElement).value;
+  }
+}
+
+function onChange(event: Event) {
+  emit('change', event);
+  if (modifiers.lazy) {
+    value.value = (event.target as HTMLInputElement).value;
+  }
+}
+
 defineExpose({
-  ...inputValidationData,
   input,
   focus(options?: FocusOptions) {
     input.value?.focus(options);

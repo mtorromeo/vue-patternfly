@@ -6,9 +6,17 @@ import PfTextInputGroup from '../../src/components/TextInputGroup/TextInputGroup
 import PfTextInputGroupMain from '../../src/components/TextInputGroup/TextInputGroupMain.vue';
 import PfTextInputGroupUtilities from '../../src/components/TextInputGroup/TextInputGroupUtilities.vue';
 import PfForm from '../../src/components/Form/Form.vue';
+import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
+import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
-function mountWithModel<C>(component: C, model: string, props: Record<string, unknown>, options: Record<string, unknown> = {}) {
+function mountWithModel<C>(
+  component: C,
+  model: string,
+  props: Record<string, unknown>,
+  options: Record<string, unknown> = {},
+) {
   const wrapper: VueWrapper<any> = mount(component as any, {
     ...options,
     props: {
@@ -41,9 +49,38 @@ describe('TextInputGroup', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.plain);
   });
 
-  it.each(['success', 'warning', 'error'] as const)('applies the %s status modifier', (validated) => {
+  it.each(['success', 'warning', 'error'] as const)('applies the %s status modifier', validated => {
     const wrapper = mount(PfTextInputGroup, { props: { validated } });
     expect(wrapper.classes()).toContain(styles.modifiers[validated]);
+  });
+
+  it('applies no status modifier when validated is default', () => {
+    const wrapper = mount(PfTextInputGroup, { props: { validated: 'default' } });
+    expect(wrapper.classes()).toEqual([styles.textInputGroup]);
+  });
+
+  it.each([
+    ['success', CircleCheckIcon],
+    ['warning', TriangleExclamationIcon],
+    ['error', CircleExclamationIcon],
+  ] as const)('renders the %s status icon after the input', (validated, icon) => {
+    const wrapper = mount(PfTextInputGroup, {
+      props: { validated },
+      slots: { default: () => h(PfTextInputGroupMain) },
+    });
+    const status = wrapper.find('input').element.nextElementSibling;
+    expect(status?.tagName).toBe('SPAN');
+    expect([...status!.classList]).toEqual([styles.textInputGroupIcon, styles.modifiers.status]);
+    expect(wrapper.findComponent(icon).exists()).toBe(true);
+    expect(wrapper.findComponent(PfTextInputGroupMain).classes()).toEqual([styles.textInputGroupMain]);
+  });
+
+  it('renders no status icon when validated is default', () => {
+    const wrapper = mount(PfTextInputGroup, {
+      props: { validated: 'default' },
+      slots: { default: () => h(PfTextInputGroupMain) },
+    });
+    expect(wrapper.find('input').element.nextElementSibling).toBeNull();
   });
 
   it('disables the inner input when disabled', () => {
@@ -73,19 +110,38 @@ describe('TextInputGroupMain', () => {
     const input = wrapper.find(`.${styles.textInputGroupText} input`);
     expect(input.classes()).toContain(styles.textInputGroupTextInput);
     expect(input.attributes('type')).toBe('text');
-    expect(input.attributes('aria-invalid')).toBe('false');
     expect(input.attributes('disabled')).toBeUndefined();
     expect(wrapper.find(`.${styles.textInputGroupIcon}`).exists()).toBe(false);
   });
 
   it('forwards attributes to the input', () => {
-    const wrapper = mount(PfTextInputGroupMain, { props: { type: 'search' }, attrs: { 'aria-label': 'Search', placeholder: 'Find', id: 'q' } });
+    const wrapper = mount(PfTextInputGroupMain, {
+      props: { type: 'search' },
+      attrs: { 'aria-label': 'Search', placeholder: 'Find', id: 'q', name: 'query', autofocus: 'true' },
+    });
     const input = wrapper.find('input');
     expect(input.attributes('type')).toBe('search');
     expect(input.attributes('aria-label')).toBe('Search');
     expect(input.attributes('placeholder')).toBe('Find');
     expect(input.attributes('id')).toBe('q');
+    expect(input.attributes('name')).toBe('query');
+    expect(input.attributes('autofocus')).toBeDefined();
     expect(wrapper.attributes('aria-label')).toBeUndefined();
+    expect(wrapper.attributes('id')).toBeUndefined();
+  });
+
+  it('defaults the input aria-label to "Type to filter"', () => {
+    const wrapper = mount(PfTextInputGroupMain);
+    expect(wrapper.find('input').attributes('aria-label')).toBe('Type to filter');
+  });
+
+  it('applies class to the root and inputClass to the input', () => {
+    const wrapper = mount(PfTextInputGroupMain, {
+      props: { inputClass: 'input-extra' },
+      attrs: { class: 'custom-class' },
+    });
+    expect(wrapper.classes()).toEqual([styles.textInputGroupMain, 'custom-class']);
+    expect(wrapper.find('input').classes()).toEqual([styles.textInputGroupTextInput, 'input-extra']);
   });
 
   it('renders the icon slot', () => {
@@ -130,31 +186,39 @@ describe('TextInputGroupMain', () => {
     expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual([42]);
   });
 
-  it('emits focus, blur, change, input and keyup events', async () => {
+  it('updates the model on change with the lazy modifier', async () => {
+    const wrapper = mount(PfTextInputGroupMain, { props: { modelModifiers: { lazy: true } } });
+    const input = wrapper.find('input');
+    input.element.value = 'foo';
+    await input.trigger('input');
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined();
+
+    await input.trigger('change');
+    expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual(['foo']);
+  });
+
+  it('emits focus, blur, change and input events', async () => {
     const wrapper = mount(PfTextInputGroupMain);
     const input = wrapper.find('input');
     await input.trigger('focus');
     await input.trigger('input');
     await input.trigger('change');
-    await input.trigger('keyup');
     await input.trigger('blur');
 
-    for (const event of ['focus', 'input', 'change', 'keyup', 'blur']) {
+    for (const event of ['focus', 'input', 'change', 'blur']) {
       expect(wrapper.emitted(event), event).toHaveLength(1);
     }
   });
 
-  it('sets aria-invalid when validated is error', () => {
-    const wrapper = mount(PfTextInputGroupMain, { props: { validated: 'error' } });
-    expect(wrapper.find('input').attributes('aria-invalid')).toBe('true');
-  });
-
-  it('becomes invalid on the invalid event', async () => {
-    const wrapper = mount(PfTextInputGroupMain);
-    await wrapper.find('input').trigger('invalid');
-    expect(wrapper.emitted('invalid')).toHaveLength(1);
-    expect(wrapper.emitted('update:validated')?.slice(-1)[0]).toEqual(['error']);
-    expect(wrapper.find('input').attributes('aria-invalid')).toBe('true');
+  it('has no validation props and sets no aria-invalid', () => {
+    const wrapper = mount(PfTextInputGroup, {
+      props: { validated: 'error' },
+      slots: { default: () => h(PfTextInputGroupMain) },
+    });
+    const main = wrapper.findComponent(PfTextInputGroupMain);
+    expect(main.props()).not.toHaveProperty('validated');
+    expect(main.props()).not.toHaveProperty('autoValidate');
+    expect(wrapper.find('input').attributes('aria-invalid')).toBeUndefined();
   });
 
   it('exposes the input and a focus method', () => {

@@ -4,6 +4,10 @@
   </div>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
 import type { HTMLAttributes } from 'vue';
@@ -13,11 +17,8 @@ defineOptions({
   name: 'PfTextInputGroupUtilities',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-}
-
 const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
