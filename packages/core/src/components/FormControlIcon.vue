@@ -7,8 +7,8 @@
   >
     <slot>
       <circle-check-icon v-if="status === 'success'" />
-      <circle-exclamation-icon v-else-if="status === 'warning'" />
-      <triangle-exclamation-icon v-else-if="status === 'error'" />
+      <triangle-exclamation-icon v-else-if="status === 'warning'" />
+      <circle-exclamation-icon v-else-if="status === 'error'" />
     </slot>
   </span>
 </template>
