@@ -85,7 +85,7 @@ let highlighter: Highlighter;
 <script lang="ts" setup>
 import { computedAsync } from '@vueuse/core';
 import { createHighlighter, type Highlighter } from 'shiki';
-import { shallowRef, type HTMLAttributes } from 'vue';
+import { shallowRef, type Component, type HTMLAttributes } from 'vue';
 import { useRouter } from 'vue-router';
 import GithubIcon from '@vue-patternfly/icons/github-icon';
 
@@ -104,16 +104,20 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 const props = defineProps<Props>();
 
-const ExampleComponent = shallowRef(undefined);
-let storySrc = props.src;
-if (storySrc) {
-  const matches = /\.\/([^/]+)\.vue/.exec(storySrc);
-  if (matches) {
-    storySrc = `stories/Components/${matches[1]}.vue`;
-    (async () => {
-      ExampleComponent.value = (await import(`../stories/Components/${matches[1]}.vue`))['default'];
-    })();
-  }
+// Examples given by `src`, as a path from the docs sources (e.g. `stories/Charts/FlameGraph.vue`)
+const examples = import.meta.glob<{ default: Component }>([
+  '../stories/**/*.vue',
+  '!../stories/**/*.story.vue',
+  '!../stories/**/*.iframe.vue',
+]);
+
+const ExampleComponent = shallowRef<Component>();
+const storySrc = props.src;
+const loadExample = storySrc ? examples[`../${storySrc}`] : undefined;
+if (loadExample) {
+  (async () => {
+    ExampleComponent.value = (await loadExample()).default;
+  })();
 }
 
 // Built here: a `//` inside a bound template literal breaks vue-tsc's generated code
@@ -136,7 +140,7 @@ const highlighted = computedAsync(async () => {
     });
   }
 
-  return highlighter.codeToHtml(props.source.replaceAll('\\n', '\n').trim(), {
+  return highlighter.codeToHtml(props.source.trim(), {
     lang: props.src ? 'vue' : 'vue-html',
     theme: 'nord',
   });

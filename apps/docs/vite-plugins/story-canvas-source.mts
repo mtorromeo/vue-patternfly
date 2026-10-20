@@ -9,6 +9,7 @@ import { escapeHtml } from '@vue/shared';
 import { createHighlighter } from 'shiki';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export const PLUGIN_NAME = 'vue-canvas-source';
 
@@ -29,6 +30,8 @@ export type VueCanvasPluginOptions = {
 };
 
 const DEFAULT_INCLUDE_RE = /(?:\.story|-demo).vue$/;
+
+const DOCS_SRC = fileURLToPath(new URL('../src', import.meta.url));
 
 async function traverse(arr: Node[], callback: (el: Node) => Promise<Node>) {
   for (let i = 0; i < arr.length; i++) {
@@ -56,6 +59,8 @@ async function addSourceToStoryCanvas(el: HTMLElement, id: string) {
   if (matches) {
     sourcePath = path.resolve(path.dirname(id), matches[1]);
     source = await fs.readFile(sourcePath, { encoding: 'utf-8' });
+    // StoryCanvas loads the example by its path from the docs sources, wherever the story is
+    el.rawAttrs = el.rawAttrs.replace(matches[0], matches[0].replace(matches[1], path.relative(DOCS_SRC, sourcePath)));
   }
 
   if (!source) {

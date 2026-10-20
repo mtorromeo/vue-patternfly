@@ -6,7 +6,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "pub": "pnpm publish -r --publish-branch main --filter ./packages/core --filter ./packages/icons --filter ./packages/table",
+    "pub": "pnpm publish -r --publish-branch main --filter ./packages/core --filter ./packages/icons --filter ./packages/table --filter ./packages/charts",
     "clean": "turbo run clean",
     "build": "turbo run build",
     "format": "oxfmt",
@@ -15,17 +15,17 @@
     "test": "turbo run test"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^5.0.3",
+    "@vitest/coverage-v8": "^5.0.5",
     "@vue/test-utils": "^2.5.1",
     "@vue/tsconfig": "^0.9.1",
     "concurrently": "^10.0.5",
-    "happy-dom": "^20.14.5",
+    "happy-dom": "^21.0.3",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",
-    "turbo": "^2.11.7",
+    "turbo": "^2.11.9",
     "typescript": "^6.0.3",
     "vite": "^8.3.3",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.5"
   },
   "packageManager": "pnpm@12.14.0",
   "name": "vue-patternfly"

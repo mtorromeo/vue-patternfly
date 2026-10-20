@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@patternfly/patternfly": "^6.7.0",
+    "@vue-patternfly/charts": "workspace:^",
     "@vue-patternfly/core": "workspace:^",
     "@vue-patternfly/icons": "workspace:^",
     "@vue-patternfly/table": "workspace:^",
+    "echarts": "^6.1.0",
     "pinia": "^4.0.3",
     "vue": "^3.5.43",
     "vue-router": "^5.4.0"
