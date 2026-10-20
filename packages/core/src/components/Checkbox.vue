@@ -2,7 +2,7 @@
   <component
     v-bind="ouiaProps"
     :is="component ?? (wrapWithLabel ? 'label' : 'div')"
-    :class="[styles.check, {
+    :class="[styles.check, $attrs.class, {
       [styles.modifiers.standalone]: !labelWrapped && !(label || $slots.label),
     }]"
     :for="labelWrapped ? id : undefined"
@@ -25,9 +25,9 @@
       <input
         :id="id"
         ref="inputRef"
-        v-bind="$attrs"
+        v-bind="{...$attrs, class: undefined}"
         type="checkbox"
-        :class="styles.checkInput"
+        :class="[styles.checkInput, inputClass]"
         :checked="modelValue === null ? undefined : modelValue"
         :indeterminate.prop="value === null"
         :disabled="disabled"
@@ -47,7 +47,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Check/check';
-import { computed, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef, useId } from 'vue';
+import { computed, type Component, type InputHTMLAttributes, getCurrentInstance, useTemplateRef, useId, type HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
@@ -61,6 +61,8 @@ defineOptions({
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'checked' | 'autocomplete'> {
   component?: string | Component;
+  /** Additional classes added to the input. */
+  inputClass?: HTMLAttributes['class'];
   /** Flag to show if the checkbox is disabled. */
   disabled?: boolean;
   /** Flag to show if the checkbox is required. */

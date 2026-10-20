@@ -7,6 +7,10 @@
     </template>
 
     <pre v-md>
+      ## Differences from patternfly-react
+      - `class` is applied to the wrapper element like `className`; use `input-class` for the input (`inputClassName`). Every other attribute is forwarded to the input.
+      See [common differences from patternfly-react](#/).
+
       ## Examples
     </pre>
 

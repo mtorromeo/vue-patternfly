@@ -2,7 +2,7 @@
   <component
     v-bind="ouiaProps"
     :is="component"
-    :class="[styles.radio, {
+    :class="[styles.radio, $attrs.class, {
       [styles.modifiers.standalone]: !wrapWithLabel && !(label || $slots.label),
     }]"
     :for="wrapWithLabel ? id : undefined"
@@ -24,9 +24,9 @@
       <input
         :id="id"
         ref="inputRef"
-        v-bind="$attrs"
+        v-bind="{...$attrs, class: undefined}"
         type="radio"
-        :class="styles.radioInput"
+        :class="[styles.radioInput, inputClass]"
         :disabled="disabled"
         :checked="checked"
         :aria-label="(label || $slots.label) ? undefined : ariaLabel"
@@ -49,7 +49,7 @@ import styles from '@patternfly/react-styles/css/components/Radio/radio';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
-import { computed, type InputHTMLAttributes, type Component, getCurrentInstance, useTemplateRef, useId } from 'vue';
+import { computed, type InputHTMLAttributes, type Component, getCurrentInstance, useTemplateRef, useId, type HTMLAttributes } from 'vue';
 import { useChildrenTracker } from '../use';
 import { FormInputsKey } from './Form/common';
 
@@ -60,6 +60,8 @@ defineOptions({
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'autocomplete'> {
   component?: string | Component;
+  /** Additional classes added to the input. */
+  inputClass?: HTMLAttributes['class'];
   /** Id of the radio. */
   id?: string;
   /** Flag to show if the radio label is shown before the radio button. */

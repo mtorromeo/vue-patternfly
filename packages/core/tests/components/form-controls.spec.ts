@@ -53,6 +53,13 @@ describe('Checkbox', () => {
     expect(wrapper.attributes('aria-label')).toBeUndefined();
   });
 
+  it('applies class to the wrapper and inputClass to the input', () => {
+    const wrapper = mount(PfCheckbox, { props: { label: 'Accept', inputClass: 'input-extra' }, attrs: { class: 'wrapper-extra' } });
+    expect(wrapper.classes()).toContain('wrapper-extra');
+    expect(wrapper.classes()).not.toContain('input-extra');
+    expect(wrapper.find('input').classes()).toEqual([checkStyles.checkInput, 'input-extra']);
+  });
+
   it('supports v-model', async () => {
     const wrapper = mountWithModel(PfCheckbox, 'modelValue', { modelValue: false, label: 'Accept' });
     const input = wrapper.find<HTMLInputElement>('input');
@@ -138,6 +145,13 @@ describe('Radio', () => {
     const wrapper = mount(PfRadio, { props: { ariaLabel: 'Option', name: 'group' } });
     expect(wrapper.find('input').attributes('aria-label')).toBe('Option');
     expect(wrapper.classes()).toContain(radioStyles.modifiers.standalone);
+  });
+
+  it('applies class to the wrapper and inputClass to the input', () => {
+    const wrapper = mount(PfRadio, { props: { label: 'Option', inputClass: 'input-extra' }, attrs: { class: 'wrapper-extra' } });
+    expect(wrapper.classes()).toContain('wrapper-extra');
+    expect(wrapper.classes()).not.toContain('input-extra');
+    expect(wrapper.find('input').classes()).toEqual([radioStyles.radioInput, 'input-extra']);
   });
 
   it('reflects the checked prop and emits change', async () => {
