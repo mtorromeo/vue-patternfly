@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
-import { CardExpandedKey } from './Card.vue';
+import { CardKey } from './common';
 import { type HTMLAttributes, inject } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -24,5 +24,5 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-const expanded = inject(CardExpandedKey);
+const expanded = inject(CardKey, undefined)?.expanded;
 </script>

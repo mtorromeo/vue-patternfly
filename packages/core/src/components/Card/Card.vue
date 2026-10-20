@@ -1,6 +1,7 @@
 <template>
   <component
     :is="component"
+    :id="id"
     v-bind="{...ouiaProps, ...$attrs}"
     :class="[styles.card, ...selectableModifiers, {
       [styles.modifiers.compact]: compact,
@@ -12,25 +13,17 @@
       [styles.modifiers.secondary]: variant === 'secondary',
       [styles.modifiers.disabled]: disabled,
     }]"
-    :tabindex="selectable ? '0' : undefined"
-    @click="onClick"
+    @click="onCardClick"
   >
     <slot />
   </component>
 </template>
 
 <script lang="ts">
-export const CardExpandedKey = Symbol('CardExpandedKey') as InjectionKey<Ref<boolean | undefined>>;
-export const CardExpandableKey = Symbol('CardExpandableKey') as InjectionKey<ComputedRef<boolean>>;
-export const CardCheckboxKey = Symbol('CardCheckboxKey') as InjectionKey<ComputedRef<{
-  name: string | undefined;
-  hidden: boolean;
-  checked: Ref<boolean>;
-  disabled: boolean | undefined;
-  onChange: (e: Event) => void;
-} | null>>;
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
+  /** ID of the Card. Also used to derive the ids of the card title and subtitle. */
+  id?: string;
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex' | 'onClick'> {
   /** Content rendered inside the Card */
   component?: string | Component;
 
@@ -40,11 +33,26 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabin
   /** Modifies the card to include selectable styling */
   selectable?: boolean;
 
-  /** Flag indicating that the card should render a hidden input to make it selectable */
+  /** Flag indicating that the card is clickable and contains some action that triggers on click. Implied by onClick and to. */
+  clickable?: boolean;
+
+  /** Flag indicating that the card should render an input to make it selectable. `true` renders it visually hidden. */
   selectableInput?: boolean | 'hidden' | 'visible';
 
-  /** Name of the optional hidden input that tracks the selected status */
+  /** Renders the selectable input as a radio instead of a checkbox, for groups of single selectable cards. */
+  selectableSingle?: boolean;
+
+  /** Name of the optional input that tracks the selected status */
   name?: string;
+
+  /** Additional attributes (id, aria-label, aria-labelledby, ...) for the selectable input or the clickable-only action */
+  selectableAttrs?: Record<string, unknown>;
+
+  /** Link to navigate to when a clickable-only card is clicked. */
+  to?: string;
+
+  /** Flag to indicate whether a clickable-only card's link should open in a new tab/window. */
+  external?: boolean;
 
   /** Flag indicating whether a card that is either only clickable or that is both clickable and selectable
    * is currently clicked and has clicked styling.
@@ -78,9 +86,10 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabin
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
-import { provide, computed, type Component, type InjectionKey, type ComputedRef, type HTMLAttributes, type Ref } from 'vue';
+import { provide, computed, watch, onScopeDispose, type Component, type HTMLAttributes } from 'vue';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { CardKey, cardRadioGroups } from './common';
 
 defineOptions({
   name: 'PfCard',
@@ -89,6 +98,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'div',
+  selectableAttrs: () => ({}),
 });
 const ouiaProps = useOUIAProps({id: props.ouiaId, safe: props.ouiaSafe});
 
@@ -104,27 +114,73 @@ const emit = defineEmits<{
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
-  icon?: (props?: Record<never, never>) => any;
-  badge?: (props?: Record<never, never>) => any;
 }>();
 
-provide(CardExpandedKey, expanded);
-provide(CardExpandableKey, computed(() => props.expandable || isDefined(expanded.value)));
-provide(CardCheckboxKey, computed(() => {
-  if (!props.selectableInput && !props.name) {
-    return null;
+if (props.compact && props.large) {
+  // eslint-disable-next-line no-console
+  console.warn('Card: Cannot use compact with large. Defaulting to compact');
+}
+
+const clickable = computed(() => props.clickable || !!props.onClick || isDefined(props.to));
+const hasInput = computed(() => !!props.selectableInput || !!props.name);
+
+if ((hasInput.value || (clickable.value && !props.selectable)) && !props.selectableAttrs['aria-label'] && !props.selectableAttrs['aria-labelledby']) {
+  // eslint-disable-next-line no-console
+  console.error(`Card: ${hasInput.value ? 'Cards with a selectable input' : 'Clickable-only cards'} must have either the aria-label or aria-labelledby attribute passed in selectableAttrs in order to provide an accessible name to the clickable element.`);
+}
+
+provide(CardKey, {
+  cardId: computed(() => props.id),
+  clickable,
+  selectable: computed(() => props.selectable || hasInput.value),
+  disabled: computed(() => props.disabled),
+  expandable: computed(() => props.expandable || isDefined(expanded.value)),
+  expanded,
+  selectableAction: computed(() => {
+    if (!hasInput.value && !(clickable.value && !props.selectable)) {
+      return null;
+    }
+    return {
+      single: props.selectableSingle,
+      name: props.name,
+      hidden: hasInput.value && props.selectableInput !== 'visible',
+      checked: selected,
+      attrs: props.selectableAttrs,
+      to: props.to,
+      external: props.external,
+      onChange: (e: Event) => emit('change', e),
+    };
+  }),
+});
+
+// Radios don't notify the inputs they uncheck, so the cards of a group deselect each other
+const radioGroup = computed(() => props.selectableSingle && props.name ? props.name : undefined);
+function leaveRadioGroup(name: string | undefined) {
+  const group = name ? cardRadioGroups.get(name) : undefined;
+  group?.delete(selected);
+  if (name && group?.size === 0) {
+    cardRadioGroups.delete(name);
   }
-  return {
-    name: props.name,
-    hidden: props.selectableInput !== 'visible',
-    checked: selected,
-    disabled: props.disabled,
-    onChange: (e: Event) => emit('change', e),
-  };
-}));
+}
+watch(radioGroup, (name, oldName) => {
+  leaveRadioGroup(oldName);
+  if (name) {
+    cardRadioGroups.set(name, (cardRadioGroups.get(name) ?? new Set()).add(selected));
+  }
+}, { immediate: true });
+onScopeDispose(() => leaveRadioGroup(radioGroup.value));
+watch(selected, (value) => {
+  if (value && radioGroup.value) {
+    for (const other of cardRadioGroups.get(radioGroup.value) ?? []) {
+      if (other !== selected) {
+        other.value = false;
+      }
+    }
+  }
+});
 
 const selectableModifiers = computed(() => {
-  if (props.selectable && props.onClick) {
+  if (props.selectable && clickable.value) {
     return [
       styles.modifiers.selectable,
       styles.modifiers.clickable,
@@ -134,9 +190,15 @@ const selectableModifiers = computed(() => {
   if (props.selectable) {
     return [styles.modifiers.selectable, selected.value && styles.modifiers.selected];
   }
-  if (props.onClick) {
+  if (clickable.value) {
     return [styles.modifiers.clickable, props.clicked && styles.modifiers.current];
   }
   return [];
 });
+
+function onCardClick(e: PointerEvent) {
+  if (!props.disabled) {
+    props.onClick?.(e);
+  }
+}
 </script>

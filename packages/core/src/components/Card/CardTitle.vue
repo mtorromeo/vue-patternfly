@@ -1,9 +1,9 @@
 <template>
   <div :class="styles.cardTitle">
-    <component v-bind="ouiaProps" :is="component" :class="styles.cardTitleText">
+    <component :id="titleId" v-bind="{...ouiaProps, ...$attrs}" :is="component" :class="styles.cardTitleText">
       <slot />
     </component>
-    <div v-if="$slots.subtitle" :class="styles.cardSubtitle">
+    <div v-if="$slots.subtitle" :id="subtitleId" :class="styles.cardSubtitle">
       <slot name="subtitle" />
     </div>
   </div>
@@ -11,11 +11,13 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
-import type { Component, HTMLAttributes } from 'vue';
+import { computed, inject, type Component, type HTMLAttributes } from 'vue';
+import { CardKey } from './common';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfCardTitle',
+  inheritAttrs: false,
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
@@ -32,4 +34,8 @@ defineSlots<{
   default?: (props?: Record<never, never>) => any;
   subtitle?: (props?: Record<never, never>) => any;
 }>();
+
+const card = inject(CardKey, undefined);
+const titleId = computed(() => card?.cardId.value ? `${card.cardId.value}-title` : undefined);
+const subtitleId = computed(() => card?.cardId.value ? `${card.cardId.value}-subtitle` : undefined);
 </script>
