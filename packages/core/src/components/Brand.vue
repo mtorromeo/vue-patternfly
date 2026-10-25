@@ -1,22 +1,43 @@
 <template>
   <picture
     v-if="$slots.default"
-    v-bind="{ ...(ouiaProps as any), ...$attrs }"
+    v-bind="{ ...ouiaProps, ...$attrs }"
     :class="[styles.brand, styles.modifiers.picture]"
-    :style="pictureStyle"
+    :style="responsiveStyle"
   >
     <slot />
     <img :src="src" :alt="alt" />
   </picture>
-  <img v-else v-bind="{ ...ouiaProps, ...$attrs }" :class="styles.brand" :src="src" :alt="alt" />
+  <img
+    v-else
+    v-bind="{ ...ouiaProps, ...$attrs }"
+    :class="styles.brand"
+    :style="responsiveStyle"
+    :src="src"
+    :alt="alt"
+  />
 </template>
+
+<script lang="ts">
+interface Props
+  extends
+    OUIAProps,
+    WidthBreakpointProps,
+    HeightBreakpointProps,
+    /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height' | 'src' | 'alt'> {
+  /** URL of the image. With source elements in the default slot, the URL of the fallback image. */
+  src?: string;
+  /** Alternative text of the image. With source elements in the default slot, the one of the fallback image. */
+  alt?: string;
+}
+</script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Brand/brand';
 import { cssVarsFromBreakpointProps, type WidthBreakpointProps, type HeightBreakpointProps } from '../breakpoints';
 import cssBrandHeight from '@patternfly/react-tokens/dist/esm/c_brand_Height';
 import cssBrandWidth from '@patternfly/react-tokens/dist/esm/c_brand_Width';
-import type { ImgHTMLAttributes } from 'vue';
+import { computed, type ImgHTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 
 defineOptions({
@@ -24,25 +45,16 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props
-  extends
-    OUIAProps,
-    WidthBreakpointProps,
-    HeightBreakpointProps,
-    /* @vue-ignore */ Omit<ImgHTMLAttributes, 'width' | 'height' | 'src' | 'alt'> {
-  src: string;
-  alt?: string;
-}
-
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** Source elements: they turn the brand into a picture element, with the image as fallback. */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const pictureStyle = {
+const responsiveStyle = computed(() => ({
   ...cssVarsFromBreakpointProps(props, 'width', cssBrandWidth.name),
   ...cssVarsFromBreakpointProps(props, 'height', cssBrandHeight.name),
-};
+}));
 </script>
