@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind="{ ...ouiaProps, ...$attrs }"
+    v-bind="ouiaProps"
     :class="[
       styles.banner,
       {
@@ -19,15 +19,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Banner/banner';
-import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import { computed, type HTMLAttributes } from 'vue';
-
-defineOptions({
-  name: 'PfBanner',
-});
-
+<script lang="ts">
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** If set to true, the banner sticks to the top of its container */
   sticky?: boolean;
@@ -42,6 +34,16 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Status style options for the banner, will overwrite any color applied using the color prop. */
   status?: 'success' | 'warning' | 'danger' | 'info' | 'custom';
 }
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Banner/banner';
+import { computed, type HTMLAttributes, type VNode } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+
+defineOptions({
+  name: 'PfBanner',
+});
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
@@ -49,7 +51,9 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const variant = computed(() => props.status || props.color);
 
 defineSlots<{
-  default: (props?: Record<never, never>) => any;
-  'screen-reader-text'?: (props?: Record<never, never>) => any;
+  /** Content rendered inside the banner. */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Text announced by screen readers, replacing screenReaderText */
+  'screen-reader-text'?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

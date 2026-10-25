@@ -19,9 +19,22 @@ describe('Banner', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.pill);
   });
 
-  it('applies the color modifier', () => {
-    const wrapper = mount(PfBanner, { props: { color: 'teal' }, slots: { default: () => 'x' } });
-    expect(wrapper.classes()).toContain(styles.modifiers.teal);
+  it.each(['red', 'orangered', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple'] as const)(
+    'applies the %s color modifier',
+    color => {
+      const wrapper = mount(PfBanner, { props: { color }, slots: { default: () => 'x' } });
+      expect(wrapper.classes()).toEqual([styles.banner, styles.modifiers[color]]);
+    },
+  );
+
+  it.each(['success', 'warning', 'danger', 'info', 'custom'] as const)('applies the %s status modifier', status => {
+    const wrapper = mount(PfBanner, { props: { status }, slots: { default: () => 'x' } });
+    expect(wrapper.classes()).toEqual([styles.banner, styles.modifiers[status]]);
+  });
+
+  it('adds custom classes', () => {
+    const wrapper = mount(PfBanner, { attrs: { class: 'custom-class' } });
+    expect(wrapper.classes()).toEqual([styles.banner, 'custom-class']);
   });
 
   it('gives the status precedence over the color', () => {
@@ -33,6 +46,8 @@ describe('Banner', () => {
   it('renders screen reader text from the prop', () => {
     const wrapper = mount(PfBanner, { props: { screenReaderText: 'Danger banner' }, slots: { default: () => 'x' } });
     expect(wrapper.find('.pf-v6-screen-reader').text()).toBe('Danger banner');
+    // the screen reader text comes before the content
+    expect(wrapper.element.firstElementChild?.className).toBe('pf-v6-screen-reader');
   });
 
   it('renders screen reader text from the slot', () => {
