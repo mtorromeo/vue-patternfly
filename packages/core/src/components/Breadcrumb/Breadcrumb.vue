@@ -6,34 +6,37 @@
   </nav>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /** Aria label added to the breadcrumb nav. */
+  ariaLabel?: string;
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import { findChildrenVNodes } from '../../util';
-import type { HTMLAttributes } from 'vue';
+import { cloneVNode, type HTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfBreadcrumb',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  ariaLabel?: string;
-}
-
 const props = withDefaults(defineProps<Props>(), {
   ariaLabel: 'Breadcrumb',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const slots = defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** pf-breadcrumb-item and pf-breadcrumb-heading elements */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
+// every crumb but the first one is preceded by a divider
 const slotWithDividers = () =>
-  findChildrenVNodes(slots.default?.({})).map((n, index) => {
-    if (n.props) {
-      n.props.showDivider = index > 0;
-    }
-    return n;
-  });
+  findChildrenVNodes(slots.default?.({})).map((vnode, index) =>
+    typeof vnode.type === 'object' ? cloneVNode(vnode, { showDivider: index > 0 }) : vnode,
+  );
 </script>

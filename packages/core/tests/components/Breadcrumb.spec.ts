@@ -4,6 +4,7 @@ import { defineComponent, h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import PfBreadcrumb from '../../src/components/Breadcrumb/Breadcrumb.vue';
 import PfBreadcrumbItem from '../../src/components/Breadcrumb/BreadcrumbItem.vue';
+import PfBreadcrumbHeading from '../../src/components/Breadcrumb/BreadcrumbHeading.vue';
 import PfButton from '../../src/components/Button.vue';
 
 const RouterLinkStub = defineComponent({
@@ -25,6 +26,18 @@ describe('Breadcrumb', () => {
     expect(list.classes()).toContain(styles.breadcrumbList);
     expect(list.attributes('role')).toBe('list');
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/Breadcrumb');
+    expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('shows a divider before a heading', () => {
+    const wrapper = mount(PfBreadcrumb, {
+      slots: {
+        default: () => [h(PfBreadcrumbItem, { href: '#1' }, () => 'One'), h(PfBreadcrumbHeading, () => 'Title')],
+      },
+    });
+    const items = wrapper.findAll(`li.${styles.breadcrumbItem}`);
+    expect(items[1]?.find(`.${styles.breadcrumbItemDivider}`).exists()).toBe(true);
+    expect(items[1]?.find(`h1.${styles.breadcrumbHeading}`).text()).toBe('Title');
   });
 
   it('uses a custom aria-label', () => {
@@ -101,6 +114,30 @@ describe('BreadcrumbItem', () => {
     expect(wrapper.text()).toBe('Plain text');
   });
 
+  it('puts class and attributes on the list item without a link', () => {
+    // regression: they were dropped
+    const wrapper = mount(PfBreadcrumbItem, {
+      attrs: { class: 'Class', id: 'Item 1' },
+      slots: { default: () => 'Item' },
+    });
+    expect(wrapper.classes().sort()).toEqual(['Class', styles.breadcrumbItem].sort());
+    expect(wrapper.attributes('id')).toBe('Item 1');
+  });
+
+  it('renders the link slot with the link classes', () => {
+    const wrapper = mount(PfBreadcrumbItem, {
+      props: { active: true },
+      slots: {
+        link: ({ class: cls, ariaCurrent }: { class: string[]; ariaCurrent?: string }) =>
+          h('a', { class: cls, 'aria-current': ariaCurrent, href: '/custom' }, 'Custom'),
+      },
+    });
+    const link = wrapper.get('a');
+    expect(link.classes()).toEqual([styles.breadcrumbLink, styles.modifiers.current]);
+    expect(link.attributes('aria-current')).toBe('page');
+    expect(link.attributes('href')).toBe('/custom');
+  });
+
   it('shows the divider when showDivider is set', () => {
     const wrapper = mount(PfBreadcrumbItem, { props: { showDivider: true } });
     expect(wrapper.find(`.${styles.breadcrumbItemDivider} svg`).exists()).toBe(true);
@@ -149,5 +186,46 @@ describe('BreadcrumbItem', () => {
     expect(wrapper.attributes('id')).toBe('crumb');
     expect(wrapper.attributes('data-ouia-component-id')).toBe('c1');
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/BreadcrumbItem');
+  });
+});
+
+describe('BreadcrumbHeading', () => {
+  it('renders plain text in an h1 inside the list item', () => {
+    const wrapper = mount(PfBreadcrumbHeading, { attrs: { class: 'Class' }, slots: { default: () => 'Item' } });
+
+    expect(wrapper.element.tagName).toBe('LI');
+    expect(wrapper.classes().sort()).toEqual(['Class', styles.breadcrumbItem].sort());
+    const heading = wrapper.get('h1');
+    expect(heading.classes()).toEqual([styles.breadcrumbHeading]);
+    expect(heading.text()).toBe('Item');
+    expect(heading.element.children).toHaveLength(0);
+    expect(wrapper.find(`.${styles.breadcrumbItemDivider}`).exists()).toBe(false);
+  });
+
+  it('renders the current page link with target', () => {
+    const wrapper = mount(PfBreadcrumbHeading, {
+      props: { href: '#here' },
+      attrs: { target: '_blank' },
+      slots: { default: () => 'Item' },
+    });
+    const link = wrapper.get('h1 > a');
+    expect(link.classes()).toEqual([styles.breadcrumbLink, styles.modifiers.current]);
+    expect(link.attributes('aria-current')).toBe('page');
+    expect(link.attributes('href')).toBe('#here');
+    expect(link.attributes('target')).toBe('_blank');
+  });
+
+  it('renders a button', () => {
+    const wrapper = mount(PfBreadcrumbHeading, { props: { component: 'button' }, slots: { default: () => 'Item' } });
+    const button = wrapper.get('h1 > button');
+    expect(button.attributes('type')).toBe('button');
+    expect(button.attributes('aria-current')).toBe('true');
+    expect(button.classes()).toEqual([styles.breadcrumbLink, styles.modifiers.current]);
+  });
+
+  it('renders the divider and liAttrs', () => {
+    const wrapper = mount(PfBreadcrumbHeading, { props: { showDivider: true, liAttrs: { id: 'Id' } } });
+    expect(wrapper.find(`.${styles.breadcrumbItemDivider} svg`).exists()).toBe(true);
+    expect(wrapper.attributes('id')).toBe('Id');
   });
 });
