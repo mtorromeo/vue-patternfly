@@ -101,8 +101,10 @@ describe('Button', () => {
     it('disables the button and does not emit click', async () => {
       const wrapper = mount(PfButton, { props: { disabled: true } });
       expect(btn(wrapper).attributes('disabled')).toBeDefined();
-      expect(btn(wrapper).attributes('aria-disabled')).toBe('true');
-      expect(btn(wrapper).classes()).toContain(styles.modifiers.disabled);
+      // regression: a disabled button element also got aria-disabled, pf-m-disabled and tabindex -1
+      expect(btn(wrapper).attributes('aria-disabled')).toBeUndefined();
+      expect(btn(wrapper).classes()).not.toContain(styles.modifiers.disabled);
+      expect(btn(wrapper).attributes('tabindex')).toBeUndefined();
 
       await btn(wrapper).trigger('click');
       expect(wrapper.emitted('click')).toBeUndefined();
@@ -112,6 +114,9 @@ describe('Button', () => {
       const wrapper = mount(PfButton, { props: { href: '/foo', disabled: true } });
       expect(btn(wrapper).element.tagName).toBe('A');
       expect(btn(wrapper).attributes('tabindex')).toBe('-1');
+      expect(btn(wrapper).attributes('aria-disabled')).toBe('true');
+      expect(btn(wrapper).attributes('disabled')).toBeUndefined();
+      expect(btn(wrapper).classes()).toContain(styles.modifiers.disabled);
 
       const event = new MouseEvent('click', { cancelable: true, bubbles: true });
       btn(wrapper).element.dispatchEvent(event);
@@ -156,20 +161,33 @@ describe('Button', () => {
   });
 
   describe('component', () => {
-    it('renders a link with role button when href is set', () => {
+    it('renders a link without a button role when href is set', () => {
+      // regression: links were announced as buttons
       const wrapper = mount(PfButton, { props: { href: 'https://example.com' } });
       expect(btn(wrapper).element.tagName).toBe('A');
       expect(btn(wrapper).attributes('href')).toBe('https://example.com');
-      expect(btn(wrapper).attributes('role')).toBe('button');
+      expect(btn(wrapper).attributes('role')).toBeUndefined();
       expect(btn(wrapper).attributes('type')).toBeUndefined();
     });
 
     it('renders a custom element', () => {
       const wrapper = mount(PfButton, { props: { component: 'span' } });
       expect(btn(wrapper).element.tagName).toBe('SPAN');
+      expect(btn(wrapper).attributes('role')).toBeUndefined();
+      expect(btn(wrapper).attributes('tabindex')).toBeUndefined();
+      expect(btn(wrapper).attributes('type')).toBeUndefined();
+    });
+
+    it('renders an inline link span as a focusable button', () => {
+      const wrapper = mount(PfButton, { props: { component: 'span', variant: 'link', inline: true } });
       expect(btn(wrapper).attributes('role')).toBe('button');
       expect(btn(wrapper).attributes('tabindex')).toBe('0');
-      expect(btn(wrapper).attributes('type')).toBeUndefined();
+      expect(btn(wrapper).attributes('type')).toBe('button');
+    });
+
+    it('keeps an explicit role', () => {
+      const wrapper = mount(PfButton, { props: { href: '#' }, attrs: { role: 'menuitem' } });
+      expect(btn(wrapper).attributes('role')).toBe('menuitem');
     });
 
     it('renders a custom component', () => {
@@ -193,7 +211,7 @@ describe('Button', () => {
   });
 
   describe('loading', () => {
-    it('shows a spinner and disables the button while loading', () => {
+    it('shows a spinner and keeps the button clickable while loading', async () => {
       const wrapper = mount(PfButton, { props: { loading: true, spinnerAriaValueText: 'Loading...' } });
       const spinner = wrapper.find(`.${styles.buttonProgress} [role="progressbar"]`);
       expect(spinner.exists()).toBe(true);
@@ -202,7 +220,21 @@ describe('Button', () => {
       expect(btn(wrapper).classes()).toEqual(
         expect.arrayContaining([styles.modifiers.progress, styles.modifiers.inProgress]),
       );
-      expect(btn(wrapper).attributes('disabled')).toBeDefined();
+      // regression: loading disabled the button, so the same button could not stop loading
+      expect(btn(wrapper).attributes('disabled')).toBeUndefined();
+      await btn(wrapper).trigger('click');
+      expect(wrapper.emitted('click')).toHaveLength(1);
+    });
+
+    it('has no progress styling on a plain button', () => {
+      // regression: plain buttons got pf-m-progress
+      const wrapper = mount(PfButton, { props: { loading: false, variant: 'plain' } });
+      expect(btn(wrapper).classes()).not.toContain(styles.modifiers.progress);
+    });
+
+    it('renders an inline spinner in an inline link', () => {
+      const wrapper = mount(PfButton, { props: { loading: true, variant: 'link', inline: true } });
+      expect(wrapper.find('[role="progressbar"]').classes()).toContain(spinnerStyles.modifiers.inline);
     });
 
     it('keeps the progress styling without a spinner when loading is false', () => {
@@ -359,5 +391,52 @@ describe('Button', () => {
       await flushPromises();
       expect(router.currentRoute.value.path).toBe('/');
     });
+  });
+});
+
+describe('Button parity', () => {
+  it('applies the clicked modifier', () => {
+    expect(btn(mount(PfButton, { props: { clicked: true } })).classes()).toContain(styles.modifiers.clicked);
+  });
+
+  it('is OUIA safe by default', () => {
+    expect(btn(mount(PfButton)).attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('does not position an icon without text', () => {
+    // regression: icon-only buttons got pf-m-start, offsetting the icon
+    const wrapper = mount(PfButton, { attrs: { 'aria-label': 'Close' }, slots: { icon: () => h('svg') } });
+    expect(wrapper.find(`.${styles.buttonIcon}`).classes()).toEqual([styles.buttonIcon]);
+  });
+
+  it('logs an error for a hamburger without expanded', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    mount(PfButton, { props: { hamburger: true }, attrs: { 'aria-label': 'Menu' } });
+    expect(error).toHaveBeenCalledWith(expect.stringContaining('expanded property'));
+    error.mockClear();
+
+    mount(PfButton, { props: { hamburger: true, expanded: false }, attrs: { 'aria-label': 'Menu' } });
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
+  });
+
+  it('logs an error for special buttons without an accessible name', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const cases: { settings?: boolean; favorite?: boolean; hamburger?: boolean; expanded?: boolean }[] = [
+      { settings: true },
+      { favorite: true },
+      { hamburger: true, expanded: false },
+    ];
+    for (const props of cases) {
+      mount(PfButton, { props });
+      expect(error).toHaveBeenCalledWith(expect.stringContaining('accessible name'));
+      error.mockClear();
+
+      mount(PfButton, { props, attrs: { 'aria-label': 'Name' } });
+      mount(PfButton, { props, attrs: { 'aria-labelledby': 'id' } });
+      mount(PfButton, { props, slots: { default: 'Name' } });
+      expect(error).not.toHaveBeenCalled();
+    }
+    error.mockRestore();
   });
 });

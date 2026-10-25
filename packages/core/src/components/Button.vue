@@ -4,24 +4,25 @@
       v-bind="{ ...ouiaProps, ...omitInoperableListeners($attrs) }"
       :is="buttonComponent"
       ref="elRef"
-      :type="buttonComponent === 'button' ? type : null"
-      :disabled="effectiveDisabled"
+      :type="isButtonElement || isInlineSpan ? type : null"
+      :disabled="isButtonElement && disabled ? true : null"
       :aria-expanded="expanded ?? $attrs['aria-expanded']"
-      :aria-disabled="effectiveDisabled || ariaDisabled"
+      :aria-disabled="ariaDisabled || (!isButtonElement && disabled) ? true : null"
       :aria-current="ariaCurrent"
       :class="[
         styles.button,
         styles.modifiers[variant],
         {
           [styles.modifiers.block]: block,
-          [styles.modifiers.disabled]: disabled,
+          [styles.modifiers.disabled]: disabled && !isButtonElement,
           [styles.modifiers.ariaDisabled]: ariaDisabled,
+          [styles.modifiers.clicked]: clicked,
           [styles.modifiers.inline]: inline && variant === 'link',
           [styles.modifiers.danger]: danger && (variant === 'link' || variant === 'secondary'),
           [styles.modifiers.noPadding]: noPadding && variant === 'plain',
           [styles.modifiers.small]: small,
           [styles.modifiers.displayLg]: large,
-          [styles.modifiers.progress]: isDefined(loading),
+          [styles.modifiers.progress]: isDefined(loading) && variant !== 'plain',
           [styles.modifiers.inProgress]: loading,
           [styles.modifiers[state as NonNullable<typeof state>]]: state && variant === 'stateful',
           [styles.modifiers.settings]: settings,
@@ -35,7 +36,7 @@
         },
       ]"
       :tabindex="tabIdx"
-      :role="$attrs.role ?? (buttonComponent !== 'button' ? 'button' : null)"
+      :role="$attrs.role ?? (isInlineSpan ? 'button' : null)"
       :href="href || (buttonComponent === 'a' ? (routerCtx as RouterLinkContext | undefined)?.href : null)"
       v-on="inoperableListeners"
       @click="onClick($event, (routerCtx as RouterLinkContext | undefined)?.navigate)"
@@ -43,6 +44,7 @@
       <span v-if="loading" :class="styles.buttonProgress">
         <pf-spinner
           size="md"
+          :inline="inline"
           :aria-valuetext="spinnerAriaValueText"
           :aria-label="spinnerAriaLabel"
           :aria-labelledby="spinnerAriaLabelledBy"
@@ -56,7 +58,10 @@
         v-if="$slots.icon || favorite || settings || hamburger"
         :class="[
           styles.buttonIcon,
-          { [styles.modifiers.start]: iconPosition === 'start', [styles.modifiers.end]: iconPosition === 'end' },
+          {
+            [styles.modifiers.start]: $slots.default && iconPosition === 'start',
+            [styles.modifiers.end]: $slots.default && iconPosition === 'end',
+          },
         ]"
       >
         <template v-if="favorite">
@@ -102,6 +107,9 @@ import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import {
   type Component,
   type UnwrapRef,
+  type VNode,
+  useAttrs,
+  useSlots,
   computed,
   type AnchorHTMLAttributes,
   type ButtonHTMLAttributes,
@@ -129,13 +137,15 @@ interface Props
     /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'onClick' | 'aria-pressed' | 'role'> {
   /** Sets the base component to render. defaults to button */
   component?: string | Component;
+  /** Adds clicked styling to button. */
+  clicked?: boolean;
   /** Adds block styling to button */
   block?: boolean;
   /** Adds disabled styling and disables the button using the disabled html attribute */
   disabled?: boolean;
   /** Adds disabled styling and communicates that the button is disabled using the aria-disabled html attribute */
   ariaDisabled?: boolean;
-  /** Adds progress styling to button */
+  /** Adds progress styling to button and shows a spinner while true. The button stays clickable. */
   loading?: boolean;
   /** Text describing that current loading status or progress */
   spinnerAriaValueText?: string;
@@ -200,6 +210,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'auto',
   loading: undefined,
   expanded: undefined,
+  ouiaSafe: true,
 });
 
 const emit = defineEmits<{
@@ -207,10 +218,31 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  icon?: (props?: Record<never, never>) => any;
-  badge?: (props?: Record<never, never>) => any;
+  /** Content rendered inside the button */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Icon of the button, overridden by settings, hamburger and favorite */
+  icon?: (props?: Record<never, never>) => VNode[];
+  /** Count rendered after the content: use a pf-badge */
+  badge?: (props?: Record<never, never>) => VNode[];
 }>();
+
+const attrs = useAttrs();
+const slots = useSlots();
+if (props.hamburger && props.expanded === undefined) {
+  console.error(
+    'Button: when the hamburger property is passed in, you must also pass in a boolean value to the expanded property. It is expected that a hamburger button controls the expansion of other content.',
+  );
+}
+if (
+  (props.settings || props.hamburger || props.favorite) &&
+  !attrs['aria-label'] &&
+  !slots.default &&
+  !attrs['aria-labelledby']
+) {
+  console.error(
+    'Button: you must provide either visible text content or an accessible name via the aria-label or aria-labelledby properties.',
+  );
+}
 
 const el = useTemplateRef<HTMLElement | ComponentPublicInstance>('elRef');
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant });
@@ -223,21 +255,20 @@ const buttonComponent = computed(() => {
   return props.href || props.to ? 'a' : 'button';
 });
 
-const effectiveDisabled = computed(() => {
-  return props.loading || props.disabled || null;
-});
+const isButtonElement = computed(() => buttonComponent.value === 'button');
+const isInlineSpan = computed(() => props.inline && buttonComponent.value === 'span');
 
 const tabIdx = computed(() => {
-  if (props.tabindex) {
+  if (props.tabindex !== undefined) {
     return props.tabindex;
   }
   if (props.disabled) {
-    return props.component === 'button' ? null : -1;
+    return isButtonElement.value ? null : -1;
   }
-  if (!props.ariaDisabled && props.component === 'span') {
-    return 0;
+  if (props.ariaDisabled) {
+    return null;
   }
-  return null;
+  return isInlineSpan.value ? 0 : null;
 });
 
 const preventedEvents = computed(() => (props.ariaDisabled ? (props.inoperableEvents ?? ['click', 'keypress']) : []));
@@ -257,7 +288,7 @@ function omitInoperableListeners(attrs: Record<string, unknown>) {
 }
 
 function onClick(e: PointerEvent, navigate: RouterLinkContext['navigate'] | undefined) {
-  if (effectiveDisabled.value || preventedEvents.value.includes('click')) {
+  if (props.disabled || preventedEvents.value.includes('click')) {
     e.preventDefault();
     return;
   }
