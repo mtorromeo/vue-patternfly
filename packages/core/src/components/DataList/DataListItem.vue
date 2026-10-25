@@ -22,6 +22,8 @@
       :type="datalist?.multipleSelection.value ? 'checkbox' : 'radio'"
       tabindex="-1"
       :checked="managedSelected"
+      :aria-label="selectableInputAriaLabel"
+      :aria-labelledby="selectableInputAriaLabel ? undefined : ($attrs['aria-labelledby'] as string | undefined)"
       @change="select"
     />
     <auto-wrap :component="PfDataListItemRow" :exclude="PfDataListContent">
@@ -41,18 +43,29 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'tab
   selectionInputValue?: string;
   /** Flag indicating if the pf-data-list-item is expandable */
   expandable?: boolean;
+  /** Aria label of the hidden selection input, which is otherwise labelled by the aria-labelledby of the item */
+  selectableInputAriaLabel?: string;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { computed, getCurrentInstance, inject, provide, ref, type LiHTMLAttributes, toValue } from 'vue';
-import { DataListKey } from './DataList.vue';
+import {
+  computed,
+  getCurrentInstance,
+  inject,
+  provide,
+  ref,
+  type LiHTMLAttributes,
+  toValue,
+  useAttrs,
+  type VNode,
+} from 'vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDataListItemRow from './DataListItemRow.vue';
 import PfDataListContent from './DataListContent.vue';
-import { DataListItemKey } from './common';
+import { DataListItemKey, DataListKey } from './common';
 
 defineOptions({
   name: 'PfDataListItem',
@@ -73,7 +86,8 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** pf-data-list-item-row and pf-data-list-content elements; other content is wrapped in a row */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const uniqueId = Symbol();
@@ -145,10 +159,20 @@ const isExpandable = computed(() => props.expandable ?? !!datalist?.expandable.v
 const name = computed(() => props.selectionInputName || datalist?.inputName.value);
 const value = computed(() => props.selectionInputValue || datalist?.inputValue.value);
 
+const attrs = useAttrs();
+
 provide(DataListItemKey, {
   expanded,
   expandable: isExpandable,
+  rowid: computed(() => attrs['aria-labelledby'] as string | undefined),
 });
+
+/** Clicks and key presses in actions and controls (checkboxes, toggles) do not select the item */
+function fromActionOrControl(event: Event) {
+  const target = event.target instanceof Element ? event.target : null;
+  const container = target?.closest(`.${styles.dataListItemAction}, .${styles.dataListItemControl}`);
+  return !!container && (event.currentTarget as Element).contains(container);
+}
 
 function select() {
   if (isSelectable.value) {
@@ -167,7 +191,9 @@ function handleKeydown(event: KeyboardEvent) {
 }
 
 function handleClick(event: PointerEvent) {
-  select();
+  if (!fromActionOrControl(event)) {
+    select();
+  }
   emit('click', event);
 }
 </script>

@@ -18,34 +18,38 @@
   </div>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /** Determines which wrapping modifier to apply to the row */
+  wrapModifier?: DataListWrapModifier;
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { inject, type HTMLAttributes } from 'vue';
-import type { DataListWrapModifier } from './DataList.vue';
+import { inject, type HTMLAttributes, type VNode } from 'vue';
 import PfDataListItemCells from './DataListItemCells.vue';
 import PfDataListCell from './DataListCell.vue';
 import PfDataListToggle from './DataListToggle.vue';
 import AutoWrap from '../../helpers/AutoWrap.vue';
-import { DataListItemKey } from './common';
+import { DataListItemKey, type DataListWrapModifier } from './common';
 
 defineOptions({
   name: 'PfDataListItemRow',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  wrapModifier?: DataListWrapModifier;
-}
-
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  toggle?: (props?: Record<never, never>) => any;
+  /** Controls, cells and actions of the row; consecutive pf-data-list-cell elements are wrapped in pf-data-list-item-cells */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Toggle of an expandable item, replacing the default pf-data-list-toggle */
+  toggle?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const datalistItem = inject(DataListItemKey);
+const datalistItem = inject(DataListItemKey, undefined);
 
 function toggle() {
   if (datalistItem) {

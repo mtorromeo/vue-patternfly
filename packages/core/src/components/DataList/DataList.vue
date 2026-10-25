@@ -1,13 +1,15 @@
 <template>
   <ul
     v-bind="ouiaProps"
+    role="list"
     :class="[
       styles.dataList,
-      gridBreackpointClass,
+      gridBreakpointClass,
       {
         [styles.modifiers.compact]: compact,
+        [styles.modifiers.plain]: plain,
+        [styles.modifiers.noPlainOnGlass]: noPlainOnGlass,
         [styles.modifiers[wrapModifier ?? 'nowrap']]: wrapModifier,
-        [styles.modifiers.dragOver]: dragging,
       },
     ]"
   >
@@ -16,17 +18,7 @@
 </template>
 
 <script lang="ts">
-export const DataListKey = Symbol('DataListSelectableKey') as InjectionKey<{
-  emit: (event: 'update:selected', item: string | number | symbol | (string | number | symbol)[] | undefined) => void;
-  selectable: Ref<boolean>;
-  expandable: ComputedRef<boolean | undefined>;
-  inputName: ComputedRef<string | undefined>;
-  inputValue: ComputedRef<string | undefined>;
-  itemSelection: Ref<string | number | symbol | (string | number | symbol)[] | undefined>;
-  multipleSelection: ComputedRef<boolean>;
-}>;
-
-export type DataListWrapModifier = 'nowrap' | 'truncate' | 'breakWord';
+export { DataListKey, type DataListWrapModifier, type DataListItemValue, type DataListSelection } from './common';
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Name of the item input (radio or checkbox) when item selection is enabled */
@@ -37,14 +29,18 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   selectionMultiple?: boolean;
   /** Flag indicating if pf-data-list should have compact styling */
   compact?: boolean;
+  /** @beta Flag indicating if pf-data-list should have plain styling with a transparent background */
+  plain?: boolean;
+  /** @beta Flag to prevent the data list from automatically applying plain styling when glass theme is enabled. */
+  noPlainOnGlass?: boolean;
   /** Flag indicating if pf-data-list-items should have expandable styling */
   expandable?: boolean;
   /** Specifies the grid breakpoints  */
   gridBreakpoint?: 'none' | 'always' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   /** Determines which wrapping modifier to apply to the pf-data-list */
-  wrapModifier?: DataListWrapModifier | 'nowrap' | 'truncate' | 'breakWord';
+  wrapModifier?: DataListWrapModifier;
   // declared as prop instead of emit to be able to detect attached listeners
-  'onUpdate:selected'?: (s: any) => void; // eslint-disable-line vue/prop-name-casing
+  'onUpdate:selected'?: (selected: DataListSelection | undefined) => void; // eslint-disable-line vue/prop-name-casing
 }
 </script>
 
@@ -52,7 +48,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import stylesGrid from '@patternfly/react-styles/css/components/DataList/data-list-grid';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { computed, type ComputedRef, type InjectionKey, provide, type Ref, ref, type HTMLAttributes } from 'vue';
+import { computed, provide, type HTMLAttributes, type VNode } from 'vue';
+import { DataListKey, type DataListSelection, type DataListWrapModifier } from './common';
 
 const gridBreakpointClasses = {
   none: stylesGrid.modifiers.gridNone,
@@ -79,11 +76,12 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const emit = defineEmits();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** pf-data-list-item elements */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 /** Array for multiple selection, single value for single selection, undefined to disable selection */
-const selected = defineModel<string | number | symbol | (string | number | symbol)[]>('selected');
+const selected = defineModel<DataListSelection>('selected');
 
 const selectable = computed(
   () => !!props['onUpdate:selected'] || selected.value !== undefined || !!props.selectionInputName,
@@ -99,6 +97,5 @@ provide(DataListKey, {
   multipleSelection: computed(() => props.selectionMultiple),
 });
 
-const gridBreackpointClass = computed(() => gridBreakpointClasses[props.gridBreakpoint]);
-const dragging = ref(false);
+const gridBreakpointClass = computed(() => gridBreakpointClasses[props.gridBreakpoint]);
 </script>

@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
-import { mount, type VueWrapper } from '@vue/test-utils';
-import { h } from 'vue';
+import { describe, expect, it, vi } from 'vitest';
+import { flushPromises, mount, type VueWrapper } from '@vue/test-utils';
+import { h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
 import gridStyles from '@patternfly/react-styles/css/components/DataList/data-list-grid';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
@@ -13,6 +13,10 @@ import PfDataListItem from '../../src/components/DataList/DataListItem.vue';
 import PfDataListItemCells from '../../src/components/DataList/DataListItemCells.vue';
 import PfDataListItemRow from '../../src/components/DataList/DataListItemRow.vue';
 import PfDataListToggle from '../../src/components/DataList/DataListToggle.vue';
+import PfDataListControl from '../../src/components/DataList/DataListControl.vue';
+import PfDataListDragButton from '../../src/components/DataList/DataListDragButton.vue';
+import PfDataListText from '../../src/components/DataList/DataListText.vue';
+import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
 function mountWithModel<C>(
@@ -337,7 +341,7 @@ describe('DataListItemCells', () => {
 describe('DataListCell', () => {
   it('renders the cell class without modifiers by default', () => {
     const wrapper = mount(PfDataListCell, { slots: { default: () => 'Cell' } });
-    expect(wrapper.classes()).toEqual([styles.dataListCell]);
+    expect(wrapper.get('div').classes()).toEqual([styles.dataListCell]);
     expect(wrapper.text()).toBe('Cell');
   });
 
@@ -347,13 +351,13 @@ describe('DataListCell', () => {
     });
 
     for (const modifier of ['noFill', 'alignRight', 'icon', 'nowrap', 'flex_3'] as const) {
-      expect(wrapper.classes()).toContain(styles.modifiers[modifier]);
+      expect(wrapper.get('div').classes()).toContain(styles.modifiers[modifier]);
     }
   });
 
   it('does not apply a flex modifier for width 1', () => {
     const wrapper = mount(PfDataListCell, { props: { width: 1 } });
-    expect(wrapper.classes()).toEqual([styles.dataListCell]);
+    expect(wrapper.get('div').classes()).toEqual([styles.dataListCell]);
   });
 });
 
@@ -457,5 +461,172 @@ describe('DataListContent', () => {
 
     expect(wrapper.attributes('hidden')).toBeUndefined();
     expect(wrapper.find(`.${styles.dataListExpandableContentBody}`).classes()).toContain(styles.modifiers.noPadding);
+  });
+});
+
+describe('DataList parity', () => {
+  it('is a list with plain and no-plain-on-glass modifiers', () => {
+    const wrapper = mount(PfDataList, {
+      props: { plain: true, noPlainOnGlass: true },
+      attrs: { 'aria-label': 'List' },
+    });
+    expect(wrapper.attributes('role')).toBe('list');
+    expect(wrapper.attributes('aria-label')).toBe('List');
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([styles.modifiers.plain, styles.modifiers.noPlainOnGlass]),
+    );
+  });
+
+  it('does not select an item when clicking its actions or controls', async () => {
+    // regression: clicks on buttons in actions and on checks selected the item
+    const onSelected = vi.fn();
+    const wrapper = mount(PfDataList, {
+      props: { 'onUpdate:selected': onSelected },
+      slots: {
+        default: () =>
+          h(PfDataListItem, { key: 'a' }, () =>
+            h(PfDataListItemRow, () => [
+              h(PfDataListCheck, { 'aria-labelledby': 'a' }),
+              h(PfDataListCell, () => 'Cell'),
+              h(PfDataListAction, () => h('button', { class: 'act' }, 'Act')),
+            ]),
+          ),
+      },
+    });
+
+    await wrapper.get('button.act').trigger('click');
+    await wrapper.get(`.${styles.dataListItemControl} input`).trigger('click');
+    expect(onSelected).not.toHaveBeenCalled();
+
+    await wrapper.get(`.${styles.dataListCell}`).trigger('click');
+    expect(onSelected).toHaveBeenCalledWith('a');
+  });
+
+  it('labels the hidden selection input', () => {
+    const labelled = mount(PfDataListItem, { props: { selected: false }, attrs: { 'aria-labelledby': 'item-1' } });
+    expect(labelled.get('input').attributes('aria-labelledby')).toBe('item-1');
+
+    const labeled = mount(PfDataListItem, {
+      props: { selected: false, selectableInputAriaLabel: 'Select item' },
+      attrs: { 'aria-labelledby': 'item-1' },
+    });
+    expect(labeled.get('input').attributes('aria-label')).toBe('Select item');
+    expect(labeled.get('input').attributes('aria-labelledby')).toBeUndefined();
+  });
+});
+
+describe('DataListToggle parity', () => {
+  it('renders the toggle icon in the button icon container', () => {
+    // regression: the icon was rendered as the button text
+    const wrapper = mount(PfDataListToggle, { props: { id: 'ex-toggle2' } });
+    expect(wrapper.find(`.${buttonStyles.buttonIcon} .${styles.dataListToggleIcon} svg`).exists()).toBe(true);
+    expect(wrapper.find(`.${buttonStyles.buttonText}`).exists()).toBe(false);
+  });
+
+  it('is labelled by the item and by itself', () => {
+    // regression: the item id was missing from aria-labelledby
+    const wrapper = mount(PfDataListItem, {
+      props: { expandable: true },
+      attrs: { 'aria-labelledby': 'item-1' },
+      slots: { default: () => h(PfDataListItemRow, null, { toggle: () => h(PfDataListToggle, { id: 'toggle-1' }) }) },
+    });
+    expect(wrapper.get('button').attributes('aria-labelledby')).toBe('item-1 toggle-1');
+  });
+
+  it('spreads buttonAttrs and follows the item expanded state', () => {
+    const wrapper = mount(PfDataListItem, {
+      props: { expandable: true, expanded: true },
+      slots: {
+        default: () =>
+          h(PfDataListItemRow, null, { toggle: () => h(PfDataListToggle, { buttonAttrs: { 'data-x': 'y' } }) }),
+      },
+    });
+    expect(wrapper.get('button').attributes('data-x')).toBe('y');
+    expect(wrapper.get('button').attributes('aria-expanded')).toBe('true');
+  });
+});
+
+describe('DataListCheck parity', () => {
+  it('renders a label wrapped standalone checkbox and puts the class on the control', () => {
+    // regression: a bare input was rendered and the class went to the input
+    const wrapper = mount(PfDataListCheck, {
+      props: { invalid: true },
+      attrs: { class: 'custom', 'aria-labelledby': 'item', name: 'check' },
+    });
+    expect(wrapper.classes()).toEqual([styles.dataListItemControl, 'custom']);
+    const check = wrapper.get(`.${styles.dataListCheck} > label`);
+    expect(check.classes()).toEqual([checkStyles.check, checkStyles.modifiers.standalone]);
+    const input = check.get('input');
+    expect(input.classes()).toContain(checkStyles.checkInput);
+    expect(input.attributes('aria-labelledby')).toBe('item');
+    expect(input.attributes('name')).toBe('check');
+    expect(input.attributes('aria-invalid')).toBe('true');
+    expect(check.attributes('for')).toBe(input.attributes('id'));
+  });
+
+  it('puts the class on the check with otherControls', () => {
+    const wrapper = mount(PfDataListCheck, { props: { otherControls: true }, attrs: { class: 'custom' } });
+    expect(wrapper.find(`.${styles.dataListItemControl}`).exists()).toBe(false);
+    expect(wrapper.get(`.${styles.dataListCheck}`).classes()).toContain('custom');
+  });
+});
+
+describe('DataListControl', () => {
+  it('renders the item control class', () => {
+    const wrapper = mount(PfDataListControl, { attrs: { class: 'custom' }, slots: { default: () => 'Ctrl' } });
+    expect(wrapper.classes()).toEqual([styles.dataListItemControl, 'custom']);
+    expect(wrapper.text()).toBe('Ctrl');
+  });
+});
+
+describe('DataListDragButton', () => {
+  it('renders a drag button with its icon', () => {
+    const wrapper = mount(PfDataListDragButton, { attrs: { 'aria-label': 'Drag' } });
+    expect(wrapper.element.tagName).toBe('BUTTON');
+    expect(wrapper.classes()).toEqual([styles.dataListItemDraggableButton]);
+    expect(wrapper.attributes('type')).toBe('button');
+    expect(wrapper.find(`.${styles.dataListItemDraggableIcon} svg`).exists()).toBe(true);
+  });
+
+  it('is disabled', () => {
+    const wrapper = mount(PfDataListDragButton, { props: { disabled: true } });
+    expect(wrapper.classes()).toContain(styles.modifiers.disabled);
+    expect(wrapper.attributes('disabled')).toBeDefined();
+  });
+});
+
+describe('DataListText', () => {
+  it('renders a span with the text class and wrap modifier', () => {
+    const wrapper = mount(PfDataListText, { props: { wrapModifier: 'truncate' }, slots: { default: () => 'Text' } });
+    const text = wrapper.get(`.${styles.dataListText}`);
+    expect(text.element.tagName).toBe('SPAN');
+    expect(text.classes()).toContain(styles.modifiers.truncate);
+    expect(text.text()).toBe('Text');
+  });
+
+  it('renders another component', () => {
+    const wrapper = mount(PfDataListText, { props: { component: 'div' } });
+    expect(wrapper.get(`.${styles.dataListText}`).element.tagName).toBe('DIV');
+  });
+
+  it('shows a tooltip only when the text overflows', async () => {
+    const wrapper = mount(PfDataListText, {
+      props: { tooltip: 'Full text' },
+      slots: { default: () => 'Text' },
+      attachTo: document.body,
+    });
+    const text = wrapper.get(`.${styles.dataListText}`);
+
+    await text.trigger('mouseenter');
+    await flushPromises();
+    expect(document.body.textContent).not.toContain('Full text');
+
+    Object.defineProperty(text.element, 'scrollWidth', { value: 200 });
+    Object.defineProperty(text.element, 'offsetWidth', { value: 100 });
+    await text.trigger('mouseenter');
+    await nextTick();
+    await flushPromises();
+    expect(document.body.textContent).toContain('Full text');
+    wrapper.unmount();
   });
 });
