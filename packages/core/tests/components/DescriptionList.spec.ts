@@ -91,6 +91,8 @@ describe('DescriptionList', () => {
   it('sets term width and responsive css variables', () => {
     const wrapper = mount(PfDescriptionList, {
       props: {
+        autoFit: true,
+        horizontal: true,
         termWidth: '10ch',
         autoFitMin: '100px',
         autoFitMinMd: '200px',
@@ -105,6 +107,29 @@ describe('DescriptionList', () => {
     expect(style.getPropertyValue(`${cssGridTemplateColumnsMin.name}-on-md`)).toBe('200px');
     expect(style.getPropertyValue(cssHorizontalTermWidth.name)).toBe('12ch');
     expect(style.getPropertyValue(`${cssHorizontalTermWidth.name}-on-xl`)).toBe('15ch');
+  });
+
+  it('only sets the auto-fit and horizontal term width variables with those layouts', () => {
+    // regression: the variables were set without autoFit and horizontal
+    const wrapper = mount(PfDescriptionList, {
+      props: { autoFitMin: '100px', horizontalTermWidth: '12ch', termWidth: '10ch' },
+    });
+    const style = (wrapper.element as HTMLElement).style;
+    expect(style.getPropertyValue(cssGridTemplateColumnsMin.name)).toBe('');
+    expect(style.getPropertyValue(cssHorizontalTermWidth.name)).toBe('');
+    expect(style.getPropertyValue(cssTermWidth.name)).toBe('10ch');
+  });
+
+  it('is OUIA safe by default', () => {
+    const wrapper = mount(PfDescriptionList, { props: { ouiaId: 'dl' } });
+    expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/DescriptionList');
+    expect(wrapper.attributes('data-ouia-component-id')).toBe('dl');
+    expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('adds custom classes', () => {
+    const wrapper = mount(PfDescriptionList, { attrs: { class: 'custom' } });
+    expect(wrapper.classes()).toEqual([styles.descriptionList, 'custom']);
   });
 
   it('updates classes when props change', async () => {

@@ -18,34 +18,15 @@
     ]"
     :style="{
       [cssTermWidth.name]: termWidth,
-      ...cssVarsFromBreakpointProps(props, 'autoFitMin', cssGridTemplateColumnsMin.name),
-      ...cssVarsFromBreakpointProps(props, 'horizontalTermWidth', cssHorizontalTermWidth.name),
+      ...(autoFit ? cssVarsFromBreakpointProps(props, 'autoFitMin', cssGridTemplateColumnsMin.name) : {}),
+      ...(horizontal ? cssVarsFromBreakpointProps(props, 'horizontalTermWidth', cssHorizontalTermWidth.name) : {}),
     }"
   >
     <slot />
   </dl>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/DescriptionList/description-list';
-import cssGridTemplateColumnsMin from '@patternfly/react-tokens/dist/esm/c_description_list_GridTemplateColumns_min';
-import cssTermWidth from '@patternfly/react-tokens/dist/esm/c_description_list__term_width';
-import cssHorizontalTermWidth from '@patternfly/react-tokens/dist/esm/c_description_list_m_horizontal__term_width';
-import type { HTMLAttributes } from 'vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import {
-  classesFromBreakpointProps,
-  cssVarsFromBreakpointProps,
-  type AutoFitMinBreakpointProps,
-  type ColumnsBreakpointProps,
-  type HorizontalTermWidthBreakpointProps,
-  type OrientationBreakpointProps,
-} from '../../breakpoints';
-
-defineOptions({
-  name: 'PfDescriptionList',
-});
-
+<script lang="ts">
 interface Props
   extends
     OUIAProps,
@@ -73,13 +54,35 @@ interface Props
   /** Sets the description list's term column width.*/
   termWidth?: string;
 }
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/DescriptionList/description-list';
+import cssGridTemplateColumnsMin from '@patternfly/react-tokens/dist/esm/c_description_list_GridTemplateColumns_min';
+import cssTermWidth from '@patternfly/react-tokens/dist/esm/c_description_list__term_width';
+import cssHorizontalTermWidth from '@patternfly/react-tokens/dist/esm/c_description_list_m_horizontal__term_width';
+import type { HTMLAttributes, VNode } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import {
+  classesFromBreakpointProps,
+  cssVarsFromBreakpointProps,
+  type AutoFitMinBreakpointProps,
+  type ColumnsBreakpointProps,
+  type HorizontalTermWidthBreakpointProps,
+  type OrientationBreakpointProps,
+} from '../../breakpoints';
+
+defineOptions({
+  name: 'PfDescriptionList',
+});
 
 const props = withDefaults(defineProps<Props>(), {
   displaySize: 'default',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>
