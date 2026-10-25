@@ -21,6 +21,17 @@ describe('ActionList', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.icons);
   });
 
+  it('applies the vertical modifier when vertical is set', () => {
+    expect(mount(PfActionList).classes()).not.toContain(styles.modifiers.vertical);
+    const wrapper = mount(PfActionList, { props: { vertical: true } });
+    expect(wrapper.classes()).toContain(styles.modifiers.vertical);
+  });
+
+  it('adds custom classes', () => {
+    const wrapper = mount(PfActionList, { attrs: { class: 'custom-class' } });
+    expect(wrapper.classes()).toEqual([styles.actionList, 'custom-class']);
+  });
+
   it('sets OUIA attributes', () => {
     const wrapper = mount(PfActionList, { props: { ouiaId: 'my-list', ouiaSafe: true } });
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/ActionList');
@@ -59,9 +70,20 @@ describe('ActionListGroup', () => {
     const wrapper = mount(PfActionListGroup, { slots: { default: () => 'Content' } });
 
     expect(wrapper.element.tagName).toBe('DIV');
-    expect(wrapper.classes()).toContain(styles.actionListGroup);
+    expect(wrapper.classes()).toEqual([styles.actionListGroup]);
     expect(wrapper.text()).toBe('Content');
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/ActionListGroup');
+  });
+
+  it('applies the icons modifier when iconGroup is set', () => {
+    const wrapper = mount(PfActionListGroup, { props: { iconGroup: true } });
+    expect(wrapper.classes()).toContain(styles.modifiers.icons);
+  });
+
+  it('forwards class and attributes', () => {
+    const wrapper = mount(PfActionListGroup, { attrs: { class: 'custom-class', 'aria-label': 'Test label' } });
+    expect(wrapper.classes()).toContain('custom-class');
+    expect(wrapper.attributes('aria-label')).toBe('Test label');
   });
 });
 
@@ -73,5 +95,11 @@ describe('ActionListItem', () => {
     expect(wrapper.classes()).toContain(`${styles.actionList}__item`);
     expect(wrapper.find('button').text()).toBe('Action');
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/ActionListItem');
+  });
+
+  it('forwards class and attributes', () => {
+    const wrapper = mount(PfActionListItem, { attrs: { class: 'custom-class', 'aria-label': 'Test label' } });
+    expect(wrapper.classes()).toEqual([`${styles.actionList}__item`, 'custom-class']);
+    expect(wrapper.attributes('aria-label')).toBe('Test label');
   });
 });
