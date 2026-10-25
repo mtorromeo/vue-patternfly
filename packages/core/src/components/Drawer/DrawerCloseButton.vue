@@ -8,6 +8,15 @@
   </div>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /** Accessible label for the drawer close button */
+  ariaLabel?: string;
+  /** Additional properties passed to the close button */
+  buttonProps?: Omit<ComponentProps<typeof PfButton>, 'onClick'>;
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -20,14 +29,9 @@ defineOptions({
   name: 'PfDrawerCloseButton',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** Accessible label for the drawer close button */
-  ariaLabel?: string;
-  /** Additional properties passed to the close button */
-  buttonProps?: Omit<ComponentProps<typeof PfButton>, 'onClick'>;
-}
-
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  ariaLabel: 'Close drawer panel',
+});
 const restButtonProps = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { onClick, ...rest } = (props.buttonProps ?? {}) as ComponentProps<typeof PfButton> & { onClick?: unknown };

@@ -77,7 +77,7 @@ describe('Drawer', () => {
     expect(wrapper.find(`.${styles.drawerPanel}`).attributes('hidden')).toBeUndefined();
   });
 
-  it('expands with a delayed expanded modifier and hides the panel after the collapse animation', async () => {
+  it('expands with a delayed expanded modifier and hides the panel after the collapse transition', async () => {
     vi.useFakeTimers();
     const wrapper = mountDrawer();
     const panel = wrapper.find(`.${styles.drawerPanel}`);
@@ -96,8 +96,36 @@ describe('Drawer', () => {
     expect(panel.attributes('hidden')).toBeDefined();
     expect((panel.element as HTMLElement).style.display).toBe('inherit');
 
-    await wrapper.trigger('animationend');
+    // the drawer CSS has no animation: the panel is collapsed by the end of its transform transition
+    await panel.trigger('transitionend', { propertyName: 'opacity' });
+    expect((panel.element as HTMLElement).style.display).toBe('inherit');
+    await panel.trigger('transitionend', { propertyName: 'transform' });
     expect((panel.element as HTMLElement).style.display).toBe('none');
+  });
+
+  it('applies the pill modifier and is OUIA safe by default', () => {
+    const wrapper = mountDrawer({ pill: true });
+    expect(wrapper.classes()).toContain(styles.modifiers.pill);
+    expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+    expect(mountDrawer().classes()).not.toContain(styles.modifiers.pill);
+  });
+
+  it('emits expand when the panel transform transition ends while expanded', async () => {
+    const wrapper = mountDrawer({ expanded: true });
+    const panel = wrapper.find(`.${styles.drawerPanel}`);
+
+    await panel.find(`.${styles.drawerHead}`).trigger('transitionend', { propertyName: 'transform' });
+    await panel.trigger('transitionend', { propertyName: 'opacity' });
+    expect(wrapper.emitted('expand')).toBeUndefined();
+
+    await panel.trigger('transitionend', { propertyName: 'transform' });
+    expect(wrapper.emitted('expand')).toHaveLength(1);
+    expect(wrapper.emitted('expand')?.[0]?.[0]).toBeInstanceOf(Event);
+    expect((panel.element as HTMLElement).style.display).toBe('inherit');
+
+    await wrapper.setProps({ expanded: false });
+    await panel.trigger('transitionend', { propertyName: 'transform' });
+    expect(wrapper.emitted('expand')).toHaveLength(1);
   });
 
   it('auto wraps children in DrawerContent but keeps sections outside', () => {
@@ -178,6 +206,71 @@ describe('DrawerPanelContent', () => {
     expect(style.getPropertyValue(cssPanelMdFlexBasisMin.name)).toBe('100px');
     expect(style.getPropertyValue(cssPanelMdFlexBasisMax.name)).toBe('600px');
     expect(panel.find(`.${styles.drawerSplitter}`).exists()).toBe(false);
+  });
+
+  it('applies the noGlass, glass, plain and noPlainOnGlass modifiers', () => {
+    const panel = mountDrawer({}, { noGlass: true, glass: true, plain: true, noPlainOnGlass: true }).find(
+      `.${styles.drawerPanel}`,
+    );
+    expect(panel.classes()).toContain('pf-m-no-glass');
+    expect(panel.classes()).toContain(styles.modifiers.glass);
+    expect(panel.classes()).toContain(styles.modifiers.plain);
+    expect(panel.classes()).toContain(styles.modifiers.noPlainOnGlass);
+
+    const plainPanel = mountDrawer().find(`.${styles.drawerPanel}`);
+    expect(plainPanel.classes()).not.toContain('pf-m-no-glass');
+    expect(plainPanel.classes()).not.toContain(styles.modifiers.glass);
+    expect(plainPanel.classes()).not.toContain(styles.modifiers.plain);
+  });
+
+  describe('focus trap', () => {
+    it('renders the panel as a modal dialog labelled by its id', () => {
+      const wrapper = mountDrawer({ expanded: true }, { id: 'panel', focusTrap: true });
+
+      const panel = wrapper.find(`.${styles.drawerPanel}`);
+      expect(panel.attributes('role')).toBe('dialog');
+      expect(panel.attributes('aria-modal')).toBe('true');
+      expect(panel.attributes('tabindex')).toBe('-1');
+      expect(panel.attributes('aria-labelledby')).toBe('panel');
+      expect(panel.attributes('id')).toBe('panel');
+    });
+
+    it('lets aria-labelledby be overridden', () => {
+      const panel = mountDrawer({ expanded: true }, { focusTrap: true, 'aria-labelledby': 'title' }).find(
+        `.${styles.drawerPanel}`,
+      );
+      expect(panel.attributes('aria-labelledby')).toBe('title');
+    });
+
+    it('activates the trap at the end of the expand transition and deactivates it after collapsing', async () => {
+      const wrapper = mountDrawer({ expanded: true }, { focusTrap: true });
+      const panel = wrapper.find(`.${styles.drawerPanel}`);
+      const trap = wrapper.findComponent({ name: 'PfFocusTrap' });
+      expect(trap.props('active')).toBe(false);
+
+      await panel.trigger('transitionend', { propertyName: 'transform' });
+      expect(trap.props('active')).toBe(true);
+
+      await wrapper.setProps({ expanded: false });
+      await panel.trigger('transitionend', { propertyName: 'transform' });
+      expect(trap.props('active')).toBe(false);
+    });
+
+    it('is disabled with a warning on a static drawer', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const wrapper = mountDrawer({ static: true }, { focusTrap: true });
+
+      expect(warn).toHaveBeenCalledWith(expect.stringContaining('permanent focus trap'));
+      expect(wrapper.findComponent({ name: 'PfFocusTrap' }).exists()).toBe(false);
+      expect(wrapper.find(`.${styles.drawerPanel}`).attributes('role')).toBeUndefined();
+      warn.mockRestore();
+    });
+
+    it('is not rendered without the focusTrap prop', () => {
+      const wrapper = mountDrawer({ expanded: true });
+      expect(wrapper.findComponent({ name: 'PfFocusTrap' }).exists()).toBe(false);
+      expect(wrapper.find(`.${styles.drawerPanel}`).attributes('role')).toBeUndefined();
+    });
   });
 
   it('applies the no-background color variant', () => {
@@ -288,7 +381,7 @@ describe('DrawerPanelContent', () => {
         width: 300,
       } as DOMRect);
 
-      await wrapper.find(`.${styles.drawerSplitter}`).trigger('mousedown');
+      await wrapper.find(`.${styles.drawerSplitter}`).trigger('mousedown', { clientX: 500 });
       expect(wrapper.classes()).toContain(styles.modifiers.resizing);
 
       document.dispatchEvent(new MouseEvent('mousemove', { clientX: 400 }));
@@ -303,6 +396,80 @@ describe('DrawerPanelContent', () => {
       document.dispatchEvent(new MouseEvent('mousemove', { clientX: 300 }));
       await nextTick();
       expect((panel.element as HTMLElement).style.getPropertyValue(cssPanelMdFlexBasis.name)).toBe('400px');
+    });
+
+    it('measures each touch drag from the panel size at its start', async () => {
+      const wrapper = mountDrawer({ expanded: true }, { id: 'panel', resizable: true });
+      const panelContent = wrapper.findComponent(PfDrawerPanelContent);
+      const panel = wrapper.find(`.${styles.drawerPanel}`);
+      const rect = vi.spyOn(panel.element, 'getBoundingClientRect');
+      const splitter = wrapper.find(`.${styles.drawerSplitter}`);
+      const touch = (type: string, clientX: number) =>
+        Object.assign(new Event(type, { bubbles: true, cancelable: true }), { touches: [{ clientX }] });
+
+      rect.mockReturnValue({ left: 500, right: 800, width: 300 } as DOMRect);
+      splitter.element.dispatchEvent(touch('touchstart', 500));
+      document.dispatchEvent(touch('touchmove', 400));
+      document.dispatchEvent(touch('touchend', 400));
+      await nextTick();
+      expect((panel.element as HTMLElement).style.getPropertyValue(cssPanelMdFlexBasis.name)).toBe('400px');
+
+      // the page scrolled: a new drag is measured from where the panel is now, not where the first drag found it
+      rect.mockReturnValue({ left: 300, right: 700, width: 400 } as DOMRect);
+      splitter.element.dispatchEvent(touch('touchstart', 300));
+      document.dispatchEvent(touch('touchmove', 250));
+      document.dispatchEvent(touch('touchend', 250));
+      await nextTick();
+      expect((panel.element as HTMLElement).style.getPropertyValue(cssPanelMdFlexBasis.name)).toBe('450px');
+      expect(panelContent.emitted('resize')).toEqual([
+        [400, 'panel'],
+        [450, 'panel'],
+      ]);
+    });
+
+    describe('in a right to left layout', () => {
+      function mockRTL() {
+        const getComputedStyle = window.getComputedStyle;
+        return vi.spyOn(window, 'getComputedStyle').mockImplementation(el => {
+          const style = getComputedStyle(el);
+          return Object.assign(Object.create(style), {
+            getPropertyValue: (name: string) => (name === 'direction' ? 'rtl' : style.getPropertyValue(name)),
+          });
+        });
+      }
+
+      it.each([
+        ['end', 600],
+        ['start', 200],
+      ] as const)('inverts the mouse drag of a panel at the %s', async (position, size) => {
+        const spy = mockRTL();
+        const wrapper = mountDrawer({ expanded: true, position }, { resizable: true });
+        const panel = wrapper.find(`.${styles.drawerPanel}`);
+        vi.spyOn(panel.element, 'getBoundingClientRect').mockReturnValue({ width: 400 } as DOMRect);
+
+        await wrapper.find(`.${styles.drawerSplitter}`).trigger('mousedown', { clientX: 500 });
+        document.dispatchEvent(new MouseEvent('mousemove', { clientX: 700 }));
+        document.dispatchEvent(new MouseEvent('mouseup'));
+        await nextTick();
+        expect((panel.element as HTMLElement).style.getPropertyValue(cssPanelMdFlexBasis.name)).toBe(`${size}px`);
+        spy.mockRestore();
+      });
+
+      it.each([
+        ['end', 'ArrowLeft', '195px'],
+        ['end', 'ArrowRight', '205px'],
+        ['start', 'ArrowLeft', '205px'],
+        ['start', 'ArrowRight', '195px'],
+      ] as const)('resizes a panel at the %s with %s', async (position, key, size) => {
+        const spy = mockRTL();
+        const wrapper = mountDrawer({ expanded: true, position }, { resizable: true });
+        const panel = wrapper.find(`.${styles.drawerPanel}`);
+        vi.spyOn(panel.element, 'getBoundingClientRect').mockReturnValue({ width: 200, height: 100 } as DOMRect);
+
+        await wrapper.find(`.${styles.drawerSplitter}`).trigger('keydown', { key });
+        expect((panel.element as HTMLElement).style.getPropertyValue(cssPanelMdFlexBasis.name)).toBe(size);
+        spy.mockRestore();
+      });
     });
   });
 });
@@ -339,6 +506,10 @@ describe('DrawerCloseButton', () => {
 
     await button.trigger('click');
     expect(wrapper.emitted('close')).toHaveLength(1);
+  });
+
+  it('labels the close button by default', () => {
+    expect(mount(PfDrawerCloseButton).find('button').attributes('aria-label')).toBe('Close drawer panel');
   });
 
   it('passes buttonProps to the close button without overriding the close handler', async () => {
@@ -411,5 +582,10 @@ describe('DrawerSection', () => {
 
     await wrapper.setProps({ colorVariant: 'no-background' });
     expect(wrapper.classes()).toContain(styles.modifiers.noBackground);
+  });
+
+  it('applies the plain modifier', () => {
+    const wrapper = mount(PfDrawerSection, { props: { plain: true } });
+    expect(wrapper.classes()).toContain(styles.modifiers.plain);
   });
 });

@@ -31,7 +31,7 @@ interface Props extends /* @vue-ignore */ ComponentProps<typeof PfDrawerMain> {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import { provide, useTemplateRef } from 'vue';
+import { provide, useTemplateRef, type VNode } from 'vue';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import AutoWrap from '../../helpers/AutoWrap.vue';
 import PfDrawerMain from './DrawerMain.vue';
@@ -49,8 +49,8 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  content?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
+  content?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const el = useTemplateRef('elRef');

@@ -6,9 +6,12 @@ export type DrawerProvide = {
   el: Readonly<Ref<HTMLDivElement | null>>;
   expanded: ComputedRef<boolean>;
   display: Ref<boolean>;
+  static: ComputedRef<boolean>;
   inline: ComputedRef<boolean>;
   viewport: ComputedRef<boolean>;
   position: ComputedRef<'start' | 'end' | 'bottom'>;
+  /** Called by the panel when its expand transition ends */
+  onExpand: (event: TransitionEvent) => void;
 };
 
 export const DrawerKey = Symbol('DrawerKey') as InjectionKey<DrawerProvide>;

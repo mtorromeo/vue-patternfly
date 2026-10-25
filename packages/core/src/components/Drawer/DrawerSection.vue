@@ -4,6 +4,7 @@
     :class="[
       styles.drawerSection,
       {
+        [styles.modifiers.plain]: plain,
         [styles.modifiers.noBackground]: colorVariant === 'no-background',
         [styles.modifiers.secondary]: colorVariant === 'secondary',
       },
@@ -13,19 +14,23 @@
   </div>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /** @beta Flag indicating that the drawer section should use plain styles. */
+  plain?: boolean;
+  /** Color variant of the background of the drawer Section. `no-background` is deprecated: use `plain` instead. */
+  colorVariant?: 'no-background' | 'default' | 'secondary';
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
-import type { HTMLAttributes } from 'vue';
+import type { HTMLAttributes, VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfDrawerSection',
 });
-
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** Color variant of the background of the drawer Section */
-  colorVariant?: 'no-background' | 'default' | 'secondary';
-}
 
 const props = withDefaults(defineProps<Props>(), {
   colorVariant: 'default',
@@ -33,6 +38,6 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>
