@@ -1,11 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { defineComponent, h, onMounted, ref } from 'vue';
+import { defineComponent, h, nextTick, onMounted, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Alert/alert-group';
 import alertStyles from '@patternfly/react-styles/css/components/Alert/alert';
 import PfAlert from '../../src/components/Alert/Alert.vue';
 import PfAlertGroup from '../../src/components/Alert/AlertGroup.vue';
 import PfAlertGroupInline from '../../src/components/Alert/AlertGroupInline.vue';
+import PfAlertActionCloseButton from '../../src/components/Alert/AlertActionCloseButton.vue';
 
 type AlertItem = { key: number; title: string; timeout?: number };
 
@@ -21,8 +22,11 @@ describe('AlertGroupInline', () => {
     expect(list.classes()).toContain(styles.alertGroup);
     expect(list.classes()).not.toContain(styles.modifiers.toast);
 
+    expect(list.attributes('role')).toBe('list');
     const items = list.findAll(':scope > li');
     expect(items).toHaveLength(2);
+    // regression: the list items had no class
+    expect(items.map(i => i.classes())).toEqual([[styles.alertGroupItem], [styles.alertGroupItem]]);
     expect(items[0]?.find(`.${alertStyles.alert}`).text()).toContain('One');
     expect(items[1]?.find(`.${alertStyles.alert}`).text()).toContain('Two');
   });
@@ -268,5 +272,111 @@ describe('AlertGroup keeps existing alerts mounted (e0930b67)', () => {
     expect(document.body.querySelectorAll(`.${alertStyles.alert}`)).toHaveLength(0);
     expect(mountCounts).toEqual({ 1: 1, 2: 1, 3: 1 });
     wrapper.unmount();
+  });
+});
+
+describe('AlertGroup', () => {
+  it('forwards the overflow click', async () => {
+    const wrapper = mount(PfAlertGroup, { props: { overflowMessage: 'View 1 more alert' } });
+    await wrapper.find(`.${styles.alertGroupOverflowButton}`).trigger('click');
+    expect(wrapper.emitted('overflowClick')).toHaveLength(1);
+  });
+});
+
+describe('AlertGroup animations', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    window.matchMedia = vi.fn().mockReturnValue({ matches: true }) as unknown as typeof window.matchMedia;
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  function transitionEnd(el: Element, propertyName = 'grid-template-rows') {
+    const event = new Event('transitionend') as TransitionEvent;
+    Object.defineProperty(event, 'propertyName', { value: propertyName });
+    el.dispatchEvent(event);
+  }
+
+  it('slides the items in from the top', async () => {
+    const wrapper = mount(PfAlertGroupInline, {
+      props: { animations: true },
+      slots: { default: () => h(PfAlert, { title: 'One' }) },
+    });
+    const item = wrapper.find('li');
+    expect(item.classes()).toContain(styles.modifiers.offstageTop);
+
+    await vi.advanceTimersByTimeAsync(0);
+    expect(item.classes()).toEqual([styles.alertGroupItem]);
+  });
+
+  it('calls onClose once the closed alert slid out', async () => {
+    const onClose = vi.fn();
+    const wrapper = mount(PfAlertGroup, {
+      props: { animations: true },
+      slots: {
+        default: () => h(PfAlert, { title: 'One' }, { 'action-close': () => h(PfAlertActionCloseButton, { onClose }) }),
+      },
+    });
+    await vi.advanceTimersByTimeAsync(0);
+
+    await wrapper.find('button').trigger('click');
+    const item = wrapper.find('li');
+    expect(item.classes()).toContain(styles.modifiers.offstageRight);
+    expect(onClose).not.toHaveBeenCalled();
+
+    // only the transition of the item itself counts
+    transitionEnd(item.find(`.${alertStyles.alert}`).element);
+    transitionEnd(item.element, 'opacity');
+    expect(onClose).not.toHaveBeenCalled();
+
+    transitionEnd(item.element);
+    expect(onClose).toHaveBeenCalledTimes(1);
+    transitionEnd(item.element);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('waits only for the opacity transition with reduced motion', async () => {
+    window.matchMedia = vi.fn().mockReturnValue({ matches: false }) as unknown as typeof window.matchMedia;
+    const onClose = vi.fn();
+    const wrapper = mount(PfAlertGroupInline, {
+      props: { animations: true },
+      slots: { default: () => h(PfAlert, { title: 'One', onClose }) },
+    });
+
+    await wrapper.find('button').trigger('click');
+    transitionEnd(wrapper.find('li').element, 'opacity');
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onClose right away without animations', async () => {
+    const onClose = vi.fn();
+    const wrapper = mount(PfAlertGroupInline, {
+      slots: { default: () => h(PfAlert, { title: 'One', onClose }) },
+    });
+
+    await wrapper.find('button').trigger('click');
+    expect(wrapper.find('li').classes()).not.toContain(styles.modifiers.offstageRight);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('dismisses a timed out alert once it slid out', async () => {
+    const onTimeout = vi.fn();
+    const wrapper = mount(PfAlertGroupInline, {
+      props: { animations: true },
+      slots: { default: () => h(PfAlert, { title: 'One', timeout: 1000, onTimeout }) },
+    });
+
+    await vi.advanceTimersByTimeAsync(1000);
+    const item = wrapper.find('li');
+    expect(item.classes()).toContain(styles.modifiers.offstageRight);
+    expect(item.find(`.${alertStyles.alert}`).exists()).toBe(true);
+    expect(onTimeout).not.toHaveBeenCalled();
+
+    transitionEnd(item.element);
+    await nextTick();
+    expect(onTimeout).toHaveBeenCalledTimes(1);
+    expect(wrapper.find(`.${alertStyles.alert}`).exists()).toBe(false);
   });
 });

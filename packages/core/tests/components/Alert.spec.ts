@@ -6,6 +6,7 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 import PfAlert from '../../src/components/Alert/Alert.vue';
 import PfAlertIcon from '../../src/components/Alert/AlertIcon.vue';
 import PfAlertActionLink from '../../src/components/Alert/AlertActionLink.vue';
+import PfAlertActionCloseButton from '../../src/components/Alert/AlertActionCloseButton.vue';
 
 describe('Alert', () => {
   describe('rendering', () => {
@@ -96,7 +97,84 @@ describe('Alert', () => {
     });
   });
 
+  describe('attributes', () => {
+    it('forwards id, aria-label and other attributes to the root', () => {
+      // regression: id and ariaLabel were declared as props and never rendered
+      const wrapper = mount(PfAlert, {
+        props: { title: 'Title' },
+        attrs: { id: 'test-id', 'aria-label': 'Test label', 'aria-describedby': 'desc', class: 'custom' },
+      });
+      expect(wrapper.attributes('id')).toBe('test-id');
+      expect(wrapper.attributes('aria-label')).toBe('Test label');
+      expect(wrapper.attributes('aria-describedby')).toBe('desc');
+      expect(wrapper.classes()).toContain('custom');
+    });
+
+    it('renders the variantLabel prop as screen reader text', () => {
+      // regression: the prop was shadowed by the computed default
+      const wrapper = mount(PfAlert, { props: { title: 'Title', variantLabel: 'Heads up:' } });
+      expect(wrapper.find('.pf-v6-screen-reader').text()).toBe('Heads up:');
+    });
+
+    it('is OUIA safe by default', () => {
+      const wrapper = mount(PfAlert, { props: { title: 'Title', variant: 'info' } });
+      expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+      expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/Alert');
+    });
+
+    it('renders the title slot instead of the title prop', () => {
+      const wrapper = mount(PfAlert, {
+        props: { title: 'Ignored' },
+        slots: { title: () => h('em', 'Custom title') },
+      });
+      const title = wrapper.find(`.${styles.alertTitle}`);
+      expect(title.find('em').text()).toBe('Custom title');
+      expect(title.text()).not.toContain('Ignored');
+    });
+
+    it('renders the title as other elements with component', () => {
+      expect(
+        mount(PfAlert, { props: { title: 'T', component: 'div' } }).find(`.${styles.alertTitle}`).element.tagName,
+      ).toBe('DIV');
+    });
+
+    it('applies the truncation style when truncateTitle is set', () => {
+      const plain = mount(PfAlert, { props: { title: 'Title' } }).find(`.${styles.alertTitle}`);
+      expect(plain.classes()).not.toContain(styles.modifiers.truncate);
+
+      const title = mount(PfAlert, { props: { title: 'Title', truncateTitle: 2 } }).find(`.${styles.alertTitle}`);
+      expect(title.classes()).toContain(styles.modifiers.truncate);
+      expect(title.attributes('style')).toContain('--pf-v6-c-alert__title--max-lines: 2');
+    });
+  });
+
   describe('close button', () => {
+    it('renders the action-close slot inside the action container', async () => {
+      const onClose = vi.fn();
+      const wrapper = mount(PfAlert, {
+        props: { title: 'Title', variant: 'success' },
+        slots: { 'action-close': () => h(PfAlertActionCloseButton, { onClose }) },
+      });
+      const button = wrapper.find(`.${styles.alertAction} button`);
+      expect(button.attributes('aria-label')).toBe('Close Success alert: Title');
+      await button.trigger('click');
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('uses the variantLabel and aria-label of the close button', () => {
+      const withVariant = mount(PfAlert, {
+        props: { title: 'Title' },
+        slots: { 'action-close': () => h(PfAlertActionCloseButton, { variantLabel: 'success' }) },
+      });
+      expect(withVariant.find('button').attributes('aria-label')).toBe('Close success alert: Title');
+
+      const withLabel = mount(PfAlert, {
+        props: { title: 'Title' },
+        slots: { 'action-close': () => h(PfAlertActionCloseButton, { ariaLabel: 'Dismiss' }) },
+      });
+      expect(withLabel.find('button').attributes('aria-label')).toBe('Dismiss');
+    });
+
     it('is not rendered without an onClose handler', () => {
       const wrapper = mount(PfAlert, { props: { title: 'Title' } });
       expect(wrapper.find(`.${styles.alertAction}`).exists()).toBe(false);
@@ -107,7 +185,9 @@ describe('Alert', () => {
       const wrapper = mount(PfAlert, { props: { title: 'Title', onClose } });
 
       const button = wrapper.find(`.${styles.alertAction} button`);
-      expect(button.attributes('aria-label')).toBe('Close');
+      // regression: the label was a bare "Close"
+      expect(button.attributes('aria-label')).toBe('Close Custom alert: Title');
+      expect(button.classes()).toContain(buttonStyles.modifiers.plain);
       await button.trigger('click');
 
       expect(onClose).toHaveBeenCalledTimes(1);
@@ -205,6 +285,17 @@ describe('Alert', () => {
       expect(wrapper.emitted('timeout')).toHaveLength(1);
     });
 
+    it('restarts the timeout when the prop changes', async () => {
+      const wrapper = mount(PfAlert, { props: { title: 'Title' } });
+      await vi.advanceTimersByTimeAsync(1000);
+      await wrapper.setProps({ timeout: 500 });
+
+      await vi.advanceTimersByTimeAsync(499);
+      expect(wrapper.emitted('timeout')).toBeUndefined();
+      await vi.advanceTimersByTimeAsync(1);
+      expect(wrapper.emitted('timeout')).toHaveLength(1);
+    });
+
     it('clears its timers when unmounted', async () => {
       const wrapper = mount(PfAlert, { props: { title: 'Title', timeout: 1000 } });
       wrapper.unmount();
@@ -225,7 +316,8 @@ describe('Alert', () => {
 
       const toggle = wrapper.find(`.${styles.alertToggle} button`);
       expect(toggle.attributes('aria-expanded')).toBe('false');
-      expect(toggle.attributes('aria-label')).toBe('Toggle Info alert: Title');
+      // regression: the default label was "Toggle Info alert: Title"
+      expect(toggle.attributes('aria-label')).toBe('Info alert details');
       // b8b173b6: the toggle icon must be rendered in the pf-button icon slot
       expect(toggle.find(`.${buttonStyles.buttonIcon} .${styles.alertToggleIcon} svg`).exists()).toBe(true);
 

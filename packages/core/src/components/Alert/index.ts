@@ -1,4 +1,5 @@
 export { default as PfAlert } from './Alert.vue';
+export { default as PfAlertActionCloseButton } from './AlertActionCloseButton.vue';
 export { default as PfAlertActionLink } from './AlertActionLink.vue';
 export { default as PfAlertGroup } from './AlertGroup.vue';
 export { default as PfAlertGroupInline } from './AlertGroupInline.vue';

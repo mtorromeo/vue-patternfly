@@ -12,7 +12,7 @@ import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 import BellIcon from '@vue-patternfly/icons/bell-icon';
-import type { HTMLAttributes } from 'vue';
+import type { HTMLAttributes, VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 export const AlertVariantIcons = {
@@ -24,6 +24,8 @@ export const AlertVariantIcons = {
 };
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /** Variant of the alert icon. */
+  /** Variant of the alert icon. */
   variant?: keyof typeof AlertVariantIcons;
 }
 </script>
@@ -41,6 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** A custom icon, replacing the one of the variant. */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

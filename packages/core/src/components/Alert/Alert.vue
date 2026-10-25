@@ -22,12 +22,12 @@
       <pf-button
         variant="plain"
         :aria-expanded="expanded"
-        :aria-label="toggleAriaLabel || `Toggle ${variantLabel} ${title}`"
+        :aria-label="toggleAriaLabel ?? `${capitalizedVariant} alert details`"
         @click="expanded = !expanded"
       >
         <template #icon>
           <span :class="styles.alertToggleIcon">
-            <pf-angle-down-icon />
+            <angle-down-icon />
           </span>
         </template>
       </pf-button>
@@ -42,24 +42,29 @@
     <component :is="tooltipVisible ? PfTooltip : PassThrough" :position="tooltipPosition">
       <component
         :is="component"
-        ref="title"
+        ref="titleRef"
         :class="[
           styles.alertTitle,
           {
             [styles.modifiers.truncate]: truncateTitle,
           },
         ]"
-        :style="truncateTitle ? `${maxLines.name}: ${truncateTitle}` : null"
-        :tabindex="tooltipVisible ? '0' : null"
+        :style="truncateTitle ? { [maxLines.name]: truncateTitle } : undefined"
+        :tabindex="tooltipVisible ? 0 : undefined"
       >
-        <span class="pf-v6-screen-reader">{{ variantLabel }}</span>
-        {{ title }}
+        <span class="pf-v6-screen-reader">{{ effectiveVariantLabel }}</span>
+        <slot name="title">{{ title }}</slot>
       </component>
-      <template v-if="tooltipVisible" #content>{{ title }}</template>
+      <template v-if="tooltipVisible" #content>
+        <span class="pf-v6-screen-reader">{{ effectiveVariantLabel }}</span>
+        <slot name="title">{{ title }}</slot>
+      </template>
     </component>
 
-    <div v-if="onClose" :class="styles.alertAction">
-      <pf-close-button @click="onClose?.($event)" />
+    <div v-if="$slots['action-close'] || onClose" :class="styles.alertAction">
+      <slot name="action-close">
+        <pf-alert-action-close-button @close="onClose" />
+      </slot>
     </div>
 
     <div v-if="$slots.default && (!expandable || expanded)" :class="styles.alertDescription">
@@ -72,44 +77,13 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Alert/alert';
-import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
-
-import PassThrough from '../../helpers/PassThrough.vue';
-import PfTooltip from '../Tooltip/Tooltip.vue';
-import PfButton from '../Button.vue';
-import PfCloseButton from '../CloseButton.vue';
-import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
-import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import {
-  ref,
-  watch,
-  type HTMLAttributes,
-  onBeforeUnmount,
-  onMounted,
-  computed,
-  type Component,
-  useTemplateRef,
-  type ComponentPublicInstance,
-} from 'vue';
-import { useElementSize } from '@vueuse/core';
-import type { Placement } from '../../helpers/FloatingUi.vue';
-
-defineOptions({
-  name: 'PfAlert',
-});
-
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-live' | 'aria-atomic'> {
-  /** Adds accessible text to the alert. */
-  ariaLabel?: string;
-  /** Uniquely identifies the alert. */
-  id?: string;
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'title' | 'aria-live' | 'aria-atomic'> {
   /** Flag indicating that the alert is expandable. */
   expandable?: boolean;
-  /** Show close button */
-  onClose?: (e: Event) => void;
+  /** A callback for when the close button is clicked. Setting it renders a pf-alert-action-close-button, unless the
+   * action-close slot is used. */
+  onClose?: (event: MouseEvent) => void;
   /** Flag to indicate if the alert is inline. */
   inline?: boolean;
   /** Flag to indicate if the alert is in a live region. */
@@ -128,7 +102,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-
   title?: string;
   /** Sets the element to use as the alert title. Default is h4. */
   component?: string | Component;
-  /** Adds accessible text to the alert toggle. */
+  /** Adds accessible text to the alert toggle. Defaults to "<Variant> alert details". */
   toggleAriaLabel?: string;
   /** Position of the tooltip which is displayed if text is truncated. */
   tooltipPosition?: Placement;
@@ -136,9 +110,42 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-
   truncateTitle?: number;
   /** Adds alert variant styles.  */
   variant?: keyof typeof AlertVariantIcons;
-  /** Variant label text for screen readers. */
+  /** Variant label text for screen readers. Defaults to "<Variant> alert:". */
   variantLabel?: string;
 }
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Alert/alert';
+import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
+import PassThrough from '../../helpers/PassThrough.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
+import PfButton from '../Button.vue';
+import PfAlertIcon, { AlertVariantIcons } from './AlertIcon.vue';
+import PfAlertActionCloseButton from './AlertActionCloseButton.vue';
+import AngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import {
+  computed,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  ref,
+  useTemplateRef,
+  watch,
+  type Component,
+  type ComponentPublicInstance,
+  type HTMLAttributes,
+  type VNode,
+} from 'vue';
+import { useElementSize } from '@vueuse/core';
+import type { Placement } from '../../helpers/FloatingUi.vue';
+import { AlertGroupItemKey, AlertKey } from './common';
+
+defineOptions({
+  name: 'PfAlert',
+});
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'custom',
@@ -146,6 +153,7 @@ const props = withDefaults(defineProps<Props>(), {
   timeoutAnimation: 3000,
   tooltipPosition: 'auto',
   component: 'h4',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant });
 
@@ -153,67 +161,105 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant
 const expanded = defineModel<boolean>('expanded', { default: false });
 
 const emit = defineEmits<{
-  (name: 'mouseenter', e: Event): void;
-  (name: 'mouseleave', e: Event): void;
+  (name: 'mouseenter', e: MouseEvent): void;
+  (name: 'mouseleave', e: MouseEvent): void;
+  /** Called once the alert is dismissed after its timeout. */
   (name: 'timeout'): void;
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  'custom-icon'?: (props?: Record<never, never>) => any;
-  'action-links'?: (props?: Record<never, never>) => any;
+  /** Description of the alert. */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Title of the alert, replacing the title prop. */
+  title?: (props?: Record<never, never>) => VNode[];
+  /** A custom icon, replacing the one of the variant. */
+  'custom-icon'?: (props?: Record<never, never>) => VNode[];
+  /** Close button: use a pf-alert-action-close-button. */
+  'action-close'?: (props?: Record<never, never>) => VNode[];
+  /** Action links beneath the description: use pf-alert-action-link. */
+  'action-links'?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const titleRef = useTemplateRef<HTMLElement | ComponentPublicInstance>('title');
-const { width, height } = useElementSize(titleRef);
-const tooltipVisible = ref(false);
-let timer: number | undefined = undefined;
-let animationTimer: number | undefined = undefined;
-const isMouseOver = ref(false);
-const timedOut = ref(false);
-const timedOutAnimation = ref(true);
-const containsFocus = ref(false);
-const el = useTemplateRef('elRef');
+const groupItem = inject(AlertGroupItemKey, undefined);
 
-const variantLabel = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)} alert:`);
-const dismissed = computed(
-  () => timedOut.value && timedOutAnimation.value && !isMouseOver.value && !containsFocus.value,
-);
+const capitalizedVariant = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)}`);
+const effectiveVariantLabel = computed(() => props.variantLabel ?? `${capitalizedVariant.value} alert:`);
+
+provide(AlertKey, {
+  title: computed(() => props.title),
+  variantLabel: effectiveVariantLabel,
+});
+
+const titleEl = useTemplateRef<HTMLElement | ComponentPublicInstance>('titleRef');
+const { width, height } = useElementSize(titleEl);
+const tooltipVisible = ref(false);
 
 watch(
-  () => [width.value, height.value],
+  () => [width.value, height.value, props.truncateTitle],
   () => {
-    if (!(titleRef.value instanceof HTMLElement) || !props.truncateTitle) {
-      return false;
+    const el = titleEl.value instanceof HTMLElement ? titleEl.value : titleEl.value?.$el;
+    if (!(el instanceof HTMLElement) || !props.truncateTitle) {
+      tooltipVisible.value = false;
+      return;
     }
-    tooltipVisible.value = titleRef.value.offsetHeight < titleRef.value.scrollHeight;
+    tooltipVisible.value = el.offsetHeight < el.scrollHeight;
   },
 );
 
-watch(dismissed, () => {
-  if (dismissed.value) {
+const el = useTemplateRef('elRef');
+const isMouseOver = ref(false);
+const containsFocus = ref(false);
+const timedOut = ref(false);
+const timedOutAnimation = ref(true);
+const dismissing = ref(false);
+const dismissed = ref(false);
+let timer: ReturnType<typeof setTimeout> | undefined;
+let animationTimer: ReturnType<typeof setTimeout> | undefined;
+
+const shouldDismiss = computed(
+  () => timedOut.value && timedOutAnimation.value && !isMouseOver.value && !containsFocus.value,
+);
+
+watch(shouldDismiss, value => {
+  if (!value || dismissing.value) {
+    return;
+  }
+  dismissing.value = true;
+  const dismiss = () => {
+    dismissed.value = true;
     emit('timeout');
+  };
+  if (groupItem) {
+    groupItem.dismiss(dismiss);
+  } else {
+    dismiss();
+  }
+});
+
+watch(
+  () => props.timeout,
+  timeout => {
+    clearTimeout(timer);
+    const calculatedTimeout = timeout === true ? 8000 : Number(timeout);
+    if (calculatedTimeout > 0) {
+      timer = setTimeout(() => (timedOut.value = true), calculatedTimeout);
+    }
+  },
+  { immediate: true },
+);
+
+// once the user stops hovering or focusing the alert, wait timeoutAnimation before dismissing it
+watch([containsFocus, isMouseOver], () => {
+  if (!containsFocus.value && !isMouseOver.value) {
+    animationTimer = setTimeout(() => (timedOutAnimation.value = true), props.timeoutAnimation);
+  } else {
+    clearTimeout(animationTimer);
+    timedOutAnimation.value = false;
   }
 });
 
 onMounted(() => {
-  if (props.timeout) {
-    timer = setTimeout(() => (timedOut.value = true), props.timeout === true ? 8000 : props.timeout);
-  }
-
   document.addEventListener('focus', onDocumentFocus, true);
-
-  watch(
-    () => [containsFocus.value, isMouseOver.value],
-    () => {
-      if (!containsFocus.value && !isMouseOver.value) {
-        animationTimer = setTimeout(() => (timedOutAnimation.value = true), props.timeoutAnimation);
-      } else {
-        clearTimeout(animationTimer);
-        timedOutAnimation.value = false;
-      }
-    },
-  );
 });
 
 onBeforeUnmount(() => {
@@ -231,13 +277,13 @@ function onDocumentFocus() {
   }
 }
 
-function onMouseEnter(e: Event) {
+function onMouseEnter(e: MouseEvent) {
   isMouseOver.value = true;
   timedOutAnimation.value = false;
   emit('mouseenter', e);
 }
 
-function onMouseLeave(e: Event) {
+function onMouseLeave(e: MouseEvent) {
   isMouseOver.value = false;
   emit('mouseleave', e);
 }
