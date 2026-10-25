@@ -27,7 +27,7 @@
           </pf-overflow-menu-group>
         </pf-overflow-menu-content>
         <pf-overflow-menu-control>
-          <pf-dropdown v-model:open="open">
+          <pf-dropdown close-on-select v-model:open="open">
             <template #toggle>
               <pf-menu-toggle variant="plain" />
             </template>
@@ -80,7 +80,7 @@
           </pf-overflow-menu-group>
         </pf-overflow-menu-content>
         <pf-overflow-menu-control additional-options>
-          <pf-dropdown v-model:open="open">
+          <pf-dropdown close-on-select v-model:open="open">
             <template #toggle>
               <pf-menu-toggle variant="plain" />
             </template>

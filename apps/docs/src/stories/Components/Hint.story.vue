@@ -19,7 +19,7 @@
     <story-canvas title="Example">
       <pf-hint>
         <template #actions>
-          <pf-dropdown position="right">
+          <pf-dropdown close-on-select position="right">
             <template #toggle>
               <pf-menu-toggle variant="plain" />
             </template>

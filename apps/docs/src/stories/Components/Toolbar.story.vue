@@ -359,7 +359,7 @@
           </pf-toolbar-group>
 
           <pf-toolbar-item>
-            <pf-dropdown v-model:open="dropdownOpen">
+            <pf-dropdown close-on-select v-model:open="dropdownOpen">
               <template #toggle>
                 <pf-menu-toggle variant="plain" />
               </template>
@@ -425,7 +425,7 @@
                 </pf-overflow-menu-group>
               </pf-overflow-menu-content>
               <pf-overflow-menu-control additional-options>
-                <pf-dropdown v-model:open="kebabIsOpen">
+                <pf-dropdown close-on-select v-model:open="kebabIsOpen">
                   <template #toggle>
                     <pf-menu-toggle variant="plain" />
                   </template>
@@ -446,7 +446,7 @@
       <pf-toolbar>
         <pf-toolbar-content>
           <pf-toolbar-item>
-            <pf-dropdown v-model:open="splitButtonDropdownIsOpen">
+            <pf-dropdown close-on-select v-model:open="splitButtonDropdownIsOpen">
               <template #toggle>
                 <pf-menu-toggle>
                   <pf-menu-toggle-checkbox aria-label="Select all" />

@@ -57,7 +57,7 @@
       <pf-breadcrumb>
         <pf-breadcrumb-item component="button">Section home</pf-breadcrumb-item>
         <pf-breadcrumb-item dropdown>
-          <pf-dropdown v-model:open="dropdownOpen">
+          <pf-dropdown close-on-select v-model:open="dropdownOpen">
             <template #toggle>
               <pf-menu-toggle small variant="plainText">
                 <template #badge>

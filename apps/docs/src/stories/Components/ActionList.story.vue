@@ -39,7 +39,7 @@
             <pf-button id="single-group-back-button2" variant="secondary">Back</pf-button>
           </pf-action-list-item>
           <pf-action-list-item>
-            <pf-dropdown>
+            <pf-dropdown close-on-select>
               <template #toggle>
                 <pf-menu-toggle variant="plain" aria-label="Action list single group kebab">
                   <template #icon>

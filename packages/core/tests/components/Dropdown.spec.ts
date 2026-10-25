@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { enableAutoUnmount, flushPromises, mount, type VueWrapper } from '@vue/test-utils';
 import { h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
@@ -61,7 +61,7 @@ describe('Dropdown', () => {
     expect(toggle().id).toMatch(/^pf-dropdown-toggle-id-\d+$/);
     expect(toggle().getAttribute('aria-haspopup')).toBe('true');
     expect(toggle().getAttribute('aria-expanded')).toBe('false');
-    expect(toggle().getAttribute('data-ouia-component-type')).toBe('PF/Dropdown');
+    expect(toggle().getAttribute('data-ouia-component-type')).toBe('PF/MenuToggle');
     expect(menu()).toBeNull();
     wrapper.unmount();
   });
@@ -116,37 +116,71 @@ describe('Dropdown', () => {
     wrapper.unmount();
   });
 
-  it('emits select and closes when an item is selected', async () => {
+  it('emits select and stays open with focus on the item by default, like upstream', async () => {
     const wrapper = await mountDropdown({ open: true });
 
+    menuItems()[1]!.focus();
     menuItems()[1]!.click();
     await flushPromises();
     expect(wrapper.emitted('select')).toHaveLength(1);
     expect(wrapper.emitted('select')![0]![1]).toBe('b');
+    expect(wrapper.emitted('update:open')).toBeUndefined();
+    expect(menu()).not.toBeNull();
+    expect(document.activeElement).toBe(menuItems()[1]);
+    wrapper.unmount();
+  });
+
+  it('closes on select with closeOnSelect', async () => {
+    const wrapper = await mountDropdown({ open: true, closeOnSelect: true });
+
+    menuItems()[0]!.click();
+    await flushPromises();
     expect(wrapper.emitted('update:open')).toEqual([[false]]);
-    expect(document.activeElement).toBe(toggle());
     expect(menu()).toBeNull();
     wrapper.unmount();
   });
 
-  it('stays open on select with noCloseOnSelect', async () => {
-    const wrapper = await mountDropdown({ open: true, noCloseOnSelect: true });
-
-    menuItems()[0]!.click();
-    await flushPromises();
-    expect(wrapper.emitted('select')).toHaveLength(1);
-    expect(wrapper.emitted('update:open')).toBeUndefined();
-    expect(menu()).not.toBeNull();
-    wrapper.unmount();
-  });
-
-  it('does not focus the toggle after select when autoFocus is false', async () => {
-    const wrapper = await mountDropdown({ open: true, autoFocus: false });
+  it('focuses the toggle after select with shouldFocusToggleOnSelect', async () => {
+    const wrapper = await mountDropdown({ open: true, shouldFocusToggleOnSelect: true });
 
     menuItems()[0]!.focus();
     menuItems()[0]!.click();
     await flushPromises();
-    expect(document.activeElement).not.toBe(toggle());
+    expect(document.activeElement).toBe(toggle());
+    wrapper.unmount();
+  });
+
+  it('puts the OUIA attributes on the menu, safe by default', async () => {
+    const wrapper = await mountDropdown({ open: true, ouiaId: 'my-dropdown' });
+
+    expect(menu()!.getAttribute('data-ouia-component-type')).toBe('PF/Dropdown');
+    expect(menu()!.getAttribute('data-ouia-component-id')).toBe('my-dropdown');
+    expect(menu()!.getAttribute('data-ouia-safe')).toBe('true');
+    expect(toggle().getAttribute('data-ouia-component-type')).toBe('PF/MenuToggle');
+    wrapper.unmount();
+  });
+
+  it('wraps the dropdown in a container with containerOuiaId', async () => {
+    const wrapper = await mountDropdown({ containerOuiaId: 'test-dropdown', appendTo: 'inline', open: true });
+
+    const container = toggle().parentElement!;
+    expect(container.tagName).toBe('SPAN');
+    expect(container.getAttribute('data-ouia-component-id')).toBe('test-dropdown');
+    expect(container.getAttribute('data-ouia-component-type')).toBe('PF/Dropdown container');
+    expect(container.getAttribute('data-ouia-safe')).toBe('true');
+    expect(container.contains(menu())).toBe(true);
+    wrapper.unmount();
+  });
+
+  it('renders a custom container element with containerComponent', async () => {
+    const wrapper = await mountDropdown({ containerOuiaId: 'test-dropdown', containerComponent: 'div' });
+    expect(toggle().parentElement!.tagName).toBe('DIV');
+    wrapper.unmount();
+  });
+
+  it('renders no container without containerOuiaId', async () => {
+    const wrapper = await mountDropdown();
+    expect(toggle().parentElement!.hasAttribute('data-ouia-component-id')).toBe(false);
     wrapper.unmount();
   });
 
@@ -219,6 +253,70 @@ describe('Dropdown', () => {
     toggle().click();
     await flushPromises();
     expect(document.activeElement).toBe(menuItems()[1]);
+    wrapper.unmount();
+  });
+
+  it('waits focusTimeoutDelay before focusing the first item', async () => {
+    vi.useFakeTimers();
+    const wrapper = await mountDropdown({ shouldFocusFirstItemOnOpen: true, focusTimeoutDelay: 100 });
+
+    toggle().click();
+    await nextTick();
+    vi.advanceTimersByTime(50);
+    expect(document.activeElement).not.toBe(menuItems()[0]);
+    vi.advanceTimersByTime(50);
+    expect(document.activeElement).toBe(menuItems()[0]);
+    vi.useRealTimers();
+    wrapper.unmount();
+  });
+
+  it.each([
+    [false, true],
+    [true, false],
+  ])('focuses the first item on open with scrollOnItemFocus %s', async (scrollOnItemFocus, preventScroll) => {
+    const focus = vi.spyOn(HTMLElement.prototype, 'focus');
+    const wrapper = await mountDropdown({ shouldFocusFirstItemOnOpen: true, scrollOnItemFocus });
+
+    toggle().click();
+    await flushPromises();
+    await new Promise(r => setTimeout(r));
+    expect(focus).toHaveBeenCalledWith({ preventScroll });
+    focus.mockRestore();
+    wrapper.unmount();
+  });
+
+  it.each(['Escape', 'Tab'])('closes and focuses the toggle on %s', async key => {
+    const wrapper = await mountDropdown({ open: true });
+
+    menuItems()[0]!.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toEqual([[false]]);
+    expect(document.activeElement).toBe(toggle());
+    wrapper.unmount();
+  });
+
+  it('closes only on the keys in openChangeKeys', async () => {
+    const wrapper = await mountDropdown({ open: true, openChangeKeys: ['Escape'] });
+
+    menuItems()[0]!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toBeUndefined();
+
+    toggle().dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toEqual([[false]]);
+    wrapper.unmount();
+  });
+
+  it('overrides the toggle arrow keys with a toggle-keydown listener', async () => {
+    const onToggleKeydown = vi.fn();
+    const wrapper = await mountDropdown({ open: true, onToggleKeydown });
+
+    toggle().focus();
+    toggle().dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    await nextTick();
+    expect(onToggleKeydown).toHaveBeenCalledTimes(1);
+    expect(document.activeElement).toBe(toggle());
     wrapper.unmount();
   });
 

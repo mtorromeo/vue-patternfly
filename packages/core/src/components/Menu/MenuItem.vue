@@ -11,6 +11,7 @@
         styles.menuListItem,
         {
           [styles.modifiers.disabled]: disabled,
+          [styles.modifiers.ariaDisabled]: ariaDisabled,
           [styles.modifiers.currentPath]: effectiveOnPath,
           [styles.modifiers.load]: loadButton,
           [styles.modifiers.loading]: loading,
@@ -19,68 +20,76 @@
         },
       ]"
       :role="check ? 'menuitem' : 'none'"
-      @mouseover="onMouseOver"
+      @mouseover="!ariaDisabled && onMouseOver()"
     >
       <input v-if="!copy && name" type="hidden" :name="name" :value="value" />
 
       <component
-        :is="component"
-        ref="menuItemRef"
-        v-bind="componentAttrs"
-        tabindex="-1"
-        :class="[styles.menuItem, { [styles.modifiers.selected]: effectiveSelected && !check }]"
-        :aria-current="ariaCurrent"
-        :disabled="(disabled && !check && component !== 'a') || undefined"
-        :role="!$slots['flyout-menu'] && !check ? 'menuitem' : undefined"
-        :for="copy || check ? undefined : randomId"
-        :href="component === 'a' ? to : undefined"
-        :aria-disabled="component === 'a' && disabled ? disabled : undefined"
-        :aria-expanded="onPath || flyoutVisible || undefined"
-        :type="component === 'button' ? 'button' : undefined"
-        :target="component === 'a' ? target : undefined"
-        :referrerpolicy="component === 'a' ? referrerpolicy : undefined"
-        :download="component === 'a' ? download : undefined"
-        @click="!check && onClick($event)"
+        :is="tooltip || $slots.tooltip ? PfTooltip : PassThrough"
+        v-bind="tooltip || $slots.tooltip ? { ...tooltipAttrs, content: tooltip } : {}"
       >
-        <span :class="styles.menuItemMain">
-          <span v-if="direction === 'up'" :class="styles.menuItemToggleIcon">
-            <angle-left-icon aria-hidden="true" />
+        <template v-if="$slots.tooltip" #content>
+          <slot name="tooltip" />
+        </template>
+        <component
+          :is="component"
+          ref="menuItemRef"
+          v-bind="componentAttrs"
+          tabindex="-1"
+          :class="[styles.menuItem, { [styles.modifiers.selected]: effectiveSelected && !check }]"
+          :aria-current="ariaCurrent"
+          :disabled="(disabled && !check && component !== 'a') || undefined"
+          :role="!$slots['flyout-menu'] && !check ? 'menuitem' : undefined"
+          :for="copy || check ? undefined : randomId"
+          :href="component === 'a' ? to : undefined"
+          :aria-disabled="(component === 'a' && disabled) || ariaDisabled || undefined"
+          :aria-expanded="onPath || flyoutVisible || undefined"
+          :type="component === 'button' ? 'button' : undefined"
+          :target="component === 'a' ? target : undefined"
+          :referrerpolicy="component === 'a' ? referrerpolicy : undefined"
+          :download="component === 'a' ? download : undefined"
+          @click="!check && onClick($event)"
+        >
+          <span :class="styles.menuItemMain">
+            <span v-if="direction === 'up'" :class="styles.menuItemToggleIcon">
+              <angle-left-icon aria-hidden="true" />
+            </span>
+            <span v-if="$slots.icon" :class="styles.menuItemIcon">
+              <slot name="icon" />
+            </span>
+            <span v-if="check" :class="styles.menuItemCheck">
+              <pf-checkbox
+                :id="copy ? undefined : randomId"
+                :name="copy ? undefined : checkName"
+                component="span"
+                :model-value="effectiveSelected"
+                :disabled="disabled"
+                @change="onItemSelect($event)"
+              />
+            </span>
+            <span :class="styles.menuItemText">
+              <slot>
+                {{ value }}
+              </slot>
+            </span>
+            <span v-if="externalLink" :class="styles.menuItemExternalIcon">
+              <up-right-from-square-icon aria-hidden="true" />
+            </span>
+            <span v-if="$slots['flyout-menu'] && direction === 'down'" :class="styles.menuItemToggleIcon">
+              <angle-right-icon aria-hidden="true" />
+            </span>
+            <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
+              <check-icon aria-hidden="true" />
+            </span>
           </span>
-          <span v-if="$slots.icon" :class="styles.menuItemIcon">
-            <slot name="icon" />
+          <span v-if="($slots.description || description) && direction !== 'up'" :class="styles.menuItemDescription">
+            <span>
+              <slot name="description">
+                {{ description }}
+              </slot>
+            </span>
           </span>
-          <span v-if="check" :class="styles.menuItemCheck">
-            <pf-checkbox
-              :id="copy ? undefined : randomId"
-              :name="copy ? undefined : checkName"
-              component="span"
-              :model-value="effectiveSelected"
-              :disabled="disabled"
-              @change="onItemSelect($event)"
-            />
-          </span>
-          <span :class="styles.menuItemText">
-            <slot>
-              {{ value }}
-            </slot>
-          </span>
-          <span v-if="externalLink" :class="styles.menuItemExternalIcon">
-            <up-right-from-square-icon aria-hidden="true" />
-          </span>
-          <span v-if="$slots['flyout-menu'] && direction === 'down'" :class="styles.menuItemToggleIcon">
-            <angle-right-icon aria-hidden="true" />
-          </span>
-          <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
-            <check-icon aria-hidden="true" />
-          </span>
-        </span>
-        <span v-if="($slots.description || description) && direction !== 'up'" :class="styles.menuItemDescription">
-          <span>
-            <slot name="description">
-              {{ description }}
-            </slot>
-          </span>
-        </span>
+        </component>
       </component>
       <slot v-if="flyoutVisible" name="flyout-menu" />
       <!-- <slot name="drilldown-menu" /> -->
@@ -102,8 +111,10 @@
 export { MenuItemInjectionKey, type MenuItemProvide } from './common';
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'onMouseover' | 'onClick'> {
+  /** Name of a hidden input submitting the item value with a form */
   name?: string;
-  value?: string;
+  /** Identifies the item in the menu select event */
+  value?: string | number;
 
   /** Target navigation link */
   to?: string;
@@ -151,6 +162,12 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'rol
       >;
   /** Render item as disabled option */
   disabled?: boolean;
+  /** Render item as aria-disabled option: it stays focusable but cannot be selected */
+  ariaDisabled?: boolean;
+  /** Content of a tooltip shown on the item. The `tooltip` slot can be used for rich content. */
+  tooltip?: string;
+  /** Additional attrs passed to the tooltip, such as its `position` */
+  tooltipAttrs?: Omit<ComponentProps<typeof PfTooltip>, 'content'>;
   /** Description of the menu item */
   description?: string;
   /** Render external link icon */
@@ -202,6 +219,9 @@ import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { isDefined } from '@vueuse/shared';
 import { useChildrenTracker } from '../../use';
 import TeleportCopy from '../../helpers/TeleportCopy.vue';
+import PassThrough from '../../helpers/PassThrough.vue';
+import PfTooltip from '../Tooltip/Tooltip.vue';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -232,6 +252,8 @@ const $slots = defineSlots<{
   icon?: (props?: Record<never, never>) => any;
   description?: (props?: Record<never, never>) => any;
   'flyout-menu'?: (props?: Record<never, never>) => any;
+  /** Content of a tooltip shown on the item */
+  tooltip?: (props?: Record<never, never>) => any;
   actions?: (props?: Record<never, never>) => any;
 }>();
 
@@ -336,6 +358,10 @@ function showFlyout(show: boolean) {
 const randomId = useId();
 
 function onClick(event: PointerEvent) {
+  if (props.ariaDisabled) {
+    event.preventDefault();
+    return;
+  }
   onItemSelect(event);
 
   // if (itemId.value) {
@@ -358,6 +384,9 @@ function onClick(event: PointerEvent) {
 }
 
 function onItemSelect(event: Event) {
+  if (props.ariaDisabled) {
+    return;
+  }
   menu?.onSelect?.(event, itemId.value);
   emit('click', event);
 }

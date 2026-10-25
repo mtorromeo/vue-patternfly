@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { mount, type VueWrapper } from '@vue/test-utils';
+import { flushPromises, mount, type VueWrapper } from '@vue/test-utils';
 import { h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
@@ -309,6 +309,79 @@ describe('MenuItem', () => {
     expect(button.attributes('role')).toBe('menuitem');
     expect(button.attributes('tabindex')).toBe('-1');
     expect(button.find(`.${styles.menuItemMain} .${styles.menuItemText}`).text()).toBe('Item');
+  });
+
+  describe('ariaDisabled', () => {
+    it.each([
+      ['button', {}],
+      ['a', { to: '#link' }],
+    ])('marks the %s as aria-disabled but keeps it enabled', (tag, props) => {
+      const { menu } = mountItem({ ariaDisabled: true, ...props });
+
+      expect(menu.find('li').classes()).toContain(styles.modifiers.ariaDisabled);
+      const control = menu.find(`.${styles.menuItem}`);
+      expect(control.element.tagName).toBe(tag.toUpperCase());
+      expect(control.attributes('aria-disabled')).toBe('true');
+      expect(control.attributes('disabled')).toBeUndefined();
+    });
+
+    it('does not select or emit click', async () => {
+      const onSelect = vi.fn();
+      const wrapper = mount(PfMenu, {
+        props: { onSelect },
+        slots: { default: () => h(PfMenuItem, { value: 'a', ariaDisabled: true, to: '#link' }, () => 'Item') },
+      });
+
+      const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+      wrapper.find(`.${styles.menuItem}`).element.dispatchEvent(event);
+      await nextTick();
+      expect(onSelect).not.toHaveBeenCalled();
+      expect(wrapper.findComponent(PfMenuItem).emitted('click')).toBeUndefined();
+      expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('is not set by default', () => {
+      const { menu } = mountItem();
+      expect(menu.find('li').classes()).not.toContain(styles.modifiers.ariaDisabled);
+      expect(menu.find(`.${styles.menuItem}`).attributes('aria-disabled')).toBeUndefined();
+    });
+  });
+
+  describe('tooltip', () => {
+    const tooltipAttrs = { appendTo: 'inline', animationDuration: 0, entryDelay: 0, exitDelay: 0 };
+
+    // the tooltip needs its trigger to be in the document
+    function mountItem(props: Record<string, unknown>, slots: Record<string, () => unknown>) {
+      const menu = mount(PfMenu, { slots: { default: () => h(PfMenuItem, props, slots) }, attachTo: document.body });
+      return { menu };
+    }
+
+    it('shows a tooltip when hovering the item', async () => {
+      const { menu } = mountItem({ tooltip: 'Help text', tooltipAttrs }, { default: () => 'Item' });
+      await flushPromises();
+
+      menu.find(`.${styles.menuItem}`).element.dispatchEvent(new MouseEvent('mouseenter'));
+      await flushPromises();
+      const tooltip = menu.find('[role="tooltip"]');
+      expect(tooltip.exists()).toBe(true);
+      expect(tooltip.text()).toBe('Help text');
+      menu.unmount();
+    });
+
+    it('renders the tooltip slot', async () => {
+      const { menu } = mountItem({ tooltipAttrs }, { default: () => 'Item', tooltip: () => h('b', 'Rich help') });
+      await flushPromises();
+
+      menu.find(`.${styles.menuItem}`).element.dispatchEvent(new MouseEvent('mouseenter'));
+      await flushPromises();
+      expect(menu.find('[role="tooltip"] b').text()).toBe('Rich help');
+      menu.unmount();
+    });
+
+    it('renders no tooltip by default', () => {
+      const { menu } = mountItem({}, { default: () => 'Item' });
+      expect(menu.findComponent({ name: 'PfTooltip' }).exists()).toBe(false);
+    });
   });
 
   it('renders the value when no default slot is given', () => {
