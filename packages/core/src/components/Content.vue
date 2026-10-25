@@ -2,6 +2,7 @@
   <component
     :is="component"
     v-bind="ouiaProps"
+    data-pf-content="true"
     :class="{
       [styles.modifiers.visited]: visited,
       [styles.modifiers.plain]: plainList && ['ul', 'ol', 'dl'].includes(component),
@@ -31,15 +32,7 @@
   </component>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Content/content';
-import type { AnchorHTMLAttributes, BlockquoteHTMLAttributes, LiHTMLAttributes, OlHTMLAttributes } from 'vue';
-import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-
-defineOptions({
-  name: 'PfContent',
-});
-
+<script lang="ts">
 interface Props
   extends
     OUIAProps,
@@ -75,13 +68,25 @@ interface Props
   /** Flag to indicate the content has editorial styling. This styling increases the font size of body text and small text by one tier, increasing body text to large and small text to the previous body text size.  */
   editorial?: boolean;
 }
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Content/content';
+import type { AnchorHTMLAttributes, BlockquoteHTMLAttributes, LiHTMLAttributes, OlHTMLAttributes, VNode } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+
+defineOptions({
+  name: 'PfContent',
+});
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'div',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** Content rendered within the content */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

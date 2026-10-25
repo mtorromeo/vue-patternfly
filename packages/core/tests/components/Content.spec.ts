@@ -13,6 +13,20 @@ describe('Content', () => {
     expect(wrapper.find('p').text()).toBe('Body');
   });
 
+  it('marks the element as content and OUIA safe', () => {
+    // regression: data-pf-content was missing and ouiaSafe defaulted to false
+    const wrapper = mount(PfContent, { props: { component: 'p', ouiaId: 'ouia-id' } });
+    expect(wrapper.attributes('data-pf-content')).toBe('true');
+    expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/Content');
+    expect(wrapper.attributes('data-ouia-component-id')).toBe('ouia-id');
+    expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('adds custom classes', () => {
+    const wrapper = mount(PfContent, { attrs: { class: 'custom-class' } });
+    expect(wrapper.classes()).toEqual([styles.content, 'custom-class']);
+  });
+
   it.each([
     ['h1', styles.contentH1],
     ['h2', styles.contentH2],
@@ -52,6 +66,18 @@ describe('Content', () => {
     );
     expect(mount(PfContent, { props: { component: 'p', plainList: true } }).classes()).not.toContain(
       styles.modifiers.plain,
+    );
+  });
+
+  it('does not apply modifiers by default', () => {
+    const wrapper = mount(PfContent, { props: { component: 'ul' } });
+    expect(wrapper.classes()).toEqual([styles.contentUl]);
+  });
+
+  it('applies the modifiers to specific elements too', () => {
+    const wrapper = mount(PfContent, { props: { component: 'a', visited: true, editorial: true } });
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([styles.contentA, styles.modifiers.visited, styles.modifiers.editorial]),
     );
   });
 
