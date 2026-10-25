@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="ouiaProps"
     :class="[
       styles.accordionItem,
       {
@@ -7,92 +8,67 @@
       },
     ]"
   >
-    <component
-      v-bind="ouiaProps"
-      :is="
-        toggleComponent ||
-        (accordion?.dl ? 'dt' : typeof accordion?.level === 'string' ? accordion?.level : `h${accordion?.level}`)
-      "
-    >
-      <button
-        v-bind="$attrs"
-        type="button"
-        :class="[
-          styles.accordionToggle,
-          {
-            [styles.modifiers.expanded]: expanded,
-          },
-        ]"
-        :aria-expanded="expanded"
-        @click="handleClick($event as PointerEvent)"
-      >
-        <span v-if="accordion?.togglePosition === 'start'" :class="styles.accordionToggleIcon">
-          <pf-angle-down-icon />
-        </span>
-        <span :class="styles.accordionToggleText">
-          <slot name="toggle">{{ title }}</slot>
-        </span>
-        <span v-if="accordion?.togglePosition === 'end'" :class="styles.accordionToggleIcon">
-          <pf-angle-down-icon />
-        </span>
-      </button>
-    </component>
-
-    <component
-      :is="contentComponent || (accordion?.dl ? 'dd' : 'div')"
-      :class="[
-        styles.accordionExpandableContent,
-        {
-          [styles.modifiers.fixed]: fixed,
-          [styles.modifiers.expanded]: expanded,
-        },
-      ]"
-      :hidden="!expanded"
-    >
-      <div :class="styles.accordionExpandableContentBody">
+    <template v-if="!hasChild(PfAccordionToggle)">
+      <pf-accordion-toggle v-bind="toggleAttrs" :component="toggleComponent">
+        <slot name="toggle">{{ title }}</slot>
+      </pf-accordion-toggle>
+      <slot v-if="hasChild(PfAccordionContent)" />
+      <pf-accordion-content v-else v-bind="contentAttrs" :component="contentComponent" :fixed="fixed">
         <slot />
-      </div>
-    </component>
+      </pf-accordion-content>
+    </template>
+    <slot v-else />
   </div>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /** Text of the toggle rendered when the default slot does not contain a pf-accordion-toggle. */
+  title?: string;
+  /** Container to override the default for the toggle rendered from title. */
+  toggleComponent?: string | Component;
+  /** Attributes added to the button of the toggle rendered from title, such as its id. */
+  toggleAttrs?: Omit<ComponentProps<typeof PfAccordionToggle>, 'component'>;
+  /** Component to use as container of the content wrapping the default slot. */
+  contentComponent?: string | Component;
+  /** Attributes added to the content wrapping the default slot, such as its id or aria-labelledby. */
+  contentAttrs?: HTMLAttributes;
+  /** Flag to indicate the content wrapping the default slot is fixed. */
+  fixed?: boolean;
+}
+</script>
+
 <script lang="ts" setup>
-import { inject, type ButtonHTMLAttributes } from 'vue';
+import { provide, type Component, type HTMLAttributes, type VNode } from 'vue';
+import type { ComponentProps } from 'vue-component-type-helpers';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
-import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
-import { AccordionKey } from './Accordion.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { findChildrenVNodes } from '../../util';
+import PfAccordionToggle from './AccordionToggle.vue';
+import PfAccordionContent from './AccordionContent.vue';
+import { AccordionItemKey } from './common';
 
 defineOptions({
   name: 'PfAccordionItem',
-  inheritAttrs: false,
 });
-
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'aria-expanded'> {
-  title?: string;
-  toggleComponent?: string;
-  contentComponent?: string;
-  fixed?: boolean;
-}
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
+/** Flag to indicate whether the accordion item is expanded. */
 const expanded = defineModel<boolean>('expanded', { default: false });
 
-const emit = defineEmits<{
-  (name: 'click', event: PointerEvent): void;
+const slots = defineSlots<{
+  /** The item content, wrapped in a pf-accordion-content unless it contains one, or a pf-accordion-toggle and a pf-accordion-content. */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Content of the toggle, replacing title. */
+  toggle?: (props?: Record<never, never>) => VNode[];
 }>();
 
-defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  toggle?: (props?: Record<never, never>) => any;
-}>();
-
-const accordion = inject(AccordionKey, undefined);
-
-function handleClick(event: PointerEvent) {
-  expanded.value = !expanded.value;
-  emit('click', event);
+// slots are not reactive: these run on every render
+function hasChild(type: Component) {
+  return findChildrenVNodes(slots.default?.()).some(vnode => vnode.type === type);
 }
+
+provide(AccordionItemKey, { expanded });
 </script>

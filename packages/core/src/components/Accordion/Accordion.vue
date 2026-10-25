@@ -6,47 +6,51 @@
       styles.accordion,
       {
         [styles.modifiers.bordered]: bordered,
-        [styles.modifiers.displayLg]: large,
+        [styles.modifiers.noPlainOnGlass]: noPlainOnGlass,
+        [styles.modifiers.plain]: plain,
         [styles.modifiers.toggleStart]: togglePosition === 'start',
+        [styles.modifiers.displayLg]: large,
       },
     ]"
+    :role="!dl && $attrs['aria-label'] ? 'region' : undefined"
   >
     <slot />
   </component>
 </template>
 
 <script lang="ts">
+export { AccordionKey, AccordionItemKey, type AccordionProvide, type AccordionItemProvide } from './common';
+
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** Heading level to use */
-  level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | number;
-  /** Flag to indicate whether use definition list or div */
+  /** Heading level to use for the toggles when the accordion is not a definition list */
+  level?: AccordionHeadingLevel;
+  /** Flag to render the accordion as a definition list instead of a div with headings */
   dl?: boolean;
   /** Flag to indicate the accordion had a border */
   bordered?: boolean;
+  /** @beta Flag to prevent the accordion from automatically applying plain styling when glass theme is enabled. */
+  noPlainOnGlass?: boolean;
+  /** @beta Flag to add plain styling to the accordion. */
+  plain?: boolean;
   /** Large display size variant. */
   large?: boolean;
   /** Sets the toggle icon position for all accordion toggles. */
   togglePosition?: 'start' | 'end';
 }
-
-export const AccordionKey = Symbol('AccordionKey') as InjectionKey<{
-  dl: Props['dl'];
-  level: Props['level'];
-  togglePosition: Props['togglePosition'];
-}>;
 </script>
 
 <script lang="ts" setup>
-import { type InjectionKey, provide, type HTMLAttributes } from 'vue';
+import { computed, provide, type HTMLAttributes, type VNode } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Accordion/accordion';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { AccordionKey, type AccordionHeadingLevel } from './common';
 
 defineOptions({
   name: 'PfAccordion',
 });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const props = withDefaults(defineProps<Props>(), {
@@ -56,8 +60,13 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 provide(AccordionKey, {
-  dl: props.dl,
-  level: props.level,
-  togglePosition: props.togglePosition,
+  toggleContainer: computed(() => {
+    if (props.dl) {
+      return 'dt';
+    }
+    return typeof props.level === 'string' ? props.level : `h${props.level}`;
+  }),
+  contentContainer: computed(() => (props.dl ? 'dd' : 'div')),
+  togglePosition: computed(() => props.togglePosition),
 });
 </script>
