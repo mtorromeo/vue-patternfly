@@ -32,9 +32,8 @@
             </pf-text-input-group-main>
 
             <pf-text-input-group-utilities v-if="renderUtilities || utilitiesDisplayed">
-              <pf-badge v-if="resultsCount" read>
+              <pf-badge v-if="resultsCount" read :screen-reader-text="resultsCountContext">
                 {{ resultsCount }}
-                <span v-if="resultsCountContext" class="pf-v6-screen-reader">{{ resultsCountContext }}</span>
               </pf-badge>
 
               <div v-if="!!onNextClick && !!onPreviousClick" :class="textInputGroupStyles.textInputGroupGroup">

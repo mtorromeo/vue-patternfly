@@ -124,7 +124,7 @@ describe('SearchInput', () => {
       const wrapper = mount(PfSearchInput, { props: { modelValue: 'q', resultsCount: '1 / 5' } });
       const badge = wrapper.find(`.${styles.textInputGroupUtilities} .${badgeStyles.badge}`);
       expect(badge.classes()).toContain(badgeStyles.modifiers.read);
-      expect(badge.text()).toBe('1 / 5  results');
+      expect(badge.text()).toBe('1 / 5 results');
       expect(badge.find('.pf-v6-screen-reader').text()).toBe('results');
     });
 
