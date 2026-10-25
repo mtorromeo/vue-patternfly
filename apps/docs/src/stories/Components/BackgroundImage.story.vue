@@ -9,6 +9,13 @@
       <component-info name="PfBackgroundImage" />
     </template>
 
+    <pre v-md>
+      ## Differences from patternfly-react
+      See [common differences from patternfly-react](#/).
+
+      ## Examples
+    </pre>
+
     <story-canvas title="Basic" src="./BackgroundImage.iframe.vue" />
   </doc-page>
 </template>
