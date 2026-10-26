@@ -1,5 +1,5 @@
 <template>
-  <teleport :to="parent === 'inline' ? undefined : parent" :disabled="!parent || parent === 'inline'">
+  <teleport defer :to="parent === 'inline' ? undefined : parent" :disabled="!parent || parent === 'inline'">
     <floating-element />
   </teleport>
 </template>
@@ -188,7 +188,8 @@ function floatingElement() {
 
   const onElementMounted = (el: unknown) => {
     htmlElement.value = el instanceof HTMLElement ? el : null;
-    opacity.value = 1;
+    // the deferred teleport can mount the element after it was hidden again
+    opacity.value = props.hidden ? 0 : 1;
   };
 
   return withDirectives(
