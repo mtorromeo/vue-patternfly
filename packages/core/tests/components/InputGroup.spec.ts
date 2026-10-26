@@ -49,10 +49,29 @@ describe('InputGroupText', () => {
     expect(wrapper.find(`.${styles.inputGroupText}`).element.tagName).toBe('LABEL');
   });
 
-  it('forwards item props and attributes to the item', () => {
-    const wrapper = mount(PfInputGroupText, { attrs: { plain: true, disabled: true, id: 'text' } });
+  it('applies plain and disabled to the item', () => {
+    const wrapper = mount(PfInputGroupText, { props: { plain: true, disabled: true } });
     expect(wrapper.classes()).toContain(styles.modifiers.plain);
     expect(wrapper.classes()).toContain(styles.modifiers.disabled);
-    expect(wrapper.attributes('id')).toBe('text');
+  });
+
+  it('keeps class on the item and puts the other attributes on the text element', () => {
+    const wrapper = mount(PfInputGroupText, {
+      props: { component: 'label' },
+      attrs: { class: 'inpt-grp-text', id: 'email-npt-grp', for: 'email', style: 'color: red' },
+      slots: { default: () => '@' },
+    });
+    expect(wrapper.classes()).toContain('inpt-grp-text');
+    expect(wrapper.attributes('id')).toBeUndefined();
+    const text = wrapper.get(`.${styles.inputGroupText}`);
+    expect(text.classes()).toEqual([styles.inputGroupText]);
+    expect(text.attributes('id')).toBe('email-npt-grp');
+    expect(text.attributes('for')).toBe('email');
+    expect((text.element as HTMLElement).style.color).toBe('red');
+  });
+
+  it('puts the OUIA attributes on the item', () => {
+    const wrapper = mount(PfInputGroupText, { props: { ouiaId: 'text' } });
+    expect(wrapper.attributes('data-ouia-component-id')).toBe('text');
   });
 });
