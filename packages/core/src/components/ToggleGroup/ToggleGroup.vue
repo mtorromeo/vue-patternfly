@@ -1,20 +1,23 @@
 <template>
-  <div v-bind="ouiaProps" :class="[styles.toggleGroup, { [styles.modifiers.compact]: compact }]" role="group">
+  <div
+    v-bind="ouiaProps"
+    :class="[styles.toggleGroup, { [styles.modifiers.compact]: compact, [styles.modifiers.fill]: fill }]"
+    role="group"
+  >
     <slot />
   </div>
 </template>
 
 <script lang="ts">
-export const ToggleGroupDisabledKey = Symbol('ToggleGroupDisabledKey') as InjectionKey<
-  ComputedRef<boolean | undefined>
->;
-export const ToggleGroupSelectionKey = Symbol('ToggleGroupSelectionKey') as InjectionKey<Ref<unknown>>;
+export { ToggleGroupDisabledKey, ToggleGroupSelectionKey } from './common';
 
 interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'> {
   /** Selected item value, or array of values for multiple selection. */
   modelValue?: T | null;
   /** Modifies the toggle group to include compact styling. */
   compact?: boolean;
+  /** Modifies the toggle group items to fill the available space. */
+  fill?: boolean;
   /** Disable all toggle group items under this component. */
   disabled?: boolean;
 }
@@ -22,7 +25,8 @@ interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'ro
 
 <script lang="ts" setup generic="T = string | number | (string | number)[]">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
-import { type InjectionKey, provide, computed, type ComputedRef, type Ref, type HTMLAttributes, useModel } from 'vue';
+import { provide, computed, type HTMLAttributes, type VNode, useModel } from 'vue';
+import { ToggleGroupDisabledKey, ToggleGroupSelectionKey } from './common';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -42,7 +46,8 @@ defineEmits<{
 const value = useModel(props, 'modelValue');
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** The pf-toggle-group-item components */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 provide(

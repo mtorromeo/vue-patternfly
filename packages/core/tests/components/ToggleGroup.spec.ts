@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mount, type VueWrapper } from '@vue/test-utils';
 import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
@@ -198,5 +198,40 @@ describe('ToggleGroupItem', () => {
     expect(pressed(wrapper)).toEqual([false, true]);
     await wrapper.findAll('button')[0]!.trigger('click');
     expect(wrapper.emitted('update:modelValue')).toBeUndefined();
+  });
+
+  it('fills the available space with fill', () => {
+    expect(mount(PfToggleGroup, { slots: { default: items } }).classes()).not.toContain(styles.modifiers.fill);
+    expect(mount(PfToggleGroup, { props: { fill: true }, slots: { default: items } }).classes()).toContain(
+      styles.modifiers.fill,
+    );
+  });
+
+  it('renders the icon at the start or at the end of the text', () => {
+    const icon = () => h('i', { class: 'icon' });
+    const start = mount(PfToggleGroupItem, { props: { text: 'Copy' }, slots: { icon } });
+    expect(start.findAll('button > span').map(s => s.classes()[0])).toEqual([
+      styles.toggleGroupIcon,
+      styles.toggleGroupText,
+    ]);
+
+    const end = mount(PfToggleGroupItem, { props: { text: 'Copy', iconPosition: 'end' }, slots: { icon } });
+    expect(end.findAll('button > span').map(s => s.classes()[0])).toEqual([
+      styles.toggleGroupText,
+      styles.toggleGroupIcon,
+    ]);
+  });
+
+  it('warns about an icon-only item without an aria-label', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(PfToggleGroupItem, { slots: { icon: () => h('i') } });
+    expect(warn).toHaveBeenCalledWith(
+      'An accessible aria-label is required when using the toggle group item icon variant.',
+    );
+    warn.mockClear();
+    mount(PfToggleGroupItem, { props: { ariaLabel: 'Copy' }, slots: { icon: () => h('i') } });
+    mount(PfToggleGroupItem, { props: { text: 'Copy' }, slots: { icon: () => h('i') } });
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 });

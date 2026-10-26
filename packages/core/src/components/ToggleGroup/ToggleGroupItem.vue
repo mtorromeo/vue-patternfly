@@ -9,11 +9,14 @@
       :disabled="disabled ?? injectedDisabled"
       @click="onClick?.($event as PointerEvent)"
     >
-      <span v-if="$slots.icon" :class="styles.toggleGroupIcon">
+      <span v-if="$slots.icon && iconPosition === 'start'" :class="styles.toggleGroupIcon">
         <slot name="icon" />
       </span>
       <span v-if="$slots.default || text" :class="styles.toggleGroupText">
         <slot>{{ text }}</slot>
+      </span>
+      <span v-if="$slots.icon && iconPosition === 'end'" :class="styles.toggleGroupIcon">
+        <slot name="icon" />
       </span>
     </button>
   </div>
@@ -21,10 +24,13 @@
 
 <script lang="ts">
 interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** Text rendered inside the toggle group item */
+  /** Text rendered inside the toggle group item, replaced by the default slot */
   text?: string;
+  /** Value of the item in the v-model of the toggle group. Defaults to the text. */
   value?: T;
-  /** Flag indicating if the toggle group item is disabled */
+  /** Sets position of the icon when text is also passed in */
+  iconPosition?: 'start' | 'end';
+  /** Flag indicating if the toggle group item is disabled. Defaults to the disabled state of the toggle group. */
   disabled?: boolean;
   /** Flag indicating if the toggle group item is selected */
   selected?: boolean;
@@ -38,8 +44,8 @@ interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 <script lang="ts" setup generic="T = string | number">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { inject, computed, ref, type HTMLAttributes } from 'vue';
-import { ToggleGroupDisabledKey, ToggleGroupSelectionKey } from './ToggleGroup.vue';
+import { inject, computed, ref, type HTMLAttributes, type VNode } from 'vue';
+import { ToggleGroupDisabledKey, ToggleGroupSelectionKey } from './common';
 import { isDefined } from '@vueuse/shared';
 
 defineOptions({
@@ -49,6 +55,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props<T>>(), {
   selected: undefined,
   disabled: undefined,
+  iconPosition: 'start',
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
@@ -57,10 +64,16 @@ const emit = defineEmits<{
   (name: 'update:selected', value: boolean): void;
 }>();
 
-defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  icon?: (props?: Record<never, never>) => any;
+const slots = defineSlots<{
+  /** Text of the toggle group item, replacing the text prop */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Icon of the toggle group item */
+  icon?: (props?: Record<never, never>) => VNode[];
 }>();
+
+if (!props.ariaLabel && slots.icon && !slots.default && !props.text) {
+  console.warn('An accessible aria-label is required when using the toggle group item icon variant.');
+}
 
 const injectedDisabled = inject(ToggleGroupDisabledKey, undefined);
 const selection = inject(ToggleGroupSelectionKey, undefined);
