@@ -34,6 +34,15 @@ export type VisibilityBreakpointProps = {
   visibility2xl?: 'hidden' | 'visible';
 };
 
+export type VisibilityAtHeightBreakpointProps = {
+  visibilityAtHeight?: 'hidden' | 'visible';
+  visibilityAtHeightSm?: 'hidden' | 'visible';
+  visibilityAtHeightMd?: 'hidden' | 'visible';
+  visibilityAtHeightLg?: 'hidden' | 'visible';
+  visibilityAtHeightXl?: 'hidden' | 'visible';
+  visibilityAtHeight2xl?: 'hidden' | 'visible';
+};
+
 export type WidthBreakpointProps = {
   width?: string;
   widthSm?: string;

@@ -1,7 +1,11 @@
 <template>
   <div
     v-bind="ouiaProps"
-    :class="[styles.toolbarContent, classesFromBreakpointProps(props, ['visibility'], styles, { short: true })]"
+    :class="[
+      styles.toolbarContent,
+      classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
+      classesFromBreakpointProps(props, ['visibilityAtHeight'], styles, { short: true, vertical: true }),
+    ]"
   >
     <div
       :class="[
@@ -18,6 +22,7 @@
     </div>
 
     <pf-toolbar-expandable-content
+      :id="expandableContentId"
       :expanded="expanded"
       :show-clear-filters-button="showClearFiltersButton"
       :clear-filters-button-text="clearFiltersButtonText"
@@ -35,27 +40,51 @@
 export const ToolbarContentExpandableRefKey = Symbol('ToolbarContentExpandableRefKey') as InjectionKey<
   Ref<HTMLDivElement | null>
 >;
+/** Id of the expandable content of the toolbar content, controlled by its toggle group */
+export const ToolbarContentExpandableIdKey = Symbol('ToolbarContentExpandableIdKey') as InjectionKey<string>;
 export const ToolbarContentLabelContainerRefKey = Symbol('ToolbarContentLabelContainerRefKey') as InjectionKey<
   Ref<HTMLDivElement | null>
 >;
 
-interface Props extends OUIAProps, VisibilityBreakpointProps, RowWrapBreakpointProps, /* @vue-ignore */ HTMLAttributes {
+interface Props
+  extends
+    OUIAProps,
+    VisibilityBreakpointProps,
+    VisibilityAtHeightBreakpointProps,
+    RowWrapBreakpointProps,
+    /* @vue-ignore */ HTMLAttributes {
   /** Vertical alignment of children */
   alignItems?: 'start' | 'center' | 'baseline' | 'default';
 }
 </script>
 
 <script lang="ts" setup>
-import { ref, provide, onBeforeUnmount, type InjectionKey, type Ref, type HTMLAttributes, inject } from 'vue';
+import {
+  ref,
+  provide,
+  onBeforeUnmount,
+  type InjectionKey,
+  type Ref,
+  type HTMLAttributes,
+  type VNode,
+  inject,
+  useId,
+} from 'vue';
 import {
   classesFromBreakpointProps,
   type RowWrapBreakpointProps,
   type VisibilityBreakpointProps,
+  type VisibilityAtHeightBreakpointProps,
 } from '../../breakpoints';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import PfToolbarExpandableContent from './ToolbarExpandableContent.vue';
 import PfToolbarGroup from './ToolbarGroup.vue';
-import { ToolbarClearFilterButtonTextKey, ToolbarExpandedKey, ToolbarShowClearFiltersButtonKey } from './Toolbar.vue';
+import {
+  ToolbarClearFilterButtonTextKey,
+  ToolbarExpandedKey,
+  ToolbarIdKey,
+  ToolbarShowClearFiltersButtonKey,
+} from './Toolbar.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -66,8 +95,13 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** Groups and items of the toolbar content */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
+
+const toolbarId = inject(ToolbarIdKey, undefined);
+const expandableContentId = `${toolbarId?.() ?? useId()}-expandable-content-${useId()}`;
+provide(ToolbarContentExpandableIdKey, expandableContentId);
 
 const expandable: Ref<HTMLDivElement | null> = ref(null);
 provide(ToolbarContentExpandableRefKey, expandable);

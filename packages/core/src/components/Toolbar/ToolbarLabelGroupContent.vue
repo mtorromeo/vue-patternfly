@@ -20,7 +20,7 @@
       v-if="showNumberOfFilters || showDefaultClearFilter || $slots.default"
       variant="action-group-inline"
     >
-      <pf-toolbar-item v-if="showNumberOfFilters">{{ numberOfFilters }} filters applied</pf-toolbar-item>
+      <pf-toolbar-item v-if="showNumberOfFilters">{{ numberOfFiltersText(numberOfFilters) }}</pf-toolbar-item>
       <pf-toolbar-item v-if="showDefaultClearFilter">
         <pf-button variant="link" inline @click="emit('clearAllFilters')">
           {{ clearFiltersButtonText }}
@@ -38,7 +38,7 @@ import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { computed, type HTMLAttributes } from 'vue';
+import { computed, type HTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -47,6 +47,7 @@ defineOptions({
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
   clearFiltersButtonText?: string;
+  numberOfFiltersText?: (numberOfFilters: number) => string;
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
   numberOfFilters?: number;
   expanded?: boolean;
@@ -57,6 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
   clearFiltersButtonText: 'Clear all filters',
   collapseListedFiltersBreakpoint: 'lg',
   numberOfFilters: 0,
+  numberOfFiltersText: (numberOfFilters: number) => `${numberOfFilters} filters applied`,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
@@ -66,7 +68,8 @@ const emit = defineEmits<{
 }>();
 
 const slots = defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** Custom content replacing the clear all filters button */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const { width: windowWidth } = useWindowSize();

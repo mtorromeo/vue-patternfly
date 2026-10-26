@@ -35,6 +35,7 @@ import {
   classesFromBreakpointProps,
   type AlignBreakpointProps,
   type VisibilityBreakpointProps,
+  type VisibilityAtHeightBreakpointProps,
   type WidthBreakpointProps,
   type GapBreakpointProps,
   type ColumnGapBreakpointProps,
@@ -45,7 +46,7 @@ import {
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import cssWidth from '@patternfly/react-tokens/dist/esm/c_toolbar__item_Width';
-import { computed, type HTMLAttributes } from 'vue';
+import { computed, type HTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -56,6 +57,7 @@ interface Props
   extends
     OUIAProps,
     VisibilityBreakpointProps,
+    VisibilityAtHeightBreakpointProps,
     AlignBreakpointProps,
     WidthBreakpointProps,
     GapBreakpointProps,
@@ -84,12 +86,13 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const breakpointClasses = computed(() => {
   return [
     ...classesFromBreakpointProps(props, ['visibility', 'rowWrap'], styles, { short: true }),
+    ...classesFromBreakpointProps(props, ['visibilityAtHeight'], styles, { short: true, vertical: true }),
     ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap', 'flexGrow'], styles),
   ];
 });

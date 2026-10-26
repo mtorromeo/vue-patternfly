@@ -14,6 +14,7 @@ import PfToolbarGroup from '../../src/components/Toolbar/ToolbarGroup.vue';
 import PfToolbarItem from '../../src/components/Toolbar/ToolbarItem.vue';
 import PfToolbarLabelGroupContent from '../../src/components/Toolbar/ToolbarLabelGroupContent.vue';
 import PfToolbarToggleGroup from '../../src/components/Toolbar/ToolbarToggleGroup.vue';
+import PfToolbarExpandIconWrapper from '../../src/components/Toolbar/ToolbarExpandIconWrapper.vue';
 import PfLabel from '../../src/components/Label/Label.vue';
 import { globalBreakpoints } from '../../src/components/Toolbar/common';
 
@@ -109,10 +110,15 @@ function mountToggleToolbar(props: Record<string, unknown> = {}, options: Record
   });
 }
 
-function mountFilterToolbar(props: Record<string, unknown> = {}, filterProps: Record<string, unknown> = {}) {
+function mountFilterToolbar(
+  props: Record<string, unknown> = {},
+  filterProps: Record<string, unknown> = {},
+  slots: Record<string, () => unknown> = {},
+) {
   return mount(PfToolbar, {
     props,
     slots: {
+      ...slots,
       default: () =>
         h(PfToolbarContent, () => [
           h(PfToolbarToggleGroup, () => [
@@ -182,7 +188,7 @@ describe('Toolbar', () => {
       const wrapper = mountToggleToolbar();
       const button = toggleButton(wrapper);
       expect(button.attributes('aria-label')).toBe('Show Filters');
-      expect(button.attributes('aria-expanded')).toBe('false');
+      expect(button.attributes('aria-expanded')).toBeUndefined();
       expect(expandableContent(wrapper).classes()).not.toContain(styles.modifiers.expanded);
 
       await button.trigger('click');
@@ -191,7 +197,7 @@ describe('Toolbar', () => {
       expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
 
       await button.trigger('click');
-      expect(button.attributes('aria-expanded')).toBe('false');
+      expect(button.attributes('aria-expanded')).toBeUndefined();
       expect(wrapper.emitted('update:expanded')).toEqual([[true], [false]]);
     });
 
@@ -217,7 +223,7 @@ describe('Toolbar', () => {
           },
         },
       );
-      expect(toggleButton(wrapper).attributes('aria-expanded')).toBe('false');
+      expect(toggleButton(wrapper).attributes('aria-expanded')).toBeUndefined();
       await toggleButton(wrapper).trigger('click');
       expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
       expect(wrapper.props('expanded')).toBe(true);
@@ -305,11 +311,39 @@ describe('Toolbar', () => {
       expect(wrapper.findComponent(PfToolbarFilter).emitted('deleteLabel')).toEqual([['Status', 'old']]);
     });
 
-    it('emits deleteLabelGroup when the label group is closed', async () => {
-      const wrapper = mountFilterToolbar();
+    it('closes the label group with deleteLabelGroup', async () => {
+      const onDeleteLabelGroup = vi.fn();
+      const wrapper = mountFilterToolbar({}, { onDeleteLabelGroup });
       await nextTick();
       await labelGroupContent(wrapper).find(`.${labelGroupStyles.labelGroupClose} button`).trigger('click');
-      expect(wrapper.findComponent(PfToolbarFilter).emitted('deleteLabelGroup')).toEqual([['Status']]);
+      expect(onDeleteLabelGroup).toHaveBeenCalledWith('Status');
+    });
+
+    it('has no label group close button without deleteLabelGroup', async () => {
+      const wrapper = mountFilterToolbar();
+      await nextTick();
+      expect(labelGroupContent(wrapper).find(`.${labelGroupStyles.labelGroupClose}`).exists()).toBe(false);
+    });
+
+    it('renders string labels as outline labels only', async () => {
+      const wrapper = mountFilterToolbar();
+      await nextTick();
+      const labels = labelGroupContent(wrapper).findAll(`.${labelStyles.label}`);
+      expect(labels[0]!.classes()).toContain(labelStyles.modifiers.outline);
+      expect(labels[1]!.classes()).not.toContain(labelStyles.modifiers.outline);
+    });
+
+    it('renders the custom number of filters text and label group content', async () => {
+      const wrapper = mountFilterToolbar(
+        { collapseListedFiltersBreakpoint: 'all', numberOfFiltersText: (n: number) => `${n} active` },
+        {},
+        { 'label-group-content': () => h('span', { class: 'custom-content' }) },
+      );
+      await nextTick();
+      const content = labelGroupContent(wrapper);
+      expect(content.text()).toContain('2 active');
+      expect(content.find('.custom-content').exists()).toBe(true);
+      expect(content.text()).not.toContain('Clear all filters');
     });
 
     it('renders labels from the labels slot', async () => {
@@ -660,5 +694,60 @@ describe('ToolbarLabelGroupContent', () => {
     });
     expect(wrapper.classes()).toContain(styles.modifiers.hidden);
     expect(wrapper.find('button').exists()).toBe(false);
+  });
+});
+
+describe('Toolbar parity with patternfly-react', () => {
+  it('generates an id and applies the sticky modifiers', () => {
+    const wrapper = mount(PfToolbar, { props: { stickyBase: true, stickyStuck: true } });
+    expect(wrapper.attributes('id')).toBeTruthy();
+    expect(wrapper.classes()).toContain(styles.modifiers.stickyBase);
+    expect(wrapper.classes()).toContain(styles.modifiers.stickyStuck);
+    expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('links the toggle to the expandable content it controls', async () => {
+    const wrapper = mountToggleToolbar();
+    const button = toggleButton(wrapper);
+    expect(button.attributes('aria-controls')).toBeUndefined();
+    await button.trigger('click');
+    const id = expandableContent(wrapper).attributes('id');
+    expect(id).toMatch(/-expandable-content-/);
+    expect(button.attributes('aria-controls')).toBe(id);
+  });
+
+  it('applies the visibility at height modifiers', () => {
+    const wrapper = mount(PfToolbarContent, {
+      props: { visibilityAtHeight: 'hidden', visibilityAtHeightMd: 'visible' },
+    });
+    expect(wrapper.classes()).toContain(styles.modifiers.hidden);
+    expect(wrapper.classes()).toContain(styles.modifiers.visibleOnMdHeight);
+    const item = mount(PfToolbarItem, { props: { visibilityAtHeightLg: 'hidden' } });
+    expect(item.classes()).toContain(styles.modifiers.hiddenOnLgHeight);
+    const group = mount(PfToolbarGroup, { props: { visibilityAtHeightXl: 'visible' } });
+    expect(group.classes()).toContain(styles.modifiers.visibleOnXlHeight);
+  });
+
+  it('applies the gaps of a toggle group', () => {
+    const wrapper = mount(PfToolbarToggleGroup, {
+      props: { gap: 'sm', columnGapMd: 'lg', lg: true },
+      slots: { icon: () => h('i') },
+    });
+    expect(wrapper.classes()).toContain(styles.modifiers.gapSm);
+    expect(wrapper.classes()).toContain(styles.modifiers.columnGapLgOnMd);
+    expect(wrapper.classes()).toContain(styles.modifiers.showOnLg);
+  });
+
+  it('warns about a toggle group without breakpoint nor icon', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mount(PfToolbarToggleGroup);
+    expect(error).toHaveBeenCalledWith('ToolbarToggleGroup will not be visible without a breakpoint or toggleIcon.');
+    error.mockRestore();
+  });
+
+  it('renders the expand icon wrapper', () => {
+    const wrapper = mount(PfToolbarExpandIconWrapper, { slots: { default: () => h('i') } });
+    expect(wrapper.element.tagName).toBe('SPAN');
+    expect(wrapper.classes()).toEqual([styles.toolbarExpandAllIcon]);
   });
 });

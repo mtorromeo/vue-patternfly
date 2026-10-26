@@ -4,8 +4,9 @@
       <pf-button
         variant="plain"
         aria-label="Show Filters"
-        :aria-expanded="expanded"
+        :aria-expanded="expanded || undefined"
         :aria-haspopup="expanded && isContentPopup"
+        :aria-controls="expanded ? expandableContentId : undefined"
         @click="toggleExpanded"
       >
         <slot name="icon" />
@@ -27,9 +28,9 @@ import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { globalBreakpoints } from './common';
 import PfButton from '../Button.vue';
 import { useWindowSize } from '@vueuse/core';
-import { computed, inject } from 'vue';
+import { computed, inject, type VNode } from 'vue';
 import { ToolbarContainerWidthKey, ToolbarExpandedKey, ToolbarToggleExpandedKey } from './Toolbar.vue';
-import { ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
+import { ToolbarContentExpandableIdKey, ToolbarContentExpandableRefKey } from './ToolbarContent.vue';
 import type { Props as ToolbarGroupProps } from './ToolbarGroup.vue';
 import { useOUIAProps } from '../../helpers/ouia';
 
@@ -42,21 +43,29 @@ interface Props extends ToolbarGroupProps, BreakpointProps {}
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
-defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  icon?: (props?: Record<never, never>) => any;
+const slots = defineSlots<{
+  /** Items collapsed into the expandable content below the breakpoint */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Icon of the toggle shown when the toggle group has collapsed down */
+  icon?: (props?: Record<never, never>) => VNode[];
 }>();
+
+if (!props.sm && !props.md && !props.lg && !props.xl && !props.xl2 && !slots.icon) {
+  console.error('ToolbarToggleGroup will not be visible without a breakpoint or toggleIcon.');
+}
 
 const { width: windowWidth } = useWindowSize();
 const expanded = inject(ToolbarExpandedKey);
 const toggleExpanded = inject(ToolbarToggleExpandedKey);
 const expandableRef = inject(ToolbarContentExpandableRefKey);
+const expandableContentId = inject(ToolbarContentExpandableIdKey, undefined);
 const containerWidth = inject(ToolbarContainerWidthKey, undefined);
 
 const breakpointClasses = computed(() => {
   return [
-    ...classesFromBreakpointProps(props, ['visibility'], styles, { short: true }),
-    ...classesFromBreakpointProps(props, ['spacer', 'spaceItems', 'align'], styles),
+    ...classesFromBreakpointProps(props, ['visibility', 'rowWrap'], styles, { short: true }),
+    ...classesFromBreakpointProps(props, ['visibilityAtHeight'], styles, { short: true, vertical: true }),
+    ...classesFromBreakpointProps(props, ['align', 'gap', 'columnGap', 'rowGap', 'flexGrow'], styles),
     ...classesFromBreakpointProps(props, [''], styles),
   ];
 });
