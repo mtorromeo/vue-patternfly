@@ -383,12 +383,10 @@
                   read
                 >
                   <pf-notification-drawer-list aria-label="Notifications in the third group">
-                    <pf-empty-state variant="full">
-                      <pf-empty-state-header heading-level="h2" title="No alerts found">
-                        <template #icon>
-                          <magnifying-glass-icon />
-                        </template>
-                      </pf-empty-state-header>
+                    <pf-empty-state title="No alerts found" heading-level="h2">
+                      <template #icon>
+                        <magnifying-glass-icon />
+                      </template>
                       <pf-empty-state-body>
                         There are currently no critical alerts firing. There may be firing alerts of other severities or
                         silenced critical alerts however.

@@ -12,7 +12,7 @@
 import styles from '@patternfly/react-styles/css/components/EmptyState/empty-state';
 import cssIconColor from '@patternfly/react-tokens/dist/esm/c_empty_state__icon_Color';
 import { findChildrenVNodes, vnodeTypeIsComponent } from '../../util';
-import { mergeProps, ref, type SVGAttributes } from 'vue';
+import { mergeProps, ref, useAttrs, type SVGAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -32,6 +32,7 @@ const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
+const attrs = useAttrs();
 const hasSpinner = ref(false);
 
 function render() {
@@ -52,6 +53,7 @@ function render() {
       {
         'aria-hidden': ariaHidden,
       },
+      attrs,
       vnode.props ?? {},
     );
     return vnode;

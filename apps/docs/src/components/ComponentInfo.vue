@@ -95,8 +95,7 @@
     </pf-table>
   </template>
 
-  <pf-empty-state v-else>
-    <pf-empty-state-header title="Documentation not available" />
+  <pf-empty-state v-else title="Documentation not available">
     <pf-empty-state-body>
       Definitions for this component could not be extracted due to a limitation of vue-docgen-api. Please consult the
       linked component's source code instead.

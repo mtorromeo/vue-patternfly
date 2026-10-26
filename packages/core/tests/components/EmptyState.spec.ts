@@ -10,6 +10,7 @@ import PfEmptyStateFooter from '../../src/components/EmptyState/EmptyStateFooter
 import PfEmptyStateHeader from '../../src/components/EmptyState/EmptyStateHeader.vue';
 import PfEmptyStateIcon from '../../src/components/EmptyState/EmptyStateIcon.vue';
 import PfSpinner from '../../src/components/Spinner.vue';
+import { statusIcons } from '../../src/constants';
 
 describe('EmptyState', () => {
   it('renders the default slot inside the content wrapper', () => {
@@ -36,8 +37,8 @@ describe('EmptyState', () => {
 
   it.each([
     ['xs', styles.modifiers.xs],
-    ['small', styles.modifiers.sm],
-    ['large', styles.modifiers.lg],
+    ['sm', styles.modifiers.sm],
+    ['lg', styles.modifiers.lg],
     ['xl', styles.modifiers.xl],
   ] as const)('applies the modifier for the %s variant', (variant, modifier) => {
     const wrapper = mount(PfEmptyState, { props: { variant } });
@@ -47,6 +48,82 @@ describe('EmptyState', () => {
   it('applies the full height modifier', () => {
     const wrapper = mount(PfEmptyState, { props: { fullHeight: true } });
     expect(wrapper.classes()).toContain(styles.modifiers.fullHeight);
+  });
+
+  it('does not render a header without title, icon or status', () => {
+    const wrapper = mount(PfEmptyState, { slots: { default: () => 'No props' } });
+    expect(wrapper.find(`.${styles.emptyState}__header`).exists()).toBe(false);
+    expect(wrapper.find(`.${styles.emptyStateContent}`).text()).toBe('No props');
+  });
+
+  it('renders the title as h1 in header and title wrappers, before the children', () => {
+    const wrapper = mount(PfEmptyState, {
+      props: { title: 'HTTP Proxies' },
+      slots: { default: () => h(PfEmptyStateBody, () => 'Body') },
+    });
+
+    const content = wrapper.find(`.${styles.emptyStateContent}`);
+    const [header, body] = content.element.children;
+    expect(header.className).toBe(`${styles.emptyState}__header`);
+    expect(body.className).toBe(styles.emptyStateBody);
+    expect(header.children).toHaveLength(1);
+    expect(header.children[0].className).toBe(`${styles.emptyState}__title`);
+    const heading = header.children[0].children[0];
+    expect(heading.tagName).toBe('H1');
+    expect(heading.className).toBe(styles.emptyStateTitleText);
+    expect(heading.textContent?.trim()).toBe('HTTP Proxies');
+  });
+
+  it('forwards headingLevel, titleClass and headerClass', () => {
+    const wrapper = mount(PfEmptyState, {
+      props: { title: 'Empty', headingLevel: 'h4', titleClass: 'my-title', headerClass: 'my-header' },
+    });
+    expect(wrapper.find(`.${styles.emptyState}__header`).classes()).toContain('my-header');
+    const heading = wrapper.find(`.${styles.emptyStateTitleText}`);
+    expect(heading.element.tagName).toBe('H4');
+    expect(heading.classes()).toContain('my-title');
+  });
+
+  it('renders the title slot inside the heading', () => {
+    const wrapper = mount(PfEmptyState, { slots: { title: () => h('em', 'Rich') } });
+    expect(wrapper.find(`.${styles.emptyStateTitleText} em`).text()).toBe('Rich');
+  });
+
+  it('renders the icon slot before the title, wrapped in an EmptyStateIcon', () => {
+    const wrapper = mount(PfEmptyState, {
+      props: { title: 'Empty' },
+      slots: { icon: () => h('svg', { class: 'my-icon' }) },
+    });
+    const header = wrapper.find(`.${styles.emptyState}__header`).element;
+    expect(header.children[0].className).toBe(styles.emptyStateIcon);
+    expect(header.children[0].querySelector('.my-icon')?.getAttribute('aria-hidden')).toBe('true');
+    expect(header.children[1].className).toBe(`${styles.emptyState}__title`);
+  });
+
+  it.each(['danger', 'warning', 'success', 'info', 'custom'] as const)(
+    'applies the %s status modifier and its default icon',
+    status => {
+      const wrapper = mount(PfEmptyState, { props: { status, title: 'Status' } });
+      expect(wrapper.classes()).toContain(styles.modifiers[status]);
+      const icon = wrapper.find(`.${styles.emptyStateIcon}`);
+      expect(icon.findComponent(statusIcons[status]).exists()).toBe(true);
+    },
+  );
+
+  it('lets the icon slot override the status icon', () => {
+    const wrapper = mount(PfEmptyState, {
+      props: { status: 'danger' },
+      slots: { icon: () => h('svg', { class: 'my-icon' }) },
+    });
+    expect(wrapper.classes()).toContain(styles.modifiers.danger);
+    expect(wrapper.find('.my-icon').exists()).toBe(true);
+    expect(wrapper.findComponent(statusIcons.danger).exists()).toBe(false);
+  });
+
+  it('keeps a spinner icon visible to assistive technologies', () => {
+    const wrapper = mount(PfEmptyState, { props: { title: 'Loading' }, slots: { icon: () => h(PfSpinner) } });
+    const spinner = wrapper.find(`.${styles.emptyStateIcon} [role="progressbar"]`);
+    expect(spinner.attributes('aria-hidden')).toBe('false');
   });
 
   it('composes header, body and footer with actions', () => {
@@ -88,6 +165,17 @@ describe('EmptyStateHeader', () => {
 
     expect(wrapper.find(`.${styles.emptyStateTitleText}`).exists()).toBe(false);
     expect(wrapper.find(`.${styles.emptyState}__title .custom`).text()).toBe('Custom');
+  });
+
+  it('does not render the title wrapper without title or content', () => {
+    const wrapper = mount(PfEmptyStateHeader, { props: { headingLevel: 'h3' } });
+    expect(wrapper.find(`.${styles.emptyState}__title`).exists()).toBe(false);
+    expect(wrapper.find('h3').exists()).toBe(false);
+  });
+
+  it('adds titleClass to the heading', () => {
+    const wrapper = mount(PfEmptyStateHeader, { props: { title: 'Empty', titleClass: 'testTitleClassName' } });
+    expect(wrapper.find('h1').classes()).toEqual([styles.emptyStateTitleText, 'testTitleClassName']);
   });
 
   it('does not render an icon wrapper without the icon slot', () => {
@@ -134,6 +222,16 @@ describe('EmptyStateIcon', () => {
       slots: { default: () => h('svg', { class: 'a', 'aria-hidden': 'false' }) },
     });
     expect(wrapper.find('.a').attributes('aria-hidden')).toBe('false');
+  });
+
+  it('puts class and attributes on the icon, not on the wrapper', () => {
+    const wrapper = mount(PfEmptyStateIcon, {
+      attrs: { class: 'custom', 'data-test': 'x' },
+      slots: { default: () => h('svg', { class: 'a' }) },
+    });
+    expect(wrapper.classes()).toEqual([styles.emptyStateIcon]);
+    expect(wrapper.find('svg').classes()).toEqual(['custom', 'a']);
+    expect(wrapper.find('svg').attributes('data-test')).toBe('x');
   });
 
   it('sets the icon color css variable', () => {
