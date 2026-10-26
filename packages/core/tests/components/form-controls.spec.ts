@@ -494,6 +494,82 @@ describe('TextInput', () => {
     const wrapper = mount(PfTextInput, { attrs: { 'aria-label': 'Name' } });
     expect(wrapper.find('input').attributes('aria-label')).toBe('Name');
   });
+  it('puts the OUIA attributes on the input, safe by default', () => {
+    const wrapper = mount(PfTextInput, { props: { ouiaId: 'ti' }, attrs: { 'aria-label': 'Name' } });
+    const input = wrapper.find('input');
+    expect(input.attributes('data-ouia-component-type')).toBe('PF/TextInput');
+    expect(input.attributes('data-ouia-component-id')).toBe('ti');
+    expect(input.attributes('data-ouia-safe')).toBe('true');
+    expect(wrapper.attributes('data-ouia-component-type')).toBeUndefined();
+  });
+
+  it('keeps a custom aria-invalid', () => {
+    const wrapper = mount(PfTextInput, { attrs: { 'aria-label': 'Name', 'aria-invalid': 'true' } });
+    expect(wrapper.find('input').attributes('aria-invalid')).toBe('true');
+  });
+
+  it('becomes a combobox controlling an expanded element with expandedControls', () => {
+    const wrapper = mount(PfTextInput, {
+      props: { expanded: true, expandedControls: 'menu' },
+      attrs: { 'aria-label': 'Name' },
+    });
+    const input = wrapper.find('input');
+    expect(input.attributes('role')).toBe('combobox');
+    expect(input.attributes('aria-expanded')).toBe('true');
+    expect(input.attributes('aria-controls')).toBe('menu');
+    expect(wrapper.classes()).toContain(formControlStyles.modifiers.expanded);
+
+    const plain = mount(PfTextInput, { props: { expanded: true }, attrs: { 'aria-label': 'Name' } }).find('input');
+    expect(plain.attributes('role')).toBeUndefined();
+    expect(plain.attributes('aria-expanded')).toBeUndefined();
+  });
+
+  it('replaces newlines in the value with spaces', () => {
+    const wrapper = mount(PfTextInput, { props: { modelValue: 'a\nb' }, attrs: { 'aria-label': 'Name' } });
+    expect(wrapper.find<HTMLInputElement>('input').element.value).toBe('a b');
+  });
+
+  it('emits focus', async () => {
+    const wrapper = mount(PfTextInput, { attrs: { 'aria-label': 'Name' } });
+    await wrapper.find('input').trigger('focus');
+    expect(wrapper.emitted('focus')).toHaveLength(1);
+  });
+
+  it('warns without an id, aria-label or aria-labelledby', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mount(PfTextInput);
+    expect(error).toHaveBeenCalledWith('Text input:', 'Text input requires either an id or aria-label to be specified');
+    error.mockClear();
+    mount(PfTextInput, { attrs: { id: 'name' } });
+    mount(PfTextInput, { attrs: { 'aria-label': 'Name' } });
+    mount(PfTextInput, { attrs: { 'aria-labelledby': 'lbl' } });
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
+  });
+
+  it('truncates the value at its start while not focused', async () => {
+    // every character is 10px wide in a 100px wide input
+    const getContext = vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
+      font: '',
+      measureText: (text: string) => ({ width: text.length * 10 }),
+    } as unknown as CanvasRenderingContext2D);
+    const clientWidth = vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(100);
+    const wrapper = mount(PfTextInput, {
+      props: { startTruncated: true, modelValue: 'abcdefghijklmnopqrst' },
+      attrs: { 'aria-label': 'Name' },
+    });
+    await nextTick();
+    const input = wrapper.find<HTMLInputElement>('input');
+    expect(input.element.value).toBe('...nopqrst');
+
+    await input.trigger('focus');
+    expect(input.element.value).toBe('abcdefghijklmnopqrst');
+
+    await input.trigger('blur');
+    expect(input.element.value).toBe('...nopqrst');
+    getContext.mockRestore();
+    clientWidth.mockRestore();
+  });
 });
 
 describe('Textarea', () => {

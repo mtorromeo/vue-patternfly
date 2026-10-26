@@ -1,6 +1,5 @@
 <template>
   <span
-    v-bind="ouiaProps"
     :class="[
       styles.formControl,
       {
@@ -16,17 +15,18 @@
     ]"
   >
     <input
-      v-bind="$attrs"
+      v-bind="{ ...$attrs, ...ouiaProps, ...comboboxAttrs }"
       ref="inputRef"
-      :value="value"
+      :value="typeof value === 'string' ? value.replace(/\n/g, ' ') : value"
       :type="type ?? 'text'"
       :aria-label="ariaLabel"
-      :aria-invalid="effectiveValidated === 'error'"
+      :aria-invalid="ariaInvalid"
       :disabled="disabled || undefined"
       :readonly="!!readOnlyVariant || readonly"
       @change="onChange"
       @input="onInput($event as InputEvent)"
-      @blur="onBlur"
+      @focus="onFocus"
+      @blur="onBlurTruncate"
       @invalid="onInvalid"
       @keyup="onKeyUp"
     />
@@ -43,12 +43,15 @@
 interface Props<T extends InputType, N extends boolean>
   extends
     OUIAProps,
-    /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'aria-invalid' | 'autocomplete'>,
+    /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'autocomplete'>,
     /* @vue-ignore */ OverriddenInputAttributes {
   /** Flag to show if the text input is disabled. */
   disabled?: boolean;
   /** Flag to apply expanded styling */
   expanded?: boolean;
+  /** Id of the element the text input controls the expansion of, such as a menu. The input becomes a combobox with aria-expanded set from expanded. */
+  expandedControls?: string;
+  /** Flag to make the input read only, without the read only styling */
   readonly?: boolean;
   /** Read only variant. */
   readOnlyVariant?: 'plain' | 'default';
@@ -68,8 +71,9 @@ interface Props<T extends InputType, N extends boolean>
   };
   /** Aria-label. The text input requires an associated id or aria-label. */
   ariaLabel?: string;
-  /** Trim text at start */
+  /** Truncates the text at its start while the input is not focused, keeping its end in view */
   startTruncated?: boolean;
+  /** When to validate the input with the browser constraint validation, true for enter or submit */
   autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
   /** Disables validation status icon */
   noStatusIcon?: boolean;
@@ -77,7 +81,19 @@ interface Props<T extends InputType, N extends boolean>
 </script>
 
 <script lang="ts" setup generic="T extends InputType = 'text', N extends boolean = false">
-import { computed, toRefs, type InputHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
+import {
+  computed,
+  toRefs,
+  type InputHTMLAttributes,
+  getCurrentInstance,
+  onMounted,
+  useAttrs,
+  useTemplateRef,
+  watch,
+  type VNode,
+} from 'vue';
+import { useResizeObserver } from '@vueuse/core';
+import { trimLeft } from '../util';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation, type InputType, type InputValidateState, type OverriddenInputAttributes } from '../input';
@@ -93,13 +109,16 @@ defineOptions({
 const props = withDefaults(defineProps<Props<T, N>>(), {
   autoValidate: true,
   modelValue: undefined,
+  ouiaSafe: true,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   /** A callback for when the text input value changes. */
   (name: 'change', event: Event): void;
   /** Callback function when text input is blurred (focus leaves) */
   (name: 'blur', event: FocusEvent): void;
+  /** Callback function when text input is focused */
+  (name: 'focus', event: FocusEvent): void;
   (name: 'input', event: Event): void;
   (name: 'invalid', event: Event): void;
   (name: 'keyup', event: KeyboardEvent): void;
@@ -108,8 +127,29 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  icon?: (props?: Record<never, never>) => any;
+  /** Custom icon to render. With a validated status, it is rendered in addition to the status icon. */
+  icon?: (props?: Record<never, never>) => VNode[];
 }>();
+
+const attrs = useAttrs();
+
+// with the id of the controlled element, the input is a combobox
+const comboboxAttrs = computed(() =>
+  props.expandedControls
+    ? { role: 'combobox', 'aria-expanded': props.expanded, 'aria-controls': props.expandedControls }
+    : {},
+);
+
+// a custom aria-invalid overrides the validated state
+const ariaInvalid = computed((): InputHTMLAttributes['aria-invalid'] => {
+  const custom = attrs['aria-invalid'];
+  return typeof custom === 'string' || typeof custom === 'boolean'
+    ? (custom as InputHTMLAttributes['aria-invalid'])
+    : effectiveValidated.value === 'error';
+});
+if (!attrs.id && !props.ariaLabel && !attrs['aria-labelledby']) {
+  console.error('Text input:', 'Text input requires either an id or aria-label to be specified');
+}
 
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
@@ -141,6 +181,35 @@ useChildrenTracker(FormGroupInputsKey, effectiveValidated);
 function focus() {
   input.value?.focus();
 }
+
+// start truncation: the full value is shown while the input is focused
+let focused = false;
+
+function truncate() {
+  if (props.startTruncated && input.value && !focused) {
+    trimLeft(input.value, String(value.value ?? ''));
+  }
+}
+
+function onFocus(event: FocusEvent) {
+  focused = true;
+  if (props.startTruncated && input.value) {
+    input.value.value = String(value.value ?? '');
+    // keep the end of the value in view
+    input.value.scrollLeft = input.value.scrollWidth;
+  }
+  emit('focus', event);
+}
+
+function onBlurTruncate(event: FocusEvent) {
+  focused = false;
+  truncate();
+  onBlur(event);
+}
+
+onMounted(truncate);
+useResizeObserver(input, truncate);
+watch(value, truncate, { flush: 'post' });
 
 function onChange(event: Event) {
   if (!input.value) {

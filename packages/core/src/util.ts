@@ -246,6 +246,35 @@ export function getTextWidth(text: string, node: HTMLElement) {
   return context.measureText(text).width;
 }
 
+/** Returns the dimensions of the content box of an element, without its padding */
+export function innerDimensions(node: HTMLElement) {
+  const computedStyle = getComputedStyle(node);
+  const padding = (value: string) => parseFloat(value) || 0;
+  const width = node.clientWidth - padding(computedStyle.paddingLeft) - padding(computedStyle.paddingRight);
+  const height = node.clientHeight - padding(computedStyle.paddingTop) - padding(computedStyle.paddingBottom);
+  return { width, height };
+}
+
+/**
+ * Truncates the value of an input at its start, with a leading ellipsis, so that its end stays in view.
+ *
+ * @param {HTMLInputElement} node The input element
+ * @param {string} value The original value
+ */
+export function trimLeft(node: HTMLInputElement, value: string) {
+  const availableWidth = innerDimensions(node).width;
+  let newValue = value;
+  if (getTextWidth(value, node) > availableWidth) {
+    // trim the text at the start and add ... in front until it fits
+    while (newValue && getTextWidth(`...${newValue}`, node) > availableWidth) {
+      newValue = newValue.substring(1);
+    }
+    node.value = `...${newValue}`;
+  } else {
+    node.value = value;
+  }
+}
+
 // copied from react-core/src/helpers/util.ts
 export function fillTemplate(templateString: string, templateVars: any) {
   return templateString.replace(/\${(.*?)}/g, (_, match) => templateVars[match] || '');
