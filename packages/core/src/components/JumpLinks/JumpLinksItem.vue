@@ -1,5 +1,6 @@
 <template>
   <li
+    ref="liRef"
     v-bind="ouiaProps"
     :class="[styles.jumpLinksItem, { [styles.modifiers.current]: managedActive }]"
     :aria-current="managedActive ? 'location' : undefined"
@@ -8,13 +9,24 @@
   </li>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'aria-current'> {
+  /** Whether this item is active. The parent pf-jump-links sets this when spying on a scrollable element. */
+  active?: boolean;
+  /** Href for this link */
+  href?: string;
+  /** Selector or HTMLElement to spy on. Defaults to the element with the id of the href. */
+  node?: string | MaybeComputedElementRef<HTMLElement>;
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
 import PfJumpLinksList from './JumpLinksList.vue';
 import PfButton from '../Button.vue';
 import type { MaybeComputedElementRef } from '@vueuse/core';
-import { h, inject, toValue, onMounted, watch, computed, ref, type Ref, type LiHTMLAttributes } from 'vue';
-import { JumpLinkInjectionKey, JumpLinksKey } from './common';
+import { h, inject, toValue, computed, markRaw, ref, useTemplateRef, type LiHTMLAttributes } from 'vue';
+import { JumpLinkInjectionKey, JumpLinksKey, type JumpLinksItemRegistration } from './common';
 import { useChildrenTracker } from '../../use';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { findChildrenVNodes, fragment } from '../../util';
@@ -22,15 +34,6 @@ import { findChildrenVNodes, fragment } from '../../util';
 defineOptions({
   name: 'PfJumpLinksItem',
 });
-
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'role' | 'aria-current'> {
-  /** Whether this item is active. Parent JumpLinks component sets this when passed a `scrollableSelector`. */
-  active?: boolean;
-  /** Href for this link */
-  href?: string;
-  /** Selector or HTMLElement to spy on */
-  node?: string | MaybeComputedElementRef<HTMLElement>;
-}
 
 const props = withDefaults(defineProps<Props>(), {
   active: undefined,
@@ -45,37 +48,37 @@ const slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
 
-useChildrenTracker(JumpLinksKey);
+const jumpLinks = inject(JumpLinkInjectionKey, undefined);
+const target = ref<HTMLElement | null>(null);
 
-const jumpLinks = inject(JumpLinkInjectionKey);
-
-const target: Ref<HTMLElement | null> = ref(null);
-
-function searchTarget() {
-  if (typeof props.node === 'string') {
-    const scrollableElement = toValue(jumpLinks?.scrollableHTMLElement);
-    if (scrollableElement) {
-      const el = scrollableElement.querySelector(props.node) ?? undefined;
+function resolveTarget() {
+  const node = props.node ?? props.href;
+  if (typeof node === 'string') {
+    if (node.startsWith('#')) {
+      // allow ids with spaces and other special characters
+      target.value = document.getElementById(node.slice(1));
+    } else if (node) {
+      const el = (toValue(jumpLinks?.scrollableHTMLElement) ?? document).querySelector(node);
       target.value = el instanceof HTMLElement ? el : null;
+    } else {
+      target.value = null;
     }
-    return;
+  } else {
+    target.value = toValue(node) ?? null;
   }
-  target.value = toValue(props.node) ?? null;
+  return target.value;
 }
 
-watch(() => [props.node, jumpLinks?.scrollableHTMLElement], searchTarget);
-onMounted(searchTarget);
+const li = useTemplateRef<HTMLElement>('liRef');
+const registration: JumpLinksItemRegistration = markRaw({
+  el: () => li.value,
+  resolveTarget,
+});
+useChildrenTracker(JumpLinksKey, registration);
 
 function handleClick(event: PointerEvent) {
+  jumpLinks?.onItemClick(registration, event, props.href);
   emit('click', event);
-
-  const scrollableElement = toValue(jumpLinks?.scrollableHTMLElement);
-  if (target.value && scrollableElement) {
-    scrollableElement.scrollTo({
-      top: target.value.offsetTop - (jumpLinks?.offset ?? 0),
-      behavior: 'smooth',
-    });
-  }
 }
 
 function renderChildren() {
@@ -102,16 +105,9 @@ function renderChildren() {
   ];
 }
 
-const managedActive = computed(() => {
-  if (props.active !== undefined) {
-    return props.active;
-  }
-  return (
-    jumpLinks?.scrollPosition.value &&
-    jumpLinks?.currentTargetPosition.value &&
-    jumpLinks?.currentTargetPosition.value === target.value?.offsetTop
-  );
-});
+const managedActive = computed(() => props.active ?? !!jumpLinks?.isActive(registration));
+
+resolveTarget();
 
 defineExpose({
   target,

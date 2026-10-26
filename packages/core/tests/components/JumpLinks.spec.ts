@@ -78,7 +78,8 @@ describe('JumpLinks', () => {
       slots: { label: () => 'Jump to section' },
     });
     const button = wrapper.find(`.${styles.jumpLinksToggle} button`);
-    expect(button.attributes('aria-label')).toBe('Toggle jump links');
+    // the visible label names the toggle
+    expect(button.attributes('aria-label')).toBeUndefined();
     expect(button.attributes('aria-expanded')).toBe('false');
     expect(button.text()).toBe('Jump to section');
     expect(button.find(`.${styles.jumpLinksToggleIcon} svg`).exists()).toBe(true);
@@ -221,6 +222,181 @@ describe('JumpLinks', () => {
     await nextTick();
     wrapper.unmount();
     expect(spy).toHaveBeenCalledWith('scroll', expect.any(Function));
+  });
+});
+
+describe('JumpLinks accessibility', () => {
+  const items = () => [h(PfJumpLinksItem, { href: '#' }, () => 'One'), h(PfJumpLinksItem, { href: '#' }, () => 'Two')];
+
+  it('renders the label prop, labelling the nav and list by its id', () => {
+    const wrapper = mount(PfJumpLinks, { props: { label: 'Jump to section' }, slots: { default: items } });
+    const label = wrapper.get(`.${styles.jumpLinksLabel}`);
+    expect(label.text()).toBe('Jump to section');
+    expect(label.attributes('id')).toBeTruthy();
+    expect(wrapper.attributes('aria-labelledby')).toBe(label.attributes('id'));
+    expect(wrapper.attributes('aria-label')).toBeUndefined();
+    expect(wrapper.get('ul').attributes('aria-labelledby')).toBe(label.attributes('id'));
+  });
+
+  it('uses the custom labelId', () => {
+    const wrapper = mount(PfJumpLinks, { props: { label: 'Jump', labelId: 'custom-id' } });
+    expect(wrapper.get(`.${styles.jumpLinksLabel}`).attributes('id')).toBe('custom-id');
+    expect(wrapper.attributes('aria-labelledby')).toBe('custom-id');
+  });
+
+  it('is labelled by the toggle when expandable, without duplicating the label', () => {
+    const wrapper = mount(PfJumpLinks, {
+      props: { expandable: 'expandable', label: 'Jump to section', labelId: 'custom-id', ariaLabel: 'Ignored' },
+    });
+    expect(wrapper.find(`.${styles.jumpLinksLabel}`).exists()).toBe(false);
+    const button = wrapper.get(`.${styles.jumpLinksToggle} button`);
+    expect(button.attributes('id')).toBe('custom-id');
+    expect(button.text()).toBe('Jump to section');
+    expect(wrapper.attributes('aria-labelledby')).toBe('custom-id');
+    expect(wrapper.attributes('aria-label')).toBeUndefined();
+  });
+
+  it('names the toggle with toggleAriaLabel without a label', () => {
+    const wrapper = mount(PfJumpLinks, { props: { expandable: 'expandable' } });
+    const button = wrapper.get('button');
+    expect(button.attributes('aria-label')).toBe('Toggle jump links');
+    expect(wrapper.attributes('aria-labelledby')).toBe(button.attributes('id'));
+  });
+
+  it('uses aria-label without a shown label', () => {
+    const plain = mount(PfJumpLinks, { props: { ariaLabel: 'Custom aria label' } });
+    expect(plain.attributes('aria-label')).toBe('Custom aria label');
+    expect(plain.attributes('aria-labelledby')).toBeUndefined();
+    expect(plain.get('ul').attributes('aria-label')).toBe('Custom aria label');
+
+    const hidden = mount(PfJumpLinks, {
+      props: { label: 'Jump to section', ariaLabel: 'Custom aria label', alwaysShowLabel: false },
+    });
+    expect(hidden.find(`.${styles.jumpLinksLabel}`).exists()).toBe(false);
+    expect(hidden.attributes('aria-label')).toBe('Custom aria label');
+    expect(hidden.attributes('aria-labelledby')).toBeUndefined();
+
+    const fromLabel = mount(PfJumpLinks, { props: { label: 'Jump to section', alwaysShowLabel: false } });
+    expect(fromLabel.attributes('aria-label')).toBe('Jump to section');
+  });
+
+  it('warns without label nor aria-label', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(PfJumpLinks, { props: { label: 'Jump to section' } });
+    mount(PfJumpLinks, { props: { ariaLabel: 'Jump to section' } });
+    expect(warn).not.toHaveBeenCalled();
+    mount(PfJumpLinks);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('an aria-label should be specified'));
+    warn.mockRestore();
+  });
+});
+
+describe('JumpLinks scroll spy', () => {
+  function mountSpy(offsets: number[], props: Record<string, unknown> = {}, options = {}) {
+    const created = createScrollable(offsets, options);
+    const wrapper = mount(PfJumpLinks, {
+      props: { scrollableElement: created.scrollable, ariaLabel: 'Jump', ...props },
+      slots: {
+        default: () => offsets.map((_, i) => h(PfJumpLinksItem, { href: `#section-${i}` }, () => `Section ${i}`)),
+      },
+      attachTo: document.body,
+    });
+    return { ...created, wrapper };
+  }
+
+  function currentIndex(wrapper: ReturnType<typeof mount>) {
+    return wrapper.findAll(`.${styles.jumpLinksItem}`).findIndex(i => i.classes().includes(styles.modifiers.current));
+  }
+
+  it('spies on the targets of the hrefs and activates the first one at the top', async () => {
+    const { wrapper } = mountSpy([0, 500, 1000]);
+    await nextTick();
+    await nextTick();
+    await nextTick();
+    expect(currentIndex(wrapper)).toBe(0);
+    wrapper.unmount();
+  });
+
+  it('defaults the offset to 0', async () => {
+    const { wrapper, scrollable } = mountSpy([0, 500]);
+    await nextTick();
+    await scrollTo(scrollable, 450);
+    expect(currentIndex(wrapper)).toBe(0);
+    await scrollTo(scrollable, 500);
+    expect(currentIndex(wrapper)).toBe(1);
+    wrapper.unmount();
+  });
+
+  it('reacts to offset changes', async () => {
+    const { wrapper, scrollable } = mountSpy([0, 500]);
+    await nextTick();
+    await wrapper.setProps({ offset: 100 });
+    await scrollTo(scrollable, 450);
+    expect(currentIndex(wrapper)).toBe(1);
+    wrapper.unmount();
+  });
+
+  it('emits the active index', async () => {
+    const { wrapper, scrollable } = mountSpy([0, 500, 1000]);
+    await nextTick();
+    await scrollTo(scrollable, 600);
+    expect(wrapper.emitted('update:activeIndex')?.slice(-1)[0]).toEqual([1]);
+    wrapper.unmount();
+  });
+
+  it('activates the clicked item, focusing its target without native navigation', async () => {
+    const { wrapper, scrollable, sections } = mountSpy([0, 500, 1000]);
+    scrollable.scrollTo = vi.fn() as typeof scrollable.scrollTo;
+    const focus = vi.spyOn(sections[2], 'focus');
+    await nextTick();
+
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    wrapper.findAll('a')[2].element.dispatchEvent(event);
+    await nextTick();
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(scrollable.scrollTo).toHaveBeenCalledWith({ top: 1000, behavior: 'smooth' });
+    expect(focus).toHaveBeenCalled();
+    expect(currentIndex(wrapper)).toBe(2);
+
+    // the scroll events of the click do not override the clicked item
+    await scrollTo(scrollable, 600);
+    expect(currentIndex(wrapper)).toBe(2);
+
+    scrollable.dispatchEvent(new Event('scrollend'));
+    await scrollTo(scrollable, 600);
+    expect(currentIndex(wrapper)).toBe(1);
+    wrapper.unmount();
+  });
+
+  it('does not update the history by default', async () => {
+    const push = vi.spyOn(window.history, 'pushState');
+    const replace = vi.spyOn(window.history, 'replaceState');
+    const { wrapper, scrollable } = mountSpy([0, 500]);
+    scrollable.scrollTo = vi.fn() as typeof scrollable.scrollTo;
+    await nextTick();
+    await wrapper.findAll('a')[1].trigger('click');
+    expect(push).not.toHaveBeenCalled();
+    expect(replace).not.toHaveBeenCalled();
+
+    await wrapper.setProps({ navHistory: 'push' });
+    await wrapper.findAll('a')[1].trigger('click');
+    expect(push).toHaveBeenCalledWith('', '', '#section-1');
+
+    await wrapper.setProps({ navHistory: 'replace' });
+    await wrapper.findAll('a')[0].trigger('click');
+    expect(replace).toHaveBeenCalledWith('', '', '#section-0');
+    push.mockRestore();
+    replace.mockRestore();
+    wrapper.unmount();
+  });
+
+  it('does not activate items without spying', () => {
+    const wrapper = mount(PfJumpLinks, {
+      props: { ariaLabel: 'Jump' },
+      slots: { default: () => [h(PfJumpLinksItem, { href: '#' }, () => 'One')] },
+    });
+    expect(wrapper.find(`.${styles.modifiers.current}`).exists()).toBe(false);
   });
 });
 
