@@ -1,37 +1,51 @@
 <template>
-  <pf-select v-model:open="open" variant="typeahead" no-focus-first-item-on-open full-width>
-    <template #label>
-      <pf-text-input-group plain>
-        <pf-text-input-group-main
-          v-model="input"
-          autocomplete="off"
-          placeholder="Select a state"
-          role="combobox"
-          :aria-expanded="open"
-          :aria-activedescendant="activeItem"
-          aria-controls="select-typeahead-listbox"
-          @update:model-value="filter = $event"
-          @focus="($event.target as HTMLInputElement).select()"
-          @click="open = !open"
-          @keydown="handleKeydown"
-        />
-        <pf-text-input-group-utilities>
-          <pf-button v-if="input" variant="plain" @click="handleClick">
-            <template #icon>
-              <xmark-icon aria-hidden />
-            </template>
-          </pf-button>
-        </pf-text-input-group-utilities>
-      </pf-text-input-group>
+  <pf-select
+    id="typeahead-select"
+    :open="open"
+    :selected="selected"
+    variant="typeahead"
+    @update:open="onOpenChange"
+    @select="onSelect"
+  >
+    <template #toggle>
+      <pf-menu-toggle
+        variant="typeahead"
+        aria-label="Typeahead menu toggle"
+        full-width
+        @update:expanded="textInput?.focus()"
+      >
+        <pf-text-input-group plain>
+          <pf-text-input-group-main
+            id="typeahead-select-input"
+            ref="textInput"
+            v-model="inputValue"
+            autocomplete="off"
+            placeholder="Select a state"
+            role="combobox"
+            :aria-expanded="open"
+            :aria-activedescendant="activeItemId"
+            aria-controls="select-typeahead-listbox"
+            @update:model-value="onTextInputChange"
+            @click="onInputClick"
+            @keydown="onInputKeyDown"
+          />
+          <pf-text-input-group-utilities v-show="inputValue">
+            <pf-button variant="plain" aria-label="Clear input value" @click="onClearButtonClick">
+              <template #icon><xmark-icon /></template>
+            </pf-button>
+          </pf-text-input-group-utilities>
+        </pf-text-input-group>
+      </pf-menu-toggle>
     </template>
 
     <pf-select-list id="select-typeahead-listbox">
       <pf-select-option
-        v-for="(option, i) of filteredOptions"
-        :key="i"
+        v-for="(option, index) in selectOptions"
+        :id="createItemId(option.value)"
+        :key="option.value"
         :value="option.value"
-        :focused="focusedItemIndex === i"
-        @click="select(option.value)"
+        :focused="focusedItemIndex === index"
+        :aria-disabled="option.ariaDisabled"
       >
         {{ option.label }}
       </pf-select-option>
@@ -40,19 +54,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, type Ref } from 'vue';
+import { computed, ref, useTemplateRef } from 'vue';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
+import type { MenuItemId } from '@vue-patternfly/core/components/Menu/Menu.vue';
 
-const open = ref(false);
-const filter: Ref<string | number | null> = ref('');
-const input = ref('');
-const focusedItemIndex: Ref<number | undefined> = ref();
-const activeItem: Ref<string | undefined> = ref();
-const selected: Ref<string | undefined> = ref();
+type Option = { value: string; label: string; ariaDisabled?: boolean };
 
-type OptionItem = { value: string; label: string };
-
-const allOptions: OptionItem[] = [
+const initialSelectOptions: Option[] = [
   { value: 'Alabama', label: 'Alabama' },
   { value: 'Florida', label: 'Florida' },
   { value: 'New Jersey', label: 'New Jersey' },
@@ -61,74 +69,136 @@ const allOptions: OptionItem[] = [
   { value: 'North Carolina', label: 'North Carolina' },
 ];
 
-const filteredOptions = computed(() => {
-  let newOptions = allOptions;
-  if (!filter.value) {
-    return newOptions;
+const NO_RESULTS = 'no results';
+
+const open = ref(false);
+const selected = ref('');
+const inputValue = ref('');
+const filterValue = ref('');
+const focusedItemIndex = ref<number | null>(null);
+const activeItemId = ref<string>();
+const textInput = useTemplateRef('textInput');
+
+// Filter menu items based on the text input value when one exists
+const selectOptions = computed((): Option[] => {
+  if (!filterValue.value) {
+    return initialSelectOptions;
   }
-
-  newOptions = allOptions.filter(item => item.label.toLowerCase().includes(String(filter.value).toLowerCase()));
-
-  if (!newOptions.length) {
-    newOptions = [{ value: '', label: `No results found for ${filter.value}` }];
-  }
-
-  return newOptions;
+  const options = initialSelectOptions.filter(option =>
+    option.label.toLowerCase().includes(filterValue.value.toLowerCase()),
+  );
+  // When no options are found after filtering, display 'No results found'
+  return options.length
+    ? options
+    : [{ ariaDisabled: true, label: `No results found for "${filterValue.value}"`, value: NO_RESULTS }];
 });
 
-function handleClick() {
-  filter.value = '';
-  input.value = '';
-  selected.value = '';
+const createItemId = (value: string) => `select-typeahead-${value.replace(' ', '-')}`;
+
+function setActiveAndFocusedItem(itemIndex: number) {
+  focusedItemIndex.value = itemIndex;
+  activeItemId.value = createItemId(selectOptions.value[itemIndex]!.value);
+}
+
+function resetActiveAndFocusedItem() {
+  focusedItemIndex.value = null;
+  activeItemId.value = undefined;
+}
+
+function closeMenu() {
+  open.value = false;
+  resetActiveAndFocusedItem();
+}
+
+function onOpenChange(isOpen: boolean) {
+  if (isOpen) {
+    open.value = true;
+  } else {
+    closeMenu();
+  }
+}
+
+function onInputClick() {
+  if (!open.value) {
+    open.value = true;
+  } else if (!inputValue.value) {
+    closeMenu();
+  }
+}
+
+function selectOption(value: string, content: string) {
+  // eslint-disable-next-line no-console
+  console.log('selected', content);
+
+  inputValue.value = content;
+  filterValue.value = '';
+  selected.value = value;
+  closeMenu();
+}
+
+function onSelect(_event: Event, value?: MenuItemId | null) {
+  if (typeof value === 'string' && value && value !== NO_RESULTS) {
+    const optionText = selectOptions.value.find(option => option.value === value)?.label;
+    selectOption(value, optionText ?? value);
+  }
+}
+
+function onTextInputChange(value: string) {
+  filterValue.value = value;
+  resetActiveAndFocusedItem();
+
+  if (value !== selected.value) {
+    selected.value = '';
+  }
+
+  // Open the menu when the input value changes and the new value is not empty
+  if (value && !open.value) {
+    open.value = true;
+  }
 }
 
 function handleMenuArrowKeys(key: string) {
-  let indexToFocus: number | undefined = undefined;
+  const options = selectOptions.value;
+  let indexToFocus = 0;
 
   if (!open.value) {
+    open.value = true;
+  }
+
+  if (options.every(option => option.ariaDisabled)) {
     return;
   }
 
   if (key === 'ArrowUp') {
     // When no index is set or at the first index, focus to the last, otherwise decrement focus index
-    if (focusedItemIndex.value === undefined || focusedItemIndex.value === 0) {
-      indexToFocus = filteredOptions.value.length - 1;
-    } else {
-      indexToFocus = focusedItemIndex.value - 1;
-    }
+    indexToFocus =
+      focusedItemIndex.value === null || focusedItemIndex.value === 0 ? options.length - 1 : focusedItemIndex.value - 1;
   }
 
   if (key === 'ArrowDown') {
     // When no index is set or at the last index, focus to the first, otherwise increment focus index
-    if (focusedItemIndex.value === undefined || focusedItemIndex.value === filteredOptions.value.length - 1) {
-      indexToFocus = 0;
-    } else {
-      indexToFocus = focusedItemIndex.value + 1;
-    }
+    indexToFocus =
+      focusedItemIndex.value === null || focusedItemIndex.value === options.length - 1 ? 0 : focusedItemIndex.value + 1;
   }
 
-  if (indexToFocus === undefined) {
-    return;
-  }
-
-  focusedItemIndex.value = indexToFocus;
-  const focusedItem = filteredOptions.value[indexToFocus];
-  activeItem.value = `select-typeahead-${focusedItem.value.replace(' ', '-')}`;
+  setActiveAndFocusedItem(indexToFocus);
 }
 
-function handleKeydown(event: KeyboardEvent) {
-  const [firstMenuItem] = filteredOptions.value;
-  const focusedItem = focusedItemIndex.value ? filteredOptions.value[focusedItemIndex.value] : firstMenuItem;
+function onInputKeyDown(event: KeyboardEvent) {
+  const focusedItem = focusedItemIndex.value !== null ? selectOptions.value[focusedItemIndex.value] : null;
+
+  // like upstream, reopen only a menu that was closed before the selection
+  const wasOpen = open.value;
 
   switch (event.key) {
-    // Select the first available option
     case 'Enter':
-      select(focusedItem.value);
-      break;
-    case 'Tab':
-    case 'Escape':
-      open.value = false;
-      activeItem.value = undefined;
+      if (wasOpen && focusedItem && focusedItem.value !== NO_RESULTS && !focusedItem.ariaDisabled) {
+        selectOption(focusedItem.value, focusedItem.label);
+      }
+
+      if (!wasOpen) {
+        open.value = true;
+      }
       break;
     case 'ArrowUp':
     case 'ArrowDown':
@@ -138,18 +208,11 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
-function select(value: string) {
-  // eslint-disable-next-line no-console
-  console.log('selected', value);
-
-  if (open.value && value) {
-    input.value = value;
-    filter.value = '';
-    selected.value = value;
-  }
-
-  open.value = !open.value;
-  focusedItemIndex.value = undefined;
-  activeItem.value = undefined;
+function onClearButtonClick() {
+  selected.value = '';
+  inputValue.value = '';
+  filterValue.value = '';
+  resetActiveAndFocusedItem();
+  textInput.value?.focus();
 }
 </script>

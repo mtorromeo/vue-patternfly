@@ -25,39 +25,37 @@
                       <moon-icon v-else />
                     </template>
 
-                    <pf-menu-content>
-                      <pf-menu-group label="Theme">
-                        <pf-menu-input>
-                          <pf-toggle-group :model-value="feltTheme" @update:model-value="feltTheme = Boolean($event)">
-                            <pf-toggle-group-item :value="false"> Default </pf-toggle-group-item>
-                            <pf-toggle-group-item :value="true"> Project Felt </pf-toggle-group-item>
-                          </pf-toggle-group>
-                        </pf-menu-input>
-                      </pf-menu-group>
-                      <pf-divider />
-                      <pf-menu-group label="Color scheme">
-                        <pf-menu-input>
-                          <pf-toggle-group
-                            :model-value="darkTheme"
-                            @update:model-value="darkTheme = Boolean($event)"
-                            aria-label="Dark mode toggle"
-                          >
-                            <pf-toggle-group-item :value="false"> Light </pf-toggle-group-item>
-                            <pf-toggle-group-item :value="true"> Dark </pf-toggle-group-item>
-                          </pf-toggle-group>
-                        </pf-menu-input>
-                      </pf-menu-group>
-                      <pf-divider />
-                      <pf-menu-group label="Contrast mode">
-                        <pf-menu-input>
-                          <pf-toggle-group v-model="contrastTheme">
-                            <pf-toggle-group-item value="Default"> Default </pf-toggle-group-item>
-                            <pf-toggle-group-item value="High contrast"> High contrast </pf-toggle-group-item>
-                            <pf-toggle-group-item value="Glass"> Glass </pf-toggle-group-item>
-                          </pf-toggle-group>
-                        </pf-menu-input>
-                      </pf-menu-group>
-                    </pf-menu-content>
+                    <pf-menu-group label="Theme">
+                      <pf-menu-input>
+                        <pf-toggle-group :model-value="feltTheme" @update:model-value="feltTheme = Boolean($event)">
+                          <pf-toggle-group-item :value="false"> Default </pf-toggle-group-item>
+                          <pf-toggle-group-item :value="true"> Project Felt </pf-toggle-group-item>
+                        </pf-toggle-group>
+                      </pf-menu-input>
+                    </pf-menu-group>
+                    <pf-divider />
+                    <pf-menu-group label="Color scheme">
+                      <pf-menu-input>
+                        <pf-toggle-group
+                          :model-value="darkTheme"
+                          @update:model-value="darkTheme = Boolean($event)"
+                          aria-label="Dark mode toggle"
+                        >
+                          <pf-toggle-group-item :value="false"> Light </pf-toggle-group-item>
+                          <pf-toggle-group-item :value="true"> Dark </pf-toggle-group-item>
+                        </pf-toggle-group>
+                      </pf-menu-input>
+                    </pf-menu-group>
+                    <pf-divider />
+                    <pf-menu-group label="Contrast mode">
+                      <pf-menu-input>
+                        <pf-toggle-group v-model="contrastTheme">
+                          <pf-toggle-group-item value="Default"> Default </pf-toggle-group-item>
+                          <pf-toggle-group-item value="High contrast"> High contrast </pf-toggle-group-item>
+                          <pf-toggle-group-item value="Glass"> Glass </pf-toggle-group-item>
+                        </pf-toggle-group>
+                      </pf-menu-input>
+                    </pf-menu-group>
                   </pf-select>
                 </pf-toolbar-item>
 
