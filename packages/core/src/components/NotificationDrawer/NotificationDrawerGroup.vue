@@ -13,7 +13,7 @@
           <div
             ref="textRef"
             :class="styles.notificationDrawerGroupToggleTitle"
-            tabindex="0"
+            :tabindex="textOverflowing ? 0 : undefined"
             :style="truncateTitle ? { [maxLines.name]: truncateTitle.toString() } : undefined"
           >
             <slot name="title">{{ title }}</slot>
@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_notification_drawer__group_toggle_title_max_lines';
-import type { HTMLAttributes } from 'vue';
+import type { HTMLAttributes, VNode } from 'vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
 import PfBadge from '../Badge.vue';
 import { useTemplateRef } from 'vue';
@@ -56,7 +56,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Adds styling to the group to indicate whether it has been read */
   read?: boolean;
   /**  Callback for when group button is clicked to expand */
-  onExpand?: (event: any, value: boolean) => void;
+  onExpand?: (event: Event, value: boolean) => void;
   /**  Notification drawer group title */
   title?: string;
   /** Truncate title to number of lines */
@@ -77,8 +77,8 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const expanded = defineModel<boolean>('expanded', { default: false });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  title?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
+  title?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const text = useTemplateRef('textRef');

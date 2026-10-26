@@ -4,6 +4,7 @@ import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
 import badgeStyles from '@patternfly/react-styles/css/components/Badge/badge';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_notification_drawer__group_toggle_title_max_lines';
+import itemMaxLines from '@patternfly/react-tokens/dist/esm/c_notification_drawer__list_item_header_title_max_lines';
 import PfNotificationDrawer from '../../src/components/NotificationDrawer/NotificationDrawer.vue';
 import PfNotificationDrawerBody from '../../src/components/NotificationDrawer/NotificationDrawerBody.vue';
 import PfNotificationDrawerGroup from '../../src/components/NotificationDrawer/NotificationDrawerGroup.vue';
@@ -100,6 +101,23 @@ describe('NotificationDrawerHeader', () => {
     expect(action.findAll('button')).toHaveLength(1);
   });
 
+  it('labels the close button', () => {
+    const onClose = vi.fn();
+    const button = (props: Record<string, unknown>) =>
+      mount(PfNotificationDrawerHeader, { props: { onClose, ...props } }).find(
+        `.${styles.notificationDrawerHeaderAction} button`,
+      );
+    expect(button({}).attributes('aria-label')).toBe('Close');
+    expect(button({ closeButtonAriaLabel: 'Close notifications' }).attributes('aria-label')).toBe(
+      'Close notifications',
+    );
+  });
+
+  it('forwards the class to the header', () => {
+    const wrapper = mount(PfNotificationDrawerHeader, { attrs: { class: 'extra-class' } });
+    expect(wrapper.classes()).toContain('extra-class');
+  });
+
   it('renders a close button calling onClose', async () => {
     const onClose = vi.fn();
     const wrapper = mount(PfNotificationDrawerHeader, { props: { onClose } });
@@ -145,7 +163,7 @@ describe('NotificationDrawerListItem', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.hoverable);
     expect(wrapper.classes()).not.toContain(styles.modifiers.read);
     expect(wrapper.attributes('tabindex')).toBe('0');
-    expect(wrapper.text()).toBe('Item');
+    expect(wrapper.text()).toBe('unreadItem');
   });
 
   it.each(['success', 'danger', 'warning', 'info'] as const)('applies the %s variant modifier', variant => {
@@ -159,6 +177,37 @@ describe('NotificationDrawerListItem', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.read);
     expect(wrapper.classes()).not.toContain(styles.modifiers.hoverable);
     expect(wrapper.attributes('tabindex')).toBe('-1');
+  });
+
+  // the screen reader text was empty unless set
+  it('defaults the read state screen reader text to read or unread', () => {
+    expect(mount(PfNotificationDrawerListItem).find('.pf-v6-screen-reader').text()).toBe('unread');
+    expect(
+      mount(PfNotificationDrawerListItem, { props: { read: true } })
+        .find('.pf-v6-screen-reader')
+        .text(),
+    ).toBe('read');
+  });
+
+  // keyboard users could not activate an item
+  it.each(['Enter', ' '])('clicks the item on %j keydown', async key => {
+    const onClick = vi.fn();
+    const wrapper = mount(PfNotificationDrawerListItem, { attrs: { onClick } });
+    await wrapper.trigger('keydown', { key });
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not click the item for keys on the header actions', async () => {
+    const onClick = vi.fn();
+    const wrapper = mount(PfNotificationDrawerListItem, {
+      attrs: { onClick },
+      slots: {
+        default: () =>
+          h(PfNotificationDrawerListItemHeader, { title: 'T' }, () => h('button', { class: 'action' }, 'Action')),
+      },
+    });
+    await wrapper.find('.action').trigger('keydown', { key: 'Enter' });
+    expect(onClick).not.toHaveBeenCalled();
   });
 
   it('renders the read state screen reader text', () => {
@@ -209,6 +258,34 @@ describe('NotificationDrawerListItemHeader', () => {
     expect(title.classes()).toContain(styles.modifiers.truncate);
     expect(title.find('span').text()).toBe('Info alert:');
     expect(title.text()).toBe('Info alert: Title');
+  });
+
+  // the max-lines variable was never set, so truncateTitle always truncated to the CSS default
+  it('sets the max lines of a truncated title', () => {
+    const wrapper = mount(PfNotificationDrawerListItemHeader, { props: { title: 'Title', truncateTitle: 2 } });
+    expect((wrapper.find('h2').element as HTMLElement).style.getPropertyValue(itemMaxLines.name)).toBe('2');
+    expect(wrapper.find('h2').attributes('tabindex')).toBeUndefined();
+  });
+
+  // attributes were dropped with a warning, as the header renders two root elements
+  it('forwards attributes to the header element', () => {
+    const wrapper = mount(PfNotificationDrawerListItemHeader, {
+      props: { title: 'T' },
+      attrs: { class: 'extra-class', 'data-testid': 'test-id' },
+    });
+    const header = wrapper.find(`.${styles.notificationDrawerListItemHeader}`);
+    expect(header.classes()).toContain('extra-class');
+    expect(header.attributes('data-testid')).toBe('test-id');
+  });
+
+  it('removes the action offset with actionNoOffset', () => {
+    const slots = { default: () => 'test' };
+    const withOffset = mount(PfNotificationDrawerListItemHeader, { props: { title: 'T' }, slots });
+    expect(withOffset.find(`.${styles.notificationDrawerListItemAction}`).classes()).not.toContain(
+      styles.modifiers.noOffset,
+    );
+    const noOffset = mount(PfNotificationDrawerListItemHeader, { props: { title: 'T', actionNoOffset: true }, slots });
+    expect(noOffset.find(`.${styles.notificationDrawerListItemAction}`).classes()).toContain(styles.modifiers.noOffset);
   });
 
   it('renders actions after the header', () => {
@@ -337,6 +414,12 @@ describe('NotificationDrawerGroup', () => {
     const title = wrapper.find(`h3 .${styles.notificationDrawerGroupToggleTitle}`);
     expect(title.find('em').text()).toBe('Slot title');
     expect((title.element as HTMLElement).style.getPropertyValue(maxLines.name)).toBe('2');
+  });
+
+  // the title was always focusable, nesting a tab stop inside the toggle button
+  it('makes the title focusable only when it overflows', () => {
+    const wrapper = mount(PfNotificationDrawerGroup, { props: { count: 1, title: 'Group' } });
+    expect(wrapper.find(`.${styles.notificationDrawerGroupToggleTitle}`).attributes('tabindex')).toBeUndefined();
   });
 
   it('calls onExpand when toggled', async () => {

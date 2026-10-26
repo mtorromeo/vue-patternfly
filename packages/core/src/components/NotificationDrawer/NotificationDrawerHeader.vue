@@ -4,14 +4,18 @@
       {{ title }}
     </h1>
 
-    <span v-if="customText || count !== undefined" :class="styles.notificationDrawerHeaderStatus" aria-live="polite">
+    <span
+      v-if="customText !== undefined || count !== undefined"
+      :class="styles.notificationDrawerHeaderStatus"
+      aria-live="polite"
+    >
       {{ customText || `${count} ${unreadText}` }}
     </span>
 
     <div v-if="$slots.default || onClose" :class="styles.notificationDrawerHeaderAction">
       <slot />
       <div v-if="onClose">
-        <pf-close-button @click="onClose" />
+        <pf-close-button :aria-label="closeButtonAriaLabel" @click="onClose" />
       </div>
     </div>
   </div>
@@ -19,7 +23,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
-import type { HTMLAttributes } from 'vue';
+import type { HTMLAttributes, VNode } from 'vue';
 import PfCloseButton from '../CloseButton.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -38,15 +42,18 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   title?: string;
   /**  Notification drawer heading unread text used in combination with a count */
   unreadText?: string;
+  /** Accessible text of the close button */
+  closeButtonAriaLabel?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: 'Notifications',
   unreadText: 'unread',
+  closeButtonAriaLabel: 'Close',
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

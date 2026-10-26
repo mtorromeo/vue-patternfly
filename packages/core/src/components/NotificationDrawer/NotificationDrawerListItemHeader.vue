@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="ouiaProps" :class="styles.notificationDrawerListItemHeader">
+  <div v-bind="{ ...ouiaProps, ...$attrs }" :class="styles.notificationDrawerListItemHeader">
     <span :class="styles.notificationDrawerListItemHeaderIcon">
       <slot name="icon">
         <component :is="variantIcons[variant]" />
@@ -12,35 +12,23 @@
         :is="headingLevel"
         ref="textRef"
         :class="[styles.notificationDrawerListItemHeaderTitle, { [styles.modifiers.truncate]: truncateTitle }]"
+        :style="truncateTitle ? { [maxLines.name]: truncateTitle.toString() } : undefined"
+        :tabindex="textOverflowing ? 0 : undefined"
       >
         <span v-if="srTitle" class="pf-v6-screen-reader">{{ srTitle }}</span>
         {{ title }}
       </component>
     </pf-tooltip>
   </div>
-  <div v-if="$slots.default" :class="styles.notificationDrawerListItemAction">
+  <div
+    v-if="$slots.default"
+    :class="[styles.notificationDrawerListItemAction, { [styles.modifiers.noOffset]: actionNoOffset }]"
+  >
     <slot />
   </div>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
-import PfTooltip from '../Tooltip/Tooltip.vue';
-import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
-import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
-import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
-import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
-import BellIcon from '@vue-patternfly/icons/bell-icon';
-import { useElementOverflow } from '../../use';
-import { useTemplateRef } from 'vue';
-import type { HTMLAttributes } from 'vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import type { Placement } from '../../helpers/FloatingUi.vue';
-
-defineOptions({
-  name: 'PfNotificationDrawerListItemHeader',
-});
-
+<script lang="ts">
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /**  Notification drawer list item header screen reader title */
   srTitle?: string;
@@ -54,7 +42,29 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   tooltipPosition?: Placement;
   /** Sets the heading level to use for the list item header title. Default is h2. */
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  /** Removes the offset of the notification drawer actions. */
+  actionNoOffset?: boolean;
 }
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
+import maxLines from '@patternfly/react-tokens/dist/esm/c_notification_drawer__list_item_header_title_max_lines';
+import PfTooltip from '../Tooltip/Tooltip.vue';
+import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
+import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
+import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
+import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
+import BellIcon from '@vue-patternfly/icons/bell-icon';
+import { useElementOverflow } from '../../use';
+import { useTemplateRef, type HTMLAttributes, type VNode } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import type { Placement } from '../../helpers/FloatingUi.vue';
+
+defineOptions({
+  name: 'PfNotificationDrawerListItemHeader',
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'custom',
@@ -64,8 +74,10 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  icon?: (props?: Record<never, never>) => any;
+  /** Actions of the list item */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Custom icon, replacing the variant icon */
+  icon?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const variantIcons = {
