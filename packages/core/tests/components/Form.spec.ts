@@ -171,7 +171,7 @@ describe('FormGroup', () => {
     expect(helper.find(`.${helperTextStyles.helperText}`).exists()).toBe(true);
     const item = helper.find(`.${helperTextStyles.helperTextItem}`);
     expect(item.classes()).toContain(helperTextStyles.modifiers.warning);
-    expect(item.text()).toBe('Enter your name');
+    expect(item.text()).toBe('Enter your name: warning status;');
   });
 
   it('renders no helper text by default', () => {
@@ -205,7 +205,7 @@ describe('FormGroup', () => {
 
     await wrapper.setProps({ validated: 'error' });
     const item = wrapper.find(`.${helperTextStyles.helperTextItem}`);
-    expect(item.text()).toBe('Invalid!');
+    expect(item.text()).toBe('Invalid!: error status;');
     expect(item.classes()).toContain(helperTextStyles.modifiers.error);
   });
 
@@ -224,7 +224,7 @@ describe('FormGroup', () => {
       slots: { default: () => h(PfTextInput, { 'aria-label': 'Name', validated: 'error' }) },
     });
     await nextTick();
-    expect(wrapper.find(`.${styles.formHelperText}`).text()).toBe('Invalid!');
+    expect(wrapper.find(`.${styles.formHelperText}`).text()).toBe('Invalid!: error status;');
   });
 
   it('lets the validated prop override the tracked inputs state', async () => {
