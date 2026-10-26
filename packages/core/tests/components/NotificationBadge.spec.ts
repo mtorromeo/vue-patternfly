@@ -43,6 +43,17 @@ describe('NotificationBadge', () => {
     expect(withSlot.find('button').text()).toBe('New');
   });
 
+  // an empty text span after the icon added extra space to badges without count nor content
+  it('renders no text span without count nor content', () => {
+    const button = mount(PfNotificationBadge).find('button');
+    expect(button.find(`.${styles.buttonText}`).exists()).toBe(false);
+    expect(
+      mount(PfNotificationBadge, { props: { count: 3 } })
+        .find(`.${styles.buttonText}`)
+        .text(),
+    ).toBe('3');
+  });
+
   it('renders a custom icon slot', () => {
     const wrapper = mount(PfNotificationBadge, { slots: { icon: () => h('i', { class: 'custom-icon' }) } });
     expect(wrapper.find(`.${styles.buttonIcon} i.custom-icon`).exists()).toBe(true);
@@ -65,6 +76,46 @@ describe('NotificationBadge', () => {
     const wrapper = mount(PfNotificationBadge, { attrs: { onClick } });
     await wrapper.find('button').trigger('click');
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders aria-expanded="false" and no clicked modifier by default', () => {
+    const button = mount(PfNotificationBadge).find('button');
+    expect(button.attributes('aria-expanded')).toBe('false');
+    expect(button.classes()).not.toContain(styles.modifiers.clicked);
+  });
+
+  // shouldNotify only animated when it changed after mounting
+  it('animates when mounted with shouldNotify', () => {
+    const button = mount(PfNotificationBadge, { props: { shouldNotify: true } }).find('button');
+    expect(button.classes()).toContain(styles.modifiers.notify);
+  });
+
+  // the animation only stopped at its end, ignoring shouldNotify becoming false
+  it('stops animating when shouldNotify becomes false', async () => {
+    const wrapper = mount(PfNotificationBadge, { props: { shouldNotify: false } });
+    await wrapper.setProps({ shouldNotify: true });
+    expect(wrapper.find('button').classes()).toContain(styles.modifiers.notify);
+    await wrapper.setProps({ shouldNotify: false });
+    expect(wrapper.find('button').classes()).not.toContain(styles.modifiers.notify);
+  });
+
+  it('forwards animationend listeners', async () => {
+    const onAnimationend = vi.fn();
+    const wrapper = mount(PfNotificationBadge, { props: { shouldNotify: true }, attrs: { onAnimationend } });
+    await wrapper.find('button').trigger('animationend');
+    expect(onAnimationend).toHaveBeenCalledTimes(1);
+    expect(wrapper.find('button').classes()).not.toContain(styles.modifiers.notify);
+  });
+
+  it('uses the attention-icon slot for the attention variant only', () => {
+    const slots = { icon: () => h('i', { class: 'icon' }), 'attention-icon': () => h('i', { class: 'attention' }) };
+    const attention = mount(PfNotificationBadge, { props: { variant: 'attention' }, slots });
+    expect(attention.find('.attention').exists()).toBe(true);
+    expect(attention.find('.icon').exists()).toBe(false);
+
+    const read = mount(PfNotificationBadge, { slots });
+    expect(read.find('.icon').exists()).toBe(true);
+    expect(read.find('.attention').exists()).toBe(false);
   });
 
   it('sets aria-expanded and the clicked modifier when expanded', () => {
