@@ -8,6 +8,7 @@
         componentClass,
         {
           [styles.modifiers.current]: current,
+          [styles.modifiers.link]: component !== 'button',
         },
       ]"
       :type="component === 'button' ? type : undefined"
@@ -20,39 +21,40 @@
   </li>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
+  /** Identifier of the item, set as the value of the SimpleList when selected. It is the form field value when the SimpleList has a name. */
+  value?: SimpleListValue;
+  /** Component type of the SimpleList item */
+  component?: 'button' | 'a';
+  /** Additional classes added to the SimpleList <a> or <button> */
+  componentClass?: HTMLAttributes['class'];
+  /** Additional attrs added to the SimpleList <a> or <button> */
+  componentAttrs?: ButtonHTMLAttributes | AnchorHTMLAttributes;
+  /** Type of button SimpleList item */
+  type?: 'button' | 'submit' | 'reset';
+  /** Default hyperlink location */
+  href?: string;
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
-
-import { computed, inject } from 'vue';
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, LiHTMLAttributes } from 'vue';
-import { SimpleListValueKey } from './SimpleList.vue';
+import {
+  computed,
+  inject,
+  type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+  type HTMLAttributes,
+  type LiHTMLAttributes,
+  type VNode,
+} from 'vue';
+import { SimpleListKey, type SimpleListValue } from './common';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfSimpleListItem',
 });
-
-interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
-  /**
-   * Identifier fot the item. If the SimpleList has a name it will be used as the form field value.
-   */
-  value?: string;
-
-  /** Component type of the SimpleList item */
-  component?: 'button' | 'a';
-
-  /** Additional classes added to the SimpleList <a> or <button> */
-  componentClass?: string | string[] | Record<string, string>;
-
-  /** Additional attrs added to the SimpleList <a> or <button> */
-  componentAttrs?: ButtonHTMLAttributes | AnchorHTMLAttributes;
-
-  /** Type of button SimpleList item */
-  type?: 'button' | 'a';
-
-  /** Default hyperlink location */
-  href?: string;
-}
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'button',
@@ -61,21 +63,23 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: 'click', e: PointerEvent): void;
+  (name: 'click', e: MouseEvent): void;
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** Content of the item */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const instanceId = Symbol();
-const listValue = inject(SimpleListValueKey, undefined);
-const current = computed(() => listValue?.value === (props.value ?? instanceId));
+const list = inject(SimpleListKey, undefined);
+const current = computed(() => list?.value.value === (props.value ?? instanceId));
 
-function onClick(e: PointerEvent) {
+function onClick(e: MouseEvent) {
   emit('click', e);
-  if (listValue) {
-    listValue.value = props.value ?? instanceId;
+  if (list) {
+    list.value.value = props.value ?? instanceId;
+    list.select(e, props.value);
   }
 }
 </script>

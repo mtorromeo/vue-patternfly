@@ -4,7 +4,7 @@
       v-if="name"
       type="hidden"
       :name="name"
-      :value="typeof value === 'string' ? value : ''"
+      :value="typeof value === 'symbol' ? '' : (value ?? '')"
       :required="required"
     />
     <component :is="fragment(renderList())" />
@@ -12,63 +12,54 @@
 </template>
 
 <script lang="ts">
-export const SimpleListValueKey = Symbol('SimpleListValueKey') as InjectionKey<
-  WritableComputedRef<string | symbol | null>
->;
+export { SimpleListKey, type SimpleListProvide, type SimpleListValue } from './common';
 
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+interface Props<T extends SimpleListValue> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
   /** Form element name */
   name?: string;
-  modelValue?: string | null;
+  /** Value of the current item, bound with v-model. */
+  modelValue?: T | null;
+  /** Flag indicating the form field is required */
   required?: boolean;
   /** aria-label for the <ul> element that wraps the SimpleList items. */
   ariaLabel?: string;
 }
 </script>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends SimpleListValue = SimpleListValue">
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
-
-import {
-  type Component,
-  type InjectionKey,
-  provide,
-  type HTMLAttributes,
-  ref,
-  type Ref,
-  computed,
-  type WritableComputedRef,
-  watch,
-  h,
-} from 'vue';
+import { type Component, provide, type HTMLAttributes, ref, computed, watch, h, type VNode } from 'vue';
 import { findChildrenVNodes, fragment } from '../../util';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { SimpleListKey, type SimpleListValue } from './common';
 
 defineOptions({
   name: 'PfSimpleList',
 });
 
-const props = defineProps<Props>();
+const props = defineProps<Props<T>>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   /** Callback for when the model value changes */
-  (e: 'update:modelValue', value: string): void;
+  (e: 'update:modelValue', value: T): void;
+  /** Callback when an item is selected, with the value of the item */
+  (e: 'select', event: Event, value: SimpleListValue | undefined): void;
 }>();
 
 const slots = defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 /** Value for the selected item */
-const innerValue: Ref<string | symbol | null> = ref(props.modelValue ?? null);
+const innerValue = ref<SimpleListValue | symbol | null>(props.modelValue ?? null);
 
 const value = computed({
   get: () => innerValue.value,
-  set: (v: string | symbol | null) => {
+  set: (v: SimpleListValue | symbol | null) => {
     innerValue.value = v;
-    if (typeof v === 'string') {
-      emit('update:modelValue', v);
+    if (typeof v === 'string' || typeof v === 'number') {
+      emit('update:modelValue', v as T);
     }
   },
 });
@@ -80,7 +71,10 @@ watch(
   },
 );
 
-provide(SimpleListValueKey, value);
+provide(SimpleListKey, {
+  value,
+  select: (event, itemValue) => emit('select', event, itemValue),
+});
 
 function renderList() {
   const children = slots.default ? findChildrenVNodes(slots.default({})) : [];

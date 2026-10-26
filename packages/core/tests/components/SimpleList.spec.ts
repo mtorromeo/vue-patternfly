@@ -136,6 +136,56 @@ describe('SimpleList', () => {
     expect(currentIndexes(wrapper)).toEqual([1]);
     expect(wrapper.emitted('update:modelValue')).toEqual([['b']]);
   });
+
+  it('emits select with the value of the clicked item, for buttons and anchors', async () => {
+    const wrapper = mount(PfSimpleList, {
+      slots: {
+        default: () => [
+          h(PfSimpleListItem, { value: 'one' }, () => 'One'),
+          h(PfSimpleListItem, { component: 'a', href: '#two' }, () => 'Two'),
+        ],
+      },
+    });
+    await itemButtons(wrapper)[0]!.trigger('click');
+    await itemButtons(wrapper)[1]!.trigger('click');
+    const select = wrapper.emitted<[Event, unknown]>('select')!;
+    expect(select).toHaveLength(2);
+    expect(select[0]![0]).toBeInstanceOf(Event);
+    expect(select[0]![1]).toBe('one');
+    expect(select[1]![1]).toBeUndefined();
+  });
+
+  it('accepts number values', async () => {
+    const wrapper = mountWithModel(
+      PfSimpleList,
+      'modelValue',
+      { modelValue: 0, name: 'choice' },
+      {
+        slots: {
+          default: () => [
+            h(PfSimpleListItem, { value: 0 }, () => 'Zero'),
+            h(PfSimpleListItem, { value: 1 }, () => 'One'),
+          ],
+        },
+      },
+    );
+    expect(currentIndexes(wrapper)).toEqual([0]);
+    expect(wrapper.find<HTMLInputElement>('input').element.value).toBe('0');
+
+    await itemButtons(wrapper)[1]!.trigger('click');
+    expect(wrapper.emitted('update:modelValue')).toEqual([[1]]);
+    expect(currentIndexes(wrapper)).toEqual([1]);
+    expect(wrapper.find<HTMLInputElement>('input').element.value).toBe('1');
+  });
+
+  it('renders anchor items as links', () => {
+    const wrapper = mount(PfSimpleList, {
+      slots: {
+        default: () => ['#foo', '#bar', '#baz'].map(href => h(PfSimpleListItem, { component: 'a', href }, () => href)),
+      },
+    });
+    expect(wrapper.findAll('a[href]')).toHaveLength(3);
+  });
 });
 
 describe('SimpleListItem', () => {
@@ -157,6 +207,18 @@ describe('SimpleListItem', () => {
     expect(link.attributes('href')).toBe('#link');
     expect(link.attributes('tabindex')).toBe('0');
     expect(link.attributes('type')).toBeUndefined();
+  });
+
+  it('adds the link modifier to anchors only', () => {
+    const link = mount(PfSimpleListItem, { props: { component: 'a', href: '#' } }).find('a');
+    expect(link.classes()).toContain(styles.modifiers.link);
+    const button = mount(PfSimpleListItem).find('button');
+    expect(button.classes()).not.toContain(styles.modifiers.link);
+  });
+
+  it('sets the button type', () => {
+    const wrapper = mount(PfSimpleListItem, { props: { type: 'submit' } });
+    expect(wrapper.find('button').attributes('type')).toBe('submit');
   });
 
   it('exposes the interactive element to assistive technology', () => {
@@ -206,6 +268,24 @@ describe('SimpleListGroup', () => {
     expect(ul.attributes('role')).toBe('list');
     expect(ul.attributes('aria-labelledby')).toBe('grp');
     expect(ul.findAll('li')).toHaveLength(1);
+  });
+
+  it('puts other attributes on the section and the class on the list', () => {
+    const wrapper = mount(PfSimpleListGroup, {
+      props: { title: 'Title' },
+      attrs: { class: 'list-extra', 'data-test': 'grp' },
+    });
+    expect(wrapper.element.tagName).toBe('SECTION');
+    expect(wrapper.attributes('data-test')).toBe('grp');
+    expect(wrapper.classes()).not.toContain('list-extra');
+    expect(wrapper.find('ul').attributes('data-test')).toBeUndefined();
+  });
+
+  it('labels the list with a generated title id', () => {
+    const wrapper = mount(PfSimpleListGroup, { props: { title: 'Title' } });
+    const id = wrapper.find('h2').attributes('id');
+    expect(id).toBeTruthy();
+    expect(wrapper.find('ul').attributes('aria-labelledby')).toBe(id);
   });
 
   it('renders the title slot over the title prop', () => {

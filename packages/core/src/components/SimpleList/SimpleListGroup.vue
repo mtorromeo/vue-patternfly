@@ -1,5 +1,5 @@
 <template>
-  <section v-bind="ouiaProps" :class="styles.simpleListSection">
+  <section v-bind="{ ...$attrs, ...ouiaProps, class: undefined }" :class="styles.simpleListSection">
     <h2 :id="id" :class="[styles.simpleListTitle, titleClass]" aria-hidden="true">
       <slot name="title">{{ title }}</slot>
     </h2>
@@ -9,9 +9,20 @@
   </section>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
+  /** ID of the SimpleList group title, labelling its list. Generated when not set. */
+  id?: string;
+  /** Title of the SimpleList group */
+  title?: string;
+  /** Additional classes added to the SimpleList group title */
+  titleClass?: HTMLAttributes['class'];
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/SimpleList/simple-list';
-import type { HTMLAttributes } from 'vue';
+import { useId, type HTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -19,22 +30,15 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** ID of SimpleList group */
-  id?: string;
-
-  /** Title of the SimpleList group */
-  title?: string;
-
-  /** Additional classes added to the SimpleList group title */
-  titleClass?: string | string[] | Record<string, string>;
-}
-
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  id: () => useId(),
+});
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  title?: (props?: Record<never, never>) => any;
+  /** Items of the group */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Title of the group, replacing the title prop */
+  title?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>
