@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { enableAutoUnmount, flushPromises, mount, type VueWrapper } from '@vue/test-utils';
 import { h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
@@ -77,7 +77,42 @@ describe('Nav', () => {
 
     await wrapper.find(`.${styles.navLink}`).trigger('click');
     expect(wrapper.emitted('select')).toHaveLength(1);
-    expect(wrapper.emitted('select')![0]!.slice(1)).toEqual(['g1', 'i1']);
+    expect(wrapper.emitted('select')![0]!.slice(1)).toEqual(['g1', 'i1', undefined]);
+  });
+
+  it('emits select with numeric ids and the item location', async () => {
+    const wrapper = mount(PfNav, {
+      slots: {
+        default: () => h(PfNavList, () => h(PfNavItem, { itemId: 0, to: '/home', linkComponent: 'a' }, () => 'Item')),
+      },
+    });
+
+    await wrapper.find(`.${styles.navLink}`).trigger('click');
+    expect(wrapper.emitted('select')![0]!.slice(1)).toEqual([undefined, 0, '/home']);
+  });
+
+  it('emits toggle when a nested expandable is toggled', async () => {
+    const wrapper = mount(PfNav, {
+      slots: {
+        default: () => h(PfNavList, () => h(PfNavExpandable, { title: 'Section', groupId: 'grp' })),
+      },
+    });
+
+    await wrapper.find(`button.${styles.navLink}`).trigger('click');
+    const [event, groupId, expanded] = wrapper.emitted('toggle')![0]!;
+    expect(event).toBeInstanceOf(MouseEvent);
+    expect([groupId, expanded]).toEqual(['grp', true]);
+  });
+
+  it('defaults ouia-safe to true', () => {
+    expect(mount(PfNav).attributes('data-ouia-safe')).toBe('true');
+  });
+
+  // the horizontal flag was computed once, ignoring a later variant change
+  it('follows a variant change', async () => {
+    const wrapper = mount(PfNav, { props: { variant: 'default' } });
+    await wrapper.setProps({ variant: 'horizontal' });
+    expect(wrapper.classes()).toContain(styles.modifiers.horizontal);
   });
 });
 
@@ -89,6 +124,7 @@ describe('NavList', () => {
 
     const list = wrapper.find('ul');
     expect(list.classes()).toContain(styles.navList);
+    expect(list.attributes('role')).toBe('list');
     expect(list.attributes('data-test')).toBe('list');
     expect(wrapper.find(`.${styles.navScrollButton}`).exists()).toBe(false);
   });
@@ -116,8 +152,7 @@ describe('NavList', () => {
     const buttons = wrapper.findAll(`.${styles.navScrollButton} button`);
     expect(buttons.map(b => b.attributes('aria-label'))).toEqual(['Back', 'Forward']);
 
-    window.dispatchEvent(new Event('resize'));
-    await nextTick();
+    await wrapper.find('ul').trigger('scroll');
     expect(wrapper.find(`.${styles.navScrollButton}`).exists()).toBe(false);
   });
 });
@@ -133,6 +168,26 @@ describe('NavGroup', () => {
     expect(title.attributes('id')).toBeTruthy();
     expect(wrapper.attributes('aria-labelledby')).toBe(title.attributes('id'));
     expect(wrapper.find(`ul.${styles.navList} li`).text()).toBe('Item');
+    expect(wrapper.find(`ul.${styles.navList}`).attributes('role')).toBe('list');
+  });
+
+  // the title was required and an empty heading always labelled the group
+  it('renders no heading without a title and warns without an aria-label', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      const labelled = mount(PfNavGroup, { attrs: { 'aria-label': 'Group' } });
+      expect(labelled.find('h2').exists()).toBe(false);
+      expect(labelled.attributes('aria-labelledby')).toBeUndefined();
+      expect(labelled.attributes('aria-label')).toBe('Group');
+      expect(warn).not.toHaveBeenCalled();
+
+      mount(PfNavGroup);
+      expect(warn).toHaveBeenCalledWith(
+        "For accessibility reasons an aria-label should be specified on nav groups if a title isn't",
+      );
+    } finally {
+      warn.mockRestore();
+    }
   });
 
   it('uses an explicit id', () => {
@@ -219,6 +274,26 @@ describe('NavItem', () => {
     expect(wrapper.emitted('select')![0]!.slice(1)).toEqual(['g', 'i']);
   });
 
+  it('accepts numeric ids', async () => {
+    const wrapper = mountItem({ groupId: 1, itemId: 2 });
+    await wrapper.find(`.${styles.navLink}`).trigger('click');
+    expect(wrapper.emitted('select')![0]!.slice(1)).toEqual([1, 2]);
+  });
+
+  it('defaults ouia-safe to true', () => {
+    expect(mountItem().attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('logs an error with both to and a flyout', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      mountItem({ to: '/home', linkComponent: 'a' }, { default: () => 'Item', flyout: () => 'Flyout' });
+      expect(error).toHaveBeenCalledWith('NavItem cannot have both "to" and "flyout" props.');
+    } finally {
+      error.mockRestore();
+    }
+  });
+
   it('prevents the default click action with preventDefault', async () => {
     const wrapper = mountItem({ preventDefault: true, href: '#' });
     const event = new MouseEvent('click', { cancelable: true, bubbles: true });
@@ -251,9 +326,38 @@ describe('NavItem', () => {
       const wrapper = mountFlyout();
       const item = wrapper.find(`li.${styles.navItem}`);
 
-      expect(item.classes()).toContain(styles.modifiers.flyout || 'pf-m-flyout');
+      expect(item.classes()).toContain(styles.modifiers.flyout);
       expect(item.find(`button.${styles.navLink} .${styles.navToggle} svg`).attributes('aria-hidden')).toBe('true');
       expect(document.body.querySelector('.sub')).toBeNull();
+    });
+
+    // the flyout button did not tell it opens a menu
+    it('marks the button as a menu trigger reflecting the flyout state', async () => {
+      const wrapper = mountFlyout();
+      const button = wrapper.find(`button.${styles.navLink}`);
+      expect(button.attributes('aria-haspopup')).toBe('menu');
+      expect(button.attributes('aria-expanded')).toBe('false');
+
+      await wrapper.find(`li.${styles.navItem}`).trigger('mouseover');
+      expect(button.attributes('aria-expanded')).toBe('true');
+    });
+
+    // the nav CSS styles flyout menus inside the nav, which used to be rendered at the end of the body
+    it('renders the flyout inside the nav with its z-index', async () => {
+      const wrapper = mountFlyout();
+      await wrapper.find(`li.${styles.navItem}`).trigger('mouseover');
+      await flushPromises();
+      const sub = document.body.querySelector<HTMLElement>('.sub')!;
+      expect(wrapper.element.contains(sub)).toBe(true);
+      expect(wrapper.find(`li.${styles.navItem}`).element.contains(sub)).toBe(false);
+      expect(sub.closest<HTMLElement>('[style*="z-index"]')!.style.zIndex).toBe('9999');
+    });
+
+    it('opens with Enter', async () => {
+      const wrapper = mountFlyout();
+      await wrapper.find(`button.${styles.navLink}`).trigger('keydown', { key: 'Enter' });
+      await flushPromises();
+      expect(document.body.querySelector('.sub')).not.toBeNull();
     });
 
     it('shows the flyout on hover and emits showflyout', async () => {
@@ -373,18 +477,39 @@ describe('NavExpandable', () => {
     expect(wrapper.find('section').attributes('hidden')).toBeUndefined();
   });
 
-  it('manages its own state when managed', async () => {
-    const wrapper = mount(PfNavExpandable, { props: { managed: true, expanded: true } });
+  // an expanded prop without v-model used to stay stuck in its state
+  it('toggles its own state seeded by the expanded prop', async () => {
+    const wrapper = mount(PfNavExpandable, { props: { expanded: true, groupId: 'grp' } });
     expect(wrapper.classes()).toContain(styles.modifiers.expanded);
 
     await toggle(wrapper).trigger('click');
     expect(wrapper.classes()).not.toContain(styles.modifiers.expanded);
-    expect(wrapper.emitted('update:expanded')).toBeUndefined();
+    expect(wrapper.emitted('update:expanded')).toEqual([[false, 'grp']]);
+
+    await toggle(wrapper).trigger('click');
+    expect(wrapper.classes()).toContain(styles.modifiers.expanded);
+  });
+
+  it('follows changes of the expanded prop', async () => {
+    const wrapper = mount(PfNavExpandable, { props: { expanded: false } });
+    await wrapper.setProps({ expanded: true });
+    expect(wrapper.classes()).toContain(styles.modifiers.expanded);
+    expect(wrapper.find('section').attributes('inert')).toBeUndefined();
+  });
+
+  it('applies buttonAttrs to the toggle', () => {
+    const wrapper = mount(PfNavExpandable, {
+      props: { title: 'Section', buttonAttrs: { 'aria-label': 'Expandable Group 1' } },
+    });
+    expect(toggle(wrapper).attributes('aria-label')).toBe('Expandable Group 1');
+  });
+
+  it('defaults ouia-safe to true', () => {
+    expect(mount(PfNavExpandable).attributes('data-ouia-safe')).toBe('true');
   });
 
   it('ignores clicks bubbling from child items', async () => {
     const wrapper = mount(PfNavExpandable, {
-      props: { managed: true },
       slots: { default: () => h('li', [h('a', { class: 'child' }, 'Child')]) },
     });
 

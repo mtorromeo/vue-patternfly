@@ -4,21 +4,19 @@
     :class="[
       styles.navItem,
       {
-        [styles.modifiers.expanded]: realExpanded,
+        [styles.modifiers.expanded]: expandedState,
         [styles.modifiers.current]: active,
       },
     ]"
-    @click="handleToggle"
   >
     <button
       :id="srText ? undefined : id"
-      ref="expandableRef"
       type="button"
       :class="styles.navLink"
-      :aria-expanded="realExpanded"
+      :aria-expanded="expandedState"
       :tabindex="sidebarOpen ? undefined : -1"
-      @click.prevent
-      @mousedown.prevent
+      v-bind="buttonAttrs"
+      @click="toggle"
     >
       <span v-if="$slots.icon" :class="styles.navLinkIcon">
         <slot name="icon" />
@@ -38,8 +36,8 @@
     <section
       :class="styles.navSubnav"
       :aria-labelledby="id"
-      :hidden="!realExpanded || undefined"
-      :inert="!realExpanded || undefined"
+      :hidden="!expandedState || undefined"
+      :inert="!expandedState || undefined"
     >
       <h2 v-if="srText" :id="id" :class="a11yStyles.screenReader">{{ srText }}</h2>
       <ul :class="styles.navList" role="list">
@@ -49,6 +47,27 @@
   </li>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
+  /** Title shown for the expandable list, replaced by the title slot */
+  title?: string;
+  /** If defined, screen readers will read this text instead of the list title */
+  srText?: string;
+  /** Group identifier, emitted with update:expanded and with the toggle event of the nav */
+  groupId?: NavId;
+  /** Identifier of the toggle (or of the srText heading), labelling the list. Generated when not set. */
+  id?: string;
+  /** Makes the expandable list title active */
+  active?: boolean;
+  /** Expands the list: the initial state, followed whenever it changes. Bind it with v-model:expanded to track clicks. */
+  expanded?: boolean;
+  /** Adds an expandable icon to indicate the section is expandable */
+  expandableIcon?: boolean;
+  /** Additional attributes added to the toggle button */
+  buttonAttrs?: ButtonHTMLAttributes;
+}
+</script>
+
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import a11yStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
@@ -56,66 +75,46 @@ import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfEllipsisIcon from '@vue-patternfly/icons/ellipsis-icon';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
-import { ref, computed, type LiHTMLAttributes, useTemplateRef, inject, useId } from 'vue';
+import { ref, watch, inject, useId, type ButtonHTMLAttributes, type LiHTMLAttributes, type VNode } from 'vue';
+import { NavOnToggleKey, type NavId } from './common';
 
 defineOptions({
   name: 'PfNavExpandable',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onClick'> {
-  title?: string;
-  srText?: string;
-  groupId?: string | number;
-  id?: string;
-  active?: boolean;
-  managed?: boolean;
-  expanded?: boolean;
-  /** Adds an expandable icon to indicate the section is expandable */
-  expandableIcon?: boolean;
-}
-
 const props = withDefaults(defineProps<Props>(), {
   id: () => useId(),
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: 'update:expanded', value: boolean, groupId: string | number | undefined): void;
+  /** The list was expanded or collapsed by its toggle */
+  (name: 'update:expanded', value: boolean, groupId: NavId | undefined): void;
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  title?: (props?: Record<never, never>) => any;
+  /** Items of the expandable list */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Title of the expandable list, replacing the title prop */
+  title?: (props?: Record<never, never>) => VNode[];
   /** Icon rendered before the title */
-  icon?: (props?: Record<never, never>) => any;
+  icon?: (props?: Record<never, never>) => VNode[];
 }>();
 
-const expandable = useTemplateRef('expandableRef');
-const expandedState = ref(props.expanded);
+const onToggle = inject(NavOnToggleKey, undefined);
 const sidebarOpen = inject(SidebarOpenKey, true);
 
-const realExpanded = computed({
-  get() {
-    return props.managed ? expandedState.value : props.expanded;
-  },
+// like upstream, the expanded prop seeds the state and resets it when it changes, while the toggle always works
+const expandedState = ref(props.expanded);
+watch(
+  () => props.expanded,
+  expanded => (expandedState.value = expanded),
+);
 
-  set(value: boolean) {
-    if (props.managed) {
-      expandedState.value = value;
-    } else {
-      emit('update:expanded', value, props.groupId);
-    }
-  },
-});
-
-function handleToggle(e: Event) {
-  if (!(e.target instanceof Element)) {
-    return;
-  }
-  // Item events can bubble up, ignore those
-  if (!expandable.value?.contains(e.target)) {
-    return;
-  }
-  realExpanded.value = !realExpanded.value;
+function toggle(event: MouseEvent) {
+  expandedState.value = !expandedState.value;
+  emit('update:expanded', expandedState.value, props.groupId);
+  onToggle?.(event, props.groupId, expandedState.value);
 }
 </script>

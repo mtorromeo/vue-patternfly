@@ -1,6 +1,7 @@
 <template>
   <nav
     v-bind="ouiaProps"
+    ref="navRef"
     :class="[
       styles.nav,
       {
@@ -18,17 +19,12 @@
 </template>
 
 <script lang="ts">
-export const NavScrollableKey = Symbol('NavScrollableKey') as InjectionKey<Ref<boolean>>;
-export const NavHorizontalKey = Symbol('NavHorizontalKey') as InjectionKey<boolean>;
-export const NavOnSelectKey = Symbol('NavOnSelectKey') as InjectionKey<
-  (event: Event, groupId: string | undefined, itemId: string | undefined) => void
->;
-export const NavFlyoutRefKey = Symbol('NavFlyoutRefKey') as InjectionKey<Ref<HTMLElement | null>>;
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+export { NavScrollableKey, NavHorizontalKey, NavOnSelectKey, NavFlyoutRefKey } from './common';
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect'> {
-  theme?: 'dark' | 'light';
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSelect' | 'onToggle'> {
+  /** The nav variant to use. Docked is in beta. */
   variant?: 'default' | 'horizontal' | 'horizontal-subnav' | 'docked';
+  /** Accessible label for the nav when there are multiple navs on the page */
   ariaLabel?: string;
   /** Flag indicating the docked nav should display text. Only applies when variant is docked. */
   expanded?: boolean;
@@ -36,35 +32,58 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSel
 </script>
 
 <script lang="ts" setup>
-import { ref, provide, type InjectionKey, type Ref, type HTMLAttributes } from 'vue';
+import { computed, ref, provide, useTemplateRef, type Ref, type HTMLAttributes, type VNode } from 'vue';
+import type { RouteLocationRaw } from 'vue-router';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import {
+  NavElementKey,
+  NavFlyoutRefKey,
+  NavHorizontalKey,
+  NavOnSelectKey,
+  NavOnToggleKey,
+  NavScrollableKey,
+  type NavId,
+} from './common';
 
 defineOptions({
   name: 'PfNav',
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  theme: 'dark',
   variant: 'default',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
-  (name: 'select', e: Event, groupId: string | undefined, itemId: string | undefined): void;
+  /** An item was selected */
+  (
+    name: 'select',
+    event: Event,
+    groupId: NavId | undefined,
+    itemId: NavId | undefined,
+    to: RouteLocationRaw | undefined,
+  ): void;
+  /** An expandable was expanded or collapsed */
+  (name: 'toggle', event: Event, groupId: NavId | undefined, expanded: boolean): void;
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const scrollable = ref(false);
 provide(NavScrollableKey, scrollable);
 
-const horizontal = ['horizontal', 'horizontal-subnav'].includes(props.variant);
+const horizontal = computed(() => ['horizontal', 'horizontal-subnav'].includes(props.variant));
 provide(NavHorizontalKey, horizontal);
 
-provide(NavOnSelectKey, (e, groupId, itemId) => emit('select', e, groupId, itemId));
+provide(NavOnSelectKey, (event, groupId, itemId, to) => emit('select', event, groupId, itemId, to));
+provide(NavOnToggleKey, (event, groupId, expanded) => emit('toggle', event, groupId, expanded));
 
 const flyoutRef: Ref<HTMLElement | null> = ref(null);
 provide(NavFlyoutRefKey, flyoutRef);
+
+provide(NavElementKey, useTemplateRef<HTMLElement>('navRef'));
 </script>

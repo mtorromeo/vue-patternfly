@@ -12,7 +12,7 @@
       </template>
     </pf-button>
   </div>
-  <ul ref="navListRef" v-bind="$attrs" :class="styles.navList" @scroll.passive="handleScrollButtons">
+  <ul ref="navListRef" v-bind="$attrs" :class="styles.navList" role="list" @scroll.passive="handleScrollButtons">
     <slot />
   </ul>
   <div v-if="horizontal && (!scrollViewAtStart || !scrollViewAtEnd)" :class="styles.navScrollButton">
@@ -30,6 +30,15 @@
   </div>
 </template>
 
+<script lang="ts">
+interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
+  /** Aria-label for the back scroll button */
+  backScrollAriaLabel?: string;
+  /** Aria-label for the forward scroll button */
+  forwardScrollAriaLabel?: string;
+}
+</script>
+
 <script lang="ts" setup>
 import PfButton from '../Button.vue';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
@@ -37,20 +46,14 @@ import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
 import { isElementInView } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
-import { inject, ref, onMounted, onBeforeUnmount, useTemplateRef, type HTMLAttributes } from 'vue';
-import { NavHorizontalKey, NavScrollableKey } from './Nav.vue';
+import { inject, ref, onMounted, useTemplateRef, type HTMLAttributes, type VNode } from 'vue';
+import { useResizeObserver } from '@vueuse/core';
+import { NavHorizontalKey, NavScrollableKey } from './common';
 
 defineOptions({
   name: 'PfNavList',
   inheritAttrs: false,
 });
-
-interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
-  /** Aria-label for the back scroll button */
-  backScrollAriaLabel?: string;
-  /** Aria-label for the forward scroll button */
-  forwardScrollAriaLabel?: string;
-}
 
 withDefaults(defineProps<Props>(), {
   backScrollAriaLabel: 'Scroll back',
@@ -58,24 +61,18 @@ withDefaults(defineProps<Props>(), {
 });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const navList = useTemplateRef('navListRef');
-const horizontal = inject(NavHorizontalKey);
-const scrollable = inject(NavScrollableKey);
+const horizontal = inject(NavHorizontalKey, undefined);
+const scrollable = inject(NavScrollableKey, undefined);
 const sidebarOpen = inject(SidebarOpenKey, true);
 const scrollViewAtStart = ref(false);
 const scrollViewAtEnd = ref(false);
 
-onMounted(() => {
-  window.addEventListener('resize', handleScrollButtons, false);
-  handleScrollButtons();
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleScrollButtons, false);
-});
+onMounted(handleScrollButtons);
+useResizeObserver(navList, handleScrollButtons);
 
 function handleScrollButtons() {
   const container = navList.value;
@@ -87,6 +84,11 @@ function handleScrollButtons() {
       scrollable.value = !scrollViewAtStart.value || !scrollViewAtEnd.value;
     }
   }
+}
+
+// scrolling back moves left in a left-to-right layout and right in a right-to-left one
+function scrollBy(container: HTMLElement, width: number) {
+  container.scrollLeft += getComputedStyle(container).direction === 'rtl' ? -width : width;
 }
 
 function scrollBack() {
@@ -104,7 +106,7 @@ function scrollBack() {
       }
     }
     if (lastElementOutOfView) {
-      container.scrollLeft -= lastElementOutOfView.scrollWidth;
+      scrollBy(container, -lastElementOutOfView.scrollWidth);
     }
     handleScrollButtons();
   }
@@ -125,7 +127,7 @@ function scrollForward() {
       }
     }
     if (firstElementOutOfView) {
-      container.scrollLeft += firstElementOutOfView.scrollWidth;
+      scrollBy(container, firstElementOutOfView.scrollWidth);
     }
     handleScrollButtons();
   }
