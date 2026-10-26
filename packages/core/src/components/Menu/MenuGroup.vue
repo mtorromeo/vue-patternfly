@@ -1,6 +1,6 @@
 <template>
   <section v-bind="ouiaProps" :class="styles.menuGroup">
-    <component :is="labelHeadingLevel" v-if="label || $slots.label" :class="styles.menuGroupTitle">
+    <component :is="labelHeadingLevel" v-if="label || $slots.label" :id="titleId" :class="styles.menuGroupTitle">
       <slot name="label">{{ label }}</slot>
     </component>
     <auto-wrap :component="PfMenuList" :include="PfMenuItem">

@@ -17,8 +17,9 @@
       :tabindex="-1"
       @click="onClick"
     >
-      <template #icon v-if="icon === 'favorites' || isDefined(favorited)">
-        <star-icon />
+      <template v-if="icon === 'favorites' || isDefined(favorited) || $slots.icon" #icon>
+        <slot v-if="!isDefined(favorited) && icon !== 'favorites'" name="icon" />
+        <star-icon v-else />
       </template>
     </pf-button>
   </div>
@@ -43,14 +44,14 @@ interface Props
   extends
     OUIAProps,
     /* @vue-ignore */ Omit<ComponentProps<typeof PfButton>, 'onClick' | 'tabindex' | 'ouiaId' | 'ouiaSafe'> {
-  /** The action icon to use */
+  /** The action icon to use: "favorites" for the star icon, or the icon slot for a custom icon */
   icon?: 'favorites';
   /** Flag indicating if the item is favorited */
   favorited?: boolean;
   /** Disables action, can also be specified on the MenuItem instead */
   disabled?: boolean;
   /** Identifies the action item in the onActionClick on the Menu */
-  actionId?: any;
+  actionId?: unknown;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -58,7 +59,10 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
-defineSlots<Record<never, never>>();
+defineSlots<{
+  /** Custom icon of the action */
+  icon?: (props?: Record<never, never>) => any;
+}>();
 
 const emit = defineEmits<{
   /** Callback on action click, can also specify onActionClick on the Menu instead */
@@ -70,8 +74,6 @@ const item = inject(MenuItemInjectionKey);
 
 function onClick(event: Event) {
   emit('click', event);
-  if (item?.itemId.value) {
-    menu?.onActionClick?.(event, item?.itemId.value, props.actionId);
-  }
+  menu?.onActionClick?.(event, item?.itemId.value ?? undefined, props.actionId);
 }
 </script>

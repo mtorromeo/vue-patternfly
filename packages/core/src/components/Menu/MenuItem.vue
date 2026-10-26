@@ -21,6 +21,7 @@
       ]"
       :role="check ? 'menuitem' : 'none'"
       @mouseover="!ariaDisabled && onMouseOver()"
+      @keydown="$slots['flyout-menu'] && !ariaDisabled ? handleFlyout($event) : undefined"
     >
       <input v-if="!copy && name" type="hidden" :name="name" :value="value" />
 
@@ -39,13 +40,15 @@
           :class="[styles.menuItem, { [styles.modifiers.selected]: effectiveSelected && !check }]"
           :aria-current="ariaCurrent"
           :disabled="(disabled && !check && component !== 'a') || undefined"
-          :role="!$slots['flyout-menu'] && !check ? 'menuitem' : undefined"
+          :role="!$slots['flyout-menu'] && !check ? (selectMenu ? 'option' : 'menuitem') : undefined"
+          :aria-selected="!$slots['flyout-menu'] && !check && selectMenu ? !!effectiveSelected : undefined"
+          :aria-haspopup="$slots['flyout-menu'] && !effectiveOnPath ? 'menu' : undefined"
           :for="copy || check ? undefined : randomId"
           :href="component === 'a' ? to : undefined"
           :aria-disabled="(component === 'a' && disabled) || ariaDisabled || undefined"
-          :aria-expanded="onPath || flyoutVisible || undefined"
+          :aria-expanded="effectiveOnPath ? true : $slots['flyout-menu'] ? !!flyoutVisible : undefined"
           :type="component === 'button' ? 'button' : undefined"
-          :target="component === 'a' ? target : undefined"
+          :target="component === 'a' ? (externalLink ? '_blank' : target) : undefined"
           :referrerpolicy="component === 'a' ? referrerpolicy : undefined"
           :download="component === 'a' ? download : undefined"
           @click="!check && onClick($event)"
@@ -75,7 +78,7 @@
             <span v-if="externalLink" :class="styles.menuItemExternalIcon">
               <up-right-from-square-icon aria-hidden="true" />
             </span>
-            <span v-if="$slots['flyout-menu'] && direction === 'down'" :class="styles.menuItemToggleIcon">
+            <span v-if="$slots['flyout-menu'] || direction === 'down'" :class="styles.menuItemToggleIcon">
               <angle-right-icon aria-hidden="true" />
             </span>
             <span v-if="effectiveSelected" :class="styles.menuItemSelectIcon">
@@ -92,7 +95,7 @@
         </component>
       </component>
       <slot v-if="flyoutVisible" name="flyout-menu" />
-      <!-- <slot name="drilldown-menu" /> -->
+      <slot name="drilldown-menu" />
       <slot name="actions" />
       <pf-menu-item-action
         v-if="isDefined(favorited)"
@@ -209,7 +212,10 @@ import {
   nextTick,
   watch,
 } from 'vue';
-import { MenuInjectionKey, MenuItemInjectionKey, MenuItemsKey } from './common';
+import { FlyoutDirectionKey, MenuInjectionKey, MenuItemInjectionKey, MenuItemsKey } from './common';
+import topOffset from '@patternfly/react-tokens/dist/esm/c_menu_m_flyout__menu_top_offset';
+import rightOffset from '@patternfly/react-tokens/dist/esm/c_menu_m_flyout__menu_m_left_right_offset';
+import leftOffset from '@patternfly/react-tokens/dist/esm/c_menu_m_flyout__menu_left_offset';
 import PfCheckbox from '../Checkbox.vue';
 import PfMenuItemAction from './MenuItemAction.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
@@ -251,7 +257,10 @@ const $slots = defineSlots<{
   default?: (props?: Record<never, never>) => any;
   icon?: (props?: Record<never, never>) => any;
   description?: (props?: Record<never, never>) => any;
+  /** Flyout menu, shown on hover or with the keyboard */
   'flyout-menu'?: (props?: Record<never, never>) => any;
+  /** Drilldown menu of the item, a pf-drilldown-menu entered when an item with direction "down" is clicked */
+  'drilldown-menu'?: (props?: Record<never, never>) => any;
   /** Content of a tooltip shown on the item */
   tooltip?: (props?: Record<never, never>) => any;
   actions?: (props?: Record<never, never>) => any;
@@ -280,10 +289,15 @@ watch(
   },
 );
 
+const drilldownMenuId = ref<string>();
+
 provide(MenuItemInjectionKey, {
   disabled: props.disabled,
   itemId,
+  setDrilldownMenuId: id => (drilldownMenuId.value = id),
 });
+
+const selectMenu = computed(() => menu?.role.value === 'listbox');
 
 onMounted(() => {
   if (!menu) {
@@ -305,16 +319,18 @@ const component = computed(() => {
 });
 
 const effectiveOnPath = computed(
-  () => props.onPath /*  || (itemId.value && menu?.drilldownItemPath?.includes(itemId.value)) */,
+  () => props.onPath || (isDefined(itemId.value) && !!menu?.drilldownItemPath.value.includes(itemId.value)),
 );
 
 const effectiveSelected = computed(() => {
   if (isDefined(props.selected)) {
     return props.selected;
   }
-  return menu?.selected?.value && Array.isArray(menu.selected.value)
-    ? menu.selected.value.includes(props.value as any)
-    : menu?.selected?.value === props.value;
+  const selected = menu?.selected?.value;
+  if (!isDefined(itemId.value) || !isDefined(selected)) {
+    return false;
+  }
+  return Array.isArray(selected) ? selected.includes(itemId.value) : selected === itemId.value;
 });
 
 const ariaCurrent = computed(() => {
@@ -364,19 +380,11 @@ function onClick(event: PointerEvent) {
   }
   onItemSelect(event);
 
-  // if (itemId.value) {
-  //   if (props.direction === 'down') {
-  //     menu?.onDrillIn?.(
-  //       menuId,
-  //       typeof drilldownMenu === 'function'
-  //         ? (drilldownMenu() as any).props.id
-  //         : drilldownMenu.props.id,
-  //         itemId.value
-  //     );
-  //   } else if (props.direction) {
-  //     menu?.onDrillOut?.(parentMenu, itemId.value);
-  //   }
-  // }
+  if (menu && props.direction === 'down' && drilldownMenuId.value) {
+    menu.onDrillIn(event, menu.menuId.value, drilldownMenuId.value, itemId.value);
+  } else if (menu && props.direction === 'up') {
+    menu.onDrillOut(event, menu.parentMenuId.value, itemId.value);
+  }
 
   if ($slots['flyout-menu']) {
     handleFlyout(event);
@@ -398,6 +406,7 @@ function handleFlyout(event: PointerEvent | KeyboardEvent) {
 
   if (key === ' ' || key === 'Enter' || key === 'ArrowRight' || type === 'click') {
     event.stopPropagation();
+    event.preventDefault();
     if (!flyoutVisible.value && target instanceof HTMLElement) {
       showFlyout(true);
       flyoutTarget.value = target;
@@ -411,6 +420,76 @@ function handleFlyout(event: PointerEvent | KeyboardEvent) {
     }
   }
 }
+
+// moves the focus into the flyout when it opens with the keyboard, and back when it closes
+watch(flyoutVisible, visible => {
+  const target = flyoutTarget.value;
+  if (!target) {
+    return;
+  }
+  nextTick(() => {
+    if (visible) {
+      const flyoutMenu = target.nextElementSibling;
+      const firstItem = Array.from(flyoutMenu?.getElementsByTagName('UL')[0]?.children ?? []).find(
+        e => !e.classList.contains(styles.modifiers.disabled) && !e.classList.contains('pf-v6-c-divider'),
+      );
+      const first = firstItem?.querySelector(`.${styles.menuItem}`);
+      if (first instanceof HTMLElement) {
+        first.focus();
+      }
+    } else {
+      target.focus();
+      flyoutTarget.value = null;
+    }
+  });
+});
+
+const parentFlyoutDirection = inject(FlyoutDirectionKey, ref<'left' | 'right'>('right'));
+const flyoutXDirection = ref<'left' | 'right'>(parentFlyoutDirection.value);
+watch(parentFlyoutDirection, d => (flyoutXDirection.value = d));
+provide(FlyoutDirectionKey, flyoutXDirection);
+
+// opens the flyout towards the side with enough space, shifting it when it overflows the viewport
+watch(flyoutVisible, visible => {
+  if (!visible) {
+    return;
+  }
+  nextTick(() => {
+    const flyoutMenu = el.value?.lastElementChild;
+    if (!el.value || !(flyoutMenu instanceof HTMLElement) || !flyoutMenu.classList.contains(styles.menu)) {
+      return;
+    }
+    const origin = el.value.getClientRects()[0];
+    const rect = flyoutMenu.getClientRects()[0];
+    if (!origin || !rect) {
+      return;
+    }
+    const spaceLeftLeft = origin.x - rect.width;
+    const spaceLeftRight = window.innerWidth - origin.x - origin.width - rect.width;
+    let xDir = flyoutXDirection.value;
+    if (spaceLeftRight < 0 && xDir !== 'left') {
+      xDir = flyoutXDirection.value = 'left';
+    } else if (spaceLeftLeft < 0 && xDir !== 'right') {
+      xDir = flyoutXDirection.value = 'right';
+    }
+    let xOffset = 0;
+    if (spaceLeftLeft < 0 && spaceLeftRight < 0) {
+      xOffset = xDir === 'right' ? -spaceLeftRight : -spaceLeftLeft;
+    }
+    if (xDir === 'left') {
+      flyoutMenu.classList.add(styles.modifiers.left);
+      flyoutMenu.style.setProperty(rightOffset.name, `-${xOffset}px`);
+    } else {
+      flyoutMenu.style.setProperty(leftOffset.name, `-${xOffset}px`);
+    }
+
+    const spaceLeftBot = window.innerHeight - origin.y - rect.height;
+    const spaceLeftTop = window.innerHeight - rect.height;
+    if (spaceLeftTop >= 0 && spaceLeftBot < 0) {
+      flyoutMenu.style.setProperty(topOffset.name, `${spaceLeftBot}px`);
+    }
+  });
+});
 
 function focus() {
   if (!menuItem.value) {

@@ -62,6 +62,7 @@ import {
   watch,
 } from 'vue';
 import { useFloatingUI, type FloatingOptions } from '../use';
+import { findChildrenVNodes } from '../util';
 
 defineOptions({
   name: 'PfFloatingUi',
@@ -174,9 +175,10 @@ function floatingElement() {
     return;
   }
 
-  const children = slots.default?.(ui);
+  // a slot forwarded from a parent template renders as a fragment: position its element instead
+  const children = findChildrenVNodes(slots.default?.(ui));
 
-  if (!children?.[0]) {
+  if (!children[0]) {
     return;
   }
 
@@ -220,4 +222,9 @@ function floatingElement() {
     [[{ mounted: onElementMounted }]],
   );
 }
+
+defineExpose({
+  /** The positioned element */
+  element: htmlElement,
+});
 </script>
