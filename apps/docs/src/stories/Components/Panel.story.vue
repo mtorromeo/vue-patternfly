@@ -8,13 +8,17 @@
 
     <template #apidocs>
       <component-info name="PfPanel" />
-      <component-info name="PfPanelFooter" />
-      <component-info name="PfPanelHeader" />
       <component-info name="PfPanelMain" />
       <component-info name="PfPanelMainBody" />
+      <component-info name="PfPanelHeader" />
+      <component-info name="PfPanelFooter" />
     </template>
 
     <pre v-md>
+      ## Differences from patternfly-react
+      - Boolean props drop their prefix: `scrollable`, `auto-height`, `no-border`, `full-height`, `glass` and `pill`.
+      See [common differences from patternfly-react](#/).
+
       ## Examples
     </pre>
 
@@ -78,117 +82,73 @@
       </pf-panel>
     </story-canvas>
 
+    <story-canvas title="Secondary variant">
+      <pf-panel variant="secondary">
+        <pf-panel-main>
+          <pf-panel-main-body>Main content</pf-panel-main-body>
+        </pf-panel-main>
+      </pf-panel>
+    </story-canvas>
+
     <story-canvas title="Scrollable">
       <pf-panel scrollable>
-        <pf-panel-main>
+        <pf-panel-main tabindex="0">
           <pf-panel-main-body>
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
+            <template v-for="i in 9" :key="i">
+              <template v-if="i > 1">
+                <br />
+                <br />
+              </template>
+              Main content
+            </template>
           </pf-panel-main-body>
         </pf-panel-main>
       </pf-panel>
+    </story-canvas>
+
+    <story-canvas title="Scrollable with auto height">
+      <div style="height: 200px">
+        <pf-panel scrollable auto-height>
+          <pf-panel-main tabindex="0">
+            <pf-panel-main-body>
+              <template v-for="i in 9" :key="i">
+                <template v-if="i > 1">
+                  <br />
+                  <br />
+                </template>
+                Main content
+              </template>
+            </pf-panel-main-body>
+          </pf-panel-main>
+        </pf-panel>
+      </div>
     </story-canvas>
 
     <story-canvas title="Scrollable with header and footer">
       <pf-panel scrollable>
         <pf-panel-header>Header content</pf-panel-header>
         <pf-divider />
-        <pf-panel-main>
+        <pf-panel-main tabindex="0">
           <pf-panel-main-body>
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
-            <br />
-            <br />
-            Main content
+            <template v-for="i in 9" :key="i">
+              <template v-if="i > 1">
+                <br />
+                <br />
+              </template>
+              Main content
+            </template>
           </pf-panel-main-body>
         </pf-panel-main>
         <pf-panel-footer>Footer content</pf-panel-footer>
       </pf-panel>
     </story-canvas>
+
+    <story-canvas title="Pill">
+      <pf-panel pill>
+        <pf-panel-main>
+          <pf-panel-main-body>Main content</pf-panel-main-body>
+        </pf-panel-main>
+      </pf-panel>
+    </story-canvas>
   </doc-page>
 </template>
-
-<script lang="ts" setup>
-// import { ref } from "vue";
-// const page = ref(1);
-// const perPage = ref(10);
-</script>

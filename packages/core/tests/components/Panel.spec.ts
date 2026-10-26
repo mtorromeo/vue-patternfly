@@ -17,7 +17,7 @@ describe('Panel', () => {
     expect(wrapper.text()).toBe('Content');
   });
 
-  it.each(['raised', 'bordered'] as const)('applies the %s variant modifier', variant => {
+  it.each(['raised', 'bordered', 'secondary'] as const)('applies the %s variant modifier', variant => {
     const wrapper = mount(PfPanel, { props: { variant } });
     expect(wrapper.classes()).toContain(styles.modifiers[variant]);
   });
@@ -27,6 +27,24 @@ describe('Panel', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.scrollable);
     expect(wrapper.classes()).not.toContain(styles.modifiers.raised);
     expect(wrapper.classes()).not.toContain(styles.modifiers.bordered);
+  });
+
+  it.each([
+    ['autoHeight', styles.modifiers.scrollableAutoHeight],
+    ['noBorder', styles.modifiers.noBorder],
+    ['fullHeight', styles.modifiers.fullHeight],
+    ['glass', styles.modifiers.glass],
+    ['pill', styles.modifiers.pill],
+  ] as const)('applies the %s modifier only when set', (prop, modifier) => {
+    expect(mount(PfPanel, { props: { [prop]: true } }).classes()).toContain(modifier);
+    expect(mount(PfPanel, { props: { [prop]: false } }).classes()).not.toContain(modifier);
+    expect(mount(PfPanel).classes()).not.toContain(modifier);
+  });
+
+  it('forwards the class and attributes to the panel', () => {
+    const wrapper = mount(PfPanel, { attrs: { class: 'test-class', 'aria-label': 'this is a simple panel' } });
+    expect(wrapper.classes()).toEqual([styles.panel, 'test-class']);
+    expect(wrapper.attributes('aria-label')).toBe('this is a simple panel');
   });
 
   it('sets OUIA attributes', () => {
