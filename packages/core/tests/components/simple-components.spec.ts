@@ -380,6 +380,17 @@ describe('Title', () => {
     expect(wrapper.classes()).not.toContain(titleStyles.modifiers.h3);
   });
 
+  it('sets the OUIA attributes, safe by default', () => {
+    const wrapper = mount(PfTitle, { props: { ouiaId: 'title' } });
+    expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/Title');
+    expect(wrapper.attributes('data-ouia-component-id')).toBe('title');
+    expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('renders only the title class and the heading level modifier by default', () => {
+    expect(mount(PfTitle, { props: { h: 3 } }).classes()).toEqual([titleStyles.title, titleStyles.modifiers.h3]);
+  });
+
   it('accepts the h1..h6 string form of the heading level', () => {
     const wrapper = mount(PfTitle, { props: { h: 'h2' } });
     expect(wrapper.element.tagName).toBe('H2');

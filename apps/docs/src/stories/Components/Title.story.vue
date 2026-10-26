@@ -10,22 +10,30 @@
       <component-info name="PfTitle" />
     </template>
 
-    <story-canvas title="Sizes">
-      <pf-title h="1" size="4xl">4xl Title</pf-title>
-      <pf-title h="2" size="3xl">3xl Title</pf-title>
-      <pf-title h="3" size="2xl">2xl Title</pf-title>
-      <pf-title h="4" size="xl">xl Title</pf-title>
-      <pf-title h="5" size="lg">lg Title</pf-title>
-      <pf-title h="6" size="md">md Title</pf-title>
+    <pre v-md>
+      ## Differences from patternfly-react
+      - The heading level is the `h` prop (`headingLevel`), which accepts `1` to `6` as well as `h1` to `h6`, and defaults to `1`.
+      See [common differences from patternfly-react](#/).
+
+      ## Examples
+    </pre>
+
+    <story-canvas title="Default sizes">
+      <pf-title h="1">H1-styled title</pf-title>
+      <pf-title h="2">H2-styled title</pf-title>
+      <pf-title h="3">H3-styled title</pf-title>
+      <pf-title h="4">H4-styled title</pf-title>
+      <pf-title h="5">H5-styled title</pf-title>
+      <pf-title h="6">H6-styled title</pf-title>
     </story-canvas>
 
-    <story-canvas title="Default size mappings">
-      <pf-title h="1">4xl Title</pf-title>
-      <pf-title h="2">3xl Title</pf-title>
-      <pf-title h="3">2xl Title</pf-title>
-      <pf-title h="4">xl Title</pf-title>
-      <pf-title h="5">lg Title</pf-title>
-      <pf-title h="6">md Title</pf-title>
+    <story-canvas title="Custom sizes">
+      <pf-title h="1" size="4xl">4xl title</pf-title>
+      <pf-title h="2" size="3xl">3xl title</pf-title>
+      <pf-title h="3" size="2xl">2xl title</pf-title>
+      <pf-title h="4" size="xl">xl title</pf-title>
+      <pf-title h="5" size="lg">lg title</pf-title>
+      <pf-title h="6" size="md">md title</pf-title>
     </story-canvas>
   </doc-page>
 </template>
