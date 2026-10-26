@@ -22,7 +22,10 @@ function mountWithModel<C>(
   return wrapper;
 }
 
-async function mountPopover(props: Record<string, unknown> = {}, slots: Record<string, () => unknown> = {}) {
+async function mountPopover(
+  props: Record<string, unknown> = {},
+  slots: Record<string, (...args: any[]) => unknown> = {},
+) {
   const wrapper = mountWithModel(
     PfPopover,
     'open',
@@ -87,9 +90,58 @@ describe('Popover', () => {
 
     const el = dialog()!;
     expect(el.getAttribute('aria-label')).toBeNull();
-    const header = document.getElementById(el.getAttribute('aria-labelledby')!)!;
-    expect(header.tagName).toBe('H6');
-    expect(header.textContent).toBe('Header');
+    const title = document.getElementById(el.getAttribute('aria-labelledby')!)!;
+    expect(title.classList.contains(styles.popoverTitle)).toBe(true);
+    expect(title.textContent!.trim()).toBe('Header');
+  });
+
+  // the header was a title component rather than the popover header markup
+  it('renders the header markup with the heading level and icon', async () => {
+    await mountPopover(
+      { open: true, headerComponent: 'h2' },
+      { header: () => 'Header', 'header-icon': () => h('i', { class: 'my-icon' }) },
+    );
+    const header = dialog()!.querySelector(`header.${styles.popoverHeader}`)!;
+    const title = header.querySelector(`:scope > .${styles.popoverTitle}`)!;
+    expect(title.querySelector(`:scope > .${styles.popoverTitleIcon} .my-icon`)).not.toBeNull();
+    const text = title.querySelector(`:scope > h2.${styles.popoverTitleText}`)!;
+    expect(text.textContent).toBe('Header');
+  });
+
+  it('defaults the heading level to h6', async () => {
+    await mountPopover({ open: true }, { header: () => 'Header' });
+    expect(dialog()!.querySelector(`h6.${styles.popoverTitleText}`)).not.toBeNull();
+  });
+
+  it.each(['custom', 'info', 'success', 'warning', 'danger'] as const)(
+    'applies the %s alert severity with screen reader text',
+    async variant => {
+      await mountPopover({ open: true, alertSeverityVariant: variant }, { header: () => 'Header' });
+      expect(dialog()!.classList.contains(styles.modifiers[variant])).toBe(true);
+      expect(dialog()!.querySelector(`.${styles.popoverTitleText} .pf-v6-screen-reader`)!.textContent!.trim()).toBe(
+        `${variant} alert:`,
+      );
+    },
+  );
+
+  it('uses a custom alert severity screen reader text', async () => {
+    await mountPopover(
+      { open: true, alertSeverityVariant: 'danger', alertSeverityScreenReaderText: 'Error:' },
+      { header: () => 'Header' },
+    );
+    expect(dialog()!.querySelector('.pf-v6-screen-reader')!.textContent!.trim()).toBe('Error:');
+  });
+
+  // start and end placements mapped to no modifier
+  it.each([
+    ['top-start', styles.modifiers.topLeft],
+    ['bottom-end', styles.modifiers.bottomRight],
+    ['left-start', styles.modifiers.leftTop],
+    ['right-end', styles.modifiers.rightBottom],
+  ] as const)('applies the %s position modifier', async (position, modifier) => {
+    await mountPopover({ open: true, position, noFlip: true });
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(dialog()!.classList.contains(modifier)).toBe(true);
   });
 
   it('renders the footer slot', async () => {
@@ -172,9 +224,87 @@ describe('Popover', () => {
     expect(dialog()).toBeNull();
   });
 
-  it('does not render a close button by default', async () => {
-    await mountPopover({ open: true });
-    expect(dialog()!.querySelector('button')).toBeNull();
+  // the close button was hidden unless showClose was set
+  it('renders a close button by default in the close wrapper', async () => {
+    const wrapper = await mountPopover({ open: true, closeBtnAriaLabel: 'Dismiss' });
+    const button = dialog()!.querySelector<HTMLButtonElement>(`.${styles.popoverClose} > button`)!;
+    expect(button.getAttribute('aria-label')).toBe('Dismiss');
+    button.click();
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toEqual([[false]]);
+  });
+
+  it('hides the close button with noClose', async () => {
+    await mountPopover({ open: true, noClose: true });
+    expect(dialog()!.querySelector(`.${styles.popoverClose}`)).toBeNull();
+  });
+
+  it('passes a hide function to the content slots', async () => {
+    const wrapper = await mountPopover(
+      { open: true },
+      { body: ({ hide }: { hide: () => void }) => h('button', { class: 'hide', onClick: hide }, 'Hide') },
+    );
+    dialog()!.querySelector<HTMLButtonElement>('.hide')!.click();
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toEqual([[false]]);
+  });
+
+  it('emits show and hide on user interactions', async () => {
+    const wrapper = await mountPopover();
+    trigger().click();
+    await flushPromises();
+    expect(wrapper.emitted('show')?.[0]?.[0]).toBeInstanceOf(MouseEvent);
+    trigger().click();
+    await flushPromises();
+    expect(wrapper.emitted('hide')?.[0]?.[0]).toBeInstanceOf(MouseEvent);
+  });
+
+  it('uses a triggerRef selector or element in place of the slot', async () => {
+    const button = document.createElement('button');
+    button.id = 'popover-selector';
+    document.body.appendChild(button);
+    try {
+      for (const triggerRef of ['#popover-selector', button, () => button]) {
+        const wrapper = mountWithModel(
+          PfPopover,
+          'open',
+          { triggerRef, animationDuration: 0 },
+          {
+            slots: { body: () => 'Body' },
+            attachTo: document.body,
+          },
+        );
+        await flushPromises();
+        button.click();
+        await flushPromises();
+        expect(wrapper.emitted('update:open')).toEqual([[true]]);
+        wrapper.unmount();
+      }
+    } finally {
+      button.remove();
+    }
+  });
+
+  it('opens on hover with hover, without close button nor focus trap', async () => {
+    const wrapper = await mountPopover({ hover: true });
+    trigger().dispatchEvent(new MouseEvent('mouseenter'));
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toEqual([[true]]);
+    expect(dialog()!.querySelector(`.${styles.popoverClose}`)).toBeNull();
+
+    trigger().click();
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toHaveLength(1);
+
+    trigger().dispatchEvent(new MouseEvent('mouseleave'));
+    await flushPromises();
+    expect(wrapper.emitted('update:open')).toEqual([[true], [false]]);
+  });
+
+  it('defaults ouia-safe to true and applies the z-index', async () => {
+    await mountPopover({ open: true, zIndex: 42 });
+    expect(dialog()!.getAttribute('data-ouia-safe')).toBe('true');
+    expect(dialog()!.style.zIndex).toBe('42');
   });
 
   it('closes on outside click but not on clicks inside', async () => {
@@ -213,11 +343,29 @@ describe('Popover', () => {
     expect(wrapper.emitted('update:open')).toBeUndefined();
   });
 
-  it('traps the focus inside the popover with focusTrap', async () => {
-    await mountPopover({ open: true, focusTrap: true, showClose: true });
+  // focus stayed on the page unless focusTrap was set
+  it('traps the focus inside the popover by default', async () => {
+    await mountPopover({ open: true });
     // focus-trap delays the initial focus to the next macrotask
     await new Promise(resolve => setTimeout(resolve, 10));
     expect(dialog()!.contains(document.activeElement)).toBe(true);
+  });
+
+  it('does not trap the focus with noFocusTrap', async () => {
+    await mountPopover({ open: true, noFocusTrap: true });
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(dialog()!.contains(document.activeElement)).toBe(false);
+  });
+
+  it('focuses elementToFocus when opened', async () => {
+    await mountPopover(
+      { open: true, elementToFocus: '#popover-target' },
+      {
+        body: () => [h('button', 'First'), h('button', { id: 'popover-target' }, 'Target')],
+      },
+    );
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(document.activeElement?.id).toBe('popover-target');
   });
 
   it('exposes the visible state', async () => {
