@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { h, nextTick } from 'vue';
+import { h, nextTick, ref } from 'vue';
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
 import menuStyles from '@patternfly/react-styles/css/components/Menu/menu';
 import PfMenu from '../../src/components/Menu/Menu.vue';
@@ -13,9 +13,9 @@ import PfOverflowMenuDropdownItem from '../../src/components/OverflowMenu/Overfl
 import { OverflowMenuIsBelowBreakpointKey } from '../../src/components/OverflowMenu/OverflowMenu.vue';
 
 // happy-dom windows are 1024px wide: 'md' (768px) is above the breakpoint, 'xl' (1200px) is below it
-function mountMenu(breakpoint: 'md' | 'xl') {
+function mountMenu(breakpoint: 'md' | 'xl', props: Record<string, unknown> = {}) {
   return mount(PfOverflowMenu, {
-    props: { breakpoint },
+    props: { breakpoint, ...props },
     slots: {
       default: () => [
         h(PfOverflowMenuContent, () => [
@@ -29,7 +29,7 @@ function mountMenu(breakpoint: 'md' | 'xl') {
 }
 
 function provideBelow(below: boolean) {
-  return { global: { provide: { [OverflowMenuIsBelowBreakpointKey as symbol]: below } } };
+  return { global: { provide: { [OverflowMenuIsBelowBreakpointKey as symbol]: ref(below) } } };
 }
 
 describe('OverflowMenu', () => {
@@ -54,6 +54,76 @@ describe('OverflowMenu', () => {
 
     expect(wrapper.find(`.${styles.overflowMenuContent}`).exists()).toBe(false);
     expect(wrapper.find(`.${styles.overflowMenuControl}`).text()).toBe('Control');
+  });
+
+  it('applies the vertical modifier', () => {
+    const wrapper = mount(PfOverflowMenu, { props: { breakpoint: 'md', vertical: true } });
+    expect(wrapper.classes()).toContain(styles.modifiers.vertical);
+  });
+
+  it('follows the window height when vertical', async () => {
+    const height = vi.spyOn(window, 'innerHeight', 'get').mockReturnValue(2000);
+    try {
+      const wrapper = mountMenu('md', { vertical: true });
+      window.dispatchEvent(new Event('resize'));
+      await nextTick();
+      expect(wrapper.find(`.${styles.overflowMenuControl}`).exists()).toBe(false);
+
+      height.mockReturnValue(100);
+      window.dispatchEvent(new Event('resize'));
+      await nextTick();
+      expect(wrapper.find(`.${styles.overflowMenuControl}`).exists()).toBe(true);
+    } finally {
+      height.mockRestore();
+    }
+  });
+
+  it('warns when using the "sm" breakpoint with vertical', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      mount(PfOverflowMenu, { props: { breakpoint: 'sm', vertical: true } });
+      expect(warn).toHaveBeenCalledWith('The "sm" breakpoint does not apply to vertical overflow menus.');
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  it('logs an error without a valid breakpoint', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      mount(PfOverflowMenu, { props: { breakpoint: undefined as unknown as 'md' } });
+      expect(error).toHaveBeenCalledWith('OverflowMenu will not be visible without a valid breakpoint.');
+    } finally {
+      error.mockRestore();
+    }
+  });
+
+  it.each([
+    ['an element', (el: HTMLElement) => el],
+    ['a function', (el: HTMLElement) => () => el],
+    ['a ref', (el: HTMLElement) => ref(el)],
+  ])('bases the breakpoint on the width of %s', async (_name, reference) => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const width = vi.spyOn(container, 'clientWidth', 'get').mockReturnValue(300);
+    try {
+      // the window is wider than md, the container is not
+      const wrapper = mountMenu('md', { breakpointReference: reference(container) });
+      await nextTick();
+      expect(wrapper.find(`.${styles.overflowMenuControl}`).exists()).toBe(true);
+      expect(wrapper.find(`.${styles.overflowMenuContent}`).exists()).toBe(false);
+    } finally {
+      width.mockRestore();
+      container.remove();
+    }
+  });
+
+  it('exposes the breakpoint state to the default slot', () => {
+    const wrapper = mount(PfOverflowMenu, {
+      props: { breakpoint: 'xl' },
+      slots: { default: (props: { belowBreakpoint: boolean }) => `below: ${props.belowBreakpoint}` },
+    });
+    expect(wrapper.text()).toBe('below: true');
   });
 
   it('reacts to window resizes', async () => {
@@ -137,11 +207,12 @@ describe('OverflowMenuDropdownItem', () => {
     });
   }
 
+  // the item carried the class of the overflow menu control
   it('renders a menu item button', () => {
     const wrapper = mountItem({}, false);
     const li = wrapper.find(`li.${menuStyles.menuListItem}`);
 
-    expect(li.classes()).toContain(styles.overflowMenuControl);
+    expect(li.classes()).not.toContain(styles.overflowMenuControl);
     expect(li.find(`button.${menuStyles.menuItem}`).text()).toBe('Dropdown item');
   });
 
