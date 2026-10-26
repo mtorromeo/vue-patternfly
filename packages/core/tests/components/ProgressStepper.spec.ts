@@ -1,8 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { flushPromises, mount } from '@vue/test-utils';
-import { defineComponent, h } from 'vue';
+import { h } from 'vue';
 import styles from '@patternfly/react-styles/css/components/ProgressStepper/progress-stepper';
-import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import PfProgressStepper from '../../src/components/ProgressStepper/ProgressStepper.vue';
 import PfProgressStep from '../../src/components/ProgressStepper/ProgressStep.vue';
 
@@ -112,22 +111,56 @@ describe('ProgressStep', () => {
     expect(description.text()).toBe('Slot');
   });
 
-  it('turns a popover trigger into the help text title', async () => {
-    const FakePopover = defineComponent({
-      name: 'PfPopover',
-      setup(_, { slots }) {
-        return () => h('button', { class: buttonStyles.button, type: 'button' }, slots.default?.());
+  // the popover had to wrap a button in the default slot, which kept its button markup and lost the title ids
+  it('renders the title as the trigger button of the popover slot', async () => {
+    let trigger: HTMLElement | null = null;
+    const wrapper = mount(PfProgressStep, {
+      props: { titleId: 'step-title' },
+      attrs: { id: 'step' },
+      slots: {
+        default: () => 'Help',
+        popover: (props: { trigger: HTMLElement | null }) => {
+          trigger = props.trigger;
+          return h('span', { class: 'popover' });
+        },
       },
     });
-    const wrapper = mount(PfProgressStep, { slots: { default: () => h(FakePopover, () => 'Help') } });
     await flushPromises();
 
-    const main = wrapper.find(`.${styles.progressStepperStepMain}`);
-    expect(main.find('div').exists()).toBe(false);
-    const button = main.find('button');
+    const button = wrapper.find(`.${styles.progressStepperStepMain} > button`);
+    expect(button.attributes('type')).toBe('button');
+    expect(button.attributes('id')).toBe('step-title');
+    expect(button.attributes('aria-labelledby')).toBe('step step-title');
+    expect(button.classes()).toEqual([styles.progressStepperStepTitle, styles.modifiers.helpText]);
     expect(button.text()).toBe('Help');
-    expect(button.classes()).toContain(styles.progressStepperStepTitle);
-    expect(button.classes()).toContain(styles.modifiers.helpText);
-    expect(button.classes()).not.toContain(buttonStyles.button);
+    expect(button.find('.popover').exists()).toBe(true);
+    expect(trigger).toBe(button.element);
+  });
+
+  it('renders the title as a div without a popover', () => {
+    const wrapper = mount(PfProgressStep, {
+      props: { titleId: 'step-title' },
+      attrs: { id: 'step' },
+      slots: { default: () => 'Title' },
+    });
+    const title = wrapper.find(`.${styles.progressStepperStepMain} > div`);
+    expect(title.classes()).toEqual([styles.progressStepperStepTitle]);
+    expect(title.attributes('id')).toBe('step-title');
+    expect(title.attributes('aria-labelledby')).toBeUndefined();
+  });
+
+  it('warns without id and titleId', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      mount(PfProgressStep);
+      expect(warn).toHaveBeenCalledWith(
+        'ProgressStep: The titleId and id properties are required to make this component accessible, and one or both of these properties are missing.',
+      );
+      warn.mockClear();
+      mount(PfProgressStep, { props: { titleId: 't' }, attrs: { id: 'i' } });
+      expect(warn).not.toHaveBeenCalled();
+    } finally {
+      warn.mockRestore();
+    }
   });
 });

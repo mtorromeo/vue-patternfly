@@ -14,16 +14,22 @@
     <div :class="styles.progressStepperStepConnector">
       <span :class="styles.progressStepperStepIcon">
         <slot name="icon">
-          <component :is="variant ? variantIcons[variant] : undefined" />
+          <component :is="variantIcons[variant]" v-if="variant && variantIcons[variant]" />
         </slot>
       </span>
     </div>
 
     <div :class="styles.progressStepperStepMain">
-      <component :is="popover ? PassThrough : 'div'" :class="styles.progressStepperStepTitle">
-        <pass-through @children="findReference">
-          <slot />
-        </pass-through>
+      <component
+        :is="$slots.popover ? 'button' : 'div'"
+        :id="titleId"
+        ref="titleRef"
+        :type="$slots.popover ? 'button' : undefined"
+        :class="[styles.progressStepperStepTitle, { [styles.modifiers.helpText]: $slots.popover }]"
+        :aria-labelledby="$slots.popover && $attrs.id && titleId ? `${$attrs.id} ${titleId}` : undefined"
+      >
+        <slot />
+        <slot name="popover" :trigger="title" />
       </component>
 
       <div v-if="description || $slots.description" :class="styles.progressStepperStepDescription">
@@ -39,13 +45,13 @@ interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   variant?: 'default' | 'success' | 'info' | 'pending' | 'warning' | 'danger';
   /** Flag indicating the progress step is the current step. */
   current?: boolean;
-  /** Description text of a progress step. */
+  /** Description text of a progress step, replaced by the description slot. */
   description?: string;
+  /** ID of the title of the progress step. */
+  titleId?: string;
 }
 
-const variantIcons = {
-  default: undefined as any,
-  pending: undefined as any,
+const variantIcons: Partial<Record<NonNullable<Props['variant']>, Component>> = {
   success: CircleCheckIcon,
   info: ResourcesFullIcon,
   warning: TriangleExclamationIcon,
@@ -64,17 +70,12 @@ const variantStyle = {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ProgressStepper/progress-stepper';
-import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
-
-import { watch, type LiHTMLAttributes } from 'vue';
+import { useAttrs, useTemplateRef, type Component, type LiHTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import ResourcesFullIcon from '@vue-patternfly/icons/resources-full-icon';
 import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
-import PassThrough from '../../helpers/PassThrough.vue';
-import { useHtmlElementFromVNodes } from '../../use';
-import { vnodeTypeIsComponent } from '../../util';
 
 defineOptions({
   name: 'PfProgressStep',
@@ -84,18 +85,21 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  icon?: (props?: Record<never, never>) => any;
-  description?: (props?: Record<never, never>) => any;
+  /** Title of the progress step */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Custom icon of the progress step, overriding the variant icon */
+  icon?: (props?: Record<never, never>) => VNode[];
+  /** Description of the progress step, replacing the description prop */
+  description?: (props?: Record<never, never>) => VNode[];
+  /** A help popover for the step, such as a pf-popover with trigger as trigger-ref. The title becomes its trigger button. */
+  popover?: (props: { trigger: HTMLElement | null }) => VNode[];
 }>();
 
-const { element: popover, findReference } = useHtmlElementFromVNodes(
-  vnode => vnodeTypeIsComponent(vnode.type) && vnode.type.name === 'PfPopover',
-);
+const title = useTemplateRef<HTMLElement>('titleRef');
 
-watch(popover, () => {
-  popover.value?.classList.add(styles.progressStepperStepTitle);
-  popover.value?.classList.add(styles.modifiers.helpText);
-  popover.value?.classList.remove(buttonStyles.button);
-});
+if (useAttrs().id === undefined || props.titleId === undefined) {
+  console.warn(
+    'ProgressStep: The titleId and id properties are required to make this component accessible, and one or both of these properties are missing.',
+  );
+}
 </script>

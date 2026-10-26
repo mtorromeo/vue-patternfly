@@ -29,7 +29,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ OlHTMLAttributes {
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ProgressStepper/progress-stepper';
 
-import type { OlHTMLAttributes } from 'vue';
+import type { OlHTMLAttributes, VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -40,6 +40,6 @@ const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>
