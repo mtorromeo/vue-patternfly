@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { h, nextTick } from 'vue';
+import { defineComponent, h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Form/form';
 import helperTextStyles from '@patternfly/react-styles/css/components/HelperText/helper-text';
 import cssMaxWidth from '@patternfly/react-tokens/dist/esm/c_form_m_limit_width_MaxWidth';
@@ -14,6 +14,10 @@ import PfFormSection from '../../src/components/Form/FormSection.vue';
 import PfActionGroup from '../../src/components/Form/ActionGroup.vue';
 import PfTextInput from '../../src/components/TextInput.vue';
 import PfCheckbox from '../../src/components/Checkbox.vue';
+import PfFormGroupLabelHelp from '../../src/components/Form/FormGroupLabelHelp.vue';
+import PfFormContextProvider from '../../src/components/Form/FormContextProvider.vue';
+import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
+import { createFormContext, useFormContext, type FormContext } from '../../src/use/form-context';
 
 describe('Form', () => {
   it('renders a form element with the base class', () => {
@@ -52,6 +56,13 @@ describe('Form', () => {
     });
     await nextTick();
     expect(wrapper.vm.elements).toHaveLength(2);
+  });
+});
+
+describe('Form ouia', () => {
+  it('defaults ouiaSafe to true on forms and form groups', () => {
+    expect(mount(PfForm).attributes('data-ouia-safe')).toBe('true');
+    expect(mount(PfFormGroup).attributes('data-ouia-safe')).toBe('true');
   });
 });
 
@@ -119,15 +130,15 @@ describe('FormGroup', () => {
     expect(required.text()).toBe('*');
   });
 
-  it('renders label info and label icon', () => {
+  it('renders label info and label help', () => {
     const wrapper = mount(PfFormGroup, {
       props: { label: 'Name', labelInfo: 'Additional info' },
-      slots: { 'label-icon': () => h('i', { class: 'my-icon' }) },
+      slots: { 'label-help': () => h('i', { class: 'my-icon' }) },
     });
     const labelContainer = wrapper.find(`.${styles.formGroupLabel}`);
     expect(labelContainer.classes()).toContain(styles.modifiers.info);
     expect(wrapper.find(`.${styles.formGroupLabelMain}`).exists()).toBe(true);
-    expect(wrapper.find(`.${styles.formGroupLabelMain} .my-icon`).exists()).toBe(true);
+    expect(wrapper.find(`.${styles.formGroupLabelMain} .${styles.formGroupLabelHelp} .my-icon`).exists()).toBe(true);
     expect(wrapper.find(`.${styles.formGroupLabelInfo}`).text()).toBe('Additional info');
   });
 
@@ -226,6 +237,119 @@ describe('FormGroup', () => {
   });
 });
 
+describe('FormGroup roles', () => {
+  it('renders a label element linked to the field without a role', () => {
+    const wrapper = mount(PfFormGroup, { props: { label: 'Name', fieldId: 'name' } });
+    expect(wrapper.attributes('role')).toBeUndefined();
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined();
+    const label = wrapper.get(`.${styles.formLabel}`);
+    expect(label.element.tagName).toBe('LABEL');
+    expect(label.attributes('for')).toBe('name');
+  });
+
+  it.each(['group', 'radiogroup'])('labels a %s with the label container instead of a label element', role => {
+    const wrapper = mount(PfFormGroup, { props: { label: 'Time zone', fieldId: 'tz', role } });
+    expect(wrapper.attributes('role')).toBe(role);
+    expect(wrapper.attributes('aria-labelledby')).toBe('tz-legend');
+    expect(wrapper.get(`.${styles.formGroupLabel}`).attributes('id')).toBe('tz-legend');
+    const label = wrapper.get(`.${styles.formLabel}`);
+    expect(label.element.tagName).toBe('SPAN');
+    expect(label.attributes('for')).toBeUndefined();
+  });
+
+  it('generates the legend id without a fieldId', () => {
+    const wrapper = mount(PfFormGroup, { props: { label: 'Options', role: 'group' } });
+    const id = wrapper.get(`.${styles.formGroupLabel}`).attributes('id');
+    expect(id).toMatch(/-legend$/);
+    expect(wrapper.attributes('aria-labelledby')).toBe(id);
+  });
+
+  it('separates the required asterisk with a non-breaking space', () => {
+    const wrapper = mount(PfFormGroup, { props: { label: 'Name', required: true } });
+    expect(wrapper.get(`.${styles.formLabelRequired}`).element.textContent).toBe('\u00a0*');
+  });
+});
+
+describe('FormGroupLabelHelp', () => {
+  it('renders a plain span button without padding and with the help icon', () => {
+    const wrapper = mount(PfFormGroupLabelHelp, { attrs: { 'aria-label': 'More info' } });
+    const button = wrapper.get('[role="button"]');
+    expect(button.element.tagName).toBe('SPAN');
+    expect(button.attributes('tabindex')).toBe('0');
+    expect(button.attributes('aria-label')).toBe('More info');
+    expect(button.classes()).toEqual(
+      expect.arrayContaining([buttonStyles.modifiers.plain, buttonStyles.modifiers.noPadding]),
+    );
+    expect(button.find(`.${buttonStyles.buttonIcon} svg`).exists()).toBe(true);
+  });
+
+  it('clicks on Enter and Space', async () => {
+    const onClick = vi.fn();
+    const wrapper = mount(PfFormGroupLabelHelp, { attrs: { 'aria-label': 'More info', onClick } });
+    const button = wrapper.get('[role="button"]');
+    await button.trigger('keydown', { key: 'Enter' });
+    await button.trigger('keydown', { key: ' ' });
+    await button.trigger('keydown', { key: 'a' });
+    expect(onClick).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('FormFieldGroup accessibility', () => {
+  it('is a group labelled by the header title', async () => {
+    const wrapper = mount(PfFormFieldGroup, {
+      props: { expandable: true },
+      slots: { header: () => h(PfFormFieldGroupHeader, { title: 'Field group', titleId: 'title-id' }) },
+    });
+    await nextTick();
+    expect(wrapper.attributes('role')).toBe('group');
+    expect(wrapper.attributes('aria-labelledby')).toBe('title-id');
+    const button = wrapper.get('button');
+    expect(button.attributes('aria-labelledby')).toBe(`title-id ${button.attributes('id')}`);
+  });
+
+  it('has no accessible name without a header title', () => {
+    const wrapper = mount(PfFormFieldGroup);
+    expect(wrapper.attributes('role')).toBe('group');
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined();
+  });
+
+  it('logs an error when expandable without toggleAriaLabel nor title', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mount(PfFormFieldGroup, {
+      props: { expandable: true },
+      slots: { header: () => h(PfFormFieldGroupHeader, { description: 'No title' }) },
+    });
+    expect(error).toHaveBeenCalled();
+    error.mockClear();
+    mount(PfFormFieldGroup, { props: { expandable: true, toggleAriaLabel: 'Details' } });
+    mount(PfFormFieldGroup, {
+      props: { expandable: true },
+      slots: { header: () => h(PfFormFieldGroupHeader, { title: 'Title' }) },
+    });
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
+  });
+
+  it('keeps the collapsed body rendered but inert with animations', async () => {
+    const wrapper = mount(PfFormFieldGroup, {
+      props: { expandable: true, animations: true, toggleAriaLabel: 'Details' },
+      slots: { default: () => 'Child content' },
+    });
+    expect(wrapper.classes()).toContain(styles.modifiers.expandable);
+    const body = wrapper.get(`.${styles.formFieldGroupBody}`);
+    expect(body.text()).toBe('Child content');
+    expect(body.attributes('inert')).toBeDefined();
+
+    await wrapper.get('button').trigger('click');
+    expect(wrapper.get(`.${styles.formFieldGroupBody}`).attributes('inert')).toBeUndefined();
+  });
+
+  it('does not apply the expandable modifier without animations', () => {
+    const wrapper = mount(PfFormFieldGroup, { props: { expandable: true, toggleAriaLabel: 'Details' } });
+    expect(wrapper.classes()).not.toContain(styles.modifiers.expandable);
+  });
+});
+
 describe('FormFieldGroup', () => {
   it('renders a non expandable group with header and body', () => {
     const wrapper = mount(PfFormFieldGroup, {
@@ -258,8 +382,9 @@ describe('FormFieldGroup', () => {
     expect(button.exists()).toBe(true);
     expect(button.attributes('aria-label')).toBe('Details');
     expect(button.attributes('id')).toMatch(/^form-field-group-toggle-/);
-    expect(button.attributes('aria-labelledby')).toBe(button.attributes('id'));
-    expect(button.find(`.${styles.formFieldGroupToggleIcon} svg`).exists()).toBe(true);
+    expect(button.attributes('aria-labelledby')).toBeUndefined();
+    expect(button.find(`.${buttonStyles.buttonIcon} .${styles.formFieldGroupToggleIcon} svg`).exists()).toBe(true);
+    expect(button.find(`.${buttonStyles.buttonText}`).exists()).toBe(false);
     expect(wrapper.find(`.${styles.formFieldGroupBody}`).exists()).toBe(false);
   });
 
@@ -296,7 +421,7 @@ describe('FormFieldGroupHeader', () => {
   it('renders title, description and actions', () => {
     const wrapper = mount(PfFormFieldGroupHeader, {
       props: { title: 'Title', description: 'Description' },
-      slots: { default: () => h('button', 'Action') },
+      slots: { actions: () => h('button', 'Action') },
     });
 
     expect(wrapper.classes()).toContain(styles.formFieldGroupHeader);
@@ -308,11 +433,22 @@ describe('FormFieldGroupHeader', () => {
     expect(wrapper.find(`.${styles.formFieldGroupHeaderActions} button`).text()).toBe('Action');
   });
 
-  it('omits empty sections', () => {
+  it('omits empty title and description but always renders the actions container', () => {
     const wrapper = mount(PfFormFieldGroupHeader);
     expect(wrapper.find(`.${styles.formFieldGroupHeaderTitle}`).exists()).toBe(false);
     expect(wrapper.find(`.${styles.formFieldGroupHeaderDescription}`).exists()).toBe(false);
-    expect(wrapper.find(`.${styles.formFieldGroupHeaderActions}`).exists()).toBe(false);
+    expect(wrapper.find(`.${styles.formFieldGroupHeaderActions}`).exists()).toBe(true);
+  });
+
+  it('renders the title and description slots', () => {
+    const wrapper = mount(PfFormFieldGroupHeader, {
+      props: { titleId: 'title-id' },
+      slots: { title: () => h('em', 'Rich title'), description: () => h('em', 'Rich description') },
+    });
+    const title = wrapper.get(`.${styles.formFieldGroupHeaderTitleText}`);
+    expect(title.attributes('id')).toBe('title-id');
+    expect(title.get('em').text()).toBe('Rich title');
+    expect(wrapper.get(`.${styles.formFieldGroupHeaderDescription} em`).text()).toBe('Rich description');
   });
 });
 
@@ -344,6 +480,21 @@ describe('FormSection', () => {
   it('omits the title when not set', () => {
     const wrapper = mount(PfFormSection);
     expect(wrapper.find(`.${styles.formSectionTitle}`).exists()).toBe(false);
+    expect(wrapper.attributes('role')).toBe('group');
+    expect(wrapper.attributes('aria-labelledby')).toBeUndefined();
+  });
+
+  it('is a group labelled by its title', () => {
+    const wrapper = mount(PfFormSection, { props: { title: 'Form title', titleElement: 'h4' } });
+    const title = wrapper.get(`.${styles.formSectionTitle}`);
+    expect(wrapper.attributes('role')).toBe('group');
+    expect(title.attributes('id')).toBeTruthy();
+    expect(wrapper.attributes('aria-labelledby')).toBe(title.attributes('id'));
+  });
+
+  it('renders the title slot', () => {
+    const wrapper = mount(PfFormSection, { slots: { title: () => h('em', 'Rich') } });
+    expect(wrapper.get(`.${styles.formSectionTitle} em`).text()).toBe('Rich');
   });
 });
 
@@ -353,5 +504,77 @@ describe('ActionGroup', () => {
     expect(wrapper.classes()).toContain(styles.formGroup);
     expect(wrapper.classes()).toContain(styles.modifiers.action);
     expect(wrapper.find(`.${styles.formGroupControl} .${styles.formActions} button`).text()).toBe('Submit');
+  });
+});
+
+describe('FormContextProvider', () => {
+  function mountProvider(initialValues: Record<string, string> | undefined, render: (ctx: FormContext) => unknown) {
+    return mount(PfFormContextProvider, {
+      props: { initialValues },
+      slots: { default: (ctx: FormContext) => render(ctx) },
+    });
+  }
+
+  it('exposes the initial values to the slot', () => {
+    const wrapper = mountProvider({ one: 'some value', two: 'some other value' }, ({ values }) =>
+      Object.values(values).map(v => h('span', v)),
+    );
+    expect(wrapper.findAll('span').map(s => s.text())).toEqual(['some value', 'some other value']);
+  });
+
+  it('updates values, errors and validity', async () => {
+    let ctx!: FormContext;
+    const wrapper = mountProvider({ someId: 'some value' }, c => {
+      ctx = c;
+      return h('span', `${c.getValue('someId')}|${c.getError('someId')}|${c.isValid}`);
+    });
+    expect(wrapper.text()).toBe('some value||true');
+
+    ctx.setValue('someId', '');
+    ctx.setError('someId', 'Some error!');
+    await nextTick();
+    expect(wrapper.text()).toBe('|Some error!|false');
+
+    ctx.setError('someId', undefined);
+    await nextTick();
+    expect(wrapper.text()).toBe('||true');
+  });
+
+  it('sets multiple values and errors at once', () => {
+    const ctx = createFormContext({ someId: 'some value' });
+    ctx.setValues({ someId: 'updated value', someNewId: 'new value' });
+    ctx.setErrors(errors => ({ ...errors, someId: 'some error!' }));
+    expect(ctx.values).toEqual({ someId: 'updated value', someNewId: 'new value' });
+    expect(ctx.errors).toEqual({ someId: 'some error!' });
+  });
+
+  it('tracks touched fields', () => {
+    const ctx = createFormContext();
+    ctx.setTouched('someId', true);
+    expect(ctx.isTouched('someId')).toBe(true);
+    expect(ctx.touched).toEqual({ someId: true });
+    ctx.setTouched('someId', false);
+    expect(ctx.isTouched('someId')).toBe(false);
+    expect(ctx.touched).toEqual({});
+  });
+
+  it('validates the fields with validators', () => {
+    const ctx = createFormContext();
+    ctx.setValidator('someId', value => (!value ? 'some error!' : null));
+    expect(ctx.validate()).toEqual({ someId: 'some error!' });
+    ctx.setValue('someId', 'filled');
+    expect(ctx.validate()).toEqual({});
+  });
+
+  it('provides the context to useFormContext', () => {
+    let injected: FormContext | undefined;
+    const Child = defineComponent({
+      setup() {
+        injected = useFormContext();
+        return () => null;
+      },
+    });
+    mount(PfFormContextProvider, { props: { initialValues: { a: 'b' } }, slots: { default: () => h(Child) } });
+    expect(injected?.getValue('a')).toBe('b');
   });
 });

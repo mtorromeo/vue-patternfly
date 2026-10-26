@@ -3,9 +3,12 @@
     v-bind="ouiaProps"
     :is="fieldset ? 'fieldset' : 'div'"
     :class="[styles.formGroup, { [styles.modifiers.action]: actionGroup }]"
+    :role="role"
+    :aria-labelledby="isGroupOrRadioGroup ? legendId : undefined"
   >
     <div
       v-if="label || $slots.label"
+      :id="isGroupOrRadioGroup ? legendId : undefined"
       :class="[
         styles.formGroupLabel,
         {
@@ -15,14 +18,20 @@
       ]"
     >
       <component :is="labelInfo || $slots['label-info'] ? 'div' : PassThrough" :class="styles.formGroupLabelMain">
-        <label :class="styles.formLabel" :for="fieldId">
+        <component
+          :is="isGroupOrRadioGroup ? 'span' : 'label'"
+          :class="styles.formLabel"
+          :for="isGroupOrRadioGroup ? undefined : fieldId"
+        >
           <span :class="styles.formLabelText">
             <slot name="label">{{ label }}</slot>
           </span>
-          <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">{{ ' *' }}</span>
-        </label>
-        {{ ' ' }}
-        <slot name="label-icon" />
+          <span v-if="required" :class="styles.formLabelRequired" aria-hidden="true">{{ '\u00a0*' }}</span>
+        </component>
+        {{ '\u00a0\u00a0' }}
+        <span v-if="$slots['label-help']" :class="styles.formGroupLabelHelp">
+          <slot name="label-help" />
+        </span>
       </component>
 
       <div v-if="labelInfo || $slots['label-info']" :class="styles.formGroupLabelInfo">
@@ -73,7 +82,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { type FieldsetHTMLAttributes, computed, toValue } from 'vue';
+import { type FieldsetHTMLAttributes, computed, toValue, useId } from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -132,23 +141,36 @@ interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
   /** Helper text after the field when the field is invalid. */
   helperTextInvalid?: string;
 
-  /** ID of the included field. It has to be the same for proper working. */
+  /** ID of an individual field or a group of multiple fields. Required when a role of "group" or "radiogroup" is passed in.
+   * If only one field is included, its ID attribute and this prop must be the same.
+   */
   fieldId?: string;
+
+  /** Sets the role of the form group. Pass in "radiogroup" when the form group contains multiple
+   * radio inputs, or pass in "group" when the form group contains multiple of any other input type.
+   */
+  role?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   helperTextVariant: 'default',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
   label?: (props?: Record<never, never>) => any;
-  'label-icon'?: (props?: Record<never, never>) => any;
+  /** A help button for the label, like a pf-form-group-label-help wrapped in a pf-popover */
+  'label-help'?: (props?: Record<never, never>) => any;
   'label-info'?: (props?: Record<never, never>) => any;
   'helper-text-invalid'?: (props?: Record<never, never>) => any;
   'helper-text'?: (props?: Record<never, never>) => any;
 }>();
+
+const generatedId = useId();
+const isGroupOrRadioGroup = computed(() => props.role === 'group' || props.role === 'radiogroup');
+const legendId = computed(() => `${props.fieldId || generatedId}-legend`);
 
 // components that use useInputValidation
 const inputs = provideChildrenTracker(FormGroupInputsKey);

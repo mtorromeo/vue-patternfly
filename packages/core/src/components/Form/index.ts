@@ -6,3 +6,5 @@ export { default as PfFormFieldGroupHeader } from './FormFieldGroupHeader.vue';
 export { default as PfFormHelperText } from './FormHelperText.vue';
 export { default as PfFormSection } from './FormSection.vue';
 export { default as PfActionGroup } from './ActionGroup.vue';
+export { default as PfFormGroupLabelHelp } from './FormGroupLabelHelp.vue';
+export { default as PfFormContextProvider } from './FormContextProvider.vue';

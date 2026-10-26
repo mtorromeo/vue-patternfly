@@ -39,6 +39,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ FormHTMLAttributes {
 
 const props = withDefaults(defineProps<Props>(), {
   component: 'form',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
