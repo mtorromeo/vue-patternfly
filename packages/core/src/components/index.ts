@@ -56,6 +56,7 @@ export * from './Panel';
 export * from './SearchInput';
 export * from './Select';
 export * from './SimpleList';
+export * from './Slider';
 export * from './Tabs';
 export * from './TextInputGroup';
 export * from './ToggleGroup';
