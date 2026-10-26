@@ -21,6 +21,7 @@ export { default as PfSwitch } from './Switch.vue';
 export { default as PfTextarea } from './Textarea.vue';
 export { default as PfTextInput } from './TextInput.vue';
 export { default as PfTitle } from './Title.vue';
+export { default as PfTruncate } from './Truncate.vue';
 export * from './Accordion';
 export * from './ActionList';
 export * from './Alert';
