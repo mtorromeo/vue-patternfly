@@ -4,14 +4,7 @@
   </component>
 </template>
 
-<script lang="ts" setup>
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-
-defineOptions({
-  name: 'PfTabButton',
-});
-
+<script lang="ts">
 interface Props
   extends
     OUIAProps,
@@ -20,11 +13,21 @@ interface Props
   /** URL associated with the Tab. A Tab with an href will render as an <a> instead of a <button>. A Tab inside a <Tabs component="nav"> should have an href. */
   href?: string;
 }
+</script>
+
+<script lang="ts" setup>
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, VNode } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+
+defineOptions({
+  name: 'PfTabButton',
+});
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  /** Content of the tab button */
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

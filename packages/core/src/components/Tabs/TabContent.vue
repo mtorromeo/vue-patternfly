@@ -15,24 +15,26 @@
   </section>
 </template>
 
+<script lang="ts">
+interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
+</script>
+
 <script lang="ts" setup>
 import { computed, inject, ref, toValue } from 'vue';
 import styles from '@patternfly/react-styles/css/components/TabContent/tab-content';
 import { TabsProvideKey } from './common';
-import type { HTMLAttributes } from 'vue';
+import type { HTMLAttributes, VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
   name: 'PfTabContent',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'tabindex' | 'hidden'> {}
-
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const hidden = ref(false);
