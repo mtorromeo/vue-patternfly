@@ -21,6 +21,19 @@ describe('Hint', () => {
     expect(wrapper.find(`.${styles.hintActions} button`).text()).toBe('Act');
   });
 
+  it('applies the no offset modifier to the actions with actionsNoOffset', async () => {
+    const wrapper = mount(PfHint, { slots: { actions: () => 'actions' } });
+    expect(wrapper.get(`.${styles.hintActions}`).classes()).not.toContain(styles.modifiers.noOffset);
+    await wrapper.setProps({ actionsNoOffset: true });
+    expect(wrapper.get(`.${styles.hintActions}`).classes()).toContain(styles.modifiers.noOffset);
+  });
+
+  it('forwards class and attributes to the root', () => {
+    const wrapper = mount(PfHint, { attrs: { class: 'custom-classname', 'aria-label': 'labelling-id' } });
+    expect(wrapper.classes()).toEqual([styles.hint, 'custom-classname']);
+    expect(wrapper.attributes('aria-label')).toBe('labelling-id');
+  });
+
   it('composes title, body and footer', () => {
     const wrapper = mount(PfHint, {
       slots: {
