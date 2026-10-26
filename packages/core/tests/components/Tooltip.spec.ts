@@ -244,6 +244,89 @@ describe('Tooltip', () => {
     await mountTooltip({}, { default: () => h('button', { class: 'trigger', 'aria-describedby': 'own' }, 'Trigger') });
     expect(trigger().getAttribute('aria-describedby')).toBe('own');
   });
+  it('uses a triggerRef element as trigger and appends its id to the existing aria', async () => {
+    const external = document.createElement('button');
+    external.id = 'external-trigger';
+    external.setAttribute('aria-describedby', 'other');
+    document.body.appendChild(external);
+    const wrapper = await mountTooltip({ triggerRef: '#external-trigger', id: 'tip' }, { default: () => [] });
+
+    external.dispatchEvent(new MouseEvent('mouseenter'));
+    await flushPromises();
+    expect(tooltip()).not.toBeNull();
+    expect(external.getAttribute('aria-describedby')).toBe('other tip');
+    expect(tooltip()!.getAttribute('aria-live')).toBe('polite');
+
+    external.dispatchEvent(new MouseEvent('mouseleave'));
+    await flushPromises();
+    expect(external.getAttribute('aria-describedby')).toBe('other');
+    wrapper.unmount();
+    external.remove();
+  });
+
+  it('is not a live region by default with a slot trigger', async () => {
+    await mountTooltip({ visible: true });
+    expect(tooltip()!.getAttribute('aria-live')).toBe('off');
+  });
+
+  it('hides on Escape and toggles on Enter on the trigger', async () => {
+    await mountTooltip();
+    trigger().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await flushPromises();
+    expect(tooltip()).not.toBeNull();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await flushPromises();
+    expect(tooltip()).toBeNull();
+  });
+
+  it('ignores the keyboard with the manual trigger', async () => {
+    const wrapper = await mountTooltip({ trigger: 'manual', visible: true });
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    trigger().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await flushPromises();
+    expect(wrapper.emitted('update:visible')).toBeUndefined();
+  });
+
+  it('stays visible while the pointer is over the tooltip', async () => {
+    vi.useFakeTimers();
+    await mountTooltip({ exitDelay: 300 });
+    trigger().dispatchEvent(new MouseEvent('mouseenter'));
+    await flushPromises();
+    trigger().dispatchEvent(new MouseEvent('mouseleave'));
+    tooltip()!.dispatchEvent(new MouseEvent('mouseenter'));
+    vi.advanceTimersByTime(400);
+    await flushPromises();
+    expect(tooltip()).not.toBeNull();
+  });
+
+  it('hides when the trigger is clicked again with the click trigger', async () => {
+    await mountTooltip({ trigger: 'click' });
+    trigger().click();
+    await flushPromises();
+    expect(tooltip()).not.toBeNull();
+    trigger().click();
+    await flushPromises();
+    expect(tooltip()).toBeNull();
+  });
+
+  it('applies a numeric maxWidth in pixels, the z-index and no trigger min width', async () => {
+    await mountTooltip({ visible: true, maxWidth: 150 });
+    const el = tooltip()!;
+    expect(el.style.maxWidth).toBe('150px');
+    expect(el.style.zIndex).toBe('9999');
+    expect(el.style.minWidth).toBe('');
+  });
+
+  it('emits hidden once hidden', async () => {
+    const wrapper = await mountTooltip({ visible: true });
+    const transition = (type: string) => Object.assign(new Event(type), { propertyName: 'opacity' });
+    tooltip()!.dispatchEvent(transition('transitionstart'));
+    await wrapper.setProps({ visible: false });
+    tooltip()!.dispatchEvent(transition('transitionend'));
+    await flushPromises();
+    expect(wrapper.emitted('hidden')).toHaveLength(1);
+  });
 });
 
 describe('TooltipArrow', () => {

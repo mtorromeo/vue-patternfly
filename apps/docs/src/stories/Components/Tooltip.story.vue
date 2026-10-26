@@ -11,6 +11,14 @@
     </template>
 
     <pre v-md>
+      ## Differences from patternfly-react
+      - The trigger is the default slot, or `trigger-ref` (an element, a selector or a function returning it).
+      - The content is the `content` prop or slot; `isContentLeftAligned` is `left-aligned`.
+      - The visibility is bound with `v-model:visible` (`isVisible`) and `onTooltipHidden` is the `hidden` event.
+      - `enableFlip` is `flip`; `flipBehavior` is not supported.
+      - `max-width` also accepts a number of pixels.
+      See [common differences from patternfly-react](#/).
+
       ## Examples
     </pre>
 
@@ -22,6 +30,56 @@
             turpis.</template
           >
           <pf-button>I have a tooltip!</pf-button>
+        </pf-tooltip>
+      </div>
+    </story-canvas>
+
+    <story-canvas title="Tooltip react ref">
+      <template #intro>
+        <pre v-md>
+          The trigger can be passed to `trigger-ref` as an element, such as a template ref, instead of being wrapped by the tooltip.
+        </pre>
+      </template>
+
+      <div style="margin: 6rem">
+        <button ref="tooltipTrigger" aria-describedby="tooltip-ref1">Tooltip attached via template ref</button>
+        <pf-tooltip id="tooltip-ref1" :trigger-ref="tooltipTrigger">
+          <template #content>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.
+          </template>
+        </pf-tooltip>
+      </div>
+    </story-canvas>
+
+    <story-canvas title="Tooltip selector ref">
+      <div style="margin: 6rem">
+        <button id="tooltip-selector" aria-describedby="tooltip-ref2">Tooltip attached via selector ref</button>
+        <pf-tooltip id="tooltip-ref2" trigger-ref="#tooltip-selector">
+          <template #content>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.
+          </template>
+        </pf-tooltip>
+      </div>
+    </story-canvas>
+
+    <story-canvas title="On icon with dynamic content">
+      <template #intro>
+        <pre v-md>
+          When the tooltip is used as a wrapper and its content will dynamically update, the `aria` prop should have a value of "none" passed in. This prevents assistive technologies from announcing the tooltip contents more than once. Additionally, the `aria-live` prop should have a value of "polite" passed in, in order for assistive technologies to announce when the tooltip contents gets updated.
+
+          When using a `trigger-ref` with a tooltip that has dynamic content, the `aria` and `aria-live` props do not need to be manually passed in.
+        </pre>
+      </template>
+
+      <div style="margin: 6rem">
+        <pf-tooltip
+          aria="none"
+          aria-live="polite"
+          :content="copied ? 'Successfully copied to clipboard!' : 'Copy to clipboard'"
+        >
+          <pf-button id="tt-ref" aria-label="Clipboard" variant="plain" @click="copied = !copied">
+            <template #icon><copy-icon /></template>
+          </pf-button>
         </pf-tooltip>
       </div>
     </story-canvas>
@@ -43,6 +101,18 @@
             label="click"
             :model-value="trigger.includes('click')"
             @update:model-value="checkTrigger('click', $event)"
+          />
+          <pf-checkbox
+            label="manual"
+            :model-value="trigger.includes('manual')"
+            @update:model-value="checkTrigger('manual', $event)"
+          />
+        </pf-form-group>
+
+        <pf-form-group label="Visibility">
+          <pf-checkbox
+            v-model="visible"
+            label="visible (also set the trigger to only manual to control it programmatically)"
           />
         </pf-form-group>
 
@@ -107,6 +177,7 @@
       >
         <pf-bullseye style="height: 200%; width: 200%">
           <pf-tooltip
+            v-model:visible="visible"
             :trigger="trigger.join(' ')"
             :left-aligned="leftAligned"
             :position="position"
@@ -132,8 +203,12 @@
 import { reactive, ref, type Ref, onMounted, useTemplateRef } from 'vue';
 import { PfButton } from '@vue-patternfly/core';
 import type { Placement } from '@vue-patternfly/core/helpers/FloatingUi.vue';
+import CopyIcon from '@vue-patternfly/icons/copy-icon';
 
 const button = useTemplateRef('buttonRef');
+const tooltipTrigger = useTemplateRef<HTMLButtonElement>('tooltipTrigger');
+const copied = ref(false);
+const visible = ref(true);
 const trigger = reactive(['mouseenter', 'focus']);
 const leftAligned = ref(false);
 const flip = ref(true);
@@ -154,6 +229,7 @@ onMounted(() => {
 });
 
 function checkTrigger(value: string, checked: boolean | null) {
+  visible.value = false;
   if (checked) {
     trigger.push(value);
   } else {
