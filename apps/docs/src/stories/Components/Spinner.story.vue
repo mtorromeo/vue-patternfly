@@ -2,7 +2,7 @@
   <doc-page title="Spinner">
     <template #description
       >A <b>spinner</b> is used to indicate to users that an action is in progress. For actions that may take a long
-      time, use a [progress bar](#/stories/components/progress) instead.</template
+      time, use a <a href="#/stories/components/progress">progress bar</a> instead.</template
     >
 
     <template #apidocs>
@@ -14,18 +14,18 @@
     </pre>
 
     <story-canvas title="Basic">
-      <pf-spinner />
+      <pf-spinner aria-label="Contents of the basic example" />
     </story-canvas>
 
     <story-canvas title="Size variations">
-      <pf-spinner size="sm" />
-      <pf-spinner size="md" />
-      <pf-spinner size="lg" />
-      <pf-spinner size="xl" />
+      <pf-spinner size="sm" aria-label="Contents of the small example" />
+      <pf-spinner size="md" aria-label="Contents of the medium example" />
+      <pf-spinner size="lg" aria-label="Contents of the large example" />
+      <pf-spinner size="xl" aria-label="Contents of the extra large example" />
     </story-canvas>
 
     <story-canvas title="Custom size">
-      <pf-spinner diameter="80px" />
+      <pf-spinner diameter="80px" aria-label="Contents of the custom size example" />
     </story-canvas>
 
     <story-canvas title="Inline size">
