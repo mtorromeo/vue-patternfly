@@ -7,565 +7,441 @@
 
     <template #apidocs>
       <component-info name="PfLabel" />
+      <component-info name="PfLabelGroup" />
     </template>
 
+    <pre v-md>
+      ## Differences from patternfly-react
+      - The `render` prop is replaced by the `to` prop, which renders a vue-router `router-link`.
+      - The `icon` prop is replaced by the `icon` slot, and `closeBtn` by the `actions` slot.
+      - The `variant="overflow"` is replaced by the `overflow` prop; `outline` is also available as a flag.
+      - The `editableProps` and `closeBtnProps` props are replaced by `editable-attrs` and `close-btn-attrs`, and `onEditComplete`/`onEditCancel` by the `edit-complete`/`edit-cancel` events.
+      - The `categoryName` prop of `pf-label-group` is replaced by `category`, `addLabelControl` by the `add-label-control` slot, `hasEditableTextArea` by `editable-textarea` and `editableTextAreaProps` by `editable-textarea-attrs`.
+      - `pf-label-group` emits `overflow-label-click` when its overflow label is clicked.
+      See [common differences from patternfly-react](#/).
+
+      ## Examples
+    </pre>
+
     <story-canvas title="Filled labels">
-      <pf-title h="4">Non-status:</pf-title>
-      <br />
-
-      <pf-label>Grey</pf-label>
-      <pf-label>
-        <template #icon> <circle-info-icon /> </template>Grey icon
-      </pf-label>
-      <pf-label @close="alert">Grey removeable</pf-label>
-      <pf-label @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Grey icon removeable
-      </pf-label>
-      <pf-label href="#filled">Grey link</pf-label>
-      <pf-label href="#filled" @close="alert">Grey link removeable</pf-label>
-      <pf-label text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Grey label with icon that overflows
-      </pf-label>
+      <strong>Non-status:</strong>
       <br />
       <br />
-      <pf-label color="blue">Blue</pf-label>
-      <pf-label color="blue">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Blue icon
-      </pf-label>
-      <pf-label color="blue" @close="alert">Blue removeable</pf-label>
-      <pf-label color="blue" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Blue icon removeable
-      </pf-label>
-      <pf-label color="blue" href="#filled">Blue link</pf-label>
-      <pf-label color="blue" href="#filled" @close="alert">Blue link removeable</pf-label>
-      <pf-label color="blue" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Blue label with icon that overflows
-      </pf-label>
+      <template v-for="[color, name] in colors" :key="color">
+        <pf-label :color="color">{{ name }}</pf-label>
+        <pf-label :color="color">
+          <template #icon><cube-icon /></template>
+          {{ name }} icon
+        </pf-label>
+        <pf-label :color="color" @close="closed">{{ name }} removable</pf-label>
+        <pf-label :color="color" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} icon removable
+        </pf-label>
+        <pf-label :color="color" href="#filled">{{ name }} link</pf-label>
+        <pf-label :color="color" href="#filled" @close="closed">{{ name }} link removable</pf-label>
+        <pf-label :color="color" @click="clicked">{{ name }} clickable</pf-label>
+        <pf-label :color="color" @click="clicked" @close="closed">{{ name }} clickable removable</pf-label>
+        <pf-label :color="color" text-max-width="16ch" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} label with icon that overflows
+        </pf-label>
+        <pf-label :color="color" disabled href="#filled" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} link removable (disabled)
+        </pf-label>
+        <pf-label :color="color" disabled @click="clicked" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} clickable removable (disabled)
+        </pf-label>
+        <br />
+        <br />
+      </template>
+      <strong>Status:</strong>
       <br />
       <br />
-      <pf-label color="green">Green</pf-label>
-      <pf-label color="green">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Green icon
-      </pf-label>
-      <pf-label color="green" @close="alert">Green removeable</pf-label>
-      <pf-label color="green" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Green icon removeable
-      </pf-label>
-      <pf-label color="green" href="#filled">Green link</pf-label>
-      <pf-label color="green" href="#filled" @close="alert">Green link removeable</pf-label>
-      <pf-label color="green" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Green label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label color="orange">Orange</pf-label>
-      <pf-label color="orange">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Orange icon
-      </pf-label>
-      <pf-label color="orange" @close="alert">Orange removeable</pf-label>
-      <pf-label color="orange" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Orange icon removeable
-      </pf-label>
-      <pf-label color="orange" href="#filled">Orange link</pf-label>
-      <pf-label color="orange" href="#filled" @close="alert">Orange link removeable</pf-label>
-      <pf-label color="orange" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Orange label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label color="red">Red</pf-label>
-      <pf-label color="red">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Red icon
-      </pf-label>
-      <pf-label color="red" @close="alert">Red removeable</pf-label>
-      <pf-label color="red" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Red icon removeable
-      </pf-label>
-      <pf-label color="red" href="#filled">Red link</pf-label>
-      <pf-label color="red" href="#filled" @close="alert">Red link removeable</pf-label>
-      <pf-label color="red" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Red label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label color="purple">Purple</pf-label>
-      <pf-label color="purple">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Purple icon
-      </pf-label>
-      <pf-label color="purple" @close="alert">Purple removeable</pf-label>
-      <pf-label color="purple" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Purple icon removeable
-      </pf-label>
-      <pf-label color="purple" href="#filled">Purple link</pf-label>
-      <pf-label color="purple" href="#filled" @close="alert">Purple link removeable</pf-label>
-      <pf-label color="purple" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Purple label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label color="teal">Teal</pf-label>
-      <pf-label color="teal">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Teal icon
-      </pf-label>
-      <pf-label color="teal" @close="alert">Teal removeable</pf-label>
-      <pf-label color="teal" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Teal icon removeable
-      </pf-label>
-      <pf-label color="teal" href="#filled">Teal link</pf-label>
-      <pf-label color="teal" href="#filled" @close="alert">Teal link removeable</pf-label>
-      <pf-label color="teal" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Teal label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label color="yellow">Yellow</pf-label>
-      <pf-label color="yellow">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Yellow icon
-      </pf-label>
-      <pf-label color="yellow" @close="alert">Yellow removeable</pf-label>
-      <pf-label color="yellow" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Yellow icon removeable
-      </pf-label>
-      <pf-label color="yellow" href="#filled">Yellow link</pf-label>
-      <pf-label color="yellow" href="#filled" @close="alert">Yellow link removeable</pf-label>
-      <pf-label color="yellow" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Yellow label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-title h="4">Status:</pf-title>
-      <br />
-
-      <pf-label status="success">Success</pf-label>
-      <pf-label status="success" @close="alert">Success removeable</pf-label>
-      <pf-label status="success" href="#filled">Success link</pf-label>
-      <pf-label status="success" href="#filled" @close="alert">Success link removeable</pf-label>
-      <pf-label status="success" text-max-width="16ch" @close="alert">
-        Success label with text that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-label status="warning">Warning</pf-label>
-      <pf-label status="warning" @close="alert">Warning removeable</pf-label>
-      <pf-label status="warning" href="#filled">Warning link</pf-label>
-      <pf-label status="warning" href="#filled" @close="alert">Warning link removeable</pf-label>
-      <pf-label status="warning" text-max-width="16ch" @close="alert">
-        Warning label with text that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-label status="danger">Danger</pf-label>
-      <pf-label status="danger" @close="alert">Danger removeable</pf-label>
-      <pf-label status="danger" href="#filled">Danger link</pf-label>
-      <pf-label status="danger" href="#filled" @close="alert">Danger link removeable</pf-label>
-      <pf-label status="danger" text-max-width="16ch" @close="alert"> Danger label with text that overflows </pf-label>
-      <br />
-      <br />
-
-      <pf-label status="info">Info</pf-label>
-      <pf-label status="info" @close="alert">Info removeable</pf-label>
-      <pf-label status="info" href="#filled">Info link</pf-label>
-      <pf-label status="info" href="#filled" @close="alert">Info link removeable</pf-label>
-      <pf-label status="info" text-max-width="16ch" @close="alert"> Info label with text that overflows </pf-label>
-      <br />
-      <br />
-
-      <pf-label status="custom">Custom</pf-label>
-      <pf-label status="custom" @close="alert">Custom removeable</pf-label>
-      <pf-label status="custom" href="#filled">Custom link</pf-label>
-      <pf-label status="custom" href="#filled" @close="alert">Custom link removeable</pf-label>
-      <pf-label status="custom" text-max-width="16ch" @close="alert"> Custom label with text that overflows </pf-label>
+      <template v-for="[status, name] in statuses" :key="status">
+        <pf-label :status="status">{{ name }}</pf-label>
+        <pf-label :status="status" @close="closed">{{ name }} removable</pf-label>
+        <pf-label :status="status" href="#filled">{{ name }} link</pf-label>
+        <pf-label :status="status" href="#filled" @close="closed">{{ name }} link removable</pf-label>
+        <pf-label :status="status" @click="clicked">{{ name }} clickable</pf-label>
+        <pf-label :status="status" @click="clicked" @close="closed">{{ name }} clickable removable</pf-label>
+        <pf-label :status="status" text-max-width="16ch" @close="closed">
+          {{ name }} label with text that overflows
+        </pf-label>
+        <br />
+        <br />
+      </template>
     </story-canvas>
 
-    <story-canvas title="Outline labels">
-      <pf-title h="4">Non-status:</pf-title>
-      <br />
-
-      <pf-label outline>Grey</pf-label>
-      <pf-label outline>
-        <template #icon> <circle-info-icon /> </template>Grey icon
-      </pf-label>
-      <pf-label outline @close="alert">Grey removeable</pf-label>
-      <pf-label outline @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Grey icon removeable
-      </pf-label>
-      <pf-label outline href="#filled">Grey link</pf-label>
-      <pf-label outline href="#filled" @close="alert">Grey link removeable</pf-label>
-      <pf-label outline text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Grey label with icon that overflows
-      </pf-label>
+    <story-canvas title="Outlined labels">
+      <strong>Non-status:</strong>
       <br />
       <br />
-      <pf-label outline color="blue">Blue</pf-label>
-      <pf-label outline color="blue">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Blue icon
-      </pf-label>
-      <pf-label outline color="blue" @close="alert">Blue removeable</pf-label>
-      <pf-label outline color="blue" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Blue icon removeable
-      </pf-label>
-      <pf-label outline color="blue" href="#filled">Blue link</pf-label>
-      <pf-label outline color="blue" href="#filled" @close="alert">Blue link removeable</pf-label>
-      <pf-label outline color="blue" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Blue label with icon that overflows
-      </pf-label>
+      <template v-for="[color, name] in colors" :key="color">
+        <pf-label variant="outline" :color="color">{{ name }}</pf-label>
+        <pf-label variant="outline" :color="color">
+          <template #icon><cube-icon /></template>
+          {{ name }} icon
+        </pf-label>
+        <pf-label variant="outline" :color="color" @close="closed">{{ name }} removable</pf-label>
+        <pf-label variant="outline" :color="color" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} icon removable
+        </pf-label>
+        <pf-label variant="outline" :color="color" href="#outline">{{ name }} link</pf-label>
+        <pf-label variant="outline" :color="color" href="#outline" @close="closed">
+          {{ name }} link removable
+        </pf-label>
+        <pf-label variant="outline" :color="color" @click="clicked">{{ name }} clickable</pf-label>
+        <pf-label variant="outline" :color="color" @click="clicked" @close="closed">
+          {{ name }} clickable removable
+        </pf-label>
+        <pf-label variant="outline" :color="color" text-max-width="16ch" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} label with icon that overflows
+        </pf-label>
+        <pf-label variant="outline" :color="color" disabled href="#outline" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} link removable (disabled)
+        </pf-label>
+        <pf-label variant="outline" :color="color" disabled @click="clicked" @close="closed">
+          <template #icon><cube-icon /></template>
+          {{ name }} clickable removable (disabled)
+        </pf-label>
+        <br />
+        <br />
+      </template>
+      <strong>Status:</strong>
       <br />
       <br />
-      <pf-label outline color="green">Green</pf-label>
-      <pf-label outline color="green">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Green icon
-      </pf-label>
-      <pf-label outline color="green" @close="alert">Green removeable</pf-label>
-      <pf-label outline color="green" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Green icon removeable
-      </pf-label>
-      <pf-label outline color="green" href="#filled">Green link</pf-label>
-      <pf-label outline color="green" href="#filled" @close="alert">Green link removeable</pf-label>
-      <pf-label outline color="green" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Green label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label outline color="orange">Orange</pf-label>
-      <pf-label outline color="orange">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Orange icon
-      </pf-label>
-      <pf-label outline color="orange" @close="alert">Orange removeable</pf-label>
-      <pf-label outline color="orange" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Orange icon removeable
-      </pf-label>
-      <pf-label outline color="orange" href="#filled">Orange link</pf-label>
-      <pf-label outline color="orange" href="#filled" @close="alert">Orange link removeable</pf-label>
-      <pf-label outline color="orange" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Orange label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label outline color="red">Red</pf-label>
-      <pf-label outline color="red">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Red icon
-      </pf-label>
-      <pf-label outline color="red" @close="alert">Red removeable</pf-label>
-      <pf-label outline color="red" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Red icon removeable
-      </pf-label>
-      <pf-label outline color="red" href="#filled">Red link</pf-label>
-      <pf-label outline color="red" href="#filled" @close="alert">Red link removeable</pf-label>
-      <pf-label outline color="red" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Red label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label outline color="purple">Purple</pf-label>
-      <pf-label outline color="purple">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Purple icon
-      </pf-label>
-      <pf-label outline color="purple" @close="alert">Purple removeable</pf-label>
-      <pf-label outline color="purple" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Purple icon removeable
-      </pf-label>
-      <pf-label outline color="purple" href="#filled">Purple link</pf-label>
-      <pf-label outline color="purple" href="#filled" @close="alert">Purple link removeable</pf-label>
-      <pf-label outline color="purple" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Purple label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label outline color="teal">Teal</pf-label>
-      <pf-label outline color="teal">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Teal icon
-      </pf-label>
-      <pf-label outline color="teal" @close="alert">Teal removeable</pf-label>
-      <pf-label outline color="teal" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Teal icon removeable
-      </pf-label>
-      <pf-label outline color="teal" href="#filled">Teal link</pf-label>
-      <pf-label outline color="teal" href="#filled" @close="alert">Teal link removeable</pf-label>
-      <pf-label outline color="teal" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Teal label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-      <pf-label outline color="yellow">Yellow</pf-label>
-      <pf-label outline color="yellow">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Yellow icon
-      </pf-label>
-      <pf-label outline color="yellow" @close="alert">Yellow removeable</pf-label>
-      <pf-label outline color="yellow" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Yellow icon removeable
-      </pf-label>
-      <pf-label outline color="yellow" href="#filled">Yellow link</pf-label>
-      <pf-label outline color="yellow" href="#filled" @close="alert">Yellow link removeable</pf-label>
-      <pf-label outline color="yellow" text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Yellow label with icon that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-title h="4">Status:</pf-title>
-      <br />
-
-      <pf-label outline status="success">Success</pf-label>
-      <pf-label outline status="success" @close="alert">Success removeable</pf-label>
-      <pf-label outline status="success" href="#filled">Success link</pf-label>
-      <pf-label outline status="success" href="#filled" @close="alert">Success link removeable</pf-label>
-      <pf-label outline status="success" text-max-width="16ch" @close="alert">
-        Success label with text that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-label outline status="warning">Warning</pf-label>
-      <pf-label outline status="warning" @close="alert">Warning removeable</pf-label>
-      <pf-label outline status="warning" href="#filled">Warning link</pf-label>
-      <pf-label outline status="warning" href="#filled" @close="alert">Warning link removeable</pf-label>
-      <pf-label outline status="warning" text-max-width="16ch" @close="alert">
-        Warning label with text that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-label outline status="danger">Danger</pf-label>
-      <pf-label outline status="danger" @close="alert">Danger removeable</pf-label>
-      <pf-label outline status="danger" href="#filled">Danger link</pf-label>
-      <pf-label outline status="danger" href="#filled" @close="alert">Danger link removeable</pf-label>
-      <pf-label outline status="danger" text-max-width="16ch" @close="alert">
-        Danger label with text that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-label outline status="info">Info</pf-label>
-      <pf-label outline status="info" @close="alert">Info removeable</pf-label>
-      <pf-label outline status="info" href="#filled">Info link</pf-label>
-      <pf-label outline status="info" href="#filled" @close="alert">Info link removeable</pf-label>
-      <pf-label outline status="info" text-max-width="16ch" @close="alert">
-        Info label with text that overflows
-      </pf-label>
-      <br />
-      <br />
-
-      <pf-label outline status="custom">Custom</pf-label>
-      <pf-label outline status="custom" @close="alert">Custom removeable</pf-label>
-      <pf-label outline status="custom" href="#filled">Custom link</pf-label>
-      <pf-label outline status="custom" href="#filled" @close="alert">Custom link removeable</pf-label>
-      <pf-label outline status="custom" text-max-width="16ch" @close="alert">
-        Custom label with text that overflows
-      </pf-label>
+      <template v-for="[status, name] in statuses" :key="status">
+        <pf-label variant="outline" :status="status">{{ name }}</pf-label>
+        <pf-label variant="outline" :status="status" @close="closed">{{ name }} removable</pf-label>
+        <pf-label variant="outline" :status="status" href="#outline">{{ name }} link</pf-label>
+        <pf-label variant="outline" :status="status" href="#outline" @close="closed">
+          {{ name }} link removable
+        </pf-label>
+        <pf-label variant="outline" :status="status" @click="clicked">{{ name }} clickable</pf-label>
+        <pf-label variant="outline" :status="status" @click="clicked" @close="closed">
+          {{ name }} clickable removable
+        </pf-label>
+        <pf-label variant="outline" :status="status" text-max-width="16ch" @close="closed">
+          {{ name }} label with text that overflows
+        </pf-label>
+        <br />
+        <br />
+      </template>
     </story-canvas>
 
     <story-canvas title="Compact labels">
       <pf-label compact>Compact</pf-label>
       <pf-label compact>
-        <template #icon> <circle-info-icon /> </template>Compact icon
+        <template #icon><cube-icon /></template>
+        Compact icon
       </pf-label>
-      <pf-label compact @close="alert">Compact removeable</pf-label>
-      <pf-label compact @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
-        Compact icon removeable
+      <pf-label compact @close="closed">Compact removable</pf-label>
+      <pf-label compact @close="closed">
+        <template #icon><cube-icon /></template>
+        Compact icon removable
       </pf-label>
-      <pf-label compact href="#filled">Compact link</pf-label>
-      <pf-label compact href="#filled" @close="alert">Compact link removeable</pf-label>
-      <pf-label compact text-max-width="16ch" @close="alert">
-        <template #icon>
-          <circle-info-icon />
-        </template>
+      <pf-label compact href="#compact">Compact link</pf-label>
+      <pf-label compact href="#compact" @close="closed">Compact link removable</pf-label>
+      <pf-label compact @click="clicked">Compact clickable</pf-label>
+      <pf-label compact @click="clicked" @close="closed">Compact clickable removable</pf-label>
+      <pf-label compact text-max-width="16ch" @close="closed">
+        <template #icon><cube-icon /></template>
         Compact label with icon that overflows
+      </pf-label>
+      <pf-label compact disabled href="#compact" @close="closed">
+        <template #icon><cube-icon /></template>
+        Compact link removable (disabled)
+      </pf-label>
+      <pf-label compact disabled @click="clicked" @close="closed">
+        <template #icon><cube-icon /></template>
+        Compact clickable removable (disabled)
       </pf-label>
     </story-canvas>
 
-    <story-canvas title="Truncated labels">
-      <pf-label text-max-width="16ch" tooltip-position="right">Label is too long to fit in the label</pf-label>
+    <story-canvas title="Label with router link">
+      <template #intro>
+        <pre v-md>
+          Labels may be passed a vue-router destination in the `to` prop to render a `router-link`, for in-app linking without reloading the page.
+        </pre>
+      </template>
+      <pf-label color="blue" to="/" text-max-width="16ch" @close="closed">
+        <template #icon><circle-info-icon /></template>
+        Blue label router link with icon that overflows
+      </pf-label>
+    </story-canvas>
+
+    <story-canvas title="Editable labels">
+      <template #intro>
+        <pre v-md>
+          Click or press either enter or space to begin editing a label. After editing, click outside the label or press enter again to complete the edit. To cancel an edit, press escape.
+
+          You can also customize any label's close button aria-label as this example shows with `close-btn-aria-label`.
+        </pre>
+      </template>
+      <pf-label
+        color="blue"
+        close-btn-aria-label="Custom close button for editable label"
+        editable
+        :editable-attrs="{ 'aria-label': `Editable label with text ${labelText}`, id: 'editable-label' }"
+        @close="closed"
+        @edit-complete="(_, text) => (labelText = text)"
+        @edit-cancel="(_, text) => (labelText = text)"
+      >
+        {{ labelText }}
+      </pf-label>
+      <pf-label
+        compact
+        close-btn-aria-label="Custom close button for compact editable label"
+        editable
+        :editable-attrs="{
+          'aria-label': `Editable compact label with text ${compactLabelText}`,
+          id: 'compact-editable-label',
+        }"
+        @close="closed"
+        @edit-complete="(_, text) => (compactLabelText = text)"
+        @edit-cancel="(_, text) => (compactLabelText = text)"
+      >
+        {{ compactLabelText }}
+      </pf-label>
+    </story-canvas>
+
+    <story-canvas title="Basic label group">
+      <template #intro>
+        <pre v-md>
+          Use a label group when you have multiple labels to display at once.
+        </pre>
+      </template>
+      <pf-label-group>
+        <pf-label>
+          <template #icon><circle-info-icon /></template>
+          Label 1
+        </pf-label>
+        <pf-label color="blue">
+          <template #icon><circle-info-icon /></template>
+          Label 2
+        </pf-label>
+        <pf-label color="green">
+          <template #icon><circle-info-icon /></template>
+          Label 3
+        </pf-label>
+      </pf-label-group>
     </story-canvas>
 
     <story-canvas title="Label group with overflow">
+      <template #intro>
+        <pre v-md>
+          An overflow label can be added to the end of a group to save space when the number of labels exceeds some threshold. Click the overflow label to expand and collapse the group.
+        </pre>
+      </template>
       <pf-label-group>
+        <pf-label v-for="[color, name] in overflowLabels" :key="name" :color="color">
+          <template #icon><circle-info-icon /></template>
+          {{ name }}
+        </pf-label>
+      </pf-label-group>
+    </story-canvas>
+
+    <story-canvas title="Label group with categories">
+      <template #intro>
+        <pre v-md>
+          Use a category name to organize a set of labels.
+        </pre>
+      </template>
+      <pf-label-group category="Group label">
+        <pf-label>
+          <template #icon><circle-info-icon /></template>
+          Label 1
+        </pf-label>
+        <pf-label color="blue">
+          <template #icon><circle-info-icon /></template>
+          Label 2
+        </pf-label>
+        <pf-label color="green">
+          <template #icon><circle-info-icon /></template>
+          Label 3
+        </pf-label>
+      </pf-label-group>
+    </story-canvas>
+
+    <story-canvas title="Label group with removable categories">
+      <pf-label-group category="Group label" closable @click="categoryLabels = []">
+        <pf-label v-for="[name, color] in categoryLabels" :key="name" :color="color">
+          <template #icon><circle-info-icon /></template>
+          {{ name }}
+        </pf-label>
+      </pf-label-group>
+    </story-canvas>
+
+    <story-canvas title="Vertical label group">
+      <template #intro>
+        <pre v-md>
+          Labels in a group can also be stacked vertically. This example shows a vertical label group with a category name and overflow.
+        </pre>
+      </template>
+      <pf-label-group category="Group label with a very long name" vertical closable @click="verticalLabels = []">
+        <pf-label v-for="[name, color] in verticalLabels" :key="name" :color="color">
+          <template #icon><circle-info-icon /></template>
+          {{ name }}
+        </pf-label>
+      </pf-label-group>
+    </story-canvas>
+
+    <story-canvas title="Editable label group">
+      <pf-label-group :num-labels="5" editable>
         <pf-label
-          ><template #icon><circle-info-icon /></template> Label 1</pf-label
+          color="blue"
+          editable
+          :editable-attrs="{ 'aria-label': `Editable label with text ${editableLabels[0]}`, id: 'editable-label-1' }"
+          @close="closed"
+          @edit-complete="(_, text) => (editableLabels[0] = text)"
+          @edit-cancel="(_, text) => (editableLabels[0] = text)"
         >
-        <pf-label color="blue"
-          ><template #icon><circle-info-icon /></template> Label 2</pf-label
+          {{ editableLabels[0] }}
+        </pf-label>
+        <pf-label color="green">Static label</pf-label>
+        <pf-label
+          color="blue"
+          editable
+          :editable-attrs="{ 'aria-label': `Editable label with text ${editableLabels[1]}`, id: 'editable-label-2' }"
+          @close="closed"
+          @edit-complete="(_, text) => (editableLabels[1] = text)"
+          @edit-cancel="(_, text) => (editableLabels[1] = text)"
         >
-        <pf-label color="green"
-          ><template #icon><circle-info-icon /></template> Label 3</pf-label
+          {{ editableLabels[1] }}
+        </pf-label>
+        <pf-label
+          color="blue"
+          editable
+          :editable-attrs="{ 'aria-label': `Editable label with text ${editableLabels[2]}`, id: 'editable-label-3' }"
+          @close="closed"
+          @edit-complete="(_, text) => (editableLabels[2] = text)"
+          @edit-cancel="(_, text) => (editableLabels[2] = text)"
         >
-        <pf-label color="yellow"
-          ><template #icon><circle-info-icon /></template> Label 4</pf-label
+          {{ editableLabels[2] }}
+        </pf-label>
+      </pf-label-group>
+    </story-canvas>
+
+    <story-canvas title="Editable label group with add button">
+      <template #intro>
+        <pre v-md>
+          The contents of a label group can be modified by removing labels or adding new ones using the add button.
+        </pre>
+      </template>
+      <pf-label-group category="Label group 1" :num-labels="5" editable>
+        <pf-label
+          v-for="(label, index) in addLabels"
+          :key="label.id"
+          color="blue"
+          :editable="label.editable"
+          :editable-attrs="label.editable ? { 'aria-label': `Editable label with text ${label.name}` } : undefined"
+          @close="addLabels.splice(index, 1)"
+          @edit-complete="(_, text) => (label.name = text)"
+          @edit-cancel="(_, text) => (label.name = text)"
         >
-        <pf-label color="red"
-          ><template #icon><circle-info-icon /></template> Label 5</pf-label
-        >
-        <pf-label color="purple"
-          ><template #icon><circle-info-icon /></template> Label 6</pf-label
-        >
+          {{ label.name }}
+        </pf-label>
+        <template #add-label-control>
+          <pf-label variant="add" @click="addLabel">Add label</pf-label>
+        </template>
       </pf-label-group>
     </story-canvas>
   </doc-page>
 </template>
 
 <style>
-.story-canvas .pf-v6-c-label + .pf-v6-c-label {
-  margin-inline-start: var(--pf-t--global--spacer--sm);
-  margin-block-start: var(--pf-t--global--spacer--sm);
+.story-canvas .pf-v6-c-label {
+  margin-inline-end: var(--pf-t--global--spacer--sm);
+  margin-block-end: var(--pf-t--global--spacer--sm);
+}
+.story-canvas .pf-v6-c-label-group .pf-v6-c-label {
+  margin: 0;
 }
 </style>
 
 <script lang="ts" setup>
+import { reactive, ref } from 'vue';
+import CubeIcon from '@vue-patternfly/icons/cube-icon';
 import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
 import { useAlertsStore } from '../../store/alerts';
 
+type Color = 'blue' | 'teal' | 'green' | 'orange' | 'purple' | 'red' | 'orangered' | 'grey' | 'yellow';
+type Status = 'success' | 'warning' | 'danger' | 'info' | 'custom';
+
+const colors: [Color, string][] = [
+  ['grey', 'Grey'],
+  ['blue', 'Blue'],
+  ['green', 'Green'],
+  ['orange', 'Orange'],
+  ['red', 'Red'],
+  ['orangered', 'Orange red'],
+  ['purple', 'Purple'],
+  ['teal', 'Teal'],
+  ['yellow', 'Yellow'],
+];
+
+const statuses: [Status, string][] = [
+  ['success', 'Success'],
+  ['warning', 'Warning'],
+  ['danger', 'Danger'],
+  ['info', 'Info'],
+  ['custom', 'Custom'],
+];
+
+const overflowLabels: [Color, string][] = [
+  ['grey', 'Label 1'],
+  ['blue', 'Label 2'],
+  ['green', 'Label 3'],
+  ['orange', 'Label 4'],
+  ['red', 'Label 5'],
+  ['purple', 'Label 6'],
+];
+
+const initialCategoryLabels: [string, Color][] = [
+  ['Label 1', 'grey'],
+  ['Label 2', 'blue'],
+  ['Label 3', 'green'],
+  ['Label 4', 'orange'],
+  ['Label 5', 'red'],
+];
+const categoryLabels = ref([...initialCategoryLabels]);
+const verticalLabels = ref([...initialCategoryLabels]);
+
+const labelText = ref('Editable label');
+const compactLabelText = ref('Compact editable label');
+const editableLabels = reactive(['Editable label', 'Editable label 2', 'Editable label 3']);
+
+let nextId = 3;
+const addLabels = reactive([
+  { id: 0, name: 'Label 1', editable: false },
+  { id: 1, name: 'Label 2', editable: false },
+  { id: 2, name: 'Label 3', editable: true },
+]);
+
+function addLabel() {
+  addLabels.unshift({ id: nextId++, name: 'New Label', editable: true });
+}
+
 const alerts = useAlertsStore();
 
-function alert(e: Event) {
+function notify(e: Event, action: string) {
   const label = (e.target as HTMLElement)?.closest('.pf-v6-c-label');
   if (label instanceof HTMLElement) {
-    alerts.add({
-      title: `Clicked close button on "${label.innerText}"`,
-      variant: 'info',
-    });
+    alerts.add({ title: `${action} "${label.innerText}"`, variant: 'info' });
   }
+}
+
+function closed(e: Event) {
+  notify(e, 'Clicked close button on');
+}
+
+function clicked(e: Event) {
+  notify(e, 'Clicked');
 }
 </script>

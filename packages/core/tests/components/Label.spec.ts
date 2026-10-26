@@ -172,9 +172,11 @@ describe('Label', () => {
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 
-    it('defaults the close button label to "Close"', () => {
-      const wrapper = mount(PfLabel, { props: { onClose: vi.fn() } });
-      expect(wrapper.find(`.${styles.labelActions} button`).attributes('aria-label')).toBe('Close');
+    it('defaults the close button label to "Close" followed by the label text', () => {
+      const empty = mount(PfLabel, { props: { onClose: vi.fn() } });
+      expect(empty.find(`.${styles.labelActions} button`).attributes('aria-label')).toBe('Close');
+      const wrapper = mount(PfLabel, { props: { onClose: vi.fn() }, slots: { default: () => 'Something' } });
+      expect(wrapper.find(`.${styles.labelActions} button`).attributes('aria-label')).toBe('Close Something');
     });
 
     it('renders the actions slot instead of the close button', () => {
@@ -214,7 +216,7 @@ describe('LabelGroup', () => {
 
     const overflow = wrapper.find(`.${styles.modifiers.overflow}`);
     await overflow.find(`.${styles.labelContent}`).trigger('click');
-    expect(wrapper.emitted('overflowChipClick')).toHaveLength(1);
+    expect(wrapper.emitted('overflowLabelClick')).toHaveLength(1);
     expect(texts()).toEqual(['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Show Less']);
 
     await wrapper.find(`.${styles.modifiers.overflow} .${styles.labelContent}`).trigger('click');
@@ -245,7 +247,7 @@ describe('LabelGroup', () => {
     const button = wrapper.find(`.${groupStyles.labelGroupClose} button`);
     expect(button.classes()).toContain(buttonStyles.modifiers.plain);
     expect(button.classes()).toContain(buttonStyles.modifiers.small);
-    expect(button.attributes('aria-label')).toBe('Close chip group');
+    expect(button.attributes('aria-label')).toBe('Close label group');
     expect(button.find(`.${buttonStyles.buttonIcon} svg`).attributes('aria-hidden')).toBe('true');
 
     await button.trigger('click');
@@ -263,5 +265,165 @@ describe('LabelGroup', () => {
     expect(wrapper.classes()).toContain(groupStyles.modifiers.category);
     expect(wrapper.find(`.${groupStyles.labelGroupLabel}`).text()).toBe('Group');
     expect(wrapper.find('ul').attributes('aria-labelledby')).toBe('grp');
+  });
+});
+
+describe('Label parity', () => {
+  it('renders an editable label as a button and edits it in a text input', async () => {
+    const wrapper = mount(PfLabel, {
+      props: { editable: true, onClose: vi.fn() },
+      slots: { default: () => 'Something' },
+      attachTo: document.body,
+    });
+    expect(wrapper.classes()).toContain(groupStyles.modifiers.editable);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.clickable);
+    const button = wrapper.get(`button.${styles.labelContent}`);
+    expect(wrapper.get(`.${styles.labelActions} button`).attributes('aria-label')).toBe('Close Something');
+
+    await button.trigger('click');
+    expect(wrapper.classes()).toContain(styles.modifiers.editableActive);
+    expect(wrapper.find(`.${styles.labelActions}`).exists()).toBe(false);
+    const input = wrapper.get<HTMLInputElement>(`input.${styles.labelContent}`);
+    expect(input.element.value).toBe('Something');
+    await input.setValue('Something else');
+    await input.trigger('keydown', { key: 'Enter' });
+
+    expect(wrapper.emitted('editComplete')?.[0][1]).toBe('Something else');
+    expect(wrapper.find('input').exists()).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('cancels an edit with escape, emitting the previous text and discarding the draft', async () => {
+    const wrapper = mount(PfLabel, { props: { editable: true }, slots: { default: () => 'Something' } });
+    await wrapper.get('button').trigger('click');
+    await wrapper.get('input').setValue('Something else');
+    await wrapper.get('input').trigger('keydown', { key: 'Escape' });
+    expect(wrapper.emitted('editCancel')?.[0][1]).toBe('Something');
+    expect(wrapper.emitted('editComplete')).toBeUndefined();
+
+    await wrapper.get('button').trigger('click');
+    expect(wrapper.get<HTMLInputElement>('input').element.value).toBe('Something');
+  });
+
+  it('completes an edit when clicking outside', async () => {
+    const wrapper = mount(PfLabel, {
+      props: { editable: true },
+      slots: { default: () => 'Something' },
+      attachTo: document.body,
+    });
+    await wrapper.get('button').trigger('click');
+    await wrapper.get('input').setValue('Other');
+    document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    await wrapper.vm.$nextTick();
+    expect(wrapper.emitted('editComplete')?.[0][1]).toBe('Other');
+    expect(wrapper.find('input').exists()).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('forwards editableAttrs to the button and input', async () => {
+    const wrapper = mount(PfLabel, {
+      props: { editable: true, editableAttrs: { 'aria-label': 'Editable label' } },
+      slots: { default: () => 'Something' },
+    });
+    expect(wrapper.get('button').attributes('aria-label')).toBe('Editable label');
+    await wrapper.get('button').trigger('click');
+    expect(wrapper.get('input').attributes('aria-label')).toBe('Editable label');
+  });
+
+  it('calls onClick from the root button of overflow labels', async () => {
+    const onClick = vi.fn();
+    const wrapper = mount(PfLabel, { props: { overflow: true, onClick }, slots: { default: () => '3 more' } });
+    expect(wrapper.element.tagName).toBe('BUTTON');
+    expect(wrapper.attributes('type')).toBe('button');
+    await wrapper.trigger('click');
+    expect(onClick).toHaveBeenCalledTimes(1);
+    await wrapper.get(`.${styles.labelContent}`).trigger('click');
+    expect(onClick).toHaveBeenCalledTimes(2);
+  });
+
+  it('applies the disabled modifier only to clickable labels', () => {
+    expect(mount(PfLabel, { props: { disabled: true } }).classes()).not.toContain(styles.modifiers.disabled);
+    expect(mount(PfLabel, { props: { disabled: true, href: '#' } }).classes()).toContain(styles.modifiers.disabled);
+  });
+
+  it('forwards closeBtnAttrs to the close button', () => {
+    const wrapper = mount(PfLabel, { props: { onClose: vi.fn(), closeBtnAttrs: { id: 'close' } } });
+    expect(wrapper.get(`.${styles.labelActions} button`).attributes('id')).toBe('close');
+  });
+
+  it('makes truncated text focusable for its tooltip', async () => {
+    const scrollWidth = vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(200);
+    const clientWidth = vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(100);
+    const wrapper = mount(PfLabel, { props: { textMaxWidth: '16ch' }, slots: { default: () => 'Long text' } });
+    await wrapper.vm.$nextTick();
+    expect(wrapper.get(`.${styles.labelContent}`).attributes('tabindex')).toBe('0');
+    scrollWidth.mockRestore();
+    clientWidth.mockRestore();
+  });
+
+  it('warns about incompatible props', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(PfLabel, { props: { onClick: vi.fn(), href: '#' } });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('Link labels cannot have onClick'));
+    warn.mockClear();
+    mount(PfLabel, { props: { onClick: vi.fn(), editable: true } });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('Editable labels cannot have onClick'));
+    warn.mockRestore();
+  });
+});
+
+describe('LabelGroup parity', () => {
+  const labels = () => [h(PfLabel, () => 'Label 1')];
+
+  it('renders the close button beside the main section, labelled by the category', () => {
+    const wrapper = mount(PfLabelGroup, {
+      props: { closable: true, category: 'Group label', id: 'group' },
+      slots: { default: labels },
+    });
+    const [main, close] = wrapper.element.children;
+    expect(main.className).toBe(groupStyles.labelGroupMain);
+    expect(close.className).toBe(groupStyles.labelGroupClose);
+    const button = wrapper.get(`.${groupStyles.labelGroupClose} button`);
+    expect(button.attributes('id')).toBe('remove_group_group');
+    expect(button.attributes('aria-labelledby')).toBe('remove_group_group group');
+    expect(wrapper.attributes('id')).toBeUndefined();
+  });
+
+  it('labels the list with the category, or with aria-label without one', () => {
+    const withCategory = mount(PfLabelGroup, { props: { category: 'Group label' }, slots: { default: labels } });
+    const id = withCategory.get(`.${groupStyles.labelGroupLabel} span`).attributes('id');
+    expect(id).toBeTruthy();
+    expect(withCategory.get('ul').attributes('aria-labelledby')).toBe(id);
+    expect(withCategory.get('ul').attributes('aria-label')).toBeUndefined();
+
+    const without = mount(PfLabelGroup, { slots: { default: labels } });
+    expect(without.get('ul').attributes('aria-labelledby')).toBeUndefined();
+    expect(without.get('ul').attributes('aria-label')).toBe('Label group category');
+  });
+
+  it('renders with only an add label control', () => {
+    const wrapper = mount(PfLabelGroup, {
+      slots: { 'add-label-control': () => h(PfLabel, { variant: 'add' }, () => 'Add label') },
+    });
+    expect(wrapper.find(`.${groupStyles.labelGroup}`).exists()).toBe(true);
+    expect(wrapper.find(`.${styles.modifiers.add}`).exists()).toBe(true);
+  });
+
+  it('forwards editableTextareaAttrs to the textarea', () => {
+    const wrapper = mount(PfLabelGroup, {
+      props: { editable: true, editableTextarea: true, editableTextareaAttrs: { 'aria-label': 'New label' } },
+      slots: { default: labels },
+    });
+    expect(wrapper.get('textarea').attributes('aria-label')).toBe('New label');
+  });
+
+  it('makes a truncated category focusable', async () => {
+    const scrollWidth = vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(200);
+    const clientWidth = vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(100);
+    const wrapper = mount(PfLabelGroup, { props: { category: 'A very long category' }, slots: { default: labels } });
+    await wrapper.vm.$nextTick();
+    expect(wrapper.get(`.${groupStyles.labelGroupLabel}`).attributes('tabindex')).toBe('0');
+    scrollWidth.mockRestore();
+    clientWidth.mockRestore();
   });
 });

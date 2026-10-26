@@ -1,8 +1,7 @@
 <template>
   <div
-    v-if="$slots.default"
+    v-if="$slots.default || $slots['add-label-control']"
     v-bind="ouiaProps"
-    :id="id"
     :class="[
       styles.labelGroup,
       {
@@ -13,19 +12,24 @@
     ]"
   >
     <div :class="styles.labelGroupMain">
-      <pf-tooltip v-if="category">
+      <pf-tooltip v-if="category" :position="tooltipPosition">
         <template v-if="labelOverflowing" #content>
           {{ category }}
         </template>
 
-        <span ref="labelRef" :class="styles.labelGroupLabel">
-          <span aria-hidden="true">
+        <span ref="labelRef" :class="styles.labelGroupLabel" :tabindex="labelOverflowing ? 0 : undefined">
+          <span :id="effectiveId" aria-hidden="true">
             {{ category }}
           </span>
         </span>
       </pf-tooltip>
 
-      <ul :class="styles.labelGroupList" :aria-labelledby="id" :aria-label="ariaLabel" role="list">
+      <ul
+        :class="styles.labelGroupList"
+        :aria-labelledby="category ? effectiveId : undefined"
+        :aria-label="category ? undefined : ariaLabel"
+        role="list"
+      >
         <pass-through>
           <template #capture>
             <slot />
@@ -38,7 +42,7 @@
               </li>
             </template>
             <li v-if="children.length > numLabels" :class="styles.labelGroupListItem">
-              <pf-label :compact="compact" overflow @click="overflowChipClick">
+              <pf-label :compact="compact" overflow @click="overflowLabelClick">
                 {{ open ? expandedText : fillTemplate(collapsedText, { remaining: children.length - numLabels }) }}
               </pf-label>
             </li>
@@ -49,23 +53,30 @@
           <slot name="add-label-control" />
         </li>
         <li v-if="editable && editableTextarea" :class="[styles.labelGroupListItem, styles.modifiers.textarea]">
-          <textarea :class="styles.labelGroupTextarea" rows="1" tabindex="0" v-bind="editableTextareaProps" />
+          <textarea :class="styles.labelGroupTextarea" rows="1" tabindex="0" v-bind="editableTextareaAttrs" />
         </li>
       </ul>
+    </div>
 
-      <div v-if="closable" :class="styles.labelGroupClose">
-        <pf-button variant="plain" small :aria-label="closeBtnAriaLabel" @click="emit('click', $event)">
-          <template #icon>
-            <xmark-icon aria-hidden="true" />
-          </template>
-        </pf-button>
-      </div>
+    <div v-if="closable" :class="styles.labelGroupClose">
+      <pf-button
+        :id="`remove_group_${effectiveId}`"
+        variant="plain"
+        small
+        :aria-label="closeBtnAriaLabel"
+        :aria-labelledby="`remove_group_${effectiveId} ${effectiveId}`"
+        @click="emit('click', $event)"
+      >
+        <template #icon>
+          <xmark-icon aria-hidden="true" />
+        </template>
+      </pf-button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, useTemplateRef, type HTMLAttributes } from 'vue';
+import { computed, ref, useId, useTemplateRef, type HTMLAttributes, type TextareaHTMLAttributes } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Label/label-group';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfLabel from './Label.vue';
@@ -82,6 +93,7 @@ defineOptions({
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onClick'> {
+  /** Id of the category label, which labels the list and the close button. Generated when not set. */
   id?: string;
   /** Flag for having the label group default to expanded */
   defaultOpen?: boolean;
@@ -95,8 +107,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCli
   editable?: boolean;
   /** Flag indicating the editable label group should be appended with a textarea. */
   editableTextarea?: boolean;
-  /** Additional props passed to the editable textarea. */
-  editableTextareaProps?: any;
+  /** Additional attributes for the editable textarea. */
+  editableTextareaAttrs?: TextareaHTMLAttributes;
   /** Category name text for the label group category.  If this prop is supplied the label group with have a label and category styling applied */
   category?: string;
   /** Set number of labels to show before overflow */
@@ -116,8 +128,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCli
 const props = withDefaults(defineProps<Props>(), {
   numLabels: 3,
   tooltipPosition: 'top',
-  closeBtnAriaLabel: 'Close chip group',
-  ariaLabel: 'Chip group category',
+  closeBtnAriaLabel: 'Close label group',
+  ariaLabel: 'Label group category',
   expandedText: 'Show Less',
   collapsedText: '${remaining} more',
 });
@@ -125,7 +137,7 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'click', e: PointerEvent): void;
-  (name: 'overflowChipClick', e: PointerEvent): void;
+  (name: 'overflowLabelClick', e: PointerEvent): void;
 }>();
 
 const slots = defineSlots<{
@@ -136,10 +148,12 @@ const slots = defineSlots<{
 const label = useTemplateRef('labelRef');
 const labelOverflowing = useElementOverflow(label);
 const open = ref(props.defaultOpen);
+const generatedId = useId();
+const effectiveId = computed(() => props.id ?? generatedId);
 
-function overflowChipClick(e: PointerEvent) {
+function overflowLabelClick(e: PointerEvent) {
   toggleCollapse();
-  emit('overflowChipClick', e);
+  emit('overflowLabelClick', e);
 }
 
 function toggleCollapse() {
