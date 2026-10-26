@@ -2,12 +2,15 @@
   <teleport :to="teleportTarget">
     <pf-backdrop
       v-if="rendered"
+      :id="backdropId"
+      :class="backdropClass"
       :no-animations="noAnimations"
       :hidden="!open"
       :aria-hidden="!noAnimations && !open ? true : undefined"
       @transitionend="onBackdropTransitionEnd"
     >
       <pf-focus-trap
+        :id="focusTrapId"
         :class="bullsEyeStyles.bullseye"
         :active="!disableFocusTrap && (noAnimations || open)"
         :focus-trap-options="{
@@ -21,15 +24,13 @@
         <component
           :is="component"
           v-bind="{ ...ouiaProps, ...$attrs }"
+          :id="boxId"
           role="dialog"
-          :aria-labelledby="
-            $attrs['aria-labelledby'] ?? (title && !$slots.header && !$attrs['aria-label'] ? titleId : undefined)
-          "
-          :aria-describedby="ariaDescribedby || (noBodyWrapper ? null : descriptorId)"
+          :aria-labelledby="ariaLabelledby"
+          :aria-describedby="describedby"
           aria-modal="true"
           :class="[
             styles.modalBox,
-            titleIconVariant && titleIconVariant !== 'default' && styles.modifiers[titleIconVariant],
             {
               [styles.modifiers.animate]: !noAnimations,
               [styles.modifiers.open]: !noAnimations && open,
@@ -50,100 +51,59 @@
           }"
         >
           <div v-if="!noClose" :class="styles.modalBoxClose">
-            <pf-close-button @click="emit('update:open', false)" />
+            <pf-close-button
+              :ouia-id="ouiaId !== undefined ? `${ouiaId}-ModalBoxCloseButton` : undefined"
+              @click="emit('update:open', false)"
+            />
           </div>
 
-          <pf-modal-header>
-            <slot name="header">
-              <component :is="titleOverflowing ? PfTooltip : PassThrough" v-if="title">
-                <h1
-                  :id="titleId"
-                  ref="titleRef"
-                  :class="[
-                    styles.modalBoxTitle,
-                    {
-                      [styles.modifiers.icon]: titleIconVariant,
-                    },
-                  ]"
-                >
-                  <span v-if="titleIconVariant" :class="styles.modalBoxTitleIcon">
-                    <circle-check-icon v-if="titleIconVariant === 'success'" />
-                    <circle-exclamation-icon v-else-if="titleIconVariant === 'danger'" />
-                    <triangle-exclamation-icon v-else-if="titleIconVariant === 'warning'" />
-                    <circle-info-icon v-else-if="titleIconVariant === 'info'" />
-                    <BellIcon v-else-if="titleIconVariant === 'default'" />
-                    <slot v-else name="title-icon" />
-                  </span>
-                  <span v-if="label" class="pf-v6-screen-reader">{{ label }}</span>
-                  <span :class="styles.modalBoxTitleText">{{ title }}</span>
-                </h1>
-
-                <template v-if="titleOverflowing" #content>{{ title }}</template>
-              </component>
-
-              <div v-if="$slots.description" :id="descriptorId" :class="styles.modalBoxDescription">
-                <slot name="description" />
-              </div>
-            </slot>
-
+          <pf-modal-header
+            v-if="title || $slots.header || $slots.description || $slots.help"
+            :title="title"
+            :title-icon-variant="titleIconVariant"
+            :title-label="titleLabel"
+            :descriptor-id="$slots.description ? descriptorId : undefined"
+          >
+            <template v-if="$slots.header" #default>
+              <slot name="header" />
+            </template>
+            <template v-if="$slots['title-icon']" #title-icon>
+              <slot name="title-icon" />
+            </template>
+            <template v-if="$slots.description" #description>
+              <slot name="description" />
+            </template>
             <template v-if="$slots.help" #help>
               <slot name="help" />
             </template>
           </pf-modal-header>
 
-          <component
-            :is="noBodyWrapper ? PassThrough : 'div'"
-            :id="$slots.description || ariaDescribedby ? null : descriptorId"
-            :class="styles.modalBoxBody"
+          <slot v-if="noBodyWrapper" />
+          <auto-wrap
+            v-else
+            :component="PfModalBody"
+            :exclude="[PfModalHeader, PfModalFooter]"
+            :id="$slots.description || ariaDescribedby ? undefined : descriptorId"
           >
             <slot />
-          </component>
+          </auto-wrap>
 
-          <footer v-if="$slots.footer" :class="styles.modalBoxFooter">
+          <pf-modal-footer v-if="$slots.footer">
             <slot name="footer" />
-          </footer>
+          </pf-modal-footer>
         </component>
       </pf-focus-trap>
     </pf-backdrop>
   </teleport>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
-import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
-import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
-import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
-
-import { capitalize, computed, ref, watch, onMounted, onBeforeUnmount, useTemplateRef, useId } from 'vue';
-import type { Component, HTMLAttributes } from 'vue';
-import PfModalHeader from './ModalHeader.vue';
-import PassThrough from '../../helpers/PassThrough.vue';
-import PfBackdrop from '../Backdrop.vue';
-import PfFocusTrap from '../../helpers/FocusTrap.vue';
-import PfTooltip from '../Tooltip/Tooltip.vue';
-import PfCloseButton from '../CloseButton.vue';
-import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
-import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
-import TriangleExclamationIcon from '@vue-patternfly/icons/triangle-exclamation-icon';
-import CircleInfoIcon from '@vue-patternfly/icons/circle-info-icon';
-import BellIcon from '@vue-patternfly/icons/bell-icon';
-import { useElementOverflow } from '../../use';
-import { useEventListener } from '@vueuse/core';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-
-defineOptions({
-  name: 'PfModal',
-  inheritAttrs: false,
-});
-
-const transitionEndFallbackDelay = 300;
-
+<script lang="ts">
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role' | 'aria-modal'> {
   /** Flag to show the modal */
   open?: boolean;
   /** Flag to remove the close button in the header area of the modal */
   noClose?: boolean;
-  /** Flag indicating if modal content should be placed in a modal box body wrapper */
+  /** Flag indicating if loose modal content should not be placed in a modal body wrapper */
   noBodyWrapper?: boolean;
   /** Flag to disable focus trap */
   disableFocusTrap?: boolean;
@@ -151,6 +111,10 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'
    * focusable element will receive focus.
    */
   elementToFocus?: HTMLElement | SVGElement | string;
+  /** Id of the focus trap, to append menus to it so that they break out of the modal box */
+  focusTrapId?: string;
+  /** Additional classes added to the modal backdrop */
+  backdropClass?: HTMLAttributes['class'];
   /** Simple text content of the Modal Header, also used for aria-label on the body */
   title?: string;
   /** Optional title label text for screen readers */
@@ -158,7 +122,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'
   /** Optional alert icon (or other) to show before the title of the Modal Header
    * When the predefined alert types are used the default styling
    * will be automatically applied */
-  titleIconVariant?: 'default' | 'success' | 'danger' | 'warning' | 'info';
+  titleIconVariant?: ModalTitleIconVariant;
+  /** The parent container to append the modal to. Defaults to document.body */
   appendTo?: HTMLElement | string | (() => HTMLElement);
   /** Id of Modal Box description */
   ariaDescribedby?: string;
@@ -177,12 +142,63 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'role'
   component?: string | Component;
   /** Flag to disable animations. */
   noAnimations?: boolean;
+  /** Called when Escape is pressed while the modal is open, in place of closing it */
+  onEscapePress?: (event: KeyboardEvent) => void;
 }
+
+// the backdrop ids must be unique across Vue apps sharing a target, which useId does not ensure
+let backdropCounter = 0;
+
+// the backdrops of the open modals of each target, the last one being the active modal
+const openModalStacks = new Map<HTMLElement, string[]>();
+
+// marks the target as having an open backdrop and hides from screen readers all its children
+// but the backdrop of the active modal
+function syncTarget(target: HTMLElement) {
+  const stack = openModalStacks.get(target);
+  const active = stack?.[stack.length - 1];
+  target.classList.toggle(backdropStyles.backdropOpen, active !== undefined);
+  for (const child of Array.from(target.children)) {
+    if (active !== undefined && child.id !== active) {
+      child.setAttribute('aria-hidden', 'true');
+    } else {
+      child.removeAttribute('aria-hidden');
+    }
+  }
+}
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/ModalBox/modal-box';
+import backdropStyles from '@patternfly/react-styles/css/components/Backdrop/backdrop';
+import bullsEyeStyles from '@patternfly/react-styles/css/layouts/Bullseye/bullseye';
+import topSpacer from '@patternfly/react-tokens/dist/esm/c_modal_box_m_align_top_spacer';
+
+import { computed, onBeforeUnmount, provide, ref, useAttrs, useId, watch } from 'vue';
+import type { Component, HTMLAttributes, VNode } from 'vue';
+import PfModalHeader from './ModalHeader.vue';
+import PfModalBody from './ModalBody.vue';
+import PfModalFooter from './ModalFooter.vue';
+import AutoWrap from '../../helpers/AutoWrap.vue';
+import PfBackdrop from '../Backdrop.vue';
+import PfFocusTrap from '../../helpers/FocusTrap.vue';
+import PfCloseButton from '../CloseButton.vue';
+import { useEventListener } from '@vueuse/core';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { ModalKey, type ModalTitleIconVariant } from './common';
+
+defineOptions({
+  name: 'PfModal',
+  inheritAttrs: false,
+});
+
+const transitionEndFallbackDelay = 300;
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   position: 'default',
   component: 'div',
+  ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
@@ -191,34 +207,53 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  header?: (props?: Record<never, never>) => any;
-  footer?: (props?: Record<never, never>) => any;
-  help?: (props?: Record<never, never>) => any;
-  description?: (props?: Record<never, never>) => any;
-  'title-icon'?: (props?: Record<never, never>) => any;
+  /** Content of the modal: wrapped in a modal body unless it is made of pf-modal-header, pf-modal-body and pf-modal-footer */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Custom content of the modal header, replacing the title and the description */
+  header?: (props?: Record<never, never>) => VNode[];
+  /** Content of the modal footer */
+  footer?: (props?: Record<never, never>) => VNode[];
+  /** Help section of the modal header */
+  help?: (props?: Record<never, never>) => VNode[];
+  /** Description of the modal, in the header */
+  description?: (props?: Record<never, never>) => VNode[];
+  /** Custom icon shown before the title */
+  'title-icon'?: (props?: Record<never, never>) => VNode[];
 }>();
 
-// inject: ['open'],
-const titleEl = useTemplateRef('titleRef');
-const titleOverflowing = useElementOverflow(titleEl);
-const titleId = useId();
+const attrs = useAttrs();
+const generatedBoxId = useId();
+const boxId = computed(() => (typeof attrs.id === 'string' ? attrs.id : generatedBoxId));
+const backdropId = `pf-modal-backdrop-${backdropCounter++}`;
+
+const titleId = ref<string>();
+const descriptionId = ref<string>();
+provide(ModalKey, { titleId, descriptionId });
+
+// like upstream, a modal without a title nor an aria-label is labelled by its whole content
+const ariaLabelledby = computed(() => {
+  if (attrs['aria-labelledby'] !== undefined) {
+    return attrs['aria-labelledby'];
+  }
+  return attrs['aria-label'] ? undefined : (titleId.value ?? boxId.value);
+});
+
+const describedby = computed(
+  () =>
+    props.ariaDescribedby ||
+    attrs['aria-describedby'] ||
+    descriptionId.value ||
+    (props.noBodyWrapper ? undefined : props.descriptorId),
+);
 
 const teleportTarget = computed(() => {
   if (typeof props.appendTo === 'function') {
     return props.appendTo();
   }
   if (typeof props.appendTo === 'string') {
-    return document.querySelector(props.appendTo) ?? document.body;
+    return document.querySelector<HTMLElement>(props.appendTo) ?? document.body;
   }
   return props.appendTo ?? document.body;
-});
-
-const label = computed(() => {
-  if (!props.titleLabel && props.titleIconVariant) {
-    return `${capitalize(props.titleIconVariant)} alert:`;
-  }
-  return props.titleLabel;
 });
 
 // Keeps the modal in the DOM while the close animation runs: with animations enabled it is
@@ -254,33 +289,61 @@ function onBackdropTransitionEnd(e: TransitionEvent) {
   }
 }
 
+// the target this modal is stacked on while open
+let stackTarget: HTMLElement | undefined;
+
+function release() {
+  const target = stackTarget;
+  if (!target) {
+    return;
+  }
+  stackTarget = undefined;
+  const stack = (openModalStacks.get(target) ?? []).filter(id => id !== backdropId);
+  if (stack.length) {
+    openModalStacks.set(target, stack);
+  } else {
+    openModalStacks.delete(target);
+  }
+  syncTarget(target);
+}
+
+function acquire(target: HTMLElement) {
+  if (stackTarget === target) {
+    return;
+  }
+  release();
+  stackTarget = target;
+  const stack = openModalStacks.get(target) ?? [];
+  stack.push(backdropId);
+  openModalStacks.set(target, stack);
+  syncTarget(target);
+}
+
 watch(
-  () => props.open,
-  () => {
-    if (props.open) {
-      teleportTarget.value.classList.add(backdropStyles.backdropOpen);
+  [() => props.open, teleportTarget],
+  ([open, target]) => {
+    if (open) {
+      acquire(target);
     } else {
-      teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
+      release();
     }
   },
+  { immediate: true },
 );
 
-onMounted(() => {
-  if (props.open) {
-    teleportTarget.value.classList.add(backdropStyles.backdropOpen);
-  } else {
-    teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
+useEventListener(teleportTarget, 'keydown', (e: KeyboardEvent) => {
+  if (!props.open || e.key !== 'Escape') {
+    return;
   }
-});
-
-useEventListener('keydown', (e: KeyboardEvent) => {
-  if (props.open && e.key === 'Escape') {
+  if (props.onEscapePress) {
+    props.onEscapePress(e);
+  } else {
     emit('update:open', false);
   }
 });
 
 onBeforeUnmount(() => {
   clearTransitionEndFallback();
-  teleportTarget.value.classList.remove(backdropStyles.backdropOpen);
+  release();
 });
 </script>
