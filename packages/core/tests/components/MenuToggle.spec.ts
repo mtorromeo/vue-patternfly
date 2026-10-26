@@ -44,6 +44,23 @@ describe('MenuToggle', () => {
       expect(wrapper.find(`.${styles.menuToggleStatusIcon} svg`).exists()).toBe(true);
     });
 
+    it('overrides the status icon with the status-icon slot', () => {
+      const wrapper = mount(PfMenuToggle, {
+        props: { status: 'success' },
+        slots: { default: () => 'Status', 'status-icon': () => h('i', { class: 'my-status' }) },
+      });
+      expect(wrapper.find(`.${styles.menuToggleStatusIcon} .my-status`).exists()).toBe(true);
+      expect(wrapper.find(`.${styles.menuToggleStatusIcon} svg`).exists()).toBe(false);
+    });
+
+    // status-icon only overrides the icon of a status, as upstream statusIcon
+    it('does not render the status-icon slot without a status', () => {
+      const wrapper = mount(PfMenuToggle, {
+        slots: { default: () => 'Status', 'status-icon': () => h('i', { class: 'my-status' }) },
+      });
+      expect(wrapper.find(`.${styles.menuToggleStatusIcon}`).exists()).toBe(false);
+    });
+
     it.each([
       ['primary', styles.modifiers.primary],
       ['secondary', styles.modifiers.secondary],
@@ -63,6 +80,9 @@ describe('MenuToggle', () => {
     it.each([
       ['listbox', 'listbox'],
       [true, 'true'],
+      [false, 'false'],
+      ['true', 'true'],
+      ['false', 'false'],
     ] as const)('renders %s', (ariaHaspopup, expected) => {
       const wrapper = mount(PfMenuToggle, { props: { ariaHaspopup }, slots: { default: () => 'Toggle' } });
       expect(root(wrapper).attributes('aria-haspopup')).toBe(expected);
@@ -101,9 +121,11 @@ describe('MenuToggle', () => {
     });
 
     it('also emits click events to listeners', async () => {
-      const wrapper = mount(PfMenuToggle, { slots: { default: () => 'Toggle' } });
+      const onClick = vi.fn();
+      const wrapper = mount(PfMenuToggle, { attrs: { onClick }, slots: { default: () => 'Toggle' } });
       await root(wrapper).trigger('click');
-      expect(wrapper.emitted('click')).toHaveLength(1);
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(onClick.mock.calls[0]?.[0]).toBeInstanceOf(MouseEvent);
     });
   });
 
@@ -231,15 +253,42 @@ describe('MenuToggle', () => {
       expect(wrapper.find(`.${styles.menuToggleText}`).exists()).toBe(false);
     });
 
-    it('toggles only via the inner toggle button', async () => {
+    it('takes the toggle button out of the tab order', () => {
       const wrapper = mountTypeahead();
+      expect(wrapper.find(`button.${styles.menuToggleButton}`).attributes('tabindex')).toBe('-1');
+    });
+
+    it('puts the aria-label and the OUIA attributes on the toggle button', () => {
+      const wrapper = mount(PfMenuToggle, {
+        props: { variant: 'typeahead', ouiaId: 'typeahead' },
+        attrs: { 'aria-label': 'Typeahead menu toggle', id: 'typeahead-toggle' },
+        slots: { default: () => h('input', { class: 'typeahead-input' }) },
+      });
+
+      const button = wrapper.find(`button.${styles.menuToggleButton}`);
+      expect(button.attributes('aria-label')).toBe('Typeahead menu toggle');
+      expect(button.attributes('data-ouia-component-id')).toBe('typeahead');
+      expect(root(wrapper).attributes('aria-label')).toBeUndefined();
+      expect(root(wrapper).attributes('data-ouia-component-id')).toBeUndefined();
+      expect(root(wrapper).attributes('id')).toBe('typeahead-toggle');
+    });
+
+    it('toggles only via the inner toggle button', async () => {
+      const onClick = vi.fn();
+      const wrapper = mount(PfMenuToggle, {
+        props: { variant: 'typeahead' },
+        attrs: { onClick },
+        slots: { default: () => h('input', { class: 'typeahead-input' }) },
+      });
 
       await wrapper.find('.typeahead-input').trigger('click');
       expect(wrapper.emitted('update:expanded')).toBeUndefined();
+      expect(onClick).not.toHaveBeenCalled();
 
       const button = wrapper.find(`button.${styles.menuToggleButton}`);
       await button.trigger('click');
       expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
+      expect(onClick).toHaveBeenCalledTimes(1);
       expect(button.attributes('aria-expanded')).toBe('true');
       expect(root(wrapper).classes()).toContain(styles.modifiers.expanded);
     });
@@ -272,6 +321,53 @@ describe('MenuToggle', () => {
       expect(button.find(`.${styles.menuToggleText}`).exists()).toBe(false);
       expect(button.classes()).not.toContain(styles.modifiers.text);
     });
+
+    it('passes the attributes to the toggle button and keeps class and style on the wrapper', () => {
+      const wrapper = mount(PfMenuToggle, {
+        props: { ouiaId: 'split' },
+        attrs: { class: 'my-split', style: 'color: red', id: 'split-toggle', 'aria-label': 'Split toggle' },
+        slots: { 'split-buttons': () => h(PfMenuToggleCheckbox, { 'aria-label': 'Select all' }) },
+      });
+
+      expect(root(wrapper).classes()).toContain('my-split');
+      expect(root(wrapper).attributes('style')).toContain('color: red');
+      expect(root(wrapper).attributes('id')).toBeUndefined();
+      expect(root(wrapper).attributes('aria-label')).toBeUndefined();
+      expect(root(wrapper).attributes('data-ouia-component-id')).toBeUndefined();
+
+      const button = wrapper.find(`button.${styles.menuToggleButton}`);
+      expect(button.attributes('id')).toBe('split-toggle');
+      expect(button.attributes('aria-label')).toBe('Split toggle');
+      expect(button.attributes('data-ouia-component-id')).toBe('split');
+      expect(button.classes()).not.toContain('my-split');
+    });
+
+    // the visible toggle text must stay the accessible name of the toggle button
+    it('does not set a default aria-label on the toggle button', () => {
+      const wrapper = mount(PfMenuToggle, {
+        slots: {
+          'split-buttons': () => h(PfMenuToggleCheckbox, { 'aria-label': 'Select all' }),
+          default: () => '10 selected',
+        },
+      });
+      expect(wrapper.find(`button.${styles.menuToggleButton}`).attributes('aria-label')).toBeUndefined();
+    });
+
+    it('emits click only for the toggle button, not for the split button items', async () => {
+      const onClick = vi.fn();
+      const wrapper = mount(PfMenuToggle, {
+        attrs: { onClick },
+        slots: { 'split-buttons': () => h(PfMenuToggleCheckbox, { 'aria-label': 'Select all' }) },
+      });
+
+      await wrapper.find('input[type="checkbox"]').trigger('click');
+      expect(onClick).not.toHaveBeenCalled();
+      expect(wrapper.emitted('update:expanded')).toBeUndefined();
+
+      await wrapper.find(`button.${styles.menuToggleButton}`).trigger('click');
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(wrapper.emitted('update:expanded')).toEqual([[true]]);
+    });
   });
 
   it('applies size and layout modifiers', () => {
@@ -289,6 +385,23 @@ describe('MenuToggle', () => {
         styles.modifiers.placeholder,
       ]),
     );
+  });
+
+  it('applies the docked modifier', () => {
+    const wrapper = mount(PfMenuToggle, { props: { docked: true, expanded: true }, slots: { default: () => 'Dock' } });
+    expect(root(wrapper).classes()).toEqual(
+      expect.arrayContaining([styles.modifiers.docked, styles.modifiers.expanded]),
+    );
+    expect(mount(PfMenuToggle).find(`.${styles.menuToggle}`).classes()).not.toContain(styles.modifiers.docked);
+  });
+
+  it('renders the settings icon in place of the icon slot', () => {
+    const wrapper = mount(PfMenuToggle, {
+      props: { settings: true },
+      slots: { icon: () => h('i', { class: 'my-icon' }), default: () => 'Settings' },
+    });
+    expect(wrapper.find('.my-icon').exists()).toBe(false);
+    expect(wrapper.find(`.${styles.menuToggleIcon} svg`).exists()).toBe(true);
   });
 
   it('renders the gear icon for settings toggles', () => {
@@ -379,11 +492,60 @@ describe('MenuToggleCheckbox', () => {
     expect(input.element.indeterminate).toBe(false);
   });
 
-  it('forwards change listeners to the input', async () => {
+  it('emits change events', async () => {
     const onChange = vi.fn();
     const wrapper = mount(PfMenuToggleCheckbox, { attrs: { onChange } });
     await wrapper.find('input').setValue(true);
     expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange.mock.calls[0]?.[0]).toBeInstanceOf(Event);
+  });
+
+  it('updates v-model:checked', async () => {
+    const wrapper = mount(PfMenuToggleCheckbox, {
+      props: { checked: null, 'onUpdate:checked': (checked: boolean | null) => wrapper.setProps({ checked }) },
+    });
+    const input = wrapper.find<HTMLInputElement>('input');
+
+    await input.setValue(true);
+    expect(wrapper.emitted('update:checked')).toEqual([[true]]);
+    expect(wrapper.props('checked')).toBe(true);
+    expect(input.element.indeterminate).toBe(false);
+
+    await input.setValue(false);
+    expect(wrapper.emitted('update:checked')).toEqual([[true], [false]]);
+  });
+
+  it('works uncontrolled', async () => {
+    const wrapper = mount(PfMenuToggleCheckbox);
+    const input = wrapper.find<HTMLInputElement>('input');
+    await input.setValue(true);
+    expect(input.element.checked).toBe(true);
+    expect(wrapper.emitted('update:checked')).toEqual([[true]]);
+  });
+
+  it('puts class and style on the label and the OUIA attributes on the input', () => {
+    const wrapper = mount(PfMenuToggleCheckbox, {
+      props: { ouiaId: 'check' },
+      attrs: { class: 'my-check', style: 'color: red', name: 'select-all' },
+    });
+    const input = wrapper.find('input');
+
+    expect(wrapper.classes()).toContain('my-check');
+    expect(wrapper.attributes('style')).toContain('color: red');
+    expect(wrapper.attributes('data-ouia-component-id')).toBeUndefined();
+    expect(input.classes()).not.toContain('my-check');
+    expect(input.attributes('style')).toBeUndefined();
+    expect(input.attributes('name')).toBe('select-all');
+    expect(input.attributes('data-ouia-component-id')).toBe('check');
+  });
+
+  it('marks the input invalid', () => {
+    expect(mount(PfMenuToggleCheckbox).find('input').attributes('aria-invalid')).toBe('false');
+    expect(
+      mount(PfMenuToggleCheckbox, { props: { invalid: true } })
+        .find('input')
+        .attributes('aria-invalid'),
+    ).toBe('true');
   });
 
   it('renders inside a split button toggle', () => {
