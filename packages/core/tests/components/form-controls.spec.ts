@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { nextTick } from 'vue';
+import { h, nextTick } from 'vue';
 import { mount, type VueWrapper } from '@vue/test-utils';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import radioStyles from '@patternfly/react-styles/css/components/Radio/radio';
@@ -331,6 +331,82 @@ describe('Switch', () => {
 
     await wrapper.setProps({ checked: true });
     expect(wrapper.find('input[type="hidden"]').exists()).toBe(false);
+  });
+
+  it('labels the input with the visible label', () => {
+    const wrapper = mount(PfSwitch, { props: { id: 'sw', label: 'On' } });
+    const input = wrapper.find('input');
+    expect(wrapper.attributes('for')).toBe('sw');
+    expect(input.attributes('id')).toBe('sw');
+    expect(input.attributes('aria-labelledby')).toBe('sw-label');
+    const label = wrapper.find(`.${switchStyles.switchLabel}`);
+    expect(label.attributes('id')).toBe('sw-label');
+    expect(label.attributes('aria-hidden')).toBe('true');
+  });
+
+  it('generates the id linking the label to the input', () => {
+    const wrapper = mount(PfSwitch, { attrs: { 'aria-label': 'Dark mode' } });
+    const id = wrapper.find('input').attributes('id');
+    expect(id).toBeTruthy();
+    expect(wrapper.attributes('for')).toBe(id);
+  });
+
+  it('uses aria-label instead of the visible label', () => {
+    const wrapper = mount(PfSwitch, { props: { id: 'sw', label: 'On' }, attrs: { 'aria-label': 'Dark mode' } });
+    expect(wrapper.find('input').attributes('aria-labelledby')).toBeUndefined();
+    expect(wrapper.find('input').attributes('aria-label')).toBe('Dark mode');
+    expect(wrapper.find(`.${switchStyles.switchLabel}`).attributes('id')).toBeUndefined();
+  });
+
+  it('uses a custom aria-labelledby', () => {
+    const wrapper = mount(PfSwitch, { props: { id: 'sw', label: 'On' }, attrs: { 'aria-labelledby': 'ext' } });
+    expect(wrapper.find('input').attributes('aria-labelledby')).toBe('ext');
+    expect(wrapper.find(`.${switchStyles.switchLabel}`).attributes('id')).toBeUndefined();
+  });
+
+  it('renders the label slot', () => {
+    const wrapper = mount(PfSwitch, { props: { id: 'sw' }, slots: { label: () => h('b', 'Bold') } });
+    expect(wrapper.find(`.${switchStyles.switchLabel} b`).text()).toBe('Bold');
+    expect(wrapper.find('input').attributes('aria-labelledby')).toBe('sw-label');
+  });
+
+  it('applies class to the label only', () => {
+    const wrapper = mount(PfSwitch, { props: { label: 'On' }, attrs: { class: 'extra' } });
+    expect(wrapper.classes()).toContain('extra');
+    expect(wrapper.find('input').classes()).toEqual([switchStyles.switchInput]);
+  });
+
+  it('puts the OUIA attributes on the label, safe by default', () => {
+    const wrapper = mount(PfSwitch, { props: { label: 'On' } });
+    expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/Switch');
+    expect(wrapper.attributes('data-ouia-safe')).toBe('true');
+  });
+
+  it('renders the check icon in a span with a label and always without one', () => {
+    const labelled = mount(PfSwitch, { props: { label: 'On', checkIcon: true } });
+    expect(labelled.find(`.${switchStyles.switchToggleIcon}`).element.tagName).toBe('SPAN');
+    expect(
+      mount(PfSwitch, { props: { label: 'On' } })
+        .find(`.${switchStyles.switchToggleIcon}`)
+        .exists(),
+    ).toBe(false);
+
+    const unlabelled = mount(PfSwitch, { attrs: { 'aria-label': 'Dark mode' } });
+    expect(unlabelled.find(`.${switchStyles.switchToggleIcon}`).element.tagName).toBe('DIV');
+  });
+
+  it('warns without a label, aria-label or aria-labelledby', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mount(PfSwitch);
+    expect(error).toHaveBeenCalledWith(
+      'Switch: Switch requires at least one of label, aria-labelledby, or aria-label props to be specified',
+    );
+    error.mockClear();
+    mount(PfSwitch, { props: { label: 'On' } });
+    mount(PfSwitch, { attrs: { 'aria-label': 'On' } });
+    mount(PfSwitch, { attrs: { 'aria-labelledby': 'ext' } });
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
   });
 });
 
