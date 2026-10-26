@@ -40,6 +40,21 @@ describe('List', () => {
   });
 });
 
+describe('List roles', () => {
+  it.each(['ul', 'ol'] as const)('renders role="list" only when plain for %s lists', async component => {
+    const wrapper = mount(PfList, { props: { component } });
+    expect(wrapper.attributes('role')).toBeUndefined();
+    await wrapper.setProps({ plain: true });
+    expect(wrapper.attributes('role')).toBe('list');
+  });
+
+  it('forwards aria-label and attributes', () => {
+    const wrapper = mount(PfList, { attrs: { 'aria-label': 'Testing stuff', 'data-test': 'x' } });
+    expect(wrapper.attributes('aria-label')).toBe('Testing stuff');
+    expect(wrapper.attributes('data-test')).toBe('x');
+  });
+});
+
 describe('ListItem', () => {
   it('renders a plain list item without icon', () => {
     const wrapper = mount(PfListItem, { slots: { default: () => 'Item' } });
@@ -54,5 +69,23 @@ describe('ListItem', () => {
     expect(wrapper.classes()).toContain(styles.listItem);
     expect(wrapper.find(`.${styles.listItemIcon} .my-icon`).exists()).toBe(true);
     expect(wrapper.text()).toBe('Item');
+  });
+
+  it('wraps the content in a plain span without icon', () => {
+    const wrapper = mount(PfListItem, { slots: { default: () => 'List item content' } });
+    const [span] = wrapper.element.children;
+    expect(span.tagName).toBe('SPAN');
+    expect(span.className).toBe('');
+    expect(span.textContent).toBe('List item content');
+  });
+
+  it('wraps the content in the item text span after the icon', () => {
+    const wrapper = mount(PfListItem, {
+      slots: { icon: () => h('div', 'Icon content'), default: () => 'List item content' },
+    });
+    const [icon, text] = wrapper.element.children;
+    expect(icon.className).toBe(styles.listItemIcon);
+    expect(text.className).toBe(`${styles.list}__item-text`);
+    expect(text.textContent).toBe('List item content');
   });
 });

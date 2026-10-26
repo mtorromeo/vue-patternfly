@@ -10,6 +10,10 @@
     </template>
 
     <pre v-md>
+      ## Differences from patternfly-react
+      - The `icon` prop of `pf-list-item` is replaced by the `icon` slot.
+      See [common differences from patternfly-react](#/).
+
       ## Examples
     </pre>
 

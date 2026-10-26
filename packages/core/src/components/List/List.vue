@@ -3,6 +3,7 @@
     v-bind="ouiaProps"
     :is="component"
     :type="component === 'ol' ? type : undefined"
+    :role="plain ? 'list' : undefined"
     :class="[
       styles.list,
       variant && styles.modifiers[variant],
@@ -27,8 +28,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   plain?: boolean;
   /** Modifies the size of the icons in the list */
   iconSize?: 'default' | 'large';
-  /** Sets the way items are numbered if variant is set to ordered */
+  /** Sets the way items are numbered if component is set to "ol". */
   type?: '1' | 'a' | 'A' | 'i' | 'I';
+  /** Sets the type of the list component. */
   component?: 'ol' | 'ul';
 }
 </script>

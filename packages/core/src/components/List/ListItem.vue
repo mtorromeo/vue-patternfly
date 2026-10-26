@@ -3,7 +3,9 @@
     <span v-if="$slots.icon" :class="styles.listItemIcon">
       <slot name="icon" />
     </span>
-    <slot />
+    <span :class="$slots.icon ? `${styles.list}__item-text` : undefined">
+      <slot />
+    </span>
   </li>
 </template>
 
@@ -23,6 +25,7 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default: (props?: Record<never, never>) => any;
-  icon: (props?: Record<never, never>) => any;
+  /** Icon for the list item */
+  icon?: (props?: Record<never, never>) => any;
 }>();
 </script>
