@@ -1,27 +1,31 @@
 <template>
-  <option v-bind="ouiaProps as any">
-    <slot />
+  <option>
+    <slot>{{ label }}</slot>
   </option>
 </template>
+
+<script lang="ts">
+interface Props extends /* @vue-ignore */ Omit<OptionHTMLAttributes, 'label' | 'placeholder'> {
+  /** The label for the option, overridden by the default slot */
+  label?: string;
+  /** Flag indicating if option will have placeholder styling applied when selected */
+  placeholder?: boolean;
+}
+</script>
 
 <script lang="ts" setup>
 import type { OptionHTMLAttributes } from 'vue';
 import { useChildrenTracker } from '../../use';
-import { FormSelectOptionsKey } from './FormSelect.vue';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import { FormSelectOptionsKey } from './common';
 
 defineOptions({
   name: 'PfFormSelectOption',
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<OptionHTMLAttributes, 'placeholder'> {
-  placeholder?: boolean;
-}
-
-const props = defineProps<Props>();
-const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
+defineProps<Props>();
 
 defineSlots<{
+  /** Content of the option, overrides the label prop */
   default?: (props?: Record<never, never>) => any;
 }>();
 

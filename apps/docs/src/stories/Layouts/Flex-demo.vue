@@ -6,8 +6,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
       <pf-tabs>
         <pf-tab title="Container properties">
           <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
-            <pf-form-group label="Direction">
-              <pf-form-select v-model="direction">
+            <pf-form-group label="Direction" field-id="flex-demo-direction">
+              <pf-form-select id="flex-demo-direction" v-model="direction">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="row">row</pf-form-select-option>
                 <pf-form-select-option value="row-reverse">row-reverse</pf-form-select-option>
@@ -16,16 +16,16 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Display">
-              <pf-form-select v-model="display">
+            <pf-form-group label="Display" field-id="flex-demo-display">
+              <pf-form-select id="flex-demo-display" v-model="display">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex">flex</pf-form-select-option>
                 <pf-form-select-option value="inline-flex">inline-flex</pf-form-select-option>
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Justify Content">
-              <pf-form-select v-model="justifyContent">
+            <pf-form-group label="Justify Content" field-id="flex-demo-justify-content">
+              <pf-form-select id="flex-demo-justify-content" v-model="justifyContent">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
                 <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
@@ -36,8 +36,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Align Items">
-              <pf-form-select v-model="alignItems">
+            <pf-form-group label="Align Items" field-id="flex-demo-align-items">
+              <pf-form-select id="flex-demo-align-items" v-model="alignItems">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
                 <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
@@ -47,8 +47,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Align Content">
-              <pf-form-select v-model="alignContent">
+            <pf-form-group label="Align Content" field-id="flex-demo-align-content">
+              <pf-form-select id="flex-demo-align-content" v-model="alignContent">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
                 <pf-form-select-option value="flex-end">flex-end</pf-form-select-option>
@@ -59,8 +59,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Flex Wrap">
-              <pf-form-select v-model="flexWrap">
+            <pf-form-group label="Flex Wrap" field-id="flex-demo-flex-wrap">
+              <pf-form-select id="flex-demo-flex-wrap" v-model="flexWrap">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="nowrap">nowrap</pf-form-select-option>
                 <pf-form-select-option value="wrap">wrap</pf-form-select-option>
@@ -68,8 +68,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Space Items">
-              <pf-form-select v-model="spaceItems">
+            <pf-form-group label="Space Items" field-id="flex-demo-space-items">
+              <pf-form-select id="flex-demo-space-items" v-model="spaceItems">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
@@ -83,8 +83,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Gap">
-              <pf-form-select v-model="gap">
+            <pf-form-group label="Gap" field-id="flex-demo-gap">
+              <pf-form-select id="flex-demo-gap" v-model="gap">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
@@ -98,8 +98,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Row Gap">
-              <pf-form-select v-model="rowGap">
+            <pf-form-group label="Row Gap" field-id="flex-demo-row-gap">
+              <pf-form-select id="flex-demo-row-gap" v-model="rowGap">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
@@ -113,8 +113,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
               </pf-form-select>
             </pf-form-group>
 
-            <pf-form-group label="Column Gap">
-              <pf-form-select v-model="columnGap">
+            <pf-form-group label="Column Gap" field-id="flex-demo-column-gap">
+              <pf-form-select id="flex-demo-column-gap" v-model="columnGap">
                 <pf-form-select-option>[undefined]</pf-form-select-option>
                 <pf-form-select-option value="none">none</pf-form-select-option>
                 <pf-form-select-option value="xs">xs</pf-form-select-option>
@@ -140,16 +140,16 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
           <pf-tabs>
             <pf-tab v-for="(item, i) in flexItems" :key="i" :title="`Item ${i + 1}`">
               <pf-form component="div" horizontal class="pf-v6-u-mt-lg">
-                <pf-form-group label="Align">
-                  <pf-form-select v-model="item.align">
+                <pf-form-group label="Align" field-id="flex-demo-align">
+                  <pf-form-select id="flex-demo-align" v-model="item.align">
                     <pf-form-select-option>[undefined]</pf-form-select-option>
                     <pf-form-select-option value="left">left</pf-form-select-option>
                     <pf-form-select-option value="right">right</pf-form-select-option>
                   </pf-form-select>
                 </pf-form-group>
 
-                <pf-form-group label="Align Self">
-                  <pf-form-select v-model="item.alignSelf">
+                <pf-form-group label="Align Self" field-id="flex-demo-align-self">
+                  <pf-form-select id="flex-demo-align-self" v-model="item.alignSelf">
                     <pf-form-select-option>default</pf-form-select-option>
                     <pf-form-select-option value="auto">auto</pf-form-select-option>
                     <pf-form-select-option value="flex-start">flex-start</pf-form-select-option>
@@ -160,8 +160,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
                   </pf-form-select>
                 </pf-form-group>
 
-                <pf-form-group label="Flex">
-                  <pf-form-select v-model="item.flex">
+                <pf-form-group label="Flex" field-id="flex-demo-flex">
+                  <pf-form-select id="flex-demo-flex" v-model="item.flex">
                     <pf-form-select-option value="default">default</pf-form-select-option>
                     <pf-form-select-option value="none">none</pf-form-select-option>
                     <pf-form-select-option value="1">1</pf-form-select-option>
@@ -171,8 +171,8 @@ An interactive demo of the Flex and FlexItem components. Use the controls below 
                   </pf-form-select>
                 </pf-form-group>
 
-                <pf-form-group label="Spacer">
-                  <pf-form-select v-model="item.spacer">
+                <pf-form-group label="Spacer" field-id="flex-demo-spacer">
+                  <pf-form-select id="flex-demo-spacer" v-model="item.spacer">
                     <pf-form-select-option>[undefined]</pf-form-select-option>
                     <pf-form-select-option value="none">none</pf-form-select-option>
                     <pf-form-select-option value="xs">xs</pf-form-select-option>

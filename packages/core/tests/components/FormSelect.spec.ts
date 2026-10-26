@@ -1,9 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mount, type VueWrapper } from '@vue/test-utils';
 import { h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import PfFormSelect from '../../src/components/FormSelect/FormSelect.vue';
 import PfFormSelectOption from '../../src/components/FormSelect/FormSelectOption.vue';
+import PfFormSelectOptionGroup from '../../src/components/FormSelect/FormSelectOptionGroup.vue';
 import PfForm from '../../src/components/Form/Form.vue';
 
 /** Mounts a component wiring `update:<model>` back to the prop, like `v-model` would */
@@ -102,6 +103,75 @@ describe('FormSelect', () => {
     expect(wrapper.classes()).not.toContain(styles.modifiers.placeholder);
   });
 
+  it('puts the OUIA attributes on the select, safe by default', () => {
+    const wrapper = mount(PfFormSelect, { props: { ouiaId: 'BasicFormSelect' }, attrs: { 'aria-label': 'Choice' } });
+    const select = wrapper.get('select');
+    expect(select.attributes('data-ouia-component-id')).toBe('BasicFormSelect');
+    expect(select.attributes('data-ouia-component-type')).toBe('PF/FormSelect');
+    expect(select.attributes('data-ouia-safe')).toBe('true');
+    expect(wrapper.attributes('data-ouia-component-id')).toBeUndefined();
+  });
+
+  it('puts class and style on the form control, not on the select', () => {
+    const wrapper = mount(PfFormSelect, { attrs: { class: 'custom', style: 'color: red', 'aria-label': 'Choice' } });
+    expect(wrapper.classes()).toEqual(expect.arrayContaining([styles.formControl, 'custom']));
+    expect((wrapper.element as HTMLElement).style.color).toBe('red');
+    const select = wrapper.get('select');
+    expect(select.classes()).not.toContain('custom');
+    expect(select.attributes('style')).toBeUndefined();
+  });
+
+  it('sets aria-invalid on the select', async () => {
+    const wrapper = mount(PfFormSelect, { attrs: { 'aria-label': 'Choice' } });
+    expect(wrapper.get('select').attributes('aria-invalid')).toBe('false');
+    await wrapper.setProps({ validated: 'error' });
+    expect(wrapper.get('select').attributes('aria-invalid')).toBe('true');
+  });
+
+  it('logs an error without an id or aria-label', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mount(PfFormSelect, { attrs: { 'aria-label': 'label' } });
+    mount(PfFormSelect, { attrs: { id: 'id' } });
+    expect(error).not.toHaveBeenCalled();
+    mount(PfFormSelect);
+    expect(error).toHaveBeenCalledWith('FormSelect requires either an id or aria-label to be specified');
+    error.mockRestore();
+  });
+
+  it('sets the required attribute on the select', () => {
+    const wrapper = mount(PfFormSelect, { attrs: { required: true, 'aria-label': 'Choice' } });
+    expect(wrapper.get('select').attributes('required')).toBeDefined();
+  });
+
+  it('renders grouped options and applies the placeholder of a nested option', async () => {
+    const wrapper = mountWithModel(
+      PfFormSelect,
+      'modelValue',
+      { modelValue: '2' },
+      {
+        attrs: { 'aria-label': 'grouped FormSelect' },
+        slots: {
+          default: () => [
+            h(PfFormSelectOptionGroup, { label: 'Group1' }, () => [
+              h(PfFormSelectOption, { value: '1', label: 'The first option' }),
+              h(PfFormSelectOption, { value: '2', label: 'Second option', placeholder: true }),
+            ]),
+            h(PfFormSelectOptionGroup, { label: 'Group3', disabled: true }, () => [
+              h(PfFormSelectOption, { value: '5', label: 'The fifth option' }),
+            ]),
+          ],
+        },
+      },
+    );
+    await nextTick();
+    const groups = wrapper.findAll('optgroup');
+    expect(groups.map(g => g.attributes('label'))).toEqual(['Group1', 'Group3']);
+    expect(groups[0].attributes('disabled')).toBeUndefined();
+    expect(groups[1].attributes('disabled')).toBeDefined();
+    expect(wrapper.get<HTMLSelectElement>('select').element.value).toBe('2');
+    expect(wrapper.classes()).toContain(styles.modifiers.placeholder);
+  });
+
   it('exposes the select element', () => {
     const wrapper = mount(PfFormSelect);
     expect(wrapper.vm.input).toBe(wrapper.find('select').element);
@@ -126,5 +196,38 @@ describe('FormSelectOption', () => {
   it('does not render the placeholder prop as an attribute', () => {
     const wrapper = mount(PfFormSelectOption, { props: { placeholder: true } });
     expect(wrapper.attributes('placeholder')).toBeUndefined();
+  });
+});
+
+describe('FormSelectOption label', () => {
+  it('renders the label as the option text', () => {
+    const wrapper = mount(PfFormSelectOption, { props: { label: 'Mr' }, attrs: { value: 'mr' } });
+    expect(wrapper.text()).toBe('Mr');
+    expect(wrapper.attributes('label')).toBeUndefined();
+  });
+
+  it('lets the default slot override the label', () => {
+    const wrapper = mount(PfFormSelectOption, { props: { label: 'Mr' }, slots: { default: () => 'Mister' } });
+    expect(wrapper.text()).toBe('Mister');
+  });
+
+  it('does not render OUIA attributes', () => {
+    const wrapper = mount(PfFormSelectOption, { props: { label: 'Mr' } });
+    expect(wrapper.attributes('data-ouia-component-type')).toBeUndefined();
+  });
+});
+
+describe('FormSelectOptionGroup', () => {
+  it('renders an optgroup with its label and attributes', () => {
+    const wrapper = mount(PfFormSelectOptionGroup, {
+      props: { label: 'string' },
+      attrs: { class: 'custom' },
+      slots: { default: () => h('option', 'A') },
+    });
+    expect(wrapper.element.tagName).toBe('OPTGROUP');
+    expect(wrapper.attributes('label')).toBe('string');
+    expect(wrapper.attributes('disabled')).toBeUndefined();
+    expect(wrapper.classes()).toEqual(['custom']);
+    expect(wrapper.find('option').text()).toBe('A');
   });
 });

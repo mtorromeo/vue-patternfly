@@ -1,6 +1,5 @@
 <template>
   <span
-    v-bind="ouiaProps"
     :class="[
       styles.formControl,
       {
@@ -10,21 +9,27 @@
         [styles.modifiers.warning]: validated === 'warning',
         [styles.modifiers.error]: validated === 'error',
       },
+      $attrs.class,
     ]"
-    :style="{
-      '--pf-v6-c-form-control--PaddingInlineEnd':
-        multiple !== false && multiple !== undefined
-          ? 'var(--pf-v6-c-form-control__select--PaddingInlineEnd)'
-          : undefined,
-      '--pf-v6-c-form-control__utilities--Gap': multiple !== false && multiple !== undefined ? '0px' : undefined,
-      '--pf-v6-c-form-control--ColumnGap': multiple !== false && multiple !== undefined ? '0px' : undefined,
-      '--pf-v6-c-form-control--m-icon--icon--spacer': multiple !== false && multiple !== undefined ? '0px' : undefined,
-    }"
+    :style="[
+      {
+        '--pf-v6-c-form-control--PaddingInlineEnd':
+          multiple !== false && multiple !== undefined
+            ? 'var(--pf-v6-c-form-control__select--PaddingInlineEnd)'
+            : undefined,
+        '--pf-v6-c-form-control__utilities--Gap': multiple !== false && multiple !== undefined ? '0px' : undefined,
+        '--pf-v6-c-form-control--ColumnGap': multiple !== false && multiple !== undefined ? '0px' : undefined,
+        '--pf-v6-c-form-control--m-icon--icon--spacer':
+          multiple !== false && multiple !== undefined ? '0px' : undefined,
+      },
+      $attrs.style as StyleValue,
+    ]"
   >
     <select
       ref="inputRef"
-      v-bind="$attrs"
+      v-bind="{ ...selectAttrs, ...ouiaProps }"
       v-model="value"
+      :aria-invalid="validated === 'error'"
       :disabled="disabled || undefined"
       :multiple="(multiple !== false && multiple !== undefined) || undefined"
     >
@@ -40,9 +45,7 @@
 </template>
 
 <script lang="ts">
-export const FormSelectOptionsKey = Symbol('FormSelectOptionsKey') as ChildrenTrackerInjectionKey<
-  ComponentExposed<typeof PfFormSelectOption>
->;
+export { FormSelectOptionsKey } from './common';
 
 interface Props<M extends boolean = false, V extends string = string>
   extends OUIAProps, /* @vue-ignore */ Omit<SelectHTMLAttributes, 'value'> {
@@ -63,21 +66,30 @@ interface Props<M extends boolean = false, V extends string = string>
 
 <script lang="ts" setup generic="M extends boolean = false, V extends string = string">
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey, useChildrenTracker } from '../../use';
-import type PfFormSelectOption from './FormSelectOption.vue';
+import { provideChildrenTracker, useChildrenTracker } from '../../use';
+import { FormSelectOptionsKey } from './common';
 import PfFormControlIcon from '../FormControlIcon.vue';
 import CaretDownIcon from '@vue-patternfly/icons/caret-down-icon';
-import { computed, type SelectHTMLAttributes, getCurrentInstance, useModel, useTemplateRef } from 'vue';
+import {
+  computed,
+  getCurrentInstance,
+  useAttrs,
+  useModel,
+  useTemplateRef,
+  type SelectHTMLAttributes,
+  type StyleValue,
+} from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { FormInputsKey } from '../Form/common';
-import type { ComponentExposed } from 'vue-component-type-helpers';
 
 defineOptions({
   name: 'PfFormSelect',
   inheritAttrs: false,
 });
 
-const props = defineProps<Props<M, V>>();
+const props = withDefaults(defineProps<Props<M, V>>(), {
+  ouiaSafe: true,
+});
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineEmits<{
@@ -89,6 +101,16 @@ const value = useModel(props, 'modelValue');
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
 }>();
+
+const attrs = useAttrs();
+const selectAttrs = computed(() => {
+  const { class: _class, style: _style, ...rest } = attrs;
+  return rest;
+});
+
+if (!attrs.id && !attrs['aria-label']) {
+  console.error('FormSelect requires either an id or aria-label to be specified');
+}
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const input = useTemplateRef('inputRef');
