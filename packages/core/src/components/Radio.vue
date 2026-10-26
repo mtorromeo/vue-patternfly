@@ -1,12 +1,11 @@
 <template>
   <component
-    v-bind="ouiaProps"
-    :is="component"
+    :is="component ?? (wrapWithLabel ? 'label' : 'div')"
     :class="[
       styles.radio,
       $attrs.class,
       {
-        [styles.modifiers.standalone]: !wrapWithLabel && !(label || $slots.label),
+        [styles.modifiers.standalone]: !(label || $slots.label),
       },
     ]"
     :for="wrapWithLabel ? id : undefined"
@@ -31,40 +30,79 @@
       <input
         :id="id"
         ref="inputRef"
-        v-bind="{ ...$attrs, class: undefined }"
+        v-bind="{ ...$attrs, ...ouiaProps, class: undefined }"
         type="radio"
         :class="[styles.radioInput, inputClass]"
-        :disabled="disabled"
-        :checked="checked"
+        :value="value"
+        :checked="isChecked"
+        :aria-invalid="!!invalid"
+        :aria-describedby="ariaDescribedby"
         :aria-label="label || $slots.label ? undefined : ariaLabel"
-        @change="emit('change', $event)"
+        :disabled="disabled"
+        @change="onChange"
       />
     </sort>
 
-    <span v-if="description || $slots.description" :class="styles.radioDescription">
+    <span v-if="description || $slots.description" :id="descriptionId" :class="styles.radioDescription">
       <slot name="description">{{ description }}</slot>
     </span>
-
     <span v-if="body || $slots.default" :class="styles.radioBody">
       <slot>{{ body }}</slot>
     </span>
   </component>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
+interface Props<T = unknown>
+  extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange' | 'type' | 'value' | 'autocomplete'> {
+  /** Sets the radio wrapper component to render. Defaults to "div", or "label" with labelWrapped. */
+  component?: string | Component;
+  /** Additional classes added to the input. */
+  inputClass?: HTMLAttributes['class'];
+  /** Id of the radio. Generated when not set. */
+  id?: string;
+  /** Value of the radio, emitted as the model value when it gets selected. */
+  value?: T;
+  /** Value of the selected radio of the group, bound with v-model. The radio is checked when it equals value. */
+  modelValue?: T;
+  /** Flag to show if the radio is checked, when it is not bound with v-model. */
+  checked?: boolean;
+  /** Flag to show if the radio is disabled. */
+  disabled?: boolean;
+  /** Flag to show if the radio selection is invalid. */
+  invalid?: boolean;
+  /** Label text of the radio. */
+  label?: string;
+  /** Aria label for the radio, used only without a label. */
+  ariaLabel?: string;
+  /** Description text of the radio. The input is described by it, unless aria-describedby is set ("" removes it). */
+  description?: string;
+  /** Body of the radio. */
+  body?: string;
+  /** Flag to indicate whether the radio wrapper element is a <label> element for the radio input. Will not apply if a component prop (with a value other than a "label") is specified. */
+  labelWrapped?: boolean;
+  /** Flag to show if the radio label is shown before the radio input. */
+  labelBeforeButton?: boolean;
+}
+</script>
+
+<script lang="ts" setup generic="T = unknown">
 import styles from '@patternfly/react-styles/css/components/Radio/radio';
-import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-import Sort from '../helpers/Sort.vue';
-import SortBy from '../helpers/SortBy.vue';
 import {
   computed,
-  type InputHTMLAttributes,
   type Component,
+  type InputHTMLAttributes,
   getCurrentInstance,
+  useAttrs,
+  useSlots,
   useTemplateRef,
   useId,
   type HTMLAttributes,
+  type VNode,
 } from 'vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import Sort from '../helpers/Sort.vue';
+import SortBy from '../helpers/SortBy.vue';
 import { useChildrenTracker } from '../use';
 import { FormInputsKey } from './Form/common';
 
@@ -73,47 +111,55 @@ defineOptions({
   inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, 'type' | 'autocomplete'> {
-  component?: string | Component;
-  /** Additional classes added to the input. */
-  inputClass?: HTMLAttributes['class'];
-  /** Id of the radio. */
-  id?: string;
-  /** Flag to show if the radio label is shown before the radio button. */
-  labelBeforeButton?: boolean;
-  /** Flag to show if the radio is checked. */
-  checked?: boolean;
-  /** Flag to show if the radio is disabled. */
-  disabled?: boolean;
-  /** Label text of the radio. */
-  label?: string;
-  /** Aria label for the radio. */
-  ariaLabel?: string;
-  /** Description text of the radio. */
-  description?: string;
-  /** Body of the radio. */
-  body?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  component: 'div',
+const props = withDefaults(defineProps<Props<T>>(), {
   id: () => useId(),
+  ouiaSafe: true,
 });
-
-defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  label?: (props?: Record<never, never>) => any;
-  description?: (props?: Record<never, never>) => any;
-}>();
+const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
   (name: 'change', e: Event): void;
+  (name: 'update:modelValue', value: T): void;
+}>();
+
+defineSlots<{
+  /** Body of the radio, replacing the body prop */
+  default?: (props?: Record<never, never>) => VNode[];
+  /** Label of the radio, replacing the label prop */
+  label?: (props?: Record<never, never>) => VNode[];
+  /** Description of the radio, replacing the description prop */
+  description?: (props?: Record<never, never>) => VNode[];
 }>();
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
-const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
-const wrapWithLabel = computed(() => props.component === 'label');
+const attrs = useAttrs();
+const slots = useSlots();
 const input = useTemplateRef('inputRef');
+const descriptionId = useId();
+const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
+
+// without v-model the checked prop drives the input
+const isChecked = computed(() => (props.modelValue === undefined ? props.checked : props.modelValue === props.value));
+
+// the input is described by the description unless aria-describedby is set: an empty string removes it
+const ariaDescribedby = computed(() => {
+  const custom = attrs['aria-describedby'];
+  if (custom !== undefined) {
+    return custom === '' ? undefined : String(custom);
+  }
+  return props.description || slots.description ? descriptionId : undefined;
+});
+
+if (!props.label && !slots.label && !props.ariaLabel) {
+  console.error('Radio:', 'Radio requires an aria-label to be specified');
+}
+
+function onChange(e: Event) {
+  emit('change', e);
+  if ((e.currentTarget as HTMLInputElement).checked) {
+    emit('update:modelValue', props.value as T);
+  }
+}
 
 defineExpose({
   input,

@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { nextTick } from 'vue';
 import { mount, type VueWrapper } from '@vue/test-utils';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
@@ -188,6 +188,101 @@ describe('Radio', () => {
     expect(wrapper.element.tagName).toBe('LABEL');
     expect(wrapper.attributes('for')).toBe('r');
     expect(wrapper.find(`.${radioStyles.radioLabel}`).element.tagName).toBe('SPAN');
+  });
+
+  it('wraps the input in a label with labelWrapped, unless component is set', () => {
+    const wrapper = mount(PfRadio, { props: { id: 'r', label: 'Option', labelWrapped: true } });
+    expect(wrapper.element.tagName).toBe('LABEL');
+    expect(wrapper.attributes('for')).toBe('r');
+    expect(wrapper.find(`.${radioStyles.radioLabel}`).element.tagName).toBe('SPAN');
+
+    const h3 = mount(PfRadio, { props: { id: 'r', ariaLabel: 'Option', labelWrapped: true, component: 'h3' } });
+    expect(h3.element.tagName).toBe('H3');
+  });
+
+  it('is standalone without a label, even when wrapped in a label', () => {
+    const wrapper = mount(PfRadio, { props: { ariaLabel: 'Option', component: 'label' } });
+    expect(wrapper.classes()).toContain(radioStyles.modifiers.standalone);
+  });
+
+  it('puts the OUIA attributes on the input', () => {
+    const wrapper = mount(PfRadio, { props: { label: 'Option', ouiaId: 'my-radio' } });
+    const input = wrapper.find('input');
+    expect(input.attributes('data-ouia-component-type')).toBe('PF/Radio');
+    expect(input.attributes('data-ouia-component-id')).toBe('my-radio');
+    expect(input.attributes('data-ouia-safe')).toBe('true');
+    expect(wrapper.attributes('data-ouia-component-type')).toBeUndefined();
+  });
+
+  it('sets aria-invalid from invalid', () => {
+    expect(
+      mount(PfRadio, { props: { label: 'Option' } })
+        .find('input')
+        .attributes('aria-invalid'),
+    ).toBe('false');
+    expect(
+      mount(PfRadio, { props: { label: 'Option', invalid: true } })
+        .find('input')
+        .attributes('aria-invalid'),
+    ).toBe('true');
+  });
+
+  it('is described by its description unless aria-describedby is set', () => {
+    const wrapper = mount(PfRadio, { props: { label: 'Option', description: 'Some text' } });
+    const description = wrapper.find(`.${radioStyles.radioDescription}`);
+    expect(description.attributes('id')).toBeTruthy();
+    expect(wrapper.find('input').attributes('aria-describedby')).toBe(description.attributes('id'));
+
+    const custom = mount(PfRadio, {
+      props: { label: 'Option', description: 'Some text' },
+      attrs: { 'aria-describedby': 'custom-id' },
+    });
+    expect(custom.find('input').attributes('aria-describedby')).toBe('custom-id');
+
+    const empty = mount(PfRadio, {
+      props: { label: 'Option', description: 'Some text' },
+      attrs: { 'aria-describedby': '' },
+    });
+    expect(empty.find('input').attributes('aria-describedby')).toBeUndefined();
+
+    const none = mount(PfRadio, { props: { label: 'Option' } });
+    expect(none.find('input').attributes('aria-describedby')).toBeUndefined();
+  });
+
+  it('renders the description and body', () => {
+    const wrapper = mount(PfRadio, { props: { label: 'Option', description: 'Description', body: 'Body' } });
+    expect(wrapper.find(`.${radioStyles.radioDescription}`).text()).toBe('Description');
+    expect(wrapper.find(`.${radioStyles.radioBody}`).text()).toBe('Body');
+  });
+
+  it('binds the selected value of the group with v-model', async () => {
+    const small = mountWithModel(PfRadio, 'modelValue', {
+      label: 'Small',
+      name: 'size',
+      value: 'sm',
+      modelValue: 'lg',
+    });
+    const input = small.find<HTMLInputElement>('input');
+    expect(input.element.checked).toBe(false);
+
+    input.element.checked = true;
+    await input.trigger('change');
+    expect(small.emitted('update:modelValue')).toEqual([['sm']]);
+    expect(small.props('modelValue')).toBe('sm');
+    expect(input.element.checked).toBe(true);
+
+    await small.setProps({ modelValue: 'lg' });
+    expect(input.element.checked).toBe(false);
+  });
+
+  it('warns without a label or an aria-label', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mount(PfRadio, { props: { name: 'group' } });
+    expect(error).toHaveBeenCalledWith('Radio:', 'Radio requires an aria-label to be specified');
+    error.mockClear();
+    mount(PfRadio, { props: { name: 'group', ariaLabel: 'Option' } });
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
   });
 });
 

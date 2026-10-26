@@ -132,7 +132,8 @@ if (slots.actions && card && card.clickable.value !== card.selectable.value) {
 }
 
 function onCheckboxUpdate(value: boolean) {
-  if (action.value) {
+  // a radio emits its value: its checked state is set by onInputChange
+  if (action.value && !action.value.single) {
     action.value.checked.value = Boolean(value);
   }
 }
