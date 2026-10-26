@@ -11,6 +11,10 @@
     </template>
 
     <pre v-md>
+      ## Differences from patternfly-react
+      - The `progressIcon` prop is replaced by the `progress-icon` slot.
+      See [common differences from patternfly-react](#/).
+
       ## Examples
     </pre>
 
@@ -18,33 +22,102 @@
       <pf-icon>
         <ArrowDownLongIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon>
         <AngleRightIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon>
         <AngleDownIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon>
         <GearIcon />
       </pf-icon>
     </story-canvas>
 
-    <story-canvas title="Size">
+    <story-canvas title="Standalone icon sizes">
+      <template #intro>
+        <pre v-md>
+          These are the standard options for sizing icons.
+        </pre>
+      </template>
       <pf-icon size="sm">
         <CirclePlusIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon size="md">
         <CirclePlusIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon size="lg">
         <CirclePlusIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon size="xl">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="2xl">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="3xl">
         <CirclePlusIcon />
       </pf-icon>
     </story-canvas>
 
-    <story-canvas title="Status color">
+    <story-canvas title="Body sizes">
+      <template #intro>
+        <pre v-md>
+          These size options are meant to make icons match the size of body text.
+        </pre>
+      </template>
+      <pf-icon size="bodySm">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="bodyDefault">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="bodyLg">
+        <CirclePlusIcon />
+      </pf-icon>
+    </story-canvas>
+
+    <story-canvas title="Heading sizes">
+      <template #intro>
+        <pre v-md>
+          These size options are meant to make icons match the size of heading text.
+        </pre>
+      </template>
+      <pf-icon size="headingSm">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="headingMd">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="headingLg">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="headingXl">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="heading_2xl">
+        <CirclePlusIcon />
+      </pf-icon>
+      {{ ' ' }}
+      <pf-icon size="heading_3xl">
+        <CirclePlusIcon />
+      </pf-icon>
+    </story-canvas>
+
+    <story-canvas title="Status colors">
       <template #intro>
         <pre v-md>
           The following example demonstrates the various status variants of an icon. Keep in mind that these icons are displayed out of a typical context, and that you should not rely on color alone to convey status to users.
@@ -54,15 +127,19 @@
       <pf-icon status="danger">
         <CircleExclamationIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon status="warning">
         <TriangleExclamationIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon status="success">
         <CircleCheckIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon status="info">
         <CircleInfoIcon />
       </pf-icon>
+      {{ ' ' }}
       <pf-icon status="custom">
         <BellIcon />
       </pf-icon>
@@ -71,20 +148,23 @@
     <story-canvas title="Sizing an icon within the icon container">
       <template #intro>
         <pre v-md>
-          Providing both size and iconSize properties allows the icon container to maintain a consistent size, even if the icon changes in size.
+          Providing both `size` and `icon-size` properties allows the icon container to maintain a consistent size, even if the icon changes in size.
         </pre>
       </template>
 
-      <pf-icon size="xl" icon-size="sm">
+      <pf-icon size="3xl" icon-size="lg">
         <CirclePlusIcon />
       </pf-icon>
-      <pf-icon size="xl" icon-size="md">
+      {{ ' ' }}
+      <pf-icon size="3xl" icon-size="xl">
         <CirclePlusIcon />
       </pf-icon>
-      <pf-icon size="xl" icon-size="lg">
+      {{ ' ' }}
+      <pf-icon size="3xl" icon-size="2xl">
         <CirclePlusIcon />
       </pf-icon>
-      <pf-icon size="xl">
+      {{ ' ' }}
+      <pf-icon size="3xl">
         <CirclePlusIcon />
       </pf-icon>
     </story-canvas>
@@ -147,7 +227,7 @@
     <story-canvas title="In progress">
       <template #intro>
         <pre v-md>
-          Passing the `isInProgress` property will swap the icon to a progress icon. By default this progress icon will be a `Spinner` but may be customized or overriden using the `progressIcon` property.
+          Passing the `in-progress` property will swap the icon to a progress icon. By default this progress icon will be a `pf-spinner` but may be customized or overriden using the `progress-icon` slot.
         </pre>
       </template>
 

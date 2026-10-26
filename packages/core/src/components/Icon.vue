@@ -30,23 +30,31 @@
   </span>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Icon/icon';
-import type { HTMLAttributes } from 'vue';
-import PfSpinner from './Spinner.vue';
-import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
-
-defineOptions({
-  name: 'PfIcon',
-});
+<script lang="ts">
+export type IconSize =
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | 'headingSm'
+  | 'headingMd'
+  | 'headingLg'
+  | 'headingXl'
+  | 'heading_2xl'
+  | 'heading_3xl'
+  | 'bodySm'
+  | 'bodyDefault'
+  | 'bodyLg';
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Size of the icon component container and icon. */
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: IconSize;
   /** Size of icon. Overrides the icon size set by the size property. */
-  iconSize?: 'sm' | 'md' | 'lg' | 'xl';
+  iconSize?: IconSize;
   /** Size of progress icon. Overrides the icon size set by the size property. */
-  progressIconSize?: 'sm' | 'md' | 'lg' | 'xl';
+  progressIconSize?: IconSize;
   /** Status color of the icon */
   status?: 'custom' | 'info' | 'success' | 'warning' | 'danger';
   /** Indicates the icon is inline and should inherit the text font size and color. Overriden by size and iconSize properties. */
@@ -60,6 +68,17 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
    */
   shouldMirrorRTL?: boolean;
 }
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Icon/icon';
+import type { HTMLAttributes } from 'vue';
+import PfSpinner from './Spinner.vue';
+import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+
+defineOptions({
+  name: 'PfIcon',
+});
 
 const props = withDefaults(defineProps<Props>(), {
   defaultProgressArialabel: 'Loading...',
@@ -68,6 +87,7 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
+  /** Icon shown when in progress. Defaults to a 1em spinner. */
   'progress-icon'?: (props?: Record<never, never>) => any;
 }>();
 </script>
