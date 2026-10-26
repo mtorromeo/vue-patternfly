@@ -33,14 +33,16 @@
         v-model="userInputPage"
         :aria-label="currPageAriaLabel"
         type="number"
-        :disabled="disabled || (page === firstPage && page === lastPage) || page === 0"
+        :disabled="disabled || (!!count && page === firstPage && page === lastPage && count >= 0) || page === 0"
         :auto-validate="false"
         :min="lastPage <= 0 && firstPage <= 0 ? 0 : 1"
         :max="lastPage"
         @keydown="onKeydown"
         @change="onChange"
       />
-      <span aria-hidden="true">of {{ pagesTitle ? pluralize(lastPage, pagesTitle, pagesTitlePlural) : lastPage }}</span>
+      <span v-if="count !== undefined" aria-hidden="true">
+        {{ ofWord }} {{ pagesTitle ? pluralize(lastPage, pagesTitle, pagesTitlePlural) : lastPage }}
+      </span>
     </div>
 
     <div :class="styles.paginationNavControl">
@@ -107,12 +109,22 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-
   pagesTitle?: string;
   /** The title of a page displayed beside the page number (the plural form). */
   pagesTitlePlural?: string;
+  /** Total number of items, undefined when unknown */
+  count?: number;
+  /** Label for the English word "of". */
+  ofWord?: string;
 
+  /** Accessible label for the button which moves to the last page. */
   toLastPageAriaLabel?: string;
+  /** Accessible label for the button which moves to the next page. */
   toNextPageAriaLabel?: string;
+  /** Accessible label for the button which moves to the first page. */
   toFirstPageAriaLabel?: string;
+  /** Accessible label for the button which moves to the previous page. */
   toPreviousPageAriaLabel?: string;
+  /** Accessible label for the input displaying the current page. */
   currPageAriaLabel?: string;
+  /** Accessible label for the pagination component. */
   paginationAriaLabel?: string;
 }
 
@@ -121,6 +133,8 @@ const props = withDefaults(defineProps<Props>(), {
   lastPage: 0,
   firstPage: 0,
   perPage: 10,
+  count: undefined,
+  ofWord: 'of',
   toLastPageAriaLabel: 'Go to last page',
   toNextPageAriaLabel: 'Go to next page',
   toFirstPageAriaLabel: 'Go to first page',
@@ -130,16 +144,14 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
-defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-}>();
-
 const emit = defineEmits<{
   (name: 'firstClick', page: number): void;
   (name: 'previousClick', page: number): void;
   (name: 'nextClick', page: number): void;
   (name: 'lastClick', page: number): void;
   (name: 'setPage', newPage: number, perPage: number, startIdx: number, endIdx: number): void;
+  /** A page number was entered in the page input */
+  (name: 'pageInput', page: number): void;
 }>();
 
 const userInputPage: Ref<string | number> = ref(props.page);
@@ -169,7 +181,9 @@ function onKeydown(e: KeyboardEvent) {
   const allowedKeys = ['Tab', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'ArrowUp', 'ArrowDown'];
   if (e.key === 'Enter') {
     const inputPage = parseInteger(userInputPage.value, props.lastPage);
-    handleNewPage(isNaN(inputPage) ? props.page : inputPage);
+    const newPage = isNaN(inputPage) ? props.page : inputPage;
+    emit('pageInput', newPage);
+    handleNewPage(newPage);
   } else if (!/^\d*$/.test(e.key) && !allowedKeys.includes(e.key)) {
     e.preventDefault();
   }

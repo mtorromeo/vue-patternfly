@@ -27,7 +27,7 @@ export interface CommonPaginationProps {
   lastFullPageShown?: boolean;
   /** Flag indicating if pagination is disabled */
   disabled?: boolean;
-  /** Flag indicating that the dropdown context menu should "drop" upwards. */
+  /** Flag indicating that the options menu should "drop" upwards. Defaults to upwards for non static bottom paginations. */
   dropUp?: boolean;
 
   /** Current page number. */
@@ -41,4 +41,18 @@ export interface CommonPaginationProps {
 
   /** ID to ideintify widget on page. */
   widgetId?: string;
+}
+
+/** The values available to the template of the pagination toggle and total items */
+export interface PaginationToggleTemplateProps {
+  /** The first index of the items being paginated */
+  firstIndex: number;
+  /** The last index of the items being paginated */
+  lastIndex: number;
+  /** The total number of items being paginated, undefined when unknown */
+  count?: number;
+  /** The type or title of the items being paginated */
+  titleItems?: string;
+  /** The word that joins the index and the count */
+  ofWord: string;
 }

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import widthChars from '@patternfly/react-tokens/dist/esm/c_pagination__nav_page_select_c_form_control_width_chars';
 import { mount, type VueWrapper } from '@vue/test-utils';
 import { h, nextTick } from 'vue';
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
@@ -6,6 +7,7 @@ import menuStyles from '@patternfly/react-styles/css/components/Menu/menu';
 import PfPagination from '../../src/components/Pagination/Pagination.vue';
 import PfPaginationNavigation from '../../src/components/Pagination/PaginationNavigation.vue';
 import PfPaginationOptionsMenu from '../../src/components/Pagination/PaginationOptionsMenu.vue';
+import FloatingUi from '../../src/helpers/FloatingUi.vue';
 
 function mountWithModel<C>(
   component: C,
@@ -120,6 +122,179 @@ describe('Pagination', () => {
     it('does not render the options menu without per page options', () => {
       const wrapper = mount(PfPagination, { props: { count: 10, perPageOptions: [] } });
       expect(wrapper.find('button[aria-haspopup="listbox"]').exists()).toBe(false);
+    });
+  });
+
+  describe('parity', () => {
+    // the toggle was not wrapped in the page menu element styling it
+    it('wraps the options toggle in the page menu', () => {
+      const wrapper = mount(PfPagination, { props: { count: 52 } });
+      expect(wrapper.find(`.${styles.paginationPageMenu} > button[aria-haspopup="listbox"]`).exists()).toBe(true);
+    });
+
+    // the input width variable was never set, leaving room for 2 digits on any page count
+    it('sizes the page input after the number of pages', async () => {
+      const wrapper = mount(PfPagination, { props: { count: 52 } });
+      expect((wrapper.element as HTMLElement).style.getPropertyValue(widthChars.name)).toBe('2');
+      await wrapper.setProps({ count: 52000 });
+      expect((wrapper.element as HTMLElement).style.getPropertyValue(widthChars.name)).toBe('4');
+    });
+
+    it('applies the page insets, sticky base and stuck modifiers', () => {
+      const wrapper = mount(PfPagination, {
+        props: { pageInsets: true, sticky: true, stickyBase: true, stickyStuck: true },
+      });
+      expect(wrapper.classes()).toEqual(
+        expect.arrayContaining([
+          styles.modifiers.pageInsets,
+          styles.modifiers.stickyBase,
+          styles.modifiers.stickyStuck,
+        ]),
+      );
+      // sticky is replaced by the dynamic sticky modifiers
+      expect(wrapper.classes()).not.toContain(styles.modifiers.sticky);
+    });
+
+    it('defaults ouia-safe to true', () => {
+      expect(mount(PfPagination).attributes('data-ouia-safe')).toBe('true');
+    });
+
+    it('uses the ofWord in the summaries and the page input', () => {
+      const wrapper = mount(PfPagination, { props: { count: 52, ofWord: 'di' } });
+      expect(totalText(wrapper)).toBe('1 - 10 di 52');
+      expect(toggleText(wrapper)).toBe('1 - 10 di 52');
+      expect(wrapper.find(`.${styles.paginationNavPageSelect} span[aria-hidden]`).text()).toBe('di 6');
+    });
+
+    it('renders the total slot in the options toggle too', () => {
+      const wrapper = mount(PfPagination, {
+        props: { page: 2 },
+        slots: {
+          total: ({ firstIndex, lastIndex }: { firstIndex: number; lastIndex: number }) =>
+            `${firstIndex} - ${lastIndex} of many`,
+        },
+      });
+      expect(totalText(wrapper)).toBe('11 - 20 of many');
+      expect(toggleText(wrapper)).toBe('11 - 20 of many');
+    });
+
+    // the toggle ignored its aria label
+    it('labels the options toggle', () => {
+      const wrapper = mount(PfPagination, { props: { count: 52, titleOptionsToggle: 'Items per page' } });
+      expect(wrapper.find('button[aria-haspopup="listbox"]').attributes('aria-label')).toBe('Items per page');
+      expect(
+        mount(PfPagination, { props: { count: 52 } })
+          .find('button[aria-haspopup="listbox"]')
+          .attributes('aria-label'),
+      ).toBeUndefined();
+    });
+  });
+
+  describe('indeterminate count', () => {
+    it('treats an unset count as unknown, allowing the next page', async () => {
+      const wrapper = mountWithModel(PfPagination, 'page', { page: 1 });
+      expect(totalText(wrapper)).toBe('1 - 10 of');
+      expect(wrapper.find(`.${styles.paginationNavPageSelect} span[aria-hidden]`).exists()).toBe(false);
+      expect(isDisabled(wrapper, 'next')).toBe(false);
+      expect(isDisabled(wrapper, 'last')).toBe(false);
+
+      await navButton(wrapper, 'next').trigger('click');
+      expect(wrapper.props('page')).toBe(2);
+      expect(totalText(wrapper)).toBe('11 - 20 of');
+      expect(isDisabled(wrapper, 'next')).toBe(false);
+    });
+
+    it('enables the options menu', () => {
+      const wrapper = mount(PfPagination, { props: { page: 1 } });
+      expect(wrapper.find('button[aria-haspopup="listbox"]').attributes('disabled')).toBeUndefined();
+    });
+  });
+
+  describe('events', () => {
+    it('emits setPage with the per page value and the item range', async () => {
+      const wrapper = mount(PfPagination, { props: { count: 523, perPage: 20, page: 2 } });
+      await navButton(wrapper, 'next').trigger('click');
+      expect(wrapper.emitted('setPage')).toEqual([[3, 20, 40, 60]]);
+    });
+
+    it('emits pageInput with the entered page', async () => {
+      const wrapper = mount(PfPagination, { props: { count: 52 } });
+      await pageInput(wrapper).setValue('4');
+      await pageInput(wrapper).trigger('keydown', { key: 'Enter' });
+      expect(wrapper.emitted('pageInput')).toEqual([[4]]);
+    });
+
+    it('emits perPageSelect with the resulting page and item range', async () => {
+      const wrapper = mount(PfPagination, { props: { count: 52, page: 6 }, attachTo: document.body });
+      await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
+      await nextTick();
+      document.body
+        .querySelector<HTMLButtonElement>('[data-action="per-page-20"] button, button[data-action="per-page-20"]')!
+        .click();
+      await nextTick();
+      expect(wrapper.emitted('perPageSelect')).toEqual([[20, 3, 40, 60]]);
+      wrapper.unmount();
+    });
+  });
+
+  describe('options menu', () => {
+    function openMenu(props: Record<string, unknown> = {}) {
+      const wrapper = mount(PfPagination, { props: { count: 52, ...props }, attachTo: document.body });
+      return wrapper;
+    }
+    const menuOpen = () => !!document.body.querySelector('[data-action="per-page-10"]');
+
+    it.each([
+      ['top', undefined, 'bottom-start'],
+      ['bottom', undefined, 'top-start'],
+      ['bottom', false, 'bottom-start'],
+      ['top', true, 'top-start'],
+    ] as const)('drops %s pagination menus (dropUp %s) to %s', (variant, dropUp, placement) => {
+      const wrapper = mount(PfPagination, { props: { count: 52, variant, dropUp } });
+      expect(wrapper.findComponent(FloatingUi).props('placement')).toBe(placement);
+    });
+
+    it('drops static bottom menus down', () => {
+      const wrapper = mount(PfPagination, { props: { count: 52, variant: 'bottom', static: true } });
+      expect(wrapper.findComponent(FloatingUi).props('placement')).toBe('bottom-start');
+    });
+
+    // the menu stayed open on Escape and on clicks outside of it
+    it('closes on Escape and returns the focus to the toggle', async () => {
+      const wrapper = openMenu();
+      const toggle = wrapper.find('button[aria-haspopup="listbox"]');
+      await toggle.trigger('click');
+      expect(menuOpen()).toBe(true);
+
+      await toggle.trigger('keydown', { key: 'Escape' });
+      await nextTick();
+      expect(toggle.attributes('aria-expanded')).toBe('false');
+      expect(document.activeElement).toBe(toggle.element);
+      wrapper.unmount();
+    });
+
+    it('closes on a click outside', async () => {
+      const wrapper = openMenu();
+      const toggle = wrapper.find('button[aria-haspopup="listbox"]');
+      await toggle.trigger('click');
+      // onClickOutside ignores a click following another one in the same task
+      await new Promise(resolve => setTimeout(resolve, 10));
+      document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+      document.body.click();
+      await nextTick();
+      expect(toggle.attributes('aria-expanded')).toBe('false');
+      wrapper.unmount();
+    });
+
+    it('appends the menu to menuAppendTo', async () => {
+      const target = document.createElement('div');
+      document.body.appendChild(target);
+      const wrapper = openMenu({ menuAppendTo: target });
+      await wrapper.find('button[aria-haspopup="listbox"]').trigger('click');
+      await nextTick();
+      expect(target.querySelector('[data-action="per-page-10"]')).not.toBeNull();
+      wrapper.unmount();
+      target.remove();
     });
   });
 
