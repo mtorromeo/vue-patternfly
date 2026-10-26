@@ -3,9 +3,10 @@
     v-bind="ouiaProps"
     :class="[
       styles.formControl,
+      styles.modifiers.textarea,
       {
-        [styles.modifiers.readonly]: !!readonlyVariant,
-        [styles.modifiers.plain]: readonlyVariant === 'plain',
+        [styles.modifiers.readonly]: !!readOnlyVariant,
+        [styles.modifiers.plain]: readOnlyVariant === 'plain',
         [styles.modifiers.disabled]: disabled,
         [styles.modifiers.resizeVertical]: resizeOrientation === 'vertical',
         [styles.modifiers.resizeHorizontal]: resizeOrientation === 'horizontal',
@@ -25,10 +26,10 @@
       :value="value"
       v-bind="$attrs"
       :disabled="disabled || undefined"
-      :readonly="!!readonlyVariant || readonly"
+      :readonly="!!readOnlyVariant || readonly"
       :aria-invalid="effectiveValidated === 'error'"
       @change="handleChange"
-      @input="onInput($event as InputEvent)"
+      @input="handleInput($event as InputEvent)"
       @blur="onBlur"
       @invalid="onInvalid"
       @keyup="onKeyUp"
@@ -45,18 +46,16 @@ interface Props<N extends boolean = false>
   /** Flag to show if the text area is disabled. */
   disabled?: boolean;
 
+  /** Flag to make the text area read only, without the read only styling */
   readonly?: boolean;
-  /** Read only variant. */
-  readonlyVariant?: 'default' | 'plain';
+  /** Sets the text area as read only and determines the read only styling. */
+  readOnlyVariant?: 'default' | 'plain';
 
   /** Flag to modify height based on contents. */
   autoResize?: boolean;
 
-  /**
-   * Sets the orientation to limit the resize to
-   * @values horizontal, vertical, both
-   */
-  resizeOrientation?: 'horizontal' | 'vertical' | 'both';
+  /** Sets the orientation to limit the resize to */
+  resizeOrientation?: 'horizontal' | 'vertical' | 'both' | 'none';
 
   /** Specifies a regular expression that the value should match */
   pattern?: string | RegExp;
@@ -75,6 +74,7 @@ interface Props<N extends boolean = false>
    */
   validated?: 'success' | 'warning' | 'error' | 'default';
 
+  /** When to validate the text area with the browser constraint validation, true for enter or submit */
   autoValidate?: '' | 'blur' | 'input' | 'change' | 'enter' | boolean;
 
   /** Maximum height */
@@ -88,7 +88,15 @@ interface Props<N extends boolean = false>
 <script lang="ts" setup generic="N extends boolean = false">
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 
-import { computed, onMounted, toRefs, type TextareaHTMLAttributes, getCurrentInstance, useTemplateRef } from 'vue';
+import {
+  computed,
+  onMounted,
+  toRefs,
+  type TextareaHTMLAttributes,
+  getCurrentInstance,
+  useAttrs,
+  useTemplateRef,
+} from 'vue';
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
 import { FormGroupInputsKey, FormInputsKey } from './Form/common';
@@ -119,6 +127,11 @@ defineEmits<{
 }>();
 
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
+
+const attrs = useAttrs();
+if (!attrs.id && !attrs['aria-label']) {
+  console.error('TextArea: TextArea requires either an id or aria-label to be specified');
+}
 
 const input = useTemplateRef('inputRef');
 const hasStatusIcon = computed(() => ['success', 'error', 'warning'].includes(effectiveValidated.value));
@@ -169,10 +182,15 @@ function checkValidity() {
   return true;
 }
 
-function handleChange(event: Event) {
+// like the onChange of upstream, the height follows the content as the user types
+function handleInput(event: InputEvent) {
   if (props.autoResize) {
     setAutoHeight();
   }
+  onInput(event);
+}
+
+function handleChange(event: Event) {
   onChange(event);
 }
 
@@ -188,13 +206,15 @@ function setAutoHeight() {
 
   parent.style.setProperty('height', 'inherit');
   const computed = window.getComputedStyle(input.value);
+  const parentComputed = window.getComputedStyle(parent);
+  const px = (style: CSSStyleDeclaration, property: string) => parseInt(style.getPropertyValue(property)) || 0;
   // Calculate the height
   const height =
-    parseInt(computed.getPropertyValue('border-top-width')) +
-    parseInt(computed.getPropertyValue('padding-top')) +
+    px(computed, 'border-top-width') +
     input.value.scrollHeight +
-    parseInt(computed.getPropertyValue('padding-bottom')) +
-    parseInt(computed.getPropertyValue('border-bottom-width'));
+    px(computed, 'border-bottom-width') +
+    px(parentComputed, 'padding-top') +
+    px(parentComputed, 'padding-bottom');
   parent.style.setProperty('height', `${height}px`);
 }
 

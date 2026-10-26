@@ -602,7 +602,7 @@ describe('Textarea', () => {
     expect(wrapper.find('textarea').attributes('disabled')).toBeDefined();
     expect(wrapper.classes()).toContain(formControlStyles.modifiers.disabled);
 
-    await wrapper.setProps({ disabled: false, readonlyVariant: 'default' });
+    await wrapper.setProps({ disabled: false, readOnlyVariant: 'default' });
     expect(wrapper.find('textarea').attributes('readonly')).toBeDefined();
     expect(wrapper.classes()).toContain(formControlStyles.modifiers.readonly);
   });
@@ -633,5 +633,45 @@ describe('Textarea', () => {
     const wrapper = mount(PfTextarea);
     await wrapper.find('textarea').trigger('keyup', { key: 'Enter' });
     expect(wrapper.emitted('keyup')).toHaveLength(1);
+  });
+
+  it('applies the textarea modifier', () => {
+    const wrapper = mount(PfTextarea, { attrs: { 'aria-label': 'Comments' } });
+    expect(wrapper.classes()).toContain(formControlStyles.modifiers.textarea);
+  });
+
+  it('can disable the resizing', () => {
+    const wrapper = mount(PfTextarea, { props: { resizeOrientation: 'none' }, attrs: { 'aria-label': 'Comments' } });
+    expect(wrapper.classes()).not.toContain(formControlStyles.modifiers.resizeBoth);
+    expect(wrapper.classes()).not.toContain(formControlStyles.modifiers.resizeVertical);
+    expect(wrapper.classes()).not.toContain(formControlStyles.modifiers.resizeHorizontal);
+  });
+
+  it('applies the plain read only variant', () => {
+    const wrapper = mount(PfTextarea, { props: { readOnlyVariant: 'plain' }, attrs: { 'aria-label': 'Comments' } });
+    expect(wrapper.classes()).toContain(formControlStyles.modifiers.readonly);
+    expect(wrapper.classes()).toContain(formControlStyles.modifiers.plain);
+    expect(wrapper.find('textarea').attributes('readonly')).toBeDefined();
+  });
+
+  it('auto resizes its height while typing', async () => {
+    const scrollHeight = vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockReturnValue(120);
+    const wrapper = mount(PfTextarea, { props: { autoResize: true }, attrs: { 'aria-label': 'Comments' } });
+    const element = wrapper.element as HTMLElement;
+    element.style.height = '';
+    await wrapper.find('textarea').setValue('a long text');
+    expect(element.style.height).toBe('120px');
+    scrollHeight.mockRestore();
+  });
+
+  it('warns without an id or aria-label', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mount(PfTextarea);
+    expect(error).toHaveBeenCalledWith('TextArea: TextArea requires either an id or aria-label to be specified');
+    error.mockClear();
+    mount(PfTextarea, { attrs: { id: 'comments' } });
+    mount(PfTextarea, { attrs: { 'aria-label': 'Comments' } });
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
   });
 });
