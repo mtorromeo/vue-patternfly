@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import type { Component, HTMLAttributes } from 'vue';
+import type { Component, HTMLAttributes, VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -24,6 +24,6 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

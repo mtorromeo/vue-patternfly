@@ -1,4 +1,5 @@
 export { default as PfPage } from './Page.vue';
+export { default as PfPageBody } from './PageBody.vue';
 export { default as PfPageBreadcrumb } from './PageBreadcrumb.vue';
 export { default as PfPageFooter } from './PageFooter.vue';
 export { default as PfPageGroup } from './PageGroup.vue';

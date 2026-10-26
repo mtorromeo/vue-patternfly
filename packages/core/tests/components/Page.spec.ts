@@ -6,6 +6,7 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 import drawerStyles from '@patternfly/react-styles/css/components/Drawer/drawer';
 import { globalHeightBreakpoints, globalWidthBreakpoints } from '../../src/constants';
 import PfPage from '../../src/components/Page/Page.vue';
+import PfPageBody from '../../src/components/Page/PageBody.vue';
 import PfPageBreadcrumb from '../../src/components/Page/PageBreadcrumb.vue';
 import PfPageFooter from '../../src/components/Page/PageFooter.vue';
 import PfPageGroup from '../../src/components/Page/PageGroup.vue';
@@ -45,7 +46,8 @@ afterEach(() => {
 
 const pageRoot = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.page}`);
 const sidebar = (wrapper: VueWrapper<any>) => wrapper.find(`.${styles.pageSidebar}`);
-const sidebarExpanded = (wrapper: VueWrapper<any>) => sidebar(wrapper).classes().includes(styles.modifiers.expanded);
+// an open sidebar is not collapsed; it is also expanded, as an overlay, only on mobile
+const sidebarExpanded = (wrapper: VueWrapper<any>) => !sidebar(wrapper).classes().includes(styles.modifiers.collapsed);
 
 function mountManagedPage(props: Record<string, unknown> = {}) {
   return mount(PfPage, {
@@ -94,6 +96,33 @@ describe('Page', () => {
       expect(main.attributes('role')).toBe('main');
       expect(main.attributes('tabindex')).toBe('-1');
       expect(main.attributes('aria-label')).toBe('Main content');
+    });
+
+    // the main element was not focusable by default, as the target of skip-to-content links
+    it('makes the main element focusable by default, unless mainTabIndex is null', () => {
+      expect(mount(PfPage).find(`.${styles.pageMain}`).attributes('tabindex')).toBe('-1');
+      expect(
+        mount(PfPage, { props: { mainTabIndex: null } })
+          .find(`.${styles.pageMain}`)
+          .attributes('tabindex'),
+      ).toBe(undefined);
+    });
+
+    it('sets the notification drawer sizes and emits its expand event', async () => {
+      const wrapper = mount(PfPage, {
+        props: { drawerExpanded: true, drawerDefaultSize: '400px', drawerMinSize: '200px', drawerMaxSize: '600px' },
+        slots: { drawer: () => 'Notifications' },
+      });
+      const panel = wrapper.find<HTMLElement>(`.${drawerStyles.drawerPanel}`).element;
+      expect(panel.getAttribute('style')).toContain('400px');
+      expect(panel.getAttribute('style')).toContain('200px');
+      expect(panel.getAttribute('style')).toContain('600px');
+
+      const transitionEnd = new Event('transitionend') as TransitionEvent;
+      Object.defineProperty(transitionEnd, 'propertyName', { value: 'transform' });
+      panel.dispatchEvent(transitionEnd);
+      await nextTick();
+      expect(wrapper.emitted('notificationDrawerExpand')).toBeTruthy();
     });
 
     it('forwards attributes to the page root', () => {
@@ -182,6 +211,30 @@ describe('Page', () => {
       expect(wrapper.emitted('pageResize')?.[1]).toEqual([{ mobileView: true, windowSize: mobileWidth }]);
     });
 
+    // the mobile state followed the window, ignoring a page narrower than the window
+    it('bases the mobile state on the page width', async () => {
+      setWindowWidth(desktopWidth);
+      vi.stubGlobal(
+        'ResizeObserver',
+        class {
+          constructor(private cb: ResizeObserverCallback) {}
+          observe() {
+            this.cb(
+              [{ contentBoxSize: [{ inlineSize: mobileWidth, blockSize: 500 }] } as unknown as ResizeObserverEntry],
+              this as unknown as ResizeObserver,
+            );
+          }
+
+          unobserve() {}
+          disconnect() {}
+        },
+      );
+      const wrapper = mount(PfPage);
+      await nextTick();
+      const resizes = wrapper.emitted('pageResize') ?? [];
+      expect(resizes[resizes.length - 1]).toEqual([{ mobileView: true, windowSize: mobileWidth }]);
+    });
+
     it('applies breakpoint classes from the observed element size', async () => {
       const width = globalWidthBreakpoints.lg + 10;
       const height = globalHeightBreakpoints.md + 10;
@@ -238,6 +291,19 @@ describe('Page', () => {
       expect(sidebarExpanded(wrapper)).toBe(false);
     });
 
+    // an open sidebar used to be expanded, the mobile overlay state, on desktop too
+    it('applies the expanded modifier to an open sidebar only on mobile', async () => {
+      setWindowWidth(desktopWidth);
+      const wrapper = mountManagedPage();
+      expect(sidebar(wrapper).classes()).not.toContain(styles.modifiers.expanded);
+      expect(sidebar(wrapper).classes()).not.toContain(styles.modifiers.collapsed);
+
+      setWindowWidth(mobileWidth);
+      await nextTick();
+      await wrapper.find('.masthead button').trigger('click');
+      expect(sidebar(wrapper).classes()).toContain(styles.modifiers.expanded);
+    });
+
     it('does not close the sidebar when clicking the main area on desktop', async () => {
       setWindowWidth(desktopWidth);
       const wrapper = mountManagedPage();
@@ -277,11 +343,12 @@ describe('PageSidebar', () => {
     warn.mockRestore();
   });
 
-  it('renders an expanded sidebar by default', () => {
+  it('renders an open sidebar by default', () => {
     const wrapper = mount(PfPageSidebar, { slots: { default: () => 'Nav' } });
     expect(wrapper.classes()).toContain(styles.pageSidebar);
-    expect(wrapper.classes()).toContain(styles.modifiers.expanded);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.expanded);
     expect(wrapper.classes()).not.toContain(styles.modifiers.collapsed);
+    expect(wrapper.attributes('aria-hidden')).toBe('false');
     expect(wrapper.attributes('id')).toBe('page-sidebar');
     expect(wrapper.find(`.${styles.pageSidebarMain} > .${styles.pageSidebarBody}`).text()).toBe('Nav');
   });
@@ -296,11 +363,17 @@ describe('PageSidebar', () => {
     expect(bodies[0].text()).toBe('Nav');
   });
 
-  it('is expanded with sidebarOpen and accepts a custom id', () => {
+  it('is open with sidebarOpen and accepts a custom id', () => {
     const wrapper = mount(PfPageSidebar, { props: { sidebarOpen: true, id: 'side' } });
-    expect(wrapper.classes()).toContain(styles.modifiers.expanded);
     expect(wrapper.classes()).not.toContain(styles.modifiers.collapsed);
     expect(wrapper.attributes('id')).toBe('side');
+  });
+
+  // a collapsed sidebar stayed exposed to assistive technologies
+  it('is hidden from assistive technologies when collapsed', () => {
+    const wrapper = mount(PfPageSidebar, { props: { sidebarOpen: false } });
+    expect(wrapper.classes()).toContain(styles.modifiers.collapsed);
+    expect(wrapper.attributes('aria-hidden')).toBe('true');
   });
 
   it('uses the sidebarOpen prop when the page does not manage the sidebar', async () => {
@@ -310,6 +383,12 @@ describe('PageSidebar', () => {
 });
 
 describe('PageSidebarBody', () => {
+  it('applies the context selector modifier', () => {
+    expect(mount(PfPageSidebarBody, { props: { contextSelector: true } }).classes()).toContain(
+      styles.modifiers.contextSelector,
+    );
+  });
+
   it('renders the sidebar body with modifiers', () => {
     const wrapper = mount(PfPageSidebarBody, {
       props: { insets: true, filled: true },
@@ -397,6 +476,15 @@ describe('PageToggleButton', () => {
     expect(button.attributes('aria-expanded')).toBe('true');
   });
 
+  it('renders the hamburger variant without the slot content', () => {
+    const wrapper = mount(PfPageToggleButton, {
+      props: { hamburger: true, hamburgerVariant: 'collapse', sidebarOpen: true },
+      slots: { default: () => h('i', { class: 'custom' }) },
+    });
+    expect(wrapper.find('button').classes()).toContain(buttonStyles.modifiers.collapse);
+    expect(wrapper.find('.custom').exists()).toBe(false);
+  });
+
   it('does not emit when managed by the page', async () => {
     setWindowWidth(desktopWidth);
     const wrapper = mountManagedPage();
@@ -405,12 +493,20 @@ describe('PageToggleButton', () => {
   });
 });
 
+describe('PageBody', () => {
+  it('renders the main body', () => {
+    const wrapper = mount(PfPageBody, { attrs: { class: 'extra' }, slots: { default: () => 'Body' } });
+    expect(wrapper.classes()).toEqual([styles.pageMainBody, 'extra']);
+    expect(wrapper.text()).toBe('Body');
+  });
+});
+
 describe('PageSection', () => {
   it('renders a section by default', () => {
     const wrapper = mount(PfPageSection, { slots: { default: () => 'Content' } });
     expect(wrapper.element.tagName).toBe('SECTION');
     expect(wrapper.classes()).toEqual([styles.pageMainSection]);
-    expect(wrapper.text()).toBe('Content');
+    expect(wrapper.find(`:scope > .${styles.pageMainBody}`).text()).toBe('Content');
     expect(wrapper.attributes('tabindex')).toBeUndefined();
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/PageSection');
   });
@@ -434,6 +530,7 @@ describe('PageSection', () => {
   it('applies variant, fill, shadow and overflow modifiers', () => {
     const wrapper = mount(PfPageSection, {
       props: { variant: 'secondary', filled: true, shadowTop: true, shadowBottom: true, overflowScroll: true },
+      attrs: { 'aria-label': 'Section' },
     });
     expect(wrapper.classes()).toEqual(
       expect.arrayContaining([
@@ -445,6 +542,51 @@ describe('PageSection', () => {
       ]),
     );
     expect(wrapper.attributes('tabindex')).toBe('0');
+  });
+
+  // the secondary variant was applied to every type
+  it('applies the secondary variant only to default sections', () => {
+    expect(mount(PfPageSection, { props: { variant: 'secondary', type: 'tabs' } }).classes()).not.toContain(
+      styles.modifiers.secondary,
+    );
+  });
+
+  it('applies the plain, sticky base and stuck modifiers', () => {
+    const wrapper = mount(PfPageSection, {
+      props: { plain: true, noPlainOnGlass: true, stickyBase: 'top', stickyStuck: true },
+    });
+    expect(wrapper.classes()).toEqual(
+      expect.arrayContaining([
+        styles.modifiers.plain,
+        styles.modifiers.noPlainOnGlass,
+        styles.modifiers.stickyTopBase,
+        styles.modifiers.stickyTopStuck,
+      ]),
+    );
+  });
+
+  it('renders the content without a body with noBodyWrapper', () => {
+    const wrapper = mount(PfPageSection, {
+      props: { noBodyWrapper: true },
+      slots: { default: () => [h(PfPageBody, () => 'One'), h(PfPageBody, () => 'Two')] },
+    });
+    expect(wrapper.findAll(`:scope > .${styles.pageMainBody}`).map(b => b.text())).toEqual(['One', 'Two']);
+  });
+
+  it.each([
+    ['PageSection', PfPageSection],
+    ['PageGroup', PfPageGroup],
+    ['PageBreadcrumb', PfPageBreadcrumb],
+  ] as const)('%s warns about a missing aria-label with overflowScroll', (name, component) => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      mount(component as typeof PfPageSection, { props: { overflowScroll: true } });
+      expect(warn).toHaveBeenCalledWith(
+        `${name}: An accessible aria-label is required when hasOverflowScroll is set to true.`,
+      );
+    } finally {
+      warn.mockRestore();
+    }
   });
 
   it('applies no-fill only when filled is explicitly false', () => {
@@ -495,11 +637,11 @@ describe('PageSection', () => {
 });
 
 describe('PageGroup', () => {
-  it('renders the group with no-fill by default', () => {
+  // no-fill was applied unless filled was set
+  it('renders the group without fill modifiers by default', () => {
     const wrapper = mount(PfPageGroup, { slots: { default: () => 'Group' } });
     expect(wrapper.element.tagName).toBe('DIV');
-    expect(wrapper.classes()).toContain(styles.pageMainGroup);
-    expect(wrapper.classes()).toContain(styles.modifiers.noFill);
+    expect(wrapper.classes()).toEqual([styles.pageMainGroup]);
     expect(wrapper.attributes('tabindex')).toBeUndefined();
     expect(wrapper.attributes('role')).toBeUndefined();
     expect(wrapper.text()).toBe('Group');
@@ -521,8 +663,12 @@ describe('PageGroup', () => {
     expect(wrapper.classes()).not.toContain(styles.modifiers.noFill);
   });
 
+  it('applies no-fill when filled is false', () => {
+    expect(mount(PfPageGroup, { props: { filled: false } }).classes()).toContain(styles.modifiers.noFill);
+  });
+
   it('is a focusable region when overflow scroll', () => {
-    const wrapper = mount(PfPageGroup, { props: { overflowScroll: true } });
+    const wrapper = mount(PfPageGroup, { props: { overflowScroll: true }, attrs: { 'aria-label': 'Group' } });
     expect(wrapper.classes()).toContain(styles.modifiers.overflowScroll);
     expect(wrapper.attributes('tabindex')).toBe('0');
     expect(wrapper.attributes('role')).toBe('region');
@@ -546,17 +692,24 @@ describe('PageGroup', () => {
 });
 
 describe('PageBreadcrumb', () => {
-  it('renders a breadcrumb section', () => {
+  // the content was only wrapped in a body when width limited
+  it('renders a breadcrumb section wrapping its content in a body', () => {
     const wrapper = mount(PfPageBreadcrumb, { slots: { default: () => 'Crumbs' } });
     expect(wrapper.element.tagName).toBe('SECTION');
     expect(wrapper.classes()).toEqual([styles.pageMainBreadcrumb]);
-    expect(wrapper.text()).toBe('Crumbs');
+    expect(wrapper.find(`:scope > .${styles.pageMainBody}`).text()).toBe('Crumbs');
+  });
+
+  it('renders the content without a body with noBodyWrapper', () => {
+    const wrapper = mount(PfPageBreadcrumb, { props: { noBodyWrapper: true }, slots: { default: () => 'Crumbs' } });
     expect(wrapper.find(`.${styles.pageMainBody}`).exists()).toBe(false);
+    expect(wrapper.text()).toBe('Crumbs');
   });
 
   it('applies shadow, overflow and sticky modifiers', () => {
     const wrapper = mount(PfPageBreadcrumb, {
       props: { shadowTop: true, shadowBottom: true, overflowScroll: true, sticky: 'top' },
+      attrs: { 'aria-label': 'Breadcrumb' },
     });
     expect(wrapper.classes()).toEqual(
       expect.arrayContaining([

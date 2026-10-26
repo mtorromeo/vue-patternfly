@@ -7,6 +7,7 @@
         [styles.modifiers.pageInsets]: insets,
         [styles.modifiers.noFill]: filled === false,
         [styles.modifiers.fill]: filled,
+        [styles.modifiers.contextSelector]: contextSelector,
       },
     ]"
   >
@@ -20,12 +21,14 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   insets?: boolean;
   /** Flag indicating that the page sidebar body should fill the available vertical space. */
   filled?: boolean;
+  /** Flag indicating that the page sidebar body is for a context selector/perspective switcher */
+  contextSelector?: boolean;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
-import type { HTMLAttributes } from 'vue';
+import type { HTMLAttributes, VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -38,6 +41,6 @@ const props = withDefaults(defineProps<Props>(), {
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 </script>

@@ -16,24 +16,14 @@
     }"
     :tabindex="overflowScroll ? 0 : undefined"
   >
-    <div v-if="isWidthLimited" :class="styles.pageMainBody">
+    <slot v-if="noBodyWrapper" />
+    <pf-page-body v-else>
       <slot />
-    </div>
-    <slot v-else />
+    </pf-page-body>
   </section>
 </template>
 
-<script lang="ts" setup>
-import styles from '@patternfly/react-styles/css/components/Page/page';
-import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
-import { computed, type HTMLAttributes } from 'vue';
-import { isDefined } from '@vueuse/shared';
-import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-
-defineOptions({
-  name: 'PfPageBreadcrumb',
-});
-
+<script lang="ts">
 interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit<HTMLAttributes, 'tabindex'> {
   /** Limits the width of the breadcrumb */
   widthLimited?: boolean;
@@ -43,16 +33,38 @@ interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit
   shadowTop?: boolean;
   /** Flag indicating if PageBreadcrumb should have a shadow at the bottom */
   shadowBottom?: boolean;
-  /** Flag indicating if the PageBreadcrumb has a scrolling overflow */
+  /** Flag indicating if the PageBreadcrumb has a scrolling overflow. Requires an aria-label. */
   overflowScroll?: boolean;
+  /** Renders the content without a PfPageBody wrapper, to pass multiple custom PfPageBody children */
+  noBodyWrapper?: boolean;
 }
+</script>
+
+<script lang="ts" setup>
+import styles from '@patternfly/react-styles/css/components/Page/page';
+import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
+import { computed, useAttrs, watchEffect, type HTMLAttributes, type VNode } from 'vue';
+import { isDefined } from '@vueuse/shared';
+import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
+import PfPageBody from './PageBody.vue';
+
+defineOptions({
+  name: 'PfPageBreadcrumb',
+});
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const isWidthLimited = computed(() => props.widthLimited || isDefined(props.maxWidth));
+
+const attrs = useAttrs();
+watchEffect(() => {
+  if (props.overflowScroll && !attrs['aria-label']) {
+    console.warn('PageBreadcrumb: An accessible aria-label is required when hasOverflowScroll is set to true.');
+  }
+});
 </script>

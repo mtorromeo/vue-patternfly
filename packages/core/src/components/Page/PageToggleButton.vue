@@ -4,11 +4,12 @@
     :id="id"
     variant="plain"
     :hamburger="hamburger"
+    :hamburger-variant="hamburgerVariant"
     :expanded="sidebarOpen"
     aria-label="Side navigation toggle"
     @click="sidebarOpen = !sidebarOpen"
   >
-    <slot />
+    <slot v-if="!hamburger" />
   </pf-button>
 </template>
 
@@ -26,12 +27,14 @@ interface Props
   sidebarOpen?: boolean;
   /** Flag indicating the button is a hamburger button. This will override the icon property. */
   hamburger?: boolean;
+  /** Adjusts and animates the hamburger icon to indicate what will happen upon clicking the button. Requires hamburger. */
+  hamburgerVariant?: 'expand' | 'collapse';
 }
 </script>
 
 <script lang="ts" setup>
-import { computed, inject } from 'vue';
-import { PageManagedSidebarKey, PageSidebarOpenKey } from './Page.vue';
+import { computed, inject, type VNode } from 'vue';
+import { PageManagedSidebarKey, PageSidebarOpenKey } from './common';
 import PfButton from '../Button.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import type { ComponentProps } from 'vue-component-type-helpers';
@@ -50,7 +53,7 @@ const emit = defineEmits<{
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const managedSidebarOpen = inject(PageSidebarOpenKey, undefined);

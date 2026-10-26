@@ -54,10 +54,14 @@
     <slot name="sidebar" />
 
     <div v-if="$slots.drawer" :class="styles.pageDrawer">
-      <pf-drawer :expanded="drawerExpanded">
+      <pf-drawer :expanded="drawerExpanded" @expand="emit('notificationDrawerExpand', $event)">
         <pf-drawer-content>
           <template #content>
-            <pf-drawer-panel-content>
+            <pf-drawer-panel-content
+              :default-size="drawerDefaultSize"
+              :min-size="drawerMinSize"
+              :max-size="drawerMaxSize"
+            >
               <slot name="drawer" />
             </pf-drawer-panel-content>
           </template>
@@ -74,9 +78,7 @@
 </template>
 
 <script lang="ts">
-export const PageManagedSidebarKey = Symbol('PageManagedSidebarKey') as InjectionKey<Ref<boolean>>;
-export const PageSidebarOpenKey = Symbol('PageSidebarOpenKey') as InjectionKey<WritableComputedRef<boolean>>;
-export const PageSidebarsKey = Symbol('PageSidebarsKey') as ChildrenTrackerInjectionKey<ComponentPublicInstance>;
+export { PageManagedSidebarKey, PageSidebarOpenKey, PageSidebarsKey } from './common';
 
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Sets the value for role on the <main> element */
@@ -84,22 +86,24 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** an id to use for the [role="main"] element */
   mainContainerId?: string;
   /** tabIndex to use for the [role="main"] element, null to unset it */
-  mainTabIndex?: number;
+  mainTabIndex?: number | null;
   /**
    * If true, manages the sidebar open/close state and there is no need to pass the isSidebarOpen boolean into
    * the sidebar component or add a callback onNavToggle function into the PageHeader component
    */
   managedSidebar?: boolean;
-  /** Flag indicating if tertiary nav width should be limited */
-  tertiaryNavWidthLimited?: boolean;
-  /** Flag indicating Notification drawer in expanded */
-  notificationDrawerExpanded?: boolean;
   /** If true, the managed sidebar is initially open for desktop view */
   defaultManagedSidebarOpen?: boolean;
   /** Accessible label, can be used to name main section */
   mainAriaLabel?: string;
-  /** Flag indicating Notification drawer in expanded */
+  /** Flag indicating the notification drawer is expanded */
   drawerExpanded?: boolean;
+  /** Sets the default size of the notification drawer */
+  drawerDefaultSize?: string;
+  /** Sets the minimum size of the notification drawer */
+  drawerMinSize?: string;
+  /** Sets the maximum size of the notification drawer */
+  drawerMaxSize?: string;
   /** HTML component used as main component of the page. Defaults to 'main', only pass in 'div' if another 'main' element already exists. */
   mainComponent?: 'main' | 'div';
   /** Enables children to fill the available vertical space. Child page sections or groups that should fill should be passed the isFilled property. */
@@ -119,24 +123,14 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { globalWidthBreakpoints } from '../../constants';
 import { createReusableTemplate, useElementSize, useWindowSize } from '@vueuse/core';
-import {
-  ref,
-  provide,
-  computed,
-  watch,
-  type Ref,
-  type InjectionKey,
-  type WritableComputedRef,
-  type HTMLAttributes,
-  useTemplateRef,
-  type ComponentPublicInstance,
-} from 'vue';
+import { ref, provide, computed, watch, toRef, type HTMLAttributes, type VNode, useTemplateRef } from 'vue';
 import PfDrawer from '../Drawer/Drawer.vue';
 import PfDrawerContent from '../Drawer/DrawerContent.vue';
 import PfDrawerPanelContent from '../Drawer/DrawerPanelContent.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { getBreakpoint, getVerticalBreakpoint } from '../../util';
-import { provideChildrenTracker, type ChildrenTrackerInjectionKey } from '../../use';
+import { provideChildrenTracker } from '../../use';
+import { PageManagedSidebarKey, PageMobileKey, PageSidebarOpenKey, PageSidebarsKey } from './common';
 
 defineOptions({
   name: 'PfPage',
@@ -146,23 +140,27 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   defaultManagedSidebarOpen: true,
   mainComponent: 'main',
+  mainTabIndex: -1,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
+  /** The page was resized, with whether it is below the xl breakpoint and its width */
   (name: 'pageResize', v: { mobileView: boolean; windowSize: number }): void;
+  /** The notification drawer finished expanding or collapsing */
+  (name: 'notificationDrawerExpand', event: TransitionEvent): void;
 }>();
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
-  drawer?: (props?: Record<never, never>) => any;
-  'skip-to-content'?: (props?: Record<never, never>) => any;
-  'dock-content'?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
+  drawer?: (props?: Record<never, never>) => VNode[];
+  'skip-to-content'?: (props?: Record<never, never>) => VNode[];
+  'dock-content'?: (props?: Record<never, never>) => VNode[];
   /** The horizontal masthead content (e.g. PfMasthead or PfPageHeader). When using the docked variant, this content will only render at mobile viewports. */
-  masthead?: (props?: Record<never, never>) => any;
-  sidebar?: (props?: Record<never, never>) => any;
+  masthead?: (props?: Record<never, never>) => VNode[];
+  sidebar?: (props?: Record<never, never>) => VNode[];
   /** Content rendered inside the page footer, e.g. PfPageFooter */
-  footer?: (props?: Record<never, never>) => any;
+  footer?: (props?: Record<never, never>) => VNode[];
 }>();
 
 const [DefineMainContainer, MainContainer] = createReusableTemplate();
@@ -175,8 +173,8 @@ const mobileView = ref(false);
 const mobileSidebarOpen = ref(false);
 const desktopSidebarOpen = ref(!props.managedSidebar || props.defaultManagedSidebarOpen);
 
-const managedSidebar = ref(props.managedSidebar);
-provide(PageManagedSidebarKey, managedSidebar);
+provide(PageManagedSidebarKey, toRef(props, 'managedSidebar'));
+provide(PageMobileKey, mobileView);
 
 const sidebarOpen = computed({
   get() {
@@ -193,10 +191,13 @@ const sidebarOpen = computed({
 });
 provide(PageSidebarOpenKey, sidebarOpen);
 
+// like upstream, the page is mobile when it is narrower than the xl breakpoint, falling back to the window
+// before it is measured
 const { width: windowWidth } = useWindowSize();
+const pageWidth = computed(() => width.value || windowWidth.value);
 
 watch(
-  windowWidth,
+  pageWidth,
   width => {
     mobileView.value = width < globalWidthBreakpoints.xl;
     emit('pageResize', { mobileView: mobileView.value, windowSize: width });

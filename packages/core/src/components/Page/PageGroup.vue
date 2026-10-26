@@ -9,8 +9,8 @@
         [styles.modifiers.stickyBottomBase]: stickyBase === 'bottom',
         [styles.modifiers.stickyTopStuck]: stickyStuck && stickyBase === 'top',
         [styles.modifiers.stickyBottomStuck]: stickyStuck && stickyBase === 'bottom',
-        [styles.modifiers.noFill]: !filled,
-        [styles.modifiers.fill]: filled,
+        [styles.modifiers.noFill]: filled === false,
+        [styles.modifiers.fill]: filled === true,
         [styles.modifiers.shadowTop]: shadowTop,
         [styles.modifiers.shadowBottom]: shadowBottom,
         [styles.modifiers.overflowScroll]: overflowScroll,
@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
 import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
-import type { HTMLAttributes } from 'vue';
+import { useAttrs, watchEffect, type HTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
 defineOptions({
@@ -42,11 +42,11 @@ interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit
   stickyStuck?: boolean;
   /** Enables the page group to fill the available vertical space if true, or disable filling if false. */
   filled?: boolean;
-  /** Flag indicating if PageBreadcrumb should have a shadow at the top */
+  /** Modifier indicating if PageGroup should have a shadow at the top */
   shadowTop?: boolean;
-  /** Flag indicating if PageBreadcrumb should have a shadow at the bottom */
+  /** Modifier indicating if PageGroup should have a shadow at the bottom */
   shadowBottom?: boolean;
-  /** Flag indicating if the PageBreadcrumb has a scrolling overflow */
+  /** Flag indicating if the PageGroup has a scrolling overflow. Requires an aria-label. */
   overflowScroll?: boolean;
   /** Adds plain styling to the page group. */
   plain?: boolean;
@@ -54,10 +54,19 @@ interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit
   noPlainOnGlass?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  filled: undefined,
+});
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
-  default?: (props?: Record<never, never>) => any;
+  default?: (props?: Record<never, never>) => VNode[];
 }>();
+
+const attrs = useAttrs();
+watchEffect(() => {
+  if (props.overflowScroll && !attrs['aria-label']) {
+    console.warn('PageGroup: An accessible aria-label is required when hasOverflowScroll is set to true.');
+  }
+});
 </script>
