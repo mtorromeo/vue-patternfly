@@ -16,7 +16,7 @@ describe('Masthead', () => {
     expect(mount(PfMasthead).classes()).not.toContain(styles.modifiers.docked);
   });
 
-  it('renders an inline header by default', () => {
+  it('renders a header stacked on mobile and inline from md by default', () => {
     const wrapper = mount(PfMasthead, {
       slots: {
         default: () => [
@@ -28,7 +28,8 @@ describe('Masthead', () => {
 
     expect(wrapper.element.tagName).toBe('HEADER');
     expect(wrapper.classes()).toContain(styles.masthead);
-    expect(wrapper.classes()).toContain(styles.modifiers.displayInline);
+    expect(wrapper.classes()).toContain(styles.modifiers.displayInlineOnMd);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.displayInline);
     expect(wrapper.find(`.${styles.mastheadMain} .${styles.mastheadToggle}`).text()).toBe('Toggle');
     expect(wrapper.find(`.${styles.mastheadMain} .${styles.mastheadBrand}`).text()).toBe('Brand');
     expect(wrapper.find(`.${styles.mastheadContent}`).text()).toBe('Content');
@@ -40,6 +41,12 @@ describe('Masthead', () => {
     expect(wrapper.classes()).toContain(styles.modifiers.displayInlineOnMd);
     expect(wrapper.classes()).toContain(styles.modifiers.displayStackOnLg);
     expect(wrapper.classes()).not.toContain(styles.modifiers.displayInline);
+  });
+
+  it('replaces the default display with the display props', () => {
+    const wrapper = mount(PfMasthead, { props: { display: 'stack' } });
+    expect(wrapper.classes()).toContain(styles.modifiers.displayStack);
+    expect(wrapper.classes()).not.toContain(styles.modifiers.displayInlineOnMd);
   });
 
   it('applies inset breakpoint modifiers', () => {
@@ -76,29 +83,44 @@ describe('MastheadToggle', () => {
 });
 
 describe('MastheadBrand', () => {
-  const brand = (wrapper: VueWrapper) => wrapper.find(`.${styles.mastheadBrand}`);
+  it('renders a div with the brand class', () => {
+    const wrapper = mount(PfMastheadBrand, { attrs: { class: 'custom' }, slots: { default: () => 'Brand' } });
+    expect(wrapper.element.tagName).toBe('DIV');
+    expect(wrapper.classes()).toEqual(expect.arrayContaining([styles.mastheadBrand, 'custom']));
+    expect(wrapper.attributes('href')).toBeUndefined();
+    expect(wrapper.attributes('tabindex')).toBeUndefined();
+    expect(wrapper.text()).toBe('Brand');
+  });
+});
+
+describe('MastheadLogo', () => {
+  const logo = (wrapper: VueWrapper) => wrapper.get(`.${styles.mastheadLogo}`);
 
   it('renders a span without href', () => {
-    const wrapper = mount(PfMastheadBrand, { slots: { default: () => 'Brand' } });
-    expect(brand(wrapper).element.tagName).toBe('SPAN');
-    expect(brand(wrapper).classes()).toContain(styles.mastheadBrand);
-    expect(brand(wrapper).attributes('tabindex')).toBeUndefined();
-    expect(brand(wrapper).attributes('href')).toBeUndefined();
-    expect(brand(wrapper).text()).toBe('Brand');
+    const wrapper = mount(PfMastheadLogo, { slots: { default: () => h('img', { alt: 'Logo' }) } });
+    expect(logo(wrapper).element.tagName).toBe('SPAN');
+    expect(logo(wrapper).classes()).not.toContain(styles.modifiers.compact);
+    expect(logo(wrapper).attributes('tabindex')).toBeUndefined();
+    expect(logo(wrapper).find('img').exists()).toBe(true);
   });
 
   it('renders a focusable link with href', () => {
-    const wrapper = mount(PfMastheadBrand, { props: { href: '/home' }, attrs: { id: 'brand' } });
-    expect(brand(wrapper).element.tagName).toBe('A');
-    expect(brand(wrapper).attributes('href')).toBe('/home');
-    expect(brand(wrapper).attributes('tabindex')).toBe('0');
-    expect(brand(wrapper).attributes('id')).toBe('brand');
+    const wrapper = mount(PfMastheadLogo, { props: { href: '/home' }, attrs: { id: 'logo' } });
+    expect(logo(wrapper).element.tagName).toBe('A');
+    expect(logo(wrapper).attributes('href')).toBe('/home');
+    expect(logo(wrapper).attributes('tabindex')).toBe('0');
+    expect(logo(wrapper).attributes('id')).toBe('logo');
+  });
+
+  it('applies the compact modifier', () => {
+    const wrapper = mount(PfMastheadLogo, { props: { compact: true } });
+    expect(logo(wrapper).classes()).toContain(styles.modifiers.compact);
   });
 
   it('renders a custom component', () => {
-    const wrapper = mount(PfMastheadBrand, { props: { component: 'div' } });
-    expect(brand(wrapper).element.tagName).toBe('DIV');
-    expect(brand(wrapper).classes()).toContain(styles.mastheadBrand);
+    const wrapper = mount(PfMastheadLogo, { props: { component: 'a' } });
+    expect(logo(wrapper).element.tagName).toBe('A');
+    expect(logo(wrapper).attributes('tabindex')).toBe('0');
   });
 
   it('renders a router link and navigates on click', async () => {
@@ -113,40 +135,13 @@ describe('MastheadBrand', () => {
     await router.push('/');
     await router.isReady();
 
-    const wrapper = mount(PfMastheadBrand, { props: { to: '/about' }, global: { plugins: [router] } });
-    const link = wrapper.find('a');
+    const wrapper = mount(PfMastheadLogo, { props: { to: '/about' }, global: { plugins: [router] } });
+    const link = wrapper.get('a');
     expect(link.attributes('href')).toBe('/about');
-    expect(link.classes()).toContain(styles.mastheadBrand);
+    expect(link.classes()).toContain(styles.mastheadLogo);
 
     await link.trigger('click');
     await flushPromises();
     expect(router.currentRoute.value.path).toBe('/about');
-  });
-});
-
-describe('MastheadLogo', () => {
-  it('renders a span without href', () => {
-    const wrapper = mount(PfMastheadLogo, { slots: { default: () => h('img', { alt: 'Logo' }) } });
-    expect(wrapper.element.tagName).toBe('SPAN');
-    expect(wrapper.classes()).toContain(styles.mastheadLogo);
-    expect(wrapper.classes()).not.toContain(styles.modifiers.compact);
-    expect(wrapper.find('img').exists()).toBe(true);
-  });
-
-  it('renders a link with href', () => {
-    const wrapper = mount(PfMastheadLogo, { props: { href: '/home' } });
-    expect(wrapper.element.tagName).toBe('A');
-    expect(wrapper.attributes('href')).toBe('/home');
-  });
-
-  it('applies the compact modifier', () => {
-    const wrapper = mount(PfMastheadLogo, { props: { compact: true } });
-    expect(wrapper.classes()).toContain(styles.modifiers.compact);
-  });
-
-  it('renders a custom component', () => {
-    const wrapper = mount(PfMastheadLogo, { props: { component: 'a' } });
-    expect(wrapper.element.tagName).toBe('A');
-    expect(wrapper.attributes('tabindex')).toBe('0');
   });
 });

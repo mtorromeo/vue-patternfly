@@ -49,9 +49,9 @@
                 <pf-page-toggle-button hamburger />
               </pf-masthead-toggle>
 
-              <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
-                <pf-masthead-brand :href="href"> Logo </pf-masthead-brand>
-              </router-link>
+              <pf-masthead-brand>
+                <pf-masthead-logo :to="{ name: 'introduction' }">Logo</pf-masthead-logo>
+              </pf-masthead-brand>
             </pf-masthead-main>
 
             <pf-masthead-content>
@@ -110,9 +110,9 @@
                 <pf-page-toggle-button hamburger />
               </pf-masthead-toggle>
 
-              <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
-                <pf-masthead-brand :href="href"> Logo </pf-masthead-brand>
-              </router-link>
+              <pf-masthead-brand>
+                <pf-masthead-logo :to="{ name: 'introduction' }">Logo</pf-masthead-logo>
+              </pf-masthead-brand>
             </pf-masthead-main>
 
             <pf-masthead-content>
@@ -164,9 +164,9 @@
                 <pf-page-toggle-button hamburger />
               </pf-masthead-toggle>
 
-              <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
-                <pf-masthead-brand :href="href"> Logo </pf-masthead-brand>
-              </router-link>
+              <pf-masthead-brand>
+                <pf-masthead-logo :to="{ name: 'introduction' }">Logo</pf-masthead-logo>
+              </pf-masthead-brand>
             </pf-masthead-main>
 
             <pf-masthead-content>
@@ -440,7 +440,9 @@
                     @click="toggleDock"
                   />
                 </pf-masthead-toggle>
-                <pf-masthead-brand href="#">Logo</pf-masthead-brand>
+                <pf-masthead-brand>
+                  <pf-masthead-logo href="#">Logo</pf-masthead-logo>
+                </pf-masthead-brand>
               </pf-masthead-main>
             </pf-masthead>
           </template>

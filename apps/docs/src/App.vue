@@ -6,13 +6,13 @@
           <pf-masthead-toggle>
             <pf-page-toggle-button hamburger />
           </pf-masthead-toggle>
-          <router-link v-slot="{ href }" :to="{ name: 'introduction' }" custom>
-            <pf-masthead-brand :href="href">
+          <pf-masthead-brand>
+            <pf-masthead-logo :to="{ name: 'introduction' }">
               <pf-brand src="">
                 <object v-html="PfLogo" />
               </pf-brand>
-            </pf-masthead-brand>
-          </router-link>
+            </pf-masthead-logo>
+          </pf-masthead-brand>
         </pf-masthead-main>
         <pf-masthead-content>
           <pf-toolbar full-height>

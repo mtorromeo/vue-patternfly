@@ -1,45 +1,25 @@
 <template>
-  <component :is="to ? 'router-link' : PassThrough" v-slot="routerCtx" :to="to" :replace="replace" custom>
-    <component
-      v-bind="{ ...ouiaProps, ...$attrs }"
-      :is="component"
-      :class="styles.mastheadBrand"
-      :tabindex="component === 'a' ? 0 : undefined"
-      :href="(routerCtx as RouterLinkContext | undefined)?.href ?? href"
-      @click="(routerCtx as RouterLinkContext | undefined)?.navigate"
-    >
-      <slot />
-    </component>
-  </component>
+  <div v-bind="ouiaProps" :class="styles.mastheadBrand">
+    <slot />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Masthead/masthead';
-import PassThrough from '../../helpers/PassThrough.vue';
-import type { AnchorHTMLAttributes, UnwrapRef } from 'vue';
-import type { useLink, RouteLocationRaw } from 'vue-router';
+import type { HTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-
-type RouterLinkContext = UnwrapRef<ReturnType<typeof useLink>>;
 
 defineOptions({
   name: 'PfMastheadBrand',
-  inheritAttrs: false,
 });
 
-interface Props extends OUIAProps, /* @vue-ignore */ AnchorHTMLAttributes {
-  component?: string;
-  href?: string;
-  to?: RouteLocationRaw;
-  replace?: boolean;
-}
+interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {}
 
 const props = defineProps<Props>();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{
+  /** The masthead logo, typically a pf-masthead-logo */
   default?: (props?: Record<never, never>) => any;
 }>();
-
-const component = props.component ?? ((props.href ?? props.to) === undefined ? 'span' : 'a');
 </script>
