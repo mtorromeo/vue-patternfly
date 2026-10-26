@@ -288,6 +288,32 @@ describe('Skeleton', () => {
     expect(style.getPropertyValue(cssSkeletonWidth.name)).toBe('50%');
     expect(style.getPropertyValue(cssSkeletonHeight.name)).toBe('20px');
   });
+
+  it.each([
+    ['sm', skeletonStyles.modifiers.textSm],
+    ['md', skeletonStyles.modifiers.textMd],
+    ['lg', skeletonStyles.modifiers.textLg],
+    ['xl', skeletonStyles.modifiers.textXl],
+    ['2xl', skeletonStyles.modifiers.text_2xl],
+    ['3xl', skeletonStyles.modifiers.text_3xl],
+    ['4xl', skeletonStyles.modifiers.text_4xl],
+  ])('applies the %s font size modifier', (fontSize, modifier) => {
+    const wrapper = mount(PfSkeleton, { props: { fontSize: fontSize as '2xl' } });
+    expect(wrapper.classes()).toEqual([skeletonStyles.skeleton, modifier]);
+  });
+
+  it('renders an empty screen reader text and no style by default', () => {
+    const wrapper = mount(PfSkeleton);
+    expect(wrapper.find('span.pf-v6-screen-reader').text()).toBe('');
+    expect(wrapper.attributes('style')).toBeUndefined();
+  });
+
+  it('merges the size variables with a style attribute', () => {
+    const wrapper = mount(PfSkeleton, { props: { width: '50%' }, attrs: { style: 'color: red' } });
+    const style = (wrapper.element as HTMLElement).style;
+    expect(style.getPropertyValue(cssSkeletonWidth.name)).toBe('50%');
+    expect(style.color).toBe('red');
+  });
 });
 
 describe('Spinner', () => {
