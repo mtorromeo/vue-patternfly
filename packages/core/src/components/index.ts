@@ -64,3 +64,4 @@ export * from './ToggleGroup';
 export * from './Toolbar';
 export * from './Tooltip';
 export * from './TreeView';
+export * from './Wizard';

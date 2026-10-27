@@ -5,6 +5,7 @@ import { findFirstChildVNode } from '../util';
 export * from './children-tracker';
 export * from './floating';
 export * from './form-context';
+export { useWizardContext } from '../components/Wizard/common';
 
 export function findHtmlElementFromVNode(vnode: VNode | undefined) {
   let el = vnode?.el;
