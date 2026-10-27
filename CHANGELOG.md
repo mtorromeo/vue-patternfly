@@ -1,6 +1,65 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-rc.2] - 2026-10-27
+
+### Bug Fixes
+
+- *(Th)* Name selection headers by default
+
+  A Th with selected gets aria-label "Row select", like the upstream examples,
+  and neither it nor an aria-hidden Th warns about a missing accessible name.
+
+- Report usage warnings only outside of production
+
+  The console warnings and errors about wrong usage go through devWarn and
+  devError, which check process.env.NODE_ENV at runtime like vue does, so the
+  bundler of the application drops them from production builds.
+  import.meta.env.DEV would be replaced already when building the library.
+
+- *(ProgressStep)* Generate the step and title ids
+
+  The step gets a generated id and its title the id of the step with a -title
+  suffix when they are not set, so the title button of a popover is always
+  labelled by both and the warning about missing ids is gone.
+
+
+### Features
+
+- *(FormGroup)* Link the label to the first field
+
+  A labelled PfFormGroup generates a field id when fieldId is not set and
+  links its label to the first PfTextInput, PfTextarea, PfFormSelect,
+  PfSwitch, PfRadio or PfCheckbox without a label of its own: the field gets
+  the group id unless it has its own, so it has an accessible name and the
+  missing-label warning no longer fires. When the linked field is unmounted,
+  the next eligible field gets linked. Unlabelled groups and groups with role
+  group or radiogroup link no field.
+
+- *(Select)* Give the OUIA id to the toggle
+
+  The default toggle, or a PfMenuToggle in the toggle slot without its own
+  ouiaId, gets the ouiaId of the select, so tests find the toggle and the menu
+  with the same id.
+
+- *(Dropdown)* [**breaking**] Close on select by default
+
+  The menu closes when an item is selected: closeOnSelect is replaced by
+  noCloseOnSelect, which keeps it open.
+
+  Without an ouiaId the menu uses containerOuiaId, and the default toggle, or
+  a PfMenuToggle in the toggle slot without its own, gets the same OUIA id.
+
+- Make the default texts of the components configurable
+
+  The English default texts of core and table, mostly accessible names like
+  "Close", "Row select" or "Select row 3", come from a typed PfMessages object.
+  The messages option of the plugin replaces them for the whole app and
+  providePfMessages for a subtree, merging with the ancestors; a ref or a
+  getter keeps them reactive to switch language at runtime. The props that set
+  the same texts still win over the messages, which keep the current English
+  defaults.
+
 ## [6.0.0-rc.1] - 2026-10-27
 
 ### Bug Fixes
