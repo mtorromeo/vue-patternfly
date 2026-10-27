@@ -31,6 +31,7 @@ export * from './DataList';
 export * from './DescriptionList';
 export * from './Drawer';
 export * from './Dropdown';
+export * from './DualListSelector';
 export * from './EmptyState';
 export * from './ExpandableSection';
 export * from './FileUpload';
