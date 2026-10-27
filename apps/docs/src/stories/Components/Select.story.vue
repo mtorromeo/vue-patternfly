@@ -16,7 +16,8 @@
       ## Differences from patternfly-react
       - A default menu toggle is included: its text is the `label` prop or slot, its icon the `icon` slot, and `disabled`, `variant`, `full-width` and `full-height` are passed to it. The `toggle` slot replaces it with a custom toggle, which receives the expanded state, the click and the keydown handlers (`toggle`).
       - The open state is bound with `v-model:open` (`isOpen`, `onOpenChange`) and the selection with `v-model:selected` (`selected`).
-      - `close-on-select` closes the menu on select, like `pf-dropdown`.
+      - `close-on-select` closes the menu on select, which `pf-dropdown` does by default.
+      - The default toggle, or a `pf-menu-toggle` in the `toggle` slot without its own, gets the `ouia-id` of the select.
       - `popperProps` are the `placement`, `append-to` and `z-index` props, `min-width` sets the minimum width of the menu.
       - `shouldPreventScrollOnItemFocus` is inverted into `scroll-on-item-focus`; `onOpenChangeKeys` is `open-change-keys`.
       - `variant="typeahead"` is the variant of the default toggle too.

@@ -191,7 +191,10 @@ function renderToggles() {
   if (slots.toggle) {
     const toggles = slots.toggle({});
     for (const t of toggles) {
-      t.props = mergeProps({ 'aria-haspopup': 'listbox' }, t.props ?? {}, toggleProps);
+      // a menu toggle in the slot gets the OUIA id, unless it has its own
+      const ownOuiaId = t.props?.ouiaId ?? t.props?.['ouia-id'];
+      const ouiaProps = t.type === PfMenuToggle && ownOuiaId === undefined ? { ouiaId: props.ouiaId } : {};
+      t.props = mergeProps({ 'aria-haspopup': 'listbox', ...ouiaProps }, t.props ?? {}, toggleProps);
     }
     return toggles;
   }
@@ -205,6 +208,8 @@ function renderToggles() {
           variant: props.variant,
           fullHeight: props.fullHeight,
           fullWidth: props.fullWidth,
+          // the menu and the toggle share the OUIA id, so tests find both with the same one
+          ouiaId: props.ouiaId,
         },
         toggleProps,
       ),

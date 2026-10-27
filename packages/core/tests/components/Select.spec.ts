@@ -353,6 +353,27 @@ describe('Select', () => {
     wrapper.unmount();
   });
 
+  it('gives its OUIA id to the toggle', async () => {
+    const wrapper = await mountSelect({ open: true, ouiaId: 'my-select' });
+    expect(menu()!.getAttribute('data-ouia-component-id')).toBe('my-select');
+    expect(toggle().getAttribute('data-ouia-component-id')).toBe('my-select');
+    wrapper.unmount();
+
+    const custom = await mountSelect(
+      { ouiaId: 'my-select' },
+      { default: defaultOptions, toggle: () => h(PfMenuToggle, null, () => 'Custom') },
+    );
+    expect(toggle().getAttribute('data-ouia-component-id')).toBe('my-select');
+    custom.unmount();
+
+    const own = await mountSelect(
+      { ouiaId: 'my-select' },
+      { default: defaultOptions, toggle: () => h(PfMenuToggle, { 'ouia-id': 'own' }, () => 'Custom') },
+    );
+    expect(toggle().getAttribute('data-ouia-component-id')).toBe('own');
+    own.unmount();
+  });
+
   it('keeps the disabled state of a custom toggle unless the select is disabled', async () => {
     const slots = {
       default: defaultOptions,
