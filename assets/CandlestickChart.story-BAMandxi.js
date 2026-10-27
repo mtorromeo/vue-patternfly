@@ -1,0 +1,47 @@
+import{F as e,K as t,c as n,h as r,j as i,l as a,m as o}from"./runtime-core.esm-bundler-DO1530YC.js";import{n as s}from"./index-CUsetNQE.js";var c={};function l(s,c){let l=e(`component-info`),u=e(`pf-chart-candlestick`),d=e(`story-canvas`),f=e(`doc-page`);return i(),a(f,{name:`Charts/CandlestickChart.story.vue`,title:`Candlestick chart`},{description:t(()=>[...c[0]||=[o(`A `,-1),n(`b`,null,`candlestick chart`,-1),o(` shows how a value moves over a period: each candle spans the lowest and highest values, and its body goes from the opening to the closing value.`,-1)]]),apidocs:t(()=>[r(l,{name:`PfChartCandlestick`,doc:{name:`PfChartCandlestick`,exportName:`default`,displayName:`ChartCandlestick`,description:``,tags:{},props:[{name:`option`,description:`ECharts option deep merged over the generated option, as an escape hatch for anything the props don't cover`,required:!1,type:{name:`ChartsOption`}},{name:`toolbox`,description:`Shows buttons to save the chart as an image and to restore it -- see https://echarts.apache.org/en/option.html#toolbox`,required:!1,type:{name:`boolean`}},{name:`patterns`,description:`Applies decal patterns to the data, in addition to colors -- see https://echarts.apache.org/en/option.html#aria.decal`,required:!1,type:{name:`boolean`}},{name:`legendData`,description:`Legend entries; defaults to the series (or data) names`,required:!1,type:{name:`Array`,elements:[{name:`string`}]}},{name:`legendOrientation`,description:`Orientation of the legend; defaults to vertical for a right aligned legend and horizontal otherwise`,required:!1,type:{name:`union`,elements:[{name:`"horizontal"`},{name:`"vertical"`}]}},{name:`legendPosition`,description:"Position of the legend, `none` hiding it. Defaults to `right`, except for donut and bullet charts, which only\nshow a legend (on the right) when `legendData` is set.",required:!1,type:{name:`ChartLegendPosition`}},{name:`height`,description:`Specify height explicitly, in pixels. Without it the chart takes the height of its container.`,required:!1,type:{name:`number`}},{name:`width`,description:`Specify width explicitly, in pixels. Without it the chart takes the width of its container.`,required:!1,type:{name:`number`}},{name:`legendTooltip`,description:"Flag indicating to use the legend tooltip (default). This may be overridden by the `option.tooltip` property.",required:!1,type:{name:`boolean`},defaultValue:{func:!1,value:`true`}},{name:`svgRenderer`,description:"Flag indicating to use the SVG renderer (default). This may be overridden by the `opts.renderer` property.",required:!1,type:{name:`boolean`},defaultValue:{func:!1,value:`true`}},{name:`opts`,description:`Optional chart configuration -- see https://echarts.apache.org/en/api.html#echarts.init`,required:!1,type:{name:`EChartsInitOpts`}},{name:`theme`,description:`The theme to use for determining styles and layout properties. Any styles defined in the theme may be
+overwritten by the option. Not compatible with \`themeColor\`.
+
+See https://echarts.apache.org/handbook/en/concepts/style/#theme`,required:!1,type:{name:`ThemeDefinition`}},{name:`themeColor`,description:"Specifies the theme color, e.g. 'blue', 'green', 'multi'. Not compatible with `theme`.",required:!1,type:{name:`ThemeColorName`}},{name:`data`,description:`The candles to draw, each one with its open, close, low and high values`,required:!1,type:{name:`Array`,elements:[{name:`ChartCandlestickDatum`}]}},{name:`name`,description:`Series name, shown in the legend and tooltip`,required:!1,type:{name:`string`}},{name:`xAxisLabel`,description:`Label of the independent (category) axis`,required:!1,type:{name:`string`}},{name:`yAxisLabel`,description:`Label of the dependent (value) axis`,required:!1,type:{name:`string`}},{name:`zoomable`,description:`Lets the user zoom into the days, with a slider and with the mouse wheel while holding Ctrl (or by pinching), so
+the wheel still scrolls the page`,required:!1,type:{name:`boolean`}}],events:[{name:`click`,type:{names:[`ChartClickEvent`]},description:`Emitted when a chart element is clicked -- see https://echarts.apache.org/en/api.html#events.Mouse%20events`},{name:`legendselectchanged`,type:{names:[`ChartLegendSelectChangedEvent`]},description:`Emitted when a legend item is toggled -- see https://echarts.apache.org/en/api.html#events.legendselectchanged`},{name:`datazoom`,type:{names:[`ChartDataZoomEvent`]},description:`Emitted when the data zoom range changes -- see https://echarts.apache.org/en/api.html#events.datazoom`}],sourceFiles:[`packages/charts/src/ChartCandlestick.vue`]}})]),default:t(()=>[c[1]||=n(`div`,{class:`markdown pf-v6-c-content`},[n(`p`,null,[o(`Note: charts live in their own package at `),n(`a`,{href:`https://www.npmjs.com/package/@vue-patternfly/charts`},`@vue-patternfly/charts`),o(`!`)]),n(`h2`,{class:`pf-v6-c-title`},`Examples`)],-1),r(d,{title:`Basic`,source:`<pf-chart-candlestick
+aria-label="Candlestick chart example"
+:data="[
+  { x: '2017-10-24', open: 20, close: 34, low: 10, high: 38 },
+  { x: '2017-10-25', open: 40, close: 35, low: 30, high: 50 },
+  { x: '2017-10-26', open: 31, close: 38, low: 28, high: 44 },
+  { x: '2017-10-27', open: 38, close: 15, low: 5, high: 42 },
+  { x: '2017-10-30', open: 15, close: 28, low: 12, high: 30 },
+  { x: '2017-10-31', open: 28, close: 32, low: 25, high: 36 },
+  { x: '2017-11-01', open: 32, close: 26, low: 22, high: 35 },
+  { x: '2017-11-02', open: 26, close: 40, low: 24, high: 43 },
+]"
+:height="300" />`},{default:t(()=>[r(u,{"aria-label":`Candlestick chart example`,data:[{x:`2017-10-24`,open:20,close:34,low:10,high:38},{x:`2017-10-25`,open:40,close:35,low:30,high:50},{x:`2017-10-26`,open:31,close:38,low:28,high:44},{x:`2017-10-27`,open:38,close:15,low:5,high:42},{x:`2017-10-30`,open:15,close:28,low:12,high:30},{x:`2017-10-31`,open:28,close:32,low:25,high:36},{x:`2017-11-01`,open:32,close:26,low:22,high:35},{x:`2017-11-02`,open:26,close:40,low:24,high:43}],height:300})]),_:1}),r(d,{title:`With axis labels and bottom aligned legend`,source:`<pf-chart-candlestick
+aria-label="Candlestick chart example"
+:data="[
+  { x: '2017-10-24', open: 20, close: 34, low: 10, high: 38 },
+  { x: '2017-10-25', open: 40, close: 35, low: 30, high: 50 },
+  { x: '2017-10-26', open: 31, close: 38, low: 28, high: 44 },
+  { x: '2017-10-27', open: 38, close: 15, low: 5, high: 42 },
+  { x: '2017-10-30', open: 15, close: 28, low: 12, high: 30 },
+  { x: '2017-10-31', open: 28, close: 32, low: 25, high: 36 },
+  { x: '2017-11-01', open: 32, close: 26, low: 22, high: 35 },
+  { x: '2017-11-02', open: 26, close: 40, low: 24, high: 43 },
+]"
+:height="350"
+legend-position="bottom"
+name="Stock price"
+x-axis-label="Day"
+y-axis-label="Price" />`},{default:t(()=>[r(u,{"aria-label":`Candlestick chart example`,data:[{x:`2017-10-24`,open:20,close:34,low:10,high:38},{x:`2017-10-25`,open:40,close:35,low:30,high:50},{x:`2017-10-26`,open:31,close:38,low:28,high:44},{x:`2017-10-27`,open:38,close:15,low:5,high:42},{x:`2017-10-30`,open:15,close:28,low:12,high:30},{x:`2017-10-31`,open:28,close:32,low:25,high:36},{x:`2017-11-01`,open:32,close:26,low:22,high:35},{x:`2017-11-02`,open:26,close:40,low:24,high:43}],height:350,"legend-position":`bottom`,name:`Stock price`,"x-axis-label":`Day`,"y-axis-label":`Price`})]),_:1}),r(d,{title:`Zoomable, with toolbox`,source:`<pf-chart-candlestick
+aria-label="Candlestick chart example"
+:data="[
+  { x: '2017-10-24', open: 20, close: 34, low: 10, high: 38 },
+  { x: '2017-10-25', open: 40, close: 35, low: 30, high: 50 },
+  { x: '2017-10-26', open: 31, close: 38, low: 28, high: 44 },
+  { x: '2017-10-27', open: 38, close: 15, low: 5, high: 42 },
+  { x: '2017-10-30', open: 15, close: 28, low: 12, high: 30 },
+  { x: '2017-10-31', open: 28, close: 32, low: 25, high: 36 },
+  { x: '2017-11-01', open: 32, close: 26, low: 22, high: 35 },
+  { x: '2017-11-02', open: 26, close: 40, low: 24, high: 43 },
+]"
+:height="350"
+toolbox
+zoomable />`},{default:t(()=>[r(u,{"aria-label":`Candlestick chart example`,data:[{x:`2017-10-24`,open:20,close:34,low:10,high:38},{x:`2017-10-25`,open:40,close:35,low:30,high:50},{x:`2017-10-26`,open:31,close:38,low:28,high:44},{x:`2017-10-27`,open:38,close:15,low:5,high:42},{x:`2017-10-30`,open:15,close:28,low:12,high:30},{x:`2017-10-31`,open:28,close:32,low:25,high:36},{x:`2017-11-01`,open:32,close:26,low:22,high:35},{x:`2017-11-02`,open:26,close:40,low:24,high:43}],height:350,toolbox:``,zoomable:``})]),_:1}),c[2]||=n(`div`,{class:`markdown pf-v6-c-content`},[n(`h2`,{class:`pf-v6-c-title`},`Differences from patternfly-react`),n(`p`,null,`react-charts has no candlestick chart: this is an ECharts only chart.`),n(`p`,null,[o(`With `),n(`code`,null,`zoomable`),o(`, the slider below the chart zooms into the days, as does the mouse wheel while holding Ctrl (or a pinch): the wheel alone still scrolls the page. The `),n(`code`,null,`toolbox`),o(` saves the chart as an image and restores the zoom.`)]),n(`p`,null,[o(`Rising candles (closing above the opening value) are drawn with the success color, falling ones with the danger color: override them with `),n(`code`,null,`option.series[0].itemStyle`),o(` (`),n(`code`,null,`color`),o(` and `),n(`code`,null,`borderColor`),o(` for rising candles, `),n(`code`,null,`color0`),o(` and `),n(`code`,null,`borderColor0`),o(` for falling ones).`)])],-1)]),_:1})}var u=s(c,[[`render`,l]]);export{u as default};

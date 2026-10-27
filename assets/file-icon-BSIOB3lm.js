@@ -1,1 +1,0 @@
-import{W as e}from"./index-Cl3hMFDe.js";var t=e({name:`FileIcon`,height:512,width:384,svgPathData:`M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z`,yOffset:0,xOffset:0});export{t};
