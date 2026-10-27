@@ -1,0 +1,45 @@
+import{F as e,G as t,c as n,d as r,ft as i,g as a,h as o,j as s,m as c,n as l,rt as u}from"./runtime-core.esm-bundler-DKmYt4j6.js";import{D as d,Y as f,j as p}from"./index-Cl3hMFDe.js";var m={style:{"margin-top":`15px`}},h=a({__name:`Hint.story`,setup(a){let[h,g]=p(),_=u(!1);return(a,u)=>{let p=e(`pf-menu-toggle`),v=e(`pf-dropdown-item`),y=e(`pf-divider`),b=e(`pf-dropdown`),x=e(`component-info`),S=e(`pf-hint-title`),C=e(`pf-hint-body`),w=e(`pf-button`),T=e(`pf-hint-footer`),E=e(`pf-hint`),D=e(`story-canvas`),O=e(`pf-checkbox`),k=e(`doc-page`);return s(),r(l,null,[o(i(h),null,{default:t(({label:e})=>[o(b,{"close-on-select":``,position:`right`},{toggle:t(()=>[o(p,{variant:`plain`,"aria-label":e},{icon:t(()=>[o(i(d))]),_:1},8,[`aria-label`])]),default:t(()=>[o(v,{component:`button`},{default:t(()=>[...u[4]||=[c(`Action`,-1)]]),_:1}),o(v,{to:`#`,onClick:u[0]||=f(()=>{},[`prevent`])},{default:t(()=>[...u[5]||=[c(`Link`,-1)]]),_:1}),o(v,{component:`button`,disabled:``},{default:t(()=>[...u[6]||=[c(`Disabled Action`,-1)]]),_:1}),o(v,{to:`#`,disabled:``,onClick:u[1]||=f(()=>{},[`prevent`])},{default:t(()=>[...u[7]||=[c(`Disabled Link`,-1)]]),_:1}),o(y,{component:`li`}),o(v,{component:`button`},{default:t(()=>[...u[8]||=[c(`Separated Action`,-1)]]),_:1}),o(v,{to:`#`,onClick:u[2]||=f(()=>{},[`prevent`])},{default:t(()=>[...u[9]||=[c(`Separated Link`,-1)]]),_:1})]),_:2},1024)]),_:1}),o(k,{name:`Components/Hint.story.vue`,title:`Hint`},{description:t(()=>[...u[10]||=[c(`A `,-1),n(`b`,null,`hint`,-1),c(` is in-app messaging that provides a one-step reminder, explanation, or call to action for a page or modal.`,-1)]]),apidocs:t(()=>[o(x,{name:`PfHint`,doc:{name:`PfHint`,exportName:`PfHint`,displayName:`Hint`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}},{name:`actionsNoOffset`,description:`Flag indicating that the actions have no offset`,required:!1,type:{name:`boolean`}}],events:[],slots:[{name:`actions`,description:`Actions of the hint`},{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Hint/Hint.vue`]}}),o(x,{name:`PfHintTitle`,doc:{name:`PfHintTitle`,exportName:`PfHintTitle`,displayName:`HintTitle`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Hint/HintTitle.vue`]}}),o(x,{name:`PfHintBody`,doc:{name:`PfHintBody`,exportName:`PfHintBody`,displayName:`HintBody`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Hint/HintBody.vue`]}}),o(x,{name:`PfHintFooter`,doc:{name:`PfHintFooter`,exportName:`PfHintFooter`,displayName:`HintFooter`,description:``,tags:{},props:[{name:`ouiaSafe`,description:`Set the value of data-ouia-safe. Only set to true when the component is in a static state, i.e. no animations are occurring. At all other times, this value must be false.`,required:!1,type:{name:`boolean`}},{name:`ouiaId`,description:`Value to overwrite the randomly generated data-ouia-component-id.`,required:!1,type:{name:`OuiaId`}}],events:[],slots:[{name:`default`}],sourceFiles:[`runner/work/vue-patternfly/vue-patternfly/packages/core/src/components/Hint/HintFooter.vue`]}})]),default:t(()=>[u[23]||=n(`div`,{class:`markdown pf-v6-c-content`},[n(`h2`,{class:`pf-v6-c-title`},`Differences from patternfly-react`),n(`ul`,null,[n(`li`,null,[c(`The `),n(`code`,null,`actions`),c(` prop is replaced by the `),n(`code`,null,`actions`),c(` slot, and `),n(`code`,null,`hasNoActionsOffset`),c(` by `),n(`code`,null,`actions-no-offset`),c(`. See `),n(`a`,{href:`#/`},`common differences from patternfly-react`),c(`.`)])]),n(`h2`,{class:`pf-v6-c-title`},`Examples`)],-1),o(D,{title:`Basic with title`,source:`<pf-hint>
+  <template #actions>
+    <kebab label="With title example kebab toggle" />
+  </template>
+  <pf-hint-title>Do more with Find it Fix it capabilities</pf-hint-title>
+  <pf-hint-body>
+    Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
+  </pf-hint-body>
+  <pf-hint-footer>
+    <pf-button variant="link" inline>Try it for 90 days</pf-button>
+  </pf-hint-footer>
+</pf-hint>`},{default:t(()=>[o(E,null,{actions:t(()=>[o(i(g),{label:`With title example kebab toggle`})]),default:t(()=>[o(S,null,{default:t(()=>[...u[11]||=[c(`Do more with Find it Fix it capabilities`,-1)]]),_:1}),o(C,null,{default:t(()=>[...u[12]||=[c(` Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies. `,-1)]]),_:1}),o(T,null,{default:t(()=>[o(w,{variant:`link`,inline:``},{default:t(()=>[...u[13]||=[c(`Try it for 90 days`,-1)]]),_:1})]),_:1})]),_:1})]),_:1}),o(D,{title:`Basic without title`,source:`<pf-hint>
+  <pf-hint-body>
+    Welcome to the new documentation experience.
+    <pf-button variant="link" inline>Learn more about the improved features.</pf-button>
+  </pf-hint-body>
+</pf-hint>
+<br>
+<pf-hint>
+  <template #actions>
+    <kebab label="Without title example kebab toggle" />
+  </template>
+  <pf-hint-body>
+    Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
+  </pf-hint-body>
+  <pf-hint-footer>
+    <pf-button variant="link" inline>Try it for 90 days</pf-button>
+  </pf-hint-footer>
+</pf-hint>`},{default:t(()=>[o(E,null,{default:t(()=>[o(C,null,{default:t(()=>[u[15]||=c(` Welcome to the new documentation experience. `,-1),o(w,{variant:`link`,inline:``},{default:t(()=>[...u[14]||=[c(`Learn more about the improved features.`,-1)]]),_:1})]),_:1})]),_:1}),u[18]||=n(`br`,null,null,-1),o(E,null,{actions:t(()=>[o(i(g),{label:`Without title example kebab toggle`})]),default:t(()=>[o(C,null,{default:t(()=>[...u[16]||=[c(` Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies. `,-1)]]),_:1}),o(T,null,{default:t(()=>[o(w,{variant:`link`,inline:``},{default:t(()=>[...u[17]||=[c(`Try it for 90 days`,-1)]]),_:1})]),_:1})]),_:1})]),_:1}),o(D,{title:`With actions`,source:`<pf-checkbox
+  id="toggle-actions-offset"
+  v-model="actionsNoOffset"
+  label="actions-no-offset"
+  aria-label="remove actions offset"
+  name="toggle-actions-offset" />
+<div style="margin-top: 15px">
+  <pf-hint :actions-no-offset="actionsNoOffset">
+    <template #actions>
+      <pf-button variant="primary">Action</pf-button>
+    </template>
+    <pf-hint-title>Do more with Find it Fix it capabilities</pf-hint-title>
+    <pf-hint-body>
+      Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies.
+    </pf-hint-body>
+  </pf-hint>
+</div>`},{intro:t(()=>[...u[19]||=[n(`div`,{class:`markdown pf-v6-c-content`},[n(`p`,null,`You can add actions to a hint to allow users to respond to suggestions and initiate any related processes.`),n(`p`,null,[c(`When a `),n(`code`,null,`pf-hint`),c(` contains actions, a negative margin is applied to the actions so that they are better aligned with the hint title. For larger-sized titles or non-plain actions (such as a button), remove this negative margin by setting `),n(`code`,null,`actions-no-offset`),c(`.`)]),n(`p`,null,`To illustrate this behavior, select the "actions-no-offset" checkbox in the following example.`)],-1)]]),default:t(()=>[o(O,{id:`toggle-actions-offset`,modelValue:_.value,"onUpdate:modelValue":u[3]||=e=>_.value=e,label:`actions-no-offset`,"aria-label":`remove actions offset`,name:`toggle-actions-offset`},null,8,[`modelValue`]),n(`div`,m,[o(E,{"actions-no-offset":_.value},{actions:t(()=>[o(w,{variant:`primary`},{default:t(()=>[...u[20]||=[c(`Action`,-1)]]),_:1})]),default:t(()=>[o(S,null,{default:t(()=>[...u[21]||=[c(`Do more with Find it Fix it capabilities`,-1)]]),_:1}),o(C,null,{default:t(()=>[...u[22]||=[c(` Upgrade to Red Hat Smart Management to remediate all your systems across regions and geographies. `,-1)]]),_:1})]),_:1},8,[`actions-no-offset`])])]),_:1})]),_:1})],64)}}});export{h as default};

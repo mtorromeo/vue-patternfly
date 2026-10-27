@@ -1,0 +1,1 @@
+var e=new URL(`PF-HorizontalLogo-Color-Cbap-rZ-.svg`,import.meta.url).href;export{e as t};
