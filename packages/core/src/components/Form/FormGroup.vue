@@ -21,7 +21,7 @@
         <component
           :is="isGroupOrRadioGroup ? 'span' : 'label'"
           :class="styles.formLabel"
-          :for="isGroupOrRadioGroup ? undefined : fieldId"
+          :for="isGroupOrRadioGroup ? undefined : (linkedOwnId ?? effectiveFieldId)"
         >
           <span :class="styles.formLabelText">
             <slot name="label">{{ label }}</slot>
@@ -57,7 +57,7 @@
           helperText ||
           $slots['helper-text']
         "
-        :id="`${fieldId}-helper`"
+        :id="`${effectiveFieldId}-helper`"
       >
         <pf-helper-text v-if="(helperTextInvalid || $slots['helper-text-invalid']) && internalValidated === 'error'">
           <slot name="helper-text-invalid">
@@ -82,7 +82,17 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
-import { type FieldsetHTMLAttributes, computed, toValue, useId } from 'vue';
+import {
+  type FieldsetHTMLAttributes,
+  computed,
+  provide,
+  ref,
+  shallowReactive,
+  toValue,
+  useId,
+  useSlots,
+  watchPostEffect,
+} from 'vue';
 import PassThrough from '../../helpers/PassThrough.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 
@@ -91,7 +101,7 @@ import PfHelperText from '../HelperText/HelperText.vue';
 import PfHelperTextItem from '../HelperText/HelperTextItem.vue';
 import type { InputValidateState } from '../../input';
 import { provideChildrenTracker } from '../../use';
-import { FormGroupInputsKey } from './common';
+import { FormGroupFieldKey, FormGroupInputsKey, type FormGroupField } from './common';
 import { isDefined } from '@vueuse/shared';
 import type { ComponentProps } from 'vue-component-type-helpers';
 
@@ -141,8 +151,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
   /** Helper text after the field when the field is invalid. */
   helperTextInvalid?: string;
 
-  /** ID of an individual field or a group of multiple fields. Required when a role of "group" or "radiogroup" is passed in.
-   * If only one field is included, its ID attribute and this prop must be the same.
+  /** ID of an individual field or a group of multiple fields. Generated when not set.
+   * With a label, the label is linked to the first field set up in the group that has no label of its own:
+   * that field gets this id unless it has its own. When it is unmounted, the next eligible field gets linked.
    */
   fieldId?: string;
 
@@ -170,7 +181,35 @@ defineSlots<{
 
 const generatedId = useId();
 const isGroupOrRadioGroup = computed(() => props.role === 'group' || props.role === 'radiogroup');
-const legendId = computed(() => `${props.fieldId || generatedId}-legend`);
+const effectiveFieldId = computed(() => props.fieldId || generatedId);
+const legendId = computed(() => `${effectiveFieldId.value}-legend`);
+
+// the label is linked to the first eligible field, with its own id or the one of the group
+const slots = useSlots();
+const fields = shallowReactive<FormGroupField[]>([]);
+const linkedField = computed(() => {
+  if (isGroupOrRadioGroup.value || !(props.label || slots.label)) {
+    return;
+  }
+  return fields.find(field => field.eligible());
+});
+// a field registers while the group renders: its own id reaches the label after that render
+const linkedOwnId = ref<string>();
+watchPostEffect(() => {
+  linkedOwnId.value = linkedField.value?.ownId();
+});
+provide(FormGroupFieldKey, {
+  register(field) {
+    fields.push(field);
+    return computed(() => (linkedField.value === field ? effectiveFieldId.value : undefined));
+  },
+  unregister(field) {
+    const idx = fields.indexOf(field);
+    if (idx >= 0) {
+      fields.splice(idx, 1);
+    }
+  },
+});
 
 // components that use useInputValidation
 const inputs = provideChildrenTracker(FormGroupInputsKey);

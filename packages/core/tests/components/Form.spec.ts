@@ -14,6 +14,10 @@ import PfFormSection from '../../src/components/Form/FormSection.vue';
 import PfActionGroup from '../../src/components/Form/ActionGroup.vue';
 import PfTextInput from '../../src/components/TextInput.vue';
 import PfCheckbox from '../../src/components/Checkbox.vue';
+import PfTextarea from '../../src/components/Textarea.vue';
+import PfFormSelect from '../../src/components/FormSelect/FormSelect.vue';
+import PfSwitch from '../../src/components/Switch.vue';
+import PfRadio from '../../src/components/Radio.vue';
 import PfFormGroupLabelHelp from '../../src/components/Form/FormGroupLabelHelp.vue';
 import PfFormContextProvider from '../../src/components/Form/FormContextProvider.vue';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
@@ -267,6 +271,153 @@ describe('FormGroup roles', () => {
   it('separates the required asterisk with a non-breaking space', () => {
     const wrapper = mount(PfFormGroup, { props: { label: 'Name', required: true } });
     expect(wrapper.get(`.${styles.formLabelRequired}`).element.textContent).toBe('\u00a0*');
+  });
+});
+
+describe('FormGroup field linking', () => {
+  const fields = { PfTextInput, PfTextarea, PfFormSelect, PfSwitch, PfRadio, PfCheckbox };
+
+  for (const [name, field] of Object.entries(fields)) {
+    it(`links the label to a ${name} with a generated id`, () => {
+      const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const wrapper = mount(PfFormGroup, {
+        props: { label: 'Field' },
+        slots: { default: () => h(field) },
+      });
+
+      const id = wrapper.find('input, textarea, select').attributes('id');
+      expect(id).toBeTruthy();
+      expect(wrapper.find(`label.${styles.formLabel}`).attributes('for')).toBe(id);
+      expect(error).not.toHaveBeenCalled();
+      error.mockRestore();
+    });
+
+    it(`gives the fieldId to a ${name} without an id`, () => {
+      const wrapper = mount(PfFormGroup, {
+        props: { label: 'Field', fieldId: 'field' },
+        slots: { default: () => h(field) },
+      });
+
+      expect(wrapper.find('input, textarea, select').attributes('id')).toBe('field');
+      expect(wrapper.find(`label.${styles.formLabel}`).attributes('for')).toBe('field');
+    });
+  }
+
+  it('links the label to the own id of the field', async () => {
+    const wrapper = mount(PfFormGroup, {
+      props: { label: 'Name' },
+      slots: { default: () => h(PfTextInput, { id: 'own' }) },
+    });
+    await nextTick();
+
+    expect(wrapper.find('input').attributes('id')).toBe('own');
+    expect(wrapper.find(`label.${styles.formLabel}`).attributes('for')).toBe('own');
+  });
+
+  it('links only the first field', () => {
+    const wrapper = mount(PfFormGroup, {
+      props: { label: 'Name', fieldId: 'first' },
+      slots: { default: () => [h(PfTextInput), h(PfTextInput, { 'aria-label': 'Second' })] },
+    });
+
+    const inputs = wrapper.findAll('input');
+    expect(inputs[0]!.attributes('id')).toBe('first');
+    expect(inputs[1]!.attributes('id')).toBeUndefined();
+  });
+
+  it('links the next field when the first one is removed', async () => {
+    const wrapper = mount(
+      defineComponent({
+        props: { first: Boolean },
+        setup: props => () =>
+          h(PfFormGroup, { label: 'Name', fieldId: 'name' }, () => [
+            props.first ? h(PfTextInput, { id: 'first' }) : null,
+          ]),
+      }),
+      { props: { first: true } },
+    );
+    await nextTick();
+    expect(wrapper.find('label').attributes('for')).toBe('first');
+
+    await wrapper.setProps({ first: false });
+    expect(wrapper.find('label').attributes('for')).toBe('name');
+  });
+
+  it('links no field without a label', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const wrapper = mount(PfFormGroup, { props: { fieldId: 'name' }, slots: { default: () => h(PfTextInput) } });
+
+    expect(wrapper.find('input').attributes('id')).toBeUndefined();
+    expect(error).toHaveBeenCalledWith('Text input:', expect.stringContaining('requires either an id or aria-label'));
+    error.mockRestore();
+  });
+
+  it('links the field with a label slot', () => {
+    const wrapper = mount(PfFormGroup, {
+      props: { fieldId: 'name' },
+      slots: { label: () => 'Name', default: () => h(PfTextInput) },
+    });
+
+    expect(wrapper.find('input').attributes('id')).toBe('name');
+    expect(wrapper.find(`label.${styles.formLabel}`).attributes('for')).toBe('name');
+  });
+
+  it('skips the fields with a label of their own', async () => {
+    const wrapper = mount(PfFormGroup, {
+      props: { label: 'Cancel', fieldId: 'cancel' },
+      slots: {
+        default: () => [
+          h(PfRadio, { label: 'Yes', name: 'cancel' }),
+          h(PfCheckbox, { id: 'confirm' }, { label: () => 'Confirm' }),
+          h(PfSwitch, { label: 'Notify' }),
+          h(PfCheckbox),
+        ],
+      },
+    });
+    await nextTick();
+
+    const inputs = wrapper.findAll('input');
+    expect(inputs.slice(0, 3).map(i => i.attributes('id'))).not.toContain('cancel');
+    expect(inputs[3]!.attributes('id')).toBe('cancel');
+    expect(wrapper.find(`label.${styles.formLabel}`).attributes('for')).toBe('cancel');
+  });
+
+  it('links the next field when the first one is unmounted', async () => {
+    const wrapper = mount(
+      defineComponent({
+        props: { first: Boolean },
+        setup: props => () =>
+          h(PfFormGroup, { label: 'Name', fieldId: 'name' }, () => [
+            props.first ? h(PfTextInput) : null,
+            h(PfTextInput, { class: 'second' }),
+          ]),
+      }),
+      { props: { first: true } },
+    );
+    expect(wrapper.find('input.second').attributes('id')).toBeUndefined();
+
+    await wrapper.setProps({ first: false });
+    expect(wrapper.find('input.second').attributes('id')).toBe('name');
+    expect(wrapper.find('label').attributes('for')).toBe('name');
+  });
+
+  it('links no field in a group', () => {
+    const wrapper = mount(PfFormGroup, {
+      props: { label: 'Options', fieldId: 'options', role: 'radiogroup' },
+      slots: { default: () => [h(PfRadio, { label: 'A' }), h(PfRadio, { label: 'B' })] },
+    });
+
+    expect(wrapper.findAll('input').map(i => i.attributes('id'))).not.toContain('options');
+  });
+
+  it('derives the helper text id from the generated field id', () => {
+    const wrapper = mount(PfFormGroup, {
+      props: { label: 'Name', helperText: 'Help' },
+      slots: { default: () => h(PfTextInput) },
+    });
+
+    const id = wrapper.find('input').attributes('id');
+    expect(wrapper.find(`.${styles.formHelperText}`).attributes('id')).toBe(`${id}-helper`);
   });
 });
 

@@ -8,7 +8,7 @@
         [styles.modifiers.standalone]: !(label || $slots.label),
       },
     ]"
-    :for="wrapWithLabel ? id : undefined"
+    :for="wrapWithLabel ? inputId : undefined"
   >
     <sort>
       <sort-by :weight="labelBeforeButton ? -1 : 1">
@@ -21,7 +21,7 @@
               [styles.modifiers.disabled]: disabled,
             },
           ]"
-          :for="wrapWithLabel ? undefined : id"
+          :for="wrapWithLabel ? undefined : inputId"
         >
           <slot name="label">{{ label }}</slot>
           <span v-if="required" :class="styles.checkLabelRequired" aria-hidden="true">*</span>
@@ -29,7 +29,7 @@
       </sort-by>
 
       <input
-        :id="id"
+        :id="inputId"
         ref="inputRef"
         v-bind="{ ...$attrs, ...ouiaProps, class: undefined }"
         type="checkbox"
@@ -99,7 +99,7 @@ import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
 import { useChildrenTracker } from '../use';
-import { FormInputsKey } from './Form/common';
+import { FormInputsKey, useFormGroupFieldId } from './Form/common';
 
 defineOptions({
   name: 'PfCheckbox',
@@ -107,10 +107,18 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  id: () => useId(),
   ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
+
+// without an id and a label of its own, the first field of a form group gets the id of the group
+const slots = useSlots();
+const generatedId = useId();
+const { id: groupFieldId } = useFormGroupFieldId(
+  () => props.id,
+  () => !props.label && !slots.label,
+);
+const inputId = computed(() => groupFieldId.value ?? generatedId);
 
 /** Flag to show if the checkbox is checked. If null, the checkbox will be indeterminate (partially checked). */
 const value = defineModel<boolean | null>({ default: false });
@@ -131,7 +139,6 @@ defineSlots<{
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const attrs = useAttrs();
-const slots = useSlots();
 const input = useTemplateRef('inputRef');
 const descriptionId = useId();
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');

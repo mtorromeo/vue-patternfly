@@ -25,6 +25,7 @@
       ref="inputRef"
       :value="value"
       v-bind="$attrs"
+      :id="fieldId"
       :disabled="disabled || undefined"
       :readonly="!!readOnlyVariant || readonly"
       :aria-invalid="effectiveValidated === 'error'"
@@ -99,7 +100,7 @@ import {
 } from 'vue';
 import { useInputValidation } from '../input';
 import { useChildrenTracker } from '../use';
-import { FormGroupInputsKey, FormInputsKey } from './Form/common';
+import { FormGroupInputsKey, FormInputsKey, useFormGroupFieldId } from './Form/common';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
 
@@ -129,7 +130,8 @@ defineEmits<{
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const attrs = useAttrs();
-if (!attrs.id && !attrs['aria-label']) {
+const { id: fieldId, linked } = useFormGroupFieldId(() => (typeof attrs.id === 'string' ? attrs.id : undefined));
+if (!attrs.id && !linked.value && !attrs['aria-label']) {
   console.error('TextArea: TextArea requires either an id or aria-label to be specified');
 }
 

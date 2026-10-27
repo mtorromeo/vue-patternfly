@@ -28,6 +28,7 @@
     <select
       ref="inputRef"
       v-bind="{ ...selectAttrs, ...ouiaProps }"
+      :id="fieldId"
       v-model="value"
       :aria-invalid="validated === 'error'"
       :disabled="disabled || undefined"
@@ -80,7 +81,7 @@ import {
   type StyleValue,
 } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
-import { FormInputsKey } from '../Form/common';
+import { FormInputsKey, useFormGroupFieldId } from '../Form/common';
 
 defineOptions({
   name: 'PfFormSelect',
@@ -108,7 +109,8 @@ const selectAttrs = computed(() => {
   return rest;
 });
 
-if (!attrs.id && !attrs['aria-label']) {
+const { id: fieldId, linked } = useFormGroupFieldId(() => (typeof attrs.id === 'string' ? attrs.id : undefined));
+if (!attrs.id && !linked.value && !attrs['aria-label']) {
   console.error('FormSelect requires either an id or aria-label to be specified');
 }
 

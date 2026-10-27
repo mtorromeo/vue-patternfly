@@ -16,6 +16,7 @@
   >
     <input
       v-bind="{ ...$attrs, ...ouiaProps, ...comboboxAttrs }"
+      :id="fieldId"
       ref="inputRef"
       :value="typeof value === 'string' ? value.replace(/\n/g, ' ') : value"
       :type="type ?? 'text'"
@@ -97,7 +98,7 @@ import { trimLeft } from '../util';
 import { useChildrenTracker } from '../use';
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
 import { useInputValidation, type InputType, type InputValidateState, type OverriddenInputAttributes } from '../input';
-import { FormGroupInputsKey, FormInputsKey } from './Form/common';
+import { FormGroupInputsKey, FormInputsKey, useFormGroupFieldId } from './Form/common';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import PfFormControlIcon from './FormControlIcon.vue';
 
@@ -147,7 +148,8 @@ const ariaInvalid = computed((): InputHTMLAttributes['aria-invalid'] => {
     ? (custom as InputHTMLAttributes['aria-invalid'])
     : effectiveValidated.value === 'error';
 });
-if (!attrs.id && !props.ariaLabel && !attrs['aria-labelledby']) {
+const { id: fieldId, linked } = useFormGroupFieldId(() => (typeof attrs.id === 'string' ? attrs.id : undefined));
+if (!attrs.id && !linked.value && !props.ariaLabel && !attrs['aria-labelledby']) {
   console.error('Text input:', 'Text input requires either an id or aria-label to be specified');
 }
 

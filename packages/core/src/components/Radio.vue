@@ -8,7 +8,7 @@
         [styles.modifiers.standalone]: !(label || $slots.label),
       },
     ]"
-    :for="wrapWithLabel ? id : undefined"
+    :for="wrapWithLabel ? inputId : undefined"
   >
     <sort>
       <sort-by :weight="labelBeforeButton ? -1 : 1">
@@ -21,14 +21,14 @@
               [styles.modifiers.disabled]: disabled,
             },
           ]"
-          :for="wrapWithLabel ? undefined : id"
+          :for="wrapWithLabel ? undefined : inputId"
         >
           <slot name="label">{{ label }}</slot>
         </component>
       </sort-by>
 
       <input
-        :id="id"
+        :id="inputId"
         ref="inputRef"
         v-bind="{ ...$attrs, ...ouiaProps, class: undefined }"
         type="radio"
@@ -104,7 +104,7 @@ import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
 import Sort from '../helpers/Sort.vue';
 import SortBy from '../helpers/SortBy.vue';
 import { useChildrenTracker } from '../use';
-import { FormInputsKey } from './Form/common';
+import { FormInputsKey, useFormGroupFieldId } from './Form/common';
 
 defineOptions({
   name: 'PfRadio',
@@ -112,10 +112,18 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props<T>>(), {
-  id: () => useId(),
   ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
+
+// without an id and a label of its own, the first field of a form group gets the id of the group
+const slots = useSlots();
+const generatedId = useId();
+const { id: groupFieldId, linked } = useFormGroupFieldId(
+  () => props.id,
+  () => !props.label && !slots.label,
+);
+const inputId = computed(() => groupFieldId.value ?? generatedId);
 
 const emit = defineEmits<{
   (name: 'change', e: Event): void;
@@ -133,7 +141,6 @@ defineSlots<{
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);
 const attrs = useAttrs();
-const slots = useSlots();
 const input = useTemplateRef('inputRef');
 const descriptionId = useId();
 const wrapWithLabel = computed(() => (props.labelWrapped && !props.component) || props.component === 'label');
@@ -150,7 +157,7 @@ const ariaDescribedby = computed(() => {
   return props.description || slots.description ? descriptionId : undefined;
 });
 
-if (!props.label && !slots.label && !props.ariaLabel) {
+if (!props.label && !slots.label && !linked.value && !props.ariaLabel) {
   console.error('Radio:', 'Radio requires an aria-label to be specified');
 }
 

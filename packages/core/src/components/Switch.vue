@@ -8,10 +8,10 @@
         [styles.modifiers.reverse]: reversed,
       },
     ]"
-    :for="id"
+    :for="inputId"
   >
     <input
-      :id="id"
+      :id="inputId"
       v-bind="{ ...$attrs, class: undefined }"
       :name="name"
       :disabled="disabled"
@@ -76,6 +76,7 @@ import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { computed, useAttrs, useId, useSlots, type HTMLAttributes, type InputHTMLAttributes, type VNode } from 'vue';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
+import { useFormGroupFieldId } from './Form/common';
 
 defineOptions({
   name: 'PfSwitch',
@@ -83,10 +84,18 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  id: () => useId(),
   ouiaSafe: true,
 });
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
+
+// without an id and a label of its own, the first field of a form group gets the id of the group
+const slots = useSlots();
+const generatedId = useId();
+const { id: groupFieldId, linked } = useFormGroupFieldId(
+  () => props.id,
+  () => props.label === undefined && !slots.label,
+);
+const inputId = computed(() => groupFieldId.value ?? generatedId);
 
 /** Flag to show if the switch is checked. */
 const checked = defineModel<boolean>('checked', { default: false });
@@ -97,7 +106,6 @@ defineSlots<{
 }>();
 
 const attrs = useAttrs();
-const slots = useSlots();
 const hasLabel = computed(() => props.label !== undefined || !!slots.label);
 
 // like upstream: the input is labelled by the visible label unless an aria-label or aria-labelledby is set
@@ -108,13 +116,13 @@ const labelledby = computed(() => {
   if (!hasAccessibleName || (ariaLabel && !ariaLabelledby)) {
     return undefined;
   }
-  return ariaLabelledby ? String(ariaLabelledby) : `${props.id}-label`;
+  return ariaLabelledby ? String(ariaLabelledby) : `${inputId.value}-label`;
 });
 const labelId = computed(() =>
-  labelledby.value && !attrs['aria-label'] && !attrs['aria-labelledby'] ? `${props.id}-label` : undefined,
+  labelledby.value && !attrs['aria-label'] && !attrs['aria-labelledby'] ? `${inputId.value}-label` : undefined,
 );
 
-if (!hasLabel.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
+if (!hasLabel.value && !linked.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
   console.error('Switch: Switch requires at least one of label, aria-labelledby, or aria-label props to be specified');
 }
 </script>
