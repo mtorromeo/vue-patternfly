@@ -153,6 +153,7 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Wizard/wizard';
+import { devError } from '../../helpers/dev';
 import wizardHeightToken from '@patternfly/react-tokens/dist/esm/c_wizard_Height';
 import {
   computed,
@@ -256,7 +257,7 @@ const builtSteps = computed(() => {
 
   for (const vnode of findChildrenVNodes(slots.default?.())) {
     if (vnode.type !== PfWizardStep) {
-      console.error('Wizard only accepts children of type WizardStep.');
+      devError('Wizard only accepts children of type WizardStep.');
       continue;
     }
     const { expandable, ...stepData } = stepProps(vnode);

@@ -289,6 +289,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import textInputGroupStyles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
+import { devError } from '../../helpers/dev';
 import inputGroupStyles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 import {
   computed,
@@ -364,7 +365,7 @@ defineSlots<{
 }>();
 
 if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
-  console.error(
+  devError(
     'An advancedSearchDelimiter prop is required when advanced search attributes are provided using the attributes prop',
   );
 }

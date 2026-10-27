@@ -43,6 +43,7 @@ interface Props<T> extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup generic="T = string | number">
 import styles from '@patternfly/react-styles/css/components/ToggleGroup/toggle-group';
+import { devWarn } from '../../helpers/dev';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { inject, computed, ref, type HTMLAttributes, type VNode } from 'vue';
 import { ToggleGroupDisabledKey, ToggleGroupSelectionKey } from './common';
@@ -72,7 +73,7 @@ const slots = defineSlots<{
 }>();
 
 if (!props.ariaLabel && slots.icon && !slots.default && !props.text) {
-  console.warn('An accessible aria-label is required when using the toggle group item icon variant.');
+  devWarn('An accessible aria-label is required when using the toggle group item icon variant.');
 }
 
 const injectedDisabled = inject(ToggleGroupDisabledKey, undefined);

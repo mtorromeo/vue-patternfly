@@ -60,6 +60,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ExpandableSection/expandable-section';
+import { devWarn } from '../../helpers/dev';
 import lineClamp from '@patternfly/react-tokens/dist/esm/c_expandable_section_m_truncate__content_LineClamp';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
 import PfButton from '../Button.vue';
@@ -128,7 +129,7 @@ const effectiveContentId = computed(() => props.contentId ?? generatedContentId)
 const effectiveToggleId = computed(() => props.toggleId ?? generatedToggleId);
 
 if (props.detached && !props.toggleId) {
-  console.warn(
+  devWarn(
     'ExpandableSection: The toggleId value must be passed in and must match the toggleId of the ExpandableSectionToggle.',
   );
 }

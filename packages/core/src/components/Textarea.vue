@@ -88,6 +88,7 @@ interface Props<N extends boolean = false>
 
 <script lang="ts" setup generic="N extends boolean = false">
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+import { devError } from '../helpers/dev';
 
 import {
   computed,
@@ -132,7 +133,7 @@ const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 const attrs = useAttrs();
 const { id: fieldId, linked } = useFormGroupFieldId(() => (typeof attrs.id === 'string' ? attrs.id : undefined));
 if (!attrs.id && !linked.value && !attrs['aria-label']) {
-  console.error('TextArea: TextArea requires either an id or aria-label to be specified');
+  devError('TextArea: TextArea requires either an id or aria-label to be specified');
 }
 
 const input = useTemplateRef('inputRef');

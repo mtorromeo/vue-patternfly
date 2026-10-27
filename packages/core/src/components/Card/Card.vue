@@ -90,6 +90,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCli
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
+import { devError, devWarn } from '../../helpers/dev';
 import { provide, computed, watch, onScopeDispose, type Component, type HTMLAttributes } from 'vue';
 import { isDefined } from '@vueuse/shared';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -121,8 +122,7 @@ defineSlots<{
 }>();
 
 if (props.compact && props.large) {
-  // eslint-disable-next-line no-console
-  console.warn('Card: Cannot use compact with large. Defaulting to compact');
+  devWarn('Card: Cannot use compact with large. Defaulting to compact');
 }
 
 const clickable = computed(() => props.clickable || !!props.onClick || isDefined(props.to));
@@ -133,8 +133,7 @@ if (
   !props.selectableAttrs['aria-label'] &&
   !props.selectableAttrs['aria-labelledby']
 ) {
-  // eslint-disable-next-line no-console
-  console.error(
+  devError(
     `Card: ${hasInput.value ? 'Cards with a selectable input' : 'Clickable-only cards'} must have either the aria-label or aria-labelledby attribute passed in selectableAttrs in order to provide an accessible name to the clickable element.`,
   );
 }

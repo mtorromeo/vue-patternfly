@@ -16,6 +16,7 @@ import * as charts from 'echarts/charts';
 import { AriaComponent, LegendComponent, ToolboxComponent, TooltipComponent } from 'echarts/components';
 import { SVGRenderer } from 'echarts/renderers';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
+import { devWarn } from '@vue-patternfly/core/helpers/dev';
 import type { ChartClickEvent, ChartDataZoomEvent, ChartLegendSelectChangedEvent, ChartWrapperProps } from './common';
 import { getChordOption, type ChartChordLink, type ChartChordNode } from './builders/chord';
 import PfCharts from './Charts.vue';
@@ -68,7 +69,7 @@ const chartsRef = useTemplateRef('chartsRef');
 const chartElement = (): Element | undefined => chartsRef.value?.$el;
 const themeVersion = useThemeVersion(chartElement);
 if (!ChordChart) {
-  console.warn('PfChartChord needs ECharts 6 or later');
+  devWarn('PfChartChord needs ECharts 6 or later');
 }
 const chartOption = computed(() => {
   void themeVersion.value;

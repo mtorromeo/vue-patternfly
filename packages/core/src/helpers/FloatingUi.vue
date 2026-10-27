@@ -47,6 +47,7 @@ import {
   type OffsetOptions,
   type ReferenceElement,
 } from '@floating-ui/dom';
+import { devError } from './dev';
 import {
   cloneVNode,
   computed,
@@ -183,7 +184,7 @@ function floatingElement() {
   }
 
   if (children.length > 1) {
-    console.error('FloatingUi should only contain a single child or none');
+    devError('FloatingUi should only contain a single child or none');
   }
 
   const onElementMounted = (el: unknown) => {

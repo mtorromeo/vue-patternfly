@@ -129,6 +129,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Label/label';
+import { devWarn } from '../../helpers/dev';
 import labelGroupStyles from '@patternfly/react-styles/css/components/Label/label-group';
 import cssTextMaxWidth from '@patternfly/react-tokens/dist/esm/c_label__text_MaxWidth';
 import {
@@ -218,11 +219,11 @@ const contentComponent = computed(() => {
 });
 
 if (props.onClick && props.href) {
-  console.warn(
+  devWarn(
     'Link labels cannot have onClick passed, this results in invalid HTML. Please remove either the href or onClick prop.',
   );
 } else if (props.onClick && props.editable) {
-  console.warn(
+  devWarn(
     'Editable labels cannot have onClick passed, clicking starts the label edit process. Please remove either the editable or onClick prop.',
   );
 }

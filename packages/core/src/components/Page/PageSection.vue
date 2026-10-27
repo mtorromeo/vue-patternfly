@@ -81,6 +81,7 @@ interface Props
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
+import { devWarn } from '../../helpers/dev';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { type PaddingBreakpointProps, type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
 import { computed, useAttrs, watchEffect, type Component, type HTMLAttributes, type VNode } from 'vue';
@@ -108,7 +109,7 @@ const isWidthLimited = computed(() => props.widthLimited || isDefined(props.maxW
 const attrs = useAttrs();
 watchEffect(() => {
   if (props.overflowScroll && !attrs['aria-label']) {
-    console.warn('PageSection: An accessible aria-label is required when hasOverflowScroll is set to true.');
+    devWarn('PageSection: An accessible aria-label is required when hasOverflowScroll is set to true.');
   }
 });
 </script>

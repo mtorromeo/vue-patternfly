@@ -23,6 +23,7 @@
 
 <script lang="ts" setup>
 import { classesFromBreakpointProps, type BreakpointProps } from '../../breakpoints';
+import { devError } from '../../helpers/dev';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
 import { globalBreakpoints } from './common';
@@ -51,7 +52,7 @@ const slots = defineSlots<{
 }>();
 
 if (!props.sm && !props.md && !props.lg && !props.xl && !props.xl2 && !slots.icon) {
-  console.error('ToolbarToggleGroup will not be visible without a breakpoint or toggleIcon.');
+  devError('ToolbarToggleGroup will not be visible without a breakpoint or toggleIcon.');
 }
 
 const { width: windowWidth } = useWindowSize();

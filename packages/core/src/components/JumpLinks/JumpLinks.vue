@@ -88,6 +88,7 @@ interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ 
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
+import { devWarn } from '../../helpers/dev';
 import sidebarStyles from '@patternfly/react-styles/css/components/Sidebar/sidebar';
 import cssToggleDisplayVar from '@patternfly/react-tokens/dist/esm/c_jump_links__toggle_Display';
 import { classesFromBreakpointProps, type ExpandableBreakpointProps } from '../../breakpoints';
@@ -159,10 +160,10 @@ const computedAriaLabel = computed(() => (hasAriaLabelledBy.value ? undefined : 
 const computedAriaLabelledBy = computed(() => (hasAriaLabelledBy.value ? effectiveLabelId.value : undefined));
 
 if (!props.label && !slots.label && !props.ariaLabel) {
-  console.warn('JumpLinks: for accessibility reasons, an aria-label should be specified if no label is provided');
+  devWarn('JumpLinks: for accessibility reasons, an aria-label should be specified if no label is provided');
 }
 if (!props.label && !slots.label && !props.toggleAriaLabel && hasToggle.value) {
-  console.warn('JumpLinks: for accessibility reasons, a toggleAriaLabel should be specified if no label is provided');
+  devWarn('JumpLinks: for accessibility reasons, a toggleAriaLabel should be specified if no label is provided');
 }
 
 const links = provideChildrenTracker(JumpLinksKey);

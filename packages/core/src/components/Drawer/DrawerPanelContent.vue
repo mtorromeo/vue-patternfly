@@ -106,6 +106,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidde
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
+import { devWarn } from '../../helpers/dev';
 import cssPanelMdFlexBasis from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis';
 import cssPanelMdFlexBasisMin from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_min';
 import cssPanelMdFlexBasisMax from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_max';
@@ -161,7 +162,7 @@ watch(
   [isStatic, () => props.focusTrap],
   ([isStatic, focusTrap]) => {
     if (isStatic && focusTrap) {
-      console.warn(
+      devWarn(
         `DrawerPanelContent: The focusTrap prop cannot be true if the Drawer's static prop is true. This will cause a permanent focus trap.`,
       );
     }

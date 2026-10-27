@@ -102,6 +102,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Progress/progress';
+import { devWarn } from '../helpers/dev';
 import PassThrough from '../helpers/PassThrough.vue';
 import PfTooltip from './Tooltip/Tooltip.vue';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
@@ -146,7 +147,7 @@ const hasTitle = computed(() => !!props.title || !!slots.title);
 const truncatedTitle = computed(() => props.titleTruncated && !!props.title && !slots.title);
 
 if (!hasTitle.value && !props.ariaLabelledby && !props.ariaLabel) {
-  console.warn(
+  devWarn(
     'One of aria-label or aria-labelledby properties should be passed when using the progress component without a title.',
   );
 }

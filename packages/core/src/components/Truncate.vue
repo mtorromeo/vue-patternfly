@@ -78,6 +78,7 @@ const minWidthCharacters = 12;
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Truncate/truncate';
+import { devWarn } from '../helpers/dev';
 import { computed, onMounted, ref, useTemplateRef, watch, type HTMLAttributes } from 'vue';
 import { useDebounceFn, useResizeObserver } from '@vueuse/core';
 import type { ComponentProps } from 'vue-component-type-helpers';
@@ -101,7 +102,7 @@ const wrapper = useTemplateRef<HTMLElement>('wrapperRef');
 const text = useTemplateRef<HTMLElement>('textRef');
 
 if (props.maxCharsDisplayed !== undefined && props.maxCharsDisplayed <= 0) {
-  console.warn('Truncate: the maxCharsDisplayed must be greater than 0, otherwise no content will be visible.');
+  devWarn('Truncate: the maxCharsDisplayed must be greater than 0, otherwise no content will be visible.');
 }
 
 const byMaxChars = computed(() => (props.maxCharsDisplayed ?? 0) > 0);

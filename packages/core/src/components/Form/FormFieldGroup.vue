@@ -59,6 +59,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ FieldsetHTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Form/form';
+import { devError } from '../../helpers/dev';
 import { type FieldsetHTMLAttributes, computed, onMounted, provide, ref, useId } from 'vue';
 import PfButton from '../Button.vue';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
@@ -90,7 +91,7 @@ provide(FormFieldGroupKey, { titleId });
 
 onMounted(() => {
   if (managedExpandable.value && !props.toggleAriaLabel && !titleId.value) {
-    console.error(
+    devError(
       'FormFieldGroupExpandable:',
       'toggleAriaLabel or the title of FormFieldGroupHeader is required to make the toggle button accessible',
     );

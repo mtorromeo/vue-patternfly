@@ -67,6 +67,7 @@ interface Props<M extends boolean = false, V extends string = string>
 
 <script lang="ts" setup generic="M extends boolean = false, V extends string = string">
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+import { devError } from '../../helpers/dev';
 import { provideChildrenTracker, useChildrenTracker } from '../../use';
 import { FormSelectOptionsKey } from './common';
 import PfFormControlIcon from '../FormControlIcon.vue';
@@ -111,7 +112,7 @@ const selectAttrs = computed(() => {
 
 const { id: fieldId, linked } = useFormGroupFieldId(() => (typeof attrs.id === 'string' ? attrs.id : undefined));
 if (!attrs.id && !linked.value && !attrs['aria-label']) {
-  console.error('FormSelect requires either an id or aria-label to be specified');
+  devError('FormSelect requires either an id or aria-label to be specified');
 }
 
 useChildrenTracker(FormInputsKey, getCurrentInstance()?.proxy);

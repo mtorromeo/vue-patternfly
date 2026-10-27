@@ -69,6 +69,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Card/card';
+import { devError } from '../../helpers/dev';
 import checkStyles from '@patternfly/react-styles/css/components/Check/check';
 import radioStyles from '@patternfly/react-styles/css/components/Radio/radio';
 import PfAngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
@@ -125,8 +126,7 @@ const randomId = useId();
 const inputId = computed(() => (action.value?.attrs.id as string | undefined) ?? `card-selectable-${randomId}`);
 
 if (slots.actions && card && card.clickable.value !== card.selectable.value) {
-  // eslint-disable-next-line no-console
-  console.error(
+  devError(
     `Card: ${card.clickable.value ? 'Clickable' : 'Selectable'} only cards should not contain any other actions. If you wish to include additional actions, use a clickable and selectable card.`,
   );
 }

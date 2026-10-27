@@ -42,6 +42,7 @@ interface Props extends OUIAProps, StickyBreakpointProps, /* @vue-ignore */ Omit
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
+import { devWarn } from '../../helpers/dev';
 import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
 import { computed, useAttrs, watchEffect, type HTMLAttributes, type VNode } from 'vue';
 import { isDefined } from '@vueuse/shared';
@@ -64,7 +65,7 @@ const isWidthLimited = computed(() => props.widthLimited || isDefined(props.maxW
 const attrs = useAttrs();
 watchEffect(() => {
   if (props.overflowScroll && !attrs['aria-label']) {
-    console.warn('PageBreadcrumb: An accessible aria-label is required when hasOverflowScroll is set to true.');
+    devWarn('PageBreadcrumb: An accessible aria-label is required when hasOverflowScroll is set to true.');
   }
 });
 </script>

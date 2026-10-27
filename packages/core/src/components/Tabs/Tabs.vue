@@ -205,6 +205,7 @@ interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointPro
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
+import { devError } from '../../helpers/dev';
 import linkAccentLength from '@patternfly/react-tokens/dist/esm/c_tabs_link_accent_length';
 import linkAccentStart from '@patternfly/react-tokens/dist/esm/c_tabs_link_accent_start';
 import {
@@ -307,7 +308,7 @@ const hasExpandable = computed(
 );
 
 if (props.vertical && hasExpandable.value && !props.toggleAriaLabel && !props.toggleText) {
-  console.error('Tabs:', 'toggleAriaLabel or the toggleText prop is required to make the toggle button accessible');
+  devError('Tabs:', 'toggleAriaLabel or the toggleText prop is required to make the toggle button accessible');
 }
 
 const toggleId = useId();

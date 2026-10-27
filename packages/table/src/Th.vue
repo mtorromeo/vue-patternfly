@@ -212,7 +212,7 @@ const attrs = useAttrs();
 const ariaHidden = attrs['aria-hidden'];
 const hidden = ariaHidden !== undefined && ariaHidden !== false && ariaHidden !== 'false';
 if (!slots.default && !props.screenReaderText && !props.ariaLabel && props.selected === undefined && !hidden) {
-  console.warn(
+  devWarn(
     'Th: Table headers must have an accessible name. If the Th is intended to be visually empty, pass in screenReaderText. If the Th contains only non-text, interactive content such as a checkbox or expand toggle, pass in an aria-label.',
   );
 }
@@ -298,6 +298,7 @@ import {
   type ComponentPublicInstance,
   type ThHTMLAttributes,
 } from 'vue';
+import { devWarn } from '@vue-patternfly/core/helpers/dev';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import { createReusableTemplate, unrefElement } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';

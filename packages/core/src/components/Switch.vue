@@ -72,6 +72,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<InputHTMLAttributes, '
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Switch/switch';
+import { devError } from '../helpers/dev';
 import CheckIcon from '@vue-patternfly/icons/check-icon';
 import { computed, useAttrs, useId, useSlots, type HTMLAttributes, type InputHTMLAttributes, type VNode } from 'vue';
 import { isDefined } from '@vueuse/shared';
@@ -123,6 +124,6 @@ const labelId = computed(() =>
 );
 
 if (!hasLabel.value && !linked.value && !attrs['aria-label'] && !attrs['aria-labelledby']) {
-  console.error('Switch: Switch requires at least one of label, aria-labelledby, or aria-label props to be specified');
+  devError('Switch: Switch requires at least one of label, aria-labelledby, or aria-label props to be specified');
 }
 </script>

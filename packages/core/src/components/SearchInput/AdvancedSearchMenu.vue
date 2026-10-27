@@ -83,6 +83,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import { computed, inject, useId, useTemplateRef, type HTMLAttributes, type VNode } from 'vue';
+import { devError } from '../../helpers/dev';
 import { buildQueryString, getAttrValueMap as parseAttrValueMap, type SearchAttribute, SearchInputKey } from './common';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfTextInput from '../TextInput.vue';
@@ -129,7 +130,7 @@ defineSlots<{
 }>();
 
 if (props.attributes.length > 0 && !props.advancedSearchDelimiter) {
-  console.error(
+  devError(
     'AdvancedSearchMenu: An advancedSearchDelimiter prop is required when advanced search attributes are provided using the attributes prop',
   );
 }

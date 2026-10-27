@@ -104,6 +104,7 @@ import {
   type VNode,
   useTemplateRef,
 } from 'vue';
+import { devError } from '../../helpers/dev';
 import type { RouteLocationRaw } from 'vue-router';
 import { isDefined, useElementHover, useEventListener } from '@vueuse/core';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
@@ -153,7 +154,7 @@ const flyoutTarget: Ref<HTMLElement | null> = ref(null);
 const isHovered = useElementHover(floating);
 
 if (props.to && slots.flyout) {
-  console.error('NavItem cannot have both "to" and "flyout" props.');
+  devError('NavItem cannot have both "to" and "flyout" props.');
 }
 
 const linkTag = computed(() => {

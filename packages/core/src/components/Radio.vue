@@ -88,6 +88,7 @@ interface Props<T = unknown>
 
 <script lang="ts" setup generic="T = unknown">
 import styles from '@patternfly/react-styles/css/components/Radio/radio';
+import { devError } from '../helpers/dev';
 import {
   computed,
   type Component,
@@ -158,7 +159,7 @@ const ariaDescribedby = computed(() => {
 });
 
 if (!props.label && !slots.label && !linked.value && !props.ariaLabel) {
-  console.error('Radio:', 'Radio requires an aria-label to be specified');
+  devError('Radio:', 'Radio requires an aria-label to be specified');
 }
 
 function onChange(e: Event) {

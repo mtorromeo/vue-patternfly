@@ -100,6 +100,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Button/button';
+import { devError } from '../helpers/dev';
 import PfSpinner from './Spinner.vue';
 import PassThrough from '../helpers/PassThrough.vue';
 import type { RouteLocationRaw, useLink } from 'vue-router';
@@ -229,7 +230,7 @@ defineSlots<{
 const attrs = useAttrs();
 const slots = useSlots();
 if (props.hamburger && props.expanded === undefined) {
-  console.error(
+  devError(
     'Button: when the hamburger property is passed in, you must also pass in a boolean value to the expanded property. It is expected that a hamburger button controls the expansion of other content.',
   );
 }
@@ -239,7 +240,7 @@ if (
   !slots.default &&
   !attrs['aria-labelledby']
 ) {
-  console.error(
+  devError(
     'Button: you must provide either visible text content or an accessible name via the aria-label or aria-labelledby properties.',
   );
 }

@@ -18,6 +18,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
+import { devWarn } from '../../helpers/dev';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { useAttrs, useId, type HTMLAttributes, type VNode } from 'vue';
 
@@ -35,6 +36,6 @@ defineSlots<{
 }>();
 
 if (!props.title && !useAttrs()['aria-label']) {
-  console.warn("For accessibility reasons an aria-label should be specified on nav groups if a title isn't");
+  devWarn("For accessibility reasons an aria-label should be specified on nav groups if a title isn't");
 }
 </script>

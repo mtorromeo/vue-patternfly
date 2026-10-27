@@ -83,6 +83,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onC
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Wizard/wizard';
+import { devError } from '../../helpers/dev';
 import { ref, watch, type LiHTMLAttributes, type VNode } from 'vue';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
@@ -115,7 +116,7 @@ defineSlots<{
 }>();
 
 if (props.component === 'a' && !props.href) {
-  console.error('WizardNavItem: When using an anchor, please provide an href');
+  devError('WizardNavItem: When using an anchor, please provide an href');
 }
 
 const expandedState = ref(false);

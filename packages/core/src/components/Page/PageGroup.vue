@@ -27,6 +27,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Page/page';
+import { devWarn } from '../../helpers/dev';
 import { type StickyBreakpointProps, classesFromBreakpointProps } from '../../breakpoints';
 import { useAttrs, watchEffect, type HTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -66,7 +67,7 @@ defineSlots<{
 const attrs = useAttrs();
 watchEffect(() => {
   if (props.overflowScroll && !attrs['aria-label']) {
-    console.warn('PageGroup: An accessible aria-label is required when hasOverflowScroll is set to true.');
+    devWarn('PageGroup: An accessible aria-label is required when hasOverflowScroll is set to true.');
   }
 });
 </script>

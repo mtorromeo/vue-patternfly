@@ -19,6 +19,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/OverflowMenu/overflow-menu';
+import { devError, devWarn } from '../../helpers/dev';
 import {
   computed,
   onMounted,
@@ -77,9 +78,9 @@ const breakpointSize = computed(
 
 watchEffect(() => {
   if (props.vertical && breakpointSize.value === 0) {
-    console.warn('The "sm" breakpoint does not apply to vertical overflow menus.');
+    devWarn('The "sm" breakpoint does not apply to vertical overflow menus.');
   } else if (!breakpointSize.value) {
-    console.error('OverflowMenu will not be visible without a valid breakpoint.');
+    devError('OverflowMenu will not be visible without a valid breakpoint.');
   }
 });
 

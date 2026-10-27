@@ -93,6 +93,7 @@ import {
   watch,
   type VNode,
 } from 'vue';
+import { devError } from '../helpers/dev';
 import { useResizeObserver } from '@vueuse/core';
 import { trimLeft } from '../util';
 import { useChildrenTracker } from '../use';
@@ -150,7 +151,7 @@ const ariaInvalid = computed((): InputHTMLAttributes['aria-invalid'] => {
 });
 const { id: fieldId, linked } = useFormGroupFieldId(() => (typeof attrs.id === 'string' ? attrs.id : undefined));
 if (!attrs.id && !linked.value && !props.ariaLabel && !attrs['aria-labelledby']) {
-  console.error('Text input:', 'Text input requires either an id or aria-label to be specified');
+  devError('Text input:', 'Text input requires either an id or aria-label to be specified');
 }
 
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });

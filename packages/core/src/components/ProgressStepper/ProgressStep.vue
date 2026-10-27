@@ -70,6 +70,7 @@ const variantStyle = {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ProgressStepper/progress-stepper';
+import { devWarn } from '../../helpers/dev';
 import { useAttrs, useTemplateRef, type Component, type LiHTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
@@ -98,7 +99,7 @@ defineSlots<{
 const title = useTemplateRef<HTMLElement>('titleRef');
 
 if (useAttrs().id === undefined || props.titleId === undefined) {
-  console.warn(
+  devWarn(
     'ProgressStep: The titleId and id properties are required to make this component accessible, and one or both of these properties are missing.',
   );
 }
