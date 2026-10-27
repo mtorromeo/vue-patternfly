@@ -107,6 +107,7 @@
           }
         : undefined
     "
+    :aria-label="ariaLabel ?? (isSelectable ? 'Row select' : undefined)"
     v-bind="{ ...ouiaProps, ...$attrs }"
     @mouseenter="onMouseEnter"
     @focus="onMouseEnter"
@@ -207,7 +208,10 @@ const slots = defineSlots<{
 const [DefineContent, ReuseContent] = createReusableTemplate();
 
 const attrs = useAttrs();
-if (!slots.default && !props.screenReaderText && !attrs['aria-label']) {
+// a selection header gets a default aria-label, an aria-hidden one needs no name
+const ariaHidden = attrs['aria-hidden'];
+const hidden = ariaHidden !== undefined && ariaHidden !== false && ariaHidden !== 'false';
+if (!slots.default && !props.screenReaderText && !props.ariaLabel && props.selected === undefined && !hidden) {
   console.warn(
     'Th: Table headers must have an accessible name. If the Th is intended to be visually empty, pass in screenReaderText. If the Th contains only non-text, interactive content such as a checkbox or expand toggle, pass in an aria-label.',
   );
@@ -359,6 +363,8 @@ interface Props extends OUIAProps, VisibilityBreakpointProps, /* @vue-ignore */ 
   /** Additional props for the tooltip */
   tooltipAttrs?: Omit<ComponentProps<typeof PfTooltip>, 'content'>;
 
+  /** Accessible name of the th, for a th with only non-text content. Defaults to "Row select" with selected. */
+  ariaLabel?: string;
   /** Visually hidden text accessible only via assistive technologies. This must be passed in if the th is intended to be visually empty, and must be conveyed as a column header text. */
   screenReaderText?: string;
   /** Adds scope to the column to associate header cells with data cells*/

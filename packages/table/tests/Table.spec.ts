@@ -590,9 +590,34 @@ describe('Th', () => {
 
       warn.mockClear();
       mount(PfTh, { attrs: { 'aria-label': 'Test' } });
+      mount(PfTh, { props: { ariaLabel: 'Test' } });
       mount(PfTh, { props: { screenReaderText: 'Test' } });
       mount(PfTh, { slots: { default: 'Test' } });
+      mount(PfTh, { props: { selected: false } });
+      mount(PfTh, { attrs: { 'aria-hidden': 'true' } });
       expect(warn).not.toHaveBeenCalled();
+
+      mount(PfTh, { attrs: { 'aria-hidden': 'false' } });
+      expect(warn).toHaveBeenCalledOnce();
+      warn.mockRestore();
+    });
+
+    it('labels a selection header by default', () => {
+      expect(
+        mount(PfTh, { props: { selected: false } })
+          .get('th')
+          .attributes('aria-label'),
+      ).toBe('Row select');
+      for (const attrs of [{ 'aria-label': 'Custom' }, { ariaLabel: 'Custom' }]) {
+        const th = mount(PfTh, { props: { selected: false }, attrs }).get('th');
+        expect(th.attributes('aria-label')).toBe('Custom');
+        expect(th.attributes('arialabel')).toBeUndefined();
+      }
+      expect(
+        mount(PfTh, { slots: { default: 'Name' } })
+          .get('th')
+          .attributes('aria-label'),
+      ).toBeUndefined();
     });
 
     it('renders the aria-label when passed in', () => {
