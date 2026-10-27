@@ -5,7 +5,7 @@
         :id="id"
         variant="plain"
         :aria-controls="ariaControls || undefined"
-        :aria-label="ariaLabel"
+        :aria-label="ariaLabel ?? messages.dataListToggle"
         :aria-labelledby="effectiveAriaLabelledby"
         :aria-expanded="isExpanded"
         v-bind="buttonAttrs"
@@ -29,7 +29,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   expanded?: boolean;
   /** Adds accessible text to the toggle. Defaults to the ids labelling the item and the toggle. */
   ariaLabelledby?: string;
-  /** Adds accessible text to the toggle */
+  /** Adds accessible text to the toggle. Defaults to the `dataListToggle` message. */
   ariaLabel?: string;
   /** Id of the content the toggle controls */
   ariaControls?: string;
@@ -40,6 +40,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DataList/data-list';
+import { usePfMessages } from '../../messages';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfButton from '../Button.vue';
 import AngleDownIcon from '@vue-patternfly/icons/angle-down-icon';
@@ -51,9 +52,9 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  ariaLabel: 'Details',
   expanded: undefined,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
@@ -69,7 +70,7 @@ const effectiveAriaLabelledby = computed(() => {
   if (props.ariaLabelledby !== undefined) {
     return props.ariaLabelledby;
   }
-  if (props.ariaLabel !== 'Details') {
+  if (props.ariaLabel !== undefined) {
     return undefined;
   }
   return [datalistItem?.rowid.value, props.id].filter(Boolean).join(' ') || undefined;

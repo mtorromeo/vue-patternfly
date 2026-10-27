@@ -10,7 +10,7 @@
           <pf-text-input
             type="number"
             :model-value="localInputValue"
-            :aria-label="inputAriaLabel"
+            :aria-label="inputAriaLabel ?? messages.sliderInput"
             :disabled="disabled"
             :auto-validate="false"
             @update:model-value="onInputChange"
@@ -65,7 +65,7 @@
         :aria-valuemax="customSteps ? customSteps[customSteps.length - 1]?.value : max"
         :aria-valuenow="value"
         :aria-valuetext="thumbAriaValueText ?? ariaTextValue"
-        :aria-label="thumbAriaLabel"
+        :aria-label="thumbAriaLabel ?? messages.sliderThumb"
         :aria-disabled="disabled"
         :aria-describedby="ariaDescribedby"
         :aria-labelledby="ariaLabelledby"
@@ -119,9 +119,9 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCha
   inputAboveThumb?: boolean;
   /** Text label placed after the input field. */
   inputLabel?: string | number;
-  /** Accessible label for the input field. */
+  /** Accessible label for the input field. Defaults to the `sliderInput` message. */
   inputAriaLabel?: string;
-  /** Accessible label for the slider thumb. */
+  /** Accessible label for the slider thumb. Defaults to the `sliderThumb` message. */
   thumbAriaLabel?: string;
   /** Accessible text for the current value of the slider. Defaults to the current value, or the label of the current custom step. */
   thumbAriaValueText?: string;
@@ -150,6 +150,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCha
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Slider/slider';
+import { usePfMessages } from '../../messages';
 import cssSliderValue from '@patternfly/react-tokens/dist/esm/c_slider_value';
 import cssFormControlWidthChars from '@patternfly/react-tokens/dist/esm/c_slider__value_c_form_control_width_chars';
 import { computed, ref, watch, onBeforeUnmount, useTemplateRef, type HTMLAttributes, type VNode } from 'vue';
@@ -170,13 +171,12 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  inputAriaLabel: 'Slider value input',
-  thumbAriaLabel: 'Value',
   step: 1,
   min: 0,
   max: 100,
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Current value of the slider */

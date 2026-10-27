@@ -43,7 +43,7 @@
         name="check-all"
         :model-value="selected"
         :disabled="selectDisabled"
-        aria-label="Select all rows"
+        :aria-label="messages.thSelectAll"
         v-bind="selectAttrs"
         @change="onSelect"
       />
@@ -56,7 +56,7 @@
         :class="{ [styles.modifiers.expanded]: expanded }"
         :small="table?.compact.value"
         :aria-labelledby="`simple-node-1 ${expandId}-1`"
-        aria-label="Expand all rows"
+        :aria-label="messages.thExpandAll"
         :aria-expanded="expanded"
         v-bind="toggleAttrs"
         @click="onToggle"
@@ -107,7 +107,7 @@
           }
         : undefined
     "
-    :aria-label="ariaLabel ?? (isSelectable ? 'Row select' : undefined)"
+    :aria-label="ariaLabel ?? (isSelectable ? messages.thRowSelect : undefined)"
     v-bind="{ ...ouiaProps, ...$attrs }"
     @mouseenter="onMouseEnter"
     @focus="onMouseEnter"
@@ -157,6 +157,7 @@ const props = withDefaults(defineProps<Props>(), {
   expandId: 'expand-toggle',
   stickyMinWidth: '120px',
 });
+const messages = usePfMessages();
 
 const emit = defineEmits<{
   /**
@@ -225,7 +226,7 @@ const table = inject(TableKey, undefined);
 const isSelectable = computed(() => props.selected !== undefined);
 const isExpandable = computed(() => props.expanded !== undefined);
 const hasInfo = computed(() => !!(props.info || slots.info));
-const sortAriaLabel = computed(() => (props.favorites ? 'Sort favorites' : undefined));
+const sortAriaLabel = computed(() => (props.favorites ? messages.value.thSortFavorites : undefined));
 const sortFocused = ref(false);
 
 const SortIcon = computed(() => {
@@ -298,6 +299,7 @@ import {
   type ComponentPublicInstance,
   type ThHTMLAttributes,
 } from 'vue';
+import { usePfMessages } from '@vue-patternfly/core/messages';
 import { devWarn } from '@vue-patternfly/core/helpers/dev';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import { createReusableTemplate, unrefElement } from '@vueuse/core';
@@ -364,7 +366,7 @@ interface Props extends OUIAProps, VisibilityBreakpointProps, /* @vue-ignore */ 
   /** Additional props for the tooltip */
   tooltipAttrs?: Omit<ComponentProps<typeof PfTooltip>, 'content'>;
 
-  /** Accessible name of the th, for a th with only non-text content. Defaults to "Row select" with selected. */
+  /** Accessible name of the th, for a th with only non-text content. Defaults to the `thRowSelect` message with selected. */
   ariaLabel?: string;
   /** Visually hidden text accessible only via assistive technologies. This must be passed in if the th is intended to be visually empty, and must be conveyed as a column header text. */
   screenReaderText?: string;

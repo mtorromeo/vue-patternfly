@@ -9,7 +9,7 @@
             v-bind="backButtonAttrs"
             @click="emit('back', $event)"
           >
-            {{ backButtonText }}
+            {{ backButtonText ?? messages.wizardBack }}
           </pf-button>
         </pf-action-list-item>
         <pf-action-list-item>
@@ -20,14 +20,14 @@
             v-bind="nextButtonAttrs"
             @click="emit('next', $event)"
           >
-            {{ nextButtonText }}
+            {{ nextButtonText ?? messages.wizardNext }}
           </pf-button>
         </pf-action-list-item>
       </pf-action-list-group>
       <pf-action-list-group v-if="!cancelHidden">
         <pf-action-list-item>
           <pf-button variant="link" v-bind="cancelButtonAttrs" @click="emit('close', $event)">
-            {{ cancelButtonText }}
+            {{ cancelButtonText ?? messages.wizardCancel }}
           </pf-button>
         </pf-action-list-item>
       </pf-action-list-group>
@@ -37,11 +37,11 @@
 
 <script lang="ts">
 interface Props extends /* @vue-ignore */ HTMLAttributes {
-  /** Custom text for the Next button */
+  /** Custom text for the Next button. Defaults to the `wizardNext` message. */
   nextButtonText?: string;
-  /** Custom text for the Back button */
+  /** Custom text for the Back button. Defaults to the `wizardBack` message. */
   backButtonText?: string;
-  /** Custom text for the Cancel link */
+  /** Custom text for the Cancel link. Defaults to the `wizardCancel` message. */
   cancelButtonText?: string;
   /** Flag to disable the next button */
   nextDisabled?: boolean;
@@ -62,6 +62,7 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue';
+import { usePfMessages } from '../../messages';
 import PfWizardFooterWrapper from './WizardFooterWrapper.vue';
 import PfActionList from '../ActionList/ActionList.vue';
 import PfActionListGroup from '../ActionList/ActionListGroup.vue';
@@ -71,12 +72,9 @@ import PfButton from '../Button.vue';
 defineOptions({
   name: 'PfWizardFooter',
 });
+const messages = usePfMessages();
 
-withDefaults(defineProps<Props>(), {
-  nextButtonText: 'Next',
-  backButtonText: 'Back',
-  cancelButtonText: 'Cancel',
-});
+defineProps<Props>();
 
 const emit = defineEmits<{
   (name: 'next', event: PointerEvent): void;

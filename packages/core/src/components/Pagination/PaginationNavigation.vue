@@ -1,10 +1,10 @@
 <template>
-  <nav v-bind="ouiaProps" :class="styles.paginationNav" :aria-label="paginationAriaLabel">
+  <nav v-bind="ouiaProps" :class="styles.paginationNav" :aria-label="paginationAriaLabel ?? messages.pagination">
     <div v-if="!compact" :class="[styles.paginationNavControl, styles.modifiers.first]">
       <pf-button
         variant="plain"
         :disabled="disabled || page === firstPage || page === 0"
-        :aria-label="toFirstPageAriaLabel"
+        :aria-label="toFirstPageAriaLabel ?? messages.paginationFirstPage"
         data-action="first"
         @click="goToFirstPage"
       >
@@ -18,7 +18,7 @@
       <pf-button
         variant="plain"
         :disabled="disabled || page === firstPage || page === 0"
-        :aria-label="toPreviousPageAriaLabel"
+        :aria-label="toPreviousPageAriaLabel ?? messages.paginationPreviousPage"
         data-action="previous"
         @click="goToPreviousPage"
       >
@@ -31,7 +31,7 @@
     <div v-if="!compact" :class="styles.paginationNavPageSelect">
       <pf-text-input
         v-model="userInputPage"
-        :aria-label="currPageAriaLabel"
+        :aria-label="currPageAriaLabel ?? messages.paginationCurrentPage"
         type="number"
         :disabled="disabled || (!!count && page === firstPage && page === lastPage && count >= 0) || page === 0"
         :auto-validate="false"
@@ -41,7 +41,8 @@
         @change="onChange"
       />
       <span v-if="count !== undefined" aria-hidden="true">
-        {{ ofWord }} {{ pagesTitle ? pluralize(lastPage, pagesTitle, pagesTitlePlural) : lastPage }}
+        {{ ofWord ?? messages.paginationOf }}
+        {{ pagesTitle ? pluralize(lastPage, pagesTitle, pagesTitlePlural) : lastPage }}
       </span>
     </div>
 
@@ -49,7 +50,7 @@
       <pf-button
         variant="plain"
         :disabled="disabled || page === lastPage"
-        :aria-label="toNextPageAriaLabel"
+        :aria-label="toNextPageAriaLabel ?? messages.paginationNextPage"
         data-action="next"
         @click="goToNextPage"
       >
@@ -63,7 +64,7 @@
       <pf-button
         variant="plain"
         :disabled="disabled || page === lastPage"
-        :aria-label="toLastPageAriaLabel"
+        :aria-label="toLastPageAriaLabel ?? messages.paginationLastPage"
         data-action="last"
         @click="goToLastPage"
       >
@@ -77,6 +78,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
+import { usePfMessages } from '../../messages';
 
 import PfButton from '../Button.vue';
 import PfTextInput from '../TextInput.vue';
@@ -111,20 +113,20 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'aria-
   pagesTitlePlural?: string;
   /** Total number of items, undefined when unknown */
   count?: number;
-  /** Label for the English word "of". */
+  /** Label for the English word "of". Defaults to the `paginationOf` message. */
   ofWord?: string;
 
-  /** Accessible label for the button which moves to the last page. */
+  /** Accessible label for the button which moves to the last page. Defaults to the `paginationLastPage` message. */
   toLastPageAriaLabel?: string;
-  /** Accessible label for the button which moves to the next page. */
+  /** Accessible label for the button which moves to the next page. Defaults to the `paginationNextPage` message. */
   toNextPageAriaLabel?: string;
-  /** Accessible label for the button which moves to the first page. */
+  /** Accessible label for the button which moves to the first page. Defaults to the `paginationFirstPage` message. */
   toFirstPageAriaLabel?: string;
-  /** Accessible label for the button which moves to the previous page. */
+  /** Accessible label for the button which moves to the previous page. Defaults to the `paginationPreviousPage` message. */
   toPreviousPageAriaLabel?: string;
-  /** Accessible label for the input displaying the current page. */
+  /** Accessible label for the input displaying the current page. Defaults to the `paginationCurrentPage` message. */
   currPageAriaLabel?: string;
-  /** Accessible label for the pagination component. */
+  /** Accessible label for the pagination component. Defaults to the `pagination` message. */
   paginationAriaLabel?: string;
 }
 
@@ -134,14 +136,8 @@ const props = withDefaults(defineProps<Props>(), {
   firstPage: 0,
   perPage: 10,
   count: undefined,
-  ofWord: 'of',
-  toLastPageAriaLabel: 'Go to last page',
-  toNextPageAriaLabel: 'Go to next page',
-  toFirstPageAriaLabel: 'Go to first page',
-  toPreviousPageAriaLabel: 'Go to previous page',
-  currPageAriaLabel: 'Current page',
-  paginationAriaLabel: 'Pagination',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

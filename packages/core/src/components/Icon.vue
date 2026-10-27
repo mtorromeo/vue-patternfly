@@ -24,7 +24,7 @@
     </span>
     <span v-if="inProgress" :class="[styles.iconProgress, progressIconSize && styles.modifiers[progressIconSize]]">
       <slot name="progress-icon">
-        <pf-spinner diameter="1em" :aria-label="defaultProgressArialabel" />
+        <pf-spinner diameter="1em" :aria-label="defaultProgressArialabel ?? messages.iconProgress" />
       </slot>
     </span>
   </span>
@@ -61,7 +61,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   inline?: boolean;
   /** Indicates the icon is in progress. Setting this property to true will swap the icon with the progressIcon. */
   inProgress?: boolean;
-  /** Aria-label for the default progress icon */
+  /** Aria-label for the default progress icon. Defaults to the `iconProgress` message. */
   defaultProgressArialabel?: string;
   /** @beta Flag indicating whether the icon passed as children should be mirrored for
    * right to left (RTL) languages. This will not mirror the icon passed to progressIcon.
@@ -72,6 +72,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Icon/icon';
+import { usePfMessages } from '../messages';
 import type { HTMLAttributes } from 'vue';
 import PfSpinner from './Spinner.vue';
 import { useOUIAProps, type OUIAProps } from '../helpers/ouia';
@@ -80,9 +81,8 @@ defineOptions({
   name: 'PfIcon',
 });
 
-const props = withDefaults(defineProps<Props>(), {
-  defaultProgressArialabel: 'Loading...',
-});
+const props = defineProps<Props>();
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{

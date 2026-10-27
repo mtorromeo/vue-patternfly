@@ -4,7 +4,7 @@
     :class="styles.dualListSelectorControls"
     tabindex="0"
     role="group"
-    aria-label="Controls for moving options between lists"
+    :aria-label="messages.dualListSelectorControls"
     @keydown="handleKeys"
   >
     <slot />
@@ -17,11 +17,13 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {}
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/DualListSelector/dual-list-selector';
+import { usePfMessages } from '../../messages';
 import { useTemplateRef, type HTMLAttributes, type VNode } from 'vue';
 
 defineOptions({
   name: 'PfDualListSelectorControlsWrapper',
 });
+const messages = usePfMessages();
 
 defineProps<Props>();
 

@@ -41,7 +41,9 @@
 
 <script lang="ts">
 export const ToolbarToggleExpandedKey = Symbol('ToolbarToggleExpandedKey') as InjectionKey<() => void>;
-export const ToolbarClearFilterButtonTextKey = Symbol('ToolbarClearFilterButtonTextKey') as InjectionKey<string>;
+export const ToolbarClearFilterButtonTextKey = Symbol('ToolbarClearFilterButtonTextKey') as InjectionKey<
+  string | undefined
+>;
 export const ToolbarShowClearFiltersButtonKey = Symbol('ToolbarShowClearFiltersButtonKey') as InjectionKey<
   ComputedRef<boolean>
 >;
@@ -67,11 +69,11 @@ export const ToolbarContainerWidthKey = Symbol('ToolbarContainerWidthKey') as In
 interface Props extends OUIAProps, InsetBreakpointProps, /* @vue-ignore */ HTMLAttributes {
   /** Id of the toolbar. Generated when not set. */
   id?: string;
-  /** Text to display in the clear all filters button */
+  /** Text to display in the clear all filters button. Defaults to the `toolbarClearFilters` message. */
   clearFiltersButtonText?: string;
   /** The breakpoint at which the listed filters in label groups are collapsed down to a summary */
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
-  /** Text to display in the total number of applied filters, when the listed filters are collapsed */
+  /** Text to display in the total number of applied filters, when the listed filters are collapsed. Defaults to the `toolbarFiltersApplied` message. */
   numberOfFiltersText?: (numberOfFilters: number) => string;
   /** Flag indicating if a data toolbar toggle group's expandable content is expanded */
   expanded?: boolean;
@@ -124,7 +126,6 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  clearFiltersButtonText: 'Clear all filters',
   collapseListedFiltersBreakpoint: 'lg',
   expanded: undefined,
   colorVariant: 'default',

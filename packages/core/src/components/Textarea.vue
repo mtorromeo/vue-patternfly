@@ -88,6 +88,7 @@ interface Props<N extends boolean = false>
 
 <script lang="ts" setup generic="N extends boolean = false">
 import styles from '@patternfly/react-styles/css/components/FormControl/form-control';
+import { usePfMessages } from '../messages';
 import { devError } from '../helpers/dev';
 
 import {
@@ -115,6 +116,7 @@ const props = withDefaults(defineProps<Props<N>>(), {
   autoValidate: true,
   modelValue: undefined,
 });
+const messages = usePfMessages();
 
 defineEmits<{
   /** A callback for when the textarea value changes. */
@@ -168,7 +170,7 @@ function checkValidity() {
   if (props.pattern && value.value) {
     const error = !regexPattern.value.test(String(value.value));
     if (error) {
-      let error = 'Please match the format requested.';
+      let error = messages.value.textareaPatternMismatch;
       if (input.value.title) {
         error += `\n${input.value.title}`;
       }

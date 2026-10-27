@@ -58,6 +58,22 @@
       app.mount('#app');
       ```
 
+      ### Translating the default texts
+
+      The default texts of the components, mostly accessible names like "Close" or "Select row", are English messages that can be replaced for the whole app with the `messages` option of the plugin. A ref or a getter keeps them reactive, to switch language at runtime:
+
+      ```js
+      app.use(VuePatternFly, {
+        messages: {
+          close: 'Chiudi',
+          thRowSelect: 'Selezione riga',
+          tdSelectRow: rowIndex => (rowIndex === undefined ? 'Seleziona riga' : `Seleziona riga ${rowIndex}`),
+        },
+      });
+      ```
+
+      `providePfMessages(messages)` replaces some messages for the descendants of a component only, on top of the ones of its ancestors, and `usePfMessages()` reads the current ones. A prop setting the same text on a component, like `close-btn-aria-label`, still wins over its message. The `PfMessages` type lists every message with its English default in `defaultMessages`.
+
       ## Credits
 
       - [Massimiliano Torromeo][link-author]

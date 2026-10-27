@@ -48,7 +48,11 @@
       <div :class="styles.popoverArrow" />
       <div :class="styles.popoverContent">
         <div v-if="!noClose && !hover" :class="styles.popoverClose">
-          <pf-close-button :aria-label="closeBtnAriaLabel" style="pointer-events: auto" @click.stop="close" />
+          <pf-close-button
+            :aria-label="closeBtnAriaLabel ?? messages.popoverClose"
+            style="pointer-events: auto"
+            @click.stop="close"
+          />
         </div>
 
         <header v-if="$slots.header" :class="styles.popoverHeader">
@@ -122,7 +126,7 @@ interface Props
   maxWidth?: string;
   /** CSS fade transition animation duration */
   animationDuration?: number;
-  /** Accessible label for the close button */
+  /** Accessible label for the close button. Defaults to the `popoverClose` message. */
   closeBtnAriaLabel?: string;
   /** Distance of the popover to its target */
   distance?: number;
@@ -171,6 +175,7 @@ const defaultFlipBehavior: Placement[] = [
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Popover/popover';
+import { usePfMessages } from '../messages';
 import { useHtmlElementFromVNodes } from '../use';
 import { computed, onMounted, ref, watch, type RendererElement, type VNode, useTemplateRef, useId } from 'vue';
 import { useEventListener } from '@vueuse/core';
@@ -199,7 +204,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   position: 'top',
-  closeBtnAriaLabel: 'Close',
   minWidth: popoverMinWidth.value,
   maxWidth: popoverMaxWidth.value,
   animationDuration: 300,
@@ -210,6 +214,7 @@ const props = withDefaults(defineProps<Props>(), {
   ouiaSafe: true,
   open: undefined,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Shows the popover */

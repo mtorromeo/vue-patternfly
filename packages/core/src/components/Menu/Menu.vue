@@ -17,7 +17,7 @@
     @keydown="!submenu && handleKeyboard($event)"
   >
     <template v-if="favoriteCount">
-      <pf-menu-group :label="favoritesLabel">
+      <pf-menu-group :label="favoritesLabel ?? messages.menuFavorites">
         <pf-menu-list ref="favoriteListRef" />
       </pf-menu-group>
       <pf-divider />
@@ -73,12 +73,14 @@ interface Props<T> extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'on
   /** Callback called when an MenuItems's action button is clicked. You can also specify it within a MenuItemAction. */
   onActionClick?: (event: Event, itemId?: MenuItemId, actionId?: unknown) => void;
 
+  /** Label of the group of favorite items. Defaults to the `menuFavorites` message. */
   favoritesLabel?: string;
 }
 </script>
 
 <script lang="ts" setup generic="T extends MenuItemId | MenuItemId[] = MenuItemId | MenuItemId[]">
 import styles from '@patternfly/react-styles/css/components/Menu/menu';
+import { usePfMessages } from '../../messages';
 import breadcrumbStyles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import dividerStyles from '@patternfly/react-styles/css/components/Divider/divider';
 import {
@@ -122,9 +124,9 @@ defineOptions({
 const props = withDefaults(defineProps<Props<T>>(), {
   selected: null,
   role: 'menu',
-  favoritesLabel: 'Favorites',
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{

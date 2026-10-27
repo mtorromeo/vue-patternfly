@@ -49,7 +49,7 @@
       <pf-button
         variant="plain"
         :disabled="disableBackScrollButton"
-        :aria-label="backScrollAriaLabel"
+        :aria-label="backScrollAriaLabel ?? messages.tabsScrollBack"
         :aria-hidden="disableBackScrollButton"
         @click="scrollBack"
       >
@@ -122,7 +122,7 @@
       <pf-button
         variant="plain"
         :disabled="disableForwardScrollButton"
-        :aria-label="forwardScrollAriaLabel"
+        :aria-label="forwardScrollAriaLabel ?? messages.tabsScrollForward"
         :aria-hidden="disableForwardScrollButton"
         @click="scrollForward"
       >
@@ -131,7 +131,12 @@
     </div>
 
     <span v-if="onAdd" :class="styles.tabsAdd">
-      <pf-button variant="plain" :aria-label="addButtonAriaLabel" :disabled="addButtonDisabled" @click="onAdd">
+      <pf-button
+        variant="plain"
+        :aria-label="addButtonAriaLabel ?? messages.tabsAdd"
+        :disabled="addButtonDisabled"
+        @click="onAdd"
+      >
         <template #icon><plus-icon /></template>
       </pf-button>
     </span>
@@ -160,9 +165,9 @@ interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointPro
   vertical?: boolean;
   /** Disables border bottom tab styling on tabs. Defaults to false. To remove the bottom border, set this prop to true. */
   noBorderBottom?: boolean;
-  /** Aria-label for the back scroll button */
+  /** Aria-label for the back scroll button. Defaults to the `tabsScrollBack` message. */
   backScrollAriaLabel?: string;
-  /** Aria-label for the forward scroll button */
+  /** Aria-label for the forward scroll button. Defaults to the `tabsScrollForward` message. */
   forwardScrollAriaLabel?: string;
   /** Determines what tag is used around the tabs. Use "nav" to define the tabs inside a navigation region */
   component?: 'div' | 'nav';
@@ -188,11 +193,11 @@ interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointPro
   overflowHorizontal?: boolean;
   /** Flag which shows the count of overflowing tabs in the overflow tab */
   overflowShowTabCount?: boolean;
-  /** The text which displays in the overflow tab when an overflowing tab isn't selected */
+  /** The text which displays in the overflow tab when an overflowing tab isn't selected. Defaults to the `tabsMore` message. */
   overflowTitleText?: string;
   /** The aria label applied to the button which toggles the tab overflow menu */
   overflowToggleAriaLabel?: string;
-  /** Aria-label for the add button */
+  /** Aria-label for the add button. Defaults to the `tabsAdd` message. */
   addButtonAriaLabel?: string;
   /** Flag indicating that the add button is disabled */
   addButtonDisabled?: boolean;
@@ -205,6 +210,7 @@ interface Props extends OUIAProps, InsetBreakpointProps, ExpandableBreakpointPro
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
+import { usePfMessages } from '../../messages';
 import { devError } from '../../helpers/dev';
 import linkAccentLength from '@patternfly/react-tokens/dist/esm/c_tabs_link_accent_length';
 import linkAccentStart from '@patternfly/react-tokens/dist/esm/c_tabs_link_accent_start';
@@ -251,12 +257,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   id: () => useId(),
-  backScrollAriaLabel: 'Scroll back',
-  forwardScrollAriaLabel: 'Scroll forward',
-  addButtonAriaLabel: 'Add tab',
-  overflowTitleText: 'More',
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** The key of the active tab */
@@ -347,7 +350,9 @@ const overflowingTabs = computed(() => tabs.filter(tab => tab.overflowing));
 const overflowingTabCount = computed(() => overflowingTabs.value.length);
 const hasOverflowTab = computed(() => props.overflowHorizontal && overflowingTabCount.value > 0);
 const selectedOverflowTab = computed(() => tabs.find(tab => tab.overflowing && tab.key === localActiveKey.value));
-const overflowTitle = computed(() => toValue(selectedOverflowTab.value?.title) ?? props.overflowTitleText);
+const overflowTitle = computed(
+  () => toValue(selectedOverflowTab.value?.title) ?? props.overflowTitleText ?? messages.value.tabsMore,
+);
 const overflowOpen = ref(false);
 
 // --- current tab accent ---

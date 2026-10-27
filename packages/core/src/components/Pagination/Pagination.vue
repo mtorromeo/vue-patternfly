@@ -30,7 +30,7 @@
         :last-index="lastIndex"
         :count="count"
         :title-items="titleItems"
-        :of-word="ofWord"
+        :of-word="ofWord ?? messages.paginationOf"
       />
     </div>
 
@@ -125,25 +125,25 @@ interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, 
   titlePage?: string;
   /** The title of a page displayed beside the page number (plural form) */
   titlePages?: string;
-  /** The title of the pagination options menu. */
+  /** The title of the pagination options menu. Defaults to the `paginationItemsPerPage` message. */
   titleItemsPerPage?: string;
-  /** The suffix to be displayed after each option on the options menu dropdown. */
+  /** The suffix to be displayed after each option on the options menu dropdown. Defaults to the `paginationPerPageSuffix` message. */
   titlePerPageSuffix?: string;
-  /** Accessible label for the button which moves to the first page. */
+  /** Accessible label for the button which moves to the first page. Defaults to the `paginationFirstPage` message. */
   toFirstPageAriaLabel?: string;
-  /** Accessible label for the button which moves to the previous page. */
+  /** Accessible label for the button which moves to the previous page. Defaults to the `paginationPreviousPage` message. */
   toPreviousPageAriaLabel?: string;
-  /** Accessible label for the button which moves to the last page. */
+  /** Accessible label for the button which moves to the last page. Defaults to the `paginationLastPage` message. */
   toLastPageAriaLabel?: string;
-  /** Accessible label for the button which moves to the next page. */
+  /** Accessible label for the button which moves to the next page. Defaults to the `paginationNextPage` message. */
   toNextPageAriaLabel?: string;
   /** Accessible label for the options toggle. */
   titleOptionsToggle?: string;
-  /** Accessible label for the input displaying the current page. */
+  /** Accessible label for the input displaying the current page. Defaults to the `paginationCurrentPage` message. */
   currPageAriaLabel?: string;
-  /** Accessible label for the pagination component. */
+  /** Accessible label for the pagination component. Defaults to the `pagination` message. */
   paginationAriaLabel?: string;
-  /** Label for the English word "of". */
+  /** Label for the English word "of". Defaults to the `paginationOf` message. */
   ofWord?: string;
   /** The container to append the options menu to */
   menuAppendTo?: 'inline' | string | RendererElement | null;
@@ -152,6 +152,7 @@ interface Props extends OUIAProps, CommonPaginationProps, InsetBreakpointProps, 
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
+import { usePfMessages } from '../../messages';
 import widthChars from '@patternfly/react-tokens/dist/esm/c_pagination__nav_page_select_c_form_control_width_chars';
 import PfPaginationOptionsMenu from './PaginationOptionsMenu.vue';
 import PfPaginationNavigation from './PaginationNavigation.vue';
@@ -171,22 +172,14 @@ const props = withDefaults(defineProps<Props>(), {
   count: undefined,
   dropUp: undefined,
   firstPage: 1,
-  titleItemsPerPage: 'Items per page',
-  titlePerPageSuffix: 'per page',
-  toFirstPageAriaLabel: 'Go to first page',
-  toPreviousPageAriaLabel: 'Go to previous page',
-  toLastPageAriaLabel: 'Go to last page',
-  toNextPageAriaLabel: 'Go to next page',
   titleOptionsToggle: '',
-  currPageAriaLabel: 'Current page',
-  paginationAriaLabel: 'Pagination',
-  ofWord: 'of',
   page: 1,
   perPage: defaultPerPageOptions[0]?.value,
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'options-menu',
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant });
 
 defineSlots<{

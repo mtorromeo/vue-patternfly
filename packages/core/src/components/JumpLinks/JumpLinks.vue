@@ -20,7 +20,7 @@
           <pf-button
             :id="effectiveLabelId"
             variant="plain"
-            :aria-label="label || $slots.label ? undefined : toggleAriaLabel"
+            :aria-label="label || $slots.label ? undefined : (toggleAriaLabel ?? messages.jumpLinksToggle)"
             :aria-expanded="expanded"
             @click="expanded = !expanded"
           >
@@ -79,7 +79,7 @@ interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ 
   autoLinkFromElements?: string | MaybeRef<HTMLElement[]>;
   /** Offset to add to `scrollPosition`, potentially for a masthead which content scrolls under. */
   offset?: number;
-  /** Aria label for expandable toggle */
+  /** Aria label for expandable toggle. Defaults to the `jumpLinksToggle` message. */
   toggleAriaLabel?: string;
   /** How a click on an item updates the navigation history with its href: pushing a new entry or replacing the current one. By default the history is not updated. */
   navHistory?: 'push' | 'replace';
@@ -88,6 +88,7 @@ interface Props extends OUIAProps, ExpandableBreakpointProps, /* @vue-ignore */ 
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/JumpLinks/jump-links';
+import { usePfMessages } from '../../messages';
 import { devWarn } from '../../helpers/dev';
 import sidebarStyles from '@patternfly/react-styles/css/components/Sidebar/sidebar';
 import cssToggleDisplayVar from '@patternfly/react-tokens/dist/esm/c_jump_links__toggle_Display';
@@ -121,8 +122,8 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   offset: 0,
   alwaysShowLabel: true,
-  toggleAriaLabel: 'Toggle jump links',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** On mobile whether or not the JumpLinks starts out expanded */
@@ -162,7 +163,7 @@ const computedAriaLabelledBy = computed(() => (hasAriaLabelledBy.value ? effecti
 if (!props.label && !slots.label && !props.ariaLabel) {
   devWarn('JumpLinks: for accessibility reasons, an aria-label should be specified if no label is provided');
 }
-if (!props.label && !slots.label && !props.toggleAriaLabel && hasToggle.value) {
+if (!props.label && !slots.label && !props.toggleAriaLabel && !messages.value.jumpLinksToggle && hasToggle.value) {
   devWarn('JumpLinks: for accessibility reasons, a toggleAriaLabel should be specified if no label is provided');
 }
 

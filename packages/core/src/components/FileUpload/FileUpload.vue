@@ -70,6 +70,7 @@ interface Props
 
 <script lang="ts" setup>
 import { computed, ref, useId, useTemplateRef } from 'vue';
+import { usePfMessages } from '../../messages';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import PfFileUploadField from './FileUploadField.vue';
@@ -81,6 +82,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   id: () => useId(),
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Value of the file's contents (string if type is 'text' or 'dataURL', File object otherwise). */
@@ -145,13 +147,16 @@ function isAccepted(file: File) {
 function fileErrors(file: File) {
   const errors: FileError[] = [];
   if (!isAccepted(file)) {
-    errors.push({ code: 'file-invalid-type', message: `File type must be ${acceptList.value.join(', ')}` });
+    errors.push({
+      code: 'file-invalid-type',
+      message: messages.value.fileUploadInvalidType(acceptList.value.join(', ')),
+    });
   }
   if (props.maxSize !== undefined && file.size > props.maxSize) {
-    errors.push({ code: 'file-too-large', message: `File is larger than ${props.maxSize} bytes` });
+    errors.push({ code: 'file-too-large', message: messages.value.fileUploadTooLarge(props.maxSize) });
   }
   if (props.minSize !== undefined && file.size < props.minSize) {
-    errors.push({ code: 'file-too-small', message: `File is smaller than ${props.minSize} bytes` });
+    errors.push({ code: 'file-too-small', message: messages.value.fileUploadTooSmall(props.minSize) });
   }
   return errors;
 }
@@ -161,7 +166,7 @@ function handleFiles(files: File[]) {
   const rejections: FileRejection[] = files.map(file => ({ file, errors: fileErrors(file) }));
   if (files.length > 1) {
     for (const rejection of rejections) {
-      rejection.errors.push({ code: 'too-many-files', message: 'Too many files' });
+      rejection.errors.push({ code: 'too-many-files', message: messages.value.fileUploadTooManyFiles });
     }
   }
 

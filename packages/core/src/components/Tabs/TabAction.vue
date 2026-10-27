@@ -5,7 +5,7 @@
       v-bind="{ ...$attrs, ...ouiaProps, class: undefined }"
       type="button"
       variant="plain"
-      :aria-label="ariaLabel"
+      :aria-label="ariaLabel ?? messages.tabAction"
       :disabled="disabled"
     >
       <template #icon>
@@ -19,13 +19,14 @@
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<ButtonHTMLAttributes, 'type'> {
   /** Flag indicating if the tab action is disabled */
   disabled?: boolean;
-  /** Accessible label for the tab action */
+  /** Accessible label for the tab action. Defaults to the `tabAction` message. */
   ariaLabel?: string;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
+import { usePfMessages } from '../../messages';
 import { computed, useTemplateRef, type ButtonHTMLAttributes, type VNode } from 'vue';
 import PfButton from '../Button.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -35,9 +36,8 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<Props>(), {
-  ariaLabel: 'Tab action',
-});
+const props = defineProps<Props>();
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{

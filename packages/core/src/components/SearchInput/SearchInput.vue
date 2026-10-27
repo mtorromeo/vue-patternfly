@@ -22,7 +22,7 @@
               :hint="hint"
               :type="type"
               :placeholder="placeholder"
-              :aria-label="ariaLabel"
+              :aria-label="ariaLabel ?? messages.searchInput"
               @keydown="onEnter"
               @update:model-value="value = String($event)"
             >
@@ -32,7 +32,11 @@
             </pf-text-input-group-main>
 
             <pf-text-input-group-utilities v-if="renderUtilities || utilitiesDisplayed">
-              <pf-badge v-if="resultsCount" read :screen-reader-text="resultsCountContext">
+              <pf-badge
+                v-if="resultsCount"
+                read
+                :screen-reader-text="resultsCountContext ?? messages.searchInputResults"
+              >
                 {{ resultsCount }}
               </pf-badge>
 
@@ -40,7 +44,7 @@
                 <pf-button
                   variant="plain"
                   :disabled="disabled || previousNavigationButtonDisabled"
-                  :aria-label="previousNavigationButtonAriaLabel"
+                  :aria-label="previousNavigationButtonAriaLabel ?? messages.searchInputPrevious"
                   @click="onPreviousClick"
                 >
                   <template #icon>
@@ -51,7 +55,7 @@
                 <pf-button
                   variant="plain"
                   :disabled="disabled || nextNavigationButtonDisabled"
-                  :aria-label="nextNavigationButtonAriaLabel"
+                  :aria-label="nextNavigationButtonAriaLabel ?? messages.searchInputNext"
                   @click="onNextClick"
                 >
                   <template #icon>
@@ -64,7 +68,7 @@
                 v-if="!!onClear && !expandable"
                 variant="plain"
                 :disabled="disabled"
-                :aria-label="resetButtonLabel"
+                :aria-label="resetButtonLabel ?? messages.searchInputReset"
                 @click="onClearInput"
               >
                 <template #icon>
@@ -84,7 +88,7 @@
             :class="{ 'pf-m-expanded': advancedSearchOpen }"
             variant="control"
             :disabled="disabled"
-            :aria-label="openMenuButtonAriaLabel"
+            :aria-label="openMenuButtonAriaLabel ?? messages.searchInputOpenMenu"
             :aria-expanded="advancedSearchOpen"
             @click="onToggle"
           >
@@ -99,7 +103,7 @@
             type="submit"
             variant="control"
             :disabled="disabled"
-            :aria-label="submitSearchButtonLabel"
+            :aria-label="submitSearchButtonLabel ?? messages.searchInputSubmit"
             @click="onSearchHandler"
           >
             <template #icon>
@@ -200,7 +204,7 @@ export { SearchInputKey, type SearchAttribute, type SearchInputProvide } from '.
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag indicating if search input is disabled. */
   disabled?: boolean;
-  /** An accessible label for the search input. */
+  /** An accessible label for the search input. Defaults to the `searchInput` message. */
   ariaLabel?: string;
   /** Placeholder text of the search input. */
   placeholder?: string;
@@ -228,29 +232,29 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
   /** z-index of the advanced search form when appendTo is not inline. */
   zIndex?: number;
-  /** Label for the button which resets the advanced search form and clears the search input. */
+  /** Label for the button which resets the advanced search form and clears the search input. Defaults to the `searchInputReset` message. */
   resetButtonLabel?: string;
-  /** Label for the button which calls the onSearch event handler. */
+  /** Label for the button which calls the onSearch event handler. Defaults to the `searchInputSubmit` message. */
   submitSearchButtonLabel?: string;
-  /** Accessible label for the button which opens the advanced search form menu. */
+  /** Accessible label for the button which opens the advanced search form menu. Defaults to the `searchInputOpenMenu` message. */
   openMenuButtonAriaLabel?: string;
-  /** Accessible label for the button to navigate to previous result. */
+  /** Accessible label for the button to navigate to previous result. Defaults to the `searchInputPrevious` message. */
   previousNavigationButtonAriaLabel?: string;
   /** Flag indicating if the previous navigation button is disabled. */
   previousNavigationButtonDisabled?: boolean;
-  /** Accessible label for the button to navigate to next result. */
+  /** Accessible label for the button to navigate to next result. Defaults to the `searchInputNext` message. */
   nextNavigationButtonAriaLabel?: string;
   /** Flag indicating if the next navigation button is disabled. */
   nextNavigationButtonDisabled?: boolean;
   /** The number of search results returned. Either a total number of results,
    * or a string representing the current result over the total number of results. i.e. "1 / 5". */
   resultsCount?: number | string;
-  /** Screenreader text that will appear after resultsCount to give context for what that value represents to assistive technologies. */
+  /** Screenreader text that will appear after resultsCount to give context for what that value represents to assistive technologies. Defaults to the `searchInputResults` message. */
   resultsCountContext?: string;
 
   /** Array of attribute values used for dynamically generated advanced search. */
   attributes?: string[] | SearchAttribute[];
-  /** Attribute label for strings unassociated with one of the provided listed attributes. */
+  /** Attribute label for strings unassociated with one of the provided listed attributes. Defaults to the `searchInputWords` message. */
   wordsAttrLabel?: string;
 
   /** Makes the search input expandable/collapsible through a toggle button. */
@@ -289,6 +293,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import textInputGroupStyles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
+import { usePfMessages } from '../../messages';
 import { devError } from '../../helpers/dev';
 import inputGroupStyles from '@patternfly/react-styles/css/components/InputGroup/input-group';
 import {
@@ -334,16 +339,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   attributes: () => [],
-  ariaLabel: 'Search input',
-  resetButtonLabel: 'Reset',
-  openMenuButtonAriaLabel: 'Open advanced search',
-  previousNavigationButtonAriaLabel: 'Previous',
-  nextNavigationButtonAriaLabel: 'Next',
-  submitSearchButtonLabel: 'Search',
-  resultsCountContext: ' results',
-  wordsAttrLabel: 'Has words',
   type: 'text',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Value of the search input. */

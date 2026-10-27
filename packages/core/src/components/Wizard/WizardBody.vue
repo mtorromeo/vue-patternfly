@@ -4,7 +4,7 @@
     :ref="setWrapper"
     :tabindex="hasScrollbar ? 0 : shouldFocusContent ? -1 : undefined"
     :role="component === 'div' && hasScrollbar ? 'region' : undefined"
-    :aria-label="hasScrollbar ? ariaLabel || `${activeStep?.name} content` : undefined"
+    :aria-label="hasScrollbar ? ariaLabel || messages.wizardBodyContent(activeStep?.name) : undefined"
     :aria-labelledby="hasScrollbar ? ariaLabelledby : undefined"
     :class="styles.wizardMain"
   >
@@ -29,6 +29,7 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Wizard/wizard';
+import { usePfMessages } from '../../messages';
 import { computed, inject, onMounted, ref, type ComponentPublicInstance, type HTMLAttributes, type VNode } from 'vue';
 import { useDebounceFn, useResizeObserver } from '@vueuse/core';
 import { WizardContextKey } from './common';
@@ -36,6 +37,7 @@ import { WizardContextKey } from './common';
 defineOptions({
   name: 'PfWizardBody',
 });
+const messages = usePfMessages();
 
 withDefaults(defineProps<Props>(), {
   component: 'div',

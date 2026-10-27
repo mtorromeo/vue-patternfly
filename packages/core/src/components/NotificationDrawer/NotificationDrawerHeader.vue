@@ -1,7 +1,7 @@
 <template>
   <div v-bind="ouiaProps" :class="styles.notificationDrawerHeader">
     <h1 :class="styles.notificationDrawerHeaderTitle">
-      {{ title }}
+      {{ title ?? messages.notificationDrawerTitle }}
     </h1>
 
     <span
@@ -9,13 +9,13 @@
       :class="styles.notificationDrawerHeaderStatus"
       aria-live="polite"
     >
-      {{ customText || `${count} ${unreadText}` }}
+      {{ customText || `${count} ${unreadText ?? messages.notificationDrawerUnread}` }}
     </span>
 
     <div v-if="$slots.default || onClose" :class="styles.notificationDrawerHeaderAction">
       <slot />
       <div v-if="onClose">
-        <pf-close-button :aria-label="closeButtonAriaLabel" @click="onClose" />
+        <pf-close-button :aria-label="closeButtonAriaLabel ?? messages.notificationDrawerClose" @click="onClose" />
       </div>
     </div>
   </div>
@@ -23,6 +23,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/NotificationDrawer/notification-drawer';
+import { usePfMessages } from '../../messages';
 import type { HTMLAttributes, VNode } from 'vue';
 import PfCloseButton from '../CloseButton.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -38,19 +39,16 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   customText?: string;
   /**  Callback for when close button is clicked */
   onClose?: (event: PointerEvent) => void;
-  /**  Notification drawer heading title */
+  /**  Notification drawer heading title. Defaults to the `notificationDrawerTitle` message. */
   title?: string;
-  /**  Notification drawer heading unread text used in combination with a count */
+  /**  Notification drawer heading unread text used in combination with a count. Defaults to the `notificationDrawerUnread` message. */
   unreadText?: string;
-  /** Accessible text of the close button */
+  /** Accessible text of the close button. Defaults to the `notificationDrawerClose` message. */
   closeButtonAriaLabel?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  title: 'Notifications',
-  unreadText: 'unread',
-  closeButtonAriaLabel: 'Close',
-});
+const props = defineProps<Props>();
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{

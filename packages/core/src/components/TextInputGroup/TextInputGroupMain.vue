@@ -27,7 +27,7 @@
         v-bind="{ ...$attrs, class: undefined }"
         :value="value"
         :type="type ?? 'text'"
-        :aria-label="ariaLabel"
+        :aria-label="ariaLabel ?? messages.textInputGroupMain"
         :class="[styles.textInputGroupTextInput, inputClass]"
         :disabled="group?.disabled.value || undefined"
         @change="onChange"
@@ -48,7 +48,7 @@ export interface Props<T extends InputType, N extends boolean>
     OUIAProps,
     /* @vue-ignore */ Omit<InputHTMLAttributes, 'value' | 'type' | 'autocomplete'>,
     /* @vue-ignore */ OverriddenInputAttributes {
-  /** Accessibility label for the input */
+  /** Accessibility label for the input. Defaults to the `textInputGroupMain` message. */
   ariaLabel?: string;
   /** Additional classes added to the input. */
   inputClass?: HTMLAttributes['class'];
@@ -69,6 +69,7 @@ export interface Props<T extends InputType, N extends boolean>
 
 <script lang="ts" setup generic="T extends InputType = 'text', N extends boolean = false">
 import styles from '@patternfly/react-styles/css/components/TextInputGroup/text-input-group';
+import { usePfMessages } from '../../messages';
 import {
   computed,
   inject,
@@ -90,9 +91,9 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props<T, N>>(), {
-  ariaLabel: 'Type to filter',
   modelValue: undefined,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

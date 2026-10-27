@@ -18,8 +18,13 @@
             :disabled="disabled"
             :auto-validate="false"
             :name="name || `${id}-filename`"
-            :aria-label="filenameAriaLabel ?? (filename ? 'Read only filename' : filenamePlaceholder)"
-            :placeholder="filenamePlaceholder"
+            :aria-label="
+              filenameAriaLabel ??
+              (filename
+                ? messages.fileUploadReadOnlyFilename
+                : (filenamePlaceholder ?? messages.fileUploadFilenamePlaceholder))
+            "
+            :placeholder="filenamePlaceholder ?? messages.fileUploadFilenamePlaceholder"
             :model-value="filename ?? ''"
           />
         </pf-input-group-item>
@@ -30,7 +35,7 @@
             :disabled="disabled || browseButtonDisabled"
             @click="$emit('browseButtonClick', $event)"
           >
-            {{ browseButtonText }}
+            {{ browseButtonText ?? messages.fileUploadBrowse }}
           </pf-button>
         </pf-input-group-item>
         <pf-input-group-item>
@@ -39,7 +44,7 @@
             :disabled="disabled || (clearButtonDisabled ?? (!filename && !value))"
             @click="$emit('clearButtonClick', $event)"
           >
-            {{ clearButtonText }}
+            {{ clearButtonText ?? messages.fileUploadClear }}
           </pf-button>
         </pf-input-group-item>
       </pf-input-group>
@@ -53,7 +58,7 @@
         :readonly="readonly || (!!filename && !allowEditingUploadedText)"
         resize-orientation="vertical"
         :validated="validated"
-        :aria-label="ariaLabel"
+        :aria-label="ariaLabel ?? messages.fileUpload"
         :model-value="typeof value === 'string' ? value : ''"
         :name="textareaName"
         :placeholder="textareaPlaceholder"
@@ -81,21 +86,21 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   filename?: string | null;
   /** Flag to allow editing of a text file's contents after it is selected from disk. */
   allowEditingUploadedText?: boolean;
-  /** Aria-label for the text area. */
+  /** Aria-label for the text area. Defaults to the `fileUpload` message. */
   ariaLabel?: string;
-  /** Text for the browse button. */
+  /** Text for the browse button. Defaults to the `fileUploadBrowse` message. */
   browseButtonText?: string;
   /** Flag to disable the browse button. */
   browseButtonDisabled?: boolean;
   /** Additional attributes for the browse button, like aria-describedby referring to helper text describing file restrictions. */
   browseButtonAttrs?: ComponentProps<typeof PfButton>;
-  /** Text for the clear button. */
+  /** Text for the clear button. Defaults to the `fileUploadClear` message. */
   clearButtonText?: string;
   /** Flag to disable the clear button. Defaults to true when there is no filename and no value. */
   clearButtonDisabled?: boolean;
   /** Aria-label for the read-only filename field. */
   filenameAriaLabel?: string;
-  /** Placeholder string to display in the empty filename field. */
+  /** Placeholder string to display in the empty filename field. Defaults to the `fileUploadFilenamePlaceholder` message. */
   filenamePlaceholder?: string;
   /** Flag to hide the built-in preview of the file (where available). If true, you can use the default slot to render an alternate preview. */
   hideDefaultPreview?: boolean;
@@ -122,6 +127,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/FileUpload/file-upload';
+import { usePfMessages } from '../../messages';
 import { computed, useId, type HTMLAttributes } from 'vue';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -138,13 +144,10 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   validated: 'default',
-  ariaLabel: 'File upload',
-  filenamePlaceholder: 'Drag a file here or browse to upload',
-  browseButtonText: 'Browse...',
-  clearButtonText: 'Clear',
   clearButtonDisabled: undefined,
   id: () => useId(),
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Value of the file's contents (string if text file, File object otherwise). */

@@ -22,7 +22,7 @@
 
           <pf-form-group :field-id="hasWordsId">
             <template #label>
-              <slot name="words-attr-label">{{ wordsAttrLabel }}</slot>
+              <slot name="words-attr-label">{{ wordsAttrLabel ?? messages.searchInputWords }}</slot>
             </template>
             <pf-text-input
               :id="hasWordsId"
@@ -39,12 +39,12 @@
               <pf-action-list-group>
                 <pf-action-list-item>
                   <pf-button variant="primary" type="submit" :disabled="!value" @click.prevent="onSearch">
-                    {{ submitSearchButtonLabel }}
+                    {{ submitSearchButtonLabel ?? messages.searchInputSubmit }}
                   </pf-button>
                 </pf-action-list-item>
                 <pf-action-list-item v-if="onClear">
                   <pf-button variant="link" type="reset" @click="onClear">
-                    {{ resetButtonLabel }}
+                    {{ resetButtonLabel ?? messages.searchInputReset }}
                   </pf-button>
                 </pf-action-list-item>
               </pf-action-list-group>
@@ -60,11 +60,11 @@
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   /** Flag for toggling the open/close state of the advanced search menu. */
   searchMenuOpen?: boolean;
-  /** Label for the button which resets the advanced search form and clears the search input. */
+  /** Label for the button which resets the advanced search form and clears the search input. Defaults to the `searchInputReset` message. */
   resetButtonLabel?: string;
-  /** Label for the button which calls the onSearch event handler. */
+  /** Label for the button which calls the onSearch event handler. Defaults to the `searchInputSubmit` message. */
   submitSearchButtonLabel?: string;
-  /** Attribute label for strings unassociated with one of the provided listed attributes. */
+  /** Attribute label for strings unassociated with one of the provided listed attributes. Defaults to the `searchInputWords` message. */
   wordsAttrLabel?: string;
   /** Array of attribute values used for dynamically generated advanced search. */
   attributes?: (string | SearchAttribute)[];
@@ -83,6 +83,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import { computed, inject, useId, useTemplateRef, type HTMLAttributes, type VNode } from 'vue';
+import { usePfMessages } from '../../messages';
 import { devError } from '../../helpers/dev';
 import { buildQueryString, getAttrValueMap as parseAttrValueMap, type SearchAttribute, SearchInputKey } from './common';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -104,10 +105,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   attributes: (): (string | SearchAttribute)[] => [],
-  resetButtonLabel: 'Reset',
-  submitSearchButtonLabel: 'Search',
-  wordsAttrLabel: 'Has words',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Value of the search input. */

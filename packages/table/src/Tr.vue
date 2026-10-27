@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   expanded: undefined,
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => any;
@@ -50,7 +51,7 @@ const ariaLabel = computed(() => {
   if (!props.selectable || isHidden.value) {
     return undefined;
   }
-  return props.selected ? 'Row selected' : '';
+  return props.selected ? messages.value.trSelected : '';
 });
 
 useChildrenTracker(TableTrKey);
@@ -65,6 +66,7 @@ function onKeyDown(e: KeyboardEvent) {
 
 <script lang="ts">
 import { computed, inject, type HTMLAttributes } from 'vue';
+import { usePfMessages } from '@vue-patternfly/core/messages';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import inlineStyles from '@patternfly/react-styles/css/components/InlineEdit/inline-edit';
@@ -98,7 +100,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCli
   selectable?: boolean;
   /** Flag indicating the spacing offset of the first cell should be reset */
   resetOffset?: boolean;
-  /** Accessible label of the row. Selectable rows default to "Row selected" when selected. */
+  /** Accessible label of the row. Selectable rows default to the `trSelected` message when selected. */
   ariaLabel?: string;
   /** An event handler for the row, also triggered by Enter and Space */
   onClick?: (event?: PointerEvent | KeyboardEvent) => void;

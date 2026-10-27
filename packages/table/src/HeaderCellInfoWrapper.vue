@@ -37,6 +37,7 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
+const messages = usePfMessages();
 
 const slots = defineSlots<{
   /** The header cell content that is wrapped */
@@ -49,11 +50,12 @@ const slots = defineSlots<{
   'popover-footer'?: (props?: Record<never, never>) => any;
 }>();
 
-const buttonAriaLabel = computed(() => props.ariaLabel || props.info || 'More info');
+const buttonAriaLabel = computed(() => props.ariaLabel || props.info || messages.value.thInfo);
 </script>
 
 <script lang="ts">
 import { computed } from 'vue';
+import { usePfMessages } from '@vue-patternfly/core/messages';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import styles from '@patternfly/react-styles/css/components/Table/table';
 import { PfButton, PfPopover, PfTooltip } from '@vue-patternfly/core';

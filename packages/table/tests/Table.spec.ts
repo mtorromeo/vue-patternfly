@@ -10,6 +10,7 @@ import buttonStyles from '@patternfly/react-styles/css/components/Button/button'
 import menuToggleStyles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
 import accessibilityStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import { PfDropdownItem, PfMenuToggle } from '@vue-patternfly/core';
+import { providePfMessages } from '@vue-patternfly/core/messages';
 import PfTable from '../src/Table.vue';
 import PfThead from '../src/Thead.vue';
 import PfTbody from '../src/Tbody.vue';
@@ -853,6 +854,29 @@ describe('Th', () => {
     await th.trigger('blur');
     expect(wrapper.findComponent({ name: 'PfTooltip' }).exists()).toBe(false);
     wrapper.unmount();
+  });
+});
+
+describe('messages', () => {
+  it('uses the provided messages for the default labels', () => {
+    const Provider = defineComponent({
+      setup(_, { slots }) {
+        providePfMessages({ thRowSelect: 'Selezione', tdSelectRow: row => `Seleziona riga ${row}` });
+        return () => slots.default?.();
+      },
+    });
+    const wrapper = mount(Provider, {
+      slots: {
+        default: () =>
+          h(PfTable, null, () => [
+            h(PfThead, null, () => h(PfTr, null, () => h(PfTh, { selected: false }))),
+            h(PfTbody, null, () => h(PfTr, null, () => h(PfTd, { selected: false, rowIndex: 3 }))),
+          ]),
+      },
+    });
+
+    expect(wrapper.get('th').attributes('aria-label')).toBe('Selezione');
+    expect(wrapper.get('td input').attributes('aria-label')).toBe('Seleziona riga 3');
   });
 });
 

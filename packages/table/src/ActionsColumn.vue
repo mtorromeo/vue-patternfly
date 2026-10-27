@@ -10,6 +10,7 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
+const messages = usePfMessages();
 
 const slots = defineSlots<{
   /** Actions of the dropdown: pf-dropdown-item and pf-divider (with component="li") */
@@ -39,7 +40,11 @@ const ActionsDropdown = () =>
     {
       toggle: () =>
         slots.toggle?.() ?? [
-          h(PfMenuToggle, { 'aria-label': 'Kebab toggle', variant: 'plain' }, { icon: () => h(EllipsisVerticalIcon) }),
+          h(
+            PfMenuToggle,
+            { 'aria-label': messages.value.actionsColumnToggle, variant: 'plain' },
+            { icon: () => h(EllipsisVerticalIcon) },
+          ),
         ],
       default: () => h(PfDropdownList, null, slots.default),
     },
@@ -48,6 +53,7 @@ const ActionsDropdown = () =>
 
 <script lang="ts">
 import { h, useAttrs } from 'vue';
+import { usePfMessages } from '@vue-patternfly/core/messages';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import { PfDropdown, PfDropdownList, PfMenuToggle } from '@vue-patternfly/core';
 import EllipsisVerticalIcon from '@vue-patternfly/icons/ellipsis-vertical-icon';

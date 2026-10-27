@@ -36,7 +36,7 @@
         role="separator"
         tabindex="0"
         :aria-orientation="position === 'bottom' ? 'horizontal' : 'vertical'"
-        :aria-label="resizeAriaLabel"
+        :aria-label="resizeAriaLabel ?? messages.drawerResize"
         :aria-valuenow="separatorValue"
         aria-valuemin="0"
         aria-valuemax="100"
@@ -80,7 +80,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidde
   maxSize?: string;
   /** The increment amount for keyboard drawer resizing. */
   increment?: number;
-  /** Aria label for the resizable drawer splitter. */
+  /** Aria label for the resizable drawer splitter. Defaults to the `drawerResize` message. */
   resizeAriaLabel?: string;
   /** Width for drawer panel at various breakpoints. Overriden by resizable drawer minSize and defaultSize. */
   widths?: {
@@ -106,6 +106,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidde
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Drawer/drawer';
+import { usePfMessages } from '../../messages';
 import { devWarn } from '../../helpers/dev';
 import cssPanelMdFlexBasis from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis';
 import cssPanelMdFlexBasisMin from '@patternfly/react-tokens/dist/esm/c_drawer__panel_md_FlexBasis_min';
@@ -125,9 +126,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<Props>(), {
   increment: 5,
-  resizeAriaLabel: 'Resize',
   id: () => useId(),
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

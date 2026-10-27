@@ -48,7 +48,7 @@
         :name="table?.radioName ?? 'radioGroup'"
         :checked="selected"
         :disabled="selectDisabled"
-        :aria-label="`Select row${rowSuffix}`"
+        :aria-label="messages.tdSelectRow(rowIndex)"
         v-bind="selectAttrs"
         @change="onSelect"
       />
@@ -58,7 +58,7 @@
         :name="rowIndex !== undefined ? `checkrow${rowIndex}` : undefined"
         :model-value="selected"
         :disabled="selectDisabled"
-        :aria-label="`Select row${rowSuffix}`"
+        :aria-label="messages.tdSelectRow(rowIndex)"
         v-bind="selectAttrs"
         @change="onSelect"
       />
@@ -77,7 +77,7 @@
           variant="plain"
           :class="{ [styles.modifiers.expanded]: tree.expanded.value }"
           :aria-expanded="tree.expanded.value"
-          :aria-label="`${tree.expanded.value ? 'Collapse' : 'Expand'} row${rowSuffix}`"
+          :aria-label="messages.tdTreeToggle(!!tree.expanded.value, rowIndex)"
           v-bind="toggleAttrs"
           @click="tree.expanded.value = !tree.expanded.value"
         >
@@ -93,7 +93,7 @@
         <label :for="treeCheckboxId">
           <pf-checkbox
             :id="treeCheckboxId"
-            :aria-label="`Row${rowSuffix} checkbox`"
+            :aria-label="messages.tdTreeCheckbox(rowIndex)"
             :model-value="tree.checked.value"
             v-bind="selectAttrs"
             @update:model-value="tree.checked.value = $event"
@@ -111,7 +111,7 @@
         <pf-button
           variant="plain"
           :aria-expanded="tree.detailsExpanded.value"
-          aria-label="Show row details"
+          :aria-label="messages.tdShowDetails"
           v-bind="detailsToggleAttrs"
           @click="tree.detailsExpanded.value = !tree.detailsExpanded.value"
         >
@@ -141,7 +141,7 @@
         :class="{ [styles.modifiers.expanded]: expanded }"
         :small="table?.compact.value"
         :aria-labelledby="`simple-node${rowIndex ?? -1} ${expandId}${rowIndex ?? -1}`"
-        aria-label="Details"
+        :aria-label="messages.tdDetails"
         :aria-expanded="expanded"
         v-bind="toggleAttrs"
         @click="onToggle"
@@ -159,7 +159,7 @@
       type="button"
       favorite
       :favorited="favorited"
-      :aria-label="favorited ? 'Starred' : 'Not starred'"
+      :aria-label="messages.tdFavorite(!!favorited)"
       v-bind="{
         ...(rowIndex !== undefined && {
           id: `favorites-button-${rowIndex}`,
@@ -174,7 +174,7 @@
       v-else-if="draggableRow"
       variant="plain"
       type="button"
-      aria-label="Draggable row draggable button"
+      :aria-label="messages.tdDragButton"
       v-bind="draggableAttrs"
     >
       <template #icon><grip-vertical-icon /></template>
@@ -200,6 +200,7 @@ const props = withDefaults(defineProps<Props>(), {
   expandId: 'expand-toggle',
   stickyMinWidth: '120px',
 });
+const messages = usePfMessages();
 
 const emit = defineEmits<{
   /**
@@ -243,7 +244,6 @@ const tree = inject(TreeRowKey, undefined);
 const isSelectable = computed(() => props.selected !== undefined);
 const isExpandable = computed(() => props.expanded !== undefined);
 const isFavoritable = computed(() => props.favorited !== undefined);
-const rowSuffix = computed(() => (props.rowIndex !== undefined ? ` ${props.rowIndex}` : ''));
 const treeCheckboxId = computed(() =>
   typeof props.selectAttrs?.id === 'string' ? props.selectAttrs.id : `checkbox_${props.rowIndex}`,
 );
@@ -314,6 +314,7 @@ import {
   type ComponentPublicInstance,
   type TdHTMLAttributes,
 } from 'vue';
+import { usePfMessages } from '@vue-patternfly/core/messages';
 import { unrefElement } from '@vueuse/core';
 import { useOUIAProps, type OUIAProps } from '@vue-patternfly/core/helpers/ouia';
 import { classesFromBreakpointProps, type VisibilityBreakpointProps } from '@vue-patternfly/core/breakpoints';

@@ -20,6 +20,7 @@ interface Props
 
 <script lang="ts" setup>
 import { computed, inject } from 'vue';
+import { usePfMessages } from '../../messages';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfButton from '../Button.vue';
@@ -31,6 +32,7 @@ defineOptions({
 });
 
 const props = defineProps<Props>();
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{
@@ -44,8 +46,8 @@ const groupItem = inject(AlertGroupItemKey, undefined);
 // the variant label of the alert already ends with "alert:"
 const defaultAriaLabel = computed(() =>
   props.variantLabel
-    ? `Close ${props.variantLabel} alert: ${alert?.title.value}`
-    : `Close ${alert?.variantLabel.value} ${alert?.title.value}`,
+    ? messages.value.alertClose(messages.value.alertVariantLabel(props.variantLabel), alert?.title.value)
+    : messages.value.alertClose(alert?.variantLabel.value ?? '', alert?.title.value),
 );
 
 function onClick(event: MouseEvent) {

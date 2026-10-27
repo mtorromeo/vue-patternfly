@@ -40,7 +40,7 @@
     <button
       type="button"
       :class="[styles.wizardToggle, { [styles.modifiers.expanded]: navExpanded }]"
-      :aria-label="toggleAriaLabel"
+      :aria-label="toggleAriaLabel ?? messages.wizardToggle"
       :aria-expanded="navExpanded"
       @click="navExpanded = !navExpanded"
     >
@@ -87,7 +87,7 @@
         >
           <pf-wizard-nav
             :expanded="navExpanded"
-            :aria-label="navAriaLabel || navAttrs?.['aria-label'] || 'Wizard steps'"
+            :aria-label="navAriaLabel || navAttrs?.['aria-label'] || messages.wizardSteps"
             :aria-labelledby="navAttrs?.['aria-labelledby']"
           >
             <reuse-nav-item v-for="item in navItems" :key="item.step.id" :item="item" />
@@ -126,7 +126,7 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
   navAttrs?: { 'aria-label'?: string; 'aria-labelledby'?: string };
   /** Aria-label applied to the navigation */
   navAriaLabel?: string;
-  /** Aria-label applied to the toggle expanding the navigation on small screens */
+  /** Aria-label applied to the toggle expanding the navigation on small screens. Defaults to the `wizardToggle` message. */
   toggleAriaLabel?: string;
   /** The initial index the wizard is to start on (1 or higher). Defaults to 1. */
   startIndex?: number;
@@ -153,6 +153,7 @@ interface Props extends /* @vue-ignore */ HTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Wizard/wizard';
+import { usePfMessages } from '../../messages';
 import { devError } from '../../helpers/dev';
 import wizardHeightToken from '@patternfly/react-tokens/dist/esm/c_wizard_Height';
 import {
@@ -197,9 +198,9 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  toggleAriaLabel: 'Wizard toggle',
   startIndex: 1,
 });
+const messages = usePfMessages();
 
 const emit = defineEmits<{
   (

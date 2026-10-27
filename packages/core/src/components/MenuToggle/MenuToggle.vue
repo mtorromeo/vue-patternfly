@@ -128,6 +128,7 @@ interface Props
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
+import { usePfMessages } from '../../messages';
 import { computed, type ButtonHTMLAttributes, useAttrs, useTemplateRef, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import { createReusableTemplate } from '@vueuse/core';
@@ -147,6 +148,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   ariaHaspopup: 'menu',
 });
+const messages = usePfMessages();
 
 /** Flag indicating the toggle has expanded styling */
 const expanded = defineModel<boolean>('expanded', { default: false });
@@ -189,7 +191,7 @@ const buttonAttrs = computed(() => {
     return { ...attrs, ...ouiaProps, class: undefined, style: undefined };
   }
   const ariaLabel = attrs['aria-label'];
-  return { ...ouiaProps, 'aria-label': typeof ariaLabel === 'string' ? ariaLabel : 'Menu toggle' };
+  return { ...ouiaProps, 'aria-label': typeof ariaLabel === 'string' ? ariaLabel : messages.value.menuToggle };
 });
 
 const [DefineToggleControls, ToggleControls] = createReusableTemplate();

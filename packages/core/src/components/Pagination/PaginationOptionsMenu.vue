@@ -16,9 +16,9 @@
         :last-index="lastIndex"
         :count="count"
         :title-items="itemsTitle"
-        :of-word="ofWord"
+        :of-word="ofWord ?? messages.paginationOf"
       >
-        <b>{{ firstIndex }} - {{ lastIndex }}</b> {{ ofWord }}
+        <b>{{ firstIndex }} - {{ lastIndex }}</b> {{ ofWord ?? messages.paginationOf }}
         <b>{{ count }}</b>
         {{ itemsTitle }}
       </slot>
@@ -43,7 +43,7 @@
               @click="selectPerPage(o.value)"
             >
               {{ o.title }}
-              {{ ` ${perPageSuffix}` }}
+              {{ ` ${perPageSuffix ?? messages.paginationPerPageSuffix}` }}
             </pf-menu-item>
           </pf-menu-content>
         </pf-menu>
@@ -64,15 +64,15 @@ interface Props
   firstIndex?: number;
   /** The last index of the items being paginated */
   lastIndex?: number;
-  /** The title of the pagination options menu */
+  /** The title of the pagination options menu. Defaults to the `paginationItemsPerPage` message. */
   itemsPerPageTitle?: string;
-  /** The suffix to be displayed after each option on the options menu dropdown */
+  /** The suffix to be displayed after each option on the options menu dropdown. Defaults to the `paginationPerPageSuffix` message. */
   perPageSuffix?: string;
   /** The type or title of the items being paginated */
   itemsTitle?: string;
   /** Accessible label for the options toggle */
   optionsToggle?: string;
-  /** Label for the English word "of" */
+  /** Label for the English word "of". Defaults to the `paginationOf` message. */
   ofWord?: string;
   /** Element or selector where to render the floating menu */
   appendTo?: 'inline' | string | RendererElement | null | undefined;
@@ -81,6 +81,7 @@ interface Props
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Pagination/pagination';
+import { usePfMessages } from '../../messages';
 import PfMenu from '../Menu/Menu.vue';
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
@@ -101,15 +102,13 @@ const props = withDefaults(defineProps<Props>(), {
   count: undefined,
   firstIndex: 0,
   lastIndex: 0,
-  itemsPerPageTitle: 'Items per page',
-  perPageSuffix: 'per page',
   optionsToggle: '',
-  ofWord: 'of',
   page: 0,
   perPage: defaultPerPageOptions[0]?.value,
   perPageOptions: () => [...defaultPerPageOptions],
   widgetId: 'pagination-options-menu',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{

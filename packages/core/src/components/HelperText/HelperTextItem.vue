@@ -14,8 +14,8 @@
     </span>
     <span :class="styles.helperTextItemText">
       <slot />
-      <span v-if="variant !== 'default' && screenReaderText" class="pf-v6-screen-reader"
-        >: {{ screenReaderText }};</span
+      <span v-if="variant !== 'default' && effectiveScreenReaderText" class="pf-v6-screen-reader"
+        >: {{ effectiveScreenReaderText }};</span
       >
     </span>
   </component>
@@ -23,6 +23,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/HelperText/helper-text';
+import { usePfMessages } from '../../messages';
 import { inject, computed, type LiHTMLAttributes } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import MinusIcon from '@vue-patternfly/icons/minus-icon';
@@ -41,15 +42,18 @@ interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   /** Sets the component type of the helper text item. Defaults to li inside a ul helper text, div otherwise. */
   component?: 'div' | 'li';
   /** Text that is only accessible to screen readers in order to announce the variant of a helper text item.
-   * It is only rendered when the variant is not "default", and defaults to "<variant> status".
+   * It is only rendered when the variant is not "default", and defaults to the `helperTextStatus` message.
    */
   screenReaderText?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
-  screenReaderText: (props: Props) => `${props.variant ?? 'default'} status`,
 });
+const messages = usePfMessages();
+const effectiveScreenReaderText = computed(
+  () => props.screenReaderText ?? messages.value.helperTextStatus(props.variant),
+);
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{

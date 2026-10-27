@@ -7,7 +7,9 @@
     <pf-toolbar-group v-if="numberOfFilters">
       <slot name="label-container" />
       <pf-toolbar-item v-if="showClearFiltersButton && !customLabelGroupContent">
-        <pf-button variant="link" inline @click="clearAllFilters?.()">{{ clearFiltersButtonText }}</pf-button>
+        <pf-button variant="link" inline @click="clearAllFilters?.()">{{
+          clearFiltersButtonText ?? messages.toolbarClearFilters
+        }}</pf-button>
       </pf-toolbar-item>
       <component :is="customLabelGroupContent" v-if="customLabelGroupContent" />
     </pf-toolbar-group>
@@ -16,6 +18,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import { usePfMessages } from '../../messages';
 import { computed, inject, type HTMLAttributes, type VNode } from 'vue';
 import PfButton from '../Button.vue';
 import { ToolbarClearAllFiltersKey, ToolbarCustomLabelGroupContentKey, ToolbarNumberOfFiltersKey } from './Toolbar.vue';
@@ -30,12 +33,12 @@ defineOptions({
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
   expanded?: boolean;
   showClearFiltersButton?: boolean;
+  /** Text of the clear all filters button. Defaults to the `toolbarClearFilters` message. */
   clearFiltersButtonText?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  clearFiltersButtonText: 'Clear all filters',
-});
+const props = defineProps<Props>();
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 defineSlots<{

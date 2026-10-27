@@ -54,7 +54,7 @@
     <slot name="actions" />
     <pf-tab-action
       v-if="closable"
-      :aria-label="closeButtonAriaLabel || 'Close tab'"
+      :aria-label="closeButtonAriaLabel || messages.tabClose"
       :disabled="closeDisabled"
       @click="tabs?.close($event, key)"
     >
@@ -111,6 +111,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Tabs/tabs';
+import { usePfMessages } from '../../messages';
 import { computed, getCurrentInstance, inject, ref, toValue, useId, watch, watchEffect, type VNode } from 'vue';
 import { TabsKey, TabsProvideKey } from './common';
 import PfTabTitleIcon from './TabTitleIcon.vue';
@@ -134,6 +135,7 @@ const props = withDefaults(defineProps<Props>(), {
   mountOnEnter: undefined,
   unmountOnExit: undefined,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

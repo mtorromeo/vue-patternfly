@@ -27,7 +27,7 @@
       <ul
         :class="styles.labelGroupList"
         :aria-labelledby="category ? effectiveId : undefined"
-        :aria-label="category ? undefined : ariaLabel"
+        :aria-label="category ? undefined : (ariaLabel ?? messages.labelGroupCategory)"
         role="list"
       >
         <pass-through>
@@ -43,7 +43,11 @@
             </template>
             <li v-if="children.length > numLabels" :class="styles.labelGroupListItem">
               <pf-label :compact="compact" overflow @click="overflowLabelClick">
-                {{ open ? expandedText : fillTemplate(collapsedText, { remaining: children.length - numLabels }) }}
+                {{
+                  open
+                    ? (expandedText ?? messages.labelGroupShowLess)
+                    : fillTemplate(collapsedText ?? messages.labelGroupMore, { remaining: children.length - numLabels })
+                }}
               </pf-label>
             </li>
           </template>
@@ -63,7 +67,7 @@
         :id="`remove_group_${effectiveId}`"
         variant="plain"
         small
-        :aria-label="closeBtnAriaLabel"
+        :aria-label="closeBtnAriaLabel ?? messages.labelGroupClose"
         :aria-labelledby="`remove_group_${effectiveId} ${effectiveId}`"
         @click="emit('click', $event)"
       >
@@ -77,6 +81,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, useId, useTemplateRef, type HTMLAttributes, type TextareaHTMLAttributes } from 'vue';
+import { usePfMessages } from '../../messages';
 import styles from '@patternfly/react-styles/css/components/Label/label-group';
 import XmarkIcon from '@vue-patternfly/icons/xmark-icon';
 import PfLabel from './Label.vue';
@@ -115,24 +120,21 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onCli
   numLabels?: number;
   /** Position of the tooltip which is displayed if the category name text is longer */
   tooltipPosition?: Placement;
-  /** Aria label for close button */
+  /** Aria label for close button. Defaults to the `labelGroupClose` message. */
   closeBtnAriaLabel?: string;
-  /** Aria label for label group that does not have a category name */
+  /** Aria label for label group that does not have a category name. Defaults to the `labelGroupCategory` message. */
   ariaLabel?: string;
-  /** Customizable "Show Less" text string */
+  /** Customizable "Show Less" text string. Defaults to the `labelGroupShowLess` message. */
   expandedText?: string;
-  /** Customizable template string. Use variable "${remaining}" for the overflow label count. */
+  /** Customizable template string. Use variable "${remaining}" for the overflow label count. Defaults to the `labelGroupMore` message. */
   collapsedText?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   numLabels: 3,
   tooltipPosition: 'top',
-  closeBtnAriaLabel: 'Close label group',
-  ariaLabel: 'Label group category',
-  expandedText: 'Show Less',
-  collapsedText: '${remaining} more',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

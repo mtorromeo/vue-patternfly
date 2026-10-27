@@ -2,7 +2,7 @@
   <div v-if="horizontal && (!scrollViewAtStart || !scrollViewAtEnd)" :class="styles.navScrollButton">
     <pf-button
       variant="plain"
-      :aria-label="backScrollAriaLabel"
+      :aria-label="backScrollAriaLabel ?? messages.navScrollBack"
       :disabled="scrollViewAtStart"
       :tabindex="sidebarOpen ? undefined : -1"
       @click="scrollBack"
@@ -18,7 +18,7 @@
   <div v-if="horizontal && (!scrollViewAtStart || !scrollViewAtEnd)" :class="styles.navScrollButton">
     <pf-button
       variant="plain"
-      :aria-label="forwardScrollAriaLabel"
+      :aria-label="forwardScrollAriaLabel ?? messages.navScrollForward"
       :disabled="scrollViewAtEnd"
       :tabindex="sidebarOpen ? undefined : -1"
       @click="scrollForward"
@@ -32,15 +32,16 @@
 
 <script lang="ts">
 interface Props extends /* @vue-ignore */ Omit<HTMLAttributes, 'onScroll'> {
-  /** Aria-label for the back scroll button */
+  /** Aria-label for the back scroll button. Defaults to the `navScrollBack` message. */
   backScrollAriaLabel?: string;
-  /** Aria-label for the forward scroll button */
+  /** Aria-label for the forward scroll button. Defaults to the `navScrollForward` message. */
   forwardScrollAriaLabel?: string;
 }
 </script>
 
 <script lang="ts" setup>
 import PfButton from '../Button.vue';
+import { usePfMessages } from '../../messages';
 import { SidebarOpenKey } from '../Page/PageSidebar.vue';
 import AngleLeftIcon from '@vue-patternfly/icons/angle-left-icon';
 import AngleRightIcon from '@vue-patternfly/icons/angle-right-icon';
@@ -54,11 +55,9 @@ defineOptions({
   name: 'PfNavList',
   inheritAttrs: false,
 });
+const messages = usePfMessages();
 
-withDefaults(defineProps<Props>(), {
-  backScrollAriaLabel: 'Scroll back',
-  forwardScrollAriaLabel: 'Scroll forward',
-});
+defineProps<Props>();
 
 defineSlots<{
   default?: (props?: Record<never, never>) => VNode[];

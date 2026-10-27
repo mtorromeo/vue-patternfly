@@ -43,7 +43,7 @@
           </span>
           <span :class="styles.wizardNavLinkToggle">
             <span :class="styles.wizardNavLinkToggleIcon">
-              <angle-down-icon :aria-label="`${current ? 'Collapse' : 'Expand'} step icon`" />
+              <angle-down-icon :aria-label="messages.wizardStepToggle(!!current)" />
             </span>
           </span>
         </template>
@@ -83,6 +83,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<LiHTMLAttributes, 'onC
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Wizard/wizard';
+import { usePfMessages } from '../../messages';
 import { devError } from '../../helpers/dev';
 import { ref, watch, type LiHTMLAttributes, type VNode } from 'vue';
 import CircleExclamationIcon from '@vue-patternfly/icons/circle-exclamation-icon';
@@ -102,6 +103,7 @@ const props = withDefaults(defineProps<Props>(), {
   status: 'default',
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

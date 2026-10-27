@@ -84,13 +84,14 @@ interface Props<T>
   fullWidth?: boolean;
   /** Variant styles of the menu toggle. With typeahead the toggle arrow keys don't move the focus to the menu. */
   variant?: 'default' | 'plain' | 'primary' | 'plainText' | 'secondary' | 'typeahead';
-  /** Label for the menu toggle */
+  /** Label for the menu toggle. Defaults to the `selectLabel` message. */
   label?: string;
 }
 </script>
 
 <script lang="ts" setup generic="T extends MenuItemId | MenuItemId[] = MenuItemId | MenuItemId[]">
 import PfMenuToggle from '../MenuToggle/MenuToggle.vue';
+import { usePfMessages } from '../../messages';
 import PfMenu, { type MenuItemId } from '../Menu/Menu.vue';
 import PfMenuContent from '../Menu/MenuContent.vue';
 import PassThrough from '../../helpers/PassThrough.vue';
@@ -122,12 +123,12 @@ const props = withDefaults(defineProps<Props<T>>(), {
   role: 'listbox',
   zIndex: 9999,
   placement: 'bottom',
-  label: 'Select a value',
   openChangeKeys: () => ['Escape', 'Tab'],
   focusTimeoutDelay: 0,
   scrollable: undefined,
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 /** Flag to indicate if select is open */
@@ -215,7 +216,7 @@ function renderToggles() {
       ),
       {
         icon: slots.icon,
-        default: slots.label || props.label ? () => slots.label?.() ?? props.label : undefined,
+        default: () => slots.label?.() ?? props.label ?? messages.value.selectLabel,
       },
     ),
   ];

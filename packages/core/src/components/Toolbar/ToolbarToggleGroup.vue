@@ -3,7 +3,7 @@
     <div :class="styles.toolbarToggle">
       <pf-button
         variant="plain"
-        aria-label="Show Filters"
+        :aria-label="messages.toolbarShowFilters"
         :aria-expanded="expanded || undefined"
         :aria-haspopup="expanded && isContentPopup"
         :aria-controls="expanded ? expandableContentId : undefined"
@@ -23,6 +23,7 @@
 
 <script lang="ts" setup>
 import { classesFromBreakpointProps, type BreakpointProps } from '../../breakpoints';
+import { usePfMessages } from '../../messages';
 import { devError } from '../../helpers/dev';
 import { toCamelCase } from '../../util';
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
@@ -42,6 +43,7 @@ defineOptions({
 interface Props extends ToolbarGroupProps, BreakpointProps {}
 
 const props = defineProps<Props>();
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const slots = defineSlots<{

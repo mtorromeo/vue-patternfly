@@ -20,10 +20,12 @@
       v-if="showNumberOfFilters || showDefaultClearFilter || $slots.default"
       variant="action-group-inline"
     >
-      <pf-toolbar-item v-if="showNumberOfFilters">{{ numberOfFiltersText(numberOfFilters) }}</pf-toolbar-item>
+      <pf-toolbar-item v-if="showNumberOfFilters">{{
+        (numberOfFiltersText ?? messages.toolbarFiltersApplied)(numberOfFilters)
+      }}</pf-toolbar-item>
       <pf-toolbar-item v-if="showDefaultClearFilter">
         <pf-button variant="link" inline @click="emit('clearAllFilters')">
-          {{ clearFiltersButtonText }}
+          {{ clearFiltersButtonText ?? messages.toolbarClearFilters }}
         </pf-button>
       </pf-toolbar-item>
       <slot />
@@ -33,6 +35,7 @@
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Toolbar/toolbar';
+import { usePfMessages } from '../../messages';
 import { globalBreakpoints } from './common';
 import PfToolbarGroup from './ToolbarGroup.vue';
 import PfToolbarItem from './ToolbarItem.vue';
@@ -46,7 +49,9 @@ defineOptions({
 });
 
 interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidden'> {
+  /** Text of the clear all filters button. Defaults to the `toolbarClearFilters` message. */
   clearFiltersButtonText?: string;
+  /** Text of the total number of applied filters. Defaults to the `toolbarFiltersApplied` message. */
   numberOfFiltersText?: (numberOfFilters: number) => string;
   collapseListedFiltersBreakpoint?: keyof typeof globalBreakpoints | 'all';
   numberOfFilters?: number;
@@ -55,11 +60,10 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'hidde
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  clearFiltersButtonText: 'Clear all filters',
   collapseListedFiltersBreakpoint: 'lg',
   numberOfFilters: 0,
-  numberOfFiltersText: (numberOfFilters: number) => `${numberOfFilters} filters applied`,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

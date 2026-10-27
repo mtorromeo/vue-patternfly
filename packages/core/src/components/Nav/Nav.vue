@@ -12,7 +12,7 @@
         [styles.modifiers.expanded]: variant === 'docked' && expanded,
       },
     ]"
-    :aria-label="ariaLabel || (variant === 'horizontal-subnav' ? 'Local' : 'Global')"
+    :aria-label="ariaLabel || (variant === 'horizontal-subnav' ? messages.navLocal : messages.navGlobal)"
   >
     <slot />
   </nav>
@@ -33,6 +33,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'onSel
 
 <script lang="ts" setup>
 import { computed, ref, provide, useTemplateRef, type Ref, type HTMLAttributes, type VNode } from 'vue';
+import { usePfMessages } from '../../messages';
 import type { RouteLocationRaw } from 'vue-router';
 import styles from '@patternfly/react-styles/css/components/Nav/nav';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -54,6 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

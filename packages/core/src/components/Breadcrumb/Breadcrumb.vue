@@ -1,5 +1,5 @@
 <template>
-  <nav v-bind="ouiaProps" :class="styles.breadcrumb" :aria-label="ariaLabel">
+  <nav v-bind="ouiaProps" :class="styles.breadcrumb" :aria-label="ariaLabel ?? messages.breadcrumb">
     <ol :class="styles.breadcrumbList" role="list">
       <slot-with-dividers />
     </ol>
@@ -8,13 +8,14 @@
 
 <script lang="ts">
 interface Props extends OUIAProps, /* @vue-ignore */ HTMLAttributes {
-  /** Aria label added to the breadcrumb nav. */
+  /** Aria label added to the breadcrumb nav. Defaults to the `breadcrumb` message. */
   ariaLabel?: string;
 }
 </script>
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
+import { usePfMessages } from '../../messages';
 import { findChildrenVNodes } from '../../util';
 import { cloneVNode, type HTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -24,9 +25,9 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<Props>(), {
-  ariaLabel: 'Breadcrumb',
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const slots = defineSlots<{

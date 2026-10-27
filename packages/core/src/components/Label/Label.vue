@@ -73,7 +73,7 @@
           <pf-button
             variant="plain"
             no-padding
-            :aria-label="closeBtnAriaLabel ?? ['Close', slotText()].filter(Boolean).join(' ')"
+            :aria-label="closeBtnAriaLabel ?? messages.labelClose(slotText())"
             :disabled="isClickableDisabled ? true : undefined"
             v-bind="closeBtnAttrs"
             @click="onClose"
@@ -129,6 +129,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ ButtonHTMLAttributes {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Label/label';
+import { usePfMessages } from '../../messages';
 import { devWarn } from '../../helpers/dev';
 import labelGroupStyles from '@patternfly/react-styles/css/components/Label/label-group';
 import cssTextMaxWidth from '@patternfly/react-tokens/dist/esm/c_label__text_MaxWidth';
@@ -179,6 +180,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'filled',
   tooltipPosition: 'top',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

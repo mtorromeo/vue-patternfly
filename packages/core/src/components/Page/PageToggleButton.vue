@@ -6,7 +6,7 @@
     :hamburger="hamburger"
     :hamburger-variant="hamburgerVariant"
     :expanded="sidebarOpen"
-    aria-label="Side navigation toggle"
+    :aria-label="messages.pageToggle"
     @click="sidebarOpen = !sidebarOpen"
   >
     <slot v-if="!hamburger" />
@@ -34,6 +34,7 @@ interface Props
 
 <script lang="ts" setup>
 import { computed, inject, type VNode } from 'vue';
+import { usePfMessages } from '../../messages';
 import { PageManagedSidebarKey, PageSidebarOpenKey } from './common';
 import PfButton from '../Button.vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
@@ -46,6 +47,7 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   id: 'nav-toggle',
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
 
 const emit = defineEmits<{

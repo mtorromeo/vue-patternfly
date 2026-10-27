@@ -22,7 +22,7 @@
       <pf-button
         variant="plain"
         :aria-expanded="expanded"
-        :aria-label="toggleAriaLabel ?? `${capitalizedVariant} alert details`"
+        :aria-label="toggleAriaLabel ?? messages.alertToggle(capitalizedVariant)"
         @click="expanded = !expanded"
       >
         <template #icon>
@@ -117,6 +117,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<HTMLAttributes, 'title
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/Alert/alert';
+import { usePfMessages } from '../../messages';
 import maxLines from '@patternfly/react-tokens/dist/esm/c_alert__title_max_lines';
 import PassThrough from '../../helpers/PassThrough.vue';
 import PfTooltip from '../Tooltip/Tooltip.vue';
@@ -155,6 +156,7 @@ const props = withDefaults(defineProps<Props>(), {
   component: 'h4',
   ouiaSafe: true,
 });
+const messages = usePfMessages();
 const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe, variant: props.variant });
 
 /** Flag indicating that the alert is expanded */
@@ -183,7 +185,9 @@ defineSlots<{
 const groupItem = inject(AlertGroupItemKey, undefined);
 
 const capitalizedVariant = computed(() => `${props.variant.charAt(0).toUpperCase()}${props.variant.slice(1)}`);
-const effectiveVariantLabel = computed(() => props.variantLabel ?? `${capitalizedVariant.value} alert:`);
+const effectiveVariantLabel = computed(
+  () => props.variantLabel ?? messages.value.alertVariantLabel(capitalizedVariant.value),
+);
 
 provide(AlertKey, {
   title: computed(() => props.title),
