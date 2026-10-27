@@ -18,7 +18,10 @@ body = """
 {% for group, commits in commits | group_by(attribute="group") %}
     ### {{ group | upper_first }}
     {% for commit in commits %}
-        - {% if commit.scope %}*({{ commit.scope }})* {% endif %}{% if commit.breaking %}[**breaking**] {% endif %}{{ commit.message | upper_first }}\
+        - {% if commit.scope %}*({{ commit.scope }})* {% endif %}{% if commit.breaking %}[**breaking**] {% endif %}{{ commit.message | upper_first }}
+        {% if commit.body %}
+{{ commit.body | trim | indent(prefix="  ", first=true) }}
+        {% endif %}\
     {% endfor %}
 {% endfor %}\n
 """
@@ -32,8 +35,8 @@ footer = """
 [git]
 # parse the commits based on https://www.conventionalcommits.org
 conventional_commits = true
-# process each line of a commit as an individual commit
-split_commits = true
+# keep each commit whole, so its body can go in the changelog
+split_commits = false
 # regex for preprocessing the commit messages
 commit_preprocessors = [
   { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/mtorromeo/vue-patternfly/issues/${2}))" },
