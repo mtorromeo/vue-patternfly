@@ -5,6 +5,7 @@ import styles from '@patternfly/react-styles/css/components/Menu/menu';
 import toggleStyles from '@patternfly/react-styles/css/components/MenuToggle/menu-toggle';
 import PfDropdown from '../../src/components/Dropdown/Dropdown.vue';
 import { PfDropdownItem } from '../../src/components/Dropdown';
+import PfMenuToggle from '../../src/components/MenuToggle/MenuToggle.vue';
 
 type DropdownProps = InstanceType<typeof PfDropdown>['$props'];
 
@@ -117,7 +118,7 @@ describe('Dropdown', () => {
   });
 
   it('emits select and stays open with focus on the item by default, like upstream', async () => {
-    const wrapper = await mountDropdown({ open: true });
+    const wrapper = await mountDropdown({ open: true, noCloseOnSelect: true });
 
     menuItems()[1]!.focus();
     menuItems()[1]!.click();
@@ -130,8 +131,8 @@ describe('Dropdown', () => {
     wrapper.unmount();
   });
 
-  it('closes on select with closeOnSelect', async () => {
-    const wrapper = await mountDropdown({ open: true, closeOnSelect: true });
+  it('closes on select by default', async () => {
+    const wrapper = await mountDropdown({ open: true });
 
     menuItems()[0]!.click();
     await flushPromises();
@@ -157,6 +158,30 @@ describe('Dropdown', () => {
     expect(menu()!.getAttribute('data-ouia-component-id')).toBe('my-dropdown');
     expect(menu()!.getAttribute('data-ouia-safe')).toBe('true');
     expect(toggle().getAttribute('data-ouia-component-type')).toBe('PF/MenuToggle');
+    expect(toggle().getAttribute('data-ouia-component-id')).toBe('my-dropdown');
+    wrapper.unmount();
+  });
+
+  it('gives the OUIA id to a menu toggle in the slot without its own', async () => {
+    const wrapper = await mountDropdown(
+      { open: true, ouiaId: 'my-dropdown' },
+      { default: defaultItems, toggle: () => h(PfMenuToggle, null, () => 'Custom') },
+    );
+    expect(toggle().getAttribute('data-ouia-component-id')).toBe('my-dropdown');
+    wrapper.unmount();
+
+    const own = await mountDropdown(
+      { open: true, ouiaId: 'my-dropdown' },
+      { default: defaultItems, toggle: () => h(PfMenuToggle, { ouiaId: 'own' }, () => 'Custom') },
+    );
+    expect(toggle().getAttribute('data-ouia-component-id')).toBe('own');
+    own.unmount();
+  });
+
+  it('uses the containerOuiaId on the menu without an ouiaId', async () => {
+    const wrapper = await mountDropdown({ containerOuiaId: 'test-dropdown', open: true });
+    expect(menu()!.getAttribute('data-ouia-component-id')).toBe('test-dropdown');
+    expect(toggle().getAttribute('data-ouia-component-id')).toBe('test-dropdown');
     wrapper.unmount();
   });
 

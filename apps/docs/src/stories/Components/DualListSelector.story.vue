@@ -324,7 +324,7 @@
             >
               <template #icon><arrow-down-short-wide-icon /></template>
             </pf-button>
-            <pf-dropdown close-on-select>
+            <pf-dropdown>
               <template #toggle>
                 <pf-menu-toggle
                   id="complex-available-toggle"
@@ -421,7 +421,7 @@
             >
               <template #icon><arrow-down-short-wide-icon /></template>
             </pf-button>
-            <pf-dropdown close-on-select>
+            <pf-dropdown>
               <template #toggle>
                 <pf-menu-toggle
                   id="complex-chosen-toggle"

@@ -167,7 +167,7 @@
         @select="(_event, item) => !item.children && (actionItems = [item])"
       >
         <template #action="{ item }">
-          <pf-dropdown v-if="item.id === 'example7-AppLaunch'" v-model:open="actionOpen" close-on-select>
+          <pf-dropdown v-if="item.id === 'example7-AppLaunch'" v-model:open="actionOpen">
             <template #toggle>
               <pf-menu-toggle variant="plain" aria-label="Tree view with actions example kebab toggle">
                 <template #icon><ellipsis-vertical-icon /></template>

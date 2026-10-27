@@ -60,7 +60,7 @@
                 </pf-toolbar-item>
 
                 <pf-toolbar-item>
-                  <pf-dropdown close-on-select>
+                  <pf-dropdown>
                     <template #toggle>
                       <pf-menu-toggle> VuePatternfly v6 </pf-menu-toggle>
                     </template>

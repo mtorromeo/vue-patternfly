@@ -17,7 +17,8 @@
       ## Differences from patternfly-react
       - The open state is bound with `v-model:open`, replacing `isOpen` and `onOpenChange`.
       - The toggle is the `#toggle` slot instead of the `toggle` prop; its id, `expanded` state, `aria-haspopup` and keyboard handling are bound automatically. Without the slot, a `pf-menu-toggle` is rendered with the `text`, `variant`, `split-button`, `disabled` and `id` props.
-      - `close-on-select` closes the menu when an item is selected, instead of closing it in the `select` listener.
+      - The menu closes when an item is selected, instead of closing it in the `select` listener; `no-close-on-select` keeps it open.
+      - Without an `ouia-id`, the menu uses the `container-ouia-id`; the default toggle, or a `pf-menu-toggle` in the `#toggle` slot without its own, gets the same OUIA id.
       - `onOpenChangeKeys` is `open-change-keys` and `onToggleKeydown` the `toggle-keydown` listener.
       - `scroll-on-item-focus` replaces `shouldPreventScrollOnItemFocus`, which defaults to `true`.
       - `popperProps` is replaced by the `append-to`, `placement`, `position` and `z-index` props; the menu always flips to stay in view.
@@ -54,7 +55,6 @@
         text="Dropdown"
         ouia-id="BasicDropdown"
         should-focus-toggle-on-select
-        close-on-select
         @select="onSelect"
       >
         <pf-dropdown-list>
@@ -87,7 +87,7 @@
         </pre>
       </template>
 
-      <pf-dropdown v-model:open="open.kebab" should-focus-toggle-on-select close-on-select @select="onSelect">
+      <pf-dropdown v-model:open="open.kebab" should-focus-toggle-on-select @select="onSelect">
         <template #toggle>
           <pf-menu-toggle aria-label="kebab dropdown toggle" variant="plain">
             <template #icon>
@@ -117,13 +117,7 @@
         </pre>
       </template>
 
-      <pf-dropdown
-        v-model:open="open.groups"
-        text="Dropdown"
-        should-focus-toggle-on-select
-        close-on-select
-        @select="onSelect"
-      >
+      <pf-dropdown v-model:open="open.groups" text="Dropdown" should-focus-toggle-on-select @select="onSelect">
         <pf-dropdown-group>
           <pf-dropdown-list>
             <pf-dropdown-item :value="0">Action</pf-dropdown-item>
@@ -158,7 +152,7 @@
         </pre>
       </template>
 
-      <pf-dropdown v-model:open="open.descriptions" should-focus-toggle-on-select close-on-select @select="onSelect">
+      <pf-dropdown v-model:open="open.descriptions" should-focus-toggle-on-select @select="onSelect">
         <template #toggle>
           <pf-menu-toggle full-width>Dropdown</pf-menu-toggle>
         </template>
@@ -194,7 +188,7 @@
         </pre>
       </template>
 
-      <pf-dropdown v-model:open="open.split" close-on-select @select="focusSplitToggle">
+      <pf-dropdown v-model:open="open.split" @select="focusSplitToggle">
         <template #toggle>
           <pf-menu-toggle ref="splitToggle" aria-label="Dropdown with checkbox split button">
             <template #split-buttons>

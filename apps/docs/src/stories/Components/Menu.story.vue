@@ -726,7 +726,7 @@
             <pf-breadcrumb>
               <pf-breadcrumb-item component="button" @click="drillOutTo(0)">Root</pf-breadcrumb-item>
               <pf-breadcrumb-item v-if="breadcrumbPath.length > 1" dropdown>
-                <pf-dropdown close-on-select>
+                <pf-dropdown>
                   <template #toggle>
                     <pf-menu-toggle variant="plainText" aria-label="Previous levels">
                       <template #badge><pf-badge read screen-reader-text="additional item">1</pf-badge></template>

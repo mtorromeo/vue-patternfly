@@ -1,6 +1,6 @@
 <template>
   <define-overflow-dropdown v-slot="{ label, items }">
-    <pf-dropdown close-on-select>
+    <pf-dropdown>
       <template #toggle>
         <pf-menu-toggle variant="plain" :aria-label="label">
           <template #icon>

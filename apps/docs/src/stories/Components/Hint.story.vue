@@ -1,6 +1,6 @@
 <template>
   <define-kebab v-slot="{ label }">
-    <pf-dropdown close-on-select position="right">
+    <pf-dropdown position="right">
       <template #toggle>
         <pf-menu-toggle variant="plain" :aria-label="label">
           <template #icon>

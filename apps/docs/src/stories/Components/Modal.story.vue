@@ -358,7 +358,6 @@
               id="modal-dropdown-toggle"
               append-to="#modal-with-dropdown-focus-trap"
               should-focus-toggle-on-select
-              close-on-select
             >
               <pf-dropdown-list>
                 <pf-dropdown-item :value="0">Action</pf-dropdown-item>

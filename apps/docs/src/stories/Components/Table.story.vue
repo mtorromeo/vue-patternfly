@@ -692,7 +692,7 @@
                   </pf-overflow-menu-group>
                 </pf-overflow-menu-content>
                 <pf-overflow-menu-control>
-                  <pf-dropdown v-model:open="repo.menuOpen" close-on-select position="right">
+                  <pf-dropdown v-model:open="repo.menuOpen" position="right">
                     <template #toggle>
                       <pf-menu-toggle variant="plain" aria-label="Table actions overflow menu">
                         <template #icon><ellipsis-vertical-icon /></template>

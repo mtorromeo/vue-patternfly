@@ -67,7 +67,7 @@
     <story-canvas title="With dropdown">
       <pf-input-group>
         <pf-input-group-item>
-          <pf-dropdown text="Dropdown" close-on-select>
+          <pf-dropdown text="Dropdown">
             <pf-dropdown-item>Option 1</pf-dropdown-item>
             <pf-dropdown-item>Option 2</pf-dropdown-item>
             <pf-dropdown-item>Option 3</pf-dropdown-item>

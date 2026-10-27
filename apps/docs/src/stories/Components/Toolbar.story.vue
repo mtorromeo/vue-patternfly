@@ -602,7 +602,7 @@
                 </pf-overflow-menu-group>
               </pf-overflow-menu-content>
               <pf-overflow-menu-control additional-options>
-                <pf-dropdown v-model:open="stacked.kebabOpen" close-on-select>
+                <pf-dropdown v-model:open="stacked.kebabOpen">
                   <template #toggle>
                     <pf-menu-toggle variant="plain" aria-label="Stacked example overflow menu" />
                   </template>
@@ -617,7 +617,7 @@
         <pf-divider />
         <pf-toolbar-content>
           <pf-toolbar-item>
-            <pf-dropdown v-model:open="stacked.bulkOpen" close-on-select>
+            <pf-dropdown v-model:open="stacked.bulkOpen">
               <template #toggle>
                 <pf-menu-toggle>
                   <template #split-buttons>

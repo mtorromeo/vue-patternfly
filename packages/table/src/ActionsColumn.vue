@@ -31,7 +31,6 @@ const ActionsDropdown = () =>
     PfDropdown,
     {
       position: 'right',
-      closeOnSelect: true,
       ...attrs,
       disabled: props.disabled,
       open: open.value,

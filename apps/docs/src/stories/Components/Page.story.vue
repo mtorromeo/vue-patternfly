@@ -595,7 +595,7 @@
         <template #drawer>
           <pf-notification-drawer>
             <pf-notification-drawer-header count="4">
-              <pf-dropdown close-on-select position="right">
+              <pf-dropdown position="right">
                 <template #toggle>
                   <pf-menu-toggle variant="plain" />
                 </template>
@@ -614,7 +614,7 @@
                         title="Unread info notification title"
                         sr-title="Info notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>
@@ -633,7 +633,7 @@
                         title="Unread danger notification title. This is a long title to show how the title will wrap if it is long and wraps to multiple lines."
                         sr-title="Danger notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>
@@ -653,7 +653,7 @@
                         title="Read warning notification title"
                         sr-title="Warning notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>
@@ -673,7 +673,7 @@
                         title="Read success notification title"
                         sr-title="Success notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>
@@ -696,7 +696,7 @@
                         title="Unread info notification title"
                         sr-title="Info notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>
@@ -715,7 +715,7 @@
                         title="Unread danger notification title. This is a long title to show how the title will wrap if it is long and wraps to multiple lines."
                         sr-title="Danger notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>
@@ -735,7 +735,7 @@
                         title="Read warning notification title"
                         sr-title="Warning notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>
@@ -754,7 +754,7 @@
                         title="Read success notification title"
                         sr-title="Success notification:"
                       >
-                        <pf-dropdown close-on-select position="right">
+                        <pf-dropdown position="right">
                           <template #toggle>
                             <pf-menu-toggle variant="plain" />
                           </template>

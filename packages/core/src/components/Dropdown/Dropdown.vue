@@ -46,8 +46,8 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
 
   /** Flag indicating the toggle should be focused after a selection. */
   shouldFocusToggleOnSelect?: boolean;
-  /** Flag indicating that the dropdown should close when an item is selected. */
-  closeOnSelect?: boolean;
+  /** Flag indicating that the dropdown should stay open when an item is selected. */
+  noCloseOnSelect?: boolean;
   /**
    * Keys that close the menu, defaults to tab and escape. It is highly recommended to include Escape in the array,
    * while Tab may be omitted if the menu contains non-menu items that are focusable.
@@ -83,7 +83,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ Omit<ComponentProps<typeof 
   /** Time in ms to wait before focusing the first menu item on open. */
   focusTimeoutDelay?: number;
 
-  /** When applied, wraps the dropdown in a container with a data-ouia-component-id. */
+  /** When applied, wraps the dropdown in a container with a data-ouia-component-id. The menu uses it too, without an ouiaId. */
   containerOuiaId?: number | string;
   /** Set the value of data-ouia-safe for the container when containerOuiaId is applied. */
   containerOuiaSafe?: boolean;
@@ -133,7 +133,9 @@ const props = withDefaults(defineProps<Props>(), {
   containerOuiaSafe: true,
   containerComponent: 'span',
 });
-const ouiaProps = useOUIAProps({ id: props.ouiaId, safe: props.ouiaSafe });
+// the menu and the default toggle share the OUIA id, so tests find both with the same one
+const ouiaId = props.ouiaId ?? props.containerOuiaId;
+const ouiaProps = useOUIAProps({ id: ouiaId, safe: props.ouiaSafe });
 const containerOuiaProps = useOUIAProps({
   name: 'Dropdown container',
   id: props.containerOuiaId,
@@ -176,7 +178,7 @@ function onSelect(event: Event, itemId: MenuItemId | null | undefined) {
   if (props.shouldFocusToggleOnSelect) {
     focusToggle();
   }
-  if (props.closeOnSelect) {
+  if (!props.noCloseOnSelect) {
     open.value = false;
   }
 }
@@ -196,7 +198,10 @@ function renderToggles() {
   if (slots.toggle) {
     const toggles = slots.toggle({});
     for (const t of toggles) {
-      t.props = mergeProps(t.props ?? {}, toggleProps);
+      // a menu toggle in the slot gets the OUIA id, unless it has its own
+      const ownOuiaId = t.props?.ouiaId ?? t.props?.['ouia-id'];
+      const ouiaProps = t.type === PfMenuToggle && ownOuiaId === undefined ? { ouiaId } : {};
+      t.props = mergeProps(ouiaProps, t.props ?? {}, toggleProps);
     }
     children.push(...toggles);
   } else {
@@ -206,6 +211,7 @@ function renderToggles() {
         {
           splitButton: props.splitButton,
           variant: props.variant,
+          ouiaId,
         },
         toggleProps,
       ),
