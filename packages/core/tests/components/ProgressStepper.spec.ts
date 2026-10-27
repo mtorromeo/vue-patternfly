@@ -149,18 +149,19 @@ describe('ProgressStep', () => {
     expect(title.attributes('aria-labelledby')).toBeUndefined();
   });
 
-  it('warns without id and titleId', () => {
+  it('generates the ids labelling the popover trigger', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    try {
-      mount(PfProgressStep);
-      expect(warn).toHaveBeenCalledWith(
-        'ProgressStep: The titleId and id properties are required to make this component accessible, and one or both of these properties are missing.',
-      );
-      warn.mockClear();
-      mount(PfProgressStep, { props: { titleId: 't' }, attrs: { id: 'i' } });
-      expect(warn).not.toHaveBeenCalled();
-    } finally {
-      warn.mockRestore();
-    }
+    const wrapper = mount(PfProgressStep, {
+      slots: { default: () => 'Help', popover: () => h('span') },
+    });
+    await flushPromises();
+
+    const stepId = wrapper.attributes('id');
+    const button = wrapper.find(`.${styles.progressStepperStepMain} > button`);
+    expect(stepId).toBeTruthy();
+    expect(button.attributes('id')).toBe(`${stepId}-title`);
+    expect(button.attributes('aria-labelledby')).toBe(`${stepId} ${stepId}-title`);
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 });

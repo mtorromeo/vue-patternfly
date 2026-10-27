@@ -1,6 +1,7 @@
 <template>
   <li
     v-bind="ouiaProps"
+    :id="stepId"
     :class="[
       styles.progressStepperStep,
       variant ? variantStyle[variant] : undefined,
@@ -22,11 +23,11 @@
     <div :class="styles.progressStepperStepMain">
       <component
         :is="$slots.popover ? 'button' : 'div'"
-        :id="titleId"
+        :id="effectiveTitleId"
         ref="titleRef"
         :type="$slots.popover ? 'button' : undefined"
         :class="[styles.progressStepperStepTitle, { [styles.modifiers.helpText]: $slots.popover }]"
-        :aria-labelledby="$slots.popover && $attrs.id && titleId ? `${$attrs.id} ${titleId}` : undefined"
+        :aria-labelledby="$slots.popover ? `${stepId} ${effectiveTitleId}` : undefined"
       >
         <slot />
         <slot name="popover" :trigger="title" />
@@ -47,7 +48,7 @@ interface Props extends OUIAProps, /* @vue-ignore */ LiHTMLAttributes {
   current?: boolean;
   /** Description text of a progress step, replaced by the description slot. */
   description?: string;
-  /** ID of the title of the progress step. */
+  /** ID of the title of the progress step. Generated when not set, like the id of the step. */
   titleId?: string;
 }
 
@@ -70,8 +71,7 @@ const variantStyle = {
 
 <script lang="ts" setup>
 import styles from '@patternfly/react-styles/css/components/ProgressStepper/progress-stepper';
-import { devWarn } from '../../helpers/dev';
-import { useAttrs, useTemplateRef, type Component, type LiHTMLAttributes, type VNode } from 'vue';
+import { computed, useAttrs, useId, useTemplateRef, type Component, type LiHTMLAttributes, type VNode } from 'vue';
 import { useOUIAProps, type OUIAProps } from '../../helpers/ouia';
 import CircleCheckIcon from '@vue-patternfly/icons/circle-check-icon';
 import ResourcesFullIcon from '@vue-patternfly/icons/resources-full-icon';
@@ -98,9 +98,9 @@ defineSlots<{
 
 const title = useTemplateRef<HTMLElement>('titleRef');
 
-if (useAttrs().id === undefined || props.titleId === undefined) {
-  devWarn(
-    'ProgressStep: The titleId and id properties are required to make this component accessible, and one or both of these properties are missing.',
-  );
-}
+// the step and its title get generated ids, which label the title button of the popover
+const attrs = useAttrs();
+const generatedId = useId();
+const stepId = computed(() => (typeof attrs.id === 'string' ? attrs.id : generatedId));
+const effectiveTitleId = computed(() => props.titleId ?? `${stepId.value}-title`);
 </script>
