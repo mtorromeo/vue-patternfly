@@ -52,7 +52,7 @@
       - `pf-data-list-item-row` and `pf-data-list-item-cells` are optional: consecutive `pf-data-list-cell` elements are wrapped in them automatically.
       - `visibility` of `pf-data-list-action` is replaced by the `visibility`, `visibility-sm`, … breakpoint props.
       - `button-attrs` replaces `buttonProps` on `pf-data-list-toggle`, and `no-padding` replaces `hasNoPadding` on `pf-data-list-content`.
-      - The drag and drop examples are not ported: they rely on the `react-drag-drop` package.
+      - The drag and drop examples live in the [Drag and drop](#/stories/components/drag-and-drop) page of the `@vue-patternfly/drag-drop` package.
 
       See [common differences from patternfly-react](#/).
 

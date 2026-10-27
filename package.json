@@ -6,7 +6,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "pub": "pnpm publish -r --publish-branch main --filter ./packages/core --filter ./packages/icons --filter ./packages/table --filter ./packages/charts",
+    "pub": "pnpm publish -r --publish-branch main --filter ./packages/core --filter ./packages/icons --filter ./packages/table --filter ./packages/charts --filter ./packages/drag-drop",
     "clean": "turbo run clean",
     "build": "turbo run build",
     "format": "oxfmt",

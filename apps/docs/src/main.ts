@@ -7,6 +7,7 @@ import { createApp } from 'vue';
 import VuePatternFly from '@vue-patternfly/core';
 import VuePatternFlyTable from '@vue-patternfly/table';
 import VuePatternFlyCharts from '@vue-patternfly/charts';
+import VuePatternFlyDragDrop from '@vue-patternfly/drag-drop';
 
 import router from './router';
 import appGlobals from './app-globals';
@@ -18,6 +19,7 @@ app.use(createPinia());
 app.use(VuePatternFly);
 app.use(VuePatternFlyTable);
 app.use(VuePatternFlyCharts);
+app.use(VuePatternFlyDragDrop);
 app.use(router);
 app.use(appGlobals);
 app.mount('#app');

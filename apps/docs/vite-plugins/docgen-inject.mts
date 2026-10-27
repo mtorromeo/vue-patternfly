@@ -50,12 +50,21 @@ async function parseAllDocs(docs: Record<string, ComponentDoc>) {
   }
 
   parseQ.push(
+    '../../packages/table/src/ActionsColumn.vue',
+    '../../packages/table/src/Caption.vue',
+    '../../packages/table/src/ExpandableRowContent.vue',
+    '../../packages/table/src/HeaderCellInfoWrapper.vue',
+    '../../packages/table/src/InnerScrollContainer.vue',
+    '../../packages/table/src/OuterScrollContainer.vue',
     '../../packages/table/src/Table.vue',
+    '../../packages/table/src/TableText.vue',
     '../../packages/table/src/Tbody.vue',
     '../../packages/table/src/Td.vue',
+    '../../packages/table/src/Tfoot.vue',
     '../../packages/table/src/Th.vue',
     '../../packages/table/src/Thead.vue',
     '../../packages/table/src/Tr.vue',
+    '../../packages/table/src/TreeRowWrapper.vue',
     '../../packages/charts/src/Charts.vue',
     '../../packages/charts/src/ChartArea.vue',
     '../../packages/charts/src/ChartBar.vue',
@@ -84,6 +93,9 @@ async function parseAllDocs(docs: Record<string, ComponentDoc>) {
     '../../packages/charts/src/ChartThemeRiver.vue',
     '../../packages/charts/src/ChartTree.vue',
     '../../packages/charts/src/ChartTreemap.vue',
+    '../../packages/drag-drop/src/DragDropSort.vue',
+    '../../packages/drag-drop/src/DragDropContainer.vue',
+    '../../packages/drag-drop/src/Droppable.vue',
   );
 
   const results = await Promise.allSettled(

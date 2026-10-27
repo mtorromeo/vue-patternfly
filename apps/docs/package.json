@@ -12,6 +12,7 @@
     "@patternfly/patternfly": "^6.7.0",
     "@vue-patternfly/charts": "workspace:^",
     "@vue-patternfly/core": "workspace:^",
+    "@vue-patternfly/drag-drop": "workspace:^",
     "@vue-patternfly/icons": "workspace:^",
     "@vue-patternfly/table": "workspace:^",
     "echarts": "^6.1.0",
