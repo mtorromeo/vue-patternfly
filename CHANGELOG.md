@@ -1,6 +1,706 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [6.0.0-rc.1] - 2026-10-27
+
+### Bug Fixes
+
+- *(TextInputGroup)* [**breaking**] Align with patternfly-react
+
+  - Render the status icon in the main input from the group's validated
+    state, and accept validated="default" without adding a modifier.
+  - Default the input aria-label to "Type to filter".
+  - Apply class to the main root element; add inputClass for the input.
+  - Share disabled and validated through TextInputGroupKey in common.ts.
+
+- *(FormControlIcon)* Swap the warning and error status icons
+
+  The warning status showed the circle exclamation icon and the error status
+  the triangle one: patternfly-react uses the triangle for warnings and the
+  circle for errors.
+
+- *(SearchInput)* Align markup and behaviour with patternfly-react
+
+  - Wrap the input, toggles and buttons in input group items as upstream
+  - Forward class and attributes to the root element
+  - Do not disable the submit button without a value; prevent the
+    enclosing form from submitting on search
+  - Parse and build quoted attribute values; collect unpaired words under
+    haswords without a delimiter
+  - Close the menu on Escape anywhere, keep it open on clicks inside an
+    appended menu, focus the first field on open and the input on close
+  - Float the menu inside the wrapper by default; render it in the flow
+    with appendTo="inline"
+  - Forward the attribute:<attr> slots to the menu
+  - Stop calling onClear when toggling the expandable input
+  - Add animations, utilitiesDisplayed, resultsCountContext, name,
+    inputAttrs, wordsAttrLabel and an exposed focus()
+  - Port all upstream examples to the story
+
+- *(Brand)* Apply the responsive sizes to an img brand
+
+  - Set the width and height breakpoint variables on the img as well as
+    on the picture, and update them when the props change
+  - Make src optional, drop any and declare props in a plain script block
+  - Port upstream's tests and examples with the light and dark logos
+
+- *(Button)* [**breaking**] Align disabled, loading and role handling with upstream
+
+  - Only disable button elements: other elements get aria-disabled,
+    pf-m-disabled and tabindex -1
+  - Keep a loading button clickable, skip pf-m-progress on plain buttons
+    and render an inline spinner in inline links
+  - Only add role="button", type and tabindex 0 to an inline span
+  - Position the icon only next to text
+  - Add clicked, default ouiaSafe to true and log upstream's errors for
+    hamburger, settings and favorite buttons
+  - Port all upstream examples to the story
+
+- *(Checkbox)* Align the wrapper, description and OUIA attributes with upstream
+
+  - Keep pf-m-standalone with labelWrapped and no label, and set the for
+    attribute of a label wrapper also with component="label"
+  - Bind the input to the model state
+  - Add invalid, describe the input with the description and default
+    ouiaSafe to true
+  - Move the OUIA attributes to the input, as upstream
+  - Port upstream's tests and examples
+
+- *(Content)* Add data-pf-content and default ouiaSafe to true
+
+  - Mark every content element with data-pf-content, as upstream
+  - Default ouiaSafe to true
+  - Declare props in a plain script block and drop any from the slot
+  - Port the remaining upstream tests and all examples to the story
+
+- *(DescriptionList)* Only set layout variables with their layouts
+
+  - Set the auto-fit minimum and horizontal term width variables only
+    with autoFit and horizontal, as upstream
+  - Default ouiaSafe to true
+  - Declare props in plain script blocks and drop any from the slots
+  - Port all upstream examples to the story
+
+- *(Divider)* Default the role of li and div dividers to separator
+
+  - Default role to separator, as upstream, and accept none
+  - Declare props in a plain script block
+  - Port upstream's tests and all examples to the story
+
+- *(Drawer)* Align with patternfly-react
+
+  - Drawer: add pill, the expand event and default ouiaSafe to true
+  - DrawerPanelContent: add focusTrap, elementToFocusOnExpand, noGlass, glass,
+    plain and noPlainOnGlass
+  - DrawerPanelContent: collapse the panel at the end of its transform
+    transition, as the drawer CSS has no animation to wait for
+  - DrawerPanelContent: measure touch drags from their start and support RTL
+    when resizing
+  - DrawerSection: add plain
+  - DrawerCloseButton: default the aria-label to "Close drawer panel"
+  - Port every upstream example to the story
+
+- *(InputGroup)* [**breaking**] Put InputGroupText attributes on the text element
+
+- *(List)* Add the plain list role and the item text wrapper
+
+  - List: render role="list" on plain lists, as upstream
+  - ListItem: wrap the content in a span, with the item text class after
+    an icon
+  - Add the differences section to the story
+
+- *(FloatingUi)* Defer the teleport to targets rendered in the same patch
+
+  A floating element appended to an element of the same render, such as a
+  dropdown appended to the focus trap of a modal, failed to resolve its
+  teleport target and broke the render. The teleport is now deferred, and the
+  element keeps its hidden opacity when it mounts after being hidden again.
+
+- *(NotificationBadge)* Align with patternfly-react
+
+  - animate when mounted with shouldNotify and stop when it becomes false
+  - render no empty text span, which added space after the icon, without
+    count nor content
+  - add the attention-icon slot for the attention variant, while the icon
+    slot covers the other variants
+  - use the clicked prop of the button for the expanded styling
+  - story: port every upstream example
+
+- *(NotificationDrawer)* Align with patternfly-react
+
+  - ListItem: click on Enter and Space unless on a header action, and
+    default the read state screen reader text to read or unread
+  - ListItemHeader: set the max lines of truncated titles, focus overflowing
+    titles, forward attributes to the header element and add actionNoOffset
+  - Group: focus the title only when it overflows
+  - Header: add closeButtonAriaLabel
+  - type the slots and onExpand without any
+  - story: port every upstream example, adding the lightweight one
+
+- *(Switch)* Align with patternfly-react
+
+  - label the input with the visible label through aria-labelledby, unless
+    an aria-label or aria-labelledby is set
+  - link the label to the input with for and a generated id
+  - apply class to the wrapping label only
+  - default ouiaSafe to true and render the check icon in a span with a label
+  - add the label slot and warn without an accessible name
+  - port every upstream example to the story
+
+- *(Title)* Align with patternfly-react
+
+  - default ouiaSafe to true
+  - type the slot and move the props into the plain script block
+  - port the upstream examples to the story and document the h prop
+
+
+### Documentation
+
+- *(Card)* Port the patternfly-react examples
+
+- *(TextInputGroup)* Port the upstream examples
+
+  Use the upstream titles and intros, add the validation example, fix the
+  filters clear button and list the differences from patternfly-react.
+
+- *(Banner)* Align the story with upstream's examples
+
+  - Add the intro texts and differences section, use the bell icon for
+    the custom status and port the pill example
+  - Declare props in a plain script block and drop any from the slots
+  - Cover every color and status and the screen reader text order
+
+- *(Skeleton)* Port the upstream examples
+
+  - port every upstream example to the story
+  - drop the any cast, map the font sizes to their modifiers and fix the
+    fontSize doc comment
+  - test every font size, the default markup and the style merging
+
+- *(Spinner)* Align the examples with upstream
+
+  - add the upstream aria-labels to the basic, size and custom size examples
+  - render the progress bar reference of the description as a link
+
+- *(DualListSelector)* Add story
+
+  Port the upstream examples, including the draggable ones built with
+  @vue-patternfly/drag-drop.
+
+
+### Features
+
+- *(Checkbox,Radio)* [**breaking**] Apply class to the wrapper and add inputClass
+
+  `class` now goes on the wrapper element, like `className` in
+  patternfly-react, instead of on the input. The new `inputClass` prop
+  replaces it for the input (`inputClassName`). Every other attribute is
+  still forwarded to the input.
+
+- *(Card)* [**breaking**] Reach feature parity with patternfly-react
+
+  Fixes the layout of the selection checkbox: the standalone modifier
+  ended up on the input instead of the check wrapper. The input is also
+  keyboard reachable again (no tabindex="-1"), and the card itself is no
+  longer focusable.
+
+  - `selectable-single` renders a radio; cards sharing a `name` deselect
+    each other through `v-model:selected`
+  - `selectable-attrs` forwards id/aria attributes to the selectable input
+    or clickable action, with a generated id by default
+  - clickable-only cards (`clickable`, `@click` or `to`/`external`) render
+    a covering button or link; `@click` is ignored when disabled
+  - `id` derives the ids of the card title and subtitle; CardTitle
+    forwards its attributes to the title text
+  - CardHeader gets an `actions` slot with `actions-no-offset` and wraps
+    its content in the header main, as in patternfly-react
+  - accessibility console errors and the compact/large warning
+  - a single CardKey provide in common.ts replaces the separate keys
+
+- *(Charts)* Add the @vue-patternfly/charts package based on ECharts
+
+  Port @patternfly/react-charts on Apache ECharts only, including the charts
+  patternfly-react draws with Victory:
+
+  - PfCharts renders an ECharts option with the PatternFly theme and per
+    series defaults, following container resizes and theme changes on the
+    html and body elements.
+  - PfChartArea, PfChartBar, PfChartLine, PfChartScatter, PfChartSparkline,
+    PfChartPie, PfChartDonut, PfChartDonutUtilization, PfChartDonutThreshold,
+    PfChartBullet, PfChartBoxPlot and PfChartSankey turn simple props into an
+    option and register the ECharts modules they need.
+  - PfCharts keeps the range zoomed by the user when its option is rebuilt.
+  - PfChartGauge, PfChartHeatmap, PfChartRadar, PfChartFunnel,
+    PfChartCandlestick and PfChartTreemap wrap ECharts types react-charts
+    has no counterpart for.
+  - ROADMAP.md maps every react-charts chart and plans the missing ECharts
+    types.
+
+- *(Accordion)* [**breaking**] Add toggle, content and content body components
+
+  - Add PfAccordionToggle, PfAccordionContent (customContent, bodyAttrs,
+    focusable fixed content with a scrollbar) and
+    PfAccordionExpandableContentBody
+  - PfAccordionItem renders the toggle and content unless its slot
+    composes them; add toggleAttrs and contentAttrs
+  - Add plain and noPlainOnGlass to PfAccordion; it is a region when
+    labelled and not a definition list
+  - Update toggles and contents when the accordion props change
+  - Do not add pf-m-expanded to the expandable content
+  - Port all upstream examples to the story
+
+- *(ActionList)* Add vertical and iconGroup props
+
+  - Add vertical to PfActionList and iconGroup to PfActionListGroup
+  - Declare props in a plain script block and drop any from the slots
+  - Port all upstream examples to the story
+
+- *(Alert)* Add the close button component and group animations
+
+  - Add PfAlertActionCloseButton with an aria-label built from the alert,
+    the action-close and title slots, and animations on PfAlertGroup
+  - Forward id and aria-label to the alert, honour the variantLabel prop,
+    restart the timeout when it changes and default ouiaSafe to true
+  - Use upstream's default label for the expand toggle
+  - Render the alert group items with their class
+  - Port all upstream examples to the story
+
+- *(Avatar)* Add initials, color and custom content
+
+  - Render initials or the default slot in an img role div, labelled by
+    alt or hidden when alt is empty
+  - Add the color prop with the colorful modifier
+  - Port all upstream examples to the story and upstream's tests
+
+- *(Badge)* Add screenReaderText
+
+  - Add the screenReaderText prop and screen-reader-text slot
+  - Use it for the results count of PfSearchInput
+  - Declare props in a plain script block, port upstream's tests and
+    align the story examples
+
+- *(Breadcrumb)* Add PfBreadcrumbHeading and the link slot
+
+  - Add PfBreadcrumbHeading for the current page title
+  - Add the link scoped slot to PfBreadcrumbItem, replacing upstream's
+    render prop
+  - Put class and attributes on the list item of an item without a link
+  - Default ouiaSafe to true and clone the children to set the dividers
+  - Port all upstream examples to the story
+
+- *(DataList)* Add control, drag button and text components
+
+  - Add PfDataListControl, PfDataListDragButton and PfDataListText
+  - Add plain, noPlainOnGlass and role="list" to PfDataList
+  - Do not select an item when clicking its actions or controls
+  - Label the hidden selection input with selectableInputAriaLabel or the
+    item aria-labelledby
+  - Render the toggle icon in the button icon, label the toggle by the
+    item and itself, follow the item expanded state and add buttonAttrs
+  - Render PfDataListCheck with a label wrapped PfCheckbox and put its
+    class on the control
+  - Show truncated cell content in a tooltip
+  - Move the shared keys to common.ts and drop any
+  - Port all upstream examples to the story but the drag and drop ones
+
+- *(Dropdown)* [**breaking**] Align with patternfly-react
+
+- *(EmptyState)* [**breaking**] Align with patternfly-react
+
+- *(ExpandableSection)* Align with patternfly-react
+
+  - ExpandableSection: add toggleId (labelling the content region),
+    indented, direction for detached sections, toggleWrapper, toggleAttrs,
+    the toggle-icon slot and noToggleIcon; pass expanded to the toggle-text
+    slot; accept truncate=true for the default line clamp; warn when
+    detached without a toggleId; default ouiaSafe to true
+  - ExpandableSection: recheck the truncate toggle when the content or the
+    line count changes, not only on resize
+  - ExpandableSectionToggle: add toggleId, detached, toggleWrapper and
+    toggleAttrs
+  - Render the toggle icon in the button icon wrapper, as upstream
+  - Port every upstream example to the story
+
+- *(FileUpload)* [**breaking**] Align with patternfly-react
+
+- *(Form)* [**breaking**] Align with patternfly-react
+
+- *(FormSelect)* Align with patternfly-react
+
+  - Add FormSelectOptionGroup
+  - FormSelect: put the OUIA attributes on the select and default ouiaSafe
+    to true; put class and style on the form control instead of the select;
+    set aria-invalid; log an error without an id or aria-label
+  - FormSelectOption: render the label prop as the option text; drop its
+    OUIA attributes
+  - Move the options injection key to common.ts
+  - Port every upstream example to the story and link the Flex demo selects
+    to their labels
+
+- *(HelperText)* Align with patternfly-react
+
+  - HelperText: render role="list" on a ul and add liveRegion
+  - HelperTextItem: add screenReaderText, announcing the variant of non
+    default items, and the component prop
+  - Move the injection key to common.ts
+  - Port every upstream example to the story
+
+- *(Hint)* Add actionsNoOffset
+
+  - Hint: add actionsNoOffset, removing the negative margin of the actions
+  - Port every upstream example to the story
+
+- *(Icon)* Support all upstream sizes
+
+  - Icon: accept the 2xl, 3xl, heading and body sizes for size, iconSize
+    and progressIconSize, and export the IconSize type
+  - Add the Icon spec
+  - Port every upstream example to the story
+
+- *(JumpLinks)* [**breaking**] Align with patternfly-react
+
+- *(Label)* [**breaking**] Align with patternfly-react
+
+- *(Masthead)* [**breaking**] Align with patternfly-react
+
+- *(Menu)* [**breaking**] Align with patternfly-react
+
+  - add drilldown menus (PfDrilldownMenu) with managed state, optional
+    v-model:drilled-in-menus/drilldown-item-path/active-menu, drill-in,
+    drill-out and get-menu-height events, and root height following the
+    active menu
+  - add PfMenuContainer, PfMenuSearchInput and the PfMenuSearch alias
+  - add the listbox role, aria-multiselectable lists and the icon slot of
+    PfMenuItemAction
+  - roving tabindex keyboard navigation, horizontal arrows between items
+    and actions, Enter/Space activation, flyout aria attributes and focus
+  - fix onActionClick for item id 0, group title id, external link target
+  - fix selection shown on menus without selected and items identified by
+    key never selected
+  - FloatingUi positions the element of a slot forwarded as a fragment
+  - port every upstream example to the story
+
+- *(MenuToggle)* [**breaking**] Align with patternfly-react
+
+  - emit click only from the toggle button, not from split button items or
+    the typeahead input
+  - split toggles keep class and style on the wrapper and pass every other
+    attribute (aria-label, id, OUIA) to the toggle button, without a default
+    aria-label hiding the toggle text
+  - typeahead toggle button: tabindex -1, the given aria-label and the OUIA
+    attributes
+  - render the status-icon slot only with a status
+  - MenuToggleCheckbox: v-model:checked (also uncontrolled), change emit,
+    invalid prop, class/style on the label and OUIA on the input
+  - story: port every upstream example and list the differences
+
+- *(Modal)* [**breaking**] Align with patternfly-react
+
+  - add PfModalBody and PfModalFooter; PfModalHeader renders the title,
+    description, title icon and help itself, and labels and describes the
+    enclosing modal
+  - PfModal keeps its title, header, description, help and footer shortcuts
+    and wraps loose content in a PfModalBody
+  - stack open modals per target: keep the backdrop-open class until all
+    close and hide siblings and previous modals from screen readers
+  - add focusTrapId, backdropClass, onEscapePress and the custom title icon
+    variant; the title-icon slot works without a titleIconVariant
+  - default ouiaSafe to true, derive the close button OUIA id, listen for
+    Escape on the appendTo target, render no empty header
+  - story: port every upstream example
+
+- *(Nav)* [**breaking**] Align with patternfly-react
+
+  - render flyouts inside the nav, where the nav styles their menus, with
+    aria-haspopup/aria-expanded on the trigger, Enter to open and a zIndex prop
+  - NavExpandable toggles its own state, seeded and followed from expanded,
+    and gets buttonAttrs
+  - Nav emits toggle and passes the item location with select; item and
+    group ids may be numbers
+  - role="list" on NavList and NavGroup lists; NavGroup title is optional,
+    warning without an aria-label
+  - react to variant changes, observe the list size and right-to-left
+    scrolling in horizontal navs, default ouiaSafe to true
+  - share the injection keys through common.ts
+  - story: port every upstream example
+
+- *(OverflowMenu)* Align with patternfly-react
+
+  - add breakpointReference, basing the breakpoint on the size of a
+    container (element, ref or getter) instead of the viewport
+  - add vertical, applying the vertical modifier and the height breakpoints
+  - warn on invalid breakpoints and on "sm" with vertical
+  - expose belowBreakpoint to the default slot and react to breakpoint
+    changes
+  - remove the overflow menu control class from dropdown items
+  - share the injection key through common.ts and type the slots
+  - story: port every upstream example
+
+- *(Page)* [**breaking**] Align with patternfly-react
+
+  - add PageBody; PageSection and PageBreadcrumb always wrap their content
+    in it, unless noBodyWrapper is set
+  - apply the sidebar expanded modifier only on mobile and hide a collapsed
+    sidebar from assistive technologies
+  - base the mobile state on the page width, make the main element
+    focusable by default (mainTabIndex -1) and add the notification drawer
+    sizes and expand event
+  - PageGroup: apply no-fill only when filled is false
+  - PageSection: add plain, noPlainOnGlass, stickyBase and stickyStuck, and
+    apply the secondary variant only to default sections
+  - warn about a missing aria-label with overflowScroll
+  - add contextSelector to PageSidebarBody and hamburgerVariant to
+    PageToggleButton
+  - share the injection keys through common.ts and type the slots
+  - story: port every upstream example
+
+- *(Pagination)* [**breaking**] Align with patternfly-react
+
+  - support an unknown total: without count the next page stays available
+    and the page input shows no total
+  - wrap the options toggle in the page menu element, label it with
+    titleOptionsToggle and render the total slot in it too
+  - open the options menu upwards for non static bottom paginations (or with
+    dropUp), close it on Escape, Tab and outside clicks returning the focus
+    to the toggle, and focus its first item when opened
+  - size the page input after the number of pages
+  - add ofWord, pageInsets, stickyBase, stickyStuck and menuAppendTo, the
+    setPage, perPageSelect and pageInput events, and default ouiaSafe to true
+  - story: port every upstream example
+
+- *(Panel)* Align with patternfly-react
+
+  - add the secondary variant and the autoHeight, noBorder, fullHeight,
+    glass and pill props
+  - declare the props in a plain script block and type the slots
+  - story: port every upstream example
+
+- *(Popover)* [**breaking**] Align with patternfly-react
+
+  - open at the given position and flip when it does not fit (noFlip,
+    flipBehavior), using auto placement only for position "auto", and map
+    the start/end placements to their position modifiers
+  - render the upstream header markup with headerComponent, a header-icon
+    slot and alertSeverityVariant with its screen reader text
+  - show the close button by default in its close wrapper (noClose) and
+    trap the focus by default when opened (noFocusTrap, elementToFocus)
+  - add triggerRef, the deprecated hover trigger, zIndex, the show and hide
+    events and a hide function for the content slots; default ouiaSafe to
+    true
+  - story: port every upstream example
+
+- *(Progress)* Align with patternfly-react
+
+  - render the title and the status only when they have content, and omit
+    aria-valuetext without valueText
+  - make a truncated title focusable, showing its tooltip on focus too, and
+    hide other titles from assistive technologies
+  - add helperText (prop or slot), ariaDescribedby, hideStatusIcon and a
+    title slot; warn without an accessible name; default ouiaSafe to true
+  - show 0% when min and max are equal
+  - story: port every upstream example
+
+- *(ProgressStepper)* [**breaking**] Align with patternfly-react
+
+  - add titleId to PfProgressStep and warn when id or titleId is missing
+  - add the popover scoped slot: the step title becomes the help-text trigger
+    button (aria-labelledby "{id} {titleId}") passed as trigger to a pf-popover
+  - type the slots and drop any
+  - port every upstream example to the story
+
+- *(Radio)* Align with patternfly-react
+
+  - bind the selected value of a group with v-model and value; checked and
+    change still work without it
+  - add labelWrapped and invalid (aria-invalid)
+  - describe the input by its description unless aria-describedby is set
+  - put the OUIA attributes on the input, safe by default
+  - keep the standalone modifier when wrapped in a label without a label
+  - warn without a label or an aria-label
+  - type the slots and drop any
+  - port every upstream example to the story
+
+  Card ignores the model update of its single selectable radio.
+
+- *(Select)* [**breaking**] Align with patternfly-react
+
+  - put the OUIA attributes on the menu, safe by default
+  - default the menu role to listbox and the toggle aria-haspopup to listbox
+  - wrap the options in a menu content with menuHeight, maxMenuHeight and
+    scrollable
+  - move the focus to the menu with the toggle arrow keys (not for the
+    typeahead variant), overridable with onToggleKeydown
+  - add focusTimeoutDelay, scrollOnItemFocus, closeOnSelect and the 9999
+    z-index default
+  - bind the open state to a custom toggle slot, like Dropdown
+  - type the slots and drop any
+  - port every upstream example to the story
+
+- *(SimpleList)* Align with patternfly-react
+
+  - emit select with the event and the value of the clicked item
+  - accept number values, typing v-model after the value type
+  - add the link modifier to anchor items and type the button type as
+    button, submit or reset
+  - put the attributes of SimpleListGroup on its section and generate its
+    title id so the title always labels the list
+  - share the injection key through common.ts and type the slots
+  - port every upstream example to the story
+
+- *(Tabs)* Align with patternfly-react
+
+  - Tabs: fix the overflow menu, which used the vertical expanded state and
+    rendered its items outside of the menu; selecting an item activates the
+    tab, the overflow tab shows the selected title and is recounted when
+    the tabs resize
+  - Tabs: add the expandable toggle, the animated current tab accent, the
+    nav prop, tabListAriaLabel/tabListAriaLabelledby, the select event,
+    mountOnEnter/unmountOnExit defaults, the overflow settings, the add
+    button and the close buttons (onAdd/onClose)
+  - Tabs: render the scroll buttons only while scrollable and default
+    ouiaSafe to true
+  - Tab: add eventKey, the actions slot, the tooltip prop/slot,
+    closeButtonAriaLabel, closeDisabled and contentId; prevent selecting
+    aria-disabled tabs; add role="presentation" and the action/disabled
+    modifiers to the item; put the OUIA attributes on the tab button; omit
+    aria-controls of panels that are not mounted
+  - add TabAction and TabContentBody
+  - port every upstream example to the story
+
+- *(TextInput)* Align with patternfly-react
+
+  - implement startTruncated, which was declared but ignored: the value is
+    truncated at its start while the input is not focused (trimLeft and
+    innerDimensions helpers in util)
+  - put the OUIA attributes on the input, safe by default
+  - keep a custom aria-invalid
+  - add expandedControls, making the input a combobox controlling the
+    expanded element (expandedProps)
+  - emit focus, replace newlines in the value with spaces and warn without
+    an accessible name
+  - type the slots and port every upstream example to the story
+
+- *(Textarea)* [**breaking**] Align with patternfly-react
+
+  - add the pf-m-textarea modifier to the form control
+  - auto resize while typing, not only on change, with the upstream height
+    calculation
+  - add resizeOrientation="none" and warn without an id or aria-label
+  - port every upstream example to the story
+
+- *(ToggleGroup)* Align with patternfly-react
+
+  - ToggleGroup: add fill (isFill)
+  - ToggleGroupItem: add iconPosition and warn about an icon-only item
+    without an aria-label
+  - share the injection keys through common.ts and type the slots
+  - port every upstream example to the story
+
+- *(Toolbar)* Align with patternfly-react
+
+  - Toolbar: generate the id, add stickyBase, stickyStuck, the "all"
+    collapseListedFiltersBreakpoint, numberOfFiltersText and the
+    label-group-content slot (customLabelGroupContent); default ouiaSafe to
+    true
+  - ToolbarContent, ToolbarGroup, ToolbarItem, ToolbarToggleGroup: add the
+    visibilityAtHeight breakpoint props
+  - ToolbarToggleGroup: apply the gap, columnGap and rowGap props instead of
+    the removed v5 spacers, link the toggle to the expandable content with
+    aria-controls, set aria-expanded only when expanded and warn without a
+    breakpoint or icon
+  - ToolbarFilter: add the label group close button only with a
+    deleteLabelGroup listener, and the outline variant only to string labels
+  - add ToolbarExpandIconWrapper
+  - port every upstream example to the story
+
+- *(Tooltip)* Align with patternfly-react
+
+  - add triggerRef (element, selector or function), appending the tooltip
+    id to the aria attribute of the trigger while visible
+  - add ariaLive, polite by default with a triggerRef
+  - hide on Escape and toggle on Enter on the trigger, unless manual
+  - keep the tooltip visible while the pointer is over it
+  - add zIndex and the hidden event (onTooltipHidden)
+  - apply a numeric maxWidth in pixels, drop the trigger min width default
+    and hide on any click with the click trigger, like upstream
+  - type the slots and port every upstream example to the story
+
+- *(Slider)* Add Slider
+
+  Port the patternfly-react Slider: discrete, continuous and custom steps,
+  dragging, rail clicks and arrow keys, the value input (at the end or above
+  the thumb, live or on commit), the tooltip over the thumb and the start
+  and end actions.
+
+  The value is bound with v-model; without v-model:input-value the input
+  edits the value directly, clamped between min and max, while binding it
+  keeps the input independent and passes it to the change event, like
+  upstream.
+
+- *(TreeView)* Add TreeView
+
+  Port the patternfly-react TreeView and TreeViewSearch: data driven trees
+  with selection, separate selectable nodes, multiple selection,
+  checkboxes with the indeterminate state, badges, icons, guides, compact
+  variants, item actions from the action slot, a toolbar slot, animations
+  with inert collapsed children and the upstream keyboard navigation.
+
+- *(Truncate)* Add Truncate
+
+  Port the patternfly-react Truncate: truncation at the end, start or
+  middle based on the width of the parent container, or on
+  maxCharsDisplayed with screen reader content and a custom omission, link
+  wrappers, and the tooltip with the full content, positioned with
+  tooltipPosition and customized with tooltipAttrs.
+
+- *(Wizard)* Add Wizard
+
+- *(DragDrop)* Add drag-drop package
+
+  Port @patternfly/react-drag-drop as @vue-patternfly/drag-drop, built on
+  @dnd-kit/vue: PfDragDropSort, PfDragDropContainer and PfDroppable with the
+  default and data-list variants, items bound with v-model:items and rendered
+  by an #item slot, and a component prop replacing wrapper. The
+  DualListSelectorList variant is deferred until DualListSelector is ported.
+
+- *(Table)* [**breaking**] Align with patternfly-react
+
+  Add Caption, TableText, ExpandableRowContent, InnerScrollContainer,
+  OuterScrollContainer, ActionsColumn, TreeRowWrapper and
+  HeaderCellInfoWrapper, and the missing Table, Tr, Th and Td features:
+  radio and indeterminate selection, expand all, expandable and compound
+  expandable cells, favorites, info tooltips/popovers, tree rows, draggable
+  rows, truncation tooltips, plain/dynamic sticky header/no inset/animations
+  modifiers and tree table keyboard navigation.
+
+  Fix sticky cell offsets (PatternFly 6 InsetInlineStart/End variables),
+  unstyled selection checkboxes, ignored visibility modifiers, invalid cell
+  roles, aria-sort="none" on unsorted columns, data-label on tree title
+  cells and the selectable rows caption. Port all the upstream examples to
+  the story.
+
+- *(DualListSelector)* Add DualListSelector
+
+  Port the composable dual list selector: PfDualListSelector, its pane, list,
+  list item, controls wrapper, control and tree, with v-model:selected on the
+  options, keyboard navigation of the options and controls, and tree options
+  named like those of pf-tree-view.
+
+- *(DragDrop)* Add dual-list-selector variant
+
+  Render the draggable objects as dual list selector options with a drag
+  button, and the drag overlay in a dual list selector.
+
+
+### Refactor
+
+- *(BackgroundImage)* Align the component shape and add tests
+
+  - Declare props in a plain script block and fix the src description
+  - Port upstream's tests
+  - Add the differences section to the story
+
+
 ## [6.0.0-beta.15] - 2026-10-19
 
 ### Bug Fixes
