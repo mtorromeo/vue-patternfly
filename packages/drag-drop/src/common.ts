@@ -21,9 +21,10 @@ export interface DraggableObject {
 /**
  * Determines which component wraps the draggable objects.
  * `default` wraps each draggable object in a div with a drag button,
- * `data-list` wraps it in a data list item whose first control is the drag button.
+ * `data-list` wraps it in a data list item whose first control is the drag button,
+ * `dual-list-selector` wraps it in a dual list selector option with a drag button.
  */
-export type DragDropVariant = 'default' | 'data-list';
+export type DragDropVariant = 'default' | 'data-list' | 'dual-list-selector';
 
 export interface DragDropContainerProvide {
   /** Items of every drop zone moved by the drag in progress, undefined when idle */

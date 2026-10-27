@@ -10,6 +10,15 @@
       >
         <slot name="item" :item="item">{{ item.content }}</slot>
       </pf-draggable-data-list-item>
+      <pf-draggable-dual-list-selector-list-item
+        v-else-if="managedVariant === 'dual-list-selector'"
+        :id="item.id"
+        :index="index"
+        :group="id"
+        v-bind="item.attrs"
+      >
+        <slot name="item" :item="item">{{ item.content }}</slot>
+      </pf-draggable-dual-list-selector-list-item>
       <pf-draggable v-else :id="item.id" :index="index" :group="id" v-bind="item.attrs">
         <slot name="item" :item="item">{{ item.content }}</slot>
       </pf-draggable>
@@ -40,6 +49,7 @@ import { CollisionPriority } from '@dnd-kit/abstract';
 import { useDroppable } from '@dnd-kit/vue';
 import PfDraggable from './Draggable.vue';
 import PfDraggableDataListItem from './DraggableDataListItem.vue';
+import PfDraggableDualListSelectorListItem from './DraggableDualListSelectorListItem.vue';
 import { DragDropContainerKey } from './common';
 
 defineOptions({

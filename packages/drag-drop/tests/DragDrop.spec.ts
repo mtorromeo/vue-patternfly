@@ -5,7 +5,8 @@ import { DragDropProvider, useDragDropManager } from '@dnd-kit/vue';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
 import dataListStyles from '@patternfly/react-styles/css/components/DataList/data-list';
 import dragStyles from '@patternfly/react-styles/css/components/DragDrop/drag-drop';
-import { PfDataList } from '@vue-patternfly/core';
+import dualListSelectorStyles from '@patternfly/react-styles/css/components/DualListSelector/dual-list-selector';
+import { PfDataList, PfDualListSelectorList, PfDualListSelectorPane } from '@vue-patternfly/core';
 import { PfDragDropContainer, PfDragDropSort, PfDroppable, type DraggableObject } from '../src';
 
 const sortItems = (): DraggableObject[] => [
@@ -165,6 +166,84 @@ describe('PfDragDropSort', () => {
     expect(oldIndex).toBe(0);
     expect(newIndex).toBe(2);
     expect(texts(wrapper.findComponent(PfDroppable).element)).toEqual(['two', 'three', 'one']);
+  });
+});
+
+describe('dual-list-selector variant', () => {
+  test('renders dual list selector options with a drag button, toggling their selection', async () => {
+    const items = ref<DraggableObject[]>([
+      { id: 'Apple', content: 'Apple', attrs: { selected: false } },
+      { id: 'Banana', content: 'Banana', attrs: { selected: true } },
+    ]);
+    const wrapper = mount(
+      () =>
+        h(PfDualListSelectorPane, { id: 'chosen', status: 'status' }, () =>
+          h(PfDragDropSort, {
+            items: items.value,
+            variant: 'dual-list-selector',
+            component: PfDualListSelectorList,
+          }),
+        ),
+      { attachTo: document.body },
+    );
+
+    const list = wrapper.find('ul').element;
+    expect(list.className).toBe(dualListSelectorStyles.dualListSelectorList);
+    expect(list.getAttribute('role')).toBe('listbox');
+
+    const option = list.children[0];
+    expect(option.tagName).toBe('LI');
+    expect(option.id).toBe('Apple');
+    expect(option.className).toBe(dualListSelectorStyles.dualListSelectorListItem);
+    expect(option.getAttribute('role')).toBe('presentation');
+    const row = option.children[0];
+    expect(row.className).toBe(dualListSelectorStyles.dualListSelectorListItemRow);
+    const [button, item] = Array.from(row.children);
+    expect(button.tagName).toBe('BUTTON');
+    expect(button.classList).toContain(dualListSelectorStyles.dualListSelectorDraggable);
+    expect(item.className).toBe(dualListSelectorStyles.dualListSelectorItem);
+    expect(item.getAttribute('role')).toBe('option');
+    expect(item.getAttribute('aria-selected')).toBe('false');
+    expect(item.querySelector(`.${dualListSelectorStyles.dualListSelectorItemText}`)?.textContent).toBe('Apple');
+    expect(list.children[1].children[0].classList).toContain(dualListSelectorStyles.modifiers.selected);
+
+    await wrapper.find('#Apple [role="option"]').trigger('click');
+    expect(item.getAttribute('aria-selected')).toBe('true');
+    expect(list.getAttribute('aria-activedescendant')).toBe('Apple');
+
+    wrapper.unmount();
+  });
+
+  test('the overlay copy is wrapped in a dual list selector', async () => {
+    let manager: ReturnType<typeof useDragDropManager> | undefined;
+    const Probe = defineComponent({
+      setup() {
+        manager = useDragDropManager();
+        return () => null;
+      },
+    });
+    const items = ref(containerItems());
+    const wrapper = mount(
+      () =>
+        h(PfDragDropContainer, { items: items.value, variant: 'dual-list-selector' }, () => [
+          h(Probe),
+          h(PfDroppable, { id: 'container1', items: items.value.container1 }),
+        ]),
+      { attachTo: document.body },
+    );
+    await flushPromises();
+
+    manager!.value.actions.start({ source: 'button-2', coordinates: { x: 0, y: 0 } });
+    await flushPromises();
+
+    const overlay = document.querySelector(`[data-dnd-overlay] > .${dragStyles.draggable}`);
+    const selector = overlay?.children[0];
+    expect(selector?.tagName).toBe('UL');
+    expect(selector?.className).toBe(dualListSelectorStyles.dualListSelector);
+    expect(selector?.children[0].className).toBe(dualListSelectorStyles.dualListSelectorListItem);
+    expect(selector?.textContent?.trim()).toBe('two');
+
+    wrapper.unmount();
   });
 });
 

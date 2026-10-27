@@ -19,9 +19,9 @@
       - The items are bound with `v-model:items` on `pf-drag-drop-sort` and `pf-drag-drop-container`, which updates the model on drop; the `drop`, `drag`, `container-move` and `cancel` events replace `onDrop`, `onDrag`, `onContainerMove` and `onCancel`, with the same arguments. During a drag the container renders the moved items itself and commits them on drop, so the parent does not need to store the items on `container-move`, nor restore them on `cancel`.
       - The content of each item is rendered by the `#item="{ item }"` slot, defaulting to the `content` string of the `DraggableObject`, instead of a `content` React node; `attrs` replaces `props`, bound to the wrapper of the item.
       - The `component` prop replaces `wrapper` (e.g. `component="pf-data-list"`); unknown attributes of `pf-droppable` and `pf-drag-drop-sort` are bound to it, instead of cloning a `wrapper` element or passing it as `children`.
-      - `variant` takes `default` or `data-list` instead of `default` or `DataList`. `pf-droppable` uses the variant of its `pf-drag-drop-container` unless it sets its own.
+      - `variant` takes `default`, `data-list` or `dual-list-selector` instead of `default`, `DataList` or `DualListSelectorList`. `pf-droppable` uses the variant of its `pf-drag-drop-container` unless it sets its own.
       - `overlay-attrs` replaces `overlayProps`, and `append-to` takes a selector or an element instead of a function.
-      - The `DualListSelectorList` variant and its demos are not ported yet: they need the dual list selector component.
+      - The dual list selector demos are on the [Dual list selector](#/stories/components/dual-list-selector) page, as its *Draggable* and *Draggable with multiple drop zones* examples.
 
       See [common differences from patternfly-react](#/).
 

@@ -25,6 +25,15 @@
                 <component :is="overlayContent(source.id)" />
               </pf-draggable-data-list-item>
             </pf-data-list>
+            <ul v-else-if="variant === 'dual-list-selector'" :class="dualListSelectorStyles.dualListSelector">
+              <pf-draggable-dual-list-selector-list-item
+                :id="source.id"
+                overlay
+                v-bind="overlayItem(source.id)?.item.attrs"
+              >
+                <component :is="overlayContent(source.id)" />
+              </pf-draggable-dual-list-selector-list-item>
+            </ul>
             <pf-draggable v-else :id="source.id" overlay v-bind="overlayItem(source.id)?.item.attrs">
               <component :is="overlayContent(source.id)" />
             </pf-draggable>
@@ -51,6 +60,7 @@ const defaultModifiers: Customizable<Modifiers> = defaults => [...defaults, Rest
 
 <script lang="ts" setup generic="T extends DraggableObject = DraggableObject">
 import styles from '@patternfly/react-styles/css/components/DragDrop/drag-drop';
+import dualListSelectorStyles from '@patternfly/react-styles/css/components/DualListSelector/dual-list-selector';
 import { provide, shallowRef, toRef, type HTMLAttributes, type Slot, type VNode } from 'vue';
 import type { Customizable, UniqueIdentifier } from '@dnd-kit/abstract';
 import {
@@ -66,6 +76,7 @@ import { DragDropProvider, DragOverlay, type DragDropProviderProps } from '@dnd-
 import { PfDataList } from '@vue-patternfly/core';
 import PfDraggable from './Draggable.vue';
 import PfDraggableDataListItem from './DraggableDataListItem.vue';
+import PfDraggableDualListSelectorListItem from './DraggableDualListSelectorListItem.vue';
 import {
   DragDropContainerKey,
   findContainer,
