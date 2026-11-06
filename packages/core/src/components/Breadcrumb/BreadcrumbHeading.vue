@@ -7,11 +7,8 @@
       <component
         :is="tag"
         v-if="tag"
-        v-bind="$attrs"
-        :to="to"
-        :href="href"
+        v-bind="{ ...$attrs, ...linkProps }"
         :class="[styles.breadcrumbLink, styles.modifiers.current]"
-        :aria-current="to ? undefined : isButton ? 'true' : 'page'"
         :type="isButton ? 'button' : undefined"
       >
         <slot />
@@ -76,4 +73,11 @@ const tag = computed(() => {
   }
   return undefined;
 });
+
+// router-link renders its own href and aria-current: passing them, even undefined, would override those
+const linkProps = computed(() =>
+  tag.value === 'router-link'
+    ? { to: props.to }
+    : { to: props.to, href: props.href, 'aria-current': props.to ? undefined : isButton.value ? 'true' : 'page' },
+);
 </script>

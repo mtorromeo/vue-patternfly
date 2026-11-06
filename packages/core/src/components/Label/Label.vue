@@ -35,10 +35,8 @@
         <component
           :is="contentComponent"
           ref="contentRef"
-          v-bind="editable ? editableAttrs : undefined"
+          v-bind="{ ...(editable ? editableAttrs : {}), ...(contentComponent === 'router-link' ? { to } : { href }) }"
           :class="[styles.labelContent, { [styles.modifiers.clickable]: isClickable }]"
-          :to="to"
-          :href="href"
           :type="contentComponent === 'button' ? 'button' : undefined"
           :disabled="contentComponent === 'button' && isClickableDisabled ? true : undefined"
           :tabindex="contentComponent === 'a' && isClickableDisabled ? -1 : textOverflowing ? 0 : undefined"

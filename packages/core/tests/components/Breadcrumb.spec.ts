@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { defineComponent, h } from 'vue';
+import { createRouter, createMemoryHistory } from 'vue-router';
 import styles from '@patternfly/react-styles/css/components/Breadcrumb/breadcrumb';
 import PfBreadcrumb from '../../src/components/Breadcrumb/Breadcrumb.vue';
 import PfBreadcrumbItem from '../../src/components/Breadcrumb/BreadcrumbItem.vue';
@@ -14,6 +15,20 @@ const RouterLinkStub = defineComponent({
     return () => h('a', { href: `#${String(props.to)}`, class: 'router-link' }, slots.default?.());
   },
 });
+
+async function makeRouter() {
+  const Page = defineComponent({ render: () => h('div') });
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes: [
+      { path: '/', component: Page },
+      { path: '/home', component: Page },
+    ],
+  });
+  await router.push('/home');
+  await router.isReady();
+  return router;
+}
 
 describe('Breadcrumb', () => {
   it('renders a labelled nav with an ordered list', () => {
@@ -187,6 +202,18 @@ describe('BreadcrumbItem', () => {
     expect(wrapper.attributes('data-ouia-component-id')).toBe('c1');
     expect(wrapper.attributes('data-ouia-component-type')).toBe('PF/BreadcrumbItem');
   });
+
+  it('keeps the href and aria-current rendered by vue-router', async () => {
+    const wrapper = mount(PfBreadcrumbItem, {
+      props: { to: '/home' },
+      slots: { default: () => 'Home' },
+      global: { plugins: [await makeRouter()] },
+    });
+
+    const link = wrapper.find('a');
+    expect(link.attributes('href')).toBe('/home');
+    expect(link.attributes('aria-current')).toBe('page');
+  });
 });
 
 describe('BreadcrumbHeading', () => {
@@ -227,5 +254,17 @@ describe('BreadcrumbHeading', () => {
     const wrapper = mount(PfBreadcrumbHeading, { props: { showDivider: true, liAttrs: { id: 'Id' } } });
     expect(wrapper.find(`.${styles.breadcrumbItemDivider} svg`).exists()).toBe(true);
     expect(wrapper.attributes('id')).toBe('Id');
+  });
+
+  it('keeps the href and aria-current rendered by vue-router', async () => {
+    const wrapper = mount(PfBreadcrumbHeading, {
+      props: { to: '/home' },
+      slots: { default: () => 'Home' },
+      global: { plugins: [await makeRouter()] },
+    });
+
+    const link = wrapper.find('a');
+    expect(link.attributes('href')).toBe('/home');
+    expect(link.attributes('aria-current')).toBe('page');
   });
 });

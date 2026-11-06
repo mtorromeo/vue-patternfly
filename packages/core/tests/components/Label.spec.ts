@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { h } from 'vue';
+import { defineComponent, h } from 'vue';
+import { createRouter, createMemoryHistory } from 'vue-router';
 import styles from '@patternfly/react-styles/css/components/Label/label';
 import groupStyles from '@patternfly/react-styles/css/components/Label/label-group';
 import buttonStyles from '@patternfly/react-styles/css/components/Button/button';
@@ -132,6 +133,29 @@ describe('Label', () => {
       const event = new MouseEvent('click', { bubbles: true, cancelable: true });
       content.element.dispatchEvent(event);
       expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('renders a router-link with the href resolved by vue-router', async () => {
+      const Page = defineComponent({ render: () => h('div') });
+      const router = createRouter({
+        history: createMemoryHistory(),
+        routes: [
+          { path: '/', component: Page },
+          { path: '/target', component: Page },
+        ],
+      });
+      await router.push('/');
+      await router.isReady();
+
+      const wrapper = mount(PfLabel, {
+        props: { to: '/target' },
+        slots: { default: () => 'Link' },
+        global: { plugins: [router] },
+      });
+
+      const content = wrapper.find(`.${styles.labelContent}`);
+      expect(content.element.tagName).toBe('A');
+      expect(content.attributes('href')).toBe('/target');
     });
 
     it('marks disabled links as aria-disabled, removes them from tab order and prevents navigation', () => {

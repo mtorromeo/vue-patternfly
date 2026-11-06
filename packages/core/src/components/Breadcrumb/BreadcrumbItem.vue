@@ -10,10 +10,7 @@
     <component
       :is="tag"
       v-else
-      v-bind="$attrs"
-      :to="to"
-      :href="href"
-      :aria-current="ariaCurrent"
+      v-bind="{ ...$attrs, ...linkProps }"
       :class="dropdown ? styles.breadcrumbDropdown : tag !== PassThrough ? linkClass : undefined"
       :type="isButton ? 'button' : undefined"
     >
@@ -70,6 +67,13 @@ const ariaCurrent = computed(() => {
   // router-link already handles the aria-current attribute
   return props.active && !props.to ? 'page' : undefined;
 });
+
+// router-link renders its own href and aria-current: passing them, even undefined, would override those
+const linkProps = computed(() =>
+  tag.value === 'router-link'
+    ? { to: props.to }
+    : { to: props.to, href: props.href, 'aria-current': ariaCurrent.value },
+);
 
 const isButton = computed(() => {
   if (typeof props.component === 'object') {
